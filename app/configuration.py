@@ -39,7 +39,7 @@ class ProductionConfig(Config):
 	RECAPTCHA_PRIVATE_KEY = "1234_xyzw"
 
 	#SQLALCHEMY_DATABASE_URI = "mysql+pymysql://db_user:db_pass@localhost/db_name"
-	SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database/database.db')
+	SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')
 
 	SERVER_NAME   = 'www.yourdomain.us'
 	DEBUG         = False
@@ -55,7 +55,7 @@ class DevelopmentConfig(Config):
 	RECAPTCHA_PRIVATE_KEY = "1234_xyzw"
 
 	#SQLALCHEMY_DATABASE_URI = "mysql+pymysql://MYSQL_USER:MYSQL_PASS@localhost/MYSQL_DATABASE"
-	SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database/database.db')
+	SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')
 
 	SERVER_NAME   = 'localhost:5000'
 	DEBUG	= False
