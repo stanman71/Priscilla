@@ -1,14 +1,6 @@
-# -*- encoding: utf-8 -*-
-"""
-Flask Boilerplate
-Author: AppSeed.us - App Generator 
-"""
-
 import time,datetime,calendar
 import os
 import base64
-
-#import util <--- DO NOT do this, we have circular inclusion ..
 
 class STATUS:
     
