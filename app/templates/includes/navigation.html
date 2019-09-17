@@ -14,6 +14,62 @@
               <p>Dashboard</p>
             </a>
           </li>
+
+          {% if data.navigation == "plants" %}
+            <li class="active ">
+          {% else %} 
+            <li>
+          {% endif %} 
+            <a href="/plants.html">
+              <i class="tim-icons icon-world"></i>
+              <p>Pflanzen</p>
+            </a>
+          </li>  
+
+          {% if data.navigation == "devices" %}
+            <li class="active ">
+          {% else %} 
+            <li>
+          {% endif %} 
+            <a href="/devices.html">
+              <i class="tim-icons icon-settings-gear-63"></i>
+              <p>Geräte</p>
+            </a>
+          </li>  
+
+          {% if data.navigation == "users" %}
+            <li class="active ">
+          {% else %} 
+            <li>
+          {% endif %} 
+            <a href="/users.html">
+              <i class="tim-icons icon-single-02"></i>
+              <p>Benutzer</p>
+            </a>
+          </li>  
+
+          {% if data.navigation == "system" %}
+            <li class="active ">
+          {% else %} 
+            <li>
+          {% endif %} 
+            <a href="/system.html">
+              <i class="tim-icons icon-settings"></i>
+              <p>System</p>
+            </a>
+          </li>            
+
+          {% if data.navigation == "system_log" %}
+            <li class="active ">
+          {% else %} 
+            <li>
+          {% endif %} 
+            <a href="/system_log.html">
+              <i class="tim-icons icon-paper"></i>
+              <p>Ereignisse</p>
+            </a>
+          </li>       
+
           {% if data.navigation == "icons" %}
             <li class="active ">
           {% else %} 
@@ -24,6 +80,7 @@
               <p>Icons</p>
             </a>
           </li>
+          
           {% if data.navigation == "notifications" %}
             <li class="active ">
           {% else %} 

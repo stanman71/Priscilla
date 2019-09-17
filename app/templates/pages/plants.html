@@ -1,0 +1,181 @@
+
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+
+<!-- add new plant -->
+
+            <div class="card">
+              <div class="card-header">
+                <h4 class="title">Pflanzen</h4>
+              </div>
+              <div class="card-body">
+                <form method="POST">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row justify-content-md-center">
+                        <div class="col-sm-6">                       
+                          <div class="form-group">
+                            <label>Pflanze hinzufügen</label>
+                            <input type="text" class="form-control" placeholder="Name" value="">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Gerät</label>
+                            <select class="selectpicker" data-width="100%" data-live-search="true" name="set_watering_controller_ieeeAddr">
+                              {% if mqtt_device_ieeeAddr != "" %}
+                                <option value= "{{ mqtt_device_ieeeAddr }}" > {{ mqtt_device_name }} </option>
+                              {% else %}
+                                <option value= "None" > Gerät </option>
+                              {% endif %}                 
+                              <optgroup>
+                                {% for each in dropdown_list_watering_controller %}
+                                  <option value="{{each.ieeeAddr}}"> {{ each.name }} </option>
+                                {% endfor %}
+                              </optgroup>
+                            </select>  
+                          </div>
+                        </div>                            
+                      </div>
+                    </div>
+                  </div>                  
+                </div>
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/plants.html#'" name="add_new_plant" class="btn btn-fill btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
+
+<!-- plants table -->
+
+<section id="plants_table"></section>      
+
+            <div class="card ">
+              <div class="card-body">
+                <form method="POST">
+                  <div class="table-responsive">
+                    <table class="table tablesorter " id="">
+
+                      <thead>
+                        <th scope="col" style="width:3%"></th> 
+                        <th scope="col" style="width:14%">Pflanze</th>   
+                        <th scope="col" style="width:20%">Gerät</th> 
+                        <th scope="col" style="width:10%">Gruppe</th> 
+                        <th scope="col" style="width:15%">Pumpdauer (s)</th>    
+                        <th scope="col" style="width:17%">Sensor Feuchtigkeit</th>                      
+                        <th scope="col" style="width:17%">Sensor Wasservorrat</th>                                     
+                        <th scope="col" style="width:4%"></th>                                                    
+                      </thead>
+                      <tbody> 
+                        {% for entry in list_plants %}
+                        <tr>
+                          <td>
+                            <a href="/watering/position/up/{{ entry.id }}#table"><span class="glyphicon glyphicon-arrow-up" style="color:white"></span></a>
+                            <a href="/watering/position/down/{{ entry.id }}#table"><span class="glyphicon glyphicon-arrow-down" style="color:white"></span></a>
+                          </td>                   
+                          <td>
+                            <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                    
+                          </td> 
+                          <td>
+                            <select id="device_{{ entry.id }}" onchange="Choose_Sensor('{{ entry.id }}'), Choose_Pump('{{ entry.id }}')" class="selectpicker" data-width="95%" data-live-search="true" name="set_mqtt_device_{{ entry.id }}">
+                              <option value= "{{ entry.mqtt_device_ieeeAddr }}" > {{ entry.mqtt_device.name }} </option>
+                              <optgroup>
+                                {% for each in dropdown_list_mqtt_devices %}
+                                  <option value="{{ each.id }}"> {{ each.name }} </option>
+                                {% endfor %}
+                              </optgroup>                                                                                 
+                            </select>                        
+                          </td>  
+                          <td>                      
+                            <select class="selectpicker" data-width="90%" name="set_group_{{ entry.id }}">
+                              <option value= "{{ entry.group }}" > {{ entry.group }} </option>
+                              <optgroup>
+                                {% for each in dropdown_list_groups %}
+                                  <option value="{{ each }}"> {{ each }} </option>
+                                {% endfor %}
+                              </optgroup>                                                                                 
+                            </select>                                
+                          </td>                                                           
+                          <td>                     
+                            <select class="selectpicker" data-width="90%" name="set_pumptime_{{ entry.id }}">
+                              <option value= "{{ entry.pumptime }}" > {{ entry.pumptime }} ({{ entry.pumptime_auto }})</option>
+                              <optgroup>
+                                <option value="auto"> auto </option>
+                              </optgroup> 
+                              <optgroup>
+                                {% for each in dropdown_list_pumptime %}
+                                  <option value="{{each}}"> {{ each }} </option>
+                                {% endfor %}
+                              </optgroup>                                                                                 
+                            </select> 
+                          </td>          
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-3">  
+                                <font size="+2">
+                                  <div class="pretty p-default p-curve p-bigger">
+                                    <input type="checkbox" {{ entry.control_sensor_moisture }} name="set_control_sensor_moisture_{{ entry.id }}" >
+                                    <div class="state p-success">
+                                      <label></label>
+                                    </div>
+                                  </div>
+                                </font>
+                              </div>
+                              
+                              {% if entry.control_sensor_moisture == "checked" %}
+                              
+                              <div class="col-sm-8">    
+                                <select class="selectpicker" data-width="100%" name="set_moisture_level_{{ entry.id }}">
+                                  <option value= "{{ entry.moisture_level }}" > {{ entry.moisture_level }} </option>
+                                  <optgroup>
+                                    {% for each in dropdown_list_moisture_level %}
+                                      <option value="{{each}}"> {{ each }} </option>
+                                    {% endfor %}
+                                  </optgroup>                                                                                 
+                                </select>                                                               
+                              </div>
+                              
+                              {% else %}
+                              
+                              <div class="col-sm-8"></div>                        
+                              
+                              {% endif %}
+                  
+                            </div>
+                          </td>    
+                          <td>
+                            <div class="row justify-content-md-center">                      
+                              <div class="col-sm-2"> 
+                                <font size="+2">
+                                  <div class="pretty p-default p-curve p-bigger">
+                                    <input type="checkbox" {{ entry.control_sensor_watertank }} name="set_control_sensor_watertank_{{ entry.id }}" >
+                                    <div class="state p-success">
+                                      <label></label>
+                                    </div>
+                                  </div>
+                                </font>                      
+                              </div>
+                            </div>  
+                          </td>                                
+                          <td>
+                            <a href="/plants.html/{{ entry.id }}#table"><font color="salmon" size="5"><b>X</b></font></a>
+                          </td>   
+                        </tr>
+                        {% endfor %}
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>            
+                <div class="card-footer">                   
+                  <button type="submit" onclick="window.location.href='/plants.html#plants_table'" name="save_plants_settings" class="btn btn-fill btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
+
+
+          </div>
+        </div>
+      </div>          

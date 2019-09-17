@@ -14,7 +14,7 @@ app.config.from_object('app.configuration.DevelopmentConfig')
 app.add_template_global(assets     , 'assets')
 app.add_template_global(app.config , 'cfg'   )
 
-from app.sites           import login, views, errors
+from app.sites           import login, plants, devices, users, system, system_log, views, errors
 from app.database.models import *
 
 app.run(host='localhost', port=5000, debug=True)

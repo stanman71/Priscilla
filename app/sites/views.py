@@ -1,5 +1,5 @@
 from flask               import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
-from flask_login         import login_user, logout_user, current_user, login_required
+from flask_login         import current_user, login_required
 from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
@@ -45,7 +45,6 @@ def dashboard():
                             content=render_template( 'pages/dashboard.html') )
 
 
-
 # Used only for static export
 @app.route('/user.html')
 @login_required
@@ -62,6 +61,7 @@ def user():
     return render_template('layouts/default.html',
                             data=data,    
                             content=render_template( 'pages/user.html') )
+
 
 # Used only for static export
 @app.route('/icons.html')
