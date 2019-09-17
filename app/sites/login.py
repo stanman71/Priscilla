@@ -35,7 +35,7 @@ def load_user(user_id):
 """ site login / logout """
 """ ################### """
 
-@app.route('/login.html', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     
     # define login form here
@@ -55,13 +55,16 @@ def login():
             
             if check_password_hash(user.password, form.password.data):
                 login_user(user, remember=form.remember.data)
+                return redirect(url_for('dashboard'))
 
             else:
                 return redirect(url_for('logout'))
 
+    data = {'navigation': 'None', 'notification': 'None'}
 
     # try to match the pages defined in -> themes/light-bootstrap/pages/
     return render_template( 'layouts/default.html',
+                            data=data,
                             title=page_title,
                             content=render_template( 'pages/login.html', 
                                                     form=form,
@@ -72,4 +75,4 @@ def login():
 @app.route('/logout.html')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))

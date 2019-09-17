@@ -8,9 +8,9 @@
   <link rel="icon" type="image/png" href="/static/img/favicon.png">
 
   {% if title %}    
-  <title>{{ title }}</title>
+    <title>{{ title }}</title>
   {% else %}
-  <title>Flask Dashboard Black - Admin Dashboard with Black Design | AppSeed</title>
+    <title>Flask Dashboard Black - Admin Dashboard with Black Design | AppSeed</title>
   {% endif %}
 
   {% if description %}    
@@ -33,11 +33,13 @@
 <body class="">
   <div class="wrapper">
 
-    {% include 'includes/sidenav.html' %}
+    {% if data.navigation != "None" %}
+      {% include 'includes/navigation.html' %}
+    {% endif %} 
 
     <div class="main-panel">
 
-      {% include 'includes/navigation.html' %}
+      {% include 'includes/header.html' %}
 
       {{ content | safe }}
       

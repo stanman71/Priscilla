@@ -27,6 +27,24 @@ def permission_required(f):
     return wrap
 
 
+# Used only for static export
+@app.route('/dashboard.html')
+@login_required
+@permission_required
+def dashboard():
+
+    # custommize your page title / description here
+    page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
+    page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
+
+    data = {'navigation': 'dashboard', 'notification': ''}
+
+    # try to match the pages defined in -> pages/
+    return render_template('layouts/default.html',
+                            data=data,
+                            content=render_template( 'pages/dashboard.html') )
+
+
 
 # Used only for static export
 @app.route('/user.html')
@@ -38,8 +56,11 @@ def user():
     page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
 
+    data = {'navigation': '', 'notification': ''}
+
     # try to match the pages defined in -> pages/
     return render_template('layouts/default.html',
+                            data=data,    
                             content=render_template( 'pages/user.html') )
 
 # Used only for static export
@@ -52,8 +73,11 @@ def icons():
     page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
 
+    data = {'navigation': 'icons', 'notification': ''}
+
     # try to match the pages defined in -> pages/
     return render_template('layouts/default.html',
+                            data=data,    
                             content=render_template( 'pages/icons.html') )
 
 # Used only for static export
@@ -66,8 +90,11 @@ def tables():
     page_title = 'Tables - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the tables page.'
 
+    data = {'navigation': '', 'notification': ''}
+
     # try to match the pages defined in -> pages/
     return render_template('layouts/default.html',
+                            data=data,    
                             content=render_template( 'pages/tables.html') )
 
 # Used only for static export
@@ -80,8 +107,11 @@ def notifications():
     page_title = 'Tables - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the tables page.'
 
+    data = {'navigation': '', 'notification': ''}
+
     # try to match the pages defined in -> pages/
     return render_template('layouts/default.html',
+                            data=data,    
                             content=render_template( 'pages/notifications.html') )
 
 # Used only for static export
@@ -94,8 +124,11 @@ def typography():
     page_title = 'Typography - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the tables page.'
 
+    data = {'navigation': '', 'notification': ''}
+
     # try to match the pages defined in -> pages/
     return render_template('layouts/default.html',
+                            data=data,    
                             content=render_template( 'pages/typography.html') )
 
 # App main route + generic routing
