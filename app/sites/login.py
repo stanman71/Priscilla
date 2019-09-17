@@ -57,6 +57,8 @@ def login():
                 login_user(user, remember=form.remember.data)
                 return redirect(url_for('dashboard'))
 
+                print("OK")
+
             else:
                 return redirect(url_for('logout'))
 

@@ -3,55 +3,14 @@
         <div class="row">
           <div class="col-md-12">
 
-<!-- add new plant -->
-
-            <div class="card">
-              <div class="card-header">
-                <h4 class="title">Pflanzen</h4>
-              </div>
-              <div class="card-body">
-                <form method="POST">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="row justify-content-md-center">
-                        <div class="col-sm-6">                       
-                          <div class="form-group">
-                            <label>Pflanze hinzufügen</label>
-                            <input type="text" class="form-control" placeholder="Name" value="">
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label>Gerät</label>
-                            <select class="selectpicker" data-width="100%" data-live-search="true" name="set_watering_controller_ieeeAddr">
-                              {% if mqtt_device_ieeeAddr != "" %}
-                                <option value= "{{ mqtt_device_ieeeAddr }}" > {{ mqtt_device_name }} </option>
-                              {% else %}
-                                <option value= "None" > Gerät </option>
-                              {% endif %}                 
-                              <optgroup>
-                                {% for each in dropdown_list_watering_controller %}
-                                  <option value="{{each.ieeeAddr}}"> {{ each.name }} </option>
-                                {% endfor %}
-                              </optgroup>
-                            </select>  
-                          </div>
-                        </div>                            
-                      </div>
-                    </div>
-                  </div>                  
-                </div>
-                <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/plants.html#'" name="add_new_plant" class="btn btn-fill btn-primary">Save</button>
-                </div>
-              </form>
-            </div>
-
 <!-- plants table -->
 
 <section id="plants_table"></section>      
 
             <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title">Pflanzen</h4>
+              </div>            
               <div class="card-body">
                 <form method="POST">
                   <div class="table-responsive">
@@ -163,14 +122,58 @@
                           </td>   
                         </tr>
                         {% endfor %}
-
-
                       </tbody>
                     </table>
                   </div>
                 </div>            
                 <div class="card-footer">                   
                   <button type="submit" onclick="window.location.href='/plants.html#plants_table'" name="save_plants_settings" class="btn btn-fill btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
+
+<!-- add new plant -->
+
+<section id="add_plant"></section>   
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title">Pflanze hinzufügen</h5>
+              </div>            
+              <div class="card-body">
+                <form method="POST">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row justify-content-md-center">
+                        <div class="col-sm-6">                       
+                          <div class="form-group">
+                            <label>Pflanze</label>
+                            <input type="text" class="form-control" value="">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Gerät</label>
+                            <select class="selectpicker" data-width="100%" data-live-search="true" name="set_watering_controller_ieeeAddr">
+                              {% if mqtt_device_ieeeAddr != "" %}
+                                <option value= "{{ mqtt_device_ieeeAddr }}" > {{ mqtt_device_name }} </option>
+                              {% else %}
+                                <option value= "None" > Gerät </option>
+                              {% endif %}                 
+                              <optgroup>
+                                {% for each in dropdown_list_watering_controller %}
+                                  <option value="{{each.ieeeAddr}}"> {{ each.name }} </option>
+                                {% endfor %}
+                              </optgroup>
+                            </select>  
+                          </div>
+                        </div>                            
+                      </div>
+                    </div>
+                  </div>                  
+                </div>
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/plants.html#add_plant'" name="add_new_plant" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>

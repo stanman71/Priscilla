@@ -27,10 +27,10 @@
                       <tbody> 
                         {% for entry in list_devices %}
                         <tr>
-                          <td>
-                            <a href="/devices/position/up/mqtt/{{ entry.id }}#mqtt_table"><span class="glyphicon glyphicon-arrow-up" style="color:white"></span></a>
-                            <a href="/devices/position/down/mqtt/{{ entry.id }}#mqtt_table"><span class="glyphicon glyphicon-arrow-down" style="color:white"></span></a>
-                          </td>                     
+                          <td> 
+                            <a href="/devices.html/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                            <a href="/devices.html/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
+                          </td>              
                           <td>                     
                             <form method="POST" class="verticalform">                                                   
                             <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{% if entry.name != None %}{{ entry.name }}{% endif %}" /> 
@@ -148,7 +148,7 @@
                 <form method="POST"> 
                   <a href="/devices/download/log_mqtt.csv?time={{ timestamp }}"><font color="lightblue"><b>Log-Datei herunterladen</b></font></a>
                   <div class="dropdown text-right">
-                    <input type="submit" onclick="window.location.href='/system/mqtt#logfile'" class="btn btn-danger text-right" name="reset_logfile" value="MQTT Log-Datei zurücksetzen">
+                    <input type="submit" onclick="window.location.href='/system/mqtt#logfile'" class="btn btn-danger text-right" name="reset_logfile" value="Log-Datei zurücksetzen">
                   </div> 
                 </form> 
               </div>
