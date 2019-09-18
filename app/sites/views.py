@@ -16,7 +16,7 @@ def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
         try:
-            if current_user.role == "administrator":
+            if current_user.role == "administrator" or current_user.role == "user":
                 return f(*args, **kwargs)
             else:
                 return redirect(url_for('logout'))
@@ -131,6 +131,8 @@ def typography():
                             data=data,    
                             content=render_template( 'pages/typography.html') )
 
+
+"""
 # App main route + generic routing
 @app.route('/', defaults={'path': 'index.html'})
 @app.route('/<path>')
@@ -145,4 +147,4 @@ def index(path):
                                 content=render_template( 'pages/'+path) )
     except:
         abort(404)
-
+"""

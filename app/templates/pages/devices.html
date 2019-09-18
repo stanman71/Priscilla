@@ -17,7 +17,6 @@
                         <th scope="col" style="width:3%"></th>  
                         <th scope="col" style="width:20%">Gerät</th>                        
                         <th scope="col">Adresse</th> 
-                        <th scope="col">Modell</th>   
                         <th scope="col">Gerätetyp</th>                     
                         <th scope="col">Beschreibung</th> 
                         <th scope="col">Letzter Kontakt</th>     
@@ -36,7 +35,6 @@
                             <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{% if entry.name != None %}{{ entry.name }}{% endif %}" /> 
                           </td>      
                           <td>{{ entry.ieeeAddr }}</td>        
-                          <td>{{ entry.model }}</td>   
                           <td>{{ entry.device_type }}</td>     
                           <td>{{ entry.description }}</td>  
                           <td>{{ entry.last_contact }}</td>    
@@ -94,42 +92,6 @@
                         <input type="text" class="form-control" value="">
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Verbindungen aktualisieren</label>
-
-                        <div class="row justify-content-md-left">
-                          <div class="col-sm-6">  
-                            <select class="selectpicker" data-width="100%" name="get_device_update_hour">
-                              <option value= "{{ device_update_hour }}" > {{ device_update_hour }} </option>   
-                              <optgroup>
-                                {% for each in dropdown_list_hours %}
-                                  <option value="{{ each }}"> {{ each }} </option>
-                                {% endfor %}                 
-                              </optgroup>
-                              <optgroup> 
-                                <option value= "None" > None </option>  
-                              </optgroup>                                                                                 
-                            </select>
-                          </div>
-                          <div class="col-sm-6">
-                            <select class="selectpicker" data-width="100%" name="get_device_update_minute">
-                              <option value= "{{ device_update_minute }}" > {{ device_update_minute }} </option>   
-                              <optgroup>
-                                {% for each in dropdown_list_minutes %}
-                                  <option value="{{ each }}"> {{ each }} </option>
-                                {% endfor %}                 
-                              </optgroup>
-                              <optgroup> 
-                                <option value= "None" > None </option>  
-                              </optgroup>                                                                                 
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>                  
                 </div>
                 <div class="card-footer">
@@ -147,6 +109,8 @@
               <div class="card-body">
                 <form method="POST"> 
                   <a href="/devices/download/log_mqtt.csv?time={{ timestamp }}"><font color="lightblue"><b>Log-Datei herunterladen</b></font></a>
+                  <br>
+                  <br>
                   <div class="dropdown text-right">
                     <input type="submit" onclick="window.location.href='/system/mqtt#logfile'" class="btn btn-danger text-right" name="reset_logfile" value="Log-Datei zurücksetzen">
                   </div> 

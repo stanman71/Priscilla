@@ -35,6 +35,8 @@ def users():
     error_message_change_settings = []
     message_admin_password_not_changed = ""
     
+    setting_email_notification = ["", "", ""]
+    
     username        = ""
     email           = ""
     password        = ""
@@ -75,7 +77,7 @@ def users():
             if username != "" and email != "" and hashed_password != "":
                 error = ADD_USER(username, email, hashed_password)
 
-                if error != "":
+                if error != None:
                     error_message_add_user.append(error)
                 
                 username = ""
@@ -92,13 +94,13 @@ def users():
                     
                     check_administrator = False
             
-                    # current user has permission_system ?
-                    if request.form.get("set_role_" + str(i)) == "administrator":
+                    # current user has administrator rights ?
+                    if request.form.get("checkbox_administrator_" + str(i)) != None:
                         check_administrator = True
                         
                     else:
                         
-                        # another user has permission_system ?
+                        # another user has administrator rights ?
                         for j in range (1,26): 
                             
                             try:
@@ -123,7 +125,7 @@ def users():
                             
                         else:
                             username = GET_USER_BY_ID(i).username 
-                            error_message_change_settings.append(username + " >>> Ungültige Eingabe >>> Keinen Name angegeben")                         
+                            error_message_change_settings.append(username + " >>> Ungültige Eingabe >>> Keinen Namen angegeben")                         
                         
                         
                         # check email
@@ -139,13 +141,22 @@ def users():
                             error_message_change_settings.append(username + " >>> Ungültige Eingabe >>> Keine eMail-Adresse angegeben")
 
                         # role
-                        role = request.form.get("set_role_" + str(i))
+                        if request.form.get("checkbox_administrator_" + str(i)) != None:
+                            role = "administrator"
+                        else:
+                            role = "user"
 
                         # notification
-                        email_notification = request.form.get("set_email_notification_" + str(i))
-                          
-                        SET_USER_SETTINGS(i, username, email, role, email_notification)    
-        
+                        if request.form.get("checkbox_email_notification_" + str(i)) != None:
+                            email_notification = "True"
+                        else:
+                            email_notification = "False"
+
+
+                        UPDATE_USER_SETTINGS(i, username, email, role, email_notification)    
+
+                        username = ""
+                        email    = ""
         
                         # reset password
                         if request.form.get("set_password_" + str(i)) != "":                        
@@ -169,8 +180,9 @@ def users():
                                     
                             except:
                                 error_message_change_settings.append(username + " >>> Passwort muss zwischen 8 und 20 Zeichen haben")
-                                
-             
+
+                            password = ""    
+                                            
                     # no user has administrator rights
                     else:    
                         error_message_change_settings.append("Mindestens ein Benutzer muss Administrator sein")  

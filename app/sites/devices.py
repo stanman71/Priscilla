@@ -30,8 +30,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def devices():
-    device_update_hour   = ""
-    device_update_minute = ""
+    
 
     page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
@@ -54,15 +53,6 @@ def devices():
 
     list_devices = ""
 
-    dropdown_list_hours   = [ "*", "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
-                                   "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"] 
-                                 
-    dropdown_list_minutes = [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
-                              "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25",
-                              "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38",
-                              "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51",
-                              "52", "53", "54", "55", "56", "57", "58", "59", "60"]  
-
     data = {'navigation': 'devices', 'notification': ''}
 
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
@@ -71,10 +61,6 @@ def devices():
                             data=data,    
                             content=render_template( 'pages/devices.html',
                                                     list_devices=list_devices,
-                                                    dropdown_list_hours=dropdown_list_hours,
-                                                    dropdown_list_minutes=dropdown_list_minutes,
-                                                    device_update_hour=device_update_hour,
-                                                    device_update_minute=device_update_minute,  
                                                     timestamp=timestamp,                         
                                                     ) 
                            )

@@ -3964,7 +3964,9 @@ input[type="button"].btn-block {
 }
 
 .custom-checkbox .custom-control-label::before {
-  border-radius: 0.2857rem;
+  border: 1px solid #555;
+  border-radius: 3px;
+  background-color: #fff;
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {

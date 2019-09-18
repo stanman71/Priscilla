@@ -32,11 +32,11 @@ def load_user(user_id):
 
 
 """ ################### """
-""" site login / logout """
+""" site index / logout """
 """ ################### """
 
 @app.route('/', methods=['GET', 'POST'])
-def login():
+def index():
     
     # define login form here
     form = LoginForm()
@@ -57,8 +57,6 @@ def login():
                 login_user(user, remember=form.remember.data)
                 return redirect(url_for('dashboard'))
 
-                print("OK")
-
             else:
                 return redirect(url_for('logout'))
 
@@ -68,7 +66,7 @@ def login():
     return render_template( 'layouts/default.html',
                             data=data,
                             title=page_title,
-                            content=render_template( 'pages/login.html', 
+                            content=render_template( 'pages/index.html', 
                                                     form=form,
                                                     msg=msg) )
 
@@ -77,4 +75,4 @@ def login():
 @app.route('/logout.html')
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('index'))
