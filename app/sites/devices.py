@@ -95,24 +95,19 @@ def devices():
             broker = request.form.get("set_broker")
         else:
             broker = ""
-            error_message_change_settings_broker.append("Broker >>> Keine Eingabe angegeben")   
+            error_message_change_settings_broker.append("Broker >>> Keinen Broker angegeben")   
+             
+        user     = request.form.get("set_user")
+        password = request.form.get("set_password")
 
-        if request.form.get("set_user") != "":                 
-            user = request.form.get("set_user")
-        else:
-            user = ""   
-            error_message_change_settings_broker.append("Benutzername >>> Keine Eingabe angegeben")                    
-
-        if request.form.get("set_password") != "":                 
-            password = request.form.get("set_password")
-        else:
-            password = ""
-            error_message_change_settings_broker.append("Passwort >>> Keine Eingabe angegeben")               
-
-        if broker != "" and user != "" and password != "":
+        if broker != "":
             SET_MQTT_BROKER_SETTINGS(broker, user, password)
             success_message_change_settings_broker = True
 
+
+    if request.form.get("restore_broker_settings") != None:
+        RESTORE_MQTT_BROKER_SETTINGS()
+        success_message_change_settings_broker = True
 
     list_devices = GET_ALL_MQTT_DEVICES("")
     

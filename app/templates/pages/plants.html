@@ -28,16 +28,14 @@
   </div>
 {% endif %}  
 
-<!-- plants table -->
-
-<section id="plants_table"></section>      
+<!-- plants table -->    
 
             <div class="card ">
               <div class="card-header">
                 <h4 class="card-title">Pflanzen</h4>
-              </div>            
-              <div class="card-body">
-                <form method="POST">
+              </div>  
+              <form method="POST">          
+                <div class="card-body"> 
                   <div class="table-responsive">
                     <table class="table tablesorter">
                       <thead>
@@ -115,7 +113,7 @@
                   </div>
                 </div>            
                 <div class="card-footer">                   
-                  <button type="submit" onclick="window.location.href='/plants.html#'" name="save_plants_settings" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/plants.html#'" name="save_plants_settings" class="btn btn-fill btn-primary">Speichern</button>
                 </div>
               </form>
             </div>
@@ -152,9 +150,9 @@
             <div class="card">
               <div class="card-header">
                 <h5 class="title">Pflanze hinzufügen</h5>
-              </div>            
-              <div class="card-body">
-                <form method="POST">
+              </div>   
+              <form method="POST">         
+                <div class="card-body">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="row justify-content-md-left">
@@ -186,7 +184,7 @@
                   </div>                  
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/plants.html#add_plant'" name="add_plant" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/plants.html#add_plant'" name="add_plant" class="btn btn-fill btn-primary">Hinzufügen</button>
                 </div>
               </form>
             </div>

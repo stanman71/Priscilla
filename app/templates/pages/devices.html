@@ -50,13 +50,13 @@
               <div class="card-header">
                 <h4 class="card-title"> Geräte</h4>
               </div>
-              <div class="card-body">
-                <form method="POST">
+              <form method="POST">
+                <div class="card-body">
                   <div class="table-responsive">
                     <table class="table tablesorter " id="">
                       <thead>
                         <th scope="col" style="width:3%"></th>  
-                        <th scope="col" style="width:20%">Gerät</th>                        
+                        <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Gerät</th>                        
                         <th scope="col">Adresse</th> 
                         <th scope="col">Modell</th>
                         <th scope="col">Gerätetyp</th>                     
@@ -89,15 +89,9 @@
                     </table>
                   </div>
                 </div>            
-                <div class="card-footer">
-                  <div class="row justify-content-md-left">
-                    <div class="col-sm-6">                      
-                      <button type="submit" onclick="window.location.href='/devices.html#'" name="save_device_settings" class="btn btn-fill btn-primary">Save</button>
-                    </div>
-                    <div class="col-sm-6"> 
-                      <input type="submit" onclick="window.location.href='/devices.html#'" class="btn btn-fill btn-primary pull-right" name="update_mqtt_devices" value="Verbindungen aktuallisieren" />
-                    </div>
-                  </div>  
+                <div class="card-footer">                  
+                  <button type="submit" onclick="window.location.href='/devices.html#'" name="save_device_settings" class="btn btn-fill btn-primary">Speichern</button>
+                  <input type="submit" onclick="window.location.href='/devices.html#'" class="btn btn-fill btn-primary pull-right" name="update_mqtt_devices" value="Aktuallisieren" /> 
                 </div>
               </form>
             </div>
@@ -137,10 +131,10 @@
 
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Geräte | Einstellungen</h5>
+                <h5 class="title">Broker | Einstellungen</h5>
               </div>
-              <div class="card-body">
-                <form method="POST">
+              <form method="POST">
+                <div class="card-body">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
@@ -152,7 +146,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label>Benutzername</label>
+                        <label>Benutzername (Optional)</label>
                         <input type="text" class="form-control" name="set_user" value="{% if broker.user != None %}{{ broker.user }}{% endif %}" /> 
                       </div>
                     </div>
@@ -160,15 +154,16 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label>Passwort</label>
+                        <label>Passwort (Optional)</label>
                         <input type="text" class="form-control" name="set_password" value="{% if broker.password != None %}{{ broker.password }}{% endif %}" /> 
                       </div>
                     </div>
                   </div>                  
                 </div>
-                <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/devices.html#broker_settings'" name="save_broker_settings" class="btn btn-fill btn-primary">Save</button>
-                </div>
+                <div class="card-footer">                  
+                  <button type="submit" onclick="window.location.href='/devices.html#broker_settings'" name="save_broker_settings" class="btn btn-fill btn-primary">Speichern</button>
+                  <button type="submit" onclick="window.location.href='/devices.html#broker_settings'" name="restore_broker_settings" class="btn btn-fill btn-primary pull-right">Wiederherstellen</button>
+                </div>                
               </form>
             </div>
 
@@ -179,7 +174,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Geräte | Log - Datei</h5>
+                <h5 class="title">Log</h5>
               </div>
               <div class="card-body">
                 <form method="POST"> 

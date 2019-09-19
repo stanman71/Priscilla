@@ -13,13 +13,36 @@ db = SQLAlchemy(app)
 def WRITE_LOGFILE_SYSTEM(value1, value2):
     pass
 
+def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway, wlan_dhcp, wlan_ip_address, wlan_gateway):
+    pass
+    
+def UPDATE_WLAN_CREDENTIALS_FILE(wlan_ssid, wlan_password):
+    pass
+
+
+class Host(db.Model):
+    __tablename__ = 'host'
+    id                = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    lan_dhcp          = db.Column(db.String(50), server_default=("True"))    
+    lan_ip_address    = db.Column(db.String(50))
+    lan_gateway       = db.Column(db.String(50))
+    wlan_dhcp         = db.Column(db.String(50), server_default=("True"))     
+    wlan_ip_address   = db.Column(db.String(50))    
+    wlan_gateway      = db.Column(db.String(50))
+    wlan_ssid         = db.Column(db.String(50))    
+    wlan_password     = db.Column(db.String(50))    
+    default_interface = db.Column(db.String(50))
+    port              = db.Column(db.Integer)   
 
 class MQTT_Broker(db.Model):
-    __tablename__ = 'mqtt_broker'
-    id       = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    broker   = db.Column(db.String(50))
-    user     = db.Column(db.String(50))
-    password = db.Column(db.String(50))
+    __tablename__     = 'mqtt_broker'
+    id                = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    broker            = db.Column(db.String(50))
+    user              = db.Column(db.String(50))
+    password          = db.Column(db.String(50))
+    previous_broker   = db.Column(db.String(50))
+    previous_user     = db.Column(db.String(50))
+    previous_password = db.Column(db.String(50))    
 
 class MQTT_Devices(db.Model):
     __tablename__ = 'mqtt_devices'
@@ -71,6 +94,14 @@ class User(UserMixin, db.Model):
 db.create_all()
 
 
+# create default host settings
+if Host.query.filter_by().first() is None:
+    host = Host(
+    )
+    db.session.add(host)
+    db.session.commit()
+
+
 # create default mqtt broker settings
 if MQTT_Broker.query.filter_by().first() is None:
     mqtt_broker = MQTT_Broker(
@@ -97,6 +128,124 @@ if User.query.filter_by(username='admin').first() is None:
 
 """ ################### """
 """ ################### """
+"""         host        """
+""" ################### """
+""" ################### """
+
+
+def GET_HOST_NETWORK():
+    return Host.query.filter_by().first()
+
+
+def GET_HOST_DEFAULT_NETWORK():
+    entry = Host.query.filter_by().first()
+    
+    if entry.default_interface == "LAN" and entry.lan_ip_address != "" and entry.lan_ip_address != "None":
+        return entry.lan_ip_address
+    
+    elif entry.default_interface == "WLAN" and entry.wlan_ip_address != "" and entry.wlan_ip_address != "None":
+        return entry.wlan_ip_address
+    
+    else:
+        
+        if entry.lan_ip_address != "" and entry.lan_ip_address != "None":
+            return entry.lan_ip_address    
+
+        else:
+            return entry.wlan_ip_address
+        
+   
+def GET_HOST_PORT():
+    port = Host.query.filter_by().first().port
+    
+    try:
+        if 0 <= int(port) <= 65535:
+            return port
+        else:
+            return 5000
+        
+    except:
+        return 5000   
+    
+
+def SET_HOST_NETWORK(lan_ip_address, lan_gateway, wlan_ip_address, wlan_gateway):
+    entry = Host.query.filter_by().first()
+    
+    # values changed ?
+    if (entry.lan_ip_address != lan_ip_address or entry.lan_gateway != lan_gateway or
+        entry.wlan_ip_address != wlan_ip_address or entry.wlan_gateway != wlan_gateway):   
+    
+        entry.lan_ip_address  = lan_ip_address
+        entry.lan_gateway     = lan_gateway
+        entry.wlan_ip_address = wlan_ip_address
+        entry.wlan_gateway    = wlan_gateway         
+        db.session.commit()
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed |" +
+                             " LAN - " + str(lan_ip_address) + " : " + str(lan_gateway) + 
+                             " | WLAN - " + str(wlan_ip_address) + " : " + str(wlan_gateway)) 
+
+
+def SET_WLAN_CREDENTIALS(wlan_ssid, wlan_password):
+    entry = Host.query.filter_by().first()
+    
+    # values changed ?
+    if (entry.wlan_ssid != wlan_ssid or entry.wlan_password != wlan_password):   
+    
+        entry.wlan_ssid     = wlan_ssid
+        entry.wlan_password = wlan_password
+        db.session.commit()
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | WLAN credentials | changed") 
+
+
+def SET_HOST_DHCP(lan_dhcp, wlan_dhcp):
+    entry = Host.query.filter_by().first()
+    
+    # values changed ?
+    if (entry.lan_dhcp != lan_dhcp or entry.wlan_dhcp != wlan_dhcp):   
+    
+        entry.lan_dhcp  = lan_dhcp
+        entry.wlan_dhcp = wlan_dhcp    
+        db.session.commit()
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed |" +
+                             " DHCP LAN - " + str(lan_dhcp) + 
+                             " | DHCP WLAN - " + str(wlan_dhcp))
+        
+
+def SET_HOST_DEFAULT_INTERFACE(default_interface):
+    entry = Host.query.filter_by().first()
+    
+    # values changed ?
+    if (entry.default_interface != default_interface):   
+    
+        entry.default_interface = default_interface     
+        db.session.commit()
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Default Interface - " + default_interface + " | changed")  
+        
+        
+def SET_HOST_PORT(port):
+    entry = Host.query.filter_by().first()
+    
+    try:
+        # values changed ?
+        if (int(entry.port) != int(port)):   
+            entry.port = port
+            db.session.commit()
+            
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Port - " + str(port) + " | changed")             
+            
+    except:       
+        entry.port = port    
+        db.session.commit()
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Port - " + str(port) + " | changed") 
+
+
+""" ################### """
+""" ################### """
 """          mqtt       """
 """ ################### """
 """ ################### """
@@ -111,12 +260,35 @@ def SET_MQTT_BROKER_SETTINGS(broker, user, password):
 
     if (entry.broker != broker or entry.user != user or entry.password != password):
  
-        entry.broker   = broker
-        entry.user     = user
-        entry.password = password
-        db.session.commit()
+        entry.previous_broker   = entry.broker
+        entry.previous_user     = entry.user
+        entry.previous_password = entry.password
+        entry.broker            = broker
+        entry.user              = user
+        entry.password          = password
+
+        db.session.commit()  
 	
         WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Broker Settings changed")
+
+
+def RESTORE_MQTT_BROKER_SETTINGS():
+    entry = MQTT_Broker.query.filter_by().first()
+
+    broker                  = entry.broker
+    user                    = entry.user
+    password                = entry.password
+
+    entry.broker            = entry.previous_broker
+    entry.user              = entry.previous_user
+    entry.password          = entry.previous_password
+    entry.previous_broker   = broker
+    entry.previous_user     = user
+    entry.previous_password = password
+
+    db.session.commit()
+
+    WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Broker Settings restored")
 
 
 """ ################### """
