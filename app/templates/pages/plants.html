@@ -3,15 +3,30 @@
         <div class="row">
           <div class="col-md-12">
 
+<!-- success message change settings -->
+
+{% if success_message_change_settings == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Einstellungen erfolgreich geändert</span>
+  </div>
+{% endif %}  
+
 <!-- error message change settings -->
 
 {% if error_message_change_settings != [] %}
-  <div class="alert alert-danger" role="alert">
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
     {% for error in error_message_change_settings %}
-      {{ error }} <br>
+      <span data-notify="message">{{ error }}</span>
     {% endfor %}
-  </div>      
-{% endif %}
+  </div>
+{% endif %}  
 
 <!-- plants table -->
 
@@ -47,7 +62,8 @@
                           </td> 
                           <td>{{ entry.mqtt_device.name }}</td>                                                          
                           <td>                     
-                            <input type="text" class="form-control" name="set_pumptime_{{ entry.id }}" value="{{ entry.pumptime }}" />  
+                            <input type="text" class="form-control" name="set_pumptime_{{ entry.id }}" 
+                             value="{% if entry.pumptime != None and entry.pumptime != "None" %}{{ entry.pumptime }}{% endif %}" />  
                           </td>          
                           <td>
                             <div class="custom-control custom-checkbox">
@@ -67,7 +83,8 @@
                             {% if entry.pump_mode == "auto" %}
                               {{ entry.pump_duration_auto }}
                             {% else %}
-                              <input type="text" class="form-control" name="set_pump_duration_manually_{{ entry.id }}" value="{{ entry.pump_duration_manually }}" /> 
+                              <input type="text" class="form-control" name="set_pump_duration_manually_{{ entry.id }}" 
+                               value="{% if entry.pump_duration_manually != None and entry.pump_duration_manually != "None" %}{{ entry.pump_duration_manually }}{% endif %}" /> 
                             {% endif %}
                           </td>                            
                           <td>
@@ -98,22 +115,37 @@
                   </div>
                 </div>            
                 <div class="card-footer">                   
-                  <button type="submit" onclick="window.location.href='/plants.html#plants_table'" name="save_plants_settings" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/plants.html#'" name="save_plants_settings" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>
 
 <section id="add_plant"></section>   
 
-<!-- error message add plant -->
+<!-- success message add plant -->
+
+{% if success_message_add_plant == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Pflanze erfolgreich hinzugefügt</span>
+  </div>
+{% endif %}  
+
+<!-- error message add plant --> 
 
 {% if error_message_add_plant != [] %}
-  <div class="alert alert-danger" role="alert">
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
     {% for error in error_message_add_plant %}
-      {{ error }} <br>
+      <span data-notify="message">{{ error }}</span>
     {% endfor %}
-  </div>      
-{% endif %}    
+  </div>
+{% endif %}  
 
 <!-- add plant -->
 
@@ -125,14 +157,14 @@
                 <form method="POST">
                   <div class="row">
                     <div class="col-md-12">
-                      <div class="row justify-content-md-center">
-                        <div class="col-sm-6">                       
+                      <div class="row justify-content-md-left">
+                        <div class="col-sm-3">                       
                           <div class="form-group">
                             <label>Pflanze</label>
                             <input type="text" class="form-control" name="set_name" value="{{ name }}" /> 
                           </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                           <div class="form-group">
                             <label>Gerät</label>
                             <select class="selectpicker" data-width="100%" data-live-search="true" name="set_watering_controller_ieeeAddr">

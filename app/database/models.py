@@ -14,8 +14,8 @@ def WRITE_LOGFILE_SYSTEM(value1, value2):
     pass
 
 
-class MQTT(db.Model):
-    __tablename__ = 'mqtt'
+class MQTT_Broker(db.Model):
+    __tablename__ = 'mqtt_broker'
     id       = db.Column(db.Integer, primary_key=True, autoincrement = True)
     broker   = db.Column(db.String(50))
     user     = db.Column(db.String(50))
@@ -26,6 +26,7 @@ class MQTT_Devices(db.Model):
     id                            = db.Column(db.Integer, primary_key=True, autoincrement = True)
     name                          = db.Column(db.String(50), unique=True)
     ieeeAddr                      = db.Column(db.String(50), unique=True)  
+    model                         = db.Column(db.String(50))    
     device_type                   = db.Column(db.String(50))
     description                   = db.Column(db.String(200))
     input_values                  = db.Column(db.String(200))
@@ -70,13 +71,13 @@ class User(UserMixin, db.Model):
 db.create_all()
 
 
-# create default mqtt settings
-if MQTT.query.filter_by().first() is None:
-    mqtt = MQTT(
+# create default mqtt broker settings
+if MQTT_Broker.query.filter_by().first() is None:
+    mqtt_broker = MQTT_Broker(
         user     = "",
         password = "",
     )
-    db.session.add(mqtt)
+    db.session.add(mqtt_broker)
     db.session.commit()
 
 
@@ -102,11 +103,11 @@ if User.query.filter_by(username='admin').first() is None:
 
 
 def GET_MQTT_BROKER_SETTINGS():
-    return MQTT.query.filter_by().first()
+    return MQTT_Broker.query.filter_by().first()
 
 
 def SET_MQTT_BROKER_SETTINGS(broker, user, password):
-    entry = MQTT.query.filter_by().first()
+    entry = MQTT_Broker.query.filter_by().first()
 
     if (entry.broker != broker or entry.user != user or entry.password != password):
  
@@ -158,10 +159,10 @@ def GET_ALL_MQTT_DEVICES(selector):
     return device_list
         
 
-def ADD_MQTT_DEVICE(name, ieeeAddr, device_type = "", description = "", 
+def ADD_MQTT_DEVICE(name, ieeeAddr, model, device_type = "", description = "", 
                     input_values = "", input_events = "", commands = "", last_contact = ""):
         
-    # path exist ?
+    # ieeeAddr exist ?
     if not GET_MQTT_DEVICE_BY_IEEEADDR(ieeeAddr):   
             
         # find a unused id
@@ -176,6 +177,7 @@ def ADD_MQTT_DEVICE(name, ieeeAddr, device_type = "", description = "",
                         id               = i,
                         name             = name,                   
                         ieeeAddr         = ieeeAddr,
+                        model            = model,
                         device_type      = device_type,
                         description      = description,
                         input_values     = str(input_values),
@@ -200,10 +202,7 @@ def ADD_MQTT_DEVICE(name, ieeeAddr, device_type = "", description = "",
 def SET_MQTT_DEVICE_NAME(ieeeAddr, new_name):
     entry = MQTT_Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
     
-    WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Device - " + entry.name + 
-                         " | Gateway - " + entry.gateway +
-                         " | Name changed" + 
-                         " || Name - " + new_name)
+    WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Device - " + entry.name + " | Name changed" + " || Name - " + new_name)
     
     entry.name = new_name
     db.session.commit()       
@@ -232,27 +231,21 @@ def SET_MQTT_DEVICE_LAST_VALUES(ieeeAddr, last_values):
     db.session.commit()   
 
     
-def UPDATE_MQTT_DEVICE(id, name, device_type = "", description = "", input_values = "", input_events = "", commands = ""):
+def UPDATE_MQTT_DEVICE(id, name, model = "", device_type = "", description = "", input_values = "", input_events = "", commands = ""):
     entry = MQTT_Devices.query.filter_by(id=id).first()
     
     # values changed ?
-    if (entry.name != name or entry.device_type != device_type or entry.description != description 
+    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.description != description 
         or entry.input_values != input_values or entry.input_events != input_events or entry.commands != commands):
         
         entry.device_type     = device_type
+        entry.model           = model
         entry.description     = description
         entry.input_values    = str(input_values)
         entry.input_events    = str(input_events)
         entry.commands        = str(commands)        
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Device - " + entry.name + " | changed" + 
-                             " || Name - " + name + 
-                             " | ieeeAddr - " + entry.ieeeAddr + 
-                             " | device_type - " + entry.device_type +
-                             " | description - " + entry.description +
-                             " | Input_values - " + str(input_values) + 
-                             " | Input_events - " + str(input_events) + 
-                             " | Commands - " + str(commands))
+        WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Device - " + entry.name + " | changed" + " || Name - " + name + " | Model - " + entry.model)
 
         entry.name = name
         db.session.commit()    
@@ -558,7 +551,7 @@ def UPDATE_USER_SETTINGS(id, username, email, role, email_notification):
                              " | eMail - " + entry.email + " | Role - " + entry.role + " | eMail-Notification - " + entry.email_notification)
 
 
-def RESET_USER_PASSWORD(id, hashed_password):
+def CHANGE_USER_PASSWORD(id, hashed_password):
     entry = User.query.filter_by(id=id).first()
     
     entry.password = hashed_password    

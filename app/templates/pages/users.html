@@ -3,24 +3,41 @@
         <div class="row">
           <div class="col-md-12">
 
-
 <!-- message admin password not changed -->
 
 {% if message_admin_password_not_changed != "" %}
-  <div class="alert alert-warning" role="alert">
-    {{ message_admin_password_not_changed }}
-  </div>      
+  <div class="alert alert-warning">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>{{ message_admin_password_not_changed }}</span>
+  </div>  
 {% endif %}   
+
+<!-- success message change settings -->
+
+{% if success_message_change_settings == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Einstellungen erfolgreich geändert</span>
+  </div>
+{% endif %}  
 
 <!-- error message change settings -->
 
 {% if error_message_change_settings != [] %}
-  <div class="alert alert-danger" role="alert">
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
     {% for error in error_message_change_settings %}
-      {{ error }} <br>
+      <span data-notify="message">{{ error }}</span>
     {% endfor %}
-  </div>      
-{% endif %}
+  </div>
+{% endif %}  
 
 <!-- users table -->
 
@@ -82,14 +99,29 @@
 
 <section id="add_user"></section>   
 
+<!-- success message add user -->
+
+{% if success_message_add_user == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Benutzer erfolgreich hinzugefügt</span>
+  </div>
+{% endif %}  
+
 <!-- error message add user -->
 
 {% if error_message_add_user != [] %}
-  <div class="alert alert-danger" role="alert">
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
     {% for error in error_message_add_user %}
-      {{ error }} <br>
+      <span data-notify="message">{{ error }}</span>
     {% endfor %}
-  </div>      
+  </div>
 {% endif %}    
 
 <!-- add user -->

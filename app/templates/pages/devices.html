@@ -3,6 +3,47 @@
         <div class="row">
           <div class="col-md-12">
 
+<!-- message error mqtt -->
+
+{% if error_message_mqtt != "" %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>{{ error_message_mqtt }}</span>
+  </div>  
+{% endif %}   
+
+
+<!------------->
+<!-- DEVICES -->
+<!------------->
+
+<!-- success message change settings devices -->
+
+{% if success_message_change_settings_devices == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Einstellungen erfolgreich geändert</span>
+  </div>
+{% endif %}  
+
+<!-- error message change settings devices -->
+
+{% if error_message_change_settings_devices != [] %}
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+    {% for error in error_message_change_settings_devices %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
 <!-- device table -->
 
             <div class="card ">
@@ -17,6 +58,7 @@
                         <th scope="col" style="width:3%"></th>  
                         <th scope="col" style="width:20%">Gerät</th>                        
                         <th scope="col">Adresse</th> 
+                        <th scope="col">Modell</th>
                         <th scope="col">Gerätetyp</th>                     
                         <th scope="col">Beschreibung</th> 
                         <th scope="col">Letzter Kontakt</th>     
@@ -34,7 +76,8 @@
                             <form method="POST" class="verticalform">                                                   
                             <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{% if entry.name != None %}{{ entry.name }}{% endif %}" /> 
                           </td>      
-                          <td>{{ entry.ieeeAddr }}</td>        
+                          <td>{{ entry.ieeeAddr }}</td>    
+                          <td>{{ entry.model }}</td>     
                           <td>{{ entry.device_type }}</td>     
                           <td>{{ entry.description }}</td>  
                           <td>{{ entry.last_contact }}</td>    
@@ -48,20 +91,49 @@
                 </div>            
                 <div class="card-footer">
                   <div class="row justify-content-md-left">
-                    <div class="col-sm-3">                      
+                    <div class="col-sm-6">                      
                       <button type="submit" onclick="window.location.href='/devices.html#'" name="save_device_settings" class="btn btn-fill btn-primary">Save</button>
                     </div>
-                    <div class="col-sm-3"> 
-                      <input type="submit" onclick="window.location.href='/devices.html#'" class="btn btn-default" name="update_mqtt_devices" value="Verbindungen aktuallisieren" />
+                    <div class="col-sm-6"> 
+                      <input type="submit" onclick="window.location.href='/devices.html#'" class="btn btn-fill btn-primary pull-right" name="update_mqtt_devices" value="Verbindungen aktuallisieren" />
                     </div>
                   </div>  
                 </div>
               </form>
             </div>
 
-<!-- device settings -->
 
-<section id="devices_settings"></section>      
+<!------------>
+<!-- BROKER -->
+<!------------>
+
+<section id="broker_settings"></section>    
+
+<!-- success message change settings broker -->
+
+{% if success_message_change_settings_broker == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Einstellungen erfolgreich geändert</span>
+  </div>
+{% endif %}  
+
+<!-- error message change settings broker -->
+
+{% if error_message_change_settings_broker != [] %}
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+    {% for error in error_message_change_settings_broker %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+  
 
             <div class="card">
               <div class="card-header">
@@ -73,7 +145,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Broker</label>
-                        <input type="text" class="form-control" value="">
+                        <input type="text" class="form-control" name="set_broker" value="{% if broker.broker != None %}{{ broker.broker }}{% endif %}" /> 
                       </div>
                     </div>
                   </div>
@@ -81,7 +153,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Benutzername</label>
-                        <input type="text" class="form-control" value="">
+                        <input type="text" class="form-control" name="set_user" value="{% if broker.user != None %}{{ broker.user }}{% endif %}" /> 
                       </div>
                     </div>
                   </div>
@@ -89,18 +161,21 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Passwort</label>
-                        <input type="text" class="form-control" value="">
+                        <input type="text" class="form-control" name="set_password" value="{% if broker.password != None %}{{ broker.password }}{% endif %}" /> 
                       </div>
                     </div>
                   </div>                  
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/devices.html#devices_settings'" name="save_device_settings" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/devices.html#broker_settings'" name="save_broker_settings" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>
 
-<!-- device log -->
+
+<!--------->
+<!-- LOG -->
+<!--------->
 
             <div class="card">
               <div class="card-header">
