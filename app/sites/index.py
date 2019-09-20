@@ -58,7 +58,10 @@ def index():
                 return redirect(url_for('dashboard'))
 
             else:
-                return redirect(url_for('logout'))
+                msg = "Wrong Password"
+
+        else:
+            msg = "Wrong Username"
 
     data = {'navigation': 'None', 'notification': 'None'}
 
@@ -67,8 +70,9 @@ def index():
                             data=data,
                             title=page_title,
                             content=render_template( 'pages/index.html', 
-                                                    form=form,
-                                                    msg=msg) )
+                                                     form=form,
+                                                     msg=msg) 
+                            )
 
 
 # logout user

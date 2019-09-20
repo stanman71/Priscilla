@@ -136,12 +136,12 @@ def users():
                     else:
                         email_notification = "False"
 
+                    if error_message_change_settings == []:
+                        UPDATE_USER_SETTINGS(i, username, email, role, email_notification)    
+                        success_message_change_settings = True
 
-                    UPDATE_USER_SETTINGS(i, username, email, role, email_notification)    
-                    success_message_change_settings = True
-
-                    username = ""
-                    email    = ""
+                        username = ""
+                        email    = ""
     
                     # change password
                     if request.form.get("set_password_" + str(i)) != "":                        
@@ -154,9 +154,10 @@ def users():
                                 if str(password) == str(request.form.get("set_password_check_" + str(i))):
                                     
                                     hashed_password = generate_password_hash(password, method='sha256')
-                        
-                                    CHANGE_USER_PASSWORD(i, hashed_password)
-                                    success_message_change_settings = True
+
+                                    if error_message_change_settings == []:                                                           
+                                        CHANGE_USER_PASSWORD(i, hashed_password)
+                                        success_message_change_settings = True
                                         
                                 else:
                                     error_message_change_settings.append(username + " >>> Eingegebene Passwörter sind nicht identisch")

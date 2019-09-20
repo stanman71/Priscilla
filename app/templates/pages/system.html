@@ -15,25 +15,13 @@
                     <div class="col-md-12">
                       <p class="text-info">
                         CPU Temperatur = {{ cpu_temperature }}
-                        <br>
-                        <br>
-                        LAN-Verbindung
-                        <br>
-                        {{ lan_ip_address }} | 
-                        {{ lan_gateway }}
-                        <br>
-                        <br>
-                        WLAN-Verbindung
-                        <br>
-                        {{ wlan_ip_address }} | 
-                        {{ wlan_gateway }}
                       </p>
                     </div>
                   </div>                  
                 </div>
                 <div class="card-footer">                  
-                  <button type="submit" onclick="window.location.href='/system.html#'" name="restart_system" class="btn btn-fill btn-primary">RASPI neustarten</button>
-                  <button type="submit" onclick="window.location.href='/system.html#'" name="shutdown_system" class="btn btn-fill btn-primary pull-right">RASPI herunterfahren</button>
+                  <button type="submit" onclick="window.location.href='/system.html#'" name="restart_system" class="btn btn-fill btn-info">Restart</button>
+                  <button type="submit" onclick="window.location.href='/system.html#'" name="shutdown_system" class="btn btn-fill btn-info pull-right">Shutdown</button>
                 </div>  
               </form>
             </div>
@@ -80,18 +68,30 @@
                           <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="checkbox_lan_dhcp" {% if lan_dhcp == "True" %} checked="on" {% endif %} name="checkbox_lan_dhcp">
                             <label class="custom-control-label" for="checkbox_lan_dhcp">DHCP</label>   
+                            <br>
+                            <br>                             
                           </div>  
-                        </div>                         
+                        </div>                  
                         <div class="col-sm-2">                       
                           <div class="form-group">
                             <label>LAN | Adresse</label>
-                            <input type="text" class="form-control" name="set_lan_ip_address" value="{% if lan_ip_address != None %}{{ lan_ip_address }}{% endif %}" />
+                            {% if lan_dhcp == "True" %}
+                              <br>
+                              {% if lan_ip_address != None %}{{ lan_ip_address }}{% endif %}
+                            {% else %} 
+                              <input type="text" class="form-control" name="set_lan_ip_address" value="{% if lan_ip_address != None %}{{ lan_ip_address }}{% endif %}" />
+                            {% endif %} 
                           </div>
                         </div>           
                         <div class="col-sm-2">                       
                           <div class="form-group">
                             <label>LAN | Gateway</label>
-                            <input type="text" class="form-control" name="set_lan_gateway" value="{% if lan_gateway != None %}{{ lan_gateway }}{% endif %}" />      
+                            {% if lan_dhcp == "True" %}
+                              <br>
+                              {% if lan_gateway != None %}{{ lan_gateway }}{% endif %}
+                            {% else %}                             
+                              <input type="text" class="form-control" name="set_lan_gateway" value="{% if lan_gateway != None %}{{ lan_gateway }}{% endif %}" /> 
+                            {% endif %}     
                           </div>
                         </div>                           
                       </div>
@@ -99,7 +99,7 @@
                   </div>                  
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/system.html#change_settings'" name="add_user" class="btn btn-fill btn-primary">Speichern</button>
+                  <button type="submit" onclick="window.location.href='/system.html#change_settings'" name="set_lan_settings" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>
@@ -117,21 +117,33 @@
                       <div class="row justify-content-md-left">        
                         <div class="col-sm-1">                                                     
                           <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="checkbox_wlan_dhcp" {% if lan_dhcp == "True" %} checked="on" {% endif %} name="checkbox_wlan_dhcp">
-                            <label class="custom-control-label" for="checkbox_wlan_dhcp">DHCP</label>   
+                            <input type="checkbox" class="custom-control-input" id="checkbox_wlan_dhcp" {% if wlan_dhcp == "True" %} checked="on" {% endif %} name="checkbox_wlan_dhcp">
+                            <label class="custom-control-label" for="checkbox_wlan_dhcp">DHCP</label>  
+                            <br>
+                            <br> 
                           </div>  
                         </div> 
                         <div class="col-sm-2">                       
                           <div class="form-group">
                             <label>WLAN | Adresse</label>
-                            <input type="text" class="form-control" name="set_wlan_ip_address" value="{% if wlan_ip_address != None %}{{ wlan_ip_address }}{% endif %}" />
+                            {% if wlan_dhcp == "True" %}
+                              <br>
+                              {% if wlan_ip_address != None %}{{ wlan_ip_address }}{% endif %}
+                            {% else %} 
+                              <input type="text" class="form-control" name="set_wlan_ip_address" value="{% if wlan_ip_address != None %}{{ wlan_ip_address }}{% endif %}" />
+                            {% endif %} 
                           </div>
                         </div>           
                         <div class="col-sm-2">                       
                           <div class="form-group">
                             <label>WLAN | Gateway</label>
-                            <input type="text" class="form-control" name="set_wlan_gateway" value="{% if wlan_gateway != None %}{{ wlan_gateway }}{% endif %}" />      
-                          </div>
+                            {% if wlan_dhcp == "True" %}
+                              <br>
+                              {% if wlan_gateway != None %}{{ wlan_gateway }}{% endif %}
+                            {% else %}                             
+                              <input type="text" class="form-control" name="set_wlan_gateway" value="{% if wlan_gateway != None %}{{ wlan_gateway }}{% endif %}" /> 
+                            {% endif %}     
+                          </div>  
                         </div>       
                         <div class="col-sm-2">                       
                           <div class="form-group">
@@ -150,12 +162,12 @@
                   </div>                  
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/system.html#change_settings'" name="add_user" class="btn btn-fill btn-primary">Speichern</button>
+                  <button type="submit" onclick="window.location.href='/system.html#change_settings'" name="set_wlan_settings" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>
 
-<!-- other settings -->
+<!-- hosting settings -->
 
             <div class="card">
               <div class="card-header">
@@ -166,15 +178,17 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="row justify-content-md-left">
-                        <div class="col-sm-1">                       
+                        <div class="col-sm-2">                       
                           <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" class="custom-control-input" id="radio_default_interface_lan" {% if default_interface == "lan" %} checked="on" {% endif %} value="lan" name="radio_default_interface">
-                            <label class="custom-control-label" for="radio_default_interface_lan">LAN</label>
+                            <label class="custom-control-label" for="radio_default_interface_lan">LAN</label>                            
                           </div>     
                           <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="radio_default_interface_wlan" {% if default_interface == "wlan" %} checked="on" {% endif %} value="lan" name="radio_default_interface">
-                            <label class="custom-control-label" for="radio_default_interface_wlan">WLAN</label>
-                          </div>       
+                            <input type="radio" class="custom-control-input" id="radio_default_interface_wlan" {% if default_interface == "wlan" %} checked="on" {% endif %} value="wlan" name="radio_default_interface">
+                            <label class="custom-control-label" for="radio_default_interface_wlan">WLAN</label>                                                                                  
+                          </div>    
+                          <br>
+                          <br>      
                         </div>           
                         <div class="col-sm-2">                       
                           <div class="form-group">
@@ -187,7 +201,7 @@
                   </div>                  
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/system.html#change_settings'" name="add_user" class="btn btn-fill btn-primary">Speichern</button>
+                  <button type="submit" onclick="window.location.href='/system.html#change_settings'" name="set_hosting_settings" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>

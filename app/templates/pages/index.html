@@ -7,7 +7,7 @@
                 <h5 class="title">Login</h5>
 
                     {% if msg %}
-                      <label>{{ msg | safe }}</label>
+                      <label><p class="text-danger">{{ msg }}</p></label>
                     {% else %}
                       <label>Sign in with your credentials</label>
                     {% endif %}
@@ -47,7 +47,7 @@
                     <div class="col-md-1 px-md-1"></div>
 
                     <div class="col-md-1 px-md-1">
-                    <button type="submit" class="btn btn-fill btn-primary">Log in</button> 
+                    <button type="submit" class="btn btn-fill btn-primary">Login</button> 
                     </div>
 
                   </div>

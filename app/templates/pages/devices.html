@@ -57,12 +57,11 @@
                       <thead>
                         <th scope="col" style="width:3%"></th>  
                         <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Gerät</th>                        
-                        <th scope="col">Adresse</th> 
-                        <th scope="col">Modell</th>
-                        <th scope="col">Gerätetyp</th>                     
-                        <th scope="col">Beschreibung</th> 
-                        <th scope="col">Letzter Kontakt</th>     
-                        <th scope="col"></th>   
+                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Adresse</th> 
+                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Modell</th>
+                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Gerätetyp</th>                     
+                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Beschreibung</th> 
+                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Letzter Kontakt</th>     
                         <th scope="col" style="width:5%"></th>                                                                                
                       </thead>
                       <tbody> 
@@ -80,9 +79,10 @@
                           <td>{{ entry.model }}</td>     
                           <td>{{ entry.device_type }}</td>     
                           <td>{{ entry.description }}</td>  
-                          <td>{{ entry.last_contact }}</td>    
-                          <td></td>              
-                          <td><a href="/devices/delete/{{ entry.ieeeAddr }}#mqtt_table"><font color="salmon" size="5"><b>X</b></font></a></td>                                   
+                          <td>{{ entry.last_contact }}</td>                
+                          <td>
+                            <a href="/devices.html/delete/{{ entry.id }}#table"><font size="6"><i class="tim-icons icon-trash-simple"></i></font></a>
+                          </td>                                 
                         </tr>
                         {% endfor %}
                       </tbody>
@@ -90,8 +90,8 @@
                   </div>
                 </div>            
                 <div class="card-footer">                  
-                  <button type="submit" onclick="window.location.href='/devices.html#'" name="save_device_settings" class="btn btn-fill btn-primary">Speichern</button>
-                  <input type="submit" onclick="window.location.href='/devices.html#'" class="btn btn-fill btn-primary pull-right" name="update_mqtt_devices" value="Aktuallisieren" /> 
+                  <button type="submit" onclick="window.location.href='/devices.html#'" name="save_device_settings" class="btn btn-fill btn-primary">Save</button>
+                  <input type="submit" onclick="window.location.href='/devices.html#'" class="btn btn-fill btn-info pull-right" name="update_mqtt_devices" value="Update" /> 
                 </div>
               </form>
             </div>
@@ -161,8 +161,8 @@
                   </div>                  
                 </div>
                 <div class="card-footer">                  
-                  <button type="submit" onclick="window.location.href='/devices.html#broker_settings'" name="save_broker_settings" class="btn btn-fill btn-primary">Speichern</button>
-                  <button type="submit" onclick="window.location.href='/devices.html#broker_settings'" name="restore_broker_settings" class="btn btn-fill btn-primary pull-right">Wiederherstellen</button>
+                  <button type="submit" onclick="window.location.href='/devices.html#broker_settings'" name="save_broker_settings" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/devices.html#broker_settings'" name="restore_broker_settings" class="btn btn-fill btn-warning pull-right">Restore</button>
                 </div>                
               </form>
             </div>
@@ -182,7 +182,7 @@
                   <br>
                   <br>
                   <div class="dropdown text-right">
-                    <input type="submit" onclick="window.location.href='/system/mqtt#logfile'" class="btn btn-danger text-right" name="reset_logfile" value="Log-Datei zurücksetzen">
+                    <input type="submit" onclick="window.location.href='/system/mqtt#logfile'" class="btn btn-danger text-right" name="reset_logfile" value="Reset Log">
                   </div> 
                 </form> 
               </div>

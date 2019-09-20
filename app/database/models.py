@@ -2,21 +2,15 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
 
-from app        import app
-from app.common import COMMON, STATUS, DATATYPE
+from app                         import app
+from app.common                  import COMMON, STATUS, DATATYPE
+#from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 
 import datetime
 
 db = SQLAlchemy(app)
 
-
 def WRITE_LOGFILE_SYSTEM(value1, value2):
-    pass
-
-def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway, wlan_dhcp, wlan_ip_address, wlan_gateway):
-    pass
-    
-def UPDATE_WLAN_CREDENTIALS_FILE(wlan_ssid, wlan_password):
     pass
 
 
@@ -140,10 +134,10 @@ def GET_HOST_NETWORK():
 def GET_HOST_DEFAULT_NETWORK():
     entry = Host.query.filter_by().first()
     
-    if entry.default_interface == "LAN" and entry.lan_ip_address != "" and entry.lan_ip_address != "None":
+    if entry.default_interface == "lan" and entry.lan_ip_address != "" and entry.lan_ip_address != "None":
         return entry.lan_ip_address
     
-    elif entry.default_interface == "WLAN" and entry.wlan_ip_address != "" and entry.wlan_ip_address != "None":
+    elif entry.default_interface == "wlan" and entry.wlan_ip_address != "" and entry.wlan_ip_address != "None":
         return entry.wlan_ip_address
     
     else:
@@ -168,25 +162,61 @@ def GET_HOST_PORT():
         return 5000   
     
 
-def SET_HOST_NETWORK(lan_ip_address, lan_gateway, wlan_ip_address, wlan_gateway):
+def UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
     entry = Host.query.filter_by().first()
     
     # values changed ?
-    if (entry.lan_ip_address != lan_ip_address or entry.lan_gateway != lan_gateway or
-        entry.wlan_ip_address != wlan_ip_address or entry.wlan_gateway != wlan_gateway):   
+    if entry.lan_dhcp != lan_dhcp:   
     
-        entry.lan_ip_address  = lan_ip_address
-        entry.lan_gateway     = lan_gateway
-        entry.wlan_ip_address = wlan_ip_address
-        entry.wlan_gateway    = wlan_gateway         
+        entry.lan_dhcp        = lan_dhcp    
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed |" +
-                             " LAN - " + str(lan_ip_address) + " : " + str(lan_gateway) + 
-                             " | WLAN - " + str(wlan_ip_address) + " : " + str(wlan_gateway)) 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed " +
+                             "| DHCP LAN - " +  str(lan_dhcp))     
 
 
-def SET_WLAN_CREDENTIALS(wlan_ssid, wlan_password):
+def UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway):
+    entry = Host.query.filter_by().first()
+    
+    # values changed ?
+    if entry.lan_ip_address != lan_ip_address or entry.lan_gateway != lan_gateway:   
+     
+        entry.lan_ip_address  = lan_ip_address
+        entry.lan_gateway     = lan_gateway  
+        db.session.commit()
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed " +
+                             "| LAN - " + str(lan_ip_address) + " : " + str(lan_gateway)) 
+
+
+def UPDATE_HOST_INTERFACE_WLAN_DHCP(wlan_dhcp):
+    entry = Host.query.filter_by().first()
+    
+    # values changed ?
+    if entry.wlan_dhcp != wlan_dhcp:   
+    
+        entry.wlan_dhcp        = wlan_dhcp    
+        db.session.commit()
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed " +
+                             "| DHCP WLAN - " +  str(wlan_dhcp))     
+
+
+def UPDATE_HOST_INTERFACE_WLAN(wlan_ip_address, wlan_gateway):
+    entry = Host.query.filter_by().first()
+    
+    # values changed ?
+    if entry.wlan_ip_address != wlan_ip_address or entry.wlan_gateway != wlan_gateway:   
+     
+        entry.wlan_ip_address  = wlan_ip_address
+        entry.wlan_gateway     = wlan_gateway  
+        db.session.commit()
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed " +
+                             "| WLAN - " + str(wlan_ip_address) + " : " + str(wlan_gateway)) 
+
+
+def UPDATE_HOST_INTERFACE_WLAN_CREDENTIALS(wlan_ssid, wlan_password):
     entry = Host.query.filter_by().first()
     
     # values changed ?
@@ -198,23 +228,8 @@ def SET_WLAN_CREDENTIALS(wlan_ssid, wlan_password):
         
         WRITE_LOGFILE_SYSTEM("DATABASE", "Host | WLAN credentials | changed") 
 
-
-def SET_HOST_DHCP(lan_dhcp, wlan_dhcp):
-    entry = Host.query.filter_by().first()
-    
-    # values changed ?
-    if (entry.lan_dhcp != lan_dhcp or entry.wlan_dhcp != wlan_dhcp):   
-    
-        entry.lan_dhcp  = lan_dhcp
-        entry.wlan_dhcp = wlan_dhcp    
-        db.session.commit()
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed |" +
-                             " DHCP LAN - " + str(lan_dhcp) + 
-                             " | DHCP WLAN - " + str(wlan_dhcp))
-        
-
-def SET_HOST_DEFAULT_INTERFACE(default_interface):
+ 
+def UPDATE_HOST_DEFAULT_INTERFACE(default_interface):
     entry = Host.query.filter_by().first()
     
     # values changed ?
@@ -223,10 +238,10 @@ def SET_HOST_DEFAULT_INTERFACE(default_interface):
         entry.default_interface = default_interface     
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Default Interface - " + default_interface + " | changed")  
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Default Interface - " + str(default_interface) + " | changed")  
         
         
-def SET_HOST_PORT(port):
+def UPDATE_HOST_PORT(port):
     entry = Host.query.filter_by().first()
     
     try:
@@ -268,7 +283,7 @@ def SET_MQTT_BROKER_SETTINGS(broker, user, password):
         entry.password          = password
 
         db.session.commit()  
-	
+    
         WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Broker Settings changed")
 
 

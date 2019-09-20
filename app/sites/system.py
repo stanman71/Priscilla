@@ -4,10 +4,11 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 from ping3               import ping
 
-from app                 import app
-from app.database.models import *
-from app.common          import COMMON, STATUS
-from app.assets          import *
+from app                         import app
+from app.database.models         import *
+from app.backend.file_management import UPDATE_NETWORK_SETTINGS_FILE, UPDATE_WLAN_CREDENTIALS_FILE
+from app.common                  import COMMON, STATUS
+from app.assets                  import *
 
 import datetime
 import os
@@ -93,10 +94,15 @@ def system():
     message_shutdown         = "" 
     message_ip_config_change = False
 
+    lan_ip_address    = GET_HOST_NETWORK().lan_ip_address
+    lan_gateway       = GET_HOST_NETWORK().lan_gateway
+    wlan_ip_address   = GET_HOST_NETWORK().wlan_ip_address
+    wlan_gateway      = GET_HOST_NETWORK().wlan_gateway
 
-    # ###############
-    # start / restart
-    # ###############             
+
+    """ #################### """
+    """  restart / shutdown  """
+    """ #################### """              
         
     # restart raspi 
     if request.form.get("restart") != None:
@@ -109,102 +115,133 @@ def system():
         Thread = threading.Thread(target=HOST_SHUTDOWN)
         Thread.start()    
         message_shutdown = "System wird in 10 Sekunden heruntergefahren"
-                
 
-    # ################
-    # network settings
-    # ################    
-                
-    if request.form.get("change_host_settings") != None:
-        
-        save_input = True
 
-        # check dhcp
+    """ ############### """
+    """  dhcp settings  """
+    """ ############### """        
+
+    if request.form.get("checkbox_lan_dhcp"):
+        lan_dhcp = "True" 
+    else:
+        lan_dhcp = "False"  
+
+    if request.form.get("checkbox_wlan_dhcp"):
+        wlan_dhcp = "True" 
+    else:
+        wlan_dhcp = "False"  
+
+
+    """ ############## """
+    """  lan settings  """
+    """ ############## """    
+                
+    if request.form.get("set_lan_settings") != None:
         
-        if request.form.get("set_lan_dhcp"):
-            lan_dhcp = "checked" 
+        if request.form.get("checkbox_lan_dhcp"):
+            lan_dhcp = "True" 
         else:
-            lan_dhcp = ""            
-        
-        if request.form.get("set_wlan_dhcp"):
-            wlan_dhcp = "checked" 
-        else:
-            wlan_dhcp = ""               
+            lan_dhcp = "False"  
 
-        lan_ip_address    = GET_HOST_NETWORK().lan_ip_address
-        lan_gateway       = GET_HOST_NETWORK().lan_gateway  
-        wlan_ip_address   = GET_HOST_NETWORK().wlan_ip_address
-        wlan_gateway      = GET_HOST_NETWORK().wlan_gateway 
+        UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp)
 
+        if lan_dhcp == "False":  
 
-        # no dhcp ?
-        
-        if lan_dhcp != "checked" or wlan_dhcp != "checked":
+            save_settings_lan = True
+                     
+            if request.form.get("set_lan_ip_address") != "":
+                new_lan_ip_address = request.form.get("set_lan_ip_address")
 
-            # lan
-        
-            if lan_dhcp != "checked":
+                if new_lan_ip_address != lan_ip_address:
+
+                    if CHECK_IP_ADDRESS(new_lan_ip_address) == False:
+                        error_message_change_settings.append("LAN || Ungültige IP-Adresse angegeben")
+                        save_settings_lan = False
+                            
+                    elif PING_IP_ADDRESS(new_lan_ip_address) == True or new_lan_ip_address == GET_HOST_NETWORK().lan_ip_address or new_lan_ip_address == GET_HOST_NETWORK().wlan_ip_address:
+                        error_message_change_settings.append("LAN || IP-Adresse bereits vergeben")
+                        save_settings_lan = False
+
+                    else:
+                        lan_ip_address = new_lan_ip_address
+
+            else:
+                error_message_change_settings.append("LAN || Keine IP-Adresse angegeben") 
                 
-                if request.form.get("set_lan_ip_address") != None:
-                    lan_ip_address  = request.form.get("set_lan_ip_address")
-                    
-                if request.form.get("set_lan_gateway") != None:
-                    lan_gateway     = request.form.get("set_lan_gateway")            
+            if request.form.get("set_lan_gateway") != "":
+                lan_gateway = request.form.get("set_lan_gateway")            
 
-                if CHECK_IP_ADDRESS(lan_ip_address) == False:
-                    error_message_change_settings.append("Ungültige LAN IP-Adresse angegeben")
-                    save_input = False
-                
-                if PING_IP_ADDRESS(lan_ip_address) == True and lan_ip_address != GET_HOST_NETWORK().lan_ip_address:
-                    error_message_change_settings.append("LAN IP-Adresse bereits vergeben")
-                    save_input = False
-                
                 if CHECK_IP_ADDRESS(lan_gateway) == False:
-                    error_message_change_settings.append("Ungültiges LAN Gateway angegeben")
-                    save_input = False
+                    error_message_change_settings.append("LAN || Ungültiges Gateway angegeben")
+                    save_settings_lan = False
                     
                 if CHECK_IP_ADDRESS(lan_gateway) == True and PING_IP_ADDRESS(lan_gateway) == False:
-                    error_message_change_settings.append("LAN Gateway nicht gefunden")
-                    save_input = False
+                    error_message_change_settings.append("LAN || Gateway nicht gefunden")
+                    save_settings_lan = False
 
-            # wlan
-            
-            if wlan_dhcp != "checked":                    
-                    
-                if request.form.get("set_wlan_ip_address") != None:
-                    wlan_ip_address  = request.form.get("set_wlan_ip_address")
-                    
-                if request.form.get("set_wlan_gateway") != None:
-                    wlan_gateway     = request.form.get("set_wlan_gateway")   
-                                            
-                if CHECK_IP_ADDRESS(wlan_ip_address) == False:
-                    error_message_change_settings.append("Ungültige WLAN IP-Adresse angegeben")
-                    save_input = False
+            else:
+                error_message_change_settings.append("LAN || Kein Gateway angegeben") 
+
+            if save_settings_lan == True:
+                UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway)
+                UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway, wlan_dhcp, wlan_ip_address, wlan_gateway)
+
+
+    """ ############### """
+    """  wlan settings  """
+    """ ############### """    
                 
-                if PING_IP_ADDRESS(wlan_ip_address) == True and wlan_ip_address != GET_HOST_NETWORK().wlan_ip_address:
-                    error_message_change_settings.append("WLAN IP-Adresse bereits vergeben")
-                    save_input = False
+    if request.form.get("set_wlan_settings") != None:
+
+        if request.form.get("checkbox_wlan_dhcp"):
+            wlan_dhcp = "True" 
+        else:
+            wlan_dhcp = "False"  
+
+        UPDATE_HOST_INTERFACE_WLAN_DHCP(wlan_dhcp)
+
+        if wlan_dhcp == "False":  
+
+            save_settings_wlan = True
+                     
+            if request.form.get("set_wlan_ip_address") != "":
+                wlan_ip_address = request.form.get("set_wlan_ip_address")
+
+                new_wlan_ip_address = request.form.get("set_wlan_ip_address")
+
+                if new_wlan_ip_address != wlan_ip_address:
+
+                    if CHECK_IP_ADDRESS(new_wlan_ip_address) == False:
+                        error_message_change_settings.append("WLAN || Ungültige IP-Adresse angegeben")
+                        save_settings_wlan = False
+                            
+                    elif PING_IP_ADDRESS(new_wlan_ip_address) == True or new_wlan_ip_address == GET_HOST_NETWORK().lan_ip_address or new_wlan_ip_address == GET_HOST_NETWORK().wlan_ip_address:
+                        error_message_change_settings.append("WLAN || IP-Adresse bereits vergeben")
+                        save_settings_wlan = False
+
+                    else:
+                        wlan_ip_address = new_wlan_ip_address
+
+            else:
+                error_message_change_settings.append("WLAN || Keine IP-Adresse angegeben") 
                 
+            if request.form.get("set_wlan_gateway") != "":
+                wlan_gateway = request.form.get("set_wlan_gateway")            
+
                 if CHECK_IP_ADDRESS(wlan_gateway) == False:
-                    error_message_change_settings.append("Ungültiges WLAN Gateway angegeben")
-                    save_input = False
-
-                if CHECK_IP_ADDRESS(wlan_gateway) == True and PING_IP_ADDRESS(wlan_gateway) == False:
-                    error_message_change_settings.append("WLAN Gateway nicht gefunden")
-                    save_input = False
-
-            
-            # lan + wlan
-            
-            if lan_dhcp != "checked" and wlan_dhcp != "checked":                     
-                
-                if lan_ip_address == "" and wlan_ip_address == "":
-                    error_message_change_settings.append("Keine IP-Adresse angegeben")
-                    save_input = False
+                    error_message_change_settings.append("WLAN || Ungültiges Gateway angegeben")
+                    save_settings_wlan = False
                     
-                if lan_ip_address == wlan_ip_address:
-                    error_message_change_settings.append("Gleiche IP-Adressen (LAN + WLAN) angegeben")
-                    save_input = False
+                if CHECK_IP_ADDRESS(wlan_gateway) == True and PING_IP_ADDRESS(wlan_gateway) == False:
+                    error_message_change_settings.append("WLAN || Gateway nicht gefunden")
+                    save_settings_wlan = False
+
+            else:
+                error_message_change_settings.append("WLAN || Kein Gateway angegeben") 
+
+            if save_settings_wlan == True:
+                UPDATE_HOST_INTERFACE_WLAN(wlan_ip_address, wlan_gateway)
+                UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway, wlan_dhcp, wlan_ip_address, wlan_gateway)
 
 
         # wlan credentials              
@@ -213,61 +250,66 @@ def system():
         wlan_password   = request.form.get("set_wlan_password")    
             
         if wlan_ssid == "" or wlan_password == "":
-            error_message_change_settings.append("WLAN Zugangsdaten unvollständig")
-            save_input = False                    
-        
-        
+            error_message_change_settings.append("WLAN || Zugangsdaten unvollständig")
+        else:
+            UPDATE_HOST_INTERFACE_WLAN_CREDENTIALS(wlan_ssid, wlan_password)    
+            UPDATE_WLAN_CREDENTIALS_FILE(wlan_ssid, wlan_password)               
+            
+
+
+
+    """ ################## """
+    """  hosting settings  """
+    """ ################## """    
+
+    if request.form.get("set_hosting_settings") != None:
+
         # default interface
+        save_settings_hosting = True
         
-        default_interface = request.form.get("set_default_interface")
+        default_interface = request.form.get("radio_default_interface")
         
-        if (default_interface == "LAN" and (lan_ip_address == "" or lan_gateway == "" or
+        if (default_interface == "lan" and (lan_ip_address == "" or lan_gateway == "" or
             CHECK_IP_ADDRESS(lan_ip_address) == False or CHECK_IP_ADDRESS(lan_gateway) == False)):
             
-            error_message_change_settings.append("Unvollständige Angeben LAN-Netzwerk")
+            error_message_change_settings.append("HOSTING || Unvollständige Angeben LAN-Netzwerk")
             default_interface = GET_HOST_NETWORK().default_interface
-            save_input = False
+            save_settings_hosting = False
         
-        if (default_interface == "WLAN" and (wlan_ip_address == "" or wlan_gateway == "" or
+        if (default_interface == "wlan" and (wlan_ip_address == "" or wlan_gateway == "" or
             CHECK_IP_ADDRESS(wlan_ip_address) == False or CHECK_IP_ADDRESS(wlan_gateway) == False)):
             
-            error_message_change_settings.append("Unvollständige Angeben WLAN-Netzwerk")
+            error_message_change_settings.append("HOSTING || Unvollständige Angeben WLAN-Netzwerk")
             default_interface = GET_HOST_NETWORK().default_interface
-            save_input = False
+            save_settings_hosting = False
 
 
         # port
-        
+        save_settings_port = True
+
         port = request.form.get("set_port") 
         
         if port == "":
-            error_message_change_settings.append("Keinen Port angegeben")
-            save_input = False
-            
-        if port.isdigit() == False:
-            error_message_change_settings.append("Ungültigen Port angegeben (Zahl von 0 bis 65535)")
-            save_input = False
-            
-        if not 0 <= int(port) <= 65535:
-            error_message_change_settings.append("Ungültigen Port angegeben (Zahl von 0 bis 65535)")
-            save_input = False           
-            
-            
-        # save settings  
-            
-        if save_input == True:
-            SET_HOST_NETWORK(lan_ip_address, lan_gateway, wlan_ip_address, wlan_gateway)
-            UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway, wlan_dhcp, wlan_ip_address, wlan_gateway)
-            
-            SET_WLAN_CREDENTIALS(wlan_ssid, wlan_password)
-            UPDATE_WLAN_CREDENTIALS_FILE(wlan_ssid, wlan_password)
-            
-            SET_HOST_DHCP(lan_dhcp, wlan_dhcp)
-            SET_HOST_DEFAULT_INTERFACE(default_interface)  
-            SET_HOST_PORT(port)        
-    
-            success_message_change_settings = True
-               
+            error_message_change_settings.append("HOSTING || Keinen Port angegeben")
+            save_settings_port = False
+        
+        else:  
+            try:
+                if port.isdigit() == False or not 0 <= int(port) <= 65535:
+                    error_message_change_settings.append("HOSTING || Ungültigen Port angegeben (Zahl von 0 bis 65535)")
+                    save_settings_port = False                       
+            except:
+                error_message_change_settings.append("HOSTING || Ungültigen Port angegeben (Zahl von 0 bis 65535)")
+                save_settings_port = False        
+
+
+        if save_settings_hosting == True: 
+            UPDATE_HOST_DEFAULT_INTERFACE(default_interface)
+
+        if save_settings_port == True:
+            UPDATE_HOST_PORT(port)
+                
+
         
     cpu_temperature   = GET_CPU_TEMPERATURE()
  
@@ -292,8 +334,8 @@ def system():
     return render_template('layouts/default.html',
                             data=data,    
                             content=render_template( 'pages/system.html',   
-                                                    error_message_host_settings=error_message_change_settings,
-                                                    success_message_host_settings=success_message_change_settings,                                                    
+                                                    error_message_change_settings=error_message_change_settings,
+                                                    success_message_change_settings=success_message_change_settings,                                                    
                                                     message_shutdown=message_shutdown,
                                                     cpu_temperature=cpu_temperature,
                                                     lan_dhcp=lan_dhcp,
