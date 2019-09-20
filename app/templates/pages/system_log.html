@@ -25,7 +25,7 @@
                   <div class="row justify-content-md-center">
                     <div class="col-sm-7">     
                       <div class="form-group">
-                        <label>Event Auswahl</label>                               
+                        <label>Auswahl</label>                               
                         <select class="selectpicker" multiple data-actions-box="true" data-width="100%" name="set_log_types[]">
                           <option {{ selected_type_event }}> EVENT </option>
                           <option {{ selected_type_status }}> STATUS </option>
@@ -54,35 +54,53 @@
 
             <div class="card">
               <div class="card-body">
-                {% if error_message == "" %}
-                  <table class="table">
-                    <thead>                      
-                      <th scope="col" style="width:16%">Zeitpunkt</th> 
-                      <th scope="col" style="width:10%">Typ</th> 
-                      <th scope="col" style="width:74%">Beschreibung</th> 
-                    </thead>
-                    <tbody> 
-                      {% for entry in data_log_system %}
-                      <tr>
-                        <td>{{ entry[0] }}</td> 
-                        <td>
-                          {% if entry[1] == "EVENT" %} <font color="white">{{ entry[1] }} </font> {% endif %}
-                          {% if entry[1] == "STATUS" %} <font color="darkKhaki">{{ entry[1] }} </font> {% endif %}
-                          {% if entry[1] == "DATABASE" %} <font color="lightblue">{{ entry[1] }} </font> {% endif %}
-                          {% if entry[1] == "SUCCESS" %} <font color="green">{{ entry[1] }} </font> {% endif %}
-                          {% if entry[1] == "WARNING" %} <font color="orange">{{ entry[1] }} </font> {% endif %}
-                          {% if entry[1] == "ERROR" %} <font color="salmon">{{ entry[1] }} </font> {% endif %}            
-                        </td>                   
-                        <td>{{ entry[2] }}</td>  
-                      </tr>
-                      {% endfor %} 
-                    </tbody>
-                  </table>  
-                {% endif %}
 
+                {% if error_message == "" %}
+                  <div class="table-responsive">
+                    <table class="table tablesorter">
+                      <thead>                      
+                        <th scope="col" style="width:16%">Zeitpunkt</th> 
+                        <th scope="col" style="width:10%">Typ</th> 
+                        <th scope="col" style="width:74%">Beschreibung</th> 
+                      </thead>
+                      <tbody> 
+                        {% for entry in data_log_system %}
+                        <tr>
+                          <td>{{ entry[0] }}</td> 
+                          <td>
+                            {% if entry[1] == "EVENT" %} <font color="white">{{ entry[1] }} </font> {% endif %}
+                            {% if entry[1] == "STATUS" %} <font color="darkKhaki">{{ entry[1] }} </font> {% endif %}
+                            {% if entry[1] == "DATABASE" %} <font color="lightblue">{{ entry[1] }} </font> {% endif %}
+                            {% if entry[1] == "SUCCESS" %} <font color="green">{{ entry[1] }} </font> {% endif %}
+                            {% if entry[1] == "WARNING" %} <font color="orange">{{ entry[1] }} </font> {% endif %}
+                            {% if entry[1] == "ERROR" %} <font color="salmon">{{ entry[1] }} </font> {% endif %}            
+                          </td>                   
+                          <td>{{ entry[2] }}</td>  
+                        </tr>
+                        {% endfor %} 
+                      </tbody>
+                    </table>  
+                  </div>   
+                {% endif %}
 
               </div>
             </div>
+
+<!-- log settings -->
+
+            <div class="card">
+              <div class="card-body">
+                <form method="POST"> 
+                  <a href="/system_log/download/log_system.csv?time={{ timestamp }}"><font color="lightblue"><b>System Log herunterladen</b></font></a>
+                  <br>
+                  <br>                  
+                  <div class="dropdown text-right">
+                    <input type="submit" onclick="window.location.href='/system_log#logfile'" class="btn btn-danger text-right" name="reset_logfile" value="Reset System Log">
+                  </div>
+                </form>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>     

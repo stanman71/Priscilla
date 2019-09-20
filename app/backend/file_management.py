@@ -22,7 +22,7 @@ if os.name == "nt":
     PATH = os.path.abspath("") 
 # linux
 else:                               
-    PATH = os.path.abspath("") + "/miranda"
+    PATH = os.path.abspath("") 
 
 def GET_PATH():
     return (PATH)
@@ -43,9 +43,7 @@ def CREATE_LOGFILE(filename):
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)    
 
             if filename == "log_mqtt":                   
-                filewriter.writerow(['Timestamp','Channel','Message'])
-            if filename == "log_zigbee2mqtt":                   
-                filewriter.writerow(['Timestamp','Channel','Message'])                
+                filewriter.writerow(['Timestamp','Channel','Message'])              
             if filename == "log_system":                   
                 filewriter.writerow(['Timestamp','Type','Description'])                
             
@@ -54,6 +52,7 @@ def CREATE_LOGFILE(filename):
         WRITE_LOGFILE_SYSTEM("EVENT", "File | /logs/" + filename + ".csv | created")      
            
     except Exception as e:
+        print(e)
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/" + filename + ".csv | " + str(e))  
 
         
@@ -164,7 +163,7 @@ def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):
 """ network config """
 """ ############## """
 
-def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway, wlan_dhcp, wlan_ip_address, wlan_gateway):
+def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
     
     try:
         file = "/etc/dhcpcd.conf"
@@ -205,68 +204,12 @@ def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway, wlan_dhc
                 conf_file.write("interface eth0\n")
                 conf_file.write("inform " + str(lan_ip_address) + "/24\n")             
                 conf_file.write("static routers=" + str(lan_gateway) + "\n")    
-            
-            if wlan_dhcp != "True":
-    
-                conf_file.write("\n")
-                conf_file.write("interface wlan0\n")
-                conf_file.write("inform " + str(wlan_ip_address) + "/24\n")
-                conf_file.write("static routers=" + str(wlan_gateway) + "\n")
 
             conf_file.close()
 
     except Exception as e:
         print(e)
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /etc/dhcpcd.conf | " + str(e))  
-        return ("ERROR: " + str(e))
-
-
-def READ_WLAN_CREDENTIALS_FILE():
-    
-    try:
-        file = "/etc/wpa_supplicant/wpa_supplicant.conf"
-        with open(file, 'r', encoding='utf-8') as conf_file:
-            
-            for line in conf_file:
-                
-                if "ssid" in line and "scan_ssid" not in line:
-                    line = line.split("=")
-                    wlan_ssid = line[1]
-                    wlan_ssid = wlan_ssid.replace('\n', '')
-                    wlan_ssid = wlan_ssid.replace('"', '')
-                    
-                if "psk" in line:
-                    line = line.split("=")
-                    wlan_password = line[1]
-                    wlan_password = wlan_password.replace('\n', '')
-                    wlan_password = wlan_password.replace('"', '')
- 
-            conf_file.close()
-            
-            return(wlan_ssid, wlan_password)
-
-    except:
-        return("", "")
-
-
-def UPDATE_WLAN_CREDENTIALS_FILE(wlan_ssid, wlan_password):
-    
-    try:
-        file = "/etc/wpa_supplicant/wpa_supplicant.conf"
-        with open(file, 'w', encoding='utf-8') as conf_file:
-            conf_file.write('ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n')
-            conf_file.write('update_config=1\n')
-            conf_file.write('country=DE\n')
-            conf_file.write('network={\n')
-            conf_file.write('    ssid="' + wlan_ssid + '"\n')
-            conf_file.write('    psk="' + wlan_password + '"\n')
-            conf_file.write('    key_mgmt=WPA-PSK\n')
-            conf_file.write('}\n')
- 
-            conf_file.close()
-
-    except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /etc/wpa_supplicant/wpa_supplicant.conf | " + str(e))  
         return ("ERROR: " + str(e))
 
 

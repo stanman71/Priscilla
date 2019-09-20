@@ -17,12 +17,6 @@ class Host(db.Model):
     lan_dhcp          = db.Column(db.String(50), server_default=("True"))    
     lan_ip_address    = db.Column(db.String(50))
     lan_gateway       = db.Column(db.String(50))
-    wlan_dhcp         = db.Column(db.String(50), server_default=("True"))     
-    wlan_ip_address   = db.Column(db.String(50))    
-    wlan_gateway      = db.Column(db.String(50))
-    wlan_ssid         = db.Column(db.String(50))    
-    wlan_password     = db.Column(db.String(50))    
-    default_interface = db.Column(db.String(50))  
 
 class MQTT_Broker(db.Model):
     __tablename__     = 'mqtt_broker'
@@ -127,24 +121,6 @@ def GET_HOST_NETWORK():
     return Host.query.filter_by().first()
 
 
-def GET_HOST_DEFAULT_NETWORK():
-    entry = Host.query.filter_by().first()
-    
-    if entry.default_interface == "lan" and entry.lan_ip_address != "" and entry.lan_ip_address != "None":
-        return entry.lan_ip_address
-    
-    elif entry.default_interface == "wlan" and entry.wlan_ip_address != "" and entry.wlan_ip_address != "None":
-        return entry.wlan_ip_address
-    
-    else:
-        
-        if entry.lan_ip_address != "" and entry.lan_ip_address != "None":
-            return entry.lan_ip_address    
-
-        else:
-            return entry.wlan_ip_address
-        
-
 def UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
     entry = Host.query.filter_by().first()
     
@@ -171,58 +147,6 @@ def UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway):
         WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed " +
                              "| LAN - " + str(lan_ip_address) + " : " + str(lan_gateway)) 
 
-
-def UPDATE_HOST_INTERFACE_WLAN_DHCP(wlan_dhcp):
-    entry = Host.query.filter_by().first()
-    
-    # values changed ?
-    if entry.wlan_dhcp != wlan_dhcp:   
-    
-        entry.wlan_dhcp        = wlan_dhcp    
-        db.session.commit()
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed " +
-                             "| DHCP WLAN - " +  str(wlan_dhcp))     
-
-
-def UPDATE_HOST_INTERFACE_WLAN(wlan_ip_address, wlan_gateway):
-    entry = Host.query.filter_by().first()
-    
-    # values changed ?
-    if entry.wlan_ip_address != wlan_ip_address or entry.wlan_gateway != wlan_gateway:   
-     
-        entry.wlan_ip_address  = wlan_ip_address
-        entry.wlan_gateway     = wlan_gateway  
-        db.session.commit()
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed " +
-                             "| WLAN - " + str(wlan_ip_address) + " : " + str(wlan_gateway)) 
-
-
-def UPDATE_HOST_INTERFACE_WLAN_CREDENTIALS(wlan_ssid, wlan_password):
-    entry = Host.query.filter_by().first()
-    
-    # values changed ?
-    if (entry.wlan_ssid != wlan_ssid or entry.wlan_password != wlan_password):   
-    
-        entry.wlan_ssid     = wlan_ssid
-        entry.wlan_password = wlan_password
-        db.session.commit()
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | WLAN credentials | changed") 
-
- 
-def UPDATE_HOST_DEFAULT_INTERFACE(default_interface):
-    entry = Host.query.filter_by().first()
-    
-    # values changed ?
-    if (entry.default_interface != default_interface):   
-    
-        entry.default_interface = default_interface     
-        db.session.commit()
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Default Interface - " + str(default_interface) + " | changed")  
-        
 
 """ ################### """
 """ ################### """

@@ -173,16 +173,13 @@
 <!--------->
 
             <div class="card">
-              <div class="card-header">
-                <h5 class="title">Log</h5>
-              </div>
               <div class="card-body">
                 <form method="POST"> 
-                  <a href="/devices/download/log_mqtt.csv?time={{ timestamp }}"><font color="lightblue"><b>Log-Datei herunterladen</b></font></a>
+                  <a href="/devices/download/log_mqtt.csv?time={{ timestamp }}"><font color="lightblue"><b>Device Log herunterladen</b></font></a>
                   <br>
                   <br>
                   <div class="dropdown text-right">
-                    <input type="submit" onclick="window.location.href='/devices#logfile'" class="btn btn-danger text-right" name="reset_logfile" value="Reset Log">
+                    <input type="submit" onclick="window.location.href='/devices#logfile'" class="btn btn-danger text-right" name="reset_logfile" value="Reset Device Log">
                   </div> 
                 </form> 
               </div>

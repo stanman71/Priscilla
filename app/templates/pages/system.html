@@ -26,40 +26,7 @@
               </form>
             </div>
 
-<section id="change_settings"></section>  
-
-<!-- default interface -->
-
-            <div class="card">
-              <div class="card-header">
-                <h5 class="title">Default Interface</h5>
-              </div>            
-              <form method="POST">        
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="row justify-content-md-left">
-                        <div class="col-sm-2">                       
-                          <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="radio_default_interface_lan" {% if default_interface == "lan" %} checked="on" {% endif %} value="lan" name="radio_default_interface">
-                            <label class="custom-control-label" for="radio_default_interface_lan">LAN</label>                            
-                          </div>     
-                          <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="radio_default_interface_wlan" {% if default_interface == "wlan" %} checked="on" {% endif %} value="wlan" name="radio_default_interface">
-                            <label class="custom-control-label" for="radio_default_interface_wlan">WLAN</label>                                                                                  
-                          </div>    
-                          <br>
-                          <br>      
-                        </div>                                                           
-                      </div>
-                    </div>
-                  </div>                  
-                </div>
-                <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/system#change_settings'" name="set_default_interface" class="btn btn-fill btn-primary">Save</button>
-                </div>
-              </form>
-            </div>
+<section id="change_lan_settings"></section>  
 
 <!-- success message change settings -->
 
@@ -90,7 +57,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h5 class="title">LAN | Einstellungen</h5>
+                <h5 class="title">Netzwerk | Einstellungen</h5>
               </div>            
               <form method="POST">        
                 <div class="card-body">
@@ -107,7 +74,7 @@
                         </div>                  
                         <div class="col-sm-2">                       
                           <div class="form-group">
-                            <label>LAN | Adresse</label>
+                            <label>LAN Adresse</label>
                             {% if lan_dhcp == "True" %}
                               <br>
                               {% if lan_ip_address != None %}{{ lan_ip_address }}{% endif %}
@@ -118,7 +85,7 @@
                         </div>           
                         <div class="col-sm-2">                       
                           <div class="form-group">
-                            <label>LAN | Gateway</label>
+                            <label>LAN Gateway</label>
                             {% if lan_dhcp == "True" %}
                               <br>
                               {% if lan_gateway != None %}{{ lan_gateway }}{% endif %}
@@ -132,70 +99,7 @@
                   </div>                  
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/system#change_settings'" name="set_lan_settings" class="btn btn-fill btn-primary">Save</button>
-                </div>
-              </form>
-            </div>
-
-<!-- wlan settings -->
-
-            <div class="card">
-              <div class="card-header">
-                <h5 class="title">WLAN | Einstellungen</h5>
-              </div>            
-              <form method="POST">        
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="row justify-content-md-left">        
-                        <div class="col-sm-1">                                                     
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="checkbox_wlan_dhcp" {% if wlan_dhcp == "True" %} checked="on" {% endif %} name="checkbox_wlan_dhcp">
-                            <label class="custom-control-label" for="checkbox_wlan_dhcp">DHCP</label>  
-                            <br>
-                            <br> 
-                          </div>  
-                        </div> 
-                        <div class="col-sm-2">                       
-                          <div class="form-group">
-                            <label>WLAN | Adresse</label>
-                            {% if wlan_dhcp == "True" %}
-                              <br>
-                              {% if wlan_ip_address != None %}{{ wlan_ip_address }}{% endif %}
-                            {% else %} 
-                              <input type="text" class="form-control" name="set_wlan_ip_address" value="{% if wlan_ip_address != None %}{{ wlan_ip_address }}{% endif %}" />
-                            {% endif %} 
-                          </div>
-                        </div>           
-                        <div class="col-sm-2">                       
-                          <div class="form-group">
-                            <label>WLAN | Gateway</label>
-                            {% if wlan_dhcp == "True" %}
-                              <br>
-                              {% if wlan_gateway != None %}{{ wlan_gateway }}{% endif %}
-                            {% else %}                             
-                              <input type="text" class="form-control" name="set_wlan_gateway" value="{% if wlan_gateway != None %}{{ wlan_gateway }}{% endif %}" /> 
-                            {% endif %}     
-                          </div>  
-                        </div>       
-                        <div class="col-sm-2">                       
-                          <div class="form-group">
-                            <label>WLAN | SSID</label>
-                            <input type="text" class="form-control" name="set_wlan_ssid" value="{% if wlan_ssid != None %}{{ wlan_ssid }}{% endif %}" />
-                          </div>
-                        </div>           
-                        <div class="col-sm-2">                       
-                          <div class="form-group">
-                            <label>WLAN | Passwort</label>
-                            <input type="password" class="form-control" name="set_wlan_password" value="{% if wlan_password != None %}{{ wlan_password }}{% endif %}" />    
-                          </div>
-                        </div>                                                
-                      </div>
-                    </div>
-                  </div>                  
-                </div>
-                <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/system#change_settings'" name="set_wlan_settings" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/system#change_lan_settings'" name="set_lan_settings" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>

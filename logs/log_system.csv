@@ -1,6 +1,12 @@
 Timestamp,Type,Description
-2019-09-20 14:38:38,EVENT,|File || /logs/log_system.csv || created|
-2019-09-20 14:38:38,ERROR,|File || /logs/log_system.csv || [Errno 2] No such file or directory: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/logs/log_system.csv'|
-2019-09-20 14:38:52,DATABASE,|Host || Network settings changed || DHCP LAN - False|2019-09-20 14:42:58,ERROR,|File || /logs/log_system.csv || list index out of range|
-2019-09-20 14:59:58,DATABASE,|Host || Network settings changed || DHCP LAN - False|
-2019-09-20 15:00:00,DATABASE,|Host || Network settings changed || DHCP LAN - True|
+2019-09-20 15:11:06,EVENT,|File || /logs/log_system.csv || created|
+2019-09-20 15:11:09,EVENT,|File || /logs/log_system.csv || downloaded|
+2019-09-20 15:11:43,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-20 16:46:32,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-20 16:46:49,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-20 19:32:41,DATABASE,|Host || Network settings changed || LAN - 192.168.1.222 : 192.168.1.1|
+2019-09-20 19:33:22,DATABASE,|Host || Network settings changed || DHCP LAN - False|
+2019-09-20 19:35:55,DATABASE,|Host || Network settings changed || LAN - 192.168.1.55 : 192.168.1.1|
+2019-09-20 19:36:40,DATABASE,|Host || Network settings changed || LAN - 192.168.1.222 : 192.168.1.1|
+2019-09-20 19:39:11,DATABASE,|Host || Network settings changed || LAN - 192.168.1.55 : 192.168.1.1|
+2019-09-20 19:44:18,DATABASE,|Host || Network settings changed || LAN - 192.168.1.40 : 192.168.1.1|
