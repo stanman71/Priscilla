@@ -27,7 +27,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.add_template_global(assets     , 'assets')
 app.add_template_global(app.config , 'cfg'   )
 
-from app.sites                   import index, plants, devices, users, system, system_log, views, errors
+from app.sites                   import index, dashboard, plants, devices, users, system, system_log, errors
 from app.database.models         import *
 from app.backend.file_management import READ_WLAN_CREDENTIALS_FILE
 
@@ -36,7 +36,7 @@ from app.backend.file_management import READ_WLAN_CREDENTIALS_FILE
 """ update ip settings """
 """ ################## """
 
-time.sleep(10)
+time.sleep(1)
 
 # lan
 
@@ -109,8 +109,6 @@ if wlan_ip_address == "" and lan_ip_address != "" and GET_HOST_NETWORK().default
 if lan_ip_address == "" and wlan_ip_address != "" and GET_HOST_NETWORK().default_interface == "lan":
     UPDATE_HOST_DEFAULT_INTERFACE("wlan") 
 
-# check port
-if GET_HOST_PORT() == 5000:
-    UPDATE_HOST_PORT(5000)
 
-app.run(host = GET_HOST_DEFAULT_NETWORK(), port = GET_HOST_PORT(), debug=True)
+
+app.run(host = GET_HOST_DEFAULT_NETWORK(), port = 80, debug=True)

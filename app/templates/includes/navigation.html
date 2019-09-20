@@ -9,7 +9,7 @@
           {% else %} 
             <li>
           {% endif %} 
-            <a href="/dashboard.html">
+            <a href="/dashboard">
               <i class="tim-icons icon-chart-pie-36"></i>
               <p>Dashboard</p>
             </a>
@@ -20,7 +20,7 @@
           {% else %} 
             <li>
           {% endif %} 
-            <a href="/plants.html">
+            <a href="/plants">
               <i class="tim-icons icon-world"></i>
               <p>Pflanzen</p>
             </a>
@@ -31,7 +31,7 @@
           {% else %} 
             <li>
           {% endif %} 
-            <a href="/devices.html">
+            <a href="/devices">
               <i class="tim-icons icon-settings-gear-63"></i>
               <p>Geräte</p>
             </a>
@@ -42,7 +42,7 @@
           {% else %} 
             <li>
           {% endif %} 
-            <a href="/users.html">
+            <a href="/users">
               <i class="tim-icons icon-single-02"></i>
               <p>Benutzer</p>
             </a>
@@ -53,7 +53,7 @@
           {% else %} 
             <li>
           {% endif %} 
-            <a href="/system.html">
+            <a href="/system">
               <i class="tim-icons icon-settings"></i>
               <p>System</p>
             </a>
@@ -64,70 +64,26 @@
           {% else %} 
             <li>
           {% endif %} 
-            <a href="/system_log.html">
+            <a href="/system_log">
               <i class="tim-icons icon-paper"></i>
               <p>Ereignisse</p>
             </a>
           </li>       
 
-          {% if data.navigation == "icons" %}
-            <li class="active ">
-          {% else %} 
-            <li>
-          {% endif %} 
-            <a href="/icons.html">
-              <i class="tim-icons icon-atom"></i>
-              <p>Icons</p>
-            </a>
-          </li>
-          
-          {% if data.navigation == "notifications" %}
-            <li class="active ">
-          {% else %} 
-            <li>
-          {% endif %} 
-            <a href="/notifications.html">
-              <i class="tim-icons icon-bell-55"></i>
-              <p>Notifications</p>
-            </a>
-          </li>
-          <li>
-            <a href="/user.html">
-              <i class="tim-icons icon-single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          <li>
-            <a href="/tables.html">
-              <i class="tim-icons icon-puzzle-10"></i>
-              <p>Table List</p>
-            </a>
-          </li>
-          <li>
-            <a href="/typography.html">
-              <i class="tim-icons icon-align-center"></i>
-              <p>Typography</p>
-            </a>
-          </li>
-
           {% if current_user.is_authenticated %}
-
-          <li>
-            <a href={{ url_for('logout') }}>
-              <i class="tim-icons icon-align-center"></i>
-              <p>Logout</p>
-            </a>
-          </li>
-
+            <li>
+              <a href={{ url_for('logout') }}>
+                <i class="tim-icons icon-align-center"></i>
+                <p>Logout</p>
+              </a>
+            </li>
           {% else %}
-
-          <li>
-            <a href={{ url_for('login') }}>
-              <i class="tim-icons icon-align-center"></i>
-              <p>Login</p>
-            </a>
-          </li>
-
+            <li>
+              <a href={{ url_for('login') }}>
+                <i class="tim-icons icon-align-center"></i>
+                <p>Login</p>
+              </a>
+            </li>
           {% endif %}
 
         </ul>

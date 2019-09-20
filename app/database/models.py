@@ -4,14 +4,11 @@ from flask_login import UserMixin
 
 from app                         import app
 from app.common                  import COMMON, STATUS, DATATYPE
-#from app.backend.file_management import WRITE_LOGFILE_SYSTEM
+from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 
 import datetime
 
 db = SQLAlchemy(app)
-
-def WRITE_LOGFILE_SYSTEM(value1, value2):
-    pass
 
 
 class Host(db.Model):
@@ -25,8 +22,7 @@ class Host(db.Model):
     wlan_gateway      = db.Column(db.String(50))
     wlan_ssid         = db.Column(db.String(50))    
     wlan_password     = db.Column(db.String(50))    
-    default_interface = db.Column(db.String(50))
-    port              = db.Column(db.Integer)   
+    default_interface = db.Column(db.String(50))  
 
 class MQTT_Broker(db.Model):
     __tablename__     = 'mqtt_broker'
@@ -148,19 +144,6 @@ def GET_HOST_DEFAULT_NETWORK():
         else:
             return entry.wlan_ip_address
         
-   
-def GET_HOST_PORT():
-    port = Host.query.filter_by().first().port
-    
-    try:
-        if 0 <= int(port) <= 65535:
-            return port
-        else:
-            return 5000
-        
-    except:
-        return 5000   
-    
 
 def UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
     entry = Host.query.filter_by().first()
@@ -240,24 +223,6 @@ def UPDATE_HOST_DEFAULT_INTERFACE(default_interface):
         
         WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Default Interface - " + str(default_interface) + " | changed")  
         
-        
-def UPDATE_HOST_PORT(port):
-    entry = Host.query.filter_by().first()
-    
-    try:
-        # values changed ?
-        if (int(entry.port) != int(port)):   
-            entry.port = port
-            db.session.commit()
-            
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Port - " + str(port) + " | changed")             
-            
-    except:       
-        entry.port = port    
-        db.session.commit()
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Port - " + str(port) + " | changed") 
-
 
 """ ################### """
 """ ################### """

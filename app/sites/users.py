@@ -27,7 +27,7 @@ def permission_required(f):
     return wrap
 
 
-@app.route('/users.html', methods=['GET', 'POST'])
+@app.route('/users', methods=['GET', 'POST'])
 @login_required
 @permission_required
 def users():
@@ -255,7 +255,7 @@ def users():
 
 
 # delete user
-@app.route('/users.html/delete/<int:id>')
+@app.route('/users/delete/<int:id>')
 @login_required
 @permission_required
 def delete_user(id):

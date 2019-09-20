@@ -26,7 +26,7 @@ def permission_required(f):
     return wrap
 
 
-@app.route('/plants.html', methods=['GET', 'POST'])
+@app.route('/plants', methods=['GET', 'POST'])
 @login_required
 @permission_required
 def plants():
@@ -163,7 +163,7 @@ def plants():
 
 
 # change plants position 
-@app.route('/plants.html/position/<string:direction>/<int:id>')
+@app.route('/plants/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
 def change_plants_position(id, direction):
@@ -172,7 +172,7 @@ def change_plants_position(id, direction):
 
 
 # delete plant
-@app.route('/plants.html/delete/<int:id>')
+@app.route('/plants/delete/<int:id>')
 @login_required
 @permission_required
 def delete_plant(id):

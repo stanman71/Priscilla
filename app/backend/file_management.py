@@ -137,16 +137,20 @@ def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):
 
             # get the selected log entries
             data_reversed_filtered = []
-            
+
             for element in data_reversed:
-                if element[1] in selected_log_types:
-                    
-                    if search != "" and search in element[2]:
-                        data_reversed_filtered.append(element)
+
+                try:
+                    if element[1] in selected_log_types:
                         
-                    if search == "":
-                        data_reversed_filtered.append(element)
-                
+                        if search != "" and search in element[2]:
+                            data_reversed_filtered.append(element)
+                            
+                        if search == "":
+                            data_reversed_filtered.append(element)
+                except:
+                    pass
+
             return data_reversed_filtered[0:rows]
             
     

@@ -68,8 +68,8 @@
                         {% for entry in list_devices %}
                         <tr>
                           <td> 
-                            <a href="/devices.html/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
-                            <a href="/devices.html/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
+                            <a href="/devices/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                            <a href="/devices/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
                           </td>              
                           <td>                     
                             <form method="POST" class="verticalform">                                                   
@@ -81,7 +81,7 @@
                           <td>{{ entry.description }}</td>  
                           <td>{{ entry.last_contact }}</td>                
                           <td>
-                            <a href="/devices.html/delete/{{ entry.id }}#table"><font size="6"><i class="tim-icons icon-trash-simple"></i></font></a>
+                            <a href="/devices/delete/{{ entry.id }}#table"><font size="6"><i class="tim-icons icon-trash-simple"></i></font></a>
                           </td>                                 
                         </tr>
                         {% endfor %}
@@ -90,8 +90,8 @@
                   </div>
                 </div>            
                 <div class="card-footer">                  
-                  <button type="submit" onclick="window.location.href='/devices.html#'" name="save_device_settings" class="btn btn-fill btn-primary">Save</button>
-                  <input type="submit" onclick="window.location.href='/devices.html#'" class="btn btn-fill btn-info pull-right" name="update_mqtt_devices" value="Update" /> 
+                  <button type="submit" onclick="window.location.href='/devices#'" name="save_device_settings" class="btn btn-fill btn-primary">Save</button>
+                  <input type="submit" onclick="window.location.href='/devices#'" class="btn btn-fill btn-info pull-right" name="update_mqtt_devices" value="Update" /> 
                 </div>
               </form>
             </div>
@@ -161,8 +161,8 @@
                   </div>                  
                 </div>
                 <div class="card-footer">                  
-                  <button type="submit" onclick="window.location.href='/devices.html#broker_settings'" name="save_broker_settings" class="btn btn-fill btn-primary">Save</button>
-                  <button type="submit" onclick="window.location.href='/devices.html#broker_settings'" name="restore_broker_settings" class="btn btn-fill btn-warning pull-right">Restore</button>
+                  <button type="submit" onclick="window.location.href='/devices#broker_settings'" name="save_broker_settings" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/devices#broker_settings'" name="restore_broker_settings" class="btn btn-fill btn-warning pull-right">Restore</button>
                 </div>                
               </form>
             </div>
@@ -182,7 +182,7 @@
                   <br>
                   <br>
                   <div class="dropdown text-right">
-                    <input type="submit" onclick="window.location.href='/system/mqtt#logfile'" class="btn btn-danger text-right" name="reset_logfile" value="Reset Log">
+                    <input type="submit" onclick="window.location.href='/devices#logfile'" class="btn btn-danger text-right" name="reset_logfile" value="Reset Log">
                   </div> 
                 </form> 
               </div>

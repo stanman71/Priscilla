@@ -1,0 +1,6 @@
+Timestamp,Type,Description
+2019-09-20 14:38:38,EVENT,|File || /logs/log_system.csv || created|
+2019-09-20 14:38:38,ERROR,|File || /logs/log_system.csv || [Errno 2] No such file or directory: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/logs/log_system.csv'|
+2019-09-20 14:38:52,DATABASE,|Host || Network settings changed || DHCP LAN - False|2019-09-20 14:42:58,ERROR,|File || /logs/log_system.csv || list index out of range|
+2019-09-20 14:59:58,DATABASE,|Host || Network settings changed || DHCP LAN - False|
+2019-09-20 15:00:00,DATABASE,|Host || Network settings changed || DHCP LAN - True|

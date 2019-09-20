@@ -3,13 +3,83 @@
         <div class="row">
           <div class="col-md-12">
 
-<!-- add new plant -->
+<!-- error message --> 
+
+{% if error_message != "" %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {{ error_message }}
+  </div>
+{% endif %}  
+
+<!-- log settings -->
 
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Benutzer</h5>
+                <h5 class="title">System Log</h5>
               </div>
               <div class="card-body">
+                <form method="POST">
+                  <div class="row justify-content-md-center">
+                    <div class="col-sm-7">     
+                      <div class="form-group">
+                        <label>Event Auswahl</label>                               
+                        <select class="selectpicker" multiple data-actions-box="true" data-width="100%" name="set_log_types[]">
+                          <option {{ selected_type_event }}> EVENT </option>
+                          <option {{ selected_type_status }}> STATUS </option>
+                          <option {{ selected_type_database }}> DATABASE </option>                        
+                          <option {{ selected_type_success }}> SUCCESS </option>   
+                          <option {{ selected_type_warning }}> WARNING </option>
+                          <option {{ selected_type_error }}> ERROR </option>                                              
+                        </select>   
+                      </div>                            
+                    </div>
+                    <div class="col-sm-5">    
+                      <div class="form-group">
+                        <label>Suchbegriff</label>                            
+                        <input type="text" class="form-control" name="set_log_search" value="{{ log_search }}" />   
+                      </div>                            
+                    </div>                                                    
+                  </div>   
+                  <div class="card-footer">
+                    <input type="submit" onclick="window.location.href='/system_log#'" class="btn btn-fill btn-info" name="get_log_output" value="Select" />  
+                  </div>
+                </form>
+              </div>
+            </div>
+
+<!-- log table -->
+
+            <div class="card">
+              <div class="card-body">
+                {% if error_message == "" %}
+                  <table class="table">
+                    <thead>                      
+                      <th scope="col" style="width:16%">Zeitpunkt</th> 
+                      <th scope="col" style="width:10%">Typ</th> 
+                      <th scope="col" style="width:74%">Beschreibung</th> 
+                    </thead>
+                    <tbody> 
+                      {% for entry in data_log_system %}
+                      <tr>
+                        <td>{{ entry[0] }}</td> 
+                        <td>
+                          {% if entry[1] == "EVENT" %} <font color="white">{{ entry[1] }} </font> {% endif %}
+                          {% if entry[1] == "STATUS" %} <font color="darkKhaki">{{ entry[1] }} </font> {% endif %}
+                          {% if entry[1] == "DATABASE" %} <font color="lightblue">{{ entry[1] }} </font> {% endif %}
+                          {% if entry[1] == "SUCCESS" %} <font color="green">{{ entry[1] }} </font> {% endif %}
+                          {% if entry[1] == "WARNING" %} <font color="orange">{{ entry[1] }} </font> {% endif %}
+                          {% if entry[1] == "ERROR" %} <font color="salmon">{{ entry[1] }} </font> {% endif %}            
+                        </td>                   
+                        <td>{{ entry[2] }}</td>  
+                      </tr>
+                      {% endfor %} 
+                    </tbody>
+                  </table>  
+                {% endif %}
+
 
               </div>
             </div>

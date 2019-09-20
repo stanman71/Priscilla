@@ -26,7 +26,7 @@ def permission_required(f):
     return wrap
 
 
-@app.route('/devices.html', methods=['GET', 'POST'])
+@app.route('/devices', methods=['GET', 'POST'])
 @login_required
 @permission_required
 def devices():

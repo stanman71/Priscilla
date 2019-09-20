@@ -20,13 +20,46 @@
                   </div>                  
                 </div>
                 <div class="card-footer">                  
-                  <button type="submit" onclick="window.location.href='/system.html#'" name="restart_system" class="btn btn-fill btn-info">Restart</button>
-                  <button type="submit" onclick="window.location.href='/system.html#'" name="shutdown_system" class="btn btn-fill btn-info pull-right">Shutdown</button>
+                  <button type="submit" onclick="window.location.href='/system#'" name="restart_system" class="btn btn-fill btn-info">Restart</button>
+                  <button type="submit" onclick="window.location.href='/system#'" name="shutdown_system" class="btn btn-fill btn-info pull-right">Shutdown</button>
                 </div>  
               </form>
             </div>
 
 <section id="change_settings"></section>  
+
+<!-- default interface -->
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title">Default Interface</h5>
+              </div>            
+              <form method="POST">        
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row justify-content-md-left">
+                        <div class="col-sm-2">                       
+                          <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="radio_default_interface_lan" {% if default_interface == "lan" %} checked="on" {% endif %} value="lan" name="radio_default_interface">
+                            <label class="custom-control-label" for="radio_default_interface_lan">LAN</label>                            
+                          </div>     
+                          <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="radio_default_interface_wlan" {% if default_interface == "wlan" %} checked="on" {% endif %} value="wlan" name="radio_default_interface">
+                            <label class="custom-control-label" for="radio_default_interface_wlan">WLAN</label>                                                                                  
+                          </div>    
+                          <br>
+                          <br>      
+                        </div>                                                           
+                      </div>
+                    </div>
+                  </div>                  
+                </div>
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/system#change_settings'" name="set_default_interface" class="btn btn-fill btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
 
 <!-- success message change settings -->
 
@@ -99,7 +132,7 @@
                   </div>                  
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/system.html#change_settings'" name="set_lan_settings" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/system#change_settings'" name="set_lan_settings" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>
@@ -162,50 +195,10 @@
                   </div>                  
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/system.html#change_settings'" name="set_wlan_settings" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/system#change_settings'" name="set_wlan_settings" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>
-
-<!-- hosting settings -->
-
-            <div class="card">
-              <div class="card-header">
-                <h5 class="title">Hosting | Einstellungen</h5>
-              </div>            
-              <form method="POST">        
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="row justify-content-md-left">
-                        <div class="col-sm-2">                       
-                          <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="radio_default_interface_lan" {% if default_interface == "lan" %} checked="on" {% endif %} value="lan" name="radio_default_interface">
-                            <label class="custom-control-label" for="radio_default_interface_lan">LAN</label>                            
-                          </div>     
-                          <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="radio_default_interface_wlan" {% if default_interface == "wlan" %} checked="on" {% endif %} value="wlan" name="radio_default_interface">
-                            <label class="custom-control-label" for="radio_default_interface_wlan">WLAN</label>                                                                                  
-                          </div>    
-                          <br>
-                          <br>      
-                        </div>           
-                        <div class="col-sm-2">                       
-                          <div class="form-group">
-                            <label>Port</label>
-                            <input type="text" class="form-control" name="set_port" value="{% if port != None %}{{ port }}{% endif %}" />     
-                          </div>
-                        </div>                                                   
-                      </div>
-                    </div>
-                  </div>                  
-                </div>
-                <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/system.html#change_settings'" name="set_hosting_settings" class="btn btn-fill btn-primary">Save</button>
-                </div>
-              </form>
-            </div>
-
 
 
           </div>

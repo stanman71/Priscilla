@@ -84,7 +84,7 @@ def HOST_SHUTDOWN():
     os.system("sudo shutdown -h now")
 
 
-@app.route('/system.html', methods=['GET', 'POST'])
+@app.route('/system', methods=['GET', 'POST'])
 @login_required
 @permission_required
 def system():
@@ -256,11 +256,9 @@ def system():
             UPDATE_WLAN_CREDENTIALS_FILE(wlan_ssid, wlan_password)               
             
 
-
-
-    """ ################## """
-    """  hosting settings  """
-    """ ################## """    
+    """ ################### """
+    """  default interface  """
+    """ ################### """    
 
     if request.form.get("set_hosting_settings") != None:
 
@@ -283,34 +281,10 @@ def system():
             default_interface = GET_HOST_NETWORK().default_interface
             save_settings_hosting = False
 
-
-        # port
-        save_settings_port = True
-
-        port = request.form.get("set_port") 
-        
-        if port == "":
-            error_message_change_settings.append("HOSTING || Keinen Port angegeben")
-            save_settings_port = False
-        
-        else:  
-            try:
-                if port.isdigit() == False or not 0 <= int(port) <= 65535:
-                    error_message_change_settings.append("HOSTING || Ungültigen Port angegeben (Zahl von 0 bis 65535)")
-                    save_settings_port = False                       
-            except:
-                error_message_change_settings.append("HOSTING || Ungültigen Port angegeben (Zahl von 0 bis 65535)")
-                save_settings_port = False        
-
-
         if save_settings_hosting == True: 
             UPDATE_HOST_DEFAULT_INTERFACE(default_interface)
 
-        if save_settings_port == True:
-            UPDATE_HOST_PORT(port)
-                
 
-        
     cpu_temperature   = GET_CPU_TEMPERATURE()
  
     lan_dhcp          = GET_HOST_NETWORK().lan_dhcp
@@ -322,8 +296,7 @@ def system():
     wlan_ssid         = GET_HOST_NETWORK().wlan_ssid
     wlan_password     = GET_HOST_NETWORK().wlan_password    
     default_interface = GET_HOST_NETWORK().default_interface
-    port              = GET_HOST_NETWORK().port       
- 
+     
 
     if (wlan_ssid != "" or wlan_password != "") and wlan_ip_address == "":
         error_message_change_settings.append("Falsche WLAN Zugangsdaten eingegeben")
@@ -346,7 +319,6 @@ def system():
                                                     wlan_gateway=wlan_gateway,
                                                     wlan_ssid=wlan_ssid,
                                                     wlan_password=wlan_password,                           
-                                                    default_interface=default_interface,
-                                                    port=port,                                 
+                                                    default_interface=default_interface,                             
                                                     ) 
                             )

@@ -52,8 +52,8 @@
                         {% for entry in list_plants %}
                         <tr>
                           <td>
-                            <a href="/plants.html/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
-                            <a href="/plants.html/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
+                            <a href="/plants/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                            <a href="/plants/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
                           </td>                   
                           <td>
                             <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                    
@@ -104,7 +104,7 @@
                             {% endif %}
                           </td>
                           <td>
-                            <a href="/plants.html/delete/{{ entry.id }}#table"><font size="6"><i class="tim-icons icon-trash-simple"></i></font></a>
+                            <a href="/plants/delete/{{ entry.id }}#table"><font size="6"><i class="tim-icons icon-trash-simple"></i></font></a>
                           </td>   
                         </tr>
                         {% endfor %}
@@ -113,7 +113,7 @@
                   </div>
                 </div>            
                 <div class="card-footer">                   
-                  <button type="submit" onclick="window.location.href='/plants.html#'" name="save_plants_settings" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/plants#'" name="save_plants_settings" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>
@@ -184,7 +184,7 @@
                   </div>                  
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/plants.html#add_plant'" name="add_plant" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/plants#add_plant'" name="add_plant" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>

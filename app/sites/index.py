@@ -76,7 +76,7 @@ def index():
 
 
 # logout user
-@app.route('/logout.html')
+@app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
