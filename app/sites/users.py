@@ -35,7 +35,7 @@ def users():
     error_message_change_settings = []
     message_admin_password_not_changed = ""
 
-    success_message_change_settings = False
+    success_message_change_settings = []
     success_message_add_user        = False
 
     setting_email_notification = ["", "", ""]
@@ -43,7 +43,6 @@ def users():
     username        = ""
     email           = ""
     password        = ""
-    hashed_password = ""
 
     """ ############### """
     """  user settings  """
@@ -56,7 +55,10 @@ def users():
             if request.form.get("set_username_" + str(i)) != None:
                 
                 check_administrator = False
-        
+                error_founded       = False
+                hashed_password     = None
+                current_username    = GET_USER_BY_ID(i).username
+
                 # current user has administrator rights ?
                 if request.form.get("checkbox_administrator_" + str(i)) != None:
                     check_administrator = True
@@ -82,23 +84,24 @@ def users():
                     if request.form.get("set_username_" + str(i)) != "":
                                         
                         new_username = request.form.get("set_username_" + str(i))
-                        old_username = GET_USER_BY_ID(i).username
 
-                        if new_username != old_username:       
+                        if new_username != current_username:       
 
                             # username already exist ?    
                             if not GET_USER_BY_NAME(new_username):  
                                 username = new_username                            
                             else: 
-                                error_message_change_settings.append(old_username + " >>> Ungültige Eingabe >>> Name bereits vergeben")  
-                                username = old_username
+                                error_message_change_settings.append(current_username + " || Ungültige Eingabe Name || Bereits vergeben")  
+                                error_founded = True
+                                username = current_username
 
                         else:
-                            username = old_username
+                            username = current_username
 
                     else:
                         username = GET_USER_BY_ID(i).username
-                        error_message_change_settings.append(old_username + " >>> Ungültige Eingabe >>> Keinen Namen angegeben")   
+                        error_message_change_settings.append(current_username + " || Ungültige Eingabe Name || Keinen Wert angegeben") 
+                        error_founded = True  
                
 
                     # change email  
@@ -113,7 +116,8 @@ def users():
                             if not GET_USER_BY_EMAIL(new_email):  
                                 email = new_email                            
                             else: 
-                                error_message_change_settings.append(username + " >>> Ungültige Eingabe >>> eMail-adresse bereits vergeben")    
+                                error_message_change_settings.append(username + " || Ungültige Eingabe eMail || Adresse bereits vergeben")   
+                                error_founded = True 
                                 email = old_email
 
                         else:
@@ -121,9 +125,28 @@ def users():
 
                     else:
                         email = GET_USER_BY_ID(i).email
-                        error_message_change_settings.append(username + " >>> Ungültige Eingabe >>> Keine eMail-Adresse angegeben")   
+                        error_message_change_settings.append(username + " || Ungültige Eingabe eMail || Keine Adresse angegeben")   
+                        error_founded = True
 
-                    
+                     # change password
+                    if request.form.get("set_password_" + str(i)) != "":                        
+                        password = request.form.get("set_password_" + str(i))
+                        
+                        try:              
+                            if 8 <= len(password) <= 20:
+                                
+                                if str(password) == str(request.form.get("set_password_check_" + str(i))):
+                                    hashed_password = generate_password_hash(password, method='sha256')
+                                       
+                                else:
+                                    error_message_change_settings.append(username + " || Eingegebene Passwörter sind nicht identisch")
+                                
+                            else:    
+                                error_message_change_settings.append(username + " || Passwort muss zwischen 8 und 20 Zeichen haben")
+                                
+                        except:
+                            error_message_change_settings.append(username + " || Passwort muss zwischen 8 und 20 Zeichen haben")
+
                     # role
                     if request.form.get("checkbox_administrator_" + str(i)) != None:
                         role = "administrator"
@@ -136,39 +159,26 @@ def users():
                     else:
                         email_notification = "False"
 
-                    if error_message_change_settings == []:
-                        UPDATE_USER_SETTINGS(i, username, email, role, email_notification)    
-                        success_message_change_settings = True
 
-                        username = ""
-                        email    = ""
-    
-                    # change password
-                    if request.form.get("set_password_" + str(i)) != "":                        
-                        password = request.form.get("set_password_" + str(i))
-                        
-                        try:
-                            
-                            if 8 <= len(password) <= 20:
-                                
-                                if str(password) == str(request.form.get("set_password_check_" + str(i))):
-                                    
-                                    hashed_password = generate_password_hash(password, method='sha256')
+                    # save settings
+                    if error_founded == False: 
 
-                                    if error_message_change_settings == []:                                                           
-                                        CHANGE_USER_PASSWORD(i, hashed_password)
-                                        success_message_change_settings = True
-                                        
-                                else:
-                                    error_message_change_settings.append(username + " >>> Eingegebene Passwörter sind nicht identisch")
-                                
-                            else:    
-                                error_message_change_settings.append(username + " >>> Passwort muss zwischen 8 und 20 Zeichen haben")
-                                
-                        except:
-                            error_message_change_settings.append(username + " >>> Passwort muss zwischen 8 und 20 Zeichen haben")
+                        changes_saved = False
 
-                        password = ""    
+                        if UPDATE_USER_SETTINGS(i, username, email, role, email_notification):   
+                            changes_saved = True
+
+                        if hashed_password != None:                             
+                            if CHANGE_USER_PASSWORD(i, hashed_password):
+                                changes_saved = True
+
+                        if changes_saved == True:
+                            success_message_change_settings.append(current_username + " || Einstellungen gespeichert") 
+
+                    username = ""
+                    email    = ""
+                    password = ""      
+   
                                         
                 # no user has administrator rights
                 else:    

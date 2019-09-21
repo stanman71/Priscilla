@@ -175,6 +175,8 @@ def SET_MQTT_BROKER_SETTINGS(broker, user, password):
     
         WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Broker Settings changed")
 
+        return True
+
 
 def RESTORE_MQTT_BROKER_SETTINGS():
     entry = MQTT_Broker.query.filter_by().first()
@@ -451,7 +453,7 @@ def UPDATE_PLANT_SETTINGS(id, name, pumptime, pump_mode, sensor_moisture, sensor
     old_name = entry.name
 
     # values changed ?
-    if (entry.name != name or entry.pump_mode != pump_mode or entry.pumptime != pumptime or 
+    if (entry.name != name or entry.pumptime != pumptime or entry.pump_mode != pump_mode or 
         entry.sensor_moisture != sensor_moisture or entry.sensor_watertank != sensor_watertank):
 
         entry.name             = name
@@ -467,36 +469,53 @@ def UPDATE_PLANT_SETTINGS(id, name, pumptime, pump_mode, sensor_moisture, sensor
                              " | PumpMode - " + str(entry.pump_mode) +                              
                              " | Sensor Moisture - " + entry.sensor_moisture + 
                              " | Sensor Watertank - " + entry.sensor_watertank)
+
+        return True
     
 
 def SET_PLANT_MOISTURE_LEVEL(id, moisture_level):         
     entry = Plants.query.filter_by(id=id).first()
 
-    entry.moisture_level = moisture_level
-    db.session.commit()  
-    
-    if entry.moisture_level != "None":
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + entry.name + " | changed || Moisture_Level - " + str(entry.moisture_level))    
+    # values changed ?
+    if entry.moisture_level != moisture_level: 
+
+        entry.moisture_level = moisture_level
+        db.session.commit()  
+        
+        if entry.moisture_level != "None":
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + entry.name + " | changed || Moisture_Level - " + str(entry.moisture_level))   
+
+        return True 
 
     
 def SET_PLANT_PUMP_DURATION_AUTO(id, pump_duration_auto):         
     entry = Plants.query.filter_by(id=id).first()
 
-    entry.pump_duration_auto = pump_duration_auto
-    db.session.commit()  
-    
-    if entry.pump_duration_auto != "None":
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + entry.name + " | changed || Pump_Duration_Auto - " + str(entry.pump_duration_auto))    
+    # values changed ?
+    if int(entry.pump_duration_auto) != int(pump_duration_auto):      
+
+        entry.pump_duration_auto = pump_duration_auto
+        db.session.commit()  
+        
+        if entry.pump_duration_auto != "None":
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + entry.name + " | changed || Pump_Duration_Auto - " + str(entry.pump_duration_auto)) 
+
+        return True    
 
 
 def SET_PLANT_PUMP_DURATION_MANUALLY(id, pump_duration_manually):         
     entry = Plants.query.filter_by(id=id).first()
 
-    entry.pump_duration_manually = pump_duration_manually
-    db.session.commit()  
-    
-    if entry.pump_duration_manually != "None":
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + entry.name + " | changed || Pump_Duration_Manually - " + str(entry.pump_duration_manually))                                 
+    # values changed ?
+    if int(entry.pump_duration_manually) != int(pump_duration_manually):       
+
+        entry.pump_duration_manually = pump_duration_manually
+        db.session.commit()  
+        
+        if entry.pump_duration_manually != "None":
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + entry.name + " | changed || Pump_Duration_Manually - " + str(entry.pump_duration_manually))   
+
+        return True                               
 
 
 def CHANGE_PLANTS_POSITION(id, direction):
@@ -626,15 +645,22 @@ def UPDATE_USER_SETTINGS(id, username, email, role, email_notification):
         WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + old_username + " | changed || Username - " + entry.username +
                              " | eMail - " + entry.email + " | Role - " + entry.role + " | eMail-Notification - " + entry.email_notification)
 
+        return True
+
 
 def CHANGE_USER_PASSWORD(id, hashed_password):
     entry = User.query.filter_by(id=id).first()
-    
-    entry.password = hashed_password    
-    db.session.commit()
-    
-    WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + entry.username + " | Password changed")
 
+    # values changed ?
+    if entry.password != hashed_password:    
+    
+        entry.password = hashed_password    
+        db.session.commit()
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + entry.username + " | Password changed")
+
+        return True
+    
 
 def DELETE_USER(user_id):
     entry = GET_USER_BY_ID(user_id)

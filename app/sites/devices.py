@@ -14,14 +14,14 @@ import datetime
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -32,7 +32,7 @@ def permission_required(f):
 def devices():
     error_message_mqtt = ""
     error_message_change_settings_devices   = [] 
-    success_message_change_settings_devices = False          
+    success_message_change_settings_devices = []          
     error_message_change_settings_broker    = [] 
     success_message_change_settings_broker  = False     
 
@@ -70,13 +70,13 @@ def devices():
                         if not GET_MQTT_DEVICE_BY_NAME(new_name):  
                             ieeeAddr = GET_MQTT_DEVICE_BY_ID(i).ieeeAddr                  
                             SET_MQTT_DEVICE_NAME(ieeeAddr, new_name)   
-                            success_message_change_settings_devices = True                                 
+                            success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert")                                  
                         else: 
-                            error_message_change_settings_devices.append(old_name + " >>> Ungültige Eingabe >>> Name bereits vergeben")  
+                            error_message_change_settings_devices.append(old_name + " || Ungültige Eingabe Name || Bereits vergeben")  
 
                 else:
                     name = GET_MQTT_DEVICE_BY_ID(i).name
-                    error_message_change_settings_devices.append(old_name + " >>> Ungültige Eingabe >>> Keinen Namen angegeben")    
+                    error_message_change_settings_devices.append(name + " || Ungültige Eingabe Name || Keinen Wert angegeben")    
 
 
     # update device list
@@ -101,8 +101,8 @@ def devices():
         password = request.form.get("set_password")
 
         if broker != "":
-            SET_MQTT_BROKER_SETTINGS(broker, user, password)
-            success_message_change_settings_broker = True
+            if SET_MQTT_BROKER_SETTINGS(broker, user, password):
+                success_message_change_settings_broker = True
 
 
     if request.form.get("restore_broker_settings") != None:

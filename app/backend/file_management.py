@@ -2,10 +2,7 @@ import datetime
 import os
 import shutil
 import csv
-import yaml
 import json
-
-import pandas as pd
 
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
@@ -26,8 +23,6 @@ else:
 
 def GET_PATH():
     return (PATH)
-
-backup_location_temp_path = ""
 
 
 """ #### """
@@ -217,9 +212,9 @@ def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
 """ backup database """
 """ ############### """
 
-"""
+
 # get backup path
-backup_location_path = GET_CONFIG_BACKUP_LOCATION()
+backup_location_path = PATH + '/backup/'
 
 
 def GET_BACKUP_FILES():
@@ -236,11 +231,10 @@ def GET_BACKUP_FILES():
 
 
 def SAVE_DATABASE():  
-
     try:
         # save database
-        shutil.copyfile(PATH + '/app/database/db_miranda.sqlite3', 
-                        backup_location_path + str(datetime.datetime.now().date()) + '_db_miranda.sqlite3')
+        shutil.copyfile(PATH + '/app/database/database.db', 
+                        backup_location_path + str(datetime.datetime.now().date()) + '_database.db')
                 
         # if more then 10 backups saved, delete oldest backup file
         list_of_files = os.listdir(PATH + '/backup/')    
@@ -261,8 +255,8 @@ def SAVE_DATABASE():
 def RESTORE_DATABASE(filename):
     # check file
     try:
-        if filename.split("_")[1] == "smarthome.sqlite3":
-            shutil.copyfile(backup_location_path + filename, PATH + '/app/database/db_miranda.sqlite3')
+        if filename.split("_")[1] == "database.db":
+            shutil.copyfile(backup_location_path + filename, PATH + '/app/database/database.db')
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Database_Backup | " + filename + " | restored")
             
     except Exception as e:
@@ -278,4 +272,3 @@ def DELETE_DATABASE_BACKUP(filename):
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /backup/" + filename + " | " + str(e))  
         return ("ERROR: " + str(e))
-"""

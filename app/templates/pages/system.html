@@ -26,7 +26,7 @@
               </form>
             </div>
 
-<section id="change_lan_settings"></section>  
+<section id="lan_settings"></section>  
 
 <!-- success message change settings -->
 
@@ -57,7 +57,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Netzwerk | Einstellungen</h5>
+                <h5 class="title">Netzwerk</h5>
               </div>            
               <form method="POST">        
                 <div class="card-body">
@@ -104,6 +104,35 @@
               </form>
             </div>
 
+<!-- backup -->
+
+<section id="backup"></section>  
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title">Sicherungen</h5>
+              </div>            
+              <form method="POST">          
+                <div class="card-body"> 
+                  <div class="table-responsive">
+                    <table class="table tablesorter">             
+                      <tbody> 
+                        {% for entry in list_backup_files %}
+                        <tr>
+                          <td>{{ entry }}</td> 
+                          <td><a href="/system/backup/restore/backup_database/{{ entry }}#database_backup"><font color="orange"><b>RESTORE</b></font></a></td>  
+                          <td><a href="/system/backup/delete/backup_database/{{ entry }}#database_backup"><font size="5"><i class="tim-icons icon-trash-simple"></i></font></a>
+                        </tr>
+                        {% endfor %} 
+                      </tbody>
+                    </table>  
+                  </div>
+                </div>  
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/system#backup'" name="database_save" class="btn btn-fill btn-info">SAVE DATABASE</button>
+                </div>
+              </form>
+            </div>
 
           </div>
         </div>

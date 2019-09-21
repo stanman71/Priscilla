@@ -15,7 +15,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 app = Flask(__name__, static_url_path='/static')
-app.config['SECRET_KEY']                     = os.urandom(20).hex()
+app.config['SECRET_KEY']                     = "randon"        #os.urandom(20).hex()
 app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///' + os.path.join(basedir, 'database/database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 

@@ -6,7 +6,7 @@ from ping3               import ping
 
 from app                         import app
 from app.database.models         import *
-from app.backend.file_management import UPDATE_NETWORK_SETTINGS_FILE
+from app.backend.file_management import UPDATE_NETWORK_SETTINGS_FILE, GET_BACKUP_FILES, SAVE_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
@@ -171,6 +171,20 @@ def system():
                 UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway)
 
 
+    """ ######### """
+    """  backups  """
+    """ ######### """    
+ 
+    # save database   
+    if request.form.get("database_save") is not None:
+        SAVE_DATABASE() 
+ 
+    list_backup_files = GET_BACKUP_FILES()
+        
+    dropdown_list_hours = [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
+                            "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"] 
+
+
     cpu_temperature   = GET_CPU_TEMPERATURE()
  
     lan_dhcp          = GET_HOST_NETWORK().lan_dhcp
@@ -189,6 +203,24 @@ def system():
                                                     cpu_temperature=cpu_temperature,
                                                     lan_dhcp=lan_dhcp,
                                                     lan_ip_address=lan_ip_address,
-                                                    lan_gateway=lan_gateway,                          
+                                                    lan_gateway=lan_gateway,  
+                                                    list_backup_files=list_backup_files,                        
                                                     ) 
                             )
+
+# restore database backup
+@app.route('/system/backup/restore/backup_database/<string:filename>')
+@login_required
+@permission_required
+def restore_database_backup(filename):
+    RESTORE_DATABASE(filename)
+    return redirect(url_for('system'))
+
+
+# delete database backup
+@app.route('/system/backup/delete/backup_database/<string:filename>')
+@login_required
+@permission_required
+def delete_database_backup(filename):
+    DELETE_DATABASE_BACKUP(filename)
+    return redirect(url_for('system'))

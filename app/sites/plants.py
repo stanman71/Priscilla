@@ -33,13 +33,12 @@ def plants():
     error_message_add_plant = []
     error_message_change_settings = []
 
-    success_message_change_settings = False   
+    success_message_change_settings = []   
     success_message_add_plant       = False   
 
     name                 = ""
     mqtt_device_ieeeAddr = ""
     mqtt_device_name     = ""
-
 
     page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
@@ -55,29 +54,34 @@ def plants():
 
             if request.form.get("set_name_" + str(i)) != None:
 
+                error_founded          = False
+                moisture_level         = None
+                pump_duration_manually = None                
+                current_name           = GET_PLANT_BY_ID(i).name
+
                 # rename plants   
                 if request.form.get("set_name_" + str(i)) != "":
                                       
                     new_name = request.form.get("set_name_" + str(i))
-                    old_name = GET_PLANT_BY_ID(i).name
 
-                    if new_name != old_name:  
+                    if new_name != current_name:  
 
                         # name already exist ?         
                         if not GET_PLANT_BY_NAME(new_name):  
                             name = new_name                            
                         else: 
-                            error_message_change_settings.append(old_name + " >>> Ungültige Eingabe >>> Name bereits vergeben")  
-                            name = old_name
+                            error_message_change_settings.append(current_name + " || Ungültige Eingabe Name || Bereits vergeben")  
+                            error_founded = True
+                            name = current_name
 
                     else:
-                        name = old_name
+                        name = current_name
 
                 else:
                     name = GET_PLANT_BY_ID(i).name
-                    error_message_change_settings.append(old_name + " >>> Ungültige Eingabe >>> Keinen Namen angegeben")       
-
-                                                                
+                    error_message_change_settings.append(current_name + " || Ungültige Eingabe Name || Keinen Wert angegeben") 
+                    error_founded = True      
+                                                            
                 pumptime = request.form.get("set_pumptime_" + str(i))
                 
                 if request.form.get("checkbox_pump_mode_" + str(i)) != None:
@@ -94,18 +98,41 @@ def plants():
                     sensor_watertank = "True"
                 else:
                     sensor_watertank = "False" 
-                    
-                UPDATE_PLANT_SETTINGS(i, name, pumptime, pump_mode, sensor_moisture, sensor_watertank) 
-                success_message_change_settings = True   
-                name = ""
-                
-            if request.form.get("radio_moisture_level_" + str(i)) != None:
-                moisture_level = request.form.get("radio_moisture_level_" + str(i))
-                SET_PLANT_MOISTURE_LEVEL(i, moisture_level)
+    
+                if request.form.get("radio_moisture_level_" + str(i)) != None:
+                    moisture_level = request.form.get("radio_moisture_level_" + str(i))
 
-            if request.form.get("set_pump_duration_manually_" + str(i)) != None:
-                pump_duration_manually = request.form.get("set_pump_duration_manually_" + str(i))
-                SET_PLANT_PUMP_DURATION_MANUALLY(i, pump_duration_manually)                   
+                if request.form.get("set_pump_duration_manually_" + str(i)) != None:
+                    pump_duration_manually = request.form.get("set_pump_duration_manually_" + str(i))
+
+                    try: 
+                        if not 5 < int(pump_duration_manually) < 200:
+                            error_message_change_settings.append(current_name + " || Ungültige Eingabe Pumpzeit || Muss eine Zahl zwischen 5 und 200 sein") 
+                            error_founded = True 
+                    except:
+                        error_message_change_settings.append(current_name + " || Ungültige Eingabe Pumpzeit || Muss eine Zahl zwischen 5 und 200 sein") 
+                        error_founded = True                                       
+
+                # save settings
+                if error_founded == False: 
+
+                    changes_saved = False
+
+                    if UPDATE_PLANT_SETTINGS(i, name, pumptime, pump_mode, sensor_moisture, sensor_watertank):
+                        changes_saved = True
+
+                    if moisture_level != None:
+                        if SET_PLANT_MOISTURE_LEVEL(i, moisture_level):
+                            changes_saved = True
+
+                    if pump_duration_manually != None:
+                        if SET_PLANT_PUMP_DURATION_MANUALLY(i, pump_duration_manually):
+                            changes_saved = True     
+
+                    if changes_saved == True:    
+                        success_message_change_settings.append(current_name + " || Einstellungen gespeichert") 
+
+                name = ""
 
 
     """ ########### """

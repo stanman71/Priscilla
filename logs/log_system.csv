@@ -10,3 +10,73 @@ Timestamp,Type,Description
 2019-09-20 19:36:40,DATABASE,|Host || Network settings changed || LAN - 192.168.1.222 : 192.168.1.1|
 2019-09-20 19:39:11,DATABASE,|Host || Network settings changed || LAN - 192.168.1.55 : 192.168.1.1|
 2019-09-20 19:44:18,DATABASE,|Host || Network settings changed || LAN - 192.168.1.40 : 192.168.1.1|
+2019-09-21 10:30:50,DATABASE,|Host || Network settings changed || LAN -  : |
+2019-09-21 10:31:09,DATABASE,|Plant - fhgfhgfhgf || changed |||| Moisture_Level - normal|
+2019-09-21 10:31:22,DATABASE,|Plant - fhgfhgfhgf || changed |||| Moisture_Level - normal|
+2019-09-21 10:31:22,DATABASE,|Plant - hgff || changed |||| Moisture_Level - normal|
+2019-09-21 10:31:22,DATABASE,|Plant - hgff || changed |||| Pump_Duration_Manually - 34|
+2019-09-21 10:31:25,DATABASE,|Plant - fhgfhgfhgf || changed |||| Moisture_Level - normal|
+2019-09-21 10:31:25,DATABASE,|Plant - hgff || changed |||| Moisture_Level - normal|
+2019-09-21 10:31:25,DATABASE,|Plant - hgff || changed |||| Pump_Duration_Manually - 34|
+2019-09-21 10:33:16,DATABASE,|Plant - fhgfhgfhgf || changed |||| Moisture_Level - normal|
+2019-09-21 10:33:16,DATABASE,|Plant - hgff || changed |||| Moisture_Level - normal|
+2019-09-21 10:33:16,DATABASE,|Plant - hgff || changed |||| Pump_Duration_Manually - 34|
+2019-09-21 10:33:21,DATABASE,|Plant - fhgfhgfhgf || changed |||| Moisture_Level - normal|
+2019-09-21 10:35:47,DATABASE,|Plant - fhgfhgfhgf || changed |||| Moisture_Level - normal|
+2019-09-21 10:36:55,DATABASE,|Plant - fhgfhgfhgf || changed |||| Moisture_Level - normal|
+2019-09-21 10:36:55,DATABASE,|Plant - hgff || changed |||| Moisture_Level - normal|
+2019-09-21 10:36:55,DATABASE,|Plant - hgff || changed |||| Pump_Duration_Manually - 34|
+2019-09-21 10:36:57,DATABASE,|Plant - fhgfhgfhgf || changed |||| Moisture_Level - normal|
+2019-09-21 10:37:02,DATABASE,|Plant - fhgfhgfhgf || changed |||| Moisture_Level - normal|
+2019-09-21 10:37:05,DATABASE,|Plant - fhgfhgfhgf || changed |||| Moisture_Level - normal|
+2019-09-21 10:37:05,DATABASE,|Plant - hgff || changed |||| Moisture_Level - normal|
+2019-09-21 10:37:05,DATABASE,|Plant - hgff || changed |||| Pump_Duration_Manually - 34|
+2019-09-21 10:42:10,DATABASE,|Plant - hgff || changed |||| Pump_Duration_Manually - 34|
+2019-09-21 10:42:13,DATABASE,|Plant - hgff || changed |||| Pump_Duration_Manually - 34|
+2019-09-21 10:42:14,DATABASE,|Plant - hgff || changed |||| Pump_Duration_Manually - 34|
+2019-09-21 10:42:15,DATABASE,|Plant - hgff || changed |||| Pump_Duration_Manually - 34|
+2019-09-21 10:44:14,DATABASE,|Plant - hgff || changed |||| Pump_Duration_Manually - 34|
+2019-09-21 10:45:19,DATABASE,|Plant - hgff || changed |||| Name - hgffuzt || PumpTime -  || PumpMode - manually || Sensor Moisture - False || Sensor Watertank - False|
+2019-09-21 10:45:27,DATABASE,|Plant - hgffuzt || changed |||| Name - hgffuzt || PumpTime -  || PumpMode - auto || Sensor Moisture - True || Sensor Watertank - True|
+2019-09-21 10:45:32,DATABASE,|Plant - hgffuzt || changed |||| Moisture_Level - high|
+2019-09-21 10:47:13,DATABASE,|Plant - hgffuzt || changed |||| Name - hgffuzt || PumpTime -  || PumpMode - manually || Sensor Moisture - False || Sensor Watertank - False|
+2019-09-21 10:47:15,DATABASE,|Plant - hgffuzt || changed |||| Moisture_Level - normal|
+2019-09-21 10:58:15,DATABASE,|Plant - hgffuzt || changed |||| Pump_Duration_Manually - 38|
+2019-09-21 10:59:38,DATABASE,|User - fdssd || changed |||| Username - fdssdz || eMail - gfdgfztd@gmx.de || Role - user || eMail-Notification - False|
+2019-09-21 10:59:51,DATABASE,|User - fdssdz || Password changed|
+2019-09-21 10:59:58,DATABASE,|User - fdssdz || changed |||| Username - fdssdz || eMail - gfdgfztd@gmx.de || Role - administrator || eMail-Notification - False|
+2019-09-21 11:00:02,DATABASE,|User - fdssdz || changed |||| Username - fdssdz || eMail - gfdgfztd@gmx.de || Role - user || eMail-Notification - False|
+2019-09-21 11:00:29,ERROR,|File || /etc/dhcpcd.conf || [Errno 2] No such file or directory: '/etc/dhcpcd.conf'|
+2019-09-21 11:00:34,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:00:37,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:04:16,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:04:17,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:04:19,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:04:19,DATABASE,|MQTT || Device - test || Name changed |||| Name - testjhg|
+2019-09-21 11:04:21,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:05:01,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:05:07,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:05:41,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:05:43,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:05:43,DATABASE,|MQTT || Broker Settings changed|
+2019-09-21 11:05:45,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:06:14,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:06:16,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:06:18,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:06:23,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:19:59,ERROR,|Database_Backup || [Errno 2] No such file or directory: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/app/database/database.sqlite3'|
+2019-09-21 11:20:04,ERROR,|Database_Backup || [Errno 2] No such file or directory: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/app/database/database.sqlite3'|
+2019-09-21 11:21:07,ERROR,|Database_Backup || [Errno 22] Invalid argument: 'sqlite:///C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Controldatabase/database.db2019-09-21_database.db'|
+2019-09-21 11:21:08,ERROR,|Database_Backup || [Errno 22] Invalid argument: 'sqlite:///C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Controldatabase/database.db2019-09-21_database.db'|
+2019-09-21 11:22:48,ERROR,|Database_Backup || [Errno 22] Invalid argument: 'sqlite:///C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Controldatabase/database.db2019-09-21_database.db'|
+2019-09-21 11:25:07,SUCCESS,|Database_Backup || saved|
+2019-09-21 11:27:47,EVENT,|File || /backup/2019-09-21_database.db || deleted|
+2019-09-21 11:27:49,SUCCESS,|Database_Backup || saved|
+2019-09-21 11:28:16,SUCCESS,|Database_Backup || 2019-09-21_database.db || restored|
+2019-09-21 11:30:01,SUCCESS,|Database_Backup || saved|
+2019-09-21 11:30:51,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:31:24,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:31:30,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:33:12,DATABASE,|Plant - hgffuzt || changed |||| Name - hgffuztd || PumpTime -  || PumpMode - manually || Sensor Moisture - False || Sensor Watertank - False|
+2019-09-21 11:33:17,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 11:33:32,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
