@@ -6,6 +6,7 @@ from ping3               import ping
 
 from app                         import app
 from app.database.models         import *
+from app.backend.email           import SEND_EMAIL
 from app.backend.file_management import UPDATE_NETWORK_SETTINGS_FILE, GET_BACKUP_FILES, SAVE_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
@@ -88,11 +89,14 @@ def HOST_SHUTDOWN():
 @login_required
 @permission_required
 def system():
-    error_message_change_settings   = []
-    success_message_change_settings = False
-    
-    message_shutdown         = "" 
-    message_ip_config_change = False
+    error_message_change_settings_network   = []
+    success_message_change_settings_network = False
+    error_message_change_settings_email     = []
+    success_message_change_settings_email   = False    
+
+    message_shutdown            = "" 
+    message_ip_config_change    = False
+    message_test_settings_email = ""
 
     lan_dhcp          = GET_HOST_NETWORK().lan_dhcp
     lan_ip_address    = GET_HOST_NETWORK().lan_ip_address
@@ -127,8 +131,7 @@ def system():
         else:
             lan_dhcp = "False"  
 
-        UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp)
-
+        # no dhcp ?
         if lan_dhcp == "False":  
 
             save_settings_lan = True
@@ -139,36 +142,108 @@ def system():
                 if new_lan_ip_address != lan_ip_address:
 
                     if CHECK_IP_ADDRESS(new_lan_ip_address) == False:
-                        error_message_change_settings.append("LAN || Ungültige IP-Adresse angegeben")
+                        error_message_change_settings_network.append("LAN || Ungültige IP-Adresse angegeben")
                         save_settings_lan = False
                             
                     elif PING_IP_ADDRESS(new_lan_ip_address) == True or new_lan_ip_address == GET_HOST_NETWORK().lan_ip_address:
-                        error_message_change_settings.append("LAN || IP-Adresse bereits vergeben")
+                        error_message_change_settings_network.append("LAN || IP-Adresse bereits vergeben")
                         save_settings_lan = False
 
                     else:
                         lan_ip_address = new_lan_ip_address
 
             else:
-                error_message_change_settings.append("LAN || Keine IP-Adresse angegeben") 
+                error_message_change_settings_network.append("LAN || Keine IP-Adresse angegeben") 
                 
             if request.form.get("set_lan_gateway") != "":
                 lan_gateway = request.form.get("set_lan_gateway")            
 
                 if CHECK_IP_ADDRESS(lan_gateway) == False:
-                    error_message_change_settings.append("LAN || Ungültiges Gateway angegeben")
+                    error_message_change_settings_network.append("LAN || Ungültiges Gateway angegeben")
                     save_settings_lan = False
                     
                 if CHECK_IP_ADDRESS(lan_gateway) == True and PING_IP_ADDRESS(lan_gateway) == False:
-                    error_message_change_settings.append("LAN || Gateway nicht gefunden")
+                    error_message_change_settings_network.append("LAN || Gateway nicht gefunden")
                     save_settings_lan = False
 
             else:
-                error_message_change_settings.append("LAN || Kein Gateway angegeben") 
+                error_message_change_settings_network.append("LAN || Kein Gateway angegeben") 
+                save_settings_lan = False
 
             if save_settings_lan == True:
-                UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway)
-                UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway)
+
+                changes_saved = False
+
+                if UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
+                    changes_saved = True
+                if UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway):
+                    changes_saved = True
+                if UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
+                    changes_saved = True
+
+                if changes_saved == True:
+                    success_message_change_settings_network = True
+        
+        else:
+            if UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
+                success_message_change_settings = True  
+
+
+    """ ####### """
+    """  email  """
+    """ ####### """    
+    
+    # update email settings
+    if request.form.get("update_email_settings") != None:  
+
+        error_founded = False
+
+        if request.form.get("set_server_address") != "":
+            server_address = request.form.get("set_server_address")
+        else:
+            error_message_change_settings_email.append("Ungültige Eingabe Server-Adresse || Keinen Wert angegeben") 
+            error_founded = True                  
+
+        if request.form.get("set_server_port") != "":
+
+            try:
+                if int(request.form.get("set_server_port")) in [25, 110, 143, 465, 587, 993, 995]:
+                    server_port = request.form.get("set_server_port")
+            except:
+                error_message_change_settings_email.append("Ungültige Eingabe Server-Port || Falscher Port")
+                error_founded = True     
+
+        else:
+            error_message_change_settings_email.append("Ungültige Eingabe Server-Port || Keinen Wert angegeben") 
+            error_founded = True       
+
+        if request.form.get("radio_encoding") != None:
+            encoding = request.form.get("radio_encoding")
+        else:
+            error_message_change_settings_email.append("Ungültige Eingabe Verschlüsselung || Keinen Wert angegeben") 
+            error_founded = True     
+
+        if request.form.get("set_username") != "":
+            username = request.form.get("set_username")
+        else:
+            error_message_change_settings_email.append("Ungültige Eingabe Benutzername || Keinen Wert angegeben") 
+            error_founded = True     
+
+        if request.form.get("set_password") != "":
+            password = request.form.get("set_password")
+        else:
+            error_message_change_settings_email.append("Ungültige Eingabe Passwort || Keinen Wert angegeben") 
+            error_founded = True                 
+
+        if error_founded == False:
+
+            if SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password):
+                success_message_change_settings_email == True
+
+
+    # test email settings
+    if request.form.get("test_email_settings") != None:  
+        message_test_settings_email = SEND_EMAIL("TEST", "TEST")
 
 
     """ ######### """
@@ -176,14 +251,8 @@ def system():
     """ ######### """    
  
     # save database   
-    if request.form.get("database_save") is not None:
+    if request.form.get("database_save") != None:
         SAVE_DATABASE() 
- 
-    list_backup_files = GET_BACKUP_FILES()
-        
-    dropdown_list_hours = [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
-                            "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"] 
-
 
     cpu_temperature   = GET_CPU_TEMPERATURE()
  
@@ -191,19 +260,25 @@ def system():
     lan_ip_address    = GET_HOST_NETWORK().lan_ip_address
     lan_gateway       = GET_HOST_NETWORK().lan_gateway
      
+    email_settings    = GET_EMAIL_SETTINGS()
+    list_backup_files = GET_BACKUP_FILES()
 
     data = {'navigation': 'system', 'notification': ''}
 
     return render_template('layouts/default.html',
                             data=data,    
                             content=render_template( 'pages/system.html',   
-                                                    error_message_change_settings=error_message_change_settings,
-                                                    success_message_change_settings=success_message_change_settings,                                                    
+                                                    error_message_change_settings_network=error_message_change_settings_network,
+                                                    success_message_change_settings_network=success_message_change_settings_network,     
+                                                    error_message_change_settings_email=error_message_change_settings_email,
+                                                    success_message_change_settings_email=success_message_change_settings_email,
+                                                    message_test_settings_email=message_test_settings_email,                                                                                                         
                                                     message_shutdown=message_shutdown,
                                                     cpu_temperature=cpu_temperature,
                                                     lan_dhcp=lan_dhcp,
                                                     lan_ip_address=lan_ip_address,
                                                     lan_gateway=lan_gateway,  
+                                                    email_settings=email_settings,                                            
                                                     list_backup_files=list_backup_files,                        
                                                     ) 
                             )

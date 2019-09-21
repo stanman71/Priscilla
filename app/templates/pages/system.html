@@ -26,11 +26,13 @@
               </form>
             </div>
 
+<!-- network -->
+
 <section id="lan_settings"></section>  
 
-<!-- success message change settings -->
+<!-- success message change settings network -->
 
-{% if success_message_change_settings == True %}
+{% if success_message_change_settings_network == True %}
   <div class="alert alert-success">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
@@ -39,21 +41,18 @@
   </div>
 {% endif %}  
 
-<!-- error message change settings -->
+<!-- error message change settings network -->
 
-{% if error_message_change_settings != [] %}
-  <div class="alert alert-info alert-with-icon" data-notify="container">
+{% if error_message_change_settings_network != [] %}
+  <div class="alert alert-danger">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
-    {% for error in error_message_change_settings %}
+    {% for error in error_message_change_settings_network %}
       <span data-notify="message">{{ error }}</span>
     {% endfor %}
   </div>
 {% endif %}  
-
-<!-- lan settings -->
 
             <div class="card">
               <div class="card-header">
@@ -103,6 +102,110 @@
                 </div>
               </form>
             </div>
+
+
+<!-- email -->
+
+<section id="email"></section>  
+
+<!-- success message change settings email -->
+
+{% if success_message_change_settings_email == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Einstellungen erfolgreich geändert</span>
+  </div>
+{% endif %}  
+
+<!-- error message change settings email -->
+
+{% if error_message_change_settings_email != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_change_settings_email %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+<!-- test settings email -->
+
+{% if message_test_settings_email != "" %}
+  {% if message_test_settings_email != None %}
+    <div class="alert alert-danger">
+      <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="tim-icons icon-simple-remove"></i>
+      </button>
+      <span data-notify="message">{{ message_test_settings_email }}</span> 
+    </div>
+  {% else %} 
+    <div class="alert alert-success">
+      <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="tim-icons icon-simple-remove"></i>
+      </button>
+      <span data-notify="message">eMail erfolgreich versendet</span> 
+    </div>
+  {% endif %} 
+{% endif %}  
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title">eMail</h5>
+              </div>            
+              <form method="POST">          
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Server Adresse</label>
+                         <input type="text" class="form-control" name="set_server_address" value="{% if email_settings.server_address != None %}{{ email_settings.server_address }}{% endif %}" />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Server Port</label>
+                        <input type="text" class="form-control" name="set_server_port" value="{% if email_settings.server_port != None %}{{ email_settings.server_port }}{% endif %}" />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="radio_encoding_ssl" {% if email_settings.encoding == "ssl" %} checked="on" {% endif %} value="ssl" name="radio_encoding">
+                        <label class="custom-control-label" for="radio_encoding_ssl">SSL</label>
+                      </div>                      
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="radio_encoding_tls" {% if email_settings.encoding == "tls" %} checked="on" {% endif %} value="tls" name="radio_encoding">
+                        <label class="custom-control-label" for="radio_encoding_tls">TLS</label>
+                      </div>      
+                      <br>
+                      <br>
+                    </div>  
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Benutzername</label>
+                        <input type="text" class="form-control" name="set_username" value="{% if email_settings.username != None %}{{ email_settings.username }}{% endif %}" />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label>Passwort</label>
+                        <input type="password" class="form-control" name="set_password" value="{% if email_settings.password != None %}{{ email_settings.password }}{% endif %}" />
+                      </div>
+                    </div>
+                  </div>                                
+                </div>
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/system#email'" name="update_email_settings" class="btn btn-fill btn-primary">SAVE</button>
+                  <button type="submit" onclick="window.location.href='/system#email'" name="test_email_settings" class="btn btn-fill btn-info pull-right">TEST</button>
+                </div>
+              </form>
+            </div>
+
 
 <!-- backup -->
 

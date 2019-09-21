@@ -80,3 +80,36 @@ Timestamp,Type,Description
 2019-09-21 11:33:12,DATABASE,|Plant - hgffuzt || changed |||| Name - hgffuztd || PumpTime -  || PumpMode - manually || Sensor Moisture - False || Sensor Watertank - False|
 2019-09-21 11:33:17,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
 2019-09-21 11:33:32,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:34:20,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:37:07,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:37:25,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:37:58,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:41:33,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:50:18,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:51:22,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:53:39,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:53:41,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:53:43,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:53:43,DATABASE,|MQTT || Device - testjhg || Name changed |||| Name - testjhghg|
+2019-09-21 14:53:47,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:53:47,DATABASE,|MQTT || Broker Settings changed|
+2019-09-21 14:53:49,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:53:51,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-21 14:53:51,DATABASE,|MQTT || Broker Settings restored|
+2019-09-21 14:53:57,DATABASE,|Plant - hgffuztd || changed |||| Name - hgffuztdiu || PumpTime -  || PumpMode - manually || Sensor Moisture - False || Sensor Watertank - False|
+2019-09-21 14:54:07,DATABASE,|User - fdssdz || changed |||| Username - fdssdzz || eMail - gfdgfztd@gmx.de || Role - user || eMail-Notification - False|
+2019-09-21 14:54:14,ERROR,|File || /etc/dhcpcd.conf || [Errno 2] No such file or directory: '/etc/dhcpcd.conf'|
+2019-09-21 14:54:19,ERROR,|File || /etc/dhcpcd.conf || [Errno 2] No such file or directory: '/etc/dhcpcd.conf'|
+2019-09-21 14:54:29,EVENT,|File || /backup/2019-09-21_database.db || deleted|
+2019-09-21 14:54:31,SUCCESS,|Database_Backup || saved|
+2019-09-21 14:55:56,DATABASE,|Host || Network settings changed || DHCP LAN - True|
+2019-09-21 15:24:41,DATABASE,|eMail || Server Settings || changed|
+2019-09-21 15:31:53,DATABASE,|eMail || Server Settings || changed|
+2019-09-21 15:34:23,ERROR,|eMail || ['ipcam.ms@gmail.co'] || TEST || TEST || (535, b'5.7.8 Username and Password not accepted. Learn more at\n5.7.8  https://support.google.com/mail/?p=BadCredentials k24sm4753771wmi.1 - gsmtp')|
+2019-09-21 15:34:28,DATABASE,|eMail || Server Settings || changed|
+2019-09-21 15:37:26,DATABASE,|eMail || Server Settings || changed|
+2019-09-21 15:38:31,DATABASE,|eMail || Server Settings || changed|
+2019-09-21 15:38:40,DATABASE,|eMail || Server Settings || changed|
+2019-09-21 15:38:42,ERROR,|eMail || ['ipcam.ms@gmail.com'] || TEST || TEST || [Errno 11001] getaddrinfo failed|
+2019-09-21 15:38:49,DATABASE,|eMail || Server Settings || changed|
+2019-09-21 15:39:37,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|

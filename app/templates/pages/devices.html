@@ -91,8 +91,8 @@
                   </div>
                 </div>            
                 <div class="card-footer">                  
-                  <button type="submit" onclick="window.location.href='/devices#'" name="save_device_settings" class="btn btn-fill btn-primary">Save</button>
-                  <input type="submit" onclick="window.location.href='/devices#'" class="btn btn-fill btn-info pull-right" name="update_mqtt_devices" value="Update" /> 
+                  <button type="submit" onclick="window.location.href='/devices#'" name="save_device_settings" class="btn btn-fill btn-primary">SAVE</button>
+                  <button type="submit" onclick="window.location.href='/devices#'" name="update_mqtt_devices" class="btn btn-fill btn-info pull-right">UPDATE</button>
                 </div>
               </form>
             </div>
@@ -136,7 +136,7 @@
               <form method="POST">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label>Broker</label>
                         <input type="text" class="form-control" name="set_broker" value="{% if broker.broker != None %}{{ broker.broker }}{% endif %}" /> 
@@ -144,15 +144,13 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label>Benutzername (Optional)</label>
                         <input type="text" class="form-control" name="set_user" value="{% if broker.user != None %}{{ broker.user }}{% endif %}" /> 
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label>Passwort (Optional)</label>
                         <input type="text" class="form-control" name="set_password" value="{% if broker.password != None %}{{ broker.password }}{% endif %}" /> 
@@ -161,8 +159,8 @@
                   </div>                  
                 </div>
                 <div class="card-footer">                  
-                  <button type="submit" onclick="window.location.href='/devices#broker_settings'" name="save_broker_settings" class="btn btn-fill btn-primary">Save</button>
-                  <button type="submit" onclick="window.location.href='/devices#broker_settings'" name="restore_broker_settings" class="btn btn-fill btn-warning pull-right">Restore</button>
+                  <button type="submit" onclick="window.location.href='/devices#broker_settings'" name="save_broker_settings" class="btn btn-fill btn-primary">SAVE</button>
+                  <button type="submit" onclick="window.location.href='/devices#broker_settings'" name="restore_broker_settings" class="btn btn-fill btn-warning pull-right">RESTORE</button>
                 </div>                
               </form>
             </div>
@@ -179,7 +177,7 @@
                   <br>
                   <br>
                   <div class="dropdown text-right">
-                    <input type="submit" onclick="window.location.href='/devices#logfile'" class="btn btn-danger text-right" name="reset_logfile" value="Reset Device Log">
+                    <button type="submit" onclick="window.location.href='/devices#logfile'" name="reset_logfile" class="btn btn-danger text-right">RESET DEVICE LOG</button>
                   </div> 
                 </form> 
               </div>

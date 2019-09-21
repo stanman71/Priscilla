@@ -10,6 +10,14 @@ import datetime
 
 db = SQLAlchemy(app)
 
+class eMail(db.Model):
+    __tablename__  = 'email'
+    id             = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    server_address = db.Column(db.String(50))
+    server_port    = db.Column(db.Integer)
+    encoding       = db.Column(db.String(50))
+    username       = db.Column(db.String(50))
+    password       = db.Column(db.String(50)) 
 
 class Host(db.Model):
     __tablename__ = 'host'
@@ -78,6 +86,15 @@ class User(UserMixin, db.Model):
 db.create_all()
 
 
+# create default email
+if eMail.query.filter_by().first() is None:
+    email = eMail(
+        id = 1,
+    )
+    db.session.add(email)
+    db.session.commit()
+
+
 # create default host settings
 if Host.query.filter_by().first() is None:
     host = Host(
@@ -110,6 +127,49 @@ if User.query.filter_by(username='admin').first() is None:
     db.session.commit()
 
 
+""" ################## """
+""" ################## """
+"""        eMail       """
+""" ################## """
+""" ################## """
+
+
+def GET_EMAIL_SETTINGS():   
+    return eMail.query.filter_by().first()
+
+
+def GET_EMAIL_ADDRESSES(address_type): 
+    if address_type == "TEST":
+        mail_list = []
+        mail_list.append(eMail.query.filter_by().first().username)
+        return mail_list
+
+    if address_type == "NOTIFICATION":
+        mail_list = []
+        users = User.query.all()
+        for user in users:
+            if user.email_notification == "True":
+                mail_list.append(user.email)
+        return mail_list
+
+
+def SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password): 
+    entry = eMail.query.filter_by().first()
+
+    if (entry.server_address != server_address or entry.server_port != server_port or entry.encoding != encoding or entry.username != username or entry.password != password):
+
+        entry.server_address = server_address
+        entry.server_port    = server_port
+        entry.encoding       = encoding
+        entry.username       = username
+        entry.password       = password
+        db.session.commit()
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "eMail | Server Settings | changed")
+        
+        return True
+
+
 """ ################### """
 """ ################### """
 """         host        """
@@ -131,7 +191,9 @@ def UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
         db.session.commit()
         
         WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed " +
-                             "| DHCP LAN - " +  str(lan_dhcp))     
+                             "| DHCP LAN - " +  str(lan_dhcp))    
+
+        return True 
 
 
 def UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway):
@@ -146,6 +208,8 @@ def UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway):
         
         WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed " +
                              "| LAN - " + str(lan_ip_address) + " : " + str(lan_gateway)) 
+
+        return True
 
 
 """ ################### """
