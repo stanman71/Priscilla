@@ -134,59 +134,66 @@ def system():
         # no dhcp ?
         if lan_dhcp == "False":  
 
-            save_settings_lan = True
-                     
-            if request.form.get("set_lan_ip_address") != "":
-                new_lan_ip_address = request.form.get("set_lan_ip_address")
+            # first reload of the website after deactivate dhcp, website don't know the values "set_lan_ip_address" and "set_lan_gateway"
+            if request.form.get("set_lan_ip_address") != None:          
 
-                if new_lan_ip_address != lan_ip_address:
+                save_settings_lan = True
+                        
+                if request.form.get("set_lan_ip_address") != "":
+                    new_lan_ip_address = request.form.get("set_lan_ip_address")
 
-                    if CHECK_IP_ADDRESS(new_lan_ip_address) == False:
-                        error_message_change_settings_network.append("LAN || Ungültige IP-Adresse angegeben")
-                        save_settings_lan = False
-                            
-                    elif PING_IP_ADDRESS(new_lan_ip_address) == True or new_lan_ip_address == GET_HOST_NETWORK().lan_ip_address:
-                        error_message_change_settings_network.append("LAN || IP-Adresse bereits vergeben")
-                        save_settings_lan = False
+                    if new_lan_ip_address != lan_ip_address:
 
-                    else:
-                        lan_ip_address = new_lan_ip_address
+                        if CHECK_IP_ADDRESS(new_lan_ip_address) == False:
+                            error_message_change_settings_network.append("LAN || Ungültige IP-Adresse angegeben")
+                            save_settings_lan = False
+                                
+                        elif PING_IP_ADDRESS(new_lan_ip_address) == True or new_lan_ip_address == GET_HOST_NETWORK().lan_ip_address:
+                            error_message_change_settings_network.append("LAN || IP-Adresse bereits vergeben")
+                            save_settings_lan = False
 
-            else:
-                error_message_change_settings_network.append("LAN || Keine IP-Adresse angegeben") 
-                
-            if request.form.get("set_lan_gateway") != "":
-                lan_gateway = request.form.get("set_lan_gateway")            
+                        else:
+                            lan_ip_address = new_lan_ip_address
 
-                if CHECK_IP_ADDRESS(lan_gateway) == False:
-                    error_message_change_settings_network.append("LAN || Ungültiges Gateway angegeben")
-                    save_settings_lan = False
+                else:
+                    error_message_change_settings_network.append("LAN || Keine IP-Adresse angegeben") 
                     
-                if CHECK_IP_ADDRESS(lan_gateway) == True and PING_IP_ADDRESS(lan_gateway) == False:
-                    error_message_change_settings_network.append("LAN || Gateway nicht gefunden")
+                if request.form.get("set_lan_gateway") != "":
+                    lan_gateway = request.form.get("set_lan_gateway")            
+
+                    if CHECK_IP_ADDRESS(lan_gateway) == False:
+                        error_message_change_settings_network.append("LAN || Ungültiges Gateway angegeben")
+                        save_settings_lan = False
+                        
+                    if CHECK_IP_ADDRESS(lan_gateway) == True and PING_IP_ADDRESS(lan_gateway) == False:
+                        error_message_change_settings_network.append("LAN || Gateway nicht gefunden")
+                        save_settings_lan = False
+
+                else:
+                    error_message_change_settings_network.append("LAN || Kein Gateway angegeben") 
                     save_settings_lan = False
 
+                if save_settings_lan == True:
+
+                    changes_saved = False
+
+                    if UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
+                        changes_saved = True
+                    if UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway):
+                        changes_saved = True
+                    if UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
+                        changes_saved = True
+
+                    if changes_saved == True:
+                        success_message_change_settings_network = True
+
             else:
-                error_message_change_settings_network.append("LAN || Kein Gateway angegeben") 
-                save_settings_lan = False
-
-            if save_settings_lan == True:
-
-                changes_saved = False
-
                 if UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
-                    changes_saved = True
-                if UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway):
-                    changes_saved = True
-                if UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
-                    changes_saved = True
+                    success_message_change_settings_network = True       
 
-                if changes_saved == True:
-                    success_message_change_settings_network = True
-        
         else:
             if UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
-                success_message_change_settings = True  
+                success_message_change_settings_network = True  
 
 
     """ ####### """

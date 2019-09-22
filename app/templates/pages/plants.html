@@ -3,6 +3,12 @@
         <div class="row">
           <div class="col-md-12">
 
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title"><b>Pflanzen</b></h4>
+              </div>
+            </div>
+
 <!-- success message change settings -->
 
 {% if success_message_change_settings != [] %}
@@ -32,9 +38,6 @@
 <!-- plants table -->    
 
             <div class="card ">
-              <div class="card-header">
-                <h4 class="card-title">Pflanzen</h4>
-              </div>  
               <form method="POST">          
                 <div class="card-body"> 
                   <div class="table-responsive">
@@ -42,11 +45,10 @@
                       <thead>
                         <th scope="col" style="width:3%"></th> 
                         <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Pflanze</th>   
-                        <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Gerät</th> 
-                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Zeitpunkt (Std:Min)</th> 
-                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Optionen</th>  
-                        <th scope="col" style="width:10%"><p style="visibility: hidden;">invisibletext</p>Pumpdauer (s)</th>                         
-                        <th scope="col" style="width:14%"><p style="visibility: hidden;">invisibletextform</p>Feuchtigkeitslevel</th>   
+                        <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Gerät</th>                      
+                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Zeit (Std:Min)</th>   
+                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletext</p>Pumpdauer (s)</th>                         
+                        <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextform</p>Feuchtigkeitslevel</th>   
                         <th scope="col" style="width:5%"></th>                                                    
                       </thead>
                       <tbody> 
@@ -59,27 +61,13 @@
                           <td>
                             <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                    
                           </td> 
-                          <td>{{ entry.mqtt_device.name }}</td>                                                          
+                          <td>{{ entry.mqtt_device.name }}</td>                                                                                     
                           <td>                     
                             <input type="text" class="form-control" name="set_pumptime_{{ entry.id }}" 
                              value="{% if entry.pumptime != None and entry.pumptime != "None" %}{{ entry.pumptime }}{% endif %}" />  
                           </td>          
                           <td>
-                            <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="checkbox_pump_mode_{{ entry.id }}" {% if entry.pump_mode == "auto" %} checked="on" {% endif %} name="checkbox_pump_mode_{{ entry.id }}">
-                              <label class="custom-control-label" for="checkbox_pump_mode_{{ entry.id }}">Automatik</label>
-                            </div>       
-                            <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="checkbox_sensor_moisture_{{ entry.id }}" {% if entry.sensor_moisture == "True" %} checked="on" {% endif %} name="checkbox_sensor_moisture_{{ entry.id }}">
-                              <label class="custom-control-label" for="checkbox_sensor_moisture_{{ entry.id }}">Feuchtigkeitssensor</label>
-                            </div>        
-                            <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="checkbox_sensor_watertank_{{ entry.id }}" {% if entry.sensor_watertank == "True" %} checked="on" {% endif %} name="checkbox_sensor_watertank_{{ entry.id }}">
-                              <label class="custom-control-label" for="checkbox_sensor_watertank_{{ entry.id }}">Wasserstandsensor</label>
-                            </div>    
-                          </td>  
-                          <td>
-                            {% if entry.pump_mode == "auto" %}
+                            {% if entry.mqtt_device.device_type == "watering_controller auto" %}          
                               {{ entry.pump_duration_auto }}
                             {% else %}
                               <input type="text" class="form-control" name="set_pump_duration_manually_{{ entry.id }}" 
@@ -87,7 +75,7 @@
                             {% endif %}
                           </td>                            
                           <td>
-                            {% if entry.sensor_moisture == "True" %}
+                            {% if entry.mqtt_device.device_type == "watering_controller auto" %}   
                               <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="radio_moisture_level_high_{{ entry.id }}" {% if entry.moisture_level == "high" %} checked="on" {% endif %} value="high" name="radio_moisture_level_{{ entry.id }}">
                                 <label class="custom-control-label" for="radio_moisture_level_high_{{ entry.id }}">Hoch</label>
@@ -188,6 +176,28 @@
                   <button type="submit" onclick="window.location.href='/plants#add_plant'" name="add_plant" class="btn btn-fill btn-primary">SAVE</button>
                 </div>
               </form>
+            </div>
+
+<!-- plants datafiles -->    
+
+            <div class="card ">
+              <div class="card-header">
+                <h5 class="title">Pflanzendaten</h5>
+              </div>         
+              <div class="card-body"> 
+                <div class="table-responsive">
+                  <table class="table tablesorter">         
+                    <tbody> 
+                      {% for entry in list_plants_datafiles %}
+                      <tr>
+                        <td>{{ entry }}</td> 
+                        <td class="text-right"><a href="/plants/download/file/{{ entry }}?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD</b></font></a></td>  
+                      </tr>
+                      {% endfor %} 
+                    </tbody>
+                  </table>
+                </div>
+              </div>            
             </div>
 
 

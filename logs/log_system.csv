@@ -113,3 +113,41 @@ Timestamp,Type,Description
 2019-09-21 15:38:42,ERROR,|eMail || ['ipcam.ms@gmail.com'] || TEST || TEST || [Errno 11001] getaddrinfo failed|
 2019-09-21 15:38:49,DATABASE,|eMail || Server Settings || changed|
 2019-09-21 15:39:37,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 02:13:45,DATABASE,|Host || Network settings changed || DHCP LAN - False|
+2019-09-22 02:13:48,DATABASE,|Host || Network settings changed || DHCP LAN - True|
+2019-09-22 02:13:50,DATABASE,|Host || Network settings changed || DHCP LAN - False|
+2019-09-22 02:13:55,DATABASE,|Host || Network settings changed || DHCP LAN - True|
+2019-09-22 02:24:22,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 02:26:28,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 02:27:44,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 02:32:45,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 02:33:07,DATABASE,|Plant - hgffuztdiu || deleted|
+2019-09-22 02:33:11,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 02:35:44,DATABASE,|Plant - fhgfhgfhgf || changed |||| Name - fhgfhgf || PumpTime - |
+2019-09-22 02:35:49,DATABASE,|Plant - fhgfhgf || changed |||| Name - fhg || PumpTime - |
+2019-09-22 02:36:45,DATABASE,|Plant - fhg || changed |||| Name - fhghgfhgf || PumpTime - |
+2019-09-22 02:38:08,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 02:39:31,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 02:41:33,DATABASE,|Plant - dkh || added|
+2019-09-22 02:42:03,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 08:44:42,EVENT,|File || /csv/test2.csv || downloaded|
+2019-09-22 08:45:48,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 08:46:16,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 08:47:16,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 08:49:19,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 08:49:47,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 08:50:00,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 08:50:06,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 08:51:34,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 08:52:50,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 08:58:12,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 08:58:56,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 08:59:31,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 09:00:25,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 09:01:02,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 09:03:46,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 09:03:51,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 09:03:54,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 09:04:02,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 09:04:55,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 09:05:03,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|

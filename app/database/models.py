@@ -43,7 +43,6 @@ class MQTT_Devices(db.Model):
     ieeeAddr                      = db.Column(db.String(50), unique=True)  
     model                         = db.Column(db.String(50))    
     device_type                   = db.Column(db.String(50))
-    description                   = db.Column(db.String(200))
     input_values                  = db.Column(db.String(200))
     input_events                  = db.Column(db.String(200))
     commands                      = db.Column(db.String(200))    
@@ -58,11 +57,8 @@ class Plants(db.Model):
     mqtt_device_ieeeAddr   = db.Column(db.String(50), db.ForeignKey('mqtt_devices.ieeeAddr'))   
     mqtt_device            = db.relationship('MQTT_Devices')  
     pumptime               = db.Column(db.Integer)        
-    pump_mode              = db.Column(db.String(50))
     pump_duration_auto     = db.Column(db.Integer)  
-    pump_duration_manually = db.Column(db.Integer)       
-    sensor_watertank       = db.Column(db.String(50))     
-    sensor_moisture        = db.Column(db.String(50))         
+    pump_duration_manually = db.Column(db.Integer)            
     moisture_level         = db.Column(db.String(50)) 
 
 class User(UserMixin, db.Model):
@@ -294,7 +290,7 @@ def GET_ALL_MQTT_DEVICES(selector):
 
     if selector == "watering_controller":
         for device in devices:
-            if device.device_type == "watering_controller":
+            if device.device_type == "watering_controller auto" or device.device_type == "watering_controller manually":
                 
                 device_list.append(device)       
           
@@ -321,9 +317,7 @@ def ADD_MQTT_DEVICE(name, ieeeAddr, model, device_type = "", description = "",
                         ieeeAddr         = ieeeAddr,
                         model            = model,
                         device_type      = device_type,
-                        description      = description,
                         input_values     = str(input_values),
-                        input_events     = str(input_events),
                         commands         = str(commands),                    
                         last_contact     = last_contact,
                         )
@@ -373,16 +367,15 @@ def SET_MQTT_DEVICE_LAST_VALUES(ieeeAddr, last_values):
     db.session.commit()   
 
     
-def UPDATE_MQTT_DEVICE(id, name, model = "", device_type = "", description = "", input_values = "", input_events = "", commands = ""):
+def UPDATE_MQTT_DEVICE(id, name, model = "", device_type = "", input_values = "", input_events = "", commands = ""):
     entry = MQTT_Devices.query.filter_by(id=id).first()
     
     # values changed ?
-    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.description != description 
-        or entry.input_values != input_values or entry.input_events != input_events or entry.commands != commands):
+    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.input_values != input_values 
+        or entry.input_events != input_events or entry.commands != commands):
         
         entry.device_type     = device_type
         entry.model           = model
-        entry.description     = description
         entry.input_values    = str(input_values)
         entry.input_events    = str(input_events)
         entry.commands        = str(commands)        
@@ -512,27 +505,19 @@ def ADD_PLANT(name, mqtt_device_ieeeAddr):
         return "Name bereits vergeben"
 
 
-def UPDATE_PLANT_SETTINGS(id, name, pumptime, pump_mode, sensor_moisture, sensor_watertank):         
+def UPDATE_PLANT_SETTINGS(id, name, pumptime):         
     entry = Plants.query.filter_by(id=id).first()
     old_name = entry.name
 
     # values changed ?
-    if (entry.name != name or entry.pumptime != pumptime or entry.pump_mode != pump_mode or 
-        entry.sensor_moisture != sensor_moisture or entry.sensor_watertank != sensor_watertank):
+    if (entry.name != name or entry.pumptime != pumptime):
 
         entry.name             = name
-        entry.pumptime         = pumptime   
-        entry.pump_mode        = pump_mode        
-        entry.sensor_moisture  = sensor_moisture
-        entry.sensor_watertank = sensor_watertank         
+        entry.pumptime         = pumptime        
         
         db.session.commit()  
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + old_name + " | changed || Name - " + entry.name +                             
-                             " | PumpTime - " + str(entry.pumptime) + 
-                             " | PumpMode - " + str(entry.pump_mode) +                              
-                             " | Sensor Moisture - " + entry.sensor_moisture + 
-                             " | Sensor Watertank - " + entry.sensor_watertank)
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + old_name + " | changed || Name - " + entry.name + " | PumpTime - " + str(entry.pumptime))
 
         return True
     

@@ -3,6 +3,12 @@
         <div class="row">
           <div class="col-md-12">
 
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title"><b>System Log</b></h4>
+              </div>
+            </div>
+
 <!-- error message --> 
 
 {% if error_message != "" %}
@@ -17,9 +23,6 @@
 <!-- log settings -->
 
             <div class="card">
-              <div class="card-header">
-                <h5 class="title">System Log</h5>
-              </div>
               <div class="card-body">
                 <form method="POST">
                   <div class="row justify-content-md-center">
@@ -43,11 +46,11 @@
                       </div>                            
                     </div>                                                    
                   </div>   
-                  <div class="card-footer">
-                    <button type="submit"  onclick="window.location.href='/system_log#'" name="get_log_output" class="btn btn-fill btn-info">SELECT</button>
-                  </div>
-                </form>
-              </div>
+                </div> 
+                <div class="card-footer">
+                  <button type="submit"  onclick="window.location.href='/system_log#'" name="get_log_output" class="btn btn-fill btn-info">SELECT</button>
+                </div>
+              </form>     
             </div>
 
 <!-- log table -->
@@ -59,9 +62,9 @@
                   <div class="table-responsive">
                     <table class="table tablesorter">
                       <thead>                      
-                        <th scope="col" style="width:16%">Zeitpunkt</th> 
+                        <th scope="col" style="width:20%">Zeitpunkt</th> 
                         <th scope="col" style="width:10%">Typ</th> 
-                        <th scope="col" style="width:74%">Beschreibung</th> 
+                        <th scope="col" style="width:70%">Beschreibung</th> 
                       </thead>
                       <tbody> 
                         {% for entry in data_log_system %}
@@ -91,7 +94,7 @@
             <div class="card">
               <div class="card-body">
                 <form method="POST"> 
-                  <a href="/system_log/download/log_system.csv?time={{ timestamp }}"><font color="lightblue"><b>System Log herunterladen</b></font></a>
+                  <a href="/system_log/download/log_system.csv?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD SYSTEM LOG</b></font></a>
                   <br>
                   <br>                  
                   <div class="dropdown text-right">

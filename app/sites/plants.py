@@ -3,10 +3,11 @@ from flask_login         import current_user, login_required
 from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
-from app                 import app
-from app.database.models import *
-from app.common          import COMMON, STATUS
-from app.assets          import *
+from app                         import app
+from app.database.models         import *
+from app.backend.file_management import GET_PATH, GET_PLANTS_DATAFILES
+from app.common                  import COMMON, STATUS
+from app.assets                  import *
 
 import datetime
 
@@ -83,21 +84,6 @@ def plants():
                     error_founded = True      
                                                             
                 pumptime = request.form.get("set_pumptime_" + str(i))
-                
-                if request.form.get("checkbox_pump_mode_" + str(i)) != None:
-                    pump_mode = "auto"
-                else:
-                    pump_mode = "manually" 
-                    
-                if request.form.get("checkbox_sensor_moisture_" + str(i)) != None:
-                    sensor_moisture = "True"
-                else:
-                    sensor_moisture = "False" 
-
-                if request.form.get("checkbox_sensor_watertank_" + str(i)) != None:
-                    sensor_watertank = "True"
-                else:
-                    sensor_watertank = "False" 
     
                 if request.form.get("radio_moisture_level_" + str(i)) != None:
                     moisture_level = request.form.get("radio_moisture_level_" + str(i))
@@ -118,7 +104,7 @@ def plants():
 
                     changes_saved = False
 
-                    if UPDATE_PLANT_SETTINGS(i, name, pumptime, pump_mode, sensor_moisture, sensor_watertank):
+                    if UPDATE_PLANT_SETTINGS(i, name, pumptime):
                         changes_saved = True
 
                     if moisture_level != None:
@@ -130,7 +116,7 @@ def plants():
                             changes_saved = True     
 
                     if changes_saved == True:    
-                        success_message_change_settings.append(current_name + " || Einstellungen gespeichert") 
+                        success_message_change_settings.append(name + " || Einstellungen gespeichert") 
 
                 name = ""
 
@@ -169,9 +155,12 @@ def plants():
 
     dropdown_list_watering_controller = GET_ALL_MQTT_DEVICES("watering_controller")
 
-    list_plants = GET_ALL_PLANTS()
+    list_plants           = GET_ALL_PLANTS()
+    list_plants_datafiles = GET_PLANTS_DATAFILES()
 
     data = {'navigation': 'plants', 'notification': ''}
+
+    timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
 
     return render_template('layouts/default.html',
                             data=data,    
@@ -184,7 +173,9 @@ def plants():
                                                     name=name,
                                                     mqtt_device_ieeeAddr=mqtt_device_ieeeAddr,
                                                     mqtt_device_name=mqtt_device_name,
-                                                    list_plants=list_plants,          
+                                                    list_plants=list_plants,  
+                                                    list_plants_datafiles=list_plants_datafiles,  
+                                                    timestamp=timestamp,      
                                                     ) 
                            )
 
@@ -205,3 +196,19 @@ def change_plants_position(id, direction):
 def delete_plant(id):
     DELETE_PLANT(id)
     return redirect(url_for('plants'))
+
+
+# download plants data file
+@app.route('/plants/download/file/<path:filepath>')
+@login_required
+@permission_required
+def download_plants_datafile(filepath):
+    if filepath is None:
+        print("Ungültiger Pfad angegeben")     
+    try:
+        path = GET_PATH() + "/csv/"     
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + filepath + " | downloaded")
+        return send_from_directory(path, filepath)
+        
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filepath + " | " + str(e)) 

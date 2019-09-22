@@ -116,7 +116,7 @@ def users():
                             if not GET_USER_BY_EMAIL(new_email):  
                                 email = new_email                            
                             else: 
-                                error_message_change_settings.append(username + " || Ungültige Eingabe eMail || Adresse bereits vergeben")   
+                                error_message_change_settings.append(current_username + " || Ungültige Eingabe eMail || Adresse bereits vergeben")   
                                 error_founded = True 
                                 email = old_email
 
@@ -125,7 +125,7 @@ def users():
 
                     else:
                         email = GET_USER_BY_ID(i).email
-                        error_message_change_settings.append(username + " || Ungültige Eingabe eMail || Keine Adresse angegeben")   
+                        error_message_change_settings.append(current_username + " || Ungültige Eingabe eMail || Keine Adresse angegeben")   
                         error_founded = True
 
                      # change password
@@ -139,13 +139,13 @@ def users():
                                     hashed_password = generate_password_hash(password, method='sha256')
                                        
                                 else:
-                                    error_message_change_settings.append(username + " || Eingegebene Passwörter sind nicht identisch")
+                                    error_message_change_settings.append(current_username + " || Eingegebene Passwörter sind nicht identisch")
                                 
                             else:    
-                                error_message_change_settings.append(username + " || Passwort muss zwischen 8 und 20 Zeichen haben")
+                                error_message_change_settings.append(current_username + " || Passwort muss zwischen 8 und 20 Zeichen haben")
                                 
                         except:
-                            error_message_change_settings.append(username + " || Passwort muss zwischen 8 und 20 Zeichen haben")
+                            error_message_change_settings.append(current_username + " || Passwort muss zwischen 8 und 20 Zeichen haben")
 
                     # role
                     if request.form.get("checkbox_administrator_" + str(i)) != None:
@@ -173,7 +173,7 @@ def users():
                                 changes_saved = True
 
                         if changes_saved == True:
-                            success_message_change_settings.append(current_username + " || Einstellungen gespeichert") 
+                            success_message_change_settings.append(username + " || Einstellungen gespeichert") 
 
                     username = ""
                     email    = ""

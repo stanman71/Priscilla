@@ -272,3 +272,77 @@ def DELETE_DATABASE_BACKUP(filename):
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /backup/" + filename + " | " + str(e))  
         return ("ERROR: " + str(e))
+
+
+""" ###### """
+""" plants """
+""" ###### """
+
+def GET_PLANTS_DATAFILES():
+    file_list = []
+    for files in os.walk(PATH + "/csv/"):  
+        file_list.append(files)   
+
+    if file_list == []:
+        return ""
+    else:
+        return file_list[0][2]    
+
+
+def CREATE_PLANTS_DATAFILE(filename):
+    if os.path.isfile(PATH + "/csv/" + filename + ".csv") is False:
+
+        try:
+            # create csv file
+            file = PATH + "/csv/" + filename + ".csv"
+            with open(file, 'w', encoding='utf-8') as csvfile:
+                filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                       
+                filewriter.writerow(['Timestamp','Device','Sensor','Sensor_Value'])
+                csvfile.close()
+
+            WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + filename + ".csv | created") 
+            return "" 
+                
+        except Exception as e:
+            WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + ".csv | " + str(e))
+
+    else:
+        return ""
+
+
+def WRITE_PLANTS_DATAFILE(filename, device, sensor, value):
+    if os.path.isfile(PATH + "/csv/" + filename + ".csv") is False:
+        CREATE_PLANTS_DATAFILE(filename)
+
+    try:
+        # open csv file
+        file = PATH + "/csv/" + filename + ".csv"
+        with open(file, 'a', newline='', encoding='utf-8') as csvfile:
+            filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                                        
+            filewriter.writerow( [str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), str(device), str(sensor), str(value) ])
+            csvfile.close()
+        
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + ".csv | " + str(e))
+
+
+def READ_PLANTS_DATAFILE(filename):
+    try:
+        # open csv file with pandas
+        file = PATH + "/csv/" + filename
+        
+        df = pd.read_csv(file, sep = ",", skiprows = 1, names = ["Timestamp","Device","Sensor","Sensor_Value"])
+        return df
+
+    except Exception as e:
+        if "Error tokenizing data. C error: Calling read(nbytes) on source failed. Try engine='python'." not in str(e):
+            print(e)
+            WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + " | " + str(e))    
+
+
+def DELETE_PLANTS_DATAFILE(filename):
+    try:
+        os.remove (PATH + '/csv/' + filename)
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + filename + " | deleted")
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + " | " + str(e))  
