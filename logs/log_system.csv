@@ -256,3 +256,132 @@ Timestamp,Type,Description
 2019-09-23 13:40:30,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
 2019-09-23 13:40:32,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
 2019-09-23 13:40:34,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 14:47:49,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 14:47:51,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 14:47:53,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 14:47:55,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 14:50:05,WARNING,|MQTT || Update Devices || No Message founded|
+2019-09-23 14:50:05,WARNING,|MQTT || Update Devices || No Message founded|
+2019-09-23 14:50:07,ERROR,|eMail || None || WARNING || MQTT || Update Devices || No Message founded || No recipients have been added|
+2019-09-23 14:50:07,ERROR,|eMail || None || WARNING || MQTT || Update Devices || No Message founded || No recipients have been added|
+2019-09-23 14:55:11,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 14:55:13,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 14:55:16,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 14:55:18,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 14:59:56,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 14:59:58,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:00:01,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:00:03,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:01:05,WARNING,|MQTT || Update Devices || No Message founded|
+2019-09-23 15:01:05,WARNING,|MQTT || Update Devices || No Message founded|
+2019-09-23 15:01:07,ERROR,|eMail || None || WARNING || MQTT || Update Devices || No Message founded || No recipients have been added|
+2019-09-23 15:01:07,ERROR,|eMail || None || WARNING || MQTT || Update Devices || No Message founded || No recipients have been added|
+2019-09-23 15:02:00,SUCCESS,|Database_Backup || saved|
+2019-09-23 15:02:00,SUCCESS,|Database_Backup || saved|
+2019-09-23 15:29:13,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:29:15,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:29:18,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:29:20,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:29:33,EVENT,|File || /logs/log_mqtt.csv || downloaded|
+2019-09-23 15:29:33,ERROR,|File || /logs/log_mqtt.csv || 404 Not Found: The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.|
+2019-09-23 15:30:29,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:30:32,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:30:34,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:30:36,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:30:46,EVENT,|File || /logs/log_mqtt.csv || downloaded|
+2019-09-23 15:30:46,ERROR,|File || /logs/log_mqtt.csv || 404 Not Found: The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.|
+2019-09-23 15:35:29,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:35:31,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:35:34,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:35:36,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:39:05,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:39:07,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:39:10,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:39:12,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:40:47,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:40:49,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:40:52,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:40:54,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:43:17,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:43:19,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:43:22,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:43:24,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:45:59,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:46:00,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:46:03,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:46:05,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:46:33,EVENT,|File || /logs/log_mqtt.csv || downloaded|
+2019-09-23 15:46:33,ERROR,|File || /logs/log_mqtt.csv || 404 Not Found: The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.|
+2019-09-23 15:49:04,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:49:06,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:49:08,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:49:12,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:49:13,EVENT,|File || /logs/log_mqtt.csv || downloaded|
+2019-09-23 15:49:13,ERROR,|File || /logs/log_mqtt.csv || 404 Not Found: The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.|
+2019-09-23 15:49:26,EVENT,|File || /logs/log_mqtt.csv || downloaded|
+2019-09-23 15:49:26,ERROR,|File || /logs/log_mqtt.csv || 404 Not Found: The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.|
+2019-09-23 15:57:26,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:57:28,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:57:31,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:57:33,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:58:25,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:58:27,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:58:30,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 15:58:32,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 15:58:42,EVENT,|File || /logs/log_mqtt.csv || downloaded|
+2019-09-23 15:58:42,ERROR,|File || /logs/log_mqtt.csv || 404 Not Found: The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.|
+2019-09-23 15:58:48,EVENT,|File || /logs/log_mqtt.csv || created|
+2019-09-23 15:58:51,EVENT,|File || /logs/log_mqtt.csv || downloaded|
+2019-09-23 16:15:05,WARNING,|MQTT || Update Devices || No Message founded|
+2019-09-23 16:15:05,WARNING,|MQTT || Update Devices || No Message founded|
+2019-09-23 16:15:07,ERROR,|eMail || None || WARNING || MQTT || Update Devices || No Message founded || No recipients have been added|
+2019-09-23 16:15:07,ERROR,|eMail || None || WARNING || MQTT || Update Devices || No Message founded || No recipients have been added|
+2019-09-23 16:18:24,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 16:18:26,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 16:18:29,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 16:18:31,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 16:18:44,DATABASE,|Plant - testiu || added|
+2019-09-23 16:18:46,DATABASE,|Plant - testiu || deleted|
+2019-09-23 16:18:59,EVENT,|File || /logs/log_devices.csv || downloaded|
+2019-09-23 16:18:59,ERROR,|File || /logs/log_devices.csv || 404 Not Found: The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.|
+2019-09-23 16:19:06,EVENT,|File || /logs/log_devices.csv || created|
+2019-09-23 16:19:08,EVENT,|File || /logs/log_devices.csv || downloaded|
+2019-09-23 16:20:23,DATABASE,|Host || Network settings changed || LAN - 192.168.1.40 : 192.168.1.1|
+2019-09-23 16:20:23,ERROR,|MQTT || Broker - hgfghjgh || [Errno -2] Name or service not known|
+2019-09-23 16:20:23,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno -2] Name or service not known || No recipients have been added|
+2019-09-23 16:20:27,ERROR,|MQTT || Broker - hgfghjgh || [Errno -2] Name or service not known|
+2019-09-23 16:20:27,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno -2] Name or service not known || No recipients have been added|
+2019-09-23 16:20:50,DATABASE,|MQTT || Broker Settings changed|
+2019-09-23 16:21:53,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-23 16:21:56,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-23 16:22:17,SUCCESS,Update Devices
+2019-09-23 16:22:24,EVENT,|File || /logs/log_devices.csv || downloaded|
+2019-09-23 16:23:33,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-23 16:23:37,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-23 16:23:53,DATABASE,|Plant - dsa || added|
+2019-09-23 16:24:06,DATABASE,|Device || 0x657494 || changed |||| Name - 0x657494 || Model - watering_controller_v1|
+2019-09-23 16:24:06,SUCCESS,Update Devices
+2019-09-23 16:25:02,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-23 16:25:05,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-23 16:25:18,SUCCESS,Update Devices
+2019-09-23 16:25:19,EVENT,|File || /csv/dsa.csv || created|
+2019-09-23 16:25:19,ERROR,|File || /csv/dsa.csv || name 'value' is not defined|
+2019-09-23 16:25:19,ERROR,|File || /csv/dsa.csv || name 'value' is not defined|
+2019-09-23 16:25:29,EVENT,|File || /csv/dsa.csv || downloaded|
+2019-09-23 16:28:09,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-23 16:28:12,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-23 16:28:25,SUCCESS,Update Devices
+2019-09-23 16:28:32,EVENT,|File || /csv/dsa.csv || downloaded|
+2019-09-23 16:40:20,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-23 16:40:23,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-23 16:40:34,SUCCESS,Update Devices
+2019-09-23 16:40:38,EVENT,|File || /csv/dsa.csv || downloaded|
+2019-09-23 16:44:56,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-23 16:44:59,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-23 16:45:09,SUCCESS,Update Devices
+2019-09-23 16:45:14,EVENT,|File || /csv/dsa.csv || downloaded|
+2019-09-23 16:49:12,DATABASE,|Host || Network settings changed || LAN -  : |
+2019-09-23 16:49:14,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 16:49:16,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 16:49:17,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 16:49:19,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|

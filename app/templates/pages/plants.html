@@ -61,7 +61,7 @@
                           <td>
                             <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                    
                           </td> 
-                          <td>{{ entry.mqtt_device.name }}</td>                                                                                     
+                          <td>{{ entry.device.name }}</td>                                                                                     
                           <td>                       
                             <div class="custom-control custom-radio custom-control-inline">
                               <input type="radio" class="custom-control-input" id="radio_group_1_{{ entry.id }}" {% if entry.group == 1 %} checked="on" {% endif %} value="1" name="radio_group_{{ entry.id }}">
@@ -79,7 +79,7 @@
                             </div>  
                           </td>          
                           <td>
-                            {% if entry.mqtt_device.device_type == "watering_controller auto" %}          
+                            {% if entry.device.device_type == "watering_controller auto" %}          
                               {{ entry.pump_duration_auto }}
                             {% else %}
                               <input type="text" class="form-control" name="set_pump_duration_manually_{{ entry.id }}" 
@@ -87,7 +87,7 @@
                             {% endif %}
                           </td>                            
                           <td>
-                            {% if entry.mqtt_device.device_type == "watering_controller auto" %}   
+                            {% if entry.device.device_type == "watering_controller auto" %}   
                               <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="radio_moisture_level_high_{{ entry.id }}" {% if entry.moisture_level == "high" %} checked="on" {% endif %} value="high" name="radio_moisture_level_{{ entry.id }}">
                                 <label class="custom-control-label" for="radio_moisture_level_high_{{ entry.id }}">Hoch</label>
@@ -167,8 +167,8 @@
                           <div class="form-group">
                             <label>Gerät</label>
                             <select class="selectpicker" data-width="100%" data-live-search="true" name="set_watering_controller_ieeeAddr">
-                              {% if mqtt_device_ieeeAddr != "" %}
-                                <option value= "{{ mqtt_device_ieeeAddr }}" > {{ mqtt_device_name }} </option>
+                              {% if device_ieeeAddr != "" %}
+                                <option value= "{{ device_ieeeAddr }}" > {{ device_name }} </option>
                               {% else %}
                                 <option value= "None" > Auswählen </option>
                               {% endif %}                 

@@ -37,9 +37,9 @@ def plants():
     success_message_change_settings = []   
     success_message_add_plant       = False   
 
-    name                 = ""
-    mqtt_device_ieeeAddr = ""
-    mqtt_device_name     = ""
+    name            = ""
+    device_ieeeAddr = ""
+    device_name     = ""
 
     page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
@@ -140,23 +140,23 @@ def plants():
         if request.form.get("set_watering_controller_ieeeAddr") == "None":
             error_message_add_plant.append("Kein Gerät angegeben")
         else:
-            mqtt_device_ieeeAddr = request.form.get("set_watering_controller_ieeeAddr")
-            mqtt_device_name     = GET_MQTT_DEVICE_BY_IEEEADDR(mqtt_device_ieeeAddr).name
+            device_ieeeAddr = request.form.get("set_watering_controller_ieeeAddr")
+            device_name     = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
             
-        if name != "" and mqtt_device_ieeeAddr != "":
+        if name != "" and device_ieeeAddr != "":
                         
-            error = ADD_PLANT(name, mqtt_device_ieeeAddr)   
+            error = ADD_PLANT(name, device_ieeeAddr)   
             if error != None: 
                 error_message_add_plant.append(error)         
 
             else:       
                 success_message_add_plant = True
-                name                 = ""
-                mqtt_device_ieeeAddr = ""
-                mqtt_device_name     = ""
+                name            = ""
+                device_ieeeAddr = ""
+                device_name     = ""
 
 
-    dropdown_list_watering_controller = GET_ALL_MQTT_DEVICES("watering_controller")
+    dropdown_list_watering_controller = GET_ALL_DEVICES("watering_controller")
 
     list_plants           = GET_ALL_PLANTS()
     list_plants_datafiles = GET_PLANTS_DATAFILES()
@@ -174,8 +174,8 @@ def plants():
                                                     success_message_add_plant=success_message_add_plant,                                               
                                                     dropdown_list_watering_controller=dropdown_list_watering_controller, 
                                                     name=name,
-                                                    mqtt_device_ieeeAddr=mqtt_device_ieeeAddr,
-                                                    mqtt_device_name=mqtt_device_name,
+                                                    device_ieeeAddr=device_ieeeAddr,
+                                                    device_name=device_name,
                                                     list_plants=list_plants,  
                                                     list_plants_datafiles=list_plants_datafiles,  
                                                     timestamp=timestamp,      

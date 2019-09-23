@@ -4,11 +4,26 @@ from flask_login import UserMixin
 
 from app                         import app
 from app.common                  import COMMON, STATUS, DATATYPE
-from app.backend.file_management import WRITE_LOGFILE_SYSTEM
+from app.backend.file_management import WRITE_LOGFILE_SYSTEM, WRITE_PLANTS_DATAFILE
 
 import datetime
+import re
 
 db = SQLAlchemy(app)
+
+class Devices(db.Model):
+    __tablename__ = 'devices'
+    id                            = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name                          = db.Column(db.String(50), unique=True)
+    ieeeAddr                      = db.Column(db.String(50), unique=True)  
+    model                         = db.Column(db.String(50))    
+    device_type                   = db.Column(db.String(50))
+    input_values                  = db.Column(db.String(200))
+    input_events                  = db.Column(db.String(200))
+    commands                      = db.Column(db.String(200))    
+    last_contact                  = db.Column(db.String(50))
+    last_values                   = db.Column(db.String(200))  
+    last_values_formated          = db.Column(db.String(200)) 
 
 class eMail(db.Model):
     __tablename__  = 'email'
@@ -36,26 +51,12 @@ class MQTT_Broker(db.Model):
     previous_user     = db.Column(db.String(50))
     previous_password = db.Column(db.String(50))    
 
-class MQTT_Devices(db.Model):
-    __tablename__ = 'mqtt_devices'
-    id                            = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    name                          = db.Column(db.String(50), unique=True)
-    ieeeAddr                      = db.Column(db.String(50), unique=True)  
-    model                         = db.Column(db.String(50))    
-    device_type                   = db.Column(db.String(50))
-    input_values                  = db.Column(db.String(200))
-    input_events                  = db.Column(db.String(200))
-    commands                      = db.Column(db.String(200))    
-    last_contact                  = db.Column(db.String(50))
-    last_values                   = db.Column(db.String(200))  
-    last_values_formated          = db.Column(db.String(200)) 
-
 class Plants(db.Model):
     __tablename__  = 'plants'
     id                     = db.Column(db.Integer, primary_key=True, autoincrement = True)   
     name                   = db.Column(db.String(50), unique=True)
-    mqtt_device_ieeeAddr   = db.Column(db.String(50), db.ForeignKey('mqtt_devices.ieeeAddr'))   
-    mqtt_device            = db.relationship('MQTT_Devices')  
+    device_ieeeAddr        = db.Column(db.String(50), db.ForeignKey('devices.ieeeAddr'))   
+    device                 = db.relationship('Devices')  
     group                  = db.Column(db.Integer)        
     pump_duration_auto     = db.Column(db.Integer)  
     pump_duration_manually = db.Column(db.Integer)            
@@ -135,13 +136,13 @@ if Scheduler_Tasks.query.filter_by().first() is None:
     )
     db.session.add(scheduler_task_plants_group_3)
 
-    scheduler_task_update_mqtt = Scheduler_Tasks(
-        name   = "update_mqtt",
-        task   = "update_mqtt_devices",
+    scheduler_task_update_devices = Scheduler_Tasks(
+        name   = "update_devices",
+        task   = "update_devices",
         hour   = "*",
         minute = "15",       
     )
-    db.session.add(scheduler_task_update_mqtt)
+    db.session.add(scheduler_task_update_devices)
 
     scheduler_task_backup = Scheduler_Tasks(
         name   = "backup_database",
@@ -253,7 +254,7 @@ def UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway):
 
 """ ################### """
 """ ################### """
-"""          mqtt       """
+"""     mqtt broker     """
 """ ################### """
 """ ################### """
 
@@ -302,29 +303,29 @@ def RESTORE_MQTT_BROKER_SETTINGS():
 
 """ ################### """
 """ ################### """
-"""     mqtt devices    """
+"""       devices       """
 """ ################### """
 """ ################### """
 
 
-def GET_MQTT_DEVICE_BY_ID(id):
-    return MQTT_Devices.query.filter_by(id=id).first()
+def GET_DEVICE_BY_ID(id):
+    return Devices.query.filter_by(id=id).first()
 
 
-def GET_MQTT_DEVICE_BY_NAME(name):
-    for device in MQTT_Devices.query.all():
+def GET_DEVICE_BY_NAME(name):
+    for device in Devices.query.all():
         
         if device.name.lower() == name.lower():
             return device 
     
     
-def GET_MQTT_DEVICE_BY_IEEEADDR(ieeeAddr):
-    return MQTT_Devices.query.filter_by(ieeeAddr=ieeeAddr).first()   
+def GET_DEVICE_BY_IEEEADDR(ieeeAddr):
+    return Devices.query.filter_by(ieeeAddr=ieeeAddr).first()   
 
 
-def GET_ALL_MQTT_DEVICES(selector):
+def GET_ALL_DEVICES(selector):
     device_list = []
-    devices     = MQTT_Devices.query.all()
+    devices     = Devices.query.all()
   
     if selector == "":
         for device in devices:
@@ -340,21 +341,21 @@ def GET_ALL_MQTT_DEVICES(selector):
     return device_list
         
 
-def ADD_MQTT_DEVICE(name, ieeeAddr, model, device_type = "", description = "", 
-                    input_values = "", input_events = "", commands = "", last_contact = ""):
+def ADD_DEVICE(name, ieeeAddr, model, device_type = "", description = "", 
+               input_values = "", input_events = "", commands = "", last_contact = ""):
         
     # ieeeAddr exist ?
-    if not GET_MQTT_DEVICE_BY_IEEEADDR(ieeeAddr):   
+    if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):   
             
         # find a unused id
         for i in range(1,51):
             
-            if MQTT_Devices.query.filter_by(id=i).first():
+            if Devices.query.filter_by(id=i).first():
                 pass
                 
             else:
                 # add the new device            
-                device = MQTT_Devices(
+                device = Devices(
                         id               = i,
                         name             = name,                   
                         ieeeAddr         = ieeeAddr,
@@ -368,34 +369,34 @@ def ADD_MQTT_DEVICE(name, ieeeAddr, model, device_type = "", description = "",
                 db.session.add(device)
                 db.session.commit()
                 
-                SET_MQTT_DEVICE_LAST_CONTACT(ieeeAddr)   
+                SET_DEVICE_LAST_CONTACT(ieeeAddr)   
                 
                 return ""
 
         return "Gerätelimit erreicht (50)"                           
                 
     else:
-        SET_MQTT_DEVICE_LAST_CONTACT(ieeeAddr)  
+        SET_DEVICE_LAST_CONTACT(ieeeAddr)  
 
 
-def SET_MQTT_DEVICE_NAME(ieeeAddr, new_name):
-    entry = MQTT_Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+def SET_DEVICE_NAME(ieeeAddr, new_name):
+    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
     
-    WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Device - " + entry.name + " | Name changed" + " || Name - " + new_name)
+    WRITE_LOGFILE_SYSTEM("DATABASE", "Device | " + entry.name + " | Name changed" + " || Name - " + new_name)
     
     entry.name = new_name
     db.session.commit()       
 
 
-def SET_MQTT_DEVICE_LAST_CONTACT(ieeeAddr):
+def SET_DEVICE_LAST_CONTACT(ieeeAddr):
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
-    entry = MQTT_Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
     entry.last_contact = timestamp
     db.session.commit()       
 
 
-def SET_MQTT_DEVICE_LAST_VALUES(ieeeAddr, last_values):
-    entry = MQTT_Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+def SET_DEVICE_LAST_VALUES(ieeeAddr, last_values):
+    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
     
     last_values_formated = last_values.replace("{","")
     last_values_formated = last_values_formated.replace("}","")
@@ -409,9 +410,17 @@ def SET_MQTT_DEVICE_LAST_VALUES(ieeeAddr, last_values):
     entry.last_contact         = timestamp
     db.session.commit()   
 
+    for plant in GET_ALL_PLANTS():
+        if plant.device_ieeeAddr == ieeeAddr:
+            device_name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
+            
+            # extract numbers
+            list_values = re.findall(r'\b\d+\b', last_values_formated)
+            WRITE_PLANTS_DATAFILE(plant.name, device_name, list_values[0], list_values[1], list_values[2])
+
     
-def UPDATE_MQTT_DEVICE(id, name, model = "", device_type = "", input_values = "", input_events = "", commands = ""):
-    entry = MQTT_Devices.query.filter_by(id=id).first()
+def UPDATE_DEVICE(id, name, model = "", device_type = "", input_values = "", input_events = "", commands = ""):
+    entry = Devices.query.filter_by(id=id).first()
     
     # values changed ?
     if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.input_values != input_values 
@@ -423,16 +432,16 @@ def UPDATE_MQTT_DEVICE(id, name, model = "", device_type = "", input_values = ""
         entry.input_events    = str(input_events)
         entry.commands        = str(commands)        
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Device - " + entry.name + " | changed" + " || Name - " + name + " | Model - " + entry.model)
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Device | " + entry.name + " | changed" + " || Name - " + name + " | Model - " + entry.model)
 
         entry.name = name
         db.session.commit()    
    
     
-def CHANGE_MQTT_DEVICE_POSITION(id, device_type, direction):
+def CHANGE_DEVICE_POSITION(id, device_type, direction):
     
     if direction == "up":
-        device_list = GET_ALL_MQTT_DEVICES(device_type)
+        device_list = GET_ALL_DEVICES(device_type)
         device_list = device_list[::-1]
         
         for device in device_list:
@@ -442,8 +451,8 @@ def CHANGE_MQTT_DEVICE_POSITION(id, device_type, direction):
                 new_id = device.id
                 
                 # change ids
-                device_1 = GET_MQTT_DEVICE_BY_ID(id)
-                device_2 = GET_MQTT_DEVICE_BY_ID(new_id)
+                device_1 = GET_DEVICE_BY_ID(id)
+                device_2 = GET_DEVICE_BY_ID(new_id)
                 
                 device_1.id = 99
                 db.session.commit()
@@ -455,14 +464,14 @@ def CHANGE_MQTT_DEVICE_POSITION(id, device_type, direction):
                 return 
 
     if direction == "down":
-        for device in GET_ALL_MQTT_DEVICES(device_type):
+        for device in GET_ALL_DEVICES(device_type):
             if device.id > id:
                 
                 new_id = device.id
                 
                 # change ids
-                device_1 = GET_MQTT_DEVICE_BY_ID(id)
-                device_2 = GET_MQTT_DEVICE_BY_ID(new_id)
+                device_1 = GET_DEVICE_BY_ID(id)
+                device_2 = GET_DEVICE_BY_ID(new_id)
                 
                 device_1.id = 99
                 db.session.commit()
@@ -474,27 +483,27 @@ def CHANGE_MQTT_DEVICE_POSITION(id, device_type, direction):
                 return 
 
 
-def DELETE_MQTT_DEVICE(ieeeAddr):
+def DELETE_DEVICE(ieeeAddr):
     error_list = ""
 
     # check plants
     entries = GET_ALL_PLANTS()
     for entry in entries:
-        if entry.mqtt_device_ieeeAddr == ieeeAddr:
-            device = GET_MQTT_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in Bewässung"
+        if entry.device_ieeeAddr == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in Pflanzen"
     
     if error_list != "":
         return error_list[1:]   
                
     else:      
-        device      = GET_MQTT_DEVICE_BY_IEEEADDR(ieeeAddr)
+        device      = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
         device_name = device.name
         
-        MQTT_Devices.query.filter_by(ieeeAddr=ieeeAddr).delete()
+        Devices.query.filter_by(ieeeAddr=ieeeAddr).delete()
         db.session.commit() 
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Device - " + device_name + " | deleted")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Device | " + device_name + " | deleted")
         return True
 
 
@@ -520,7 +529,7 @@ def GET_ALL_PLANTS():
     return Plants.query.all()
 
 
-def ADD_PLANT(name, mqtt_device_ieeeAddr):
+def ADD_PLANT(name, device_ieeeAddr):
     # name exist ?
     if not GET_PLANT_BY_NAME(name):
         
@@ -533,7 +542,7 @@ def ADD_PLANT(name, mqtt_device_ieeeAddr):
                 plant = Plants(
                         id                     = i,
                         name                   = name, 
-                        mqtt_device_ieeeAddr   = mqtt_device_ieeeAddr,     
+                        device_ieeeAddr        = device_ieeeAddr,     
                         group                  = 0,
                         pump_duration_auto     = 0, 
                         pump_duration_manually = 0,                                               

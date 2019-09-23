@@ -83,7 +83,7 @@
                           <td>{{ entry.device_type }}</td>      
                           <td>{{ entry.last_contact }}</td>                
                           <td>
-                            <a href="/devices/delete/{{ entry.id }}#table"><font size="6"><i class='uil uil-trash-alt'></i></font></a>
+                            <a href="/devices/delete/{{ entry.ieeeAddr }}#table"><font size="6"><i class='uil uil-trash-alt'></i></font></a>
                           </td>                                 
                         </tr>
                         {% endfor %}
@@ -93,7 +93,7 @@
                 </div>            
                 <div class="card-footer">                  
                   <button type="submit" onclick="window.location.href='/devices#'" name="save_device_settings" class="btn btn-fill btn-primary">SAVE</button>
-                  <button type="submit" onclick="window.location.href='/devices#'" name="update_mqtt_devices" class="btn btn-fill btn-info pull-right">UPDATE</button>
+                  <button type="submit" onclick="window.location.href='/devices#'" name="update_devices" class="btn btn-fill btn-info pull-right">UPDATE</button>
                 </div>
               </form>
             </div>
@@ -167,14 +167,14 @@
             </div>
 
 
-<!--------->
-<!-- LOG -->
-<!--------->
+<!---------->
+<!-- LOG  -->
+<!---------->
 
             <div class="card">
               <div class="card-body">
                 <form method="POST"> 
-                  <a href="/devices/download/log_mqtt.csv?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD DEVICE LOG</b></font></a>
+                  <a href="/devices/download/log_devices.csv?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD DEVICE LOG</b></font></a>
                   <br>
                   <br>
                   <div class="dropdown text-right">

@@ -76,7 +76,7 @@ def scheduler_tasks():
 
     for task in GET_ALL_SCHEDULER_TASKS():
         if (task.hour == int(current_hour) or task.hour == "*") and (task.minute == int(current_minute) or task.minute == "*"):
-            heapq.heappush(process_management_queue, (20, ("scheduler", task.id)))  
+            heapq.heappush(process_management_queue, (20, ("scheduler", task.task)))  
 
 
 """ #### """

@@ -1,0 +1,7 @@
+Timestamp,Device,Sensor,Sensor_Value
+2019-09-23 16:28:25,<Devices 3>,|pump: OFF, pump_time: 0, sensor_moisture: 221, sensor_watertank: 1|
+2019-09-23 16:28:25,<Devices 3>,|pump: OFF, pump_time: 0, sensor_moisture: 221, sensor_watertank: 1|
+2019-09-23 16:40:34,0x657494,|['0', '221', '1']|
+2019-09-23 16:40:34,0x657494,|['0', '221', '1']|
+2019-09-23 16:45:09,0x657494,0,221,1
+2019-09-23 16:45:09,0x657494,0,221,1

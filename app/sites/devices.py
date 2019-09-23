@@ -3,11 +3,13 @@ from flask_login         import current_user, login_required
 from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
-from app                 import app
-from app.database.models import *
-from app.backend.mqtt    import CHECK_MQTT, UPDATE_MQTT_DEVICES
-from app.common          import COMMON, STATUS
-from app.assets          import *
+from app                          import app
+from app.database.models          import *
+from app.backend.mqtt             import MQTT_PUBLISH, UPDATE_DEVICES
+from app.backend.file_management  import GET_PATH, RESET_LOGFILE
+from app.backend.shared_resources import GET_ERROR_DELETE_DEVICE, SET_ERROR_DELETE_DEVICE
+from app.common                   import COMMON, STATUS
+from app.assets                   import *
 
 import datetime
 
@@ -15,14 +17,14 @@ import datetime
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        try:
-            if current_user.role == "administrator":
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('logout'))
-        except Exception as e:
-            print(e)
+        #try:
+        if current_user.role == "administrator":
+            return f(*args, **kwargs)
+        else:
             return redirect(url_for('logout'))
+        #except Exception as e:
+        #    print(e)
+        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -41,17 +43,19 @@ def devices():
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
 
     # check mqtt
-    try:
-        CHECK_MQTT()
-    except Exception as e:
-        error_message_mqtt = "Fehler MQTT >>> " + str(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e)) 
-        #SEND_EMAIL("ERROR", "MQTT | " + str(e)) 
+    result = MQTT_PUBLISH("miranda/mqtt/test", "") 
+    if result != None:
+        error_message_mqtt = result
+
+    # get device delete errors
+    if GET_ERROR_DELETE_DEVICE() != "":
+        error_message_change_settings_devices.append(GET_ERROR_DELETE_DEVICE())
+        SET_ERROR_DELETE_DEVICE("")
 
 
-    """ ############## """
-    """  mqtt devices  """
-    """ ############## """
+    """ ######### """
+    """  devices  """
+    """ ######### """
 
     if request.form.get("save_device_settings") != None:  
 
@@ -63,26 +67,26 @@ def devices():
                 if request.form.get("set_name_" + str(i)) != "":
                                       
                     new_name = request.form.get("set_name_" + str(i))
-                    old_name = GET_MQTT_DEVICE_BY_ID(i).name
+                    old_name = GET_DEVICE_BY_ID(i).name
 
                     if new_name != old_name:  
 
                         # name already exist ?         
-                        if not GET_MQTT_DEVICE_BY_NAME(new_name):  
-                            ieeeAddr = GET_MQTT_DEVICE_BY_ID(i).ieeeAddr                  
-                            SET_MQTT_DEVICE_NAME(ieeeAddr, new_name)   
+                        if not GET_DEVICE_BY_NAME(new_name):  
+                            ieeeAddr = GET_DEVICE_BY_ID(i).ieeeAddr                  
+                            SET_DEVICE_NAME(ieeeAddr, new_name)   
                             success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert")                                  
                         else: 
                             error_message_change_settings_devices.append(old_name + " || Ungültige Eingabe Name || Bereits vergeben")  
 
                 else:
-                    name = GET_MQTT_DEVICE_BY_ID(i).name
+                    name = GET_DEVICE_BY_ID(i).name
                     error_message_change_settings_devices.append(name + " || Ungültige Eingabe Name || Keinen Wert angegeben")    
 
 
     # update device list
-    if request.form.get("update_mqtt_devices") != None:     
-        result = UPDATE_MQTT_DEVICES()
+    if request.form.get("update_devices") != None:     
+        result = UPDATE_DEVICES()
 
         if result == "Success":
             success_message_change_settings_devices.append("Geräte erfolgreich aktualisiert")
@@ -114,7 +118,16 @@ def devices():
         RESTORE_MQTT_BROKER_SETTINGS()
         success_message_change_settings_broker = True
 
-    list_devices = GET_ALL_MQTT_DEVICES("")
+    """ ############ """
+    """  device log  """
+    """ ############ """
+
+    # reset logfile
+    if request.form.get("reset_logfile") != None: 
+        RESET_LOGFILE("log_devices")   
+
+
+    list_devices = GET_ALL_DEVICES("")
     
     broker = GET_MQTT_BROKER_SETTINGS()
 
@@ -135,3 +148,40 @@ def devices():
                                                     timestamp=timestamp,                         
                                                     ) 
                            )
+
+
+# change device position 
+@app.route('/devices/position/<string:direction>/<int:id>')
+@login_required
+@permission_required
+def change_device_position(id, direction, device_type):
+    CHANGE_DEVICE_POSITION(id, device_type, direction)
+    return redirect(url_for('devices'))
+
+
+# remove device
+@app.route('/devices/delete/<string:ieeeAddr>')
+@login_required
+@permission_required
+def remove_device(ieeeAddr):
+    device_name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
+    result      = DELETE_DEVICE(ieeeAddr) 
+    
+    if result != True:
+        SET_ERROR_DELETE_DEVICE(result)
+        
+    return redirect(url_for('devices'))
+     
+     
+# download devices logfile
+@app.route('/devices/download/<path:filepath>')
+@login_required
+@permission_required
+def download_devices_logfile(filepath): 
+    try:
+        path = GET_PATH() + "/logs/"     
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /logs/" + filepath + " | downloaded")
+        return send_from_directory(path, filepath)
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/" + filepath + " | " + str(e))
+        return redirect(url_for('devices'))

@@ -65,34 +65,26 @@ def MQTT_RECEIVE():
         msg     = str(message.payload.decode("utf-8"))        
       
         ieeeAddr    = ""
-        device_type = ""
 
         # get ieeeAddr and device_type
         incoming_topic   = channel
         incoming_topic   = incoming_topic.split("/")
-        mqtt_device_name = incoming_topic[2]
+        device_name      = incoming_topic[2]
      
-        mqtt_devices = GET_ALL_MQTT_DEVICES("")
+        list_devices = GET_ALL_DEVICES("")
      
         try:
-            for device in mqtt_devices:
-                if device.name == mqtt_device_name:             
+            for device in list_devices:
+                if device.name == device_name:             
                     ieeeAddr = device.ieeeAddr
         except:
             pass        
-
-        try:
-            for device in mqtt_devices:
-                if device.name == mqtt_device_name:             
-                    device_type = device.device_type            
-        except:
-            pass     
 
         print("message topic: ", channel)       
         print("message received: ", msg)    
         
         # write data in logs
-        WRITE_LOGFILE_MQTT("mqtt", channel, msg)
+        WRITE_LOGFILE_DEVICES(channel, msg)
             
         # add message to the incoming message list
         mqtt_incoming_messages_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), channel, msg))  
@@ -101,7 +93,7 @@ def MQTT_RECEIVE():
         if channel != "" and channel != None:   
             
             try:    
-                Thread = threading.Thread(target=MQTT_MESSAGE, args=(channel, msg, ieeeAddr, device_type,))
+                Thread = threading.Thread(target=MQTT_MESSAGE, args=(channel, msg, ieeeAddr, ))
                 Thread.start()   
             except Exception as e:
                     WRITE_LOGFILE_SYSTEM("ERROR", "Thread | MQTT Message | " + str(e)) 
@@ -142,7 +134,7 @@ def MQTT_RECEIVE():
 """  mqtt message """
 """ ############# """
 
-def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
+def MQTT_MESSAGE(channel, msg, ieeeAddr):
     
     channel = channel.split("/")
 
@@ -159,9 +151,9 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
     except:    
         if ieeeAddr != "":
-
-            if device_type == "watering_controller_auto" or device_type == "watering_controller_manually":  
-                SET_MQTT_DEVICE_LAST_VALUES(ieeeAddr, msg)
+            
+            # save last values and last contact 
+            SET_DEVICE_LAST_VALUES(ieeeAddr, msg)
 
 
 """ #################### """
@@ -183,7 +175,7 @@ def MQTT_PUBLISH(MQTT_TOPIC, MQTT_MSG):
         
         client.disconnect()
 
-        return ""
+        return 
 
     except Exception as e:
         print("ERROR: MQTT Publish | " + str(e))
@@ -202,7 +194,7 @@ def MQTT_PUBLISH(MQTT_TOPIC, MQTT_MSG):
 """ ################### """
 
 
-def UPDATE_MQTT_DEVICES():
+def UPDATE_DEVICES():
    
     message_founded = False
 
@@ -221,7 +213,6 @@ def UPDATE_MQTT_DEVICES():
                 data = json.loads(message)
                 
                 name            = data['ieeeAddr']
-                gateway         = "mqtt"
                 ieeeAddr        = data['ieeeAddr']
                 model           = data['model']
 
@@ -255,29 +246,29 @@ def UPDATE_MQTT_DEVICES():
 
 
                 # add new device
-                if not GET_MQTT_DEVICE_BY_IEEEADDR(ieeeAddr):
-                    ADD_MQTT_DEVICE(name, ieeeAddr, model, device_type, input_values, input_events, commands)
+                if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):
+                    ADD_DEVICE(name, ieeeAddr, model, device_type, input_values, input_events, commands)
                     
                 # update existing device
                 else:
-                    id   = GET_MQTT_DEVICE_BY_IEEEADDR(ieeeAddr).id
-                    name = GET_MQTT_DEVICE_BY_IEEEADDR(ieeeAddr).name
+                    id   = GET_DEVICE_BY_IEEEADDR(ieeeAddr).id
+                    name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
                                     
-                    UPDATE_MQTT_DEVICE(id, name, model, device_type, input_values, input_events, commands)
-                    SET_MQTT_DEVICE_LAST_CONTACT(ieeeAddr)
+                    UPDATE_DEVICE(id, name, model, device_type, input_values, input_events, commands)
+                    SET_DEVICE_LAST_CONTACT(ieeeAddr)
                     
                 # update input values
                 MQTT_PUBLISH("miranda/mqtt/" + ieeeAddr + "/get", "")  
 
 
         if message_founded == True:
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "MQTT | Update Devices")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Update Devices")
             return "Success"
             
         else:    
-            WRITE_LOGFILE_SYSTEM("WARNING", "MQTT | Update Devices | No Message founded")
-            SEND_EMAIL("WARNING", "MQTT | Update Devices | No Message founded")             
-            return "MQTT >>> Update Devices >>> Kein Message gefunden"
+            WRITE_LOGFILE_SYSTEM("WARNING", "Update Devices | No Message founded")
+            SEND_EMAIL("WARNING", "Update Devices | No Message founded")             
+            return "Update Devices >>> Kein Message gefunden"
         
     
     except Exception as e:
@@ -374,12 +365,3 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting, limit):
                 
          
     return False
-   
-
-""" ################### """
-"""      check mqtt     """
-""" ################### """
- 
- 
-def CHECK_MQTT():
-    MQTT_PUBLISH("miranda/mqtt/test", "") 

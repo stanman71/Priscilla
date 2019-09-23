@@ -49,16 +49,16 @@ def REFRESH_MQTT_INPUT_MESSAGES():
 		time.sleep(1)
 
 
-# error_list_delete_mqtt_device
-error_list_delete_mqtt_device = ""
+# error_list_delete_device
+error_list_delete_device = ""
 
-def SET_ERROR_DELETE_MQTT_DEVICE(error_list):
-	global error_list_delete_mqtt_device
+def SET_ERROR_DELETE_DEVICE(error_list):
+	global error_list_delete_device
 	
-	error_list_delete_mqtt_device = error_list
+	error_list_delete_device = error_list
 	
 	
-def GET_ERROR_DELETE_MQTT_DEVICE():
-	global error_list_delete_mqtt_device
+def GET_ERROR_DELETE_DEVICE():
+	global error_list_delete_device
 	
-	return error_list_delete_mqtt_device
+	return error_list_delete_device

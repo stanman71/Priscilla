@@ -5,8 +5,8 @@ import time
 
 from app import app
 from app.database.models          import *
-from app.backend.file_management  import *
-from app.backend.mqtt             import *
+from app.backend.file_management  import SAVE_DATABASE, WRITE_LOGFILE_SYSTEM
+from app.backend.mqtt             import UPDATE_DEVICES
 from app.backend.email            import SEND_EMAIL
 from app.backend.shared_resources import process_management_queue
 
@@ -31,7 +31,7 @@ def PROCESS_MANAGEMENT_THREAD():
 def PROCESS_MANAGEMENT():
     
     while True:
-        
+
         try:
             process = heapq.heappop(process_management_queue)[1]
         
@@ -40,12 +40,11 @@ def PROCESS_MANAGEMENT():
             # ###########
                                     
             if process[0] == "scheduler":                        
-                task_object = GET_SCHEDULER_TASK_BY_ID(process[1])      
-                
-                if task_object.task == "update_mqtt_devices":
-                    UPDATE_MQTT_DEVICES()
 
-                if task_object.task == "create_database_backup":  
+                if process[1] == "update_devices":
+                    UPDATE_DEVICES()
+
+                if process[1] == "create_database_backup":  
                     SAVE_DATABASE()                  
   
         except Exception as e:         

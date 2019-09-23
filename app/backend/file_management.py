@@ -3,6 +3,7 @@ import os
 import shutil
 import csv
 import json
+import pandas as pd
 
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
@@ -37,7 +38,7 @@ def CREATE_LOGFILE(filename):
         with open(file, 'w', encoding='utf-8') as csvfile:
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)    
 
-            if filename == "log_mqtt":                   
+            if filename == "log_devices":                   
                 filewriter.writerow(['Timestamp','Channel','Message'])              
             if filename == "log_system":                   
                 filewriter.writerow(['Timestamp','Type','Description'])                
@@ -60,23 +61,23 @@ def RESET_LOGFILE(filename):
     CREATE_LOGFILE(filename)
         
 
-def WRITE_LOGFILE_MQTT(gateway, channel, msg):
+def WRITE_LOGFILE_DEVICES(channel, msg):
     
     # create file if not exist
-    if os.path.isfile(PATH + "/logs/log_" + gateway + ".csv") is False:
-        CREATE_LOGFILE("log_" + gateway)
+    if os.path.isfile(PATH + "/logs/log_devices.csv") is False:
+        CREATE_LOGFILE("log_devices")
         
     # replace file if size > 2,5 mb
-    file_size = os.path.getsize(PATH + "/logs/log_" + gateway + ".csv")
+    file_size = os.path.getsize(PATH + "/logs/log_devices.csv")
     file_size = round(file_size / 1024 / 1024, 2)
     
     if file_size > 2.5:
-        RESET_LOGFILE("log_" + gateway)
+        RESET_LOGFILE("log_devices")
 
     try:
         
         # open csv file
-        file = PATH + "/logs/log_" + gateway + ".csv"
+        file = PATH + "/logs/log_devices.csv"
         
         with open(file, 'a', newline='', encoding='utf-8') as csvfile:
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                                        
@@ -297,7 +298,7 @@ def CREATE_PLANTS_DATAFILE(filename):
             file = PATH + "/csv/" + filename + ".csv"
             with open(file, 'w', encoding='utf-8') as csvfile:
                 filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                       
-                filewriter.writerow(['Timestamp','Device','Sensor','Sensor_Value'])
+                filewriter.writerow(["Timestamp","Device","Pumptime","Moisture","Watertank"])
                 csvfile.close()
 
             WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + filename + ".csv | created") 
@@ -310,7 +311,7 @@ def CREATE_PLANTS_DATAFILE(filename):
         return ""
 
 
-def WRITE_PLANTS_DATAFILE(filename, device, sensor, value):
+def WRITE_PLANTS_DATAFILE(filename, device, pumptime, moisture, watertank):
     if os.path.isfile(PATH + "/csv/" + filename + ".csv") is False:
         CREATE_PLANTS_DATAFILE(filename)
 
@@ -319,7 +320,7 @@ def WRITE_PLANTS_DATAFILE(filename, device, sensor, value):
         file = PATH + "/csv/" + filename + ".csv"
         with open(file, 'a', newline='', encoding='utf-8') as csvfile:
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                                        
-            filewriter.writerow( [str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), str(device), str(sensor), str(value) ])
+            filewriter.writerow( [str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), str(device), str(pumptime), str(moisture), str(watertank)])
             csvfile.close()
         
     except Exception as e:
@@ -331,7 +332,7 @@ def READ_PLANTS_DATAFILE(filename):
         # open csv file with pandas
         file = PATH + "/csv/" + filename
         
-        df = pd.read_csv(file, sep = ",", skiprows = 1, names = ["Timestamp","Device","Sensor","Sensor_Value"])
+        df = pd.read_csv(file, sep = ",", skiprows = 1, names = ["Timestamp","Device","Pumptime","Moisture","Watertank"])
         return df
 
     except Exception as e:
