@@ -13,17 +13,16 @@ db = SQLAlchemy(app)
 
 class Devices(db.Model):
     __tablename__ = 'devices'
-    id                            = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    name                          = db.Column(db.String(50), unique=True)
-    ieeeAddr                      = db.Column(db.String(50), unique=True)  
-    model                         = db.Column(db.String(50))    
-    device_type                   = db.Column(db.String(50))
-    input_values                  = db.Column(db.String(200))
-    input_events                  = db.Column(db.String(200))
-    commands                      = db.Column(db.String(200))    
-    last_contact                  = db.Column(db.String(50))
-    last_values                   = db.Column(db.String(200))  
-    last_values_formated          = db.Column(db.String(200)) 
+    id                   = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name                 = db.Column(db.String(50), unique=True)
+    ieeeAddr             = db.Column(db.String(50), unique=True)  
+    model                = db.Column(db.String(50))    
+    device_type          = db.Column(db.String(50))
+    inputs               = db.Column(db.String(200))
+    commands             = db.Column(db.String(200))    
+    last_contact         = db.Column(db.String(50))
+    last_values          = db.Column(db.String(200))  
+    last_values_formated = db.Column(db.String(200)) 
 
 class eMail(db.Model):
     __tablename__  = 'email'
@@ -210,6 +209,211 @@ def SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password
         return True
 
 
+
+""" ################### """
+""" ################### """
+"""       devices       """
+""" ################### """
+""" ################### """
+
+
+def GET_DEVICE_BY_ID(id):
+    return Devices.query.filter_by(id=id).first()
+
+
+def GET_DEVICE_BY_NAME(name):
+    for device in Devices.query.all():
+        
+        if device.name.lower() == name.lower():
+            return device 
+    
+    
+def GET_DEVICE_BY_IEEEADDR(ieeeAddr):
+    return Devices.query.filter_by(ieeeAddr=ieeeAddr).first()   
+
+
+def GET_ALL_DEVICES(selector):
+    device_list = []
+    devices     = Devices.query.all()
+  
+    if selector == "":
+        for device in devices:
+            
+            device_list.append(device)     
+
+    if selector == "watering_controller":
+        for device in devices:
+            if device.device_type == "watering_controller auto" or device.device_type == "watering_controller manually":
+                
+                device_list.append(device)       
+          
+    return device_list
+        
+
+def ADD_DEVICE(name, ieeeAddr, model, device_type = "", description = "", inputs = "", commands = "", last_contact = ""):
+        
+    # ieeeAddr exist ?
+    if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):   
+            
+        # find a unused id
+        for i in range(1,51):
+            
+            if Devices.query.filter_by(id=i).first():
+                pass
+                
+            else:
+                # add the new device            
+                device = Devices(
+                        id           = i,
+                        name         = name,                   
+                        ieeeAddr     = ieeeAddr,
+                        model        = model,
+                        device_type  = device_type,
+                        inputs       = str(inputs),
+                        commands     = str(commands),                    
+                        last_contact = last_contact,
+                        )
+                        
+                db.session.add(device)
+                db.session.commit()
+                
+                SET_DEVICE_LAST_CONTACT(ieeeAddr)   
+                
+                return ""
+
+        return "Gerätelimit erreicht (50)"                           
+                
+    else:
+        SET_DEVICE_LAST_CONTACT(ieeeAddr)  
+
+
+def SET_DEVICE_NAME(ieeeAddr, new_name):
+    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+    
+    WRITE_LOGFILE_SYSTEM("DATABASE", "Device | " + entry.name + " | Name changed" + " || Name - " + new_name)
+    
+    entry.name = new_name
+    db.session.commit()       
+
+
+def SET_DEVICE_LAST_CONTACT(ieeeAddr):
+    timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
+    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+    entry.last_contact = timestamp
+    db.session.commit()       
+
+
+def SET_DEVICE_LAST_VALUES(ieeeAddr, last_values):
+    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+    
+    last_values_formated = last_values.replace("{","")
+    last_values_formated = last_values_formated.replace("}","")
+    last_values_formated = last_values_formated.replace('"',"")
+    last_values_formated = last_values_formated.replace(":",": ")
+    last_values_formated = last_values_formated.replace(",",", ")
+    
+    timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    entry.last_values          = last_values
+    entry.last_values_formated = last_values_formated
+    entry.last_contact         = timestamp
+    db.session.commit()   
+
+    # write data_file
+    for plant in GET_ALL_PLANTS():
+        if plant.device_ieeeAddr == ieeeAddr:
+            device_name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
+            
+            # extract numbers
+            list_values = re.findall(r'\b\d+\b', last_values_formated)
+            WRITE_PLANTS_DATAFILE(plant.name, device_name, list_values[0], list_values[1], list_values[2])
+
+    
+def UPDATE_DEVICE(id, name, model = "", device_type = "", inputs = "", commands = ""):
+    entry = Devices.query.filter_by(id=id).first()
+    
+    # values changed ?
+    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.inputs != inputs or entry.commands != commands):
+        
+        entry.device_type = device_type
+        entry.model       = model
+        entry.inputs      = str(inputs)
+        entry.commands    = str(commands)        
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Device | " + entry.name + " | changed" + " || Name - " + name + " | Model - " + entry.model)
+
+        entry.name = name
+        db.session.commit()    
+   
+    
+def CHANGE_DEVICE_POSITION(id, device_type, direction):
+    
+    if direction == "up":
+        device_list = GET_ALL_DEVICES(device_type)
+        device_list = device_list[::-1]
+        
+        for device in device_list:
+            
+            if device.id < id:
+                
+                new_id = device.id
+                
+                # change ids
+                device_1 = GET_DEVICE_BY_ID(id)
+                device_2 = GET_DEVICE_BY_ID(new_id)
+                
+                device_1.id = 99
+                db.session.commit()
+                
+                device_2.id = id
+                device_1.id = new_id
+                db.session.commit()
+                
+                return 
+
+    if direction == "down":
+        for device in GET_ALL_DEVICES(device_type):
+            if device.id > id:
+                
+                new_id = device.id
+                
+                # change ids
+                device_1 = GET_DEVICE_BY_ID(id)
+                device_2 = GET_DEVICE_BY_ID(new_id)
+                
+                device_1.id = 99
+                db.session.commit()
+                
+                device_2.id = id
+                device_1.id = new_id
+                db.session.commit()
+                
+                return 
+
+
+def DELETE_DEVICE(ieeeAddr):
+    error_list = ""
+
+    # check plants
+    entries = GET_ALL_PLANTS()
+    for entry in entries:
+        if entry.device_ieeeAddr == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in Pflanzen"
+    
+    if error_list != "":
+        return error_list[1:]   
+               
+    else:      
+        device      = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+        device_name = device.name
+        
+        Devices.query.filter_by(ieeeAddr=ieeeAddr).delete()
+        db.session.commit() 
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Device | " + device_name + " | deleted")
+        return True
+
+
 """ ################### """
 """ ################### """
 """         host        """
@@ -299,212 +503,6 @@ def RESTORE_MQTT_BROKER_SETTINGS():
     db.session.commit()
 
     WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Broker Settings restored")
-
-
-""" ################### """
-""" ################### """
-"""       devices       """
-""" ################### """
-""" ################### """
-
-
-def GET_DEVICE_BY_ID(id):
-    return Devices.query.filter_by(id=id).first()
-
-
-def GET_DEVICE_BY_NAME(name):
-    for device in Devices.query.all():
-        
-        if device.name.lower() == name.lower():
-            return device 
-    
-    
-def GET_DEVICE_BY_IEEEADDR(ieeeAddr):
-    return Devices.query.filter_by(ieeeAddr=ieeeAddr).first()   
-
-
-def GET_ALL_DEVICES(selector):
-    device_list = []
-    devices     = Devices.query.all()
-  
-    if selector == "":
-        for device in devices:
-            
-            device_list.append(device)     
-
-    if selector == "watering_controller":
-        for device in devices:
-            if device.device_type == "watering_controller auto" or device.device_type == "watering_controller manually":
-                
-                device_list.append(device)       
-          
-    return device_list
-        
-
-def ADD_DEVICE(name, ieeeAddr, model, device_type = "", description = "", 
-               input_values = "", input_events = "", commands = "", last_contact = ""):
-        
-    # ieeeAddr exist ?
-    if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):   
-            
-        # find a unused id
-        for i in range(1,51):
-            
-            if Devices.query.filter_by(id=i).first():
-                pass
-                
-            else:
-                # add the new device            
-                device = Devices(
-                        id               = i,
-                        name             = name,                   
-                        ieeeAddr         = ieeeAddr,
-                        model            = model,
-                        device_type      = device_type,
-                        input_values     = str(input_values),
-                        commands         = str(commands),                    
-                        last_contact     = last_contact,
-                        )
-                        
-                db.session.add(device)
-                db.session.commit()
-                
-                SET_DEVICE_LAST_CONTACT(ieeeAddr)   
-                
-                return ""
-
-        return "Gerätelimit erreicht (50)"                           
-                
-    else:
-        SET_DEVICE_LAST_CONTACT(ieeeAddr)  
-
-
-def SET_DEVICE_NAME(ieeeAddr, new_name):
-    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
-    
-    WRITE_LOGFILE_SYSTEM("DATABASE", "Device | " + entry.name + " | Name changed" + " || Name - " + new_name)
-    
-    entry.name = new_name
-    db.session.commit()       
-
-
-def SET_DEVICE_LAST_CONTACT(ieeeAddr):
-    timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
-    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
-    entry.last_contact = timestamp
-    db.session.commit()       
-
-
-def SET_DEVICE_LAST_VALUES(ieeeAddr, last_values):
-    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
-    
-    last_values_formated = last_values.replace("{","")
-    last_values_formated = last_values_formated.replace("}","")
-    last_values_formated = last_values_formated.replace('"',"")
-    last_values_formated = last_values_formated.replace(":",": ")
-    last_values_formated = last_values_formated.replace(",",", ")
-    
-    timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-    entry.last_values          = last_values
-    entry.last_values_formated = last_values_formated
-    entry.last_contact         = timestamp
-    db.session.commit()   
-
-    for plant in GET_ALL_PLANTS():
-        if plant.device_ieeeAddr == ieeeAddr:
-            device_name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
-            
-            # extract numbers
-            list_values = re.findall(r'\b\d+\b', last_values_formated)
-            WRITE_PLANTS_DATAFILE(plant.name, device_name, list_values[0], list_values[1], list_values[2])
-
-    
-def UPDATE_DEVICE(id, name, model = "", device_type = "", input_values = "", input_events = "", commands = ""):
-    entry = Devices.query.filter_by(id=id).first()
-    
-    # values changed ?
-    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.input_values != input_values 
-        or entry.input_events != input_events or entry.commands != commands):
-        
-        entry.device_type     = device_type
-        entry.model           = model
-        entry.input_values    = str(input_values)
-        entry.input_events    = str(input_events)
-        entry.commands        = str(commands)        
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Device | " + entry.name + " | changed" + " || Name - " + name + " | Model - " + entry.model)
-
-        entry.name = name
-        db.session.commit()    
-   
-    
-def CHANGE_DEVICE_POSITION(id, device_type, direction):
-    
-    if direction == "up":
-        device_list = GET_ALL_DEVICES(device_type)
-        device_list = device_list[::-1]
-        
-        for device in device_list:
-            
-            if device.id < id:
-                
-                new_id = device.id
-                
-                # change ids
-                device_1 = GET_DEVICE_BY_ID(id)
-                device_2 = GET_DEVICE_BY_ID(new_id)
-                
-                device_1.id = 99
-                db.session.commit()
-                
-                device_2.id = id
-                device_1.id = new_id
-                db.session.commit()
-                
-                return 
-
-    if direction == "down":
-        for device in GET_ALL_DEVICES(device_type):
-            if device.id > id:
-                
-                new_id = device.id
-                
-                # change ids
-                device_1 = GET_DEVICE_BY_ID(id)
-                device_2 = GET_DEVICE_BY_ID(new_id)
-                
-                device_1.id = 99
-                db.session.commit()
-                
-                device_2.id = id
-                device_1.id = new_id
-                db.session.commit()
-                
-                return 
-
-
-def DELETE_DEVICE(ieeeAddr):
-    error_list = ""
-
-    # check plants
-    entries = GET_ALL_PLANTS()
-    for entry in entries:
-        if entry.device_ieeeAddr == ieeeAddr:
-            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in Pflanzen"
-    
-    if error_list != "":
-        return error_list[1:]   
-               
-    else:      
-        device      = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-        device_name = device.name
-        
-        Devices.query.filter_by(ieeeAddr=ieeeAddr).delete()
-        db.session.commit() 
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Device | " + device_name + " | deleted")
-        return True
 
 
 """ ################### """

@@ -222,42 +222,34 @@ def UPDATE_DEVICES():
                     device_type = ""                 
                     
                 try:
-                    input_values = data['input_values']
-                    input_values = ','.join(input_values)   
-                    input_values = input_values.replace("'", '"')
+                    inputs  = data['inputs']
+                    inputs  = ','.join(inputs)   
+                    inputs  = inputs.replace("'", '"')
                 except:
-                    input_values = ""
+                    inputs  = ""
                     
                 try:
-                    input_events = data['input_events']
-                    input_events = ','.join(input_events)
-                    input_events = input_events.replace("'", '"') 
-                    input_events = input_events.replace("},{", '} {')                                           
+                    commands = data['commands'] 
+                    commands = ','.join(commands)
+                    commands = commands.replace("'", '"')
+                    commands = commands.replace("},{", '} {')                               
                 except:
-                    input_events = ""
-                    
-                try:
-                    commands     = data['commands'] 
-                    commands     = ','.join(commands)
-                    commands     = commands.replace("'", '"')
-                    commands     = commands.replace("},{", '} {')                               
-                except:
-                    commands     = ""
+                    commands = ""
 
 
                 # add new device
                 if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):
-                    ADD_DEVICE(name, ieeeAddr, model, device_type, input_values, input_events, commands)
+                    ADD_DEVICE(name, ieeeAddr, model, device_type, inputs, commands)
                     
                 # update existing device
                 else:
                     id   = GET_DEVICE_BY_IEEEADDR(ieeeAddr).id
                     name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
                                     
-                    UPDATE_DEVICE(id, name, model, device_type, input_values, input_events, commands)
+                    UPDATE_DEVICE(id, name, model, device_type, inputs, commands)
                     SET_DEVICE_LAST_CONTACT(ieeeAddr)
                     
-                # update input values
+                # update sensor values 
                 MQTT_PUBLISH("miranda/mqtt/" + ieeeAddr + "/get", "")  
 
 
