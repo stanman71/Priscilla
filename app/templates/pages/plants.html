@@ -45,10 +45,11 @@
                       <thead>
                         <th scope="col" style="width:3%"></th> 
                         <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Pflanze</th>   
-                        <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Gerät</th>                      
+                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Gerät</th>     
+                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Test</th>                                          
                         <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Gruppen</th>   
                         <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Pumpdauer (s)</th>                         
-                        <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextform</p>Feuchtigkeitslevel</th>   
+                        <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Feuchtigkeitslevel</th>   
                         <th scope="col" style="width:5%"></th>                                                    
                       </thead>
                       <tbody> 
@@ -61,7 +62,10 @@
                           <td>
                             <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                    
                           </td> 
-                          <td>{{ entry.device.name }}</td>                                                                                     
+                          <td>{{ entry.device.name }}</td>   
+                          <td>
+                            <a href="/plants/test_pump/{{ entry.id }}#table"><font size="6"><i class='uil uil-play-circle'></i></font></a>
+                          </td>                                                                                   
                           <td>                       
                             <div class="custom-control custom-radio custom-control-inline">
                               <input type="radio" class="custom-control-input" id="radio_group_1_{{ entry.id }}" {% if entry.group == 1 %} checked="on" {% endif %} value="1" name="radio_group_{{ entry.id }}">

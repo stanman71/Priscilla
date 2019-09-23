@@ -270,9 +270,9 @@ def UPDATE_DEVICES():
             return ("MQTT | No connection")     
          
 
-""" ################### """
-"""  mqtt check setting """
-""" ################### """
+""" #################### """
+"""  mqtt check setting  """
+""" #################### """
  
  
 def CHECK_MQTT_SETTING_THREAD(ieeeAddr, setting, delay = 1, limit = 15): 

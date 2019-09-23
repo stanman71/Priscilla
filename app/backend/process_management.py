@@ -6,7 +6,7 @@ import time
 from app import app
 from app.database.models          import *
 from app.backend.file_management  import SAVE_DATABASE, WRITE_LOGFILE_SYSTEM
-from app.backend.mqtt             import UPDATE_DEVICES
+from app.backend.mqtt             import UPDATE_DEVICES, MQTT_PUBLISH
 from app.backend.email            import SEND_EMAIL
 from app.backend.shared_resources import process_management_queue
 
@@ -47,9 +47,19 @@ def PROCESS_MANAGEMENT():
                 if process[1] == "create_database_backup":  
                     SAVE_DATABASE()                  
   
+            # ##############
+            #  mqtt message
+            # ##############
+                
+            if process[0] == "send_message":
+                channel = process[1]
+                msg     = process[2]
+                
+                MQTT_PUBLISH(channel, msg)  
+
+
         except Exception as e:         
-            try:
-            
+            try:   
                 if "index out of range" not in str(e):
                     WRITE_LOGFILE_SYSTEM("ERROR", "Process Management | Process - " + process + " | " + str(e))  
                     SEND_EMAIL("ERROR", "Process Management | Process - " + process + " | " + str(e))               

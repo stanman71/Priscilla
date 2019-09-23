@@ -3,13 +3,15 @@ from flask_login         import current_user, login_required
 from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
-from app                         import app
-from app.database.models         import *
-from app.backend.file_management import GET_PATH, GET_PLANTS_DATAFILES
-from app.common                  import COMMON, STATUS
-from app.assets                  import *
+from app                          import app
+from app.database.models          import *
+from app.backend.file_management  import GET_PATH, GET_PLANTS_DATAFILES
+from app.backend.shared_resources import process_management_queue
+from app.common                   import COMMON, STATUS
+from app.assets                   import *
 
 import datetime
+import heapq
 
 # access rights
 def permission_required(f):
@@ -192,6 +194,18 @@ def change_plants_position(id, direction):
     return redirect(url_for('plants'))
 
 
+# test pump
+@app.route('/plants/test_pump/<int:id>')
+@login_required
+@permission_required
+def test_pump(id):
+    channel  =  "miranda/mqtt/" + GET_PLANT_BY_ID(id).device_ieeeAddr + "/set"
+    msg      = '{"pump":"ON","pump_time":5}'
+
+    heapq.heappush(process_management_queue, (20, ("send_message", channel, msg)))  
+    return redirect(url_for('plants'))
+
+
 # delete plant
 @app.route('/plants/delete/<int:id>')
 @login_required
@@ -206,12 +220,12 @@ def delete_plant(id):
 @login_required
 @permission_required
 def download_plants_datafile(filepath):
-    if filepath is None:
-        print("Ungültiger Pfad angegeben")     
+    path = GET_PATH() + "/csv/"  
+
     try:
-        path = GET_PATH() + "/csv/"     
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + filepath + " | downloaded")
-        return send_from_directory(path, filepath)
-        
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + filepath + " | downloaded") 
+
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filepath + " | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filepath + " | " + str(e))
+
+    return send_from_directory(path, filepath)
