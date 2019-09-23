@@ -6,12 +6,13 @@ from functools           import wraps
 from app                          import app
 from app.database.models          import *
 from app.backend.mqtt             import MQTT_PUBLISH, UPDATE_DEVICES
-from app.backend.file_management  import GET_PATH, RESET_LOGFILE
+from app.backend.file_management  import GET_PATH, RESET_LOGFILE, WRITE_LOGFILE_SYSTEM
 from app.backend.shared_resources import GET_ERROR_DELETE_DEVICE, SET_ERROR_DELETE_DEVICE
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
 import datetime
+import os
 
 # access rights
 def permission_required(f):
@@ -178,10 +179,14 @@ def remove_device(ieeeAddr):
 @login_required
 @permission_required
 def download_devices_logfile(filepath): 
+    path = GET_PATH() + "/logs/"  
+
     try:
-        path = GET_PATH() + "/logs/"     
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /logs/" + filepath + " | downloaded")
-        return send_from_directory(path, filepath)
+        if os.path.isfile(path + filepath) is False:
+            RESET_LOGFILE("log_devices")  
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /logs/" + filepath + " | downloaded") 
+
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/" + filepath + " | " + str(e))
-        return redirect(url_for('devices'))
+
+    return send_from_directory(path, filepath)

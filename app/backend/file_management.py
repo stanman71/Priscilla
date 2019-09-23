@@ -14,13 +14,8 @@ from app import app
 """ #### """
 """ path """
 """ #### """
-
-# windows
-if os.name == "nt":                 
-    PATH = os.path.abspath("") 
-# linux
-else:                               
-    PATH = os.path.abspath("") 
+            
+PATH = os.path.abspath("") 
 
 def GET_PATH():
     return (PATH)
@@ -241,7 +236,7 @@ def SAVE_DATABASE():
         list_of_files = os.listdir(PATH + '/backup/')    
         full_path     = [backup_location_path + '{0}'.format(x) for x in list_of_files]
 
-        if len([name for name in list_of_files]) > 10:
+        if len([name for name in list_of_files]) > 7:
             oldest_file = min(full_path, key=os.path.getctime)
             os.remove(oldest_file)        
         
@@ -341,9 +336,17 @@ def READ_PLANTS_DATAFILE(filename):
             WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + " | " + str(e))    
 
 
+def RENAME_PLANTS_DATAFILE(old_filename, new_filename):
+    try:
+        os.rename(PATH + '/csv/' + old_filename + ".csv", PATH + '/csv/' + new_filename + ".csv") 
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + old_filename + " | renamed | New name - " + new_filename)
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + old_filename + " | " + str(e))  
+
+
 def DELETE_PLANTS_DATAFILE(filename):
     try:
-        os.remove (PATH + '/csv/' + filename)
+        os.remove (PATH + '/csv/' + filename + ".csv")
         WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + filename + " | deleted")
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + " | " + str(e))  

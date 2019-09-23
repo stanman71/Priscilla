@@ -100,4 +100,4 @@ PROCESS_MANAGEMENT_THREAD()
 REFRESH_MQTT_INPUT_MESSAGES_THREAD()
 
 
-app.run(host = GET_HOST_NETWORK().lan_ip_address, port = 80, debug=True)
+app.run(host = GET_HOST_NETWORK().lan_ip_address, port = 80, debug=False)

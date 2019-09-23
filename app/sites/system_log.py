@@ -5,11 +5,12 @@ from functools           import wraps
 
 from app                         import app
 from app.database.models         import *
-from app.backend.file_management import RESET_LOGFILE, GET_LOGFILE_SYSTEM, GET_PATH
+from app.backend.file_management import RESET_LOGFILE, GET_LOGFILE_SYSTEM, GET_PATH, WRITE_LOGFILE_SYSTEM
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
 import datetime
+import os
 
 # access rights
 def permission_required(f):
@@ -92,6 +93,7 @@ def system_log():
     else:
         data_log_system = ""
 
+    # check data_log_system is string ?
     if isinstance(data_log_system, str):   
         error_message = data_log_system                
 
@@ -121,9 +123,14 @@ def system_log():
 @login_required
 @permission_required
 def download_system_log(filepath): 
+    path = GET_PATH() + "/logs/"  
+
     try:
-        path = GET_PATH() + "/logs/"    
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /logs/" + filepath + " | downloaded")
-        return send_from_directory(path, filepath)
+        if os.path.isfile(path + filepath) is False:
+            RESET_LOGFILE("log_system")  
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /logs/" + filepath + " | downloaded") 
+
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/" + filepath + " | " + str(e))
+
+    return send_from_directory(path, filepath)

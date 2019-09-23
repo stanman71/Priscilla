@@ -2,9 +2,9 @@ import datetime
 import time
 import threading
 
-from app import app
+from app                         import app
 from app.backend.file_management import WRITE_LOGFILE_SYSTEM
-from app.backend.email import SEND_EMAIL
+from app.backend.email           import SEND_EMAIL
 
 process_management_queue = []
 

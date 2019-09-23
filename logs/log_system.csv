@@ -385,3 +385,123 @@ Timestamp,Type,Description
 2019-09-23 16:49:16,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
 2019-09-23 16:49:17,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2019-09-23 16:49:19,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:21:33,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:21:35,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:21:36,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:21:38,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:21:52,EVENT,|File || /logs/log_devices.csv || downloaded|
+2019-09-23 18:22:30,EVENT,|File || /logs/log_devices.csv || downloaded|
+2019-09-23 18:22:38,EVENT,|File || /logs/log_devices.csv || downloaded|
+2019-09-23 18:22:44,EVENT,|File || /logs/log_devices.csv || created|
+2019-09-23 18:22:47,EVENT,|File || /logs/log_devices.csv || downloaded|
+2019-09-23 18:22:57,EVENT,|File || /logs/log_devices.csv || created|
+2019-09-23 18:22:59,EVENT,|File || /logs/log_devices.csv || downloaded|
+2019-09-23 18:26:49,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:26:51,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:27:03,EVENT,|File || /logs/log_devices.csv || downloaded|
+2019-09-23 18:27:14,EVENT,|File || /logs/log_devices.csv || created|
+2019-09-23 18:27:14,EVENT,|File || /logs/log_devices.csv || downloaded|
+2019-09-23 18:35:18,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:35:20,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:35:33,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:35:35,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:38:48,DATABASE,|Plant - dsa || changed |||| Name - dsa || Group - 2|
+2019-09-23 18:38:48,DATABASE,|Plant - dsa || changed |||| Pump_Duration_Manually - 10|
+2019-09-23 18:38:50,DATABASE,|Plant - dsa || changed |||| Name - dsa || Group - 1|
+2019-09-23 18:41:10,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:41:12,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:41:16,DATABASE,|Plant - test || deleted|
+2019-09-23 18:41:16,ERROR,|File || /csv/test || [WinError 2] Das System kann die angegebene Datei nicht finden: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/csv/test'|
+2019-09-23 18:46:26,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:46:28,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:46:47,DATABASE,|Plant - fhghgfhgf || changed |||| Name - fhghgfhg87f || Group - 1|
+2019-09-23 18:46:47,ERROR,|File || /csv/fhghgfhgf || [WinError 2] Das System kann die angegebene Datei nicht finden: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/csv/fhghgfhgf' -> 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/csv/fhghgfhg87f'|
+2019-09-23 18:46:52,DATABASE,|Plant - fhghgfhg87f || deleted|
+2019-09-23 18:46:52,ERROR,|File || /csv/fhghgfhg87f || [WinError 2] Das System kann die angegebene Datei nicht finden: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/csv/fhghgfhg87f'|
+2019-09-23 18:46:57,DATABASE,|Plant - test || added|
+2019-09-23 18:47:52,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:47:54,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:48:06,DATABASE,|Plant - test || deleted|
+2019-09-23 18:48:06,ERROR,|File || /csv/test || [WinError 2] Das System kann die angegebene Datei nicht finden: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/csv/test'|
+2019-09-23 18:48:14,DATABASE,|Plant - test || added|
+2019-09-23 18:48:14,EVENT,|File || /csv/test.csv || created|
+2019-09-23 18:48:20,DATABASE,|Plant - test || changed |||| Name - testuzt || Group - 1|
+2019-09-23 18:48:20,ERROR,|File || /csv/test || [WinError 2] Das System kann die angegebene Datei nicht finden: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/csv/test' -> 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/csv/testuzt'|
+2019-09-23 18:49:12,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:49:14,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:49:24,DATABASE,|Plant - testuzt || deleted|
+2019-09-23 18:49:24,ERROR,|File || /csv/testuzt || [WinError 2] Das System kann die angegebene Datei nicht finden: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/csv/testuzt'|
+2019-09-23 18:49:28,DATABASE,|Plant - test || added|
+2019-09-23 18:49:28,EVENT,|File || /csv/test.csv || created|
+2019-09-23 18:49:35,DATABASE,|Plant - test || changed |||| Name - testuzt || Group - 1|
+2019-09-23 18:49:35,EVENT,|File || /csv/test || renamed || New name - testuzt|
+2019-09-23 18:49:45,DATABASE,|Plant - testuzt || changed |||| Name - testuztoiu || Group - 1|
+2019-09-23 18:49:45,EVENT,|File || /csv/testuzt || renamed || New name - testuztoiu|
+2019-09-23 18:49:51,DATABASE,|Plant - testuztoiu || deleted|
+2019-09-23 18:49:51,ERROR,|File || /csv/testuztoiu || [WinError 2] Das System kann die angegebene Datei nicht finden: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/csv/testuztoiu'|
+2019-09-23 18:50:34,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:50:36,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:50:58,DATABASE,|Plant - uzt || added|
+2019-09-23 18:50:58,EVENT,|File || /csv/uzt.csv || created|
+2019-09-23 18:51:50,DATABASE,|Plant - uzt || changed |||| Name - uzt || Group - 1|
+2019-09-23 18:51:50,DATABASE,|Plant - uzt || changed |||| Pump_Duration_Manually - 10|
+2019-09-23 18:51:55,DATABASE,|Plant - uzt || changed |||| Name - uztgfd || Group - 1|
+2019-09-23 18:51:55,EVENT,|File || /csv/uzt || renamed || New name - uztgfd|
+2019-09-23 18:51:59,DATABASE,|Plant - uztgfd || deleted|
+2019-09-23 18:52:00,EVENT,|File || /csv/uztgfd || deleted|
+2019-09-23 18:52:56,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:52:58,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:55:03,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:55:05,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:56:26,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:56:28,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:57:16,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:57:18,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:58:15,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:58:17,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 18:59:07,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 18:59:09,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 19:00:11,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 19:00:13,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 19:02:22,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 19:02:24,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 19:04:39,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 19:04:41,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 19:06:29,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 19:06:31,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 19:06:56,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 19:06:58,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 19:07:32,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 19:07:34,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 19:07:55,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 19:07:57,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 19:08:12,DATABASE,|Plant - ztr || added|
+2019-09-23 19:08:12,EVENT,|File || /csv/ztr.csv || created|
+2019-09-23 19:08:52,DATABASE,|Plant - ztr || deleted|
+2019-09-23 19:08:52,EVENT,|File || /csv/ztr || deleted|
+2019-09-23 19:09:56,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 19:09:58,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 19:10:50,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 19:10:52,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 19:11:28,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 19:11:30,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 19:11:36,DATABASE,|Plant - tretre || added|
+2019-09-23 19:11:36,EVENT,|File || /csv/tretre.csv || created|
+2019-09-23 19:11:45,DATABASE,|Plant - tretre || changed |||| Name - tretre || Group - 1|
+2019-09-23 19:11:45,DATABASE,|Plant - tretre || changed |||| Pump_Duration_Manually - 10|
+2019-09-23 19:11:53,DATABASE,|Plant - tretre || changed |||| Name - tretre || Group - 2|
+2019-09-23 19:11:57,DATABASE,|Plant - tretre || deleted|
+2019-09-23 19:11:57,EVENT,|File || /csv/tretre || deleted|
+2019-09-23 19:12:32,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 19:12:34,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 19:12:50,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-23 19:12:52,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-23 19:12:57,DATABASE,|Plant - test || added|
+2019-09-23 19:12:57,EVENT,|File || /csv/test.csv || created|
+2019-09-23 19:13:01,DATABASE,|Plant - test || changed |||| Name - test || Group - 2|
+2019-09-23 19:13:06,DATABASE,|Plant - test || deleted|
+2019-09-23 19:13:06,EVENT,|File || /csv/test || deleted|
+2019-09-23 19:13:20,DATABASE,|Plant - dsadsadsa || added|
+2019-09-23 19:13:20,EVENT,|File || /csv/dsadsadsa.csv || created|
+2019-09-23 19:13:25,DATABASE,|Plant - dsadsadsa || deleted|
+2019-09-23 19:13:25,EVENT,|File || /csv/dsadsadsa || deleted|

@@ -137,7 +137,7 @@ def plants():
             name = request.form.get("set_name")
 
         # check device
-        if request.form.get("set_watering_controller_ieeeAddr") == "None":
+        if request.form.get("set_watering_controller_ieeeAddr") == "":
             error_message_add_plant.append("Kein Gerät angegeben")
         else:
             device_ieeeAddr = request.form.get("set_watering_controller_ieeeAddr")

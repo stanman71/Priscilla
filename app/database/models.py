@@ -4,7 +4,7 @@ from flask_login import UserMixin
 
 from app                         import app
 from app.common                  import COMMON, STATUS, DATATYPE
-from app.backend.file_management import WRITE_LOGFILE_SYSTEM, WRITE_PLANTS_DATAFILE
+from app.backend.file_management import WRITE_LOGFILE_SYSTEM, WRITE_PLANTS_DATAFILE, CREATE_PLANTS_DATAFILE, RENAME_PLANTS_DATAFILE, DELETE_PLANTS_DATAFILE
 
 import datetime
 import re
@@ -543,14 +543,17 @@ def ADD_PLANT(name, device_ieeeAddr):
                         id                     = i,
                         name                   = name, 
                         device_ieeeAddr        = device_ieeeAddr,     
-                        group                  = 0,
+                        group                  = 1,
                         pump_duration_auto     = 0, 
-                        pump_duration_manually = 0,                                               
+                        pump_duration_manually = 30,                                               
                     )
                 db.session.add(plant)
                 db.session.commit()
 
                 WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + name + " | added")  
+
+                # create data_file
+                CREATE_PLANTS_DATAFILE(name)
                 return
   
                           
@@ -574,8 +577,12 @@ def UPDATE_PLANT_SETTINGS(id, name, group):
         
         WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + old_name + " | changed || Name - " + entry.name + " | Group - " + str(entry.group))
 
+        # rename data_file
+        if old_name != name:
+            RENAME_PLANTS_DATAFILE(old_name, name)
+
         return True
-    
+
 
 def SET_PLANT_MOISTURE_LEVEL(id, moisture_level):         
     entry = Plants.query.filter_by(id=id).first()
@@ -667,14 +674,18 @@ def CHANGE_PLANTS_POSITION(id, direction):
 
 def DELETE_PLANT(id):
     entry = GET_PLANT_BY_ID(id)
+    plant_name = entry.name
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + entry.name + " | deleted")   
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + plant_name + " | deleted")   
     except:
         pass 
     
     Plants.query.filter_by(id=id).delete()
     db.session.commit()
+
+    # delete data_file
+    DELETE_PLANTS_DATAFILE(plant_name)
 
 
 """ ################## """
