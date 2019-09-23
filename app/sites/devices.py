@@ -5,6 +5,7 @@ from functools           import wraps
 
 from app                 import app
 from app.database.models import *
+from app.backend.mqtt    import CHECK_MQTT, UPDATE_MQTT_DEVICES
 from app.common          import COMMON, STATUS
 from app.assets          import *
 
@@ -80,9 +81,13 @@ def devices():
 
 
     # update device list
-    if request.form.get("update_mqtt_devices") != None:
-        pass
-        #error_message_change_settings = UPDATE_MQTT_DEVICES("mqtt")
+    if request.form.get("update_mqtt_devices") != None:     
+        result = UPDATE_MQTT_DEVICES()
+
+        if result == "Success":
+            success_message_change_settings_devices.append("Geräte erfolgreich aktualisiert")
+        else:
+            error_message_change_settings_devices.append(result)
 
 
     """ ############# """

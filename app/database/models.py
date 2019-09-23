@@ -122,19 +122,16 @@ if MQTT_Broker.query.filter_by().first() is None:
 if Scheduler_Tasks.query.filter_by().first() is None:
     scheduler_task_plants_group_1 = Scheduler_Tasks(
         name   = "plants_group_1",
-        task   = "watering_plants:1",
     )
     db.session.add(scheduler_task_plants_group_1)
 
     scheduler_task_plants_group_2 = Scheduler_Tasks(
         name   = "plants_group_2",
-        task   = "watering_plants:2",
     )
     db.session.add(scheduler_task_plants_group_2)
 
     scheduler_task_plants_group_3 = Scheduler_Tasks(
         name   = "plants_group_3",
-        task   = "watering_plants:3",
     )
     db.session.add(scheduler_task_plants_group_3)
 

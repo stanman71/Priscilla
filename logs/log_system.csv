@@ -228,3 +228,31 @@ Timestamp,Type,Description
 2019-09-23 11:04:13,DATABASE,|Task - plants_group_2 || changed |||| Time - 21:23 || Pause - True|
 2019-09-23 11:04:23,DATABASE,|Task - plants_group_1 || changed |||| Time - 8:34 || Pause - True|
 2019-09-23 11:04:28,DATABASE,|Task - plants_group_2 || changed |||| Time - 21:23 || Pause - False|
+2019-09-23 13:26:04,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 13:26:06,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 13:26:08,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 13:26:10,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 13:27:11,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 13:27:14,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 13:27:16,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 13:27:18,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 13:29:48,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 13:29:50,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 13:29:53,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 13:29:55,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 13:33:35,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 13:33:37,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 13:33:39,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 13:33:41,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 13:36:46,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 13:36:48,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 13:36:50,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 13:36:52,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 13:38:05,WARNING,|MQTT || Update Devices || No Message founded|
+2019-09-23 13:38:05,WARNING,|MQTT || Update Devices || No Message founded|
+2019-09-23 13:38:07,ERROR,|eMail || None || WARNING || MQTT || Update Devices || No Message founded || No recipients have been added|
+2019-09-23 13:38:07,ERROR,|eMail || None || WARNING || MQTT || Update Devices || No Message founded || No recipients have been added|
+2019-09-23 13:40:28,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 13:40:30,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
+2019-09-23 13:40:32,ERROR,|MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed|
+2019-09-23 13:40:34,ERROR,|eMail || None || ERROR || MQTT || Broker - hgfghjgh || [Errno 11001] getaddrinfo failed || No recipients have been added|
