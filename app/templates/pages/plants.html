@@ -60,7 +60,11 @@
                             <a href="/plants/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
                           </td>                   
                           <td>
-                            <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                    
+                            <div class="row justify-content-md-left">
+                              <div class="col-sm-10">                                    
+                                <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />  
+                              </div>
+                            </div>
                           </td> 
                           <td>{{ entry.device.name }}</td>   
                           <td>
@@ -83,12 +87,16 @@
                             </div>  
                           </td>          
                           <td>
-                            {% if entry.device.device_type == "watering_controller auto" %}          
-                              {{ entry.pump_duration_auto }}
-                            {% else %}
-                              <input type="text" class="form-control" name="set_pump_duration_manually_{{ entry.id }}" 
-                               value="{% if entry.pump_duration_manually != None and entry.pump_duration_manually != "None" %}{{ entry.pump_duration_manually }}{% endif %}" /> 
-                            {% endif %}
+                            <div class="row justify-content-md-left">
+                              <div class="col-sm-10">                                    
+                                {% if entry.device.device_type == "watering_controller auto" %}          
+                                  {{ entry.pump_duration_auto }}
+                                {% else %}
+                                  <input type="text" class="form-control" name="set_pump_duration_manually_{{ entry.id }}" 
+                                  value="{% if entry.pump_duration_manually != None and entry.pump_duration_manually != "None" %}{{ entry.pump_duration_manually }}{% endif %}" /> 
+                                {% endif %}
+                              </div>
+                            </div>
                           </td>                            
                           <td>
                             {% if entry.device.device_type == "watering_controller auto" %}   

@@ -66,15 +66,27 @@
                         {% for entry in list_users %}
                           <tr>           
                             <td>
-                              <input type="text" class="form-control" name="set_username_{{ entry.id }}" value="{{ entry.username }}" />             
+                              <div class="row justify-content-md-left">
+                                <div class="col-sm-10">                                    
+                                  <input type="text" class="form-control" name="set_username_{{ entry.id }}" value="{{ entry.username }}" />   
+                                </div>
+                              </div>          
                             </td> 
                             <td>
-                              <input type="email" class="form-control" name="set_email_{{ entry.id }}" value="{{ entry.email }}" />                    
+                              <div class="row justify-content-md-left">
+                                <div class="col-sm-10">                                    
+                                  <input type="email" class="form-control" name="set_email_{{ entry.id }}" value="{{ entry.email }}" /> 
+                                </div>
+                              </div>                 
                             </td> 
                             <td>
-                              <input type="password" class="form-control" name="set_password_{{ entry.id }}" value="" /> 
-                              <br>
-                              <input type="password" class="form-control" name="set_password_check_{{ entry.id }}" value="" />  
+                              <div class="row justify-content-md-left">
+                                <div class="col-sm-10">                                    
+                                  <input type="password" class="form-control" name="set_password_{{ entry.id }}" value="" /> 
+                                  <br>
+                                  <input type="password" class="form-control" name="set_password_check_{{ entry.id }}" value="" />  
+                                </div>
+                              </div>
                             </td> 
                             <td>
                               <div class="custom-control custom-checkbox">
@@ -139,19 +151,19 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="row justify-content-md-left">
-                        <div class="col-sm-4">                       
+                        <div class="col-sm-3">                       
                           <div class="form-group">
                             <label>Benutzer</label>
                             <input type="text" class="form-control" name="set_username" value="{{ username }}" /> 
                           </div>
                         </div>
-                        <div class="col-sm-4">                       
+                        <div class="col-sm-3">                       
                           <div class="form-group">
                             <label>eMail</label>
                             <input type="email" class="form-control" name="set_email" value="{{ email }}" />       
                           </div>
                         </div>           
-                        <div class="col-sm-4">                       
+                        <div class="col-sm-3">                       
                           <div class="form-group">
                             <label>Passwort</label>
                             <input type="password" class="form-control" name="set_password" value="{{ password }}" />       
