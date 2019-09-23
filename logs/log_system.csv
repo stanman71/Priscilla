@@ -151,3 +151,80 @@ Timestamp,Type,Description
 2019-09-22 09:04:02,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
 2019-09-22 09:04:55,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
 2019-09-22 09:05:03,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 10:48:54,DATABASE,|eMail || Server Settings || changed|
+2019-09-22 10:48:58,DATABASE,|eMail || Server Settings || changed|
+2019-09-22 10:49:40,DATABASE,|eMail || Server Settings || changed|
+2019-09-22 10:49:42,DATABASE,|eMail || Server Settings || changed|
+2019-09-22 13:32:53,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 13:34:40,DATABASE,|Host || Network settings changed || DHCP LAN - False|
+2019-09-22 13:34:47,DATABASE,|Host || Network settings changed || DHCP LAN - True|
+2019-09-22 13:34:50,DATABASE,|Host || Network settings changed || DHCP LAN - False|
+2019-09-22 13:42:06,DATABASE,|Host || Network settings changed || DHCP LAN - True|
+2019-09-22 13:43:50,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 13:48:32,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 13:48:35,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 13:48:35,DATABASE,|MQTT || Device - jhg || Name changed |||| Name - jhgfgdg|
+2019-09-22 14:05:20,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 22:01:43,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 22:05:16,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 22:29:22,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 22:32:29,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 22:43:08,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-22 22:43:46,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-23 08:36:57,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-23 08:37:00,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-23 08:38:06,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-23 08:43:13,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-23 08:44:07,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-23 09:03:06,DATABASE,|Plant - fhghgfhgf || changed |||| Name - fhghgfhgf || Group - None|
+2019-09-23 09:04:39,DATABASE,|Plant - fhghgfhgf || changed |||| Name - fhghgfhgf || Group - 1|
+2019-09-23 09:05:11,DATABASE,|Plant - fhghgfhgf || changed |||| Name - fhghgfhgf || Group - 1|
+2019-09-23 09:05:15,DATABASE,|Plant - fhghgfhgf || changed |||| Name - fhghgfhgf || Group - 1|
+2019-09-23 09:05:17,DATABASE,|Plant - fhghgfhgf || changed |||| Name - fhghgfhgf || Group - 1|
+2019-09-23 09:05:28,DATABASE,|Plant - fhghgfhgf || changed |||| Name - fhghgfhgf || Group - 1|
+2019-09-23 09:05:32,DATABASE,|Plant - fhghgfhgf || changed |||| Name - fhghgfhgf || Group - 1|
+2019-09-23 09:11:22,DATABASE,|Plant - dkh || deleted|
+2019-09-23 09:11:30,DATABASE,|Plant - test || added|
+2019-09-23 09:11:37,DATABASE,|Plant - test || deleted|
+2019-09-23 09:11:41,DATABASE,|Plant - test || added|
+2019-09-23 09:12:15,DATABASE,|Plant - test || deleted|
+2019-09-23 09:12:21,DATABASE,|Plant - test || added|
+2019-09-23 09:15:03,DATABASE,|Plant - test || deleted|
+2019-09-23 09:15:09,DATABASE,|Plant - test || added|
+2019-09-23 09:15:27,DATABASE,|Plant - test || changed |||| Name - test || Group - 2|
+2019-09-23 09:15:27,DATABASE,|Plant - test || changed |||| Pump_Duration_Manually - 10|
+2019-09-23 09:15:29,DATABASE,|Plant - test || changed |||| Name - test || Group - 3|
+2019-09-23 09:47:16,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-23 09:47:58,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-23 09:52:04,ERROR,|MQTT || name 'CHECK_MQTT' is not defined|
+2019-09-23 10:13:08,DATABASE,|Plant - test || changed |||| Name - test || Group - 2|
+2019-09-23 10:47:15,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - None|
+2019-09-23 10:47:17,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - None|
+2019-09-23 10:47:19,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - None|
+2019-09-23 10:47:21,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - None|
+2019-09-23 10:48:11,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - None|
+2019-09-23 10:48:12,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - None|
+2019-09-23 10:48:13,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - None|
+2019-09-23 10:48:14,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - None|
+2019-09-23 10:48:16,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - None|
+2019-09-23 10:48:17,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - None|
+2019-09-23 10:48:19,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - None|
+2019-09-23 10:49:36,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - None|
+2019-09-23 10:50:21,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - True|
+2019-09-23 10:50:23,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - True|
+2019-09-23 10:50:25,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - True|
+2019-09-23 10:50:25,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - True|
+2019-09-23 10:50:28,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - True|
+2019-09-23 10:51:41,DATABASE,|Plant - fhghgfhgf || changed |||| Name - fhghgfhgf || Group - 3|
+2019-09-23 10:51:45,DATABASE,|Plant - fhghgfhgf || changed |||| Name - fhghgfhgf || Group - 1|
+2019-09-23 10:51:50,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - True|
+2019-09-23 10:51:51,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - True|
+2019-09-23 10:51:53,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - True|
+2019-09-23 10:53:24,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - True|
+2019-09-23 10:53:30,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - False|
+2019-09-23 10:53:34,DATABASE,|Task - plants_group_1 || changed |||| Time - 12:45 || Pause - True|
+2019-09-23 11:03:26,DATABASE,|Task - plants_group_1 || changed |||| Time - 8:34 || Pause - False|
+2019-09-23 11:04:08,DATABASE,|Task - plants_group_2 || changed |||| Time - 21:23 || Pause - False|
+2019-09-23 11:04:13,DATABASE,|Task - plants_group_2 || changed |||| Time - 21:23 || Pause - True|
+2019-09-23 11:04:23,DATABASE,|Task - plants_group_1 || changed |||| Time - 8:34 || Pause - True|
+2019-09-23 11:04:28,DATABASE,|Task - plants_group_2 || changed |||| Time - 21:23 || Pause - False|

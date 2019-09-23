@@ -15,14 +15,14 @@ import datetime
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        try:
-            if current_user.role == "administrator":
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('logout'))
-        except Exception as e:
-            print(e)
+        #try:
+        if current_user.role == "administrator":
+            return f(*args, **kwargs)
+        else:
             return redirect(url_for('logout'))
+        #except Exception as e:
+        #    print(e)
+        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -83,8 +83,11 @@ def plants():
                     error_message_change_settings.append(current_name + " || Ungültige Eingabe Name || Keinen Wert angegeben") 
                     error_founded = True      
                                                             
-                pumptime = request.form.get("set_pumptime_" + str(i))
-    
+                if request.form.get("radio_group_" + str(i)) != None:
+                    group = request.form.get("radio_group_" + str(i))
+                else:
+                    group = 1
+
                 if request.form.get("radio_moisture_level_" + str(i)) != None:
                     moisture_level = request.form.get("radio_moisture_level_" + str(i))
 
@@ -97,14 +100,14 @@ def plants():
                             error_founded = True 
                     except:
                         error_message_change_settings.append(current_name + " || Ungültige Eingabe Pumpzeit || Muss eine Zahl zwischen 5 und 200 sein") 
-                        error_founded = True                                       
+                        error_founded = True        
 
                 # save settings
                 if error_founded == False: 
 
                     changes_saved = False
 
-                    if UPDATE_PLANT_SETTINGS(i, name, pumptime):
+                    if UPDATE_PLANT_SETTINGS(i, name, group):
                         changes_saved = True
 
                     if moisture_level != None:

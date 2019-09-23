@@ -225,9 +225,9 @@
                       <tbody> 
                         {% for entry in list_backup_files %}
                         <tr>
-                          <td>{{ entry }}</td> 
-                          <td><a href="/system/backup/restore/backup_database/{{ entry }}#database_backup"><font color="orange"><b>RESTORE</b></font></a></td>  
-                          <td><a href="/system/backup/delete/backup_database/{{ entry }}#database_backup"><font size="5"><i class="tim-icons icon-trash-simple"></i></font></a>
+                          <td style="width:80%">{{ entry }}</td> 
+                          <td style="width:10%"><a href="/system/backup/restore/backup_database/{{ entry }}#database_backup"><font color="orange"><b>RESTORE</b></font></a></td>  
+                          <td style="width:10%"><a href="/system/backup/delete/backup_database/{{ entry }}#database_backup"><font size="5"><i class='uil uil-trash-alt'></i></font></a>
                         </tr>
                         {% endfor %} 
                       </tbody>

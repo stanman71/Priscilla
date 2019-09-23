@@ -46,8 +46,8 @@
                         <th scope="col" style="width:3%"></th> 
                         <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Pflanze</th>   
                         <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Gerät</th>                      
-                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Zeit (Std:Min)</th>   
-                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletext</p>Pumpdauer (s)</th>                         
+                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Gruppe</th>   
+                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Pumpdauer (s)</th>                         
                         <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextform</p>Feuchtigkeitslevel</th>   
                         <th scope="col" style="width:5%"></th>                                                    
                       </thead>
@@ -62,9 +62,21 @@
                             <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                    
                           </td> 
                           <td>{{ entry.mqtt_device.name }}</td>                                                                                     
-                          <td>                     
-                            <input type="text" class="form-control" name="set_pumptime_{{ entry.id }}" 
-                             value="{% if entry.pumptime != None and entry.pumptime != "None" %}{{ entry.pumptime }}{% endif %}" />  
+                          <td>                       
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" class="custom-control-input" id="radio_group_1_{{ entry.id }}" {% if entry.group == 1 %} checked="on" {% endif %} value="1" name="radio_group_{{ entry.id }}">
+                              <label class="custom-control-label" for="radio_group_1_{{ entry.id }}">1</label>
+                            </div>     
+                            <br>  
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" class="custom-control-input" id="radio_group_2_{{ entry.id }}" {% if entry.group == 2 %} checked="on" {% endif %} value="2" name="radio_group_{{ entry.id }}">
+                              <label class="custom-control-label" for="radio_group_2_{{ entry.id }}">2</label>
+                            </div> 
+                            <br>       
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" class="custom-control-input" id="radio_group_3_{{ entry.id }}" {% if entry.group == 3 %} checked="on" {% endif %} value="3" name="radio_group_{{ entry.id }}">
+                              <label class="custom-control-label" for="radio_group_3_{{ entry.id }}">3</label>
+                            </div>  
                           </td>          
                           <td>
                             {% if entry.mqtt_device.device_type == "watering_controller auto" %}          
@@ -93,7 +105,7 @@
                             {% endif %}
                           </td>
                           <td>
-                            <a href="/plants/delete/{{ entry.id }}#table"><font size="6"><i class="tim-icons icon-trash-simple"></i></font></a>
+                            <a href="/plants/delete/{{ entry.id }}#table"><font size="6"><i class='uil uil-trash-alt'></i></font></a>
                           </td>   
                         </tr>
                         {% endfor %}
@@ -158,7 +170,7 @@
                               {% if mqtt_device_ieeeAddr != "" %}
                                 <option value= "{{ mqtt_device_ieeeAddr }}" > {{ mqtt_device_name }} </option>
                               {% else %}
-                                <option value= "None" > </option>
+                                <option value= "None" > Auswählen </option>
                               {% endif %}                 
                               <optgroup>
                                 {% for each in dropdown_list_watering_controller %}

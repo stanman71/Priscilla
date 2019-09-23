@@ -56,10 +56,19 @@ class Plants(db.Model):
     name                   = db.Column(db.String(50), unique=True)
     mqtt_device_ieeeAddr   = db.Column(db.String(50), db.ForeignKey('mqtt_devices.ieeeAddr'))   
     mqtt_device            = db.relationship('MQTT_Devices')  
-    pumptime               = db.Column(db.Integer)        
+    group                  = db.Column(db.Integer)        
     pump_duration_auto     = db.Column(db.Integer)  
     pump_duration_manually = db.Column(db.Integer)            
     moisture_level         = db.Column(db.String(50)) 
+
+class Scheduler_Tasks(db.Model):
+    __tablename__ = 'scheduler_tasks'
+    id     = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name   = db.Column(db.String(50), unique=True)
+    task   = db.Column(db.String(50))  
+    hour   = db.Column(db.Integer)  
+    minute = db.Column(db.Integer)         
+    pause  = db.Column(db.String(50))
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
@@ -108,6 +117,43 @@ if MQTT_Broker.query.filter_by().first() is None:
     db.session.add(mqtt_broker)
     db.session.commit()
 
+
+# create default mqtt broker settings
+if Scheduler_Tasks.query.filter_by().first() is None:
+    scheduler_task_plants_group_1 = Scheduler_Tasks(
+        name   = "plants_group_1",
+        task   = "watering_plants:1",
+    )
+    db.session.add(scheduler_task_plants_group_1)
+
+    scheduler_task_plants_group_2 = Scheduler_Tasks(
+        name   = "plants_group_2",
+        task   = "watering_plants:2",
+    )
+    db.session.add(scheduler_task_plants_group_2)
+
+    scheduler_task_plants_group_3 = Scheduler_Tasks(
+        name   = "plants_group_3",
+        task   = "watering_plants:3",
+    )
+    db.session.add(scheduler_task_plants_group_3)
+
+    scheduler_task_update_mqtt = Scheduler_Tasks(
+        name   = "update_mqtt",
+        task   = "update_mqtt_devices",
+        hour   = "*",
+        minute = "15",       
+    )
+    db.session.add(scheduler_task_update_mqtt)
+
+    scheduler_task_backup = Scheduler_Tasks(
+        name   = "backup_database",
+        task   = "create_database_backup",
+        hour   = "0",
+        minute = "0",        
+    )
+    db.session.add(scheduler_task_backup)
+    db.session.commit()
 
 # create default user
 if User.query.filter_by(username='admin').first() is None:
@@ -488,9 +534,12 @@ def ADD_PLANT(name, mqtt_device_ieeeAddr):
             else:
                 # add the new plant
                 plant = Plants(
-                        id                   = i,
-                        name                 = name, 
-                        mqtt_device_ieeeAddr = mqtt_device_ieeeAddr,            
+                        id                     = i,
+                        name                   = name, 
+                        mqtt_device_ieeeAddr   = mqtt_device_ieeeAddr,     
+                        group                  = 0,
+                        pump_duration_auto     = 0, 
+                        pump_duration_manually = 0,                                               
                     )
                 db.session.add(plant)
                 db.session.commit()
@@ -505,19 +554,19 @@ def ADD_PLANT(name, mqtt_device_ieeeAddr):
         return "Name bereits vergeben"
 
 
-def UPDATE_PLANT_SETTINGS(id, name, pumptime):         
+def UPDATE_PLANT_SETTINGS(id, name, group):         
     entry = Plants.query.filter_by(id=id).first()
     old_name = entry.name
 
     # values changed ?
-    if (entry.name != name or entry.pumptime != pumptime):
+    if (entry.name != name or entry.group != int(group)):
 
-        entry.name             = name
-        entry.pumptime         = pumptime        
+        entry.name  = name
+        entry.group = group        
         
         db.session.commit()  
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + old_name + " | changed || Name - " + entry.name + " | PumpTime - " + str(entry.pumptime))
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + old_name + " | changed || Name - " + entry.name + " | Group - " + str(entry.group))
 
         return True
     
@@ -541,7 +590,7 @@ def SET_PLANT_PUMP_DURATION_AUTO(id, pump_duration_auto):
     entry = Plants.query.filter_by(id=id).first()
 
     # values changed ?
-    if int(entry.pump_duration_auto) != int(pump_duration_auto):      
+    if entry.pump_duration_auto != int(pump_duration_auto):      
 
         entry.pump_duration_auto = pump_duration_auto
         db.session.commit()  
@@ -556,7 +605,7 @@ def SET_PLANT_PUMP_DURATION_MANUALLY(id, pump_duration_manually):
     entry = Plants.query.filter_by(id=id).first()
 
     # values changed ?
-    if int(entry.pump_duration_manually) != int(pump_duration_manually):       
+    if entry.pump_duration_manually != int(pump_duration_manually):       
 
         entry.pump_duration_manually = pump_duration_manually
         db.session.commit()  
@@ -620,6 +669,47 @@ def DELETE_PLANT(id):
     
     Plants.query.filter_by(id=id).delete()
     db.session.commit()
+
+
+""" ################## """
+""" ################## """
+"""      scheduler     """
+""" ################## """
+""" ################## """
+
+
+def GET_SCHEDULER_TASK_BY_ID(id):
+    return Scheduler_Tasks.query.filter_by(id=id).first()
+
+
+def GET_SCHEDULER_TASK_BY_NAME(name):
+    for task in Scheduler_Tasks.query.all():
+        
+        if task.name.lower() == name.lower():
+            return task    
+    
+
+def GET_ALL_SCHEDULER_TASKS():
+    return Scheduler_Tasks.query.all()    
+
+
+def UPDATE_SCHEDULER_TASK(id, hour, minute, pause): 
+    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+
+    # values changed ?
+    if (entry.hour != int(hour) or entry.minute != int(minute) or entry.pause != pause):
+            
+        entry.hour   = hour
+        entry.minute = minute        
+        entry.pause  = pause      
+
+        db.session.commit()   
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Task - " + entry.name + " | changed " +
+                             "|| Time - " + str(entry.hour) + ":" + str(entry.minute) + 
+                             " | Pause - " + str(entry.pause))     
+
+        return True
 
 
 """ ################### """

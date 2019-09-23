@@ -145,32 +145,32 @@ def system():
                     if new_lan_ip_address != lan_ip_address:
 
                         if CHECK_IP_ADDRESS(new_lan_ip_address) == False:
-                            error_message_change_settings_network.append("LAN || Ungültige IP-Adresse angegeben")
+                            error_message_change_settings_network.append("Netzwerk || Ungültige IP-Adresse angegeben")
                             save_settings_lan = False
                                 
                         elif PING_IP_ADDRESS(new_lan_ip_address) == True or new_lan_ip_address == GET_HOST_NETWORK().lan_ip_address:
-                            error_message_change_settings_network.append("LAN || IP-Adresse bereits vergeben")
+                            error_message_change_settings_network.append("Netzwerk || IP-Adresse bereits vergeben")
                             save_settings_lan = False
 
                         else:
                             lan_ip_address = new_lan_ip_address
 
                 else:
-                    error_message_change_settings_network.append("LAN || Keine IP-Adresse angegeben") 
+                    error_message_change_settings_network.append("Netzwerk || Keine IP-Adresse angegeben") 
                     
                 if request.form.get("set_lan_gateway") != "":
                     lan_gateway = request.form.get("set_lan_gateway")            
 
                     if CHECK_IP_ADDRESS(lan_gateway) == False:
-                        error_message_change_settings_network.append("LAN || Ungültiges Gateway angegeben")
+                        error_message_change_settings_network.append("Netzwerk || Ungültiges Gateway angegeben")
                         save_settings_lan = False
                         
                     if CHECK_IP_ADDRESS(lan_gateway) == True and PING_IP_ADDRESS(lan_gateway) == False:
-                        error_message_change_settings_network.append("LAN || Gateway nicht gefunden")
+                        error_message_change_settings_network.append("Netzwerk || Gateway nicht gefunden")
                         save_settings_lan = False
 
                 else:
-                    error_message_change_settings_network.append("LAN || Kein Gateway angegeben") 
+                    error_message_change_settings_network.append("Netzwerk || Kein Gateway angegeben") 
                     save_settings_lan = False
 
                 if save_settings_lan == True:
@@ -245,7 +245,7 @@ def system():
         if error_founded == False:
 
             if SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password):
-                success_message_change_settings_email == True
+                success_message_change_settings_email = True
 
 
     # test email settings
