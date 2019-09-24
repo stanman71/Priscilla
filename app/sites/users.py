@@ -11,6 +11,8 @@ from app.assets          import *
 
 import datetime
 
+
+
 # access rights
 def permission_required(f):
     @wraps(f)
@@ -31,18 +33,28 @@ def permission_required(f):
 @login_required
 @permission_required
 def users():
-    error_message_add_user = []
-    error_message_change_settings = []
+    success_message_add_user           = False
+    error_message_add_user             = []
+    success_message_change_settings    = []
+    error_message_change_settings      = []
+
     message_admin_password_not_changed = ""
 
-    success_message_change_settings = []
-    success_message_add_user        = False
-
-    setting_email_notification = ["", "", ""]
-    
     username        = ""
     email           = ""
     password        = ""
+    password_repeat = ""
+    hashed_password = ""
+
+    # delete message
+    if session.get('delete_user_success', None) != None:
+        success_message_change_settings.append(session.get('delete_user') + " || Erfolgreich gelöscht") 
+        session['delete_user_success'] = None
+        
+    if session.get('delete_user_error', None) != None:
+        error_message_change_settings.append(session.get('delete_user'))
+        session['delete_user_error'] = None       
+
 
     """ ############### """
     """  user settings  """
@@ -135,7 +147,7 @@ def users():
                         try:              
                             if 8 <= len(password) <= 20:
                                 
-                                if str(password) == str(request.form.get("set_password_check_" + str(i))):
+                                if str(password) == str(request.form.get("set_password_repeat_" + str(i))):
                                     hashed_password = generate_password_hash(password, method='sha256')
                                        
                                 else:
@@ -175,10 +187,10 @@ def users():
                         if changes_saved == True:
                             success_message_change_settings.append(username + " || Einstellungen gespeichert") 
 
-                    username = ""
-                    email    = ""
-                    password = ""      
-   
+                    username        = ""
+                    email           = ""
+                    password        = ""      
+                    password_repeat = "" 
                                         
                 # no user has administrator rights
                 else:    
@@ -194,29 +206,40 @@ def users():
         if request.form.get("set_username") != None:
             # missing name
             if request.form.get("set_username") == "":
-                error_message_add_user.append("Keinen Benutzernamen angegeben")                                    
+                error_message_add_user.append("Keinen Benutzernamen angegeben")   
+            elif GET_USER_BY_NAME(request.form.get("set_username")):  
+                error_message_add_user.append("Benutzername bereits vergeben")                                                   
             else:         
                 username = request.form.get("set_username")
                 
         if request.form.get("set_email") != None:
             # missing email address
             if request.form.get("set_email") == "":
-                error_message_add_user.append("Keine eMail-Adresse angegeben")                                    
+                error_message_add_user.append("Keine eMail-Adresse angegeben") 
+            elif GET_USER_BY_EMAIL(request.form.get("set_email")):  
+                error_message_add_user.append("eMail-Adresse bereits vergeben")   
             else:         
                 email = request.form.get("set_email")  
     
         if request.form.get("set_password") != None:
             # missing password
             if request.form.get("set_password") == "":
-                error_message_add_user.append("Kein Passwort angegeben")                                    
+                error_message_add_user.append("Kein Passwort angegeben")    
+            elif request.form.get("set_password_repeat") == "":
+                error_message_add_user.append("Passwort nicht bestätigt")                                    
             else:         
-                password = request.form.get("set_password")
+                password        = request.form.get("set_password")
+                password_repeat = request.form.get("set_password_repeat")
 
-                if 8 <= len(password) <= 20:                
-                    hashed_password = generate_password_hash(password, method='sha256')
+                if password == password_repeat:
+
+                    if 8 <= len(password) <= 20:                
+                        hashed_password = generate_password_hash(password, method='sha256')
+                    else:
+                        error_message_add_user.append("Passwort muss zwischen 8 und 20 Zeichen haben")
+
                 else:
-                    error_message_add_user.append("Passwort muss zwischen 8 und 20 Zeichen haben")
-
+                    error_message_add_user.append("Passworter nicht identisch")  
 
         if username != "" and email != "" and hashed_password != "":
             error = ADD_USER(username, email, hashed_password)
@@ -226,9 +249,10 @@ def users():
 
             else:
                 success_message_add_user = True
-                username = ""
-                email    = ""
-                password = ""
+                username        = ""
+                email           = ""
+                password        = ""
+                password_repeat = ""
 
 
     user_list = GET_ALL_USERS()
@@ -240,9 +264,6 @@ def users():
         pass
 
     list_users = GET_ALL_USERS()
-
-    dropdown_list_roles               = ["user", "administrator"]
-    dropdown_list_email_notifications = ["none", "warnings", "all"]
 
     data = {'navigation': 'users', 'notification': ''}
 
@@ -256,10 +277,9 @@ def users():
                                                      success_message_add_user=success_message_add_user,
                                                      username=username,
                                                      email=email,
-                                                     password=password,                         
+                                                     password=password,  
+                                                     password_repeat=password_repeat,                      
                                                      list_users=list_users,
-                                                     dropdown_list_roles=dropdown_list_roles,
-                                                     dropdown_list_email_notifications=dropdown_list_email_notifications,
                                                     ) 
                            )
 
@@ -269,5 +289,12 @@ def users():
 @login_required
 @permission_required
 def delete_user(id):
-    DELETE_USER(id)
+    username = GET_USER_BY_ID(id).username
+    result   = DELETE_USER(id)
+
+    if result:
+        session['delete_user_success'] = username
+    else:
+        session['delete_user_error'] = result
+
     return redirect(url_for('users'))

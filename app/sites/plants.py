@@ -33,11 +33,10 @@ def permission_required(f):
 @login_required
 @permission_required
 def plants():
-    error_message_add_plant = []
-    error_message_change_settings = []
-
-    success_message_change_settings = []   
-    success_message_add_plant       = False   
+    success_message_change_settings = []      
+    error_message_change_settings   = []    
+    success_message_add_plant       = False       
+    error_message_add_plant         = []
 
     name            = ""
     device_ieeeAddr = ""
@@ -45,6 +44,21 @@ def plants():
 
     page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
+
+
+    # test message
+    if session.get('test_pump', None) != None:
+        success_message_change_settings.append(session.get('test_pump') + " || Pumpe gestartet (5 Sekunden)") 
+        session['test_pump'] = None
+
+    # delete message
+    if session.get('delete_plant_success', None) != None:
+        success_message_change_settings.append(session.get('delete_plant') + " || Erfolgreich gelöscht") 
+        session['delete_plant_success'] = None
+        
+    if session.get('delete_plant_error', None) != None:
+        error_message_change_settings.append(session.get('delete_plant'))
+        session['delete_plant_error'] = None       
 
 
     """ ################# """
@@ -135,6 +149,8 @@ def plants():
         # check name
         if request.form.get("set_name") == "":
             error_message_add_plant.append("Keinen Namen angegeben")
+        elif GET_PLANT_BY_NAME(request.form.get("set_name")):  
+            error_message_add_plant.append("Name bereits vergeben")               
         else:
             name = request.form.get("set_name")
 
@@ -170,10 +186,10 @@ def plants():
     return render_template('layouts/default.html',
                             data=data,    
                             content=render_template( 'pages/plants.html',
-                                                    error_message_change_settings=error_message_change_settings,                            
-                                                    error_message_add_plant=error_message_add_plant,
-                                                    success_message_change_settings=success_message_change_settings,                                                         
-                                                    success_message_add_plant=success_message_add_plant,                                               
+                                                    success_message_change_settings=success_message_change_settings,                               
+                                                    error_message_change_settings=error_message_change_settings,   
+                                                    success_message_add_plant=success_message_add_plant,                            
+                                                    error_message_add_plant=error_message_add_plant,                                                                                                  
                                                     dropdown_list_watering_controller=dropdown_list_watering_controller, 
                                                     name=name,
                                                     device_ieeeAddr=device_ieeeAddr,
@@ -199,6 +215,8 @@ def change_plants_position(id, direction):
 @login_required
 @permission_required
 def test_pump(id):
+    session['test_pump'] = GET_PLANT_BY_ID(id).name 
+
     channel  =  "miranda/mqtt/" + GET_PLANT_BY_ID(id).device_ieeeAddr + "/set"
     msg      = '{"pump":"ON","pump_time":5}'
 
@@ -211,7 +229,14 @@ def test_pump(id):
 @login_required
 @permission_required
 def delete_plant(id):
-    DELETE_PLANT(id)
+    plant  = GET_PLANT_BY_ID(id).name  
+    result = DELETE_PLANT(id)
+
+    if result:
+        session['delete_plant_success'] = plant
+    else:
+        session['delete_plant_error'] = result
+
     return redirect(url_for('plants'))
 
 

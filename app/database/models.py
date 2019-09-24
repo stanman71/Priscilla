@@ -676,14 +676,15 @@ def DELETE_PLANT(id):
     
     try:
         WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + plant_name + " | deleted")   
-    except:
-        pass 
-    
-    Plants.query.filter_by(id=id).delete()
-    db.session.commit()
+        Plants.query.filter_by(id=id).delete()
+        db.session.commit()
 
-    # delete data_file
-    DELETE_PLANTS_DATAFILE(plant_name)
+        # delete data_file
+        DELETE_PLANTS_DATAFILE(plant_name)
+        return True
+
+    except Exception as e:
+        return("ERROR: " + str(e))
 
 
 """ ################## """
@@ -821,8 +822,9 @@ def DELETE_USER(user_id):
 
     try:
         WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + entry.username + " | deleted")    
-    except:
-        pass
-    
-    User.query.filter_by(id=user_id).delete()
-    db.session.commit()
+        User.query.filter_by(id=user_id).delete()
+        db.session.commit()    
+        return True
+
+    except Exception as e:
+        return("ERROR: " + str(e))

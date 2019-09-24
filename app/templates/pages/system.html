@@ -40,7 +40,7 @@
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    <span>Einstellungen erfolgreich geändert</span>
+    <span>Einstellungen erfolgreich geändert - Neustart des Systems notwendig</span>
   </div>
 {% endif %}  
 
@@ -214,6 +214,28 @@
 
 <section id="backup"></section>  
 
+<!-- success message change settings backup -->
+
+{% if success_message_change_settings_backup != "" %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>{{ success_message_change_settings_backup }}</span>
+  </div>
+{% endif %}  
+
+<!-- error message change settings backup -->
+
+{% if error_message_change_settings_backup != "" %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>{{ error_message_change_settings_backup }}</span>
+  </div>
+{% endif %}  
+
             <div class="card">
               <div class="card-header">
                 <h5 class="title">Backups</h5>
@@ -226,8 +248,8 @@
                         {% for entry in list_backup_files %}
                         <tr>
                           <td style="width:80%">{{ entry }}</td> 
-                          <td style="width:10%"><a href="/system/backup/restore/backup_database/{{ entry }}#database_backup"><font color="orange"><b>RESTORE</b></font></a></td>  
-                          <td style="width:10%"><a href="/system/backup/delete/backup_database/{{ entry }}#database_backup"><font size="5"><i class='uil uil-trash-alt'></i></font></a>
+                          <td style="width:10%"><a href="/system/backup/restore/backup_database/{{ entry }}#backup"><font color="orange"><b>RESTORE</b></font></a></td>  
+                          <td style="width:10%"><a href="/system/backup/delete/backup_database/{{ entry }}#backup"><font size="5"><i class='uil uil-trash-alt'></i></font></a>
                         </tr>
                         {% endfor %} 
                       </tbody>
@@ -235,7 +257,7 @@
                   </div>
                 </div>  
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/system#backup'" name="database_save" class="btn btn-fill btn-info">SAVE DATABASE</button>
+                  <button type="submit" onclick="window.location.href='/system#backup'" name="database_save" class="btn btn-fill btn-info">BACKUP DATABASE</button>
                 </div>
               </form>
             </div>

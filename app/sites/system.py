@@ -89,10 +89,12 @@ def HOST_SHUTDOWN():
 @login_required
 @permission_required
 def system():
-    error_message_change_settings_network   = []
     success_message_change_settings_network = False
-    error_message_change_settings_email     = []
-    success_message_change_settings_email   = False    
+    error_message_change_settings_network   = []
+    success_message_change_settings_email   = False       
+    error_message_change_settings_email     = [] 
+    success_message_change_settings_backup  = ""    
+    error_message_change_settings_backup    = ""
 
     message_shutdown            = "" 
     message_ip_config_change    = False
@@ -102,6 +104,24 @@ def system():
     lan_ip_address    = GET_HOST_NETWORK().lan_ip_address
     lan_gateway       = GET_HOST_NETWORK().lan_gateway
 
+    # restore message
+    if session.get('restore_database_success', None) != None:
+        success_message_change_settings_backup = session.get('restore_database_success') + " || Erfolgreich wiederhergestellt"
+        session['restore_database_success'] = None
+        
+    if session.get('restore_database_error', None) != None:
+        error_message_change_settings_backup = session.get('restore_database_error') 
+        session['restore_database_error'] = None       
+        
+    # delete message
+    if session.get('delete_database_success', None) != None:
+        success_message_change_settings_backup = session.get('delete_database_success') + " || Erfolgreich gelöscht"
+        session['delete_database_success'] = None
+        
+    if session.get('delete_database_error', None) != None:
+        error_message_change_settings_backup = session.get('delete_database_error') 
+        session['delete_database_error'] = None       
+        
 
     """ #################### """
     """  restart / shutdown  """
@@ -259,7 +279,13 @@ def system():
  
     # save database   
     if request.form.get("database_save") != None:
-        SAVE_DATABASE() 
+        result = SAVE_DATABASE() 
+        
+        if result:
+            success_message_change_settings_backup = "Backup erfolgreich erstellt"
+        else:
+            error_message_change_settings_backup = result
+
 
     cpu_temperature   = GET_CPU_TEMPERATURE()
  
@@ -275,11 +301,13 @@ def system():
     return render_template('layouts/default.html',
                             data=data,    
                             content=render_template( 'pages/system.html',   
-                                                    error_message_change_settings_network=error_message_change_settings_network,
-                                                    success_message_change_settings_network=success_message_change_settings_network,     
+                                                    success_message_change_settings_network=success_message_change_settings_network,                             
+                                                    error_message_change_settings_network=error_message_change_settings_network, 
+                                                    success_message_change_settings_email=success_message_change_settings_email,                                                       
                                                     error_message_change_settings_email=error_message_change_settings_email,
-                                                    success_message_change_settings_email=success_message_change_settings_email,
-                                                    message_test_settings_email=message_test_settings_email,                                                                                                         
+                                                    message_test_settings_email=message_test_settings_email, 
+                                                    error_message_change_settings_backup=error_message_change_settings_backup,                                                       
+                                                    success_message_change_settings_backup=success_message_change_settings_backup,                                                                                                     
                                                     message_shutdown=message_shutdown,
                                                     cpu_temperature=cpu_temperature,
                                                     lan_dhcp=lan_dhcp,
@@ -295,7 +323,12 @@ def system():
 @login_required
 @permission_required
 def restore_database_backup(filename):
-    RESTORE_DATABASE(filename)
+    result = RESTORE_DATABASE(filename)
+    if result:
+        session['restore_database_success'] = filename
+    else:
+        session['restore_database_error'] = result
+
     return redirect(url_for('system'))
 
 
@@ -304,5 +337,10 @@ def restore_database_backup(filename):
 @login_required
 @permission_required
 def delete_database_backup(filename):
-    DELETE_DATABASE_BACKUP(filename)
+    result = DELETE_DATABASE_BACKUP(filename)
+    if result:
+        session['delete_database_success'] = filename
+    else:
+        session['delete_database_error'] = result
+
     return redirect(url_for('system'))

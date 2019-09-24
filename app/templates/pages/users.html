@@ -84,7 +84,8 @@
                                 <div class="col-sm-10">                                    
                                   <input type="password" class="form-control" name="set_password_{{ entry.id }}" value="" /> 
                                   <br>
-                                  <input type="password" class="form-control" name="set_password_check_{{ entry.id }}" value="" />  
+                                  <label>Passwort wiederholen</label>
+                                  <input type="password" class="form-control" name="set_password_repeat_{{ entry.id }}" value="" />  
                                 </div>
                               </div>
                             </td> 
@@ -99,7 +100,7 @@
                               </div>
                             </td>
                             <td>
-                              <a href="/users.html/delete/{{ entry.id }}#table"><font size="5"><i class='tim-icons icon-trash-simple'></i></font></a>
+                              <a href="/users/delete/{{ entry.id }}#table"><font size="5"><i class='tim-icons icon-trash-simple'></i></font></a>
                             </td>   
                           </tr>
                         {% endfor %}
@@ -168,7 +169,13 @@
                             <label>Passwort</label>
                             <input type="password" class="form-control" name="set_password" value="{{ password }}" />       
                           </div>
-                        </div>                           
+                        </div>        
+                        <div class="col-sm-3">                       
+                          <div class="form-group">
+                            <label>Passwort wiederholen</label>
+                            <input type="password" class="form-control" name="set_password_repeat" value="{{ password_repeat }}" />       
+                          </div>
+                        </div>                                                 
                       </div>
                     </div>
                   </div>                  

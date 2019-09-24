@@ -241,11 +241,11 @@ def SAVE_DATABASE():
             os.remove(oldest_file)        
         
         WRITE_LOGFILE_SYSTEM("SUCCESS", "Database_Backup | saved")
-        return ""
+        return True
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "Database_Backup | " + str(e)) 
-        return str(e)
+        return ("ERROR | " + str(e))
 
 
 def RESTORE_DATABASE(filename):
@@ -254,20 +254,22 @@ def RESTORE_DATABASE(filename):
         if filename.split("_")[1] == "database.db":
             shutil.copyfile(backup_location_path + filename, PATH + '/app/database/database.db')
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Database_Backup | " + filename + " | restored")
+            return True
             
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "Database_Backup | " + str(e))  
-        return ("ERROR: " + str(e))
+        return ("ERROR | " + str(e))
         
         
 def DELETE_DATABASE_BACKUP(filename):
     try:
         os.remove (backup_location_path + filename)
         WRITE_LOGFILE_SYSTEM("EVENT", "File | /backup/" + filename + " | deleted")
+        return True
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /backup/" + filename + " | " + str(e))  
-        return ("ERROR: " + str(e))
+        return ("ERROR | " + str(e))
 
 
 """ ###### """

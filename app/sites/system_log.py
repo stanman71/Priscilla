@@ -32,7 +32,8 @@ def permission_required(f):
 @login_required
 @permission_required
 def system_log():
-    error_message = ""
+    error_message                           = ""
+    success_message_change_settings_logfile = False
     
     selected_type_event    = "selected"
     selected_type_status   = "selected"
@@ -85,7 +86,8 @@ def system_log():
    
     # reset logfile
     if request.form.get("reset_logfile") != None: 
-        RESET_LOGFILE("log_system")   
+        RESET_LOGFILE("log_system")  
+        success_message_change_settings_logfile = True 
 
     # get log entries
     if GET_LOGFILE_SYSTEM(selected_log_types, 50, log_search) != None:
@@ -105,6 +107,7 @@ def system_log():
                             data=data,    
                             content=render_template( 'pages/system_log.html', 
                                                     error_message=error_message,
+                                                    success_message_change_settings_logfile=success_message_change_settings_logfile,
                                                     timestamp=timestamp,
                                                     selected_type_event=selected_type_event,
                                                     selected_type_status=selected_type_status,

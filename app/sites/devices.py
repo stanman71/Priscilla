@@ -35,10 +35,11 @@ def permission_required(f):
 @permission_required
 def devices():
     error_message_mqtt = ""
-    error_message_change_settings_devices   = [] 
-    success_message_change_settings_devices = []          
-    error_message_change_settings_broker    = [] 
-    success_message_change_settings_broker  = False     
+    success_message_change_settings_devices = []         
+    error_message_change_settings_devices   = []    
+    success_message_change_settings_broker  = ""         
+    error_message_change_settings_broker    = []   
+    success_message_change_settings_logfile = False
 
     page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
@@ -53,6 +54,10 @@ def devices():
         error_message_change_settings_devices.append(GET_ERROR_DELETE_DEVICE())
         SET_ERROR_DELETE_DEVICE("")
 
+    # delete message
+    if session.get('delete_device', None) != None:
+        success_message_change_settings_devices.append(session.get('delete_device') + " || Erfolgreich gelöscht") 
+        session['delete_device'] = None
 
     """ ######### """
     """  devices  """
@@ -112,12 +117,12 @@ def devices():
 
         if broker != "":
             if SET_MQTT_BROKER_SETTINGS(broker, user, password):
-                success_message_change_settings_broker = True
+                success_message_change_settings_broker = "Einstellungen erfolgreich geändert"
 
 
     if request.form.get("restore_broker_settings") != None:
         RESTORE_MQTT_BROKER_SETTINGS()
-        success_message_change_settings_broker = True
+        success_message_change_settings_broker = "Einstellungen erfolgreich wiederhergestellt"
 
     """ ############ """
     """  device log  """
@@ -126,6 +131,7 @@ def devices():
     # reset logfile
     if request.form.get("reset_logfile") != None: 
         RESET_LOGFILE("log_devices")   
+        success_message_change_settings_logfile = True
 
 
     list_devices = GET_ALL_DEVICES("")
@@ -143,7 +149,8 @@ def devices():
                                                     error_message_change_settings_devices=error_message_change_settings_devices,   
                                                     success_message_change_settings_devices=success_message_change_settings_devices, 
                                                     error_message_change_settings_broker=error_message_change_settings_broker,   
-                                                    success_message_change_settings_broker=success_message_change_settings_broker,                                                     
+                                                    success_message_change_settings_broker=success_message_change_settings_broker,  
+                                                    success_message_change_settings_logfile=success_message_change_settings_logfile,                                                   
                                                     list_devices=list_devices,
                                                     broker=broker,
                                                     timestamp=timestamp,                         
@@ -170,6 +177,8 @@ def remove_device(ieeeAddr):
     
     if result != True:
         SET_ERROR_DELETE_DEVICE(result)
+    else:
+        session['delete_device'] = device_name
         
     return redirect(url_for('devices'))
      
