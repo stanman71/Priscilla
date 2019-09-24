@@ -7,7 +7,6 @@ from app                          import app
 from app.database.models          import *
 from app.backend.mqtt             import MQTT_PUBLISH, UPDATE_DEVICES
 from app.backend.file_management  import GET_PATH, RESET_LOGFILE, WRITE_LOGFILE_SYSTEM
-from app.backend.shared_resources import GET_ERROR_DELETE_DEVICE, SET_ERROR_DELETE_DEVICE
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
@@ -49,15 +48,15 @@ def devices():
     if result != None:
         error_message_mqtt = result
 
-    # get device delete errors
-    if GET_ERROR_DELETE_DEVICE() != "":
-        error_message_change_settings_devices.append(GET_ERROR_DELETE_DEVICE())
-        SET_ERROR_DELETE_DEVICE("")
-
     # delete message
-    if session.get('delete_device', None) != None:
-        success_message_change_settings_devices.append(session.get('delete_device') + " || Erfolgreich gelöscht") 
-        session['delete_device'] = None
+    if session.get('delete_device_success', None) != None:
+        success_message_change_settings_devices.append(session.get('delete_device_success') + " || Erfolgreich gelöscht")
+        session['delete_device_success'] = None
+        
+    if session.get('delete_device_error', None) != None:
+        error_message_change_settings_devices.append(session.get('delete_device_error'))
+        session['delete_device_error'] = None      
+
 
     """ ######### """
     """  devices  """
@@ -174,11 +173,10 @@ def change_device_position(id, direction, device_type):
 def remove_device(ieeeAddr):
     device_name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
     result      = DELETE_DEVICE(ieeeAddr) 
-    
-    if result != True:
-        SET_ERROR_DELETE_DEVICE(result)
+    if result == True:
+        session['delete_device_success'] = device_name
     else:
-        session['delete_device'] = device_name
+        session['delete_device_error'] = result
         
     return redirect(url_for('devices'))
      

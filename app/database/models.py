@@ -19,7 +19,6 @@ class Devices(db.Model):
     model                = db.Column(db.String(50))    
     device_type          = db.Column(db.String(50))
     inputs               = db.Column(db.String(200))
-    commands             = db.Column(db.String(200))    
     last_contact         = db.Column(db.String(50))
     last_values          = db.Column(db.String(200))  
     last_values_formated = db.Column(db.String(200)) 
@@ -250,7 +249,7 @@ def GET_ALL_DEVICES(selector):
     return device_list
         
 
-def ADD_DEVICE(name, ieeeAddr, model, device_type = "", description = "", inputs = "", commands = "", last_contact = ""):
+def ADD_DEVICE(name, ieeeAddr, model, device_type = "", description = "", inputs = "", last_contact = ""):
         
     # ieeeAddr exist ?
     if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):   
@@ -269,8 +268,7 @@ def ADD_DEVICE(name, ieeeAddr, model, device_type = "", description = "", inputs
                         ieeeAddr     = ieeeAddr,
                         model        = model,
                         device_type  = device_type,
-                        inputs       = str(inputs),
-                        commands     = str(commands),                    
+                        inputs       = str(inputs),                 
                         last_contact = last_contact,
                         )
                         
@@ -328,16 +326,15 @@ def SET_DEVICE_LAST_VALUES(ieeeAddr, last_values):
             WRITE_PLANTS_DATAFILE(plant.name, device_name, list_values[0], list_values[1], list_values[2])
 
     
-def UPDATE_DEVICE(id, name, model = "", device_type = "", inputs = "", commands = ""):
+def UPDATE_DEVICE(id, name, model = "", device_type = "", inputs = ""):
     entry = Devices.query.filter_by(id=id).first()
     
     # values changed ?
-    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.inputs != inputs or entry.commands != commands):
+    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.inputs != inputs):
         
         entry.device_type = device_type
         entry.model       = model
-        entry.inputs      = str(inputs)
-        entry.commands    = str(commands)        
+        entry.inputs      = str(inputs)       
         
         WRITE_LOGFILE_SYSTEM("DATABASE", "Device | " + entry.name + " | changed" + " || Name - " + name + " | Model - " + entry.model)
 
@@ -399,6 +396,7 @@ def DELETE_DEVICE(ieeeAddr):
         if entry.device_ieeeAddr == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
             error_list = error_list + "," + device.name + " eingetragen in Pflanzen"
+            
     
     if error_list != "":
         return error_list[1:]   
@@ -522,6 +520,10 @@ def GET_PLANT_BY_NAME(name):
         if plant.name.lower() == name.lower():
             return plant    
     
+
+def GET_PLANT_BY_IEEEADDR(device_ieeeAddr):
+    return Plants.query.filter_by(device_ieeeAddr=device_ieeeAddr).first()
+
 
 def GET_ALL_PLANTS():
     return Plants.query.all()

@@ -53,11 +53,11 @@ def plants():
 
     # delete message
     if session.get('delete_plant_success', None) != None:
-        success_message_change_settings.append(session.get('delete_plant') + " || Erfolgreich gelöscht") 
+        success_message_change_settings.append(session.get('delete_plant_success') + " || Erfolgreich gelöscht") 
         session['delete_plant_success'] = None
         
     if session.get('delete_plant_error', None) != None:
-        error_message_change_settings.append(session.get('delete_plant'))
+        error_message_change_settings.append(session.get('delete_plant_error'))
         session['delete_plant_error'] = None       
 
 
@@ -157,6 +157,8 @@ def plants():
         # check device
         if request.form.get("set_watering_controller_ieeeAddr") == "":
             error_message_add_plant.append("Kein Gerät angegeben")
+        elif GET_PLANT_BY_IEEEADDR(request.form.get("set_watering_controller_ieeeAddr")):
+            error_message_add_plant.append("Gerät bereits vergeben")                    
         else:
             device_ieeeAddr = request.form.get("set_watering_controller_ieeeAddr")
             device_name     = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name

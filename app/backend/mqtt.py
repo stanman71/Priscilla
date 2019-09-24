@@ -212,41 +212,28 @@ def UPDATE_DEVICES():
                 
                 data = json.loads(message)
                 
-                name            = data['ieeeAddr']
-                ieeeAddr        = data['ieeeAddr']
-                model           = data['model']
+                name        = data['ieeeAddr']
+                ieeeAddr    = data['ieeeAddr']
+                model       = data['model']
+                device_type = data['device_type']
 
-                try:
-                    device_type = data['device_type']
-                except:
-                    device_type = ""                 
-                    
                 try:
                     inputs  = data['inputs']
                     inputs  = ','.join(inputs)   
                     inputs  = inputs.replace("'", '"')
                 except:
                     inputs  = ""
-                    
-                try:
-                    commands = data['commands'] 
-                    commands = ','.join(commands)
-                    commands = commands.replace("'", '"')
-                    commands = commands.replace("},{", '} {')                               
-                except:
-                    commands = ""
-
 
                 # add new device
                 if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):
-                    ADD_DEVICE(name, ieeeAddr, model, device_type, inputs, commands)
+                    ADD_DEVICE(name, ieeeAddr, model, device_type, inputs)
                     
                 # update existing device
                 else:
                     id   = GET_DEVICE_BY_IEEEADDR(ieeeAddr).id
                     name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
                                     
-                    UPDATE_DEVICE(id, name, model, device_type, inputs, commands)
+                    UPDATE_DEVICE(id, name, model, device_type, inputs)
                     SET_DEVICE_LAST_CONTACT(ieeeAddr)
                     
                 # update sensor values 
@@ -260,7 +247,7 @@ def UPDATE_DEVICES():
         else:    
             WRITE_LOGFILE_SYSTEM("WARNING", "Update Devices | No Message founded")
             SEND_EMAIL("WARNING", "Update Devices | No Message founded")             
-            return "Update Devices >>> Kein Message gefunden"
+            return "Update Devices | Kein Message gefunden"
         
     
     except Exception as e:
@@ -283,7 +270,7 @@ def CHECK_MQTT_SETTING_THREAD(ieeeAddr, setting, delay = 1, limit = 15):
  
 def CHECK_MQTT_SETTING_PROCESS(ieeeAddr, setting, delay, limit): 
                       
-    device = GET_MQTT_DEVICE_BY_IEEEADDR(ieeeAddr)
+    device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
                     
     # check setting 1 try
     time.sleep(delay)                             
@@ -354,6 +341,5 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting, limit):
                         return False    
                         
                 return True
-                
-         
+                     
     return False
