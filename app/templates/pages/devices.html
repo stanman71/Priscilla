@@ -21,9 +21,9 @@
 {% endif %}   
 
 
-<!------------->
-<!-- DEVICES -->
-<!------------->
+<!------------------->
+<!-- DEVICES TABLE -->
+<!------------------->
 
 <!-- success message change settings devices -->
 
@@ -102,9 +102,9 @@
             </div>
 
 
-<!------------>
-<!-- BROKER -->
-<!------------>
+<!---------------------->
+<!--  BROKER SETTINGS -->
+<!---------------------->
 
 <section id="broker_settings"></section>    
 
@@ -170,15 +170,15 @@
             </div>
 
 
-<!---------->
-<!-- LOG  -->
-<!---------->
+<!---------------------->
+<!-- DEVICES LOGFILE  -->
+<!---------------------->
 
 <section id="logfile"></section>    
 
-<!-- success message change settings broker -->
+<!-- success message logfile -->
 
-{% if success_message_change_settings_logfile == True %}
+{% if success_message_logfile == True %}
   <div class="alert alert-success">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
@@ -186,6 +186,17 @@
     <span>DEVICE LOG erfolgreich zurückgesetzt</span>
   </div>
 {% endif %}  
+
+<!-- error message logfile --> 
+
+{% if error_message_logfile != "" %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {{ error_message_logfile }}
+  </div>
+{% endif %}   
 
             <div class="card">
               <div class="card-body">

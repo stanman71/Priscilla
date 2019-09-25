@@ -38,7 +38,8 @@ def devices():
     error_message_change_settings_devices   = []    
     success_message_change_settings_broker  = ""         
     error_message_change_settings_broker    = []   
-    success_message_change_settings_logfile = False
+    success_message_logfile                 = False
+    error_message_logfile                   = ""
 
     page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
@@ -50,13 +51,17 @@ def devices():
 
     # delete message
     if session.get('delete_device_success', None) != None:
-        success_message_change_settings_devices.append(session.get('delete_device_success') + " || Erfolgreich gelöscht")
+        success_message_change_settings_devices.append(session.get('delete_device_success'))
         session['delete_device_success'] = None
         
     if session.get('delete_device_error', None) != None:
         error_message_change_settings_devices.append(session.get('delete_device_error'))
         session['delete_device_error'] = None      
 
+    # error download logfile
+    if session.get('error_download_log', None) != None:
+        error_message_logfile = session.get('error_download_log')
+        session['error_download_log'] = None
 
     """ ######### """
     """  devices  """
@@ -94,7 +99,7 @@ def devices():
         result = UPDATE_DEVICES()
 
         if result == "Success":
-            success_message_change_settings_devices.append("Geräte erfolgreich aktualisiert")
+            success_message_change_settings_devices.append("Geräte || Erfolgreich aktualisiert")
         else:
             error_message_change_settings_devices.append(result)
 
@@ -109,7 +114,7 @@ def devices():
             broker = request.form.get("set_broker")
         else:
             broker = ""
-            error_message_change_settings_broker.append("Broker >>> Keinen Broker angegeben")   
+            error_message_change_settings_broker.append("Broker || Keinen Broker angegeben")   
              
         user     = request.form.get("set_user")
         password = request.form.get("set_password")
@@ -129,8 +134,12 @@ def devices():
 
     # reset logfile
     if request.form.get("reset_logfile") != None: 
-        RESET_LOGFILE("log_devices")   
-        success_message_change_settings_logfile = True
+        result = RESET_LOGFILE("log_devices")  
+
+        if result:
+            success_message_logfile = True 
+        else:
+            error_message_logfile = "Reset Log || " + str(result)
 
 
     list_devices = GET_ALL_DEVICES("")
@@ -145,11 +154,12 @@ def devices():
                             data=data,    
                             content=render_template( 'pages/devices.html',
                                                     error_message_mqtt=error_message_mqtt,
-                                                    error_message_change_settings_devices=error_message_change_settings_devices,   
-                                                    success_message_change_settings_devices=success_message_change_settings_devices, 
-                                                    error_message_change_settings_broker=error_message_change_settings_broker,   
-                                                    success_message_change_settings_broker=success_message_change_settings_broker,  
-                                                    success_message_change_settings_logfile=success_message_change_settings_logfile,                                                   
+                                                    success_message_change_settings_devices=success_message_change_settings_devices,
+                                                    error_message_change_settings_devices=error_message_change_settings_devices, 
+                                                    success_message_change_settings_broker=success_message_change_settings_broker,                                                       
+                                                    error_message_change_settings_broker=error_message_change_settings_broker,    
+                                                    success_message_logfile=success_message_logfile,     
+                                                    error_message_logfile=error_message_logfile,                                                  
                                                     list_devices=list_devices,
                                                     broker=broker,
                                                     timestamp=timestamp,                         
@@ -174,9 +184,9 @@ def remove_device(ieeeAddr):
     device_name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
     result      = DELETE_DEVICE(ieeeAddr) 
     if result == True:
-        session['delete_device_success'] = device_name
+        session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"
     else:
-        session['delete_device_error'] = result
+        session['delete_device_error'] = device_name + " || " + str(result)
         
     return redirect(url_for('devices'))
      
@@ -195,5 +205,6 @@ def download_devices_logfile(filepath):
 
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/" + filepath + " | " + str(e))
+        session['error_download_log'] = "Download Log || " + str(e)
 
     return send_from_directory(path, filepath)

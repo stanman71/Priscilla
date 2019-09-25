@@ -32,8 +32,8 @@ def permission_required(f):
 @login_required
 @permission_required
 def system_log():
-    error_message                           = ""
-    success_message_change_settings_logfile = False
+    success_message_logfile = False
+    error_message_logfile   = ""
     
     selected_type_event    = "selected"
     selected_type_status   = "selected"
@@ -42,6 +42,11 @@ def system_log():
     selected_type_warning  = "selected"                                                      
     selected_type_error    = "selected"
     log_search             = ""    
+
+    # error download logfile
+    if session.get('error_download_log', None) != None:
+        error_message_logfile = session.get('error_download_log')
+        session['error_download_log'] = None
 
     # create log types list
     selected_log_types = ["EVENT", "STATUS", "DATABASE", "SUCCESS", "WARNING", "ERROR"]     
@@ -86,8 +91,12 @@ def system_log():
    
     # reset logfile
     if request.form.get("reset_logfile") != None: 
-        RESET_LOGFILE("log_system")  
-        success_message_change_settings_logfile = True 
+        result = RESET_LOGFILE("log_system")  
+
+        if result:
+            success_message_logfile = True 
+        else:
+            error_message_logfile = "Reset Log || " + str(result)
 
     # get log entries
     if GET_LOGFILE_SYSTEM(selected_log_types, 50, log_search) != None:
@@ -97,7 +106,7 @@ def system_log():
 
     # check data_log_system is string ?
     if isinstance(data_log_system, str):   
-        error_message = data_log_system                
+        error_message_logfile = data_log_system                
 
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
 
@@ -106,8 +115,8 @@ def system_log():
     return render_template('layouts/default.html',
                             data=data,    
                             content=render_template( 'pages/system_log.html', 
-                                                    error_message=error_message,
-                                                    success_message_change_settings_logfile=success_message_change_settings_logfile,
+                                                    error_message_logfile=error_message_logfile,
+                                                    success_message_logfile=success_message_logfile,
                                                     timestamp=timestamp,
                                                     selected_type_event=selected_type_event,
                                                     selected_type_status=selected_type_status,
@@ -135,5 +144,6 @@ def download_system_log(filepath):
 
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/" + filepath + " | " + str(e))
+        session['error_download_log'] = "Download Log || " + str(e)
 
     return send_from_directory(path, filepath)

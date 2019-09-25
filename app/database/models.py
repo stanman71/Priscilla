@@ -277,9 +277,9 @@ def ADD_DEVICE(name, ieeeAddr, model, device_type = "", description = "", inputs
                 
                 SET_DEVICE_LAST_CONTACT(ieeeAddr)   
                 
-                return ""
+                return True
 
-        return "Gerätelimit erreicht (50)"                           
+        return "Devicelimit reached (50)"                           
                 
     else:
         SET_DEVICE_LAST_CONTACT(ieeeAddr)  
@@ -557,10 +557,10 @@ def ADD_PLANT(name, device_ieeeAddr):
                 return
   
                           
-        return "Pflanzenlimit erreicht (25)"
+        return "Plantslimit reached (25)"
 
     else:
-        return "Name bereits vergeben"
+        return "Name already assigned"
 
 
 def UPDATE_PLANT_SETTINGS(id, name, group):         
@@ -686,7 +686,7 @@ def DELETE_PLANT(id):
         return True
 
     except Exception as e:
-        return("ERROR: " + str(e))
+        return(e)
 
 
 """ ################## """
@@ -779,10 +779,10 @@ def ADD_USER(username, email, password):
             return 
 
         else:
-            return "eMail-Adresse bereits vorhanden"               
+            return "eMail-Address already assigned"               
 
     else:
-        return "Name bereits vorhanden"    
+        return "Name already assigned"    
 
 
 def UPDATE_USER_SETTINGS(id, username, email, role, email_notification):    
@@ -829,4 +829,4 @@ def DELETE_USER(user_id):
         return True
 
     except Exception as e:
-        return("ERROR: " + str(e))
+        return(e)

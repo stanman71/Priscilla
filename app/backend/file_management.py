@@ -40,11 +40,12 @@ def CREATE_LOGFILE(filename):
             
             csvfile.close()
 
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /logs/" + filename + ".csv | created")      
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /logs/" + filename + ".csv | created")   
+        return True   
            
     except Exception as e:
-        print(e)
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/" + filename + ".csv | " + str(e))  
+        return(e)
 
         
 def RESET_LOGFILE(filename):
@@ -53,7 +54,12 @@ def RESET_LOGFILE(filename):
 
         WRITE_LOGFILE_SYSTEM("EVENT", "File | /logs/" + filename + ".csv | deleted")
         
-    CREATE_LOGFILE(filename)
+    result = CREATE_LOGFILE(filename)
+    
+    if result:
+        return True
+    else:
+        return result
         
 
 def WRITE_LOGFILE_DEVICES(channel, msg):
@@ -78,9 +84,10 @@ def WRITE_LOGFILE_DEVICES(channel, msg):
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                                        
             filewriter.writerow( [str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), str(channel), msg ])
             csvfile.close()
+            return True
        
     except Exception as e:
-        print(str(e))
+        return(e)
 
 
 def WRITE_LOGFILE_SYSTEM(log_type, description):
@@ -104,11 +111,11 @@ def WRITE_LOGFILE_SYSTEM(log_type, description):
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)   
             filewriter.writerow( [str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), log_type, description])
             csvfile.close()
+            return True
         
     except Exception as e:
-        print(e)
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/log_system.csv | " + str(e))
-        return ("ERROR: " + str(e))
+        return (e)
         
     
 def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):   
@@ -145,9 +152,8 @@ def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):
             
     
     except Exception as e:
-        print(e)
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/log_system.csv | " + str(e)) 
-        return ("ERROR: " + str(e))        
+        return (e)   
 
 
 """ ############## """
@@ -197,11 +203,11 @@ def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
                 conf_file.write("static routers=" + str(lan_gateway) + "\n")    
 
             conf_file.close()
+            return True
 
     except Exception as e:
-        print(e)
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /etc/dhcpcd.conf | " + str(e))  
-        return ("ERROR: " + str(e))
+        return(e)
 
 
 """ ############### """
@@ -219,7 +225,7 @@ def GET_BACKUP_FILES():
         file_list.append(files)
 
     if file_list == []:
-        return ""
+        return "No Files founded"
     else:
         file_list = file_list[0][2]
         file_list = sorted(file_list, reverse=True)
@@ -245,7 +251,7 @@ def SAVE_DATABASE():
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "Database_Backup | " + str(e)) 
-        return ("ERROR | " + str(e))
+        return (e)
 
 
 def RESTORE_DATABASE(filename):
@@ -258,7 +264,7 @@ def RESTORE_DATABASE(filename):
             
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "Database_Backup | " + str(e))  
-        return ("ERROR | " + str(e))
+        return (e)
         
         
 def DELETE_DATABASE_BACKUP(filename):
@@ -269,7 +275,7 @@ def DELETE_DATABASE_BACKUP(filename):
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /backup/" + filename + " | " + str(e))  
-        return ("ERROR | " + str(e))
+        return (e)
 
 
 """ ###### """
@@ -282,7 +288,7 @@ def GET_PLANTS_DATAFILES():
         file_list.append(files)   
 
     if file_list == []:
-        return ""
+        return "No Files founded"
     else:
         return file_list[0][2]    
 
@@ -299,13 +305,11 @@ def CREATE_PLANTS_DATAFILE(filename):
                 csvfile.close()
 
             WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + filename + ".csv | created") 
-            return "" 
+            return True 
                 
         except Exception as e:
             WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + ".csv | " + str(e))
-
-    else:
-        return ""
+            return(e)
 
 
 def WRITE_PLANTS_DATAFILE(filename, device, pumptime, moisture, watertank):
@@ -322,6 +326,7 @@ def WRITE_PLANTS_DATAFILE(filename, device, pumptime, moisture, watertank):
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + ".csv | " + str(e))
+        return(e)
 
 
 def READ_PLANTS_DATAFILE(filename):
@@ -334,21 +339,25 @@ def READ_PLANTS_DATAFILE(filename):
 
     except Exception as e:
         if "Error tokenizing data. C error: Calling read(nbytes) on source failed. Try engine='python'." not in str(e):
-            print(e)
-            WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + " | " + str(e))    
+            WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + " | " + str(e))   
+            return(e) 
 
 
 def RENAME_PLANTS_DATAFILE(old_filename, new_filename):
     try:
         os.rename(PATH + '/csv/' + old_filename + ".csv", PATH + '/csv/' + new_filename + ".csv") 
         WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + old_filename + " | renamed | New name - " + new_filename)
+        return True
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + old_filename + " | " + str(e))  
+        return(e)
 
 
 def DELETE_PLANTS_DATAFILE(filename):
     try:
         os.remove (PATH + '/csv/' + filename + ".csv")
         WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + filename + " | deleted")
+        return True
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + " | " + str(e))  
+        return(e)

@@ -37,6 +37,7 @@ def plants():
     error_message_change_settings   = []    
     success_message_add_plant       = False       
     error_message_add_plant         = []
+    error_message_datafile          = ""
 
     name            = ""
     device_ieeeAddr = ""
@@ -48,17 +49,22 @@ def plants():
 
     # test message
     if session.get('test_pump', None) != None:
-        success_message_change_settings.append(session.get('test_pump') + " || Pumpe gestartet (5 Sekunden)") 
+        success_message_change_settings.append(session.get('test_pump')) 
         session['test_pump'] = None
 
     # delete message
     if session.get('delete_plant_success', None) != None:
-        success_message_change_settings.append(session.get('delete_plant_success') + " || Erfolgreich gelöscht") 
+        success_message_change_settings.append(session.get('delete_plant_success')) 
         session['delete_plant_success'] = None
         
     if session.get('delete_plant_error', None) != None:
         error_message_change_settings.append(session.get('delete_plant_error'))
         session['delete_plant_error'] = None       
+
+    # error download datafile
+    if session.get('error_download_datafile', None) != None:
+        error_message_datafile = session.get('error_download_datafile') 
+        session['error_download_datafile'] = None
 
 
     """ ################# """
@@ -87,7 +93,7 @@ def plants():
                         if not GET_PLANT_BY_NAME(new_name):  
                             name = new_name                            
                         else: 
-                            error_message_change_settings.append(current_name + " || Ungültige Eingabe Name || Bereits vergeben")  
+                            error_message_change_settings.append(current_name + " || Name bereits vergeben")  
                             error_founded = True
                             name = current_name
 
@@ -96,7 +102,7 @@ def plants():
 
                 else:
                     name = GET_PLANT_BY_ID(i).name
-                    error_message_change_settings.append(current_name + " || Ungültige Eingabe Name || Keinen Wert angegeben") 
+                    error_message_change_settings.append(current_name + " || Keinen Namen angegeben") 
                     error_founded = True      
                                                             
                 if request.form.get("radio_group_" + str(i)) != None:
@@ -112,10 +118,10 @@ def plants():
 
                     try: 
                         if not 5 < int(pump_duration_manually) < 200:
-                            error_message_change_settings.append(current_name + " || Ungültige Eingabe Pumpzeit || Muss eine Zahl zwischen 5 und 200 sein") 
+                            error_message_change_settings.append(current_name + " || Pumpzeit muss eine Zahl zwischen 5 und 200 sein") 
                             error_founded = True 
                     except:
-                        error_message_change_settings.append(current_name + " || Ungültige Eingabe Pumpzeit || Muss eine Zahl zwischen 5 und 200 sein") 
+                        error_message_change_settings.append(current_name + " || Pumpzeit muss eine Zahl zwischen 5 und 200 sein") 
                         error_founded = True        
 
                 # save settings
@@ -191,7 +197,8 @@ def plants():
                                                     success_message_change_settings=success_message_change_settings,                               
                                                     error_message_change_settings=error_message_change_settings,   
                                                     success_message_add_plant=success_message_add_plant,                            
-                                                    error_message_add_plant=error_message_add_plant,                                                                                                  
+                                                    error_message_add_plant=error_message_add_plant,     
+                                                    error_message_datafile=error_message_datafile,                                                                                             
                                                     dropdown_list_watering_controller=dropdown_list_watering_controller, 
                                                     name=name,
                                                     device_ieeeAddr=device_ieeeAddr,
@@ -217,7 +224,7 @@ def change_plants_position(id, direction):
 @login_required
 @permission_required
 def test_pump(id):
-    session['test_pump'] = GET_PLANT_BY_ID(id).name 
+    session['test_pump'] = GET_PLANT_BY_ID(id).name + " || Pumpe gestartet (5 Sekunden)" 
 
     channel  =  "miranda/mqtt/" + GET_PLANT_BY_ID(id).device_ieeeAddr + "/set"
     msg      = '{"pump":"ON","pump_time":5}'
@@ -235,14 +242,14 @@ def delete_plant(id):
     result = DELETE_PLANT(id)
 
     if result:
-        session['delete_plant_success'] = plant
+        session['delete_plant_success'] = plant + " || Erfolgreich gelöscht"
     else:
-        session['delete_plant_error'] = result
+        session['delete_plant_error'] = plant + " || " + str(result)
 
     return redirect(url_for('plants'))
 
 
-# download plants data file
+# download plants datafile
 @app.route('/plants/download/file/<path:filepath>')
 @login_required
 @permission_required
@@ -254,5 +261,6 @@ def download_plants_datafile(filepath):
 
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filepath + " | " + str(e))
+        session['error_download_datafile'] = "Download Datafile || " + str(e)
 
     return send_from_directory(path, filepath)

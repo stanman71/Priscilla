@@ -93,8 +93,8 @@ def system():
     error_message_change_settings_network   = []
     success_message_change_settings_email   = False       
     error_message_change_settings_email     = [] 
-    success_message_change_settings_backup  = ""    
-    error_message_change_settings_backup    = ""
+    success_message_backup                  = ""    
+    error_message_backup                    = ""
 
     message_shutdown            = "" 
     message_ip_config_change    = False
@@ -106,20 +106,20 @@ def system():
 
     # restore message
     if session.get('restore_database_success', None) != None:
-        success_message_change_settings_backup = session.get('restore_database_success') + " || Erfolgreich wiederhergestellt"
+        success_message_backup = session.get('restore_database_success')
         session['restore_database_success'] = None
         
     if session.get('restore_database_error', None) != None:
-        error_message_change_settings_backup = session.get('restore_database_error') 
+        error_message_backup = session.get('restore_database_error') 
         session['restore_database_error'] = None       
         
     # delete message
     if session.get('delete_database_success', None) != None:
-        success_message_change_settings_backup = session.get('delete_database_success') + " || Erfolgreich gelöscht"
+        success_message_backup = session.get('delete_database_success')
         session['delete_database_success'] = None
         
     if session.get('delete_database_error', None) != None:
-        error_message_change_settings_backup = session.get('delete_database_error') 
+        error_message_backup = session.get('delete_database_error') 
         session['delete_database_error'] = None       
         
 
@@ -282,9 +282,9 @@ def system():
         result = SAVE_DATABASE() 
         
         if result:
-            success_message_change_settings_backup = "Backup erfolgreich erstellt"
+            success_message_backup = "Backup || Erfolgreich erstellt"
         else:
-            error_message_change_settings_backup = result
+            error_message_backup = "Backup || " + str(result)
 
 
     cpu_temperature   = GET_CPU_TEMPERATURE()
@@ -306,8 +306,8 @@ def system():
                                                     success_message_change_settings_email=success_message_change_settings_email,                                                       
                                                     error_message_change_settings_email=error_message_change_settings_email,
                                                     message_test_settings_email=message_test_settings_email, 
-                                                    error_message_change_settings_backup=error_message_change_settings_backup,                                                       
-                                                    success_message_change_settings_backup=success_message_change_settings_backup,                                                                                                     
+                                                    error_message_backup=error_message_backup,                                                       
+                                                    success_message_backup=success_message_backup,                                                                                                     
                                                     message_shutdown=message_shutdown,
                                                     cpu_temperature=cpu_temperature,
                                                     lan_dhcp=lan_dhcp,
@@ -325,9 +325,9 @@ def system():
 def restore_database_backup(filename):
     result = RESTORE_DATABASE(filename)
     if result:
-        session['restore_database_success'] = filename
+        session['restore_database_success'] = filename + " || Erfolgreich wiederhergestellt"
     else:
-        session['restore_database_error'] = result
+        session['restore_database_error'] = filename + " || " + result
 
     return redirect(url_for('system'))
 
@@ -339,8 +339,8 @@ def restore_database_backup(filename):
 def delete_database_backup(filename):
     result = DELETE_DATABASE_BACKUP(filename)
     if result:
-        session['delete_database_success'] = filename
+        session['delete_database_success'] = filename + " || Erfolgreich gelöscht"
     else:
-        session['delete_database_error'] = result
+        session['delete_database_error'] = filename + " || " + result
 
     return redirect(url_for('system'))

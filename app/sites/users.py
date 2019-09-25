@@ -48,7 +48,7 @@ def users():
 
     # delete message
     if session.get('delete_user_success', None) != None:
-        success_message_change_settings.append(session.get('delete_user') + " || Erfolgreich gelöscht") 
+        success_message_change_settings.append(session.get('delete_user')) 
         session['delete_user_success'] = None
         
     if session.get('delete_user_error', None) != None:
@@ -103,7 +103,7 @@ def users():
                             if not GET_USER_BY_NAME(new_username):  
                                 username = new_username                            
                             else: 
-                                error_message_change_settings.append(current_username + " || Ungültige Eingabe Name || Bereits vergeben")  
+                                error_message_change_settings.append(current_username + " || Name bereits vergeben")  
                                 error_founded = True
                                 username = current_username
 
@@ -112,7 +112,7 @@ def users():
 
                     else:
                         username = GET_USER_BY_ID(i).username
-                        error_message_change_settings.append(current_username + " || Ungültige Eingabe Name || Keinen Wert angegeben") 
+                        error_message_change_settings.append(current_username + " || Keinen Namen angegeben") 
                         error_founded = True  
                
 
@@ -128,7 +128,7 @@ def users():
                             if not GET_USER_BY_EMAIL(new_email):  
                                 email = new_email                            
                             else: 
-                                error_message_change_settings.append(current_username + " || Ungültige Eingabe eMail || Adresse bereits vergeben")   
+                                error_message_change_settings.append(current_username + " || eMail-Adresse bereits vergeben")   
                                 error_founded = True 
                                 email = old_email
 
@@ -137,7 +137,7 @@ def users():
 
                     else:
                         email = GET_USER_BY_ID(i).email
-                        error_message_change_settings.append(current_username + " || Ungültige Eingabe eMail || Keine Adresse angegeben")   
+                        error_message_change_settings.append(current_username + " || Keine eMail-Adresse angegeben")   
                         error_founded = True
 
                      # change password
@@ -185,7 +185,7 @@ def users():
                                 changes_saved = True
 
                         if changes_saved == True:
-                            success_message_change_settings.append(username + " || Einstellungen gespeichert") 
+                            success_message_change_settings.append(username + " || Einstellungen erfolgreich gespeichert") 
 
                     username        = ""
                     email           = ""
@@ -259,7 +259,7 @@ def users():
 
     try:                                        
         if GET_USER_BY_NAME("admin").password == "sha256$OeDkVenT$bc8d974603b713097e69fc3efa1132991bfb425c59ec00f207e4b009b91f4339":
-            message_admin_password_not_changed = "admin >>> Passwort muss geändert werden"
+            message_admin_password_not_changed = "admin || Passwort muss geändert werden"
     except:
         pass
 
@@ -293,8 +293,8 @@ def delete_user(id):
     result   = DELETE_USER(id)
 
     if result:
-        session['delete_user_success'] = username
+        session['delete_user_success'] = username + " || Erfolgreich gelöscht"
     else:
-        session['delete_user_error'] = result
+        session['delete_user_error'] = username + " || " + str(result)
 
     return redirect(url_for('users'))
