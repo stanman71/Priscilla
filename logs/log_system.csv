@@ -16,3 +16,30 @@ Timestamp,Type,Description
 2019-09-26 10:12:14,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
 2019-09-26 10:15:05,WARNING,|Update Devices || No Message founded|
 2019-09-26 10:15:07,ERROR,|eMail || None || WARNING || Update Devices || No Message founded || No recipients have been added|
+2019-09-26 10:16:13,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-26 10:16:15,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-26 10:17:05,DATABASE,|User - fdsfdsrtz || deleted|
+2019-09-26 11:39:21,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-26 11:39:24,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-26 11:39:55,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-26 11:39:57,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-26 11:42:20,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-26 11:42:22,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-26 11:42:55,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-26 11:42:57,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-26 11:43:36,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-26 11:43:38,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-26 11:47:56,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-26 11:47:58,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-26 11:48:46,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-26 11:48:48,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-26 11:49:49,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-26 11:49:51,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-26 11:50:12,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-26 11:50:14,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-26 11:55:55,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-26 11:55:57,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-26 11:57:53,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-26 11:57:55,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-26 11:58:58,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-26 11:59:00,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
