@@ -48,11 +48,11 @@ def users():
 
     # delete message
     if session.get('delete_user_success', None) != None:
-        success_message_change_settings.append(session.get('delete_user')) 
+        success_message_change_settings.append(session.get('delete_user_success')) 
         session['delete_user_success'] = None
         
     if session.get('delete_user_error', None) != None:
-        error_message_change_settings.append(session.get('delete_user'))
+        error_message_change_settings.append(session.get('delete_user_error'))
         session['delete_user_error'] = None       
 
 

@@ -219,18 +219,22 @@
                 <h5 class="title">Pflanzendaten</h5>
               </div>         
               <div class="card-body"> 
-                <div class="table-responsive">
-                  <table class="table tablesorter">         
-                    <tbody> 
-                      {% for entry in list_plants_datafiles %}
-                      <tr>
-                        <td>{{ entry }}</td> 
-                        <td class="text-right"><a href="/plants/download/file/{{ entry }}?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD</b></font></a></td>  
-                      </tr>
-                      {% endfor %} 
-                    </tbody>
-                  </table>
-                </div>
+                {% if list_plants_datafiles != "No Files founded" %}
+                  <div class="table-responsive">
+                    <table class="table tablesorter">         
+                      <tbody> 
+                        {% for entry in list_plants_datafiles %}
+                        <tr>
+                          <td>{{ entry }}</td> 
+                          <td class="text-right"><a href="/plants/download/file/{{ entry }}?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD</b></font></a></td>  
+                        </tr>
+                        {% endfor %} 
+                      </tbody>
+                    </table>
+                  </div>
+                {% else %}
+                  {{ list_plants_datafiles }}
+                {% endif %}
               </div>            
             </div>
 

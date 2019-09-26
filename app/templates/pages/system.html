@@ -13,17 +13,20 @@
 <!-- SYSTEM CONTROL -->
 <!-------------------->
 
+<!-- message system -->
+
+{% if message_system != "" %}
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+    <span>{{ message_system }}</span>
+  </div>
+{% endif %}  
+
             <div class="card">          
-              <div class="card-body">
-                <form method="POST">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <p class="text-info">
-                        CPU Temperatur = {{ cpu_temperature }}
-                      </p>
-                    </div>
-                  </div>                  
-                </div>
+              <form method="POST">
                 <div class="card-footer">                  
                   <button type="submit" onclick="window.location.href='/system#'" name="restart_system" class="btn btn-fill btn-info">Restart</button>
                   <button type="submit" onclick="window.location.href='/system#'" name="shutdown_system" class="btn btn-fill btn-info pull-right">Shutdown</button>
@@ -250,19 +253,23 @@
               </div>            
               <form method="POST">          
                 <div class="card-body"> 
-                  <div class="table-responsive">
-                    <table class="table tablesorter">             
-                      <tbody> 
-                        {% for entry in list_backup_files %}
-                        <tr>
-                          <td style="width:80%">{{ entry }}</td> 
-                          <td style="width:10%"><a href="/system/backup/restore/backup_database/{{ entry }}#backup"><font color="orange"><b>RESTORE</b></font></a></td>  
-                          <td style="width:10%"><a href="/system/backup/delete/backup_database/{{ entry }}#backup"><font size="5"><i class='uil uil-trash-alt'></i></font></a>
-                        </tr>
-                        {% endfor %} 
-                      </tbody>
-                    </table>  
-                  </div>
+                  {% if list_backup_files != "No Files founded" %}
+                    <div class="table-responsive">
+                      <table class="table tablesorter">             
+                        <tbody> 
+                          {% for entry in list_backup_files %}
+                          <tr>
+                            <td style="width:80%">{{ entry }}</td> 
+                            <td style="width:10%"><a href="/system/backup/restore/backup_database/{{ entry }}#backup"><font color="orange"><b>RESTORE</b></font></a></td>  
+                            <td style="width:10%"><a href="/system/backup/delete/backup_database/{{ entry }}#backup"><font size="5"><i class='uil uil-trash-alt'></i></font></a>
+                          </tr>
+                          {% endfor %} 
+                        </tbody>
+                      </table>  
+                    </div>
+                  {% else %}
+                    {{ list_backup_files }}
+                  {% endif %}                  
                 </div>  
                 <div class="card-footer">
                   <button type="submit" onclick="window.location.href='/system#backup'" name="database_save" class="btn btn-fill btn-info">BACKUP DATABASE</button>

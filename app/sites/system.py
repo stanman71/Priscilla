@@ -37,11 +37,6 @@ def permission_required(f):
 """  system functions """
 """ ################# """
 
-def GET_CPU_TEMPERATURE():
-    res = os.popen('vcgencmd measure_temp').readline()
-    return(res.replace("temp=","").replace("'C\n"," C"))
-
-
 def CHECK_IP_ADDRESS(ip_address):
     try:
         for element in ip_address:
@@ -77,12 +72,12 @@ def PING_IP_ADDRESS(ip_address):
 
 def HOST_REBOOT():
     time.sleep(10)
-    os.system("sudo shutdown -r now")
+    os.system("sudo reboot")
 
 
 def HOST_SHUTDOWN():
     time.sleep(10)
-    os.system("sudo shutdown -h now")
+    os.system("sudo shutdown")
 
 
 @app.route('/system', methods=['GET', 'POST'])
@@ -96,7 +91,7 @@ def system():
     success_message_backup                  = ""    
     error_message_backup                    = ""
 
-    message_shutdown            = "" 
+    message_system              = "" 
     message_ip_config_change    = False
     message_test_settings_email = ""
 
@@ -128,16 +123,16 @@ def system():
     """ #################### """              
         
     # restart raspi 
-    if request.form.get("restart") != None:
+    if request.form.get("restart_system") != None:
         Thread = threading.Thread(target=HOST_REBOOT)
         Thread.start()    
-        message_shutdown = "System wird in 10 Sekunden neugestartet"
+        message_system = "System wird in 10 Sekunden neugestartet"
         
     # shutdown raspi 
-    if request.form.get("shutdown") != None:
+    if request.form.get("shutdown_system") != None:
         Thread = threading.Thread(target=HOST_SHUTDOWN)
         Thread.start()    
-        message_shutdown = "System wird in 10 Sekunden heruntergefahren"
+        message_system = "System wird in 10 Sekunden heruntergefahren"
 
 
     """ ############## """
@@ -287,8 +282,6 @@ def system():
             error_message_backup = "Backup || " + str(result)
 
 
-    cpu_temperature   = GET_CPU_TEMPERATURE()
- 
     lan_dhcp          = GET_HOST_NETWORK().lan_dhcp
     lan_ip_address    = GET_HOST_NETWORK().lan_ip_address
     lan_gateway       = GET_HOST_NETWORK().lan_gateway
@@ -308,8 +301,7 @@ def system():
                                                     message_test_settings_email=message_test_settings_email, 
                                                     error_message_backup=error_message_backup,                                                       
                                                     success_message_backup=success_message_backup,                                                                                                     
-                                                    message_shutdown=message_shutdown,
-                                                    cpu_temperature=cpu_temperature,
+                                                    message_system=message_system,
                                                     lan_dhcp=lan_dhcp,
                                                     lan_ip_address=lan_ip_address,
                                                     lan_gateway=lan_gateway,  

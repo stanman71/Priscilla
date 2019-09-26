@@ -15,7 +15,12 @@ from app import app
 """ path """
 """ #### """
             
-PATH = os.path.abspath("") 
+# windows
+if os.name == "nt":                 
+    PATH = os.path.abspath("") 
+# armbian
+else:                               
+    PATH = "/home/pi/watering_control"
 
 def GET_PATH():
     return (PATH)
@@ -44,7 +49,8 @@ def CREATE_LOGFILE(filename):
         return True   
            
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/" + filename + ".csv | " + str(e))  
+        if filename != "log_system":
+            WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/" + filename + ".csv | " + str(e))  
         return(e)
 
         
@@ -163,50 +169,28 @@ def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):
 def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
     
     try:
-        file = "/etc/dhcpcd.conf"
+        file = "/etc/network/interfaces"
         with open(file, 'w', encoding='utf-8') as conf_file:
-            conf_file.write("# A sample configuration for dhcpcd.\n")
-            conf_file.write("# See dhcpcd.conf(5) for details.\n")
-            conf_file.write("\n")
-            conf_file.write("# Inform the DHCP server of our hostname for DDNS.\n")
-            conf_file.write("hostname\n")
-            conf_file.write("\n")
-            conf_file.write("# Use the hardware address of the interface for the Client ID.\n")
-            conf_file.write("clientid\n")
-            conf_file.write("\n")
-            conf_file.write("# Persist interface configuration when dhcpcd exits.\n")
-            conf_file.write("persistent\n")
-            conf_file.write("\n")
-            conf_file.write("# on the server to actually work.\n")
-            conf_file.write("option rapid_commit\n")
-            conf_file.write("\n")
-            conf_file.write("# A list of options to request from the DHCP server.\n")
-            conf_file.write("option domain_name_servers, domain_name, domain_search, host_name\n")
-            conf_file.write("option classless_static_routes\n")
-            conf_file.write("\n")
-            conf_file.write("# Respect the network MTU. This is applied to DHCP routes.\n")
-            conf_file.write("option interface_mtu\n")
-            conf_file.write("\n")
-            conf_file.write("# A ServerID is required by RFC2131.\n")
-            conf_file.write("require dhcp_server_identifier\n")
-            conf_file.write("\n")
-            conf_file.write("# Generate SLAAC address using the Hardware Address of the interface\n")
-            conf_file.write("#slaac hwaddr\n")
-            conf_file.write("# OR generate Stable Private IPv6 Addresses based from the DUID\n")
-            conf_file.write("slaac private\n")
-        
+
+            conf_file.write("source /etc/network/interfaces.d/*\n")
+            conf_file.write("# Network is managed by Network manager\n")
+            conf_file.write("auto lo\n")
+            conf_file.write("iface lo inet loopback\n")
+    
             if lan_dhcp != "True":
 
                 conf_file.write("\n")
-                conf_file.write("interface eth0\n")
-                conf_file.write("inform " + str(lan_ip_address) + "/24\n")             
-                conf_file.write("static routers=" + str(lan_gateway) + "\n")    
+                conf_file.write("auto eth0\n")
+                conf_file.write("iface eth0 inet static\n")
+                conf_file.write("  address " + str(lan_ip_address) + "\n")
+                conf_file.write("  netmask 255.255.255.0\n")        
+                conf_file.write("  gateway " + str(lan_gateway) + "\n")    
 
             conf_file.close()
             return True
 
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /etc/dhcpcd.conf | " + str(e))  
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /etc/network/interfaces | " + str(e))  
         return(e)
 
 
