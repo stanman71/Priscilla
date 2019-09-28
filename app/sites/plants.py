@@ -229,7 +229,7 @@ def test_pump(id):
     channel  =  "miranda/mqtt/" + GET_PLANT_BY_ID(id).device_ieeeAddr + "/set"
     msg      = '{"pump":"ON","pump_time":5}'
 
-    heapq.heappush(process_management_queue, (20, ("send_message", channel, msg)))  
+    heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))  
     return redirect(url_for('plants'))
 
 

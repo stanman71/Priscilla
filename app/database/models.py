@@ -11,17 +11,53 @@ import re
 
 db = SQLAlchemy(app)
 
+class Controller(db.Model):
+    __tablename__   = 'controller'
+    id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    device_ieeeAddr = db.Column(db.String(50), db.ForeignKey('devices.ieeeAddr')) 
+    device          = db.relationship('Devices') 
+    command_1       = db.Column(db.String(50))
+    task_1          = db.Column(db.String(50))
+    command_2       = db.Column(db.String(50))
+    task_2          = db.Column(db.String(50))
+    command_3       = db.Column(db.String(50))
+    task_3          = db.Column(db.String(50))    
+    command_4       = db.Column(db.String(50))
+    task_4          = db.Column(db.String(50))
+    command_5       = db.Column(db.String(50))
+    task_5          = db.Column(db.String(50))
+    command_6       = db.Column(db.String(50))
+    task_6          = db.Column(db.String(50))   
+    command_7       = db.Column(db.String(50))
+    task_7          = db.Column(db.String(50))
+    command_8       = db.Column(db.String(50))
+    task_8          = db.Column(db.String(50))
+    command_9       = db.Column(db.String(50))
+    task_9          = db.Column(db.String(50))   
+    collapse        = db.Column(db.String(50))        
+
 class Devices(db.Model):
     __tablename__ = 'devices'
-    id                   = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    name                 = db.Column(db.String(50), unique=True)
-    ieeeAddr             = db.Column(db.String(50), unique=True)  
-    model                = db.Column(db.String(50))    
-    device_type          = db.Column(db.String(50))
-    inputs               = db.Column(db.String(200))
-    last_contact         = db.Column(db.String(50))
-    last_values          = db.Column(db.String(200))  
-    last_values_formated = db.Column(db.String(200)) 
+    id                            = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name                          = db.Column(db.String(50), unique=True)
+    gateway                       = db.Column(db.String(50)) 
+    ieeeAddr                      = db.Column(db.String(50), unique=True)  
+    model                         = db.Column(db.String(50))
+    device_type                   = db.Column(db.String(50))
+    description                   = db.Column(db.String(200))
+    input_values                  = db.Column(db.String(200))
+    input_events                  = db.Column(db.String(200))
+    commands                      = db.Column(db.String(200))    
+    last_contact                  = db.Column(db.String(50))
+    last_values                   = db.Column(db.String(200))  
+    last_values_formated          = db.Column(db.String(200)) 
+    exception_option              = db.Column(db.String(50)) 
+    exception_setting             = db.Column(db.String(50))     
+    exception_sensor_ieeeAddr     = db.Column(db.String(50))   
+    exception_sensor_input_values = db.Column(db.String(50))     
+    exception_value_1             = db.Column(db.String(50))
+    exception_value_2             = db.Column(db.String(50))
+    exception_value_3             = db.Column(db.String(50))       
 
 class eMail(db.Model):
     __tablename__  = 'email'
@@ -78,6 +114,11 @@ class User(UserMixin, db.Model):
     password           = db.Column(db.String(100))
     email_notification = db.Column(db.String(20))
 
+class ZigBee2MQTT(db.Model):
+    __tablename__ = 'zigbee2mqtt'
+    id      = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    pairing = db.Column(db.String(50))
+
 
 """ ################################ """
 """ ################################ """
@@ -110,6 +151,7 @@ if Host.query.filter_by().first() is None:
 # create default mqtt broker settings
 if MQTT_Broker.query.filter_by().first() is None:
     mqtt_broker = MQTT_Broker(
+        broker   = "localhost",
         user     = "",
         password = "",
     )
@@ -117,7 +159,7 @@ if MQTT_Broker.query.filter_by().first() is None:
     db.session.commit()
 
 
-# create default mqtt broker settings
+# create default scheduler settings
 if Scheduler_Tasks.query.filter_by().first() is None:
     scheduler_task_plants_group_1 = Scheduler_Tasks(
         name   = "plants_group_1",
@@ -165,48 +207,216 @@ if User.query.filter_by(username='admin').first() is None:
     db.session.commit()
 
 
+# create default zigbee2mqtt settings
+if ZigBee2MQTT.query.filter_by().first() is None:
+    zigbee2mqtt = ZigBee2MQTT(
+        pairing = "False",
+    )
+    db.session.add(zigbee2mqtt)
+    db.session.commit()
+
+
 """ ################## """
 """ ################## """
-"""        eMail       """
+"""     Controller     """
 """ ################## """
 """ ################## """
 
 
-def GET_EMAIL_SETTINGS():   
-    return eMail.query.filter_by().first()
+def GET_CONTROLLER_BY_ID(id):
+    return Controller.query.filter_by(id=id).first()
+    
+    
+def GET_CONTROLLER_BY_IEEEADDR(device_ieeeAddr):
+    return Controller.query.filter_by(device_ieeeAddr=device_ieeeAddr).first()
+    
+    
+def GET_ALL_CONTROLLER():   
+    return Controller.query.all()
+        
+
+def ADD_CONTROLLER(device_ieeeAddr):
+    # controller exist ?
+    if not GET_CONTROLLER_BY_IEEEADDR(device_ieeeAddr):
+        
+        if device_ieeeAddr == "":
+            return "Keinen Controller angegeben"
+            
+        else:
+            # find a unused id
+            for i in range(1,21):
+                if Controller.query.filter_by(id=i).first():
+                    pass
+                else:
+                    # add new controller
+                    controller = Controller(
+                                            id = i,
+                                            device_ieeeAddr = device_ieeeAddr,
+                                           )
+                    db.session.add(controller)
+                    db.session.commit()
+                    
+                    UPDATE_CONTROLLER_EVENTS()
+                    
+                    controller_name = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
+
+                    WRITE_LOGFILE_SYSTEM("DATABASE", "Controller - " + controller_name + " | added")  
+
+                    return ""
+
+            return "Controllerlimit erreicht (20)"
+
+    else:
+        return "Controller bereits vorhanden"    
 
 
-def GET_EMAIL_ADDRESSES(address_type): 
-    if address_type == "TEST":
-        mail_list = []
-        mail_list.append(eMail.query.filter_by().first().username)
-        return mail_list
+def UPDATE_CONTROLLER_EVENTS(): 
+    
+    for controller in GET_ALL_CONTROLLER():
+    
+        device_input_events = GET_DEVICE_BY_IEEEADDR(controller.device_ieeeAddr).input_events
+        device_input_events = device_input_events.split(" ")
 
-    if address_type == "NOTIFICATION":
-        mail_list = []
-        users = User.query.all()
-        for user in users:
-            if user.email_notification == "True":
-                mail_list.append(user.email)
-        return mail_list
+        try:
+            device_events        = device_input_events[0].replace(" ","")
+            controller.command_1 = device_events
+        except:
+            controller.command_1 = "None"
+        try:
+            device_events        = device_input_events[1].replace(" ","")
+            controller.command_2 = device_events
+        except:
+            controller.command_2 = "None"
+        try:
+            device_events        = device_input_events[2].replace(" ","")
+            controller.command_3 = device_events
+        except:
+            controller.command_3 = "None"
+        try:
+            device_events        = device_input_events[3].replace(" ","")
+            controller.command_4 = device_events
+        except:
+            controller.command_4 = "None"
+        try:
+            device_events        = device_input_events[4].replace(" ","")
+            controller.command_5 = device_events
+        except:
+            controller.command_5 = "None"
+        try:
+            device_events        = device_input_events[5].replace(" ","")
+            controller.command_6 = device_events
+        except:
+            controller.command_6 = "None"            
+        try:
+            device_events        = device_input_events[6].replace(" ","")
+            controller.command_7 = device_events
+        except:
+            controller.command_7 = "None"
+        try:
+            device_events        = device_input_events[7].replace(" ","")
+            controller.command_8 = device_events
+        except:
+            controller.command_8 = "None"
+        try:
+            device_events        = device_input_events[8].replace(" ","")
+            controller.command_9 = device_events
+        except:
+            controller.command_9 = "None"      
 
-
-def SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password): 
-    entry = eMail.query.filter_by().first()
-
-    if (entry.server_address != server_address or entry.server_port != server_port or entry.encoding != encoding or entry.username != username or entry.password != password):
-
-        entry.server_address = server_address
-        entry.server_port    = server_port
-        entry.encoding       = encoding
-        entry.username       = username
-        entry.password       = password
         db.session.commit()
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "eMail | Server Settings | changed")
-        
-        return True
 
+
+def SET_CONTROLLER_COLLAPSE(id):
+    list_controller = Controller.query.all()
+    
+    for controller in list_controller:
+        controller.collapse = ""
+        db.session.commit()   
+  
+    entry = Controller.query.filter_by(id=id).first()
+    
+    entry.collapse = "in"
+    db.session.commit()   
+
+
+def RESET_CONTROLLER_COLLAPSE():
+    list_controller = Controller.query.all()
+    
+    for controller in list_controller:
+        controller.collapse = ""
+        db.session.commit()   
+
+
+def SET_CONTROLLER_TASKS(id, task_1 = "", task_2 = "", task_3 = "", task_4 = "", task_5 = "",
+                             task_6 = "", task_7 = "", task_8 = "", task_9 = ""):  
+
+    entry = Controller.query.filter_by(id=id).first()
+    entry.task_1 = task_1
+    entry.task_2 = task_2
+    entry.task_3 = task_3   
+    entry.task_4 = task_4
+    entry.task_5 = task_5
+    entry.task_6 = task_6     
+    entry.task_7 = task_7
+    entry.task_8 = task_8
+    entry.task_9 = task_9               
+    db.session.commit() 
+
+
+def CHANGE_CONTROLLER_POSITION(id, direction):
+    
+    if direction == "up":
+        controller_list = GET_ALL_CONTROLLER()
+        controller_list = controller_list[::-1]
+        
+        for controller in controller_list:
+            
+            if controller.id < id:     
+                new_id = controller.id
+                
+                # change ids
+                controller_1 = GET_CONTROLLER_BY_ID(id)
+                controller_2 = GET_CONTROLLER_BY_ID(new_id)
+                
+                controller_1.id = 99
+                db.session.commit()
+                
+                controller_2.id = id
+                controller_1.id = new_id
+                db.session.commit()
+                
+                return 
+
+    if direction == "down":
+        for controller in GET_ALL_CONTROLLER():
+            if controller.id > id:       
+                new_id = controller.id
+                
+                # change ids
+                controller_1 = GET_CONTROLLER_BY_ID(id)
+                controller_2 = GET_CONTROLLER_BY_ID(new_id)
+                
+                controller_1.id = 99
+                db.session.commit()
+                
+                controller_2.id = id
+                controller_1.id = new_id
+                db.session.commit()
+                
+                return 
+
+
+def DELETE_CONTROLLER(id):
+    device_ieeeAddr = GET_CONTROLLER_BY_ID(id).device_ieeeAddr
+    controller_name = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
+    
+    try:
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Controller - " + controller_name + " | deleted")   
+    except:
+        pass     
+    
+    Controller.query.filter_by(id=id).delete()
+    db.session.commit() 
 
 
 """ ################### """
@@ -240,18 +450,55 @@ def GET_ALL_DEVICES(selector):
             
             device_list.append(device)     
 
+    if selector == "controller":
+        for device in devices:
+            if device.device_type == "controller":
+                
+                device_list.append(device)      
+ 
+    if selector == "devices":
+        for device in devices:
+            if (device.device_type == "power_switch"):
+                
+                device_list.append(device)      
+  
+    if selector == "heaters":
+        for device in devices:
+            if device.device_type == "heater":
+                
+                device_list.append(device)          
+
+    if selector == "led":
+        for device in devices:
+            if (device.device_type == "led_rgb" or 
+                device.device_type == "led_white" or 
+                device.device_type == "led_simple"):
+                    
+                device_list.append(device)    
+                
+    if selector == "sensors":
+        for device in devices:
+            
+            if (device.device_type == "sensor_passiv" or 
+                device.device_type == "sensor_active" or 
+                device.device_type == "sensor_contact" or
+                device.device_type == "watering_controller"):
+                
+                device_list.append(device)   
+   
     if selector == "watering_controller":
         for device in devices:
-            if device.device_type == "watering_controller auto" or device.device_type == "watering_controller manually":
+            if device.device_type == "watering_controller":
                 
                 device_list.append(device)       
-          
-    return device_list
+    
+    return device_list    
         
 
-def ADD_DEVICE(name, ieeeAddr, model, device_type = "", description = "", inputs = "", last_contact = ""):
+def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", description = "", 
+               input_values = "", input_events = "", commands = "", last_contact = ""):
         
-    # ieeeAddr exist ?
+    # path exist ?
     if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):   
             
         # find a unused id
@@ -263,13 +510,18 @@ def ADD_DEVICE(name, ieeeAddr, model, device_type = "", description = "", inputs
             else:
                 # add the new device            
                 device = Devices(
-                        id           = i,
-                        name         = name,                   
-                        ieeeAddr     = ieeeAddr,
-                        model        = model,
-                        device_type  = device_type,
-                        inputs       = str(inputs),                 
-                        last_contact = last_contact,
+                        id               = i,
+                        name             = name,
+                        gateway          = gateway,                    
+                        ieeeAddr         = ieeeAddr,
+                        model            = model,
+                        device_type      = device_type,
+                        description      = description,
+                        input_values     = str(input_values),
+                        input_events     = str(input_events),
+                        commands         = str(commands),                    
+                        last_contact     = last_contact,
+                        exception_option = "None"
                         )
                         
                 db.session.add(device)
@@ -277,9 +529,9 @@ def ADD_DEVICE(name, ieeeAddr, model, device_type = "", description = "", inputs
                 
                 SET_DEVICE_LAST_CONTACT(ieeeAddr)   
                 
-                return True
+                return ""
 
-        return "Devicelimit reached (50)"                           
+        return "Gerätelimit erreicht (50)"                           
                 
     else:
         SET_DEVICE_LAST_CONTACT(ieeeAddr)  
@@ -325,27 +577,84 @@ def SET_DEVICE_LAST_VALUES(ieeeAddr, last_values):
             list_values = re.findall(r'\b\d+\b', last_values_formated)
             WRITE_PLANTS_DATAFILE(plant.name, device_name, list_values[0], list_values[1], list_values[2])
 
-    
-def UPDATE_DEVICE(id, name, model = "", device_type = "", inputs = ""):
+
+def UPDATE_DEVICE_EXCEPTION_SENSOR_NAMES():
+
+    try:
+        for device in GET_ALL_DEVICES("device"):
+            
+            if device.exception_sensor_ieeeAddr != "None":
+                device.exception_option = GET_DEVICE_BY_IEEEADDR(device.exception_sensor_ieeeAddr).name
+            
+        db.session.commit()
+        
+    except:
+        pass
+
+
+def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting, exception_sensor_ieeeAddr, 
+                         exception_sensor_input_values, exception_value_1, exception_value_2, exception_value_3):
+              
+    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+             
+    # values changed ?
+    if (entry.exception_option != exception_option or entry.exception_setting != exception_setting or
+        entry.exception_sensor_ieeeAddr != exception_sensor_ieeeAddr or 
+        entry.exception_sensor_input_values != exception_sensor_input_values or 
+        entry.exception_value_1 != exception_value_1 or entry.exception_value_2 != exception_value_2 or 
+        entry.exception_value_3 != exception_value_3):              
+                                         
+        entry.exception_option              = exception_option
+        entry.exception_setting             = exception_setting          
+        entry.exception_sensor_ieeeAddr     = exception_sensor_ieeeAddr
+        entry.exception_sensor_input_values = exception_sensor_input_values
+        entry.exception_value_1             = exception_value_1
+        entry.exception_value_2             = exception_value_2 
+        entry.exception_value_3             = exception_value_3         
+        
+        db.session.commit()  
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + entry.name + " | Exception Settings changed" +
+                             " || Exception - " + entry.exception_option +
+                             " | Exception Setting - " + entry.exception_setting +                          
+                             " | Exception ieeeAddr - " + entry.exception_sensor_ieeeAddr +
+                             " | Exception Value 1 - " + entry.exception_value_1 +
+                             " | Exception Value 2 - " + entry.exception_value_2 +      
+                             " | Exception Value 3 - " + entry.exception_value_3) 
+
+
+def UPDATE_DEVICE(id, name, gateway, model, device_type = "", description = "", input_values = "", input_events = "", commands = ""):
     entry = Devices.query.filter_by(id=id).first()
     
     # values changed ?
-    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.inputs != inputs):
+    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.description != description 
+        or entry.input_values != input_values or entry.input_events != input_events or entry.commands != commands):
         
-        entry.device_type = device_type
-        entry.model       = model
-        entry.inputs      = str(inputs)       
+        entry.model           = model
+        entry.device_type     = device_type
+        entry.description     = description
+        entry.input_values    = str(input_values)
+        entry.input_events    = str(input_events)
+        entry.commands        = str(commands)        
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Device | " + entry.name + " | changed" + " || Name - " + name + " | Model - " + entry.model)
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + entry.name + " | changed" + 
+                             " || Name - " + name + 
+                             " | ieeeAddr - " + entry.ieeeAddr + 
+                             " | Model - " + entry.model +
+                             " | device_type - " + entry.device_type +
+                             " | description - " + entry.description +
+                             " | Input_values - " + str(input_values) + 
+                             " | Input_events - " + str(input_events) + 
+                             " | Commands - " + str(commands))
 
         entry.name = name
         db.session.commit()    
    
     
-def CHANGE_DEVICE_POSITION(id, device_type, direction):
+def CHANGE_DEVICE_POSITION(id, direction):
     
     if direction == "up":
-        device_list = GET_ALL_DEVICES(device_type)
+        device_list = GET_ALL_DEVICES("")
         device_list = device_list[::-1]
         
         for device in device_list:
@@ -368,7 +677,7 @@ def CHANGE_DEVICE_POSITION(id, device_type, direction):
                 return 
 
     if direction == "down":
-        for device in GET_ALL_DEVICES(device_type):
+        for device in GET_ALL_DEVICES(""):
             if device.id > id:
                 
                 new_id = device.id
@@ -390,25 +699,133 @@ def CHANGE_DEVICE_POSITION(id, device_type, direction):
 def DELETE_DEVICE(ieeeAddr):
     error_list = ""
 
+    # check controller
+    entries = GET_ALL_CONTROLLER()
+    for entry in entries:
+        if entry.device_ieeeAddr == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in System / Controller"     
+
     # check plants
     entries = GET_ALL_PLANTS()
     for entry in entries:
         if entry.device_ieeeAddr == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in Pflanzen"
-            
+            error_list = error_list + "," + device.name + " eingetragen in Bewässung"
     
+
+    """
+    # check scheduler sensor
+    entries = GET_ALL_SCHEDULER_TASKS()
+    for entry in entries:
+        if (entry.device_ieeeAddr_1 == ieeeAddr) or (entry.device_ieeeAddr_2 == ieeeAddr) or (entry.device_ieeeAddr_3 == ieeeAddr):
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in Aufgabenplanung"
+    
+    # check sensordata
+    entries = GET_ALL_SENSORDATA_JOBS()
+    for entry in entries:
+        if entry.device_ieeeAddr == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in Sensordaten / Jobs"
+        
+    # check speechcontrol
+    entries = GET_ALL_SPEECHCONTROL_DEVICE_TASKS()
+    for entry in entries:
+        if entry.device_ieeeAddr == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in System / Sprachsteuerung"            
+        
+    # check led groups
+    entries = GET_ALL_LED_GROUPS()
+    for entry in entries:
+        if entry.led_ieeeAddr_1 == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+        if entry.led_ieeeAddr_2 == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+        if entry.led_ieeeAddr_3 == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen" 
+        if entry.led_ieeeAddr_4 == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+        if entry.led_ieeeAddr_5 == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+        if entry.led_ieeeAddr_6 == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+        if entry.led_ieeeAddr_7 == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+        if entry.led_ieeeAddr_8 == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+        if entry.led_ieeeAddr_9 == ieeeAddr:
+            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"            
+        """
+
+
     if error_list != "":
         return error_list[1:]   
                
-    else:      
+    else:
+        
         device      = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+        gateway     = device.gateway
         device_name = device.name
         
         Devices.query.filter_by(ieeeAddr=ieeeAddr).delete()
         db.session.commit() 
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Device | " + device_name + " | deleted")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + device_name + " | deleted")
+                    
+        return True
+
+
+""" ################## """
+""" ################## """
+"""        eMail       """
+""" ################## """
+""" ################## """
+
+
+def GET_EMAIL_SETTINGS():   
+    return eMail.query.filter_by().first()
+
+
+def GET_EMAIL_ADDRESSES(address_type): 
+    if address_type == "TEST":
+        mail_list = []
+        mail_list.append(eMail.query.filter_by().first().username)
+        return mail_list
+
+    if address_type == "NOTIFICATION":
+        mail_list = []
+        users = User.query.all()
+        for user in users:
+            if user.email_notification == "True":
+                mail_list.append(user.email)
+        return mail_list
+
+
+def SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password): 
+    entry = eMail.query.filter_by().first()
+
+    if (entry.server_address != server_address or entry.server_port != server_port or entry.encoding != encoding or entry.username != username or entry.password != password):
+
+        entry.server_address = server_address
+        entry.server_port    = server_port
+        entry.encoding       = encoding
+        entry.username       = username
+        entry.password       = password
+        db.session.commit()
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "eMail | Server Settings | changed")
+        
         return True
 
 
@@ -830,3 +1247,20 @@ def DELETE_USER(user_id):
 
     except Exception as e:
         return(e)
+
+
+""" ################### """
+""" ################### """
+"""     zigbee2mqtt     """
+""" ################### """
+""" ################### """
+
+    
+def GET_ZIGBEE2MQTT_PAIRING():
+    return ZigBee2MQTT.query.filter_by().first().pairing
+
+
+def SET_ZIGBEE2MQTT_PAIRING(setting):
+    entry = ZigBee2MQTT.query.filter_by().first()
+    entry.pairing = setting
+    db.session.commit()

@@ -14,13 +14,8 @@ from app import app
 """ #### """
 """ path """
 """ #### """
-            
-# windows
-if os.name == "nt":                 
-    PATH = os.path.abspath("") 
-# armbian
-else:                               
-    PATH = "/home/pi/watering_control"
+                    
+PATH = os.path.abspath("") 
 
 def GET_PATH():
     return (PATH)
@@ -33,7 +28,7 @@ def GET_PATH():
 def CREATE_LOGFILE(filename):
     try:
         # create csv file
-        file = PATH + "/logs/" + filename + ".csv"
+        file = PATH + "/data/logs/" + filename + ".csv"
         
         with open(file, 'w', encoding='utf-8') as csvfile:
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)    
@@ -45,20 +40,20 @@ def CREATE_LOGFILE(filename):
             
             csvfile.close()
 
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /logs/" + filename + ".csv | created")   
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/logs/" + filename + ".csv | created")   
         return True   
            
     except Exception as e:
         if filename != "log_system":
-            WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/" + filename + ".csv | " + str(e))  
+            WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/logs/" + filename + ".csv | " + str(e))  
         return(e)
 
         
 def RESET_LOGFILE(filename):
-    if os.path.isfile(PATH + "/logs/" + filename + ".csv"):
-        os.remove (PATH + "/logs/" + filename + ".csv")
+    if os.path.isfile(PATH + "/data/logs/" + filename + ".csv"):
+        os.remove (PATH + "/data/logs/" + filename + ".csv")
 
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /logs/" + filename + ".csv | deleted")
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/logs/" + filename + ".csv | deleted")
         
     result = CREATE_LOGFILE(filename)
     
@@ -71,11 +66,11 @@ def RESET_LOGFILE(filename):
 def WRITE_LOGFILE_DEVICES(channel, msg):
     
     # create file if not exist
-    if os.path.isfile(PATH + "/logs/log_devices.csv") is False:
+    if os.path.isfile(PATH + "/data/logs/log_devices.csv") is False:
         CREATE_LOGFILE("log_devices")
         
     # replace file if size > 2,5 mb
-    file_size = os.path.getsize(PATH + "/logs/log_devices.csv")
+    file_size = os.path.getsize(PATH + "/data/logs/log_devices.csv")
     file_size = round(file_size / 1024 / 1024, 2)
     
     if file_size > 2.5:
@@ -84,7 +79,7 @@ def WRITE_LOGFILE_DEVICES(channel, msg):
     try:
         
         # open csv file
-        file = PATH + "/logs/log_devices.csv"
+        file = PATH + "/data/logs/log_devices.csv"
         
         with open(file, 'a', newline='', encoding='utf-8') as csvfile:
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                                        
@@ -99,11 +94,11 @@ def WRITE_LOGFILE_DEVICES(channel, msg):
 def WRITE_LOGFILE_SYSTEM(log_type, description):
 
     # create file if not exist
-    if os.path.isfile(PATH + "/logs/log_system.csv") is False:
+    if os.path.isfile(PATH + "/data/logs/log_system.csv") is False:
         CREATE_LOGFILE("log_system")
 
     # replace file if size > 2.5 mb
-    file_size = os.path.getsize(PATH + "/logs/log_system.csv")
+    file_size = os.path.getsize(PATH + "/data/logs/log_system.csv")
     file_size = round(file_size / 1024 / 1024, 2)
     
     if file_size > 2.5:
@@ -111,7 +106,7 @@ def WRITE_LOGFILE_SYSTEM(log_type, description):
 
     try:
         # open csv file
-        file = PATH + "/logs/log_system.csv"
+        file = PATH + "/data/logs/log_system.csv"
         
         with open(file, 'a', newline='', encoding='utf-8') as csvfile:
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)   
@@ -120,7 +115,7 @@ def WRITE_LOGFILE_SYSTEM(log_type, description):
             return True
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/log_system.csv | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/logs/log_system.csv | " + str(e))
         return (e)
         
     
@@ -128,7 +123,7 @@ def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):
     
     try:
         # open csv file
-        file = PATH + "/logs/log_system.csv"
+        file = PATH + "/data/logs/log_system.csv"
         
         with open(file, 'r', newline='', encoding='utf-8') as csvfile:
             rowReader = csv.reader(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -158,7 +153,7 @@ def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):
             
     
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/log_system.csv | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/logs/log_system.csv | " + str(e)) 
         return (e)   
 
 
@@ -254,11 +249,11 @@ def RESTORE_DATABASE(filename):
 def DELETE_DATABASE_BACKUP(filename):
     try:
         os.remove (backup_location_path + filename)
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /backup/" + filename + " | deleted")
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/backup/" + filename + " | deleted")
         return True
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /backup/" + filename + " | " + str(e))  
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/backup/" + filename + " | " + str(e))  
         return (e)
 
 
@@ -268,7 +263,7 @@ def DELETE_DATABASE_BACKUP(filename):
 
 def GET_PLANTS_DATAFILES():
     file_list = []
-    for files in os.walk(PATH + "/csv/"):  
+    for files in os.walk(PATH + "/data/csv/"):  
         file_list.append(files)   
 
     if file_list == []:
@@ -278,21 +273,21 @@ def GET_PLANTS_DATAFILES():
 
 
 def CREATE_PLANTS_DATAFILE(filename):
-    if os.path.isfile(PATH + "/csv/" + filename + ".csv") is False:
+    if os.path.isfile(PATH + "/data/csv/" + filename + ".csv") is False:
 
         try:
             # create csv file
-            file = PATH + "/csv/" + filename + ".csv"
+            file = PATH + "/data/csv/" + filename + ".csv"
             with open(file, 'w', encoding='utf-8') as csvfile:
                 filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                       
                 filewriter.writerow(["Timestamp","Device","Pumptime","Moisture","Watertank"])
                 csvfile.close()
 
-            WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + filename + ".csv | created") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/csv/" + filename + ".csv | created") 
             return True 
                 
         except Exception as e:
-            WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + ".csv | " + str(e))
+            WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + filename + ".csv | " + str(e))
             return(e)
 
 
@@ -302,46 +297,102 @@ def WRITE_PLANTS_DATAFILE(filename, device, pumptime, moisture, watertank):
 
     try:
         # open csv file
-        file = PATH + "/csv/" + filename + ".csv"
+        file = PATH + "/data/csv/" + filename + ".csv"
         with open(file, 'a', newline='', encoding='utf-8') as csvfile:
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                                        
             filewriter.writerow( [str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), str(device), str(pumptime), str(moisture), str(watertank)])
             csvfile.close()
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + ".csv | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + filename + ".csv | " + str(e))
         return(e)
 
 
 def READ_PLANTS_DATAFILE(filename):
     try:
         # open csv file with pandas
-        file = PATH + "/csv/" + filename
+        file = PATH + "/data/csv/" + filename
         
         df = pd.read_csv(file, sep = ",", skiprows = 1, names = ["Timestamp","Device","Pumptime","Moisture","Watertank"])
         return df
 
     except Exception as e:
         if "Error tokenizing data. C error: Calling read(nbytes) on source failed. Try engine='python'." not in str(e):
-            WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + " | " + str(e))   
+            WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + filename + " | " + str(e))   
             return(e) 
 
 
 def RENAME_PLANTS_DATAFILE(old_filename, new_filename):
     try:
-        os.rename(PATH + '/csv/' + old_filename + ".csv", PATH + '/csv/' + new_filename + ".csv") 
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + old_filename + " | renamed | New name - " + new_filename)
+        os.rename(PATH + '/data/csv/' + old_filename + ".csv", PATH + '/data/csv/' + new_filename + ".csv") 
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/csv/" + old_filename + " | renamed | New name - " + new_filename)
         return True
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + old_filename + " | " + str(e))  
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + old_filename + " | " + str(e))  
         return(e)
 
 
 def DELETE_PLANTS_DATAFILE(filename):
     try:
-        os.remove (PATH + '/csv/' + filename + ".csv")
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + filename + " | deleted")
+        os.remove (PATH + '/data/csv/' + filename + ".csv")
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/csv/" + filename + " | deleted")
         return True
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filename + " | " + str(e))  
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + filename + " | " + str(e))  
         return(e)
+
+
+
+""" ################################ """
+"""  file zigbee device informations """
+""" ################################ """
+
+def GET_DEVICE_INFORMATIONS(model):
+    
+    try:
+        with open(PATH + "/data/zigbee_device_informations.json", 'r') as data_file:
+            data_loaded = json.load(data_file)
+
+        for device in data_loaded["data"]:
+
+            if str(device["model"]) == str(model):
+
+                try:
+                    device_type  = device['device_type']
+                except:
+                    device_type  = ""                 
+                  
+                try:
+                    description  = device['description']
+                except:
+                    description  = ""
+
+                try:
+                    input_values = device['input_values']
+                    input_values = ','.join(input_values)   
+                    input_values = input_values.replace("'", '"')
+                except:
+                    input_values = ""
+                  
+                try:
+                    input_events = device['input_events']
+                    input_events = ','.join(input_events)
+                    input_events = input_events.replace("'", '"')
+                    input_events = input_events.replace("},{", '} {')     
+                except:
+                    input_events = ""
+                    
+                try:
+                    commands     = device['commands']   
+                    commands     = ','.join(commands)
+                    commands     = commands.replace("'", '"')  
+                    commands     = commands.replace("},{", '} {')                               
+                except:
+                    commands     = ""
+                
+                return (device_type, description, input_values, input_events, commands)
+                
+        return ("", "", "", "", "")   
+        
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/zigbee_device_informations.json | " + str(e))   

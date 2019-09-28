@@ -51,7 +51,7 @@ def PROCESS_MANAGEMENT():
             #  mqtt message
             # ##############
                 
-            if process[0] == "send_message":
+            if process[0] == "send_mqtt_message":
                 channel = process[1]
                 msg     = process[2]
                 

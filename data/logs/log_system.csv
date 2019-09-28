@@ -187,3 +187,88 @@ Timestamp,Type,Description
 2019-09-28 08:42:23,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
 2019-09-28 08:45:15,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2019-09-28 08:45:17,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 10:41:51,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 11:17:18,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 11:17:20,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 11:17:35,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-09-28 11:17:37,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-09-28 11:17:41,WARNING,|Devices || ZigBee2MQTT || Update || No Message founded|
+2019-09-28 11:17:43,ERROR,|eMail || None || WARNING || Devices || ZigBee2MQTT || Update || No Message founded || No recipients have been added|
+2019-09-28 11:34:15,DATABASE,|Host || Network settings changed || LAN - 192.168.1.111 : 192.168.1.1|
+2019-09-28 11:34:16,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 11:34:32,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-09-28 11:34:33,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-09-28 11:34:36,SUCCESS,|Devices |||| ZigBee2MQTT |||| Update|
+2019-09-28 11:36:08,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 11:36:16,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-09-28 11:36:16,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-09-28 11:36:18,ERROR,|Devices || ZigBee2MQTT || Update || name 'MQTT_Devices' is not defined|
+2019-09-28 11:36:18,ERROR,|eMail || None || ERROR || Devices || ZigBee2MQTT || Update || name 'MQTT_Devices' is not defined || No recipients have been added|
+2019-09-28 11:38:20,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 11:38:28,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-09-28 11:38:28,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-09-28 11:38:30,DATABASE,|MQTT || Device - led_wohnzimmer_01 || changed |||| Name - led_wohnzimmer_01 || ieeeAddr - 0x00178801040c9476 || Model - 9290012573A || device_type - led_rgb || description - PHILIPS HUE white and color ambiance E26/E27/E14 || Input_values -  || Input_events -  || Commands - |
+2019-09-28 11:38:30,DATABASE,|MQTT || Device - led_wohnzimmer_02 || changed |||| Name - led_wohnzimmer_02 || ieeeAddr - 0x0017880104878b88 || Model - 9290012573A || device_type - led_rgb || description - PHILIPS HUE white and color ambiance E26/E27/E14 || Input_values -  || Input_events -  || Commands - |
+2019-09-28 11:38:30,DATABASE,|MQTT || Device - led_bad_01 || changed |||| Name - led_bad_01 || ieeeAddr - 0x000b3cfffef56003 || Model - LED1649C5 || device_type - led_simple || description - IKEA TRADFRI LED bulb E12/E14/E17 400 lumen || Input_values -  || Input_events -  || Commands - |
+2019-09-28 11:38:30,DATABASE,|MQTT || Device - led_bad_02 || changed |||| Name - led_bad_02 || ieeeAddr - 0x000b3cfffeff0aa8 || Model - LED1649C5 || device_type - led_simple || description - IKEA TRADFRI LED bulb E12/E14/E17 400 lumen || Input_values -  || Input_events -  || Commands - |
+2019-09-28 11:38:30,DATABASE,|MQTT || Device - Steckdose_TV || changed |||| Name - Steckdose_TV || ieeeAddr - 0x7cb03eaa0a02fa78 || Model - AB3257001NJ || device_type - power_switch || description - OSRAM Smart+ Plug || Input_values -  || Input_events -  || Commands - {"state":"ON"} {"state":"OFF"}|
+2019-09-28 11:38:30,DATABASE,|MQTT || Device - Steckdose_Server || changed |||| Name - Steckdose_Server || ieeeAddr - 0x8418260000105fa0 || Model - AB3257001NJ || device_type - power_switch || description - OSRAM Smart+ Plug || Input_values -  || Input_events -  || Commands - {"state":"ON"} {"state":"OFF"}|
+2019-09-28 11:38:30,DATABASE,|MQTT || Device - 0x00158d000349876a || changed |||| Name - 0x00158d000349876a || ieeeAddr - 0x00158d000349876a || Model - WSDCGQ11LM || device_type - sensor_active || description - AQARA Environment Sensor || Input_values - temperature,humidity,pressure,battery || Input_events -  || Commands - |
+2019-09-28 11:38:30,DATABASE,|MQTT || Device - HUE_Dimmer || changed |||| Name - HUE_Dimmer || ieeeAddr - 0x00178801067147c7 || Model - 324131092621 || device_type - controller || description - PHILIPS HUE Dimmer Switch || Input_values -  || Input_events - {"action":"on-press"} {"action":"up-press"} {"action":"down-press"} {"action":"off-press"} || Commands - |
+2019-09-28 11:38:30,DATABASE,|MQTT || Device - Cube_Spotify || changed |||| Name - Cube_Spotify || ieeeAddr - 0x00158d000275de23 || Model - MFKZQ01LM || device_type - controller || description - AQARA Cube Controller || Input_values -  || Input_events - {"action":"shake"} {"action":"rotate_left"} {"action":"rotate_right"} {"side":1} {"side":2} {"side":4} {"side":5} || Commands - |
+2019-09-28 11:38:30,DATABASE,|MQTT || Device - 0x00158d0001923614 || changed |||| Name - 0x00158d0001923614 || ieeeAddr - 0x00158d0001923614 || Model - SPZB0001 || device_type - heater || description - Eurotronic Heater Thermostat || Input_values - current_heating_setpoint,eurotronic_system_mode,eurotronic_error_status || Input_events -  || Commands - {"current_heating_setpoint":16} {"current_heating_setpoint":17} {"current_heating_setpoint":18} {"current_heating_setpoint":19} {"current_heating_setpoint":20} {"current_heating_setpoint":21} {"current_heating_setpoint":22} {"current_heating_setpoint":23} {"current_heating_setpoint":24} {"current_heating_setpoint":25}|
+2019-09-28 11:38:30,DATABASE,|MQTT || Device - led_strip_01 || changed |||| Name - led_strip_01 || ieeeAddr - 0x0017880104498d6b || Model - 915005106701 || device_type - led_rgb || description - PHILIPS HUE LightStrip || Input_values -  || Input_events -  || Commands - |
+2019-09-28 11:38:30,SUCCESS,|Devices |||| ZigBee2MQTT |||| Update|
+2019-09-28 11:40:48,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 11:42:27,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 11:42:36,DATABASE,|Device - led_strip_01 || deleted|
+2019-09-28 11:42:43,DATABASE,|Device - 0x00158d0001923614 || deleted|
+2019-09-28 11:42:57,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-09-28 11:42:58,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-09-28 11:43:00,SUCCESS,|Devices |||| ZigBee2MQTT |||| Update|
+2019-09-28 11:43:09,DATABASE,|Device - led_strip_01 || deleted|
+2019-09-28 11:48:17,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 11:48:23,DATABASE,|Device - 0x00158d0001923614 || deleted|
+2019-09-28 11:48:33,EVENT,|Device || Deleted - 0x00158d0001923614|
+2019-09-28 11:48:50,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-09-28 11:48:51,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-09-28 11:48:53,SUCCESS,|Devices |||| ZigBee2MQTT |||| Update|
+2019-09-28 11:48:57,DATABASE,|Device - led_strip_01 || deleted|
+2019-09-28 11:49:07,EVENT,|Device || Deleted - led_strip_01|
+2019-09-28 11:57:50,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 11:58:23,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 12:02:46,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 12:10:22,DATABASE,|Host || Network settings changed || LAN -  : |
+2019-09-28 12:10:24,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 12:10:26,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 12:12:03,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 12:12:05,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 12:18:29,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 12:18:32,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 12:20:48,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 12:20:50,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 12:22:29,DATABASE,|Device - led_bad_02 || deleted|
+2019-09-28 12:24:33,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 12:24:35,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 12:25:32,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 12:25:34,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 12:27:17,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 12:27:19,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 12:29:40,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 12:29:42,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 12:32:38,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 12:32:41,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 12:54:38,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 12:54:40,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 13:30:59,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 13:31:01,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 13:31:24,ERROR,|Devices || ZigBee2MQTT || Device - bridge/config || Setting not confirmed || permit_join: false|
+2019-09-28 13:31:26,ERROR,|eMail || None || ERROR || Devices || ZigBee2MQTT || Device - bridge/config || Setting not confirmed || permit_join: false || No recipients have been added|
+2019-09-28 13:31:26,ERROR,|ZigBee2MQTT || Pairing disabled || Setting not confirmed|
+2019-09-28 13:32:34,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 13:32:36,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 13:32:54,ERROR,|Devices || ZigBee2MQTT || Device - bridge/config || Setting not confirmed || permit_join: false|
+2019-09-28 13:32:56,ERROR,|eMail || None || ERROR || Devices || ZigBee2MQTT || Device - bridge/config || Setting not confirmed || permit_join: false || No recipients have been added|
+2019-09-28 13:32:56,ERROR,|ZigBee2MQTT || Pairing disabled || Setting not confirmed|
+2019-09-28 13:58:34,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 13:58:36,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
