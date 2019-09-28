@@ -5,7 +5,7 @@ from functools           import wraps
 
 from app                          import app
 from app.database.models          import *
-from app.backend.mqtt             import MQTT_PUBLISH, UPDATE_DEVICES, CHECK_ZIGBEE2MQTT_NAME_CHANGED, CHECK_ZIGBEE2MQTT_DEVICE_DELETED, CHECK_ZIGBEE2MQTT_SETTING_PROCESS
+from app.backend.mqtt             import MQTT_PUBLISH, UPDATE_DEVICES, CHECK_ZIGBEE2MQTT_NAME_CHANGED, CHECK_ZIGBEE2MQTT_DEVICE_DELETED, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.file_management  import GET_PATH, RESET_LOGFILE, WRITE_LOGFILE_SYSTEM
 from app.backend.shared_resources import process_management_queue
 from app.common                   import COMMON, STATUS
@@ -42,8 +42,8 @@ def devices():
     error_message_change_settings_devices       = []    
     success_message_change_settings_mqtt_broker = ""         
     error_message_change_settings_mqtt_broker   = []   
-    success_message_zigbee_pairing              = False
-    error_message_zigbee_pairing                = False
+    success_message_zigbee_pairing              = []
+    error_message_zigbee_pairing                = []
     success_message_logfile                     = False
     error_message_logfile                       = ""
 
@@ -108,30 +108,13 @@ def devices():
                                     msg      = '{"old": "' + old_name + '", "new": "' + new_name + '"}'
 
                                     heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))
-                                    time.sleep(5)   
 
-                                    # first check
                                     if CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
                                         SET_DEVICE_NAME(ieeeAddr, new_name)  
-                                        success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert") 
-                                    else: 
-                                        time.sleep(5)
-
-                                        # second check
-                                        if CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
-                                            SET_DEVICE_NAME(ieeeAddr, new_name)  
-                                            success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert") 
-                                        else: 
-                                            time.sleep(5)
-
-                                            # third check
-                                            if CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
-                                                SET_DEVICE_NAME(ieeeAddr, new_name)  
-                                                success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert")       
-                                            else:
-                                                error_message_change_settings_devices.append(old_name + " || Name konnte nicht verändert werden")       
-
-                                
+                                        success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert")       
+                                    else:
+                                        error_message_change_settings_devices.append(old_name + " || Name konnte nicht verändert werden")       
+                        
                         else: 
                             error_message_change_settings_devices.append(old_name + " || Ungültige Eingabe || Name bereits vergeben")  
 
@@ -197,9 +180,7 @@ def devices():
         heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
         time.sleep(1)
 
-        zigbee_check = CHECK_ZIGBEE2MQTT_SETTING_PROCESS("bridge/config", '"permit_join":false', 1, 5)
-
-        if zigbee_check == "":                
+        if CHECK_ZIGBEE2MQTT_PAIRING("false"):             
             WRITE_LOGFILE_SYSTEM("SUCCESS", "ZigBee2MQTT | Pairing disabled") 
         else:             
             WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
@@ -207,51 +188,53 @@ def devices():
 
     # change pairing setting
     if request.form.get("save_zigbee_pairing") != None: 
-        
-        setting_pairing = str(request.form.get("radio_zigbee_pairing"))
-        
-        if setting_pairing == "True":
-                
-            channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
-            msg      = "true"
 
-            heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
+        # check mqtt
+        result = MQTT_PUBLISH("miranda/mqtt/test", "") 
+        if result != True:  
+            error_message_zigbee_pairing.append("Keine MQTT-Verbindung")  
 
-            Thread = threading.Thread(target=DISABLE_ZIGBEE_PAIRING)
-            Thread.start()                      
-            time.sleep(1)
-
-            zigbee_check = CHECK_ZIGBEE2MQTT_SETTING_PROCESS("bridge/config", '"permit_join":true', 1, 5)
-            
-            if zigbee_check == "":             
-                WRITE_LOGFILE_SYSTEM("WARNING", "ZigBee2MQTT | Pairing enabled") 
-                SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
-                success_message_zigbee_pairing = True
-            else:             
-                WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing enabled | Setting not confirmed")   
-                error_message_zigbee_pairing = True
-                                        
         else:
+            setting_pairing = str(request.form.get("radio_zigbee_pairing"))
             
-            channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
-            msg      = "false"
+            if setting_pairing == "True":
+                    
+                channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
+                msg      = "true"
 
-            heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
-            time.sleep(1)
+                heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
 
-            zigbee_check = CHECK_ZIGBEE2MQTT_SETTING_PROCESS("bridge/config", '"permit_join":false', 1, 5)
-            
-            if zigbee_check == "":                
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "ZigBee2MQTT | Pairing disabled") 
-                SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
-                success_message_zigbee_pairing = True
-            else:             
-                WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
-                error_message_zigbee_pairing = True
+                Thread = threading.Thread(target=DISABLE_ZIGBEE_PAIRING)
+                Thread.start()                      
+                time.sleep(1)
+
+                if CHECK_ZIGBEE2MQTT_PAIRING("true"):             
+                    WRITE_LOGFILE_SYSTEM("WARNING", "ZigBee2MQTT | Pairing enabled") 
+                    SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
+                    success_message_zigbee_pairing.append("Einstellung erfolgreich übernommen") 
+                else:             
+                    WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing enabled | Setting not confirmed")   
+                    error_message_zigbee_pairing.append("Einstellung nicht bestätigt") 
+                                            
+            else:
+                
+                channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
+                msg      = "false"
+
+                heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
+                time.sleep(1)
+
+                if CHECK_ZIGBEE2MQTT_PAIRING("false"):                 
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "ZigBee2MQTT | Pairing disabled") 
+                    SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
+                    success_message_zigbee_pairing.append("Einstellung erfolgreich übernommen") 
+                else:             
+                    WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
+                    error_message_zigbee_pairing.append("Einstellung nicht bestätigt") 
 
 
     # request zigbee topology
-    if request.form.get("generate_zigbee_topology") != None: 
+    if request.form.get("update_zigbee_topology") != None: 
         channel  = "miranda/zigbee2mqtt/bridge/networkmap"
         msg      = "graphviz"
 
@@ -330,25 +313,11 @@ def remove_device(ieeeAddr):
             msg      = device_name
 
             heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))
-            time.sleep(5)   
-            
-            # first check
+
             if CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
-                session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"
-            else: 
-                time.sleep(5)
-
-                # second check
-                if CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
-                    session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"
-                else: 
-                    time.sleep(5)
-
-                    # third check
-                    if CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
-                        session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"       
-                    else:
-                        session['delete_device_error'] = device_name + " || Löschung nicht bestätigt"         
+                session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"       
+            else:
+                session['delete_device_error'] = device_name + " || Löschung nicht bestätigt"         
         
     else:
         session['delete_device_error'] = device_name + " || " + str(result)
