@@ -6,7 +6,7 @@ from functools           import wraps
 from app                          import app
 from app.database.models          import *
 from app.backend.mqtt             import MQTT_PUBLISH, UPDATE_DEVICES, CHECK_ZIGBEE2MQTT_NAME_CHANGED, CHECK_ZIGBEE2MQTT_DEVICE_DELETED, CHECK_ZIGBEE2MQTT_PAIRING
-from app.backend.file_management  import GET_PATH, RESET_LOGFILE, WRITE_LOGFILE_SYSTEM, DELETE_NETWORK_TOPOLOGY
+from app.backend.file_management  import GET_PATH, RESET_LOGFILE, WRITE_LOGFILE_SYSTEM
 from app.backend.shared_resources import process_management_queue
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
@@ -235,8 +235,6 @@ def devices():
 
     # request zigbee topology
     if request.form.get("update_zigbee_topology") != None: 
-        DELETE_NETWORK_TOPOLOGY()
-        
         channel  = "miranda/zigbee2mqtt/bridge/networkmap"
         msg      = "graphviz"
 
@@ -326,21 +324,35 @@ def remove_device(ieeeAddr):
              
     return redirect(url_for('devices'))
      
-     
+  
+# download network topology 
+@app.route('/devices/topology/<path:filepath>')
+@login_required
+@permission_required
+def download_devices_topology(filepath): 
+    path = GET_PATH() + "/data/"
+    
+    if os.path.isfile(path + filepath) is False:
+        return redirect(url_for('devices'))
+    
+    else:
+        return send_from_directory(path, filepath)
+
+  
 # download devices logfile
 @app.route('/devices/download/<path:filepath>')
 @login_required
 @permission_required
 def download_devices_logfile(filepath): 
-    path = GET_PATH() + "/logs/"  
+    path = GET_PATH() + "/data/logs/"  
 
     try:
         if os.path.isfile(path + filepath) is False:
             RESET_LOGFILE("log_devices")  
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /logs/" + filepath + " | downloaded") 
+        WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/logs/" + filepath + " | downloaded") 
 
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /logs/" + filepath + " | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/logs/" + filepath + " | " + str(e))
         session['error_download_log'] = "Download Log || " + str(e)
 
     return send_from_directory(path, filepath)

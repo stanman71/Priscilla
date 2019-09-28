@@ -294,3 +294,11 @@ Timestamp,Type,Description
 2019-09-28 16:32:38,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
 2019-09-28 16:33:14,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2019-09-28 16:33:16,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 16:48:47,DATABASE,|Host || Network settings changed || LAN - 192.168.1.111 : 192.168.1.1|
+2019-09-28 16:48:47,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 16:57:05,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 16:57:17,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 16:57:25,EVENT,|File || /data/logs/log_devices.csv || downloaded|
+2019-09-28 17:01:11,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 17:02:58,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 17:04:29,EVENT,|MQTT || Broker - localhost || Connected|

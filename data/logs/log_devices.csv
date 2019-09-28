@@ -65,3 +65,176 @@ Timestamp,Channel,Message
 2019-09-28 12:02:39,miranda/zigbee2mqtt/0x00158d000349876a,|{"temperature":24.09,"linkquality":52,"humidity":56,"pressure":1004.5,"battery":91,"voltage":2985}|
 2019-09-28 12:02:46,miranda/zigbee2mqtt/bridge/state,online
 2019-09-28 12:02:46,miranda/zigbee2mqtt/bridge/config,|{"version":"1.5.1","commit":"ac3b924","coordinator":20190515,"log_level":"info","permit_join":false}|
+2019-09-28 16:48:47,miranda/zigbee2mqtt/bridge/state,online
+2019-09-28 16:48:47,miranda/zigbee2mqtt/bridge/config,|{"version":"1.5.1","commit":"ac3b924","coordinator":20190515,"log_level":"info","permit_join":false}|
+2019-09-28 16:48:49,miranda/mqtt/test,
+2019-09-28 16:48:55,miranda/mqtt/test,
+2019-09-28 16:48:55,miranda/zigbee2mqtt/bridge/networkmap,graphviz
+2019-09-28 16:49:02,miranda/zigbee2mqtt/bridge/networkmap/graphviz,|digraph G {
+node[shape=record];
+  "0x00124b001d41aa97" [style="bold, filled", fillcolor="#e04e5d", fontcolor="#ffffff", label="{0x00124b001d41aa97||0x0 ||No model information available||online (2019-09-28T16:49:02+02:00)}"];
+  "0x00178801040c9476" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_01||0xb291  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (03:50:37s ago)}"];
+  "0x00178801040c9476" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x0017880104878b88" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_02||0x41d1  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (03:49:51s ago)}"];
+  "0x0017880104878b88" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x000b3cfffeff0aa8" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_bad_02||0x989a  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (01:48:47s ago)}"];
+  "0x7cb03eaa0a02fa78" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_TV||0x9b58  no lqi||OSRAM Smart+ plug (AB3257001NJ)||offline (00:32:37s ago)}"];
+  "0x7cb03eaa0a02fa78" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x8418260000105fa0" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_Server||0xd441  no lqi||OSRAM Smart+ plug (AB3257001NJ)||online (00:05:20s ago)}"];
+  "0x8418260000105fa0" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="56"]
+  "0x00158d000349876a" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{0x00158d000349876a||0x7aae ||Xiaomi Aqara temperature, humidity and pressure sensor (WSDCGQ11LM)||online (00:22:59s ago)}"];
+  "0x00178801067147c7" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{HUE_Dimmer||0x84eb ||Philips Hue dimmer switch (324131092621)||online (00:11:32s ago)}"];
+  "0x00158d000275de23" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{Cube_Spotify||0xc787 ||Xiaomi Mi/Aqara smart home cube (MFKZQ01LM)||online (00:07:21s ago)}"];
+  "0x000b3cfffef56003" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{0x000b3cfffef56003||0x63e9  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (01:48:25s ago)}"];
+}|
+2019-09-28 16:49:54,miranda/mqtt/test,
+2019-09-28 16:49:54,miranda/zigbee2mqtt/bridge/networkmap,graphviz
+2019-09-28 16:50:01,miranda/zigbee2mqtt/bridge/networkmap/graphviz,|digraph G {
+node[shape=record];
+  "0x00124b001d41aa97" [style="bold, filled", fillcolor="#e04e5d", fontcolor="#ffffff", label="{0x00124b001d41aa97||0x0 ||No model information available||online (2019-09-28T16:50:01+02:00)}"];
+  "0x00124b001d41aa97" -> "0x8418260000105fa0" [penwidth=0.5, weight=0, color="#994444", label="72"]
+  "0x00178801040c9476" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_01||0xb291  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (03:51:36s ago)}"];
+  "0x00178801040c9476" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x0017880104878b88" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_02||0x41d1  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (03:50:51s ago)}"];
+  "0x0017880104878b88" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x000b3cfffeff0aa8" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_bad_02||0x989a  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (01:49:47s ago)}"];
+  "0x7cb03eaa0a02fa78" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_TV||0x9b58  no lqi||OSRAM Smart+ plug (AB3257001NJ)||offline (00:33:36s ago)}"];
+  "0x7cb03eaa0a02fa78" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x7cb03eaa0a02fa78" -> "0x8418260000105fa0" [penwidth=0.5, weight=0, color="#994444", label="36"]
+  "0x8418260000105fa0" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_Server||0xd441 ||OSRAM Smart+ plug (AB3257001NJ)||online (00:06:20s ago)}"];
+  "0x8418260000105fa0" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="52"]
+  "0x00158d000349876a" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{0x00158d000349876a||0x7aae ||Xiaomi Aqara temperature, humidity and pressure sensor (WSDCGQ11LM)||online (00:23:59s ago)}"];
+  "0x00158d000349876a" -> "0x8418260000105fa0" [penwidth=1, weight=0, color="#994444", label="58"]
+  "0x00178801067147c7" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{HUE_Dimmer||0x84eb ||Philips Hue dimmer switch (324131092621)||online (00:12:32s ago)}"];
+  "0x00158d000275de23" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{Cube_Spotify||0xc787 ||Xiaomi Mi/Aqara smart home cube (MFKZQ01LM)||online (00:08:21s ago)}"];
+  "0x00158d000275de23" -> "0x8418260000105fa0" [penwidth=1, weight=0, color="#994444", label="62"]
+  "0x000b3cfffef56003" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{0x000b3cfffef56003||0x63e9  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (01:49:24s ago)}"];
+}|
+2019-09-28 16:54:12,miranda/zigbee2mqtt/HUE_Dimmer,|{"battery":100,"linkquality":54,"counter":1,"brightness":205}|
+2019-09-28 16:57:05,miranda/zigbee2mqtt/bridge/state,online
+2019-09-28 16:57:05,miranda/zigbee2mqtt/bridge/config,|{"version":"1.5.1","commit":"ac3b924","coordinator":20190515,"log_level":"info","permit_join":false}|
+2019-09-28 16:57:17,miranda/zigbee2mqtt/bridge/state,online
+2019-09-28 16:57:17,miranda/zigbee2mqtt/bridge/config,|{"version":"1.5.1","commit":"ac3b924","coordinator":20190515,"log_level":"info","permit_join":false}|
+2019-09-28 16:57:22,miranda/mqtt/test,
+2019-09-28 16:57:32,miranda/mqtt/test,
+2019-09-28 16:57:32,miranda/zigbee2mqtt/bridge/networkmap,graphviz
+2019-09-28 16:57:39,miranda/zigbee2mqtt/bridge/networkmap/graphviz,|digraph G {
+node[shape=record];
+  "0x00124b001d41aa97" [style="bold, filled", fillcolor="#e04e5d", fontcolor="#ffffff", label="{0x00124b001d41aa97||0x0 ||No model information available||online (2019-09-28T16:57:39+02:00)}"];
+  "0x00124b001d41aa97" -> "0x8418260000105fa0" [penwidth=0.5, weight=0, color="#994444", label="70"]
+  "0x00178801040c9476" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_01||0xb291  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (03:59:14s ago)}"];
+  "0x00178801040c9476" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x0017880104878b88" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_02||0x41d1  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (03:58:28s ago)}"];
+  "0x0017880104878b88" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x000b3cfffeff0aa8" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_bad_02||0x989a  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (01:57:24s ago)}"];
+  "0x7cb03eaa0a02fa78" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_TV||0x9b58  no lqi||OSRAM Smart+ plug (AB3257001NJ)||offline (00:41:14s ago)}"];
+  "0x7cb03eaa0a02fa78" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x7cb03eaa0a02fa78" -> "0x8418260000105fa0" [penwidth=0.5, weight=0, color="#994444", label="38"]
+  "0x8418260000105fa0" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_Server||0xd441 ||OSRAM Smart+ plug (AB3257001NJ)||online (00:13:58s ago)}"];
+  "0x8418260000105fa0" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="52"]
+  "0x00158d000349876a" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{0x00158d000349876a||0x7aae ||Xiaomi Aqara temperature, humidity and pressure sensor (WSDCGQ11LM)||online (00:31:37s ago)}"];
+  "0x00158d000349876a" -> "0x8418260000105fa0" [penwidth=1, weight=0, color="#994444", label="58"]
+  "0x00178801067147c7" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{HUE_Dimmer||0x84eb ||Philips Hue dimmer switch (324131092621)||online (00:03:27s ago)}"];
+  "0x00158d000275de23" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{Cube_Spotify||0xc787 ||Xiaomi Mi/Aqara smart home cube (MFKZQ01LM)||online (00:15:58s ago)}"];
+  "0x00158d000275de23" -> "0x8418260000105fa0" [penwidth=1, weight=0, color="#994444", label="62"]
+  "0x000b3cfffef56003" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{0x000b3cfffef56003||0x63e9  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (01:57:02s ago)}"];
+}|
+2019-09-28 16:57:53,miranda/mqtt/test,
+2019-09-28 16:57:53,miranda/zigbee2mqtt/bridge/networkmap,graphviz
+2019-09-28 16:58:00,miranda/zigbee2mqtt/bridge/networkmap/graphviz,|digraph G {
+node[shape=record];
+  "0x00124b001d41aa97" [style="bold, filled", fillcolor="#e04e5d", fontcolor="#ffffff", label="{0x00124b001d41aa97||0x0 ||No model information available||online (2019-09-28T16:58:00+02:00)}"];
+  "0x00124b001d41aa97" -> "0x8418260000105fa0" [penwidth=0.5, weight=0, color="#994444", label="70"]
+  "0x00178801040c9476" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_01||0xb291  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (03:59:36s ago)}"];
+  "0x00178801040c9476" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x0017880104878b88" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_02||0x41d1  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (03:58:50s ago)}"];
+  "0x0017880104878b88" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x000b3cfffeff0aa8" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_bad_02||0x989a  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (01:57:46s ago)}"];
+  "0x7cb03eaa0a02fa78" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_TV||0x9b58  no lqi||OSRAM Smart+ plug (AB3257001NJ)||offline (00:41:35s ago)}"];
+  "0x7cb03eaa0a02fa78" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x7cb03eaa0a02fa78" -> "0x8418260000105fa0" [penwidth=0.5, weight=0, color="#994444", label="36"]
+  "0x8418260000105fa0" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_Server||0xd441 ||OSRAM Smart+ plug (AB3257001NJ)||online (00:14:19s ago)}"];
+  "0x8418260000105fa0" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="49"]
+  "0x00158d000349876a" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{0x00158d000349876a||0x7aae ||Xiaomi Aqara temperature, humidity and pressure sensor (WSDCGQ11LM)||online (00:31:58s ago)}"];
+  "0x00158d000349876a" -> "0x8418260000105fa0" [penwidth=1, weight=0, color="#994444", label="58"]
+  "0x00178801067147c7" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{HUE_Dimmer||0x84eb ||Philips Hue dimmer switch (324131092621)||online (00:03:48s ago)}"];
+  "0x00158d000275de23" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{Cube_Spotify||0xc787 ||Xiaomi Mi/Aqara smart home cube (MFKZQ01LM)||online (00:16:20s ago)}"];
+  "0x00158d000275de23" -> "0x8418260000105fa0" [penwidth=1, weight=0, color="#994444", label="62"]
+  "0x000b3cfffef56003" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{0x000b3cfffef56003||0x63e9  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (01:57:24s ago)}"];
+}|
+2019-09-28 17:00:21,miranda/zigbee2mqtt/Steckdose_Server,|{"state":"OFF","linkquality":46}|
+2019-09-28 17:01:11,miranda/zigbee2mqtt/bridge/state,online
+2019-09-28 17:01:11,miranda/zigbee2mqtt/bridge/config,|{"version":"1.5.1","commit":"ac3b924","coordinator":20190515,"log_level":"info","permit_join":false}|
+2019-09-28 17:01:16,miranda/mqtt/test,
+2019-09-28 17:02:59,miranda/zigbee2mqtt/bridge/state,online
+2019-09-28 17:02:59,miranda/zigbee2mqtt/bridge/config,|{"version":"1.5.1","commit":"ac3b924","coordinator":20190515,"log_level":"info","permit_join":false}|
+2019-09-28 17:03:11,miranda/mqtt/test,
+2019-09-28 17:04:29,miranda/zigbee2mqtt/bridge/state,online
+2019-09-28 17:04:29,miranda/zigbee2mqtt/bridge/config,|{"version":"1.5.1","commit":"ac3b924","coordinator":20190515,"log_level":"info","permit_join":false}|
+2019-09-28 17:04:39,miranda/mqtt/test,
+2019-09-28 17:04:42,miranda/mqtt/test,
+2019-09-28 17:04:45,miranda/mqtt/test,
+2019-09-28 17:04:46,miranda/zigbee2mqtt/bridge/networkmap,graphviz
+2019-09-28 17:04:53,miranda/zigbee2mqtt/bridge/networkmap/graphviz,|digraph G {
+node[shape=record];
+  "0x00124b001d41aa97" [style="bold, filled", fillcolor="#e04e5d", fontcolor="#ffffff", label="{0x00124b001d41aa97||0x0 ||No model information available||online (2019-09-28T17:04:53+02:00)}"];
+  "0x00124b001d41aa97" -> "0x8418260000105fa0" [penwidth=0.5, weight=0, color="#994444", label="50"]
+  "0x00178801040c9476" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_01||0xb291  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (04:06:28s ago)}"];
+  "0x00178801040c9476" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x0017880104878b88" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_02||0x41d1  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (04:05:42s ago)}"];
+  "0x0017880104878b88" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x000b3cfffeff0aa8" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_bad_02||0x989a  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (02:04:38s ago)}"];
+  "0x7cb03eaa0a02fa78" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_TV||0x9b58  no lqi||OSRAM Smart+ plug (AB3257001NJ)||offline (00:48:28s ago)}"];
+  "0x7cb03eaa0a02fa78" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x7cb03eaa0a02fa78" -> "0x8418260000105fa0" [penwidth=0.5, weight=0, color="#994444", label="34"]
+  "0x8418260000105fa0" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_Server||0xd441 ||OSRAM Smart+ plug (AB3257001NJ)||online (00:04:31s ago)}"];
+  "0x8418260000105fa0" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="47"]
+  "0x00158d000349876a" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{0x00158d000349876a||0x7aae ||Xiaomi Aqara temperature, humidity and pressure sensor (WSDCGQ11LM)||online (00:38:50s ago)}"];
+  "0x00158d000349876a" -> "0x8418260000105fa0" [penwidth=1, weight=0, color="#994444", label="58"]
+  "0x00178801067147c7" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{HUE_Dimmer||0x84eb ||Philips Hue dimmer switch (324131092621)||online (00:10:41s ago)}"];
+  "0x00158d000275de23" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{Cube_Spotify||0xc787 ||Xiaomi Mi/Aqara smart home cube (MFKZQ01LM)||online (00:23:12s ago)}"];
+  "0x00158d000275de23" -> "0x8418260000105fa0" [penwidth=1, weight=0, color="#994444", label="62"]
+  "0x000b3cfffef56003" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{0x000b3cfffef56003||0x63e9  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (02:04:16s ago)}"];
+}|
+2019-09-28 17:05:02,miranda/mqtt/test,
+2019-09-28 17:05:03,miranda/zigbee2mqtt/bridge/networkmap,graphviz
+2019-09-28 17:05:10,miranda/zigbee2mqtt/bridge/networkmap/graphviz,|digraph G {
+node[shape=record];
+  "0x00124b001d41aa97" [style="bold, filled", fillcolor="#e04e5d", fontcolor="#ffffff", label="{0x00124b001d41aa97||0x0 ||No model information available||online (2019-09-28T17:05:10+02:00)}"];
+  "0x00178801040c9476" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_01||0xb291  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (04:06:45s ago)}"];
+  "0x00178801040c9476" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x0017880104878b88" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_02||0x41d1  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (04:05:59s ago)}"];
+  "0x0017880104878b88" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x000b3cfffeff0aa8" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_bad_02||0x989a  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (02:04:55s ago)}"];
+  "0x7cb03eaa0a02fa78" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_TV||0x9b58  no lqi||OSRAM Smart+ plug (AB3257001NJ)||offline (00:48:45s ago)}"];
+  "0x7cb03eaa0a02fa78" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x8418260000105fa0" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_Server||0xd441  no lqi||OSRAM Smart+ plug (AB3257001NJ)||online (00:04:48s ago)}"];
+  "0x8418260000105fa0" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="53"]
+  "0x00158d000349876a" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{0x00158d000349876a||0x7aae ||Xiaomi Aqara temperature, humidity and pressure sensor (WSDCGQ11LM)||online (00:39:07s ago)}"];
+  "0x00178801067147c7" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{HUE_Dimmer||0x84eb ||Philips Hue dimmer switch (324131092621)||online (00:10:58s ago)}"];
+  "0x00158d000275de23" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{Cube_Spotify||0xc787 ||Xiaomi Mi/Aqara smart home cube (MFKZQ01LM)||online (00:23:29s ago)}"];
+  "0x000b3cfffef56003" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{0x000b3cfffef56003||0x63e9  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (02:04:33s ago)}"];
+}|
+2019-09-28 17:05:22,miranda/mqtt/test,
+2019-09-28 17:05:23,miranda/zigbee2mqtt/bridge/networkmap,graphviz
+2019-09-28 17:05:30,miranda/zigbee2mqtt/bridge/networkmap/graphviz,|digraph G {
+node[shape=record];
+  "0x00124b001d41aa97" [style="bold, filled", fillcolor="#e04e5d", fontcolor="#ffffff", label="{0x00124b001d41aa97||0x0 ||No model information available||online (2019-09-28T17:05:30+02:00)}"];
+  "0x00124b001d41aa97" -> "0x8418260000105fa0" [penwidth=0.5, weight=0, color="#994444", label="60"]
+  "0x00178801040c9476" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_01||0xb291  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (04:07:05s ago)}"];
+  "0x00178801040c9476" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x0017880104878b88" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_wohnzimmer_02||0x41d1  no lqi||Philips Hue white and color ambiance E26/E27/E14 (9290012573A)||online (04:06:19s ago)}"];
+  "0x0017880104878b88" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x000b3cfffeff0aa8" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{led_bad_02||0x989a  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (02:05:15s ago)}"];
+  "0x7cb03eaa0a02fa78" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_TV||0x9b58  no lqi||OSRAM Smart+ plug (AB3257001NJ)||offline (00:49:05s ago)}"];
+  "0x7cb03eaa0a02fa78" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x7cb03eaa0a02fa78" -> "0x8418260000105fa0" [penwidth=0.5, weight=0, color="#994444", label="38"]
+  "0x8418260000105fa0" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{Steckdose_Server||0xd441 ||OSRAM Smart+ plug (AB3257001NJ)||online (00:05:08s ago)}"];
+  "0x8418260000105fa0" -> "0x00124b001d41aa97" [penwidth=0.5, weight=0, color="#994444", label="52"]
+  "0x00158d000349876a" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{0x00158d000349876a||0x7aae ||Xiaomi Aqara temperature, humidity and pressure sensor (WSDCGQ11LM)||online (00:39:28s ago)}"];
+  "0x00158d000349876a" -> "0x8418260000105fa0" [penwidth=1, weight=0, color="#994444", label="58"]
+  "0x00178801067147c7" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{HUE_Dimmer||0x84eb ||Philips Hue dimmer switch (324131092621)||online (00:11:18s ago)}"];
+  "0x00158d000275de23" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{Cube_Spotify||0xc787 ||Xiaomi Mi/Aqara smart home cube (MFKZQ01LM)||online (00:23:49s ago)}"];
+  "0x00158d000275de23" -> "0x8418260000105fa0" [penwidth=1, weight=0, color="#994444", label="62"]
+  "0x000b3cfffef56003" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{0x000b3cfffef56003||0x63e9  no lqi||IKEA TRADFRI LED bulb E12/E14/E17 400 lumen, dimmable warm white, chandelier opal (LED1649C5)||online (02:04:53s ago)}"];
+}|

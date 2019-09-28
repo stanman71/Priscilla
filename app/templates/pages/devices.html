@@ -237,7 +237,7 @@
             <div class="card">       
               <form method="POST"> 
                 <div class="card-body">                                
-                  <a href="{{ url_for('static', filename='img/zigbee_topology.png') }}"><font color="lightblue"><b>DOWNLOAD ZIGBEE TOPOLOGY</b></font></a>   
+                  <a href="/devices/topology/zigbee_topology.png?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD ZIGBEE TOPOLOGY</b></font></a>
                 </div>
                 <div class="card-footer">                  
                   <button type="submit" onclick="window.location.href='/devices#zigbee'" name="update_zigbee_topology" class="btn btn-fill btn-info">UPDATE ZIGBEE TOPOLOGY</button>
