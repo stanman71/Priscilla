@@ -4,10 +4,16 @@
           <div class="col-md-12">
 
             <div class="card ">
-              <div class="card-header">
-                <h4 class="card-title"><b>System</b></h4>
-              </div>
-            </div>
+              <div class="card-footer">    
+                <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
+                  <a href="/settings/system" class="btn btn-primary btn-lg" role="button" aria-pressed="true">System</a>
+                  <a href="/settings/controller" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Controller</a>
+                  <a href="/settings/speechcontrol" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Sprachsteuerung</a>                                    
+                  <a href="/settings/users" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Benutzer</a>
+                  <a href="/settings/system_log" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Ereignisse</a>
+                </div>           
+              </div>  
+            </div>  
 
 <!-------------------->
 <!-- SYSTEM CONTROL -->
@@ -28,8 +34,8 @@
             <div class="card">          
               <form method="POST">
                 <div class="card-footer">                  
-                  <button type="submit" onclick="window.location.href='/system#'" name="restart_system" class="btn btn-fill btn-info">Restart</button>
-                  <button type="submit" onclick="window.location.href='/system#'" name="shutdown_system" class="btn btn-fill btn-info pull-right">Shutdown</button>
+                  <button type="submit" onclick="window.location.href='/settings/system#'" name="restart_system" class="btn btn-fill btn-info">Restart</button>
+                  <button type="submit" onclick="window.location.href='/settings/system#'" name="shutdown_system" class="btn btn-fill btn-info pull-right">Shutdown</button>
                 </div>  
               </form>
             </div>
@@ -108,7 +114,7 @@
                   </div>                  
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/system#network'" name="set_lan_settings" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/settings/system#network'" name="set_lan_settings" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>
@@ -212,8 +218,8 @@
                   </div>                                
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/system#email'" name="update_email_settings" class="btn btn-fill btn-primary">SAVE</button>
-                  <button type="submit" onclick="window.location.href='/system#email'" name="test_email_settings" class="btn btn-fill btn-info pull-right">TEST</button>
+                  <button type="submit" onclick="window.location.href='/settings/system#email'" name="update_email_settings" class="btn btn-fill btn-primary">SAVE</button>
+                  <button type="submit" onclick="window.location.href='/settings/system#email'" name="test_email_settings" class="btn btn-fill btn-info pull-right">TEST</button>
                 </div>
               </form>
             </div>
@@ -260,8 +266,8 @@
                           {% for entry in list_backup_files %}
                           <tr>
                             <td style="width:80%">{{ entry }}</td> 
-                            <td style="width:10%"><a href="/system/backup/restore/backup_database/{{ entry }}#backup"><font color="orange"><b>RESTORE</b></font></a></td>  
-                            <td style="width:10%"><a href="/system/backup/delete/backup_database/{{ entry }}#backup"><font size="5"><i class='uil uil-trash-alt'></i></font></a>
+                            <td style="width:10%"><a href="/settings/system/backup/restore/backup_database/{{ entry }}#backup"><font color="orange"><b>RESTORE</b></font></a></td>  
+                            <td style="width:10%"><a href="/settings/system/backup/delete/backup_database/{{ entry }}#backup"><font size="5"><i class='uil uil-trash-alt'></i></font></a>
                           </tr>
                           {% endfor %} 
                         </tbody>
@@ -272,7 +278,7 @@
                   {% endif %}                  
                 </div>  
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/system#backup'" name="database_save" class="btn btn-fill btn-info">BACKUP DATABASE</button>
+                  <button type="submit" onclick="window.location.href='/settings/system#backup'" name="database_save" class="btn btn-fill btn-info">BACKUP DATABASE</button>
                 </div>
               </form>
             </div>

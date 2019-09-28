@@ -29,10 +29,10 @@ def permission_required(f):
     return wrap
 
 
-@app.route('/users', methods=['GET', 'POST'])
+@app.route('/settings/users', methods=['GET', 'POST'])
 @login_required
 @permission_required
-def users():
+def settings_users():
     success_message_add_user           = False
     error_message_add_user             = []
     success_message_change_settings    = []
@@ -265,11 +265,11 @@ def users():
 
     list_users = GET_ALL_USERS()
 
-    data = {'navigation': 'users', 'notification': ''}
+    data = {'navigation': 'settings', 'notification': ''}
 
     return render_template('layouts/default.html',
                             data=data,    
-                            content=render_template( 'pages/users.html',
+                            content=render_template( 'pages/settings_users.html',
                                                      error_message_change_settings=error_message_change_settings,                            
                                                      error_message_add_user=error_message_add_user,
                                                      message_admin_password_not_changed=message_admin_password_not_changed,
@@ -285,7 +285,7 @@ def users():
 
 
 # delete user
-@app.route('/users/delete/<int:id>')
+@app.route('/settings/users/delete/<int:id>')
 @login_required
 @permission_required
 def delete_user(id):
@@ -297,4 +297,4 @@ def delete_user(id):
     else:
         session['delete_user_error'] = username + " || " + str(result)
 
-    return redirect(url_for('users'))
+    return redirect(url_for('settings_users'))

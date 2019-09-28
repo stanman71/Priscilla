@@ -48,38 +48,16 @@
             </a>
           </li>  
 
-          {% if data.navigation == "users" %}
+          {% if data.navigation == "settings" %}
             <li class="active ">
           {% else %} 
             <li>
           {% endif %} 
-            <a href="/users">
-              <i class='uil uil-users-alt'></i>
-              <p>Benutzer</p>
+            <a href="/settings/system">
+              <i class='uil uil-cog'></i>
+              <p>Einstellungen</p>
             </a>
           </li>  
-
-          {% if data.navigation == "system" %}
-            <li class="active ">
-          {% else %} 
-            <li>
-          {% endif %} 
-            <a href="/system">
-              <i class='uil uil-cog'></i>
-              <p>System</p>
-            </a>
-          </li>            
-
-          {% if data.navigation == "system_log" %}
-            <li class="active ">
-          {% else %} 
-            <li>
-          {% endif %} 
-            <a href="/system_log">
-              <i class='uil uil-clipboard-notes'></i>
-              <p>Ereignisse</p>
-            </a>
-          </li>       
 
           {% if current_user.is_authenticated %}
             <li>

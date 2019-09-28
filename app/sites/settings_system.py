@@ -80,10 +80,10 @@ def HOST_SHUTDOWN():
     os.system("sudo shutdown")
 
 
-@app.route('/system', methods=['GET', 'POST'])
+@app.route('/settings/system', methods=['GET', 'POST'])
 @login_required
 @permission_required
-def system():
+def settings_system():
     success_message_change_settings_network = False
     error_message_change_settings_network   = []
     success_message_change_settings_email   = False       
@@ -289,11 +289,11 @@ def system():
     email_settings    = GET_EMAIL_SETTINGS()
     list_backup_files = GET_BACKUP_FILES()
 
-    data = {'navigation': 'system', 'notification': ''}
+    data = {'navigation': 'settings', 'notification': ''}
 
     return render_template('layouts/default.html',
                             data=data,    
-                            content=render_template( 'pages/system.html',   
+                            content=render_template( 'pages/settings_system.html',   
                                                     success_message_change_settings_network=success_message_change_settings_network,                             
                                                     error_message_change_settings_network=error_message_change_settings_network, 
                                                     success_message_change_settings_email=success_message_change_settings_email,                                                       
@@ -311,7 +311,7 @@ def system():
                             )
 
 # restore database backup
-@app.route('/system/backup/restore/backup_database/<string:filename>')
+@app.route('/settings/system/backup/restore/backup_database/<string:filename>')
 @login_required
 @permission_required
 def restore_database_backup(filename):
@@ -321,11 +321,11 @@ def restore_database_backup(filename):
     else:
         session['restore_database_error'] = filename + " || " + result
 
-    return redirect(url_for('system'))
+    return redirect(url_for('settings_system'))
 
 
 # delete database backup
-@app.route('/system/backup/delete/backup_database/<string:filename>')
+@app.route('/settings/system/backup/delete/backup_database/<string:filename>')
 @login_required
 @permission_required
 def delete_database_backup(filename):
@@ -335,4 +335,4 @@ def delete_database_backup(filename):
     else:
         session['delete_database_error'] = filename + " || " + result
 
-    return redirect(url_for('system'))
+    return redirect(url_for('settings_system'))

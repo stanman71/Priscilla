@@ -16,22 +16,22 @@ import os
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
 
-@app.route('/system_log', methods=['GET', 'POST'])
+@app.route('/settings/system_log', methods=['GET', 'POST'])
 @login_required
 @permission_required
-def system_log():
+def settings_system_log():
     success_message_logfile = False
     error_message_logfile   = ""
     
@@ -110,11 +110,11 @@ def system_log():
 
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
 
-    data = {'navigation': 'system_log', 'notification': ''}
+    data = {'navigation': 'settings', 'notification': ''}
 
     return render_template('layouts/default.html',
                             data=data,    
-                            content=render_template( 'pages/system_log.html', 
+                            content=render_template( 'pages/settings_system_log.html', 
                                                     error_message_logfile=error_message_logfile,
                                                     success_message_logfile=success_message_logfile,
                                                     timestamp=timestamp,
@@ -131,7 +131,7 @@ def system_log():
 
 
 # download system logfile
-@app.route('/system_log/download/<path:filepath>')
+@app.route('/settings/system_log/download/<path:filepath>')
 @login_required
 @permission_required
 def download_system_log(filepath): 
