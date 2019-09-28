@@ -6,7 +6,7 @@ from functools           import wraps
 from app                          import app
 from app.database.models          import *
 from app.backend.mqtt             import MQTT_PUBLISH, UPDATE_DEVICES, CHECK_ZIGBEE2MQTT_NAME_CHANGED, CHECK_ZIGBEE2MQTT_DEVICE_DELETED, CHECK_ZIGBEE2MQTT_PAIRING
-from app.backend.file_management  import GET_PATH, RESET_LOGFILE, WRITE_LOGFILE_SYSTEM
+from app.backend.file_management  import GET_PATH, RESET_LOGFILE, WRITE_LOGFILE_SYSTEM, DELETE_NETWORK_TOPOLOGY
 from app.backend.shared_resources import process_management_queue
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
@@ -235,6 +235,8 @@ def devices():
 
     # request zigbee topology
     if request.form.get("update_zigbee_topology") != None: 
+        DELETE_NETWORK_TOPOLOGY()
+        
         channel  = "miranda/zigbee2mqtt/bridge/networkmap"
         msg      = "graphviz"
 

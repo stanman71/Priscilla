@@ -189,6 +189,11 @@ def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
         return(e)
 
 
+def DELETE_NETWORK_TOPOLOGY():
+    if os.path.isfile(PATH + "/app/static/img/zigbee_topology.png"):
+        os.remove (PATH + "/app/static/img/zigbee_topology.png")
+
+
 """ ############### """
 """ backup database """
 """ ############### """
