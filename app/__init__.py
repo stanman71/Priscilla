@@ -107,8 +107,8 @@ if CHECK_ZIGBEE2MQTT():
     # deactivate pairing at startup
     SET_ZIGBEE2MQTT_PAIRING("False")
     
-    channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
-    msg      = "false"
+    channel = "miranda/zigbee2mqtt/bridge/config/permit_join"
+    msg     = "false"
 
     heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
     time.sleep(1)

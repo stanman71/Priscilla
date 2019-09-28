@@ -58,50 +58,55 @@
             <div class="card ">
               <form method="POST">
                 <div class="card-body">
+                  <input class="form-control" id="input_table_devices" type="text" placeholder="Suche ...">
                   <div class="table-responsive">
-                    <table class="table tablesorter">
-                      <thead> 
-                        <th scope="col" style="width:3%"></th> 
-                        <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Gerät</th>                        
-                        <th scope="col" style="width:18%"><p style="visibility: hidden;">invisibletextforminlenght</p>Adresse</th> 
-                        <th scope="col" style="width:12%"><p style="visibility: hidden;">invisibletext</p>Modell</th>
-                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Gerätetyp</th> 
-                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Beschreibung</th>                                             
-                        <th scope="col" style="width:10%"><p style="visibility: hidden;">invisibletext</p>Letzter Kontakt</th>     
-                        <th scope="col" style="width:5%"></th>                                                                                
-                      </thead>
-                      <tbody> 
-                        {% for entry in list_devices %}
-                        <tr>  
-                          <td>
-                            <a href="/devices/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
-                            <a href="/devices/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
-                          </td>                                 
-                          <td>                     
-                            <div class="row justify-content-md-left">
-                              <div class="col-sm-10">                                    
-                                <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{% if entry.name != None %}{{ entry.name }}{% endif %}" /> 
+                    <div style="max-height: 500px">
+                      <table class="table tablesorter">
+                        <thead> 
+                          <td style="display:none">hidden_names for search function</td>
+                          <th scope="col" style="width:3%"></th> 
+                          <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Gerät</th>                        
+                          <th scope="col" style="width:18%"><p style="visibility: hidden;">invisibletextforminlenght</p>Adresse</th> 
+                          <th scope="col" style="width:12%"><p style="visibility: hidden;">invisibletext</p>Modell</th>
+                          <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Gerätetyp</th> 
+                          <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Beschreibung</th>                                             
+                          <th scope="col" style="width:10%"><p style="visibility: hidden;">invisibletext</p>Letzter Kontakt</th>     
+                          <th scope="col" style="width:5%"></th>                                                                                
+                        </thead>
+                        <tbody id="table_devices">
+                          {% for entry in list_devices %}
+                          <tr>  
+                            <td style="display:none">{{ entry.name }}</td>
+                            <td>
+                              <a href="/devices/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                              <a href="/devices/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
+                            </td>        
+                            <td>                     
+                              <div class="row justify-content-md-left">
+                                <div class="col-sm-10">                                    
+                                  <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{% if entry.name != None %}{{ entry.name }}{% endif %}" /> 
+                                </div>
                               </div>
-                            </div>
-                          </td>      
-                          <td>{{ entry.ieeeAddr }}</td>    
-                          <td>{{ entry.model }}</td>   
-                          
-                          {% if entry.gateway == mqtt %}
-                            <td><font color="#ccccff">{{ entry.device_type }}</font></td>
-                          {% else %}
-                            <td><font color="#ffffcc">{{ entry.device_type }}</font></td>
-                          {% endif %}
+                            </td>      
+                            <td>{{ entry.ieeeAddr }}</td>    
+                            <td>{{ entry.model }}</td>   
+                            
+                            {% if entry.gateway == mqtt %}
+                              <td><font color="#ccccff">{{ entry.device_type }}</font></td>
+                            {% else %}
+                              <td><font color="#ffffcc">{{ entry.device_type }}</font></td>
+                            {% endif %}
 
-                          <td>{{ entry.description }}</td>                            
-                          <td>{{ entry.last_contact }}</td>                       
-                          <td>
-                            <a href="/devices/delete/{{ entry.ieeeAddr }}#table"><font size="5"><i class='tim-icons icon-trash-simple'></i></font></a>
-                          </td>                                 
-                        </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
+                            <td>{{ entry.description }}</td>                            
+                            <td>{{ entry.last_contact }}</td>                       
+                            <td>
+                              <a href="/devices/delete/{{ entry.ieeeAddr }}#table"><font size="5"><i class='tim-icons icon-trash-simple'></i></font></a>
+                            </td>                                 
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>            
                 <div class="card-footer">                  
@@ -156,8 +161,6 @@
                         <input type="text" class="form-control" name="set_mqtt_broker" value="{% if mqtt_broker.broker != None %}{{ mqtt_broker.broker }}{% endif %}" /> 
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
                     <div class="col-md-3">
                       <div class="form-group">
                         <label>Benutzername (Optional)</label>

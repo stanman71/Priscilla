@@ -14,8 +14,15 @@ from app import app
 """ #### """
 """ path """
 """ #### """
-                    
-PATH = os.path.abspath("") 
+
+
+# windows
+if os.name == "nt":                 
+    PATH = os.path.abspath("") 
+# linux
+else:                               
+    PATH = "/home/pi/watering_control/"
+
 
 def GET_PATH():
     return (PATH)
@@ -195,7 +202,7 @@ def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
 
 
 # get backup path
-backup_location_path = PATH + '/backup/'
+backup_location_path = PATH + '/data/backup/'
 
 
 def GET_BACKUP_FILES():

@@ -73,6 +73,19 @@
 
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->
   <script src="/static/demo/demo.js"></script>
+
+  <!-- table search function -->
+  <script>
+    $(document).ready(function(){
+      $("#input_table_devices").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#table_devices tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+  </script>
+
   <script>
     $(document).ready(function() {
       $().ready(function() {
