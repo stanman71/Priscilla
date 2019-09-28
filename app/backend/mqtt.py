@@ -708,6 +708,28 @@ def CHECK_MQTT():
     MQTT_PUBLISH("miranda/mqtt/test", "") 
 
 
+def CHECK_ZIGBEE2MQTT():                     
+    counter = 1
+
+    while counter != 5:      
+
+        for message in GET_MQTT_INCOMING_MESSAGES(10):
+                
+            if message[1] == "miranda/zigbee2mqtt/bridge/state":
+            
+                try:
+                    if message[2] == "online":
+                        return True
+
+                except:
+                    pass
+
+        counter = counter + 1
+        time.sleep(1)
+                
+    return False
+
+
 def CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):                     
     counter = 1
 

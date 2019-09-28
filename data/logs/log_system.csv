@@ -302,3 +302,8 @@ Timestamp,Type,Description
 2019-09-28 17:01:11,EVENT,|MQTT || Broker - localhost || Connected|
 2019-09-28 17:02:58,EVENT,|MQTT || Broker - localhost || Connected|
 2019-09-28 17:04:29,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-28 17:19:54,DATABASE,|Host || Network settings changed || LAN -  : |
+2019-09-28 17:19:56,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-09-28 17:19:58,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-09-28 17:20:01,ERROR,|ZigBee2MQTT || No Connection|
+2019-09-28 17:20:03,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|

@@ -32,7 +32,8 @@ from app.database.models            import *
 from app.backend.shared_resources   import process_management_queue
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
 from app.backend.shared_resources   import REFRESH_MQTT_INPUT_MESSAGES_THREAD
-from app.backend.mqtt               import MQTT_RECEIVE_THREAD
+from app.backend.mqtt               import MQTT_RECEIVE_THREAD, CHECK_ZIGBEE2MQTT, CHECK_ZIGBEE2MQTT_PAIRING
+from app.backend.email              import SEND_EMAIL
 
 
 """ ################## """
@@ -90,6 +91,39 @@ try:
 except Exception as e:
     print("ERROR: MQTT | " + str(e))
     WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e)) 
+
+
+""" ###### """
+""" zigbee """
+""" ###### """
+ 
+time.sleep(3)
+
+if CHECK_ZIGBEE2MQTT():  
+    print("ZigBee2MQTT | Connected") 
+    
+    WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Connected")
+
+    # deactivate pairing at startup
+    SET_ZIGBEE2MQTT_PAIRING("False")
+    
+    channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
+    msg      = "false"
+
+    heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
+    time.sleep(1)
+
+    if CHECK_ZIGBEE2MQTT_PAIRING("false"):                        
+        WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Pairing disabled") 
+    else:             
+        WRITE_LOGFILE_SYSTEM("WARNING", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")    
+
+
+else:
+    print("ERROR: ZigBee2MQTT | No connection") 
+    
+    WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | No Connection")        
+    SEND_EMAIL("ERROR", "ZigBee2MQTT | No Connection")          
 
 
 """ ################## """
