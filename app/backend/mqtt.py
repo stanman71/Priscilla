@@ -583,68 +583,45 @@ def SAVE_SENSORDATA(job_id):
 """ ################### """
  
  
-def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, delay = 1, limit = 15): 
-    Thread = threading.Thread(target=CHECK_DEVICE_SETTING_PROCESS, args=(ieeeAddr, setting, delay, limit, ))
+def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, repeats = 10): 
+    Thread = threading.Thread(target=CHECK_DEVICE_SETTING_PROCESS, args=(ieeeAddr, setting, repeats, ))
     Thread.start()   
 
  
-def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, delay, limit):                
-    device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):                
+    device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+    counter = 1
                     
-    # check setting 1 try
-    time.sleep(delay)                             
-    
-    if device.gateway == "mqtt":
-        result = CHECK_MQTT_SETTING(device.ieeeAddr, setting, limit)
-    if device.gateway == "zigbee2mqtt":
-        result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting, limit)    
-    
     # format for gui
     setting_formated = setting.replace('"', '')
     setting_formated = setting_formated.replace('{', '')
     setting_formated = setting_formated.replace('}', '')    
     setting_formated = setting_formated.replace(':', ': ')
     setting_formated = setting_formated.replace(',', ', ')      
-    
-    # set previous setting
-    if result == True:
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices |Device - " + device.name + " | Setting changed | " + setting_formated)  
-    
-    else:
-        # check setting 2 try
-        time.sleep(delay)                             
-        if device.gateway == "mqtt":
-            result = CHECK_MQTT_SETTING(device.ieeeAddr, setting, limit)
-        if device.gateway == "zigbee2mqtt":
-            result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting, limit)      
+
+    while counter != repeats:  
         
+        if device.gateway == "mqtt":
+            result = CHECK_MQTT_SETTING(device.ieeeAddr, setting)
+        if device.gateway == "zigbee2mqtt":
+            result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting)    
+    
         # set previous setting
         if result == True:
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | Device - " + device.name + " | Setting changed | " + setting_formated)      
-            
-        else:
-            # check setting 3 try
-            time.sleep(delay)                             
-            if device.gateway == "mqtt":
-                result = CHECK_MQTT_SETTING(device.ieeeAddr, setting, limit)
-            if device.gateway == "zigbee2mqtt":
-                result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting, limit)                 
-             
-            # set previous setting
-            if result == True:
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | Device - " + device.name + " | Setting changed | " + setting_formated)          
-                
-            # error message
-            else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Devices | Device - " + device.name + " | Setting not confirmed | " + setting_formated)  
-                SEND_EMAIL("ERROR", "Devices | Device - " + device.name + " | Setting not confirmed | " + setting_formated)                
-                return ("Devices | Device - " + device.name + " | Setting not confirmed - " + setting_formated) 
-                
-    return True
-                    
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices |Device - " + device.name + " | Setting changed | " + setting_formated)  
+            return True
 
-def CHECK_MQTT_SETTING(ieeeAddr, setting, limit):        
-    for message in GET_MQTT_INCOMING_MESSAGES(limit):
+        counter = counter + 1
+        time.sleep(1)       
+
+    # error message
+    WRITE_LOGFILE_SYSTEM("ERROR", "Devices | Device - " + device.name + " | Setting not confirmed | " + setting_formated)  
+    SEND_EMAIL("ERROR", "Devices | Device - " + device.name + " | Setting not confirmed | " + setting_formated)                
+    return ("Devices | Device - " + device.name + " | Setting not confirmed - " + setting_formated) 
+                         
+
+def CHECK_MQTT_SETTING(ieeeAddr, setting):        
+    for message in GET_MQTT_INCOMING_MESSAGES(10):
         
         # search for fitting message in incoming_messages_list
         if message[1] == "miranda/mqtt/" + ieeeAddr:  
@@ -652,8 +629,7 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting, limit):
             setting = setting[1:-1]
             
             # only one setting value
-            if not "," in setting:
-            
+            if not "," in setting:    
                 if setting in message[2]:
                     return True
                                                     
@@ -662,8 +638,7 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting, limit):
                 
                 list_settings = setting.split(",")
                 
-                for setting in list_settings:
-                    
+                for setting in list_settings:           
                     if not setting in message[2]:
                         return False    
                         
@@ -672,8 +647,8 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting, limit):
     return False
    
 
-def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting, limit):
-    for message in GET_MQTT_INCOMING_MESSAGES(limit):
+def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
+    for message in GET_MQTT_INCOMING_MESSAGES(10):
 
         # search for fitting message in incoming_messages_list
         if message[1] == "miranda/zigbee2mqtt/" + device_name:   
@@ -713,8 +688,7 @@ def CHECK_ZIGBEE2MQTT():
 
     while counter != 5:      
 
-        for message in GET_MQTT_INCOMING_MESSAGES(10):
-                
+        for message in GET_MQTT_INCOMING_MESSAGES(10):          
             if message[1] == "miranda/zigbee2mqtt/bridge/state":
             
                 try:
@@ -735,8 +709,7 @@ def CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
 
     while counter != 10:      
 
-        for message in GET_MQTT_INCOMING_MESSAGES(10):
-                
+        for message in GET_MQTT_INCOMING_MESSAGES(10):      
             if message[1] == "miranda/zigbee2mqtt/bridge/log":
             
                 try:
@@ -837,10 +810,9 @@ def CHECK_DEVICE_EXCEPTIONS(id, setting):
     if device.exception_sensor_ieeeAddr != "None" and exception_setting == setting:
         
         sensor_ieeeAddr = device.exception_sensor_ieeeAddr
-        sensor_key      = device.exception_value_1
-        
-        operator = device.exception_value_2
-        value    = device.exception_value_3
+        sensor_key      = device.exception_value_1   
+        operator        = device.exception_value_2
+        value           = device.exception_value_3
 
         try:
              value = str(value).lower()

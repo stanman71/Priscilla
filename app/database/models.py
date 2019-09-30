@@ -239,35 +239,26 @@ def ADD_CONTROLLER(device_ieeeAddr):
     # controller exist ?
     if not GET_CONTROLLER_BY_IEEEADDR(device_ieeeAddr):
         
-        if device_ieeeAddr == "":
-            return "Keinen Controller angegeben"
-            
-        else:
-            # find a unused id
-            for i in range(1,21):
-                if Controller.query.filter_by(id=i).first():
-                    pass
-                else:
-                    # add new controller
-                    controller = Controller(
-                                            id = i,
-                                            device_ieeeAddr = device_ieeeAddr,
-                                           )
-                    db.session.add(controller)
-                    db.session.commit()
-                    
-                    UPDATE_CONTROLLER_EVENTS()
-                    
-                    controller_name = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
+        # find a unused id
+        for i in range(1,21):
+            if Controller.query.filter_by(id=i).first():
+                pass
+            else:
+                # add new controller
+                controller = Controller(
+                                        id = i,
+                                        device_ieeeAddr = device_ieeeAddr,
+                                        )
+                db.session.add(controller)
+                db.session.commit()
+                
+                UPDATE_CONTROLLER_EVENTS()
+                
+                controller_name = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
 
-                    WRITE_LOGFILE_SYSTEM("DATABASE", "Controller - " + controller_name + " | added")  
+                WRITE_LOGFILE_SYSTEM("DATABASE", "Controller - " + controller_name + " | added")  
 
-                    return ""
-
-            return "Controllerlimit erreicht (20)"
-
-    else:
-        return "Controller bereits vorhanden"    
+                return True
 
 
 def UPDATE_CONTROLLER_EVENTS(): 
@@ -326,7 +317,7 @@ def UPDATE_CONTROLLER_EVENTS():
         db.session.commit()
 
 
-def SET_CONTROLLER_COLLAPSE(id):
+def SET_CONTROLLER_COLLAPSE_OPEN(id):
     list_controller = Controller.query.all()
     
     for controller in list_controller:
@@ -335,7 +326,7 @@ def SET_CONTROLLER_COLLAPSE(id):
   
     entry = Controller.query.filter_by(id=id).first()
     
-    entry.collapse = "in"
+    entry.collapse = "True"
     db.session.commit()   
 
 
@@ -406,17 +397,9 @@ def CHANGE_CONTROLLER_POSITION(id, direction):
                 return 
 
 
-def DELETE_CONTROLLER(id):
-    device_ieeeAddr = GET_CONTROLLER_BY_ID(id).device_ieeeAddr
-    controller_name = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
-    
-    try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Controller - " + controller_name + " | deleted")   
-    except:
-        pass     
-    
-    Controller.query.filter_by(id=id).delete()
-    db.session.commit() 
+def DELETE_CONTROLLER(device_ieeeAddr):
+    Controller.query.filter_by(device_ieeeAddr=device_ieeeAddr).delete()
+    db.session.commit()
 
 
 """ ################### """
@@ -528,8 +511,11 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", descriptio
                 db.session.commit()
                 
                 SET_DEVICE_LAST_CONTACT(ieeeAddr)   
+
+                if device_type == "controller":
+                    ADD_CONTROLLER(ieeeAddr)
                 
-                return ""
+                return True
 
         return "Gerätelimit erreicht (50)"                           
                 
@@ -578,6 +564,38 @@ def SET_DEVICE_LAST_VALUES(ieeeAddr, last_values):
             WRITE_PLANTS_DATAFILE(plant.name, device_name, list_values[0], list_values[1], list_values[2])
 
 
+def UPDATE_DEVICE(id, name, gateway, model, device_type = "", description = "", input_values = "", input_events = "", commands = ""):
+    entry = Devices.query.filter_by(id=id).first()
+    
+    # values changed ?
+    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.description != description 
+        or entry.input_values != input_values or entry.input_events != input_events or entry.commands != commands):
+        
+        entry.model           = model
+        entry.device_type     = device_type
+        entry.description     = description
+        entry.input_values    = str(input_values)
+        entry.input_events    = str(input_events)
+        entry.commands        = str(commands)        
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + entry.name + " | changed" + 
+                             " || Name - " + name + 
+                             " | ieeeAddr - " + entry.ieeeAddr + 
+                             " | Model - " + entry.model +
+                             " | device_type - " + entry.device_type +
+                             " | description - " + entry.description +
+                             " | Input_values - " + str(input_values) + 
+                             " | Input_events - " + str(input_events) + 
+                             " | Commands - " + str(commands))
+
+        entry.name = name
+        db.session.commit()    
+   
+        if device_type == "controller":
+            ADD_CONTROLLER(GET_DEVICE_BY_ID(id).ieeeAddr)
+            UPDATE_CONTROLLER_EVENTS()
+
+
 def UPDATE_DEVICE_EXCEPTION_SENSOR_NAMES():
 
     try:
@@ -622,34 +640,6 @@ def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting, exceptio
                              " | Exception Value 2 - " + entry.exception_value_2 +      
                              " | Exception Value 3 - " + entry.exception_value_3) 
 
-
-def UPDATE_DEVICE(id, name, gateway, model, device_type = "", description = "", input_values = "", input_events = "", commands = ""):
-    entry = Devices.query.filter_by(id=id).first()
-    
-    # values changed ?
-    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.description != description 
-        or entry.input_values != input_values or entry.input_events != input_events or entry.commands != commands):
-        
-        entry.model           = model
-        entry.device_type     = device_type
-        entry.description     = description
-        entry.input_values    = str(input_values)
-        entry.input_events    = str(input_events)
-        entry.commands        = str(commands)        
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + entry.name + " | changed" + 
-                             " || Name - " + name + 
-                             " | ieeeAddr - " + entry.ieeeAddr + 
-                             " | Model - " + entry.model +
-                             " | device_type - " + entry.device_type +
-                             " | description - " + entry.description +
-                             " | Input_values - " + str(input_values) + 
-                             " | Input_events - " + str(input_events) + 
-                             " | Commands - " + str(commands))
-
-        entry.name = name
-        db.session.commit()    
-   
     
 def CHANGE_DEVICE_POSITION(id, direction):
     
@@ -698,13 +688,6 @@ def CHANGE_DEVICE_POSITION(id, direction):
 
 def DELETE_DEVICE(ieeeAddr):
     error_list = ""
-
-    # check controller
-    entries = GET_ALL_CONTROLLER()
-    for entry in entries:
-        if entry.device_ieeeAddr == ieeeAddr:
-            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in System / Controller"     
 
     # check plants
     entries = GET_ALL_PLANTS()
@@ -774,16 +757,22 @@ def DELETE_DEVICE(ieeeAddr):
                
     else:
         
-        device      = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-        gateway     = device.gateway
-        device_name = device.name
-        
-        Devices.query.filter_by(ieeeAddr=ieeeAddr).delete()
-        db.session.commit() 
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + device_name + " | deleted")
-                    
-        return True
+        try:
+            device      = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+            device_name = device.name
+            
+            if device.device_type == "controller":
+                DELETE_CONTROLLER(ieeeAddr)
+
+            Devices.query.filter_by(ieeeAddr=ieeeAddr).delete()
+            db.session.commit() 
+            
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + device_name + " | deleted")
+                        
+            return True
+
+        except Exception as e:
+            return e
 
 
 """ ################## """
