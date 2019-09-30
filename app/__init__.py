@@ -32,7 +32,7 @@ from app.database.models            import *
 from app.backend.shared_resources   import process_management_queue
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
 from app.backend.shared_resources   import REFRESH_MQTT_INPUT_MESSAGES_THREAD
-from app.backend.mqtt               import MQTT_RECEIVE_THREAD, CHECK_ZIGBEE2MQTT, CHECK_ZIGBEE2MQTT_PAIRING
+from app.backend.mqtt               import MQTT_RECEIVE_THREAD, MQTT_PUBLISH_THREAD, CHECK_ZIGBEE2MQTT, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.email              import SEND_EMAIL
 
 
@@ -87,6 +87,7 @@ def scheduler_tasks():
 try:
     print("###### Start MQTT ######")
     MQTT_RECEIVE_THREAD()
+    MQTT_PUBLISH_THREAD()
 
 except Exception as e:
     print("ERROR: MQTT | " + str(e))
@@ -132,6 +133,7 @@ else:
 
 PROCESS_MANAGEMENT_THREAD()
 REFRESH_MQTT_INPUT_MESSAGES_THREAD()
+
 
 
 app.run(host = GET_HOST_NETWORK().lan_ip_address, port = 80, debug=False)

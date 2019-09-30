@@ -5,9 +5,9 @@ from functools           import wraps
 
 from app                          import app
 from app.database.models          import *
-from app.backend.mqtt             import MQTT_PUBLISH, UPDATE_DEVICES, CHECK_ZIGBEE2MQTT_NAME_CHANGED, CHECK_ZIGBEE2MQTT_DEVICE_DELETED, CHECK_ZIGBEE2MQTT_PAIRING
+from app.backend.mqtt             import CHECK_MQTT, UPDATE_DEVICES, CHECK_ZIGBEE2MQTT_NAME_CHANGED, CHECK_ZIGBEE2MQTT_DEVICE_DELETED, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.file_management  import GET_PATH, RESET_LOGFILE, WRITE_LOGFILE_SYSTEM
-from app.backend.shared_resources import process_management_queue
+from app.backend.shared_resources import mqtt_message_queue
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
@@ -21,14 +21,14 @@ import threading
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        try:
-            if current_user.role == "administrator":
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('logout'))
-        except Exception as e:
-            print(e)
+        #try:
+        if current_user.role == "administrator":
+            return f(*args, **kwargs)
+        else:
             return redirect(url_for('logout'))
+        #except Exception as e:
+        #    print(e)
+        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -51,7 +51,7 @@ def devices():
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
 
     # check mqtt
-    result = MQTT_PUBLISH("miranda/mqtt/test", "") 
+    result = CHECK_MQTT()
     if result != True:
         error_message_mqtt = result
 
@@ -99,15 +99,15 @@ def devices():
                             if gateway == "zigbee2mqtt":
 
                                 # check mqtt
-                                result = MQTT_PUBLISH("miranda/mqtt/test", "") 
+                                result = CHECK_MQTT()
                                 if result != True:
-                                    error_message_change_settings_devices.append(old_name + " || Keine MQTT-Verbindung")  
+                                    error_message_change_settings_devices.append(result)  
                                 
                                 else:
                                     channel  = "miranda/zigbee2mqtt/bridge/config/rename"
                                     msg      = '{"old": "' + old_name + '", "new": "' + new_name + '"}'
 
-                                    heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))
+                                    heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
 
                                     if CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
                                         SET_DEVICE_NAME(ieeeAddr, new_name)  
@@ -177,7 +177,7 @@ def devices():
         channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
         msg      = "false"
 
-        heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
+        heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
         time.sleep(1)
 
         if CHECK_ZIGBEE2MQTT_PAIRING("false"):             
@@ -190,9 +190,9 @@ def devices():
     if request.form.get("save_zigbee_pairing") != None: 
 
         # check mqtt
-        result = MQTT_PUBLISH("miranda/mqtt/test", "") 
+        result = CHECK_MQTT()
         if result != True:  
-            error_message_zigbee_pairing.append("Keine MQTT-Verbindung")  
+            error_message_zigbee_pairing.append(result)  
 
         else:
             setting_pairing = str(request.form.get("radio_zigbee_pairing"))
@@ -202,7 +202,7 @@ def devices():
                 channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
                 msg      = "true"
 
-                heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
+                heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
 
                 Thread = threading.Thread(target=DISABLE_ZIGBEE_PAIRING)
                 Thread.start()                      
@@ -221,7 +221,7 @@ def devices():
                 channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
                 msg      = "false"
 
-                heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
+                heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
                 time.sleep(1)
 
                 if CHECK_ZIGBEE2MQTT_PAIRING("false"):                 
@@ -238,7 +238,7 @@ def devices():
         channel  = "miranda/zigbee2mqtt/bridge/networkmap"
         msg      = "graphviz"
 
-        heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))
+        heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
         time.sleep(5)
 
 
@@ -312,7 +312,7 @@ def remove_device(ieeeAddr):
             channel  = "miranda/zigbee2mqtt/bridge/config/remove"
             msg      = device_name
 
-            heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))
+            heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
 
             if CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
                 session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"       

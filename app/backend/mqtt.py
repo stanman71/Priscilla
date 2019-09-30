@@ -8,7 +8,7 @@ import time
 from app import app
 from app.database.models import *
 from app.backend.file_management import *
-from app.backend.shared_resources import process_management_queue, mqtt_incoming_messages_list
+from app.backend.shared_resources import process_management_queue, mqtt_incoming_messages_list, mqtt_message_queue
 from app.backend.email import SEND_EMAIL
 
 from ping3 import ping
@@ -259,9 +259,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                     heapq.heappush(process_management_queue, (10, ("scheduler", "sensor", task.id, ieeeAddr)))
         """
 
-        if device_type == "controller":
-            
-            # start controller job          
+        if device_type == "controller":       
             heapq.heappush(process_management_queue, (1, ("controller", ieeeAddr, msg)))
 
 
@@ -269,26 +267,45 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 """ mqtt publish message """
 """ #################### """
 
-
-def MQTT_PUBLISH(MQTT_TOPIC, MQTT_MSG):
+def MQTT_PUBLISH_THREAD():
 
     try:
-        def on_publish(client, userdata, mid):
-            print ('Message Published...')
-
-        client = mqtt.Client()
-        client.username_pw_set(username=GET_MQTT_BROKER_SETTINGS().user,password=GET_MQTT_BROKER_SETTINGS().password)          
-        client.on_publish = on_publish
-        client.connect(GET_MQTT_BROKER_SETTINGS().broker)      
-        client.publish(MQTT_TOPIC,MQTT_MSG)
+        Thread = threading.Thread(target=MQTT_PUBLISH)
+        Thread.start()  
         
-        client.disconnect()
-
-        return True
-
     except Exception as e:
-        print("ERROR: MQTT Publish | " + str(e))
-        return ("MQTT || " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "Thread | MQTT Publish | " + str(e))  
+        SEND_EMAIL("ERROR", "Thread | MQTT Publish | " + str(e))    
+
+
+def MQTT_PUBLISH():
+    
+    while True:
+        
+        try:  
+            mqtt_message = heapq.heappop(mqtt_message_queue)[1]
+            
+            def on_publish(client, userdata, mid):
+                print ('Message Published...')
+
+            client = mqtt.Client()
+            client.username_pw_set(username=GET_MQTT_BROKER_SETTINGS().user,password=GET_MQTT_BROKER_SETTINGS().password)          
+            client.on_publish = on_publish
+            client.connect(GET_MQTT_BROKER_SETTINGS().broker)      
+            client.publish(mqtt_message[0],mqtt_message[1])        
+            client.disconnect()
+
+        except Exception as e:         
+            try:   
+                if "index out of range" not in str(e):
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Process Management | Process - " + process + " | " + str(e))  
+                    SEND_EMAIL("ERROR", "Process Management | Process - " + process + " | " + str(e))               
+                    print(str(e))
+                    
+            except:
+                pass
+                    
+        time.sleep(0.5)
 
 
 """ ################################ """
@@ -309,7 +326,7 @@ def UPDATE_DEVICES(gateway):
         
         message_founded = False
 
-        MQTT_PUBLISH("miranda/mqtt/devices", "")  
+        heapq.heappush(mqtt_message_queue, (20, ("miranda/mqtt/devices", "")))
         time.sleep(3)
 
         try:
@@ -400,7 +417,7 @@ def UPDATE_DEVICES(gateway):
         message_founded = False
         error = ""
     
-        MQTT_PUBLISH("miranda/zigbee2mqtt/bridge/config/devices", "")  
+        heapq.heappush(mqtt_message_queue, (20, ("miranda/zigbee2mqtt/bridge/config/devices", "")))        
         time.sleep(2)
       
         try:
@@ -675,12 +692,29 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
    
 
 """ ################### """
-"""      check mqtt     """
+"""   check functions   """
 """ ################### """
  
  
 def CHECK_MQTT():
-    MQTT_PUBLISH("miranda/mqtt/test", "") 
+    MQTT_TOPIC = "miranda/mqtt/test"
+    MQTT_MSG   = ""
+
+    try:
+        def on_publish(client, userdata, mid):
+            print ('Message Published...')
+
+        client = mqtt.Client()
+        client.username_pw_set(username=GET_MQTT_BROKER_SETTINGS().user,password=GET_MQTT_BROKER_SETTINGS().password)          
+        client.on_publish = on_publish
+        client.connect(GET_MQTT_BROKER_SETTINGS().broker)      
+        client.publish(MQTT_TOPIC,MQTT_MSG)    
+        client.disconnect()
+
+        return True
+
+    except Exception as e:
+        return ("MQTT || " + str(e))    
 
 
 def CHECK_ZIGBEE2MQTT():                     

@@ -7,6 +7,7 @@ from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 from app.backend.email           import SEND_EMAIL
 
 process_management_queue = []
+mqtt_message_queue       = []
 
 
 # mqtt_incoming_messages

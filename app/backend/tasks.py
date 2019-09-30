@@ -6,6 +6,7 @@ from app.backend.file_management        import SAVE_DATABASE, WRITE_LOGFILE_SYST
 from app.backend.process_program        import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD, GET_PROGRAM_RUNNING
 #from app.backend.microphone_led_control import MICROPHONE_LED_CONTROL
 from app.backend.backend_spotify        import *
+from app.backend.shared_resources       import mqtt_message_queue
 
 from difflib import SequenceMatcher
 
@@ -238,28 +239,17 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                     new_setting = True
                             
                             
-                if new_setting == True:             
-                    
-                    # mqtt
+                if new_setting == True:    
+
                     if device.gateway == "mqtt":
-                        
-                        channel  = "miranda/mqtt/" + device.ieeeAddr + "/set"                  
-                        msg      = controller_setting
+                        channel = "miranda/mqtt/" + device.ieeeAddr + "/set"  
+                    if device.gateway == "zigbee2mqtt":   
+                        channel = "miranda/zigbee2mqtt/" + device.name + "/set"          
 
-                        MQTT_PUBLISH(channel, msg)  
-                        
-                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 20)
+                    msg = controller_setting
 
-
-                    # zigbee2mqtt
-                    if device.gateway == "zigbee2mqtt":
-                        
-                        channel  = "miranda/zigbee2mqtt/" + device.name + "/set"                  
-                        msg      = controller_setting
-
-                        MQTT_PUBLISH(channel, msg)  
-                        
-                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 20)  
+                    heapq.heappush(mqtt_message_queue, (1, (channel, msg)))            
+                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 20)
                              
                 else:
                     WRITE_LOGFILE_SYSTEM("STATUS", "Devices | Device - " + device.name + " | " + controller_setting_formated) 
@@ -584,27 +574,16 @@ def START_SCHEDULER_TASK(task_object):
                     if new_setting == True:
 
                         WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                              
-                                                        
-                        # mqtt
+
                         if device.gateway == "mqtt":
-                            
-                            channel  = "miranda/mqtt/" + device.ieeeAddr + "/set"                  
-                            msg      = scheduler_setting
+                            channel = "miranda/mqtt/" + device.ieeeAddr + "/set"  
+                        if device.gateway == "zigbee2mqtt":   
+                            channel = "miranda/zigbee2mqtt/" + device.name + "/set"          
 
-                            MQTT_PUBLISH(channel, msg)  
-                            
-                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting, 20)
+                        msg = scheduler_setting
 
-
-                        # zigbee2mqtt
-                        if device.gateway == "zigbee2mqtt":
-                            
-                            channel  = "miranda/zigbee2mqtt/" + device.name + "/set"                  
-                            msg      = scheduler_setting
-
-                            MQTT_PUBLISH(channel, msg)  
-                            
-                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting, 20)
+                        heapq.heappush(mqtt_message_queue, (5, (channel, msg)))            
+                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting, 20)  
                             
                 else:
                     WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | " + check_result)
@@ -1256,26 +1235,15 @@ def SPEECHCONTROL_DEVICE_TASK(answer):
 
                         if new_setting == True:
 
-                            # mqtt
                             if device.gateway == "mqtt":
-                                
-                                channel  = "miranda/mqtt/" + device.ieeeAddr + "/set"                  
-                                msg      = speechcontrol_setting
+                                channel = "miranda/mqtt/" + device.ieeeAddr + "/set"  
+                            if device.gateway == "zigbee2mqtt":   
+                                channel = "miranda/zigbee2mqtt/" + device.name + "/set"          
 
-                                MQTT_PUBLISH(channel, msg)  
-                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, speechcontrol_setting, 20)
-                                return
-                                
-                                
-                            # zigbee2mqtt
-                            if device.gateway == "zigbee2mqtt":
-                                
-                                channel  = "miranda/zigbee2mqtt/" + device.name + "/set"                  
-                                msg      = speechcontrol_setting
+                            msg = speechcontrol_setting
 
-                                MQTT_PUBLISH(channel, msg)  
-                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, speechcontrol_setting, 20)   
-                                return
+                            heapq.heappush(mqtt_message_queue, (10, (channel, msg)))            
+                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, speechcontrol_setting, 20)  
 
                         else:
                             WRITE_LOGFILE_SYSTEM("STATUS", "Devices | Device - " + device.name + " | " + speechcontrol_setting_formated) 

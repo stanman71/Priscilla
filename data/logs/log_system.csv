@@ -607,3 +607,68 @@ Timestamp,Type,Description
 2019-09-30 14:17:49,STATUS,|Devices || Device - Steckdose_TV || state:ON|
 2019-09-30 14:17:54,SUCCESS,|Devices ||Device - Steckdose_TV || Setting changed || state: OFF|
 2019-09-30 14:18:05,SUCCESS,|Devices ||Device - Steckdose_TV || Setting changed || state: ON|
+2019-09-30 14:21:48,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-30 14:21:51,EVENT,|ZigBee2MQTT || Connected|
+2019-09-30 14:21:52,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-09-30 14:21:55,STATUS,|Devices || Device - Steckdose_TV || state:ON|
+2019-09-30 14:22:01,SUCCESS,|Devices ||Device - Steckdose_TV || Setting changed || state: OFF|
+2019-09-30 14:28:20,STATUS,|Devices || Device - Steckdose_TV || state:OFF|
+2019-09-30 14:28:29,SUCCESS,|Devices ||Device - Steckdose_TV || Setting changed || state: ON|
+2019-09-30 14:41:54,SUCCESS,|Devices ||Device - Steckdose_TV || Setting changed || state: OFF|
+2019-09-30 18:24:07,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-30 18:24:10,EVENT,|ZigBee2MQTT || Connected|
+2019-09-30 18:24:11,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-09-30 18:25:24,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-30 18:25:27,EVENT,|ZigBee2MQTT || Connected|
+2019-09-30 18:25:28,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-09-30 18:27:48,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-30 18:27:51,EVENT,|ZigBee2MQTT || Connected|
+2019-09-30 18:27:52,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-09-30 18:27:57,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-09-30 18:27:57,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-09-30 18:27:59,WARNING,|Devices || ZigBee2MQTT || Update || No Message founded|
+2019-09-30 18:28:00,ERROR,|eMail || None || WARNING || Devices || ZigBee2MQTT || Update || No Message founded || No recipients have been added|
+2019-09-30 18:30:42,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-30 18:30:45,EVENT,|ZigBee2MQTT || Connected|
+2019-09-30 18:30:46,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-09-30 18:31:36,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-30 18:31:39,EVENT,|ZigBee2MQTT || Connected|
+2019-09-30 18:31:40,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-09-30 18:32:47,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-30 18:32:50,EVENT,|ZigBee2MQTT || Connected|
+2019-09-30 18:32:51,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-09-30 18:33:15,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-09-30 18:33:15,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-09-30 18:33:17,WARNING,|Devices || ZigBee2MQTT || Update || No Message founded|
+2019-09-30 18:33:18,ERROR,|eMail || None || WARNING || Devices || ZigBee2MQTT || Update || No Message founded || No recipients have been added|
+2019-09-30 18:36:00,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-30 18:36:03,EVENT,|ZigBee2MQTT || Connected|
+2019-09-30 18:36:04,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-09-30 18:37:52,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-30 18:37:55,EVENT,|ZigBee2MQTT || Connected|
+2019-09-30 18:37:56,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-09-30 18:38:07,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-09-30 18:38:07,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-09-30 18:38:09,WARNING,|Devices || ZigBee2MQTT || Update || No Message founded|
+2019-09-30 18:38:09,ERROR,|eMail || None || WARNING || Devices || ZigBee2MQTT || Update || No Message founded || No recipients have been added|
+2019-09-30 18:38:24,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-09-30 18:38:24,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-09-30 18:38:26,WARNING,|Devices || ZigBee2MQTT || Update || No Message founded|
+2019-09-30 18:38:27,ERROR,|eMail || None || WARNING || Devices || ZigBee2MQTT || Update || No Message founded || No recipients have been added|
+2019-09-30 18:39:37,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-30 18:39:40,EVENT,|ZigBee2MQTT || Connected|
+2019-09-30 18:39:41,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-09-30 18:39:48,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-09-30 18:39:49,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-09-30 18:39:51,WARNING,|Devices || ZigBee2MQTT || Update || No Message founded|
+2019-09-30 18:39:51,ERROR,|eMail || None || WARNING || Devices || ZigBee2MQTT || Update || No Message founded || No recipients have been added|
+2019-09-30 18:41:10,EVENT,|MQTT || Broker - localhost || Connected|
+2019-09-30 18:41:13,EVENT,|ZigBee2MQTT || Connected|
+2019-09-30 18:41:14,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-09-30 18:41:19,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-09-30 18:41:20,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-09-30 18:41:22,SUCCESS,|Devices |||| ZigBee2MQTT |||| Update|
+2019-09-30 18:41:31,WARNING,|ZigBee2MQTT || Pairing enabled|
+2019-09-30 18:41:40,SUCCESS,|ZigBee2MQTT || Pairing disabled|
+2019-09-30 18:42:13,SUCCESS,|Devices ||Device - Steckdose_TV || Setting changed || state: ON|
+2019-09-30 18:42:20,SUCCESS,|Devices ||Device - Steckdose_TV || Setting changed || state: OFF|
