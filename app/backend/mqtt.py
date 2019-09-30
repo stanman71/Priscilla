@@ -786,73 +786,78 @@ def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
 def CHECK_DEVICE_EXCEPTIONS(id, setting):
     
     device = GET_DEVICE_BY_ID(id)
+
+    try:
                         
-    # ####################
-    # exception ip_address 
-    # ####################
-    
-    setting           = setting.replace(" ", "")
-    exception_setting = device.exception_setting.replace(" ", "")
-    
-    if device.exception_option == "IP-Address" and exception_setting == setting:
+        # ####################
+        # exception ip_address 
+        # ####################
+        
+        setting           = setting.replace(" ", "")
+        exception_setting = device.exception_setting.replace(" ", "")
+        
+        if device.exception_option == "IP-Address" and exception_setting == setting:
 
-        if ping(device.exception_value_1, timeout=1) != None:    
-            return (device.name + " | Device running")
-        
-        else:
-            return True
-
-
-    # ################
-    # exception sensor
-    # ################
-    
-    if device.exception_sensor_ieeeAddr != "None" and exception_setting == setting:
-        
-        sensor_ieeeAddr = device.exception_sensor_ieeeAddr
-        sensor_key      = device.exception_value_1   
-        operator        = device.exception_value_2
-        value           = device.exception_value_3
-
-        try:
-             value = str(value).lower()
-        except:
-             pass
-                 
-        
-        # get sensordata 
-        data         = json.loads(GET_DEVICE_BY_IEEEADDR(device.exception_sensor_ieeeAddr).last_values)
-        sensor_value = data[sensor_key]
-        
-        try:
-             sensor_value = str(sensor_value).lower()
-        except:
-             pass
-        
-              
-        # compare conditions
-        if operator == "=" and value.isdigit():
-            if int(sensor_value) == int(value):
-                return (device.name + " | Sensor passing failed")   
-            else:
-                return True
-                
-        if operator == "=" and not value.isdigit():
-            if str(sensor_value) == str(value):
-                return (device.name + " | Sensor passing failed")  
-            else:
-                return True
-                
-        if operator == "<" and value.isdigit():
-            if int(sensor_value) < int(value):
-                return (device.name + " | Sensor passing failed")  
-            else:
-                return True
-                
-        if operator == ">" and value.isdigit():
-            if int(sensor_value) > int(value):
-                return (device.name + " | Sensor passing failed")  
-            else:
-                return True
+            if ping(device.exception_value_1, timeout=1) != None:    
+                return (device.name + " | Device running")
             
-    return True
+            else:
+                return True
+
+
+        # ################
+        # exception sensor
+        # ################
+        
+        if device.exception_sensor_ieeeAddr != "None" and exception_setting == setting:
+            
+            sensor_ieeeAddr = device.exception_sensor_ieeeAddr
+            sensor_key      = device.exception_value_1   
+            operator        = device.exception_value_2
+            value           = device.exception_value_3
+
+            try:
+                value = str(value).lower()
+            except:
+                pass
+                    
+            
+            # get sensordata 
+            data         = json.loads(GET_DEVICE_BY_IEEEADDR(device.exception_sensor_ieeeAddr).last_values)
+            sensor_value = data[sensor_key]
+            
+            try:
+                sensor_value = str(sensor_value).lower()
+            except:
+                pass
+            
+                
+            # compare conditions
+            if operator == "=" and value.isdigit():
+                if int(sensor_value) == int(value):
+                    return (device.name + " | Sensor passing failed")   
+                else:
+                    return True
+                    
+            if operator == "=" and not value.isdigit():
+                if str(sensor_value) == str(value):
+                    return (device.name + " | Sensor passing failed")  
+                else:
+                    return True
+                    
+            if operator == "<" and value.isdigit():
+                if int(sensor_value) < int(value):
+                    return (device.name + " | Sensor passing failed")  
+                else:
+                    return True
+                    
+            if operator == ">" and value.isdigit():
+                if int(sensor_value) > int(value):
+                    return (device.name + " | Sensor passing failed")  
+                else:
+                    return True
+                
+        return True
+
+    except:
+        return True

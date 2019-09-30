@@ -4,11 +4,12 @@ import threading
 import time
 
 from app import app
-from app.database.models          import *
-from app.backend.file_management  import SAVE_DATABASE, WRITE_LOGFILE_SYSTEM
-from app.backend.mqtt             import UPDATE_DEVICES, MQTT_PUBLISH
-from app.backend.email            import SEND_EMAIL
-from app.backend.shared_resources import process_management_queue
+from app.database.models            import *
+from app.backend.file_management    import SAVE_DATABASE, WRITE_LOGFILE_SYSTEM
+from app.backend.mqtt               import UPDATE_DEVICES, MQTT_PUBLISH
+from app.backend.email              import SEND_EMAIL
+from app.backend.shared_resources   import process_management_queue
+from app.backend.process_controller import PROCESS_CONTROLLER
 
 
 """ ################ """
@@ -34,7 +35,19 @@ def PROCESS_MANAGEMENT():
 
         try:
             process = heapq.heappop(process_management_queue)[1]
-        
+
+
+            # ############
+            #  controller
+            # ############
+            
+            if process[0] == "controller":
+                ieeeAddr = process[1]
+                msg      = process[2]
+                
+                PROCESS_CONTROLLER(ieeeAddr, msg)           
+
+
             # ###########
             #  scheduler
             # ###########
