@@ -184,10 +184,16 @@
                         <div class="col-md-3">
                           <div class="form-group">
                             <label>Gerät</label>
-                            <select class="selectpicker" data-width="100%" title="Auswählen..." data-size="5" name="set_watering_controller_ieeeAddr">          
+                            <select class="form-control" data-size="5" name="set_watering_controller_ieeeAddr" style="background-color:#27293D"> 
+                              {% if device_ieeeAddr != "" %}
+                                <option value = "{{ device_ieeeAddr }}" > {{ device_name }} </option>
+                              {% else %}   
+                                <option value = "None" > Gerät </option>   
+                              {% endif %}                       
+                              <option disabled>_________</option>
                               {% for each in dropdown_list_watering_controller %}
                                 <option value="{{each.ieeeAddr}}"> {{ each.name }} </option>
-                              {% endfor %}
+                              {% endfor %}      
                             </select>  
                           </div>
                         </div>                            

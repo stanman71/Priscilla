@@ -56,9 +56,9 @@ def settings_users():
         session['delete_user_error'] = None       
 
 
-    """ ############### """
-    """  user settings  """
-    """ ############### """    
+    """ ############# """
+    """  table users  """
+    """ ############# """    
 
     if request.form.get("save_user_settings") != None:
         

@@ -4,6 +4,44 @@ from app.database.models         import *
 import datetime
 
 
+""" ################### """
+"""  device exceptions  """
+""" ################### """
+
+def CHECK_DEVICE_EXCEPTION_SETTINGS(devices): 
+   error_message_settings = []
+
+   for device in devices:
+
+      if device.exception_option != "None":
+
+         if device.exception_setting == "None" or device.exception_setting == None:
+            error_message_settings.append(device.name + " || Keine Aufgabe ausgewählt")         
+
+         # exception setting ip_address
+         if device.exception_option == "IP-Address":
+
+            # search for wrong chars
+            for element in device.exception_value_1:
+               if not element.isdigit() and element != "." and element != "," and element != " ":
+                  error_message_settings.append(device.name + " || Ungültige IP-Adresse")
+                  break
+               
+         # exception setting sensor
+         if device.exception_option != "IP-Address": 
+            
+            if device.exception_value_1 == "None" or device.exception_value_1 == None:
+               error_message_settings.append(device.name + " || Keinen Sensor ausgewählt")
+
+            if device.exception_value_2 == "None" or device.exception_value_2 == None:
+               error_message_settings.append(device.name + " || Keinen Operator (<, >, =) eingetragen")
+
+            if device.exception_value_3 == "None" or device.exception_value_3 == None:
+               error_message_settings.append(device.name + " || Keinen Vergleichswert eingetragen")
+                  
+   return error_message_settings
+
+
 """ ################## """
 """  check led groups  """
 """ ################## """

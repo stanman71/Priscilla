@@ -50,8 +50,8 @@ def PROCESS_MANAGEMENT():
         except Exception as e:         
             try:   
                 if "index out of range" not in str(e):
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Process Management | Process - " + process + " | " + str(e))  
-                    SEND_EMAIL("ERROR", "Process Management | Process - " + process + " | " + str(e))               
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Process Management | " + str(e))  
+                    SEND_EMAIL("ERROR", "Process Management | " + str(e))               
                     print(str(e))
                     
             except:

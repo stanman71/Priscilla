@@ -8,6 +8,7 @@ from app.database.models          import *
 from app.backend.mqtt             import CHECK_MQTT, UPDATE_DEVICES, CHECK_ZIGBEE2MQTT_NAME_CHANGED, CHECK_ZIGBEE2MQTT_DEVICE_DELETED, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.file_management  import GET_PATH, RESET_LOGFILE, WRITE_LOGFILE_SYSTEM
 from app.backend.shared_resources import mqtt_message_queue
+from app.backend.checks           import CHECK_DEVICE_EXCEPTION_SETTINGS
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
@@ -69,9 +70,9 @@ def devices():
         error_message_logfile = session.get('error_download_log')
         session['error_download_log'] = None
 
-    """ ######### """
-    """  devices  """
-    """ ######### """
+    """ ############### """
+    """  table devices  """
+    """ ############### """
 
     if request.form.get("save_device_settings") != None:  
 
@@ -137,6 +138,137 @@ def devices():
         else:
             error_message_change_settings_devices.append(result_mqtt)
             error_message_change_settings_devices.append(result_zigbee2mqtt)
+
+
+    """ ################## """
+    """  table exceptions  """
+    """ ################## """
+
+    if request.form.get("save_device_exceptions") != None:  
+                
+        for i in range (1,21):
+            
+            try:     
+                device = GET_DEVICE_BY_ID(i)
+                
+                if device in GET_ALL_DEVICES("devices"):
+                    
+                    
+                    # ####################
+                    #   Exception Options
+                    # ####################
+
+                    exception_option  = request.form.get("set_exception_option_" + str(i))
+                    exception_option  = exception_option.replace(" ","")
+                    exception_setting = request.form.get("set_exception_setting_" + str(i))
+                                            
+                    if exception_setting == "" or exception_setting == None:
+                        exception_setting = "None"  
+        
+                    # ######
+                    # Sensor
+                    # ######
+
+                    if GET_DEVICE_BY_NAME(exception_option) or exception_option.isdigit(): 
+
+                        if exception_option.isdigit():        
+                            exception_sensor_ieeeAddr     = GET_DEVICE_BY_ID(exception_option).ieeeAddr
+                            exception_sensor_input_values = GET_DEVICE_BY_ID(exception_option).input_values       
+                            exception_option              = GET_DEVICE_BY_ID(exception_option).name
+                            
+                        else:
+                            exception_sensor_ieeeAddr     = GET_DEVICE_BY_NAME(exception_option).ieeeAddr
+                            exception_sensor_input_values = GET_DEVICE_BY_NAME(exception_option).input_values                                  
+                    
+                        # set device exception value 1
+                        if device.exception_option == "IP-Address":
+                            exception_value_1 = "None" 
+                    
+                        else:
+                            exception_value_1 = request.form.get("set_exception_value_1_" + str(i))
+
+                            if exception_value_1 != None:                  
+                                exception_value_1 = exception_value_1.replace(" ", "")
+
+                                # replace array_position to sensor name 
+                                if exception_value_1.isdigit():
+                                    
+                                    # first two array elements are no sensors
+                                    if exception_value_1 == "0" or exception_value_1 == "1":
+                                        exception_value_1 = "None"
+                                        
+                                    else:           
+                                        sensor_list       = GET_DEVICE_BY_IEEEADDR(exception_sensor_ieeeAddr).input_values
+                                        sensor_list       = sensor_list.split(",")
+                                        exception_value_1 = sensor_list[int(exception_value_1)-2]
+                                        
+                            else:
+                                exception_value_1 = "None" 
+
+
+                        # set device exception value 2
+                        exception_value_2 = request.form.get("set_exception_value_2_" + str(i))
+                        
+                        if exception_value_2 == "" or exception_value_2 == None:
+                            exception_value_2 = "None"       
+                        
+                        
+                        # set device exception value 3
+                        exception_value_3 = request.form.get("set_exception_value_3_" + str(i))
+                        
+                        if exception_value_3 == "" or exception_value_3 == None:
+                            exception_value_3 = "None"       
+
+
+                    # ##########
+                    # IP Address
+                    # ##########
+
+                    elif exception_option == "IP-Address":
+                        
+                        # set device exception value 1
+                        exception_value_1 = request.form.get("set_exception_value_1_" + str(i))
+                        
+                        if exception_value_1 == "" or exception_value_1 == None:
+                            exception_value_1 = "None" 
+                                
+                        exception_sensor_ieeeAddr     = "None"
+                        exception_sensor_input_values = "None"
+                        exception_value_2             = "None"                        
+                        exception_value_3             = "None"   
+            
+                                                            
+                    else:
+                        
+                        exception_option              = "None" 
+                        exception_value_1             = "None" 
+                        exception_value_2             = "None"  
+                        exception_value_3             = "None"  
+                        exception_sensor_ieeeAddr     = "None"
+                        exception_sensor_input_values = "None"                                                            
+
+                    SET_DEVICE_EXCEPTION(device.ieeeAddr, exception_option, exception_setting,
+                                         exception_sensor_ieeeAddr, exception_sensor_input_values,
+                                         exception_value_1, exception_value_2, exception_value_3)
+                
+                
+                else:
+                    
+                    if exception_option == "None":
+                    
+                        exception_setting             = "None" 
+                        exception_value_1             = "None" 
+                        exception_value_2             = "None"  
+                        exception_value_3             = "None"  
+                        exception_sensor_ieeeAddr     = "None"
+                        exception_sensor_input_values = "None"                                                            
+
+                        SET_DEVICE_EXCEPTION(device.ieeeAddr, exception_option, exception_setting, exception_sensor_ieeeAddr,
+                                             exception_sensor_input_values, exception_value_1, exception_value_2, exception_value_3)                   
+            
+            except Exception as e:
+                if "NoneType" not in str(e):
+                    print(e)                        
 
 
     """ ############# """
@@ -256,6 +388,12 @@ def devices():
             error_message_logfile = "Reset Log || " + str(result)
 
 
+    list_exception_devices = GET_ALL_DEVICES("devices")
+    list_exception_sensors = GET_ALL_DEVICES("sensors")    
+
+    dropdown_list_exception_options = ["IP-Address"] 
+    dropdown_list_operators         = ["=", ">", "<"]
+    
     list_devices   = GET_ALL_DEVICES("")
     mqtt_broker    = GET_MQTT_BROKER_SETTINGS()
     zigbee_pairing = GET_ZIGBEE2MQTT_PAIRING()
@@ -264,12 +402,15 @@ def devices():
 
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
 
+    error_message_device_exceptions = CHECK_DEVICE_EXCEPTION_SETTINGS(GET_ALL_DEVICES("devices")) 
+
     return render_template('layouts/default.html',
                             data=data,    
                             content=render_template( 'pages/devices.html',
                                                     error_message_mqtt=error_message_mqtt,
                                                     success_message_change_settings_devices=success_message_change_settings_devices,
                                                     error_message_change_settings_devices=error_message_change_settings_devices, 
+                                                    error_message_device_exceptions=error_message_device_exceptions,
                                                     success_message_change_settings_mqtt_broker=success_message_change_settings_mqtt_broker,                                                       
                                                     error_message_change_settings_mqtt_broker=error_message_change_settings_mqtt_broker,    
                                                     success_message_zigbee_pairing=success_message_zigbee_pairing,
@@ -277,9 +418,13 @@ def devices():
                                                     success_message_logfile=success_message_logfile,     
                                                     error_message_logfile=error_message_logfile,                                                  
                                                     list_devices=list_devices,
+                                                    list_exception_devices=list_exception_devices,
+                                                    list_exception_sensors=list_exception_sensors,
+                                                    dropdown_list_exception_options=dropdown_list_exception_options,
+                                                    dropdown_list_operators=dropdown_list_operators,
                                                     mqtt_broker=mqtt_broker,
                                                     zigbee_pairing=zigbee_pairing,
-                                                    timestamp=timestamp,                         
+                                                    timestamp=timestamp,     
                                                     ) 
                            )
 

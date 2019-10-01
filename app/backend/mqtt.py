@@ -184,6 +184,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
     # filter incoming messages
     try:
+
         if channel[2] == "devices":
             return
         if channel[2] == "test":    
@@ -298,8 +299,8 @@ def MQTT_PUBLISH():
         except Exception as e:         
             try:   
                 if "index out of range" not in str(e):
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Process Management | Process - " + process + " | " + str(e))  
-                    SEND_EMAIL("ERROR", "Process Management | Process - " + process + " | " + str(e))               
+                    WRITE_LOGFILE_SYSTEM("ERROR", "MQTT Publish | " + str(e))  
+                    SEND_EMAIL("ERROR", "MQTT Publish | " + str(e))               
                     print(str(e))
                     
             except:
@@ -319,7 +320,6 @@ def MQTT_PUBLISH():
 """    update devices   """
 """ ################### """
 
-
 def UPDATE_DEVICES(gateway):
    
     if gateway == "mqtt":
@@ -333,7 +333,6 @@ def UPDATE_DEVICES(gateway):
             for message in GET_MQTT_INCOMING_MESSAGES(5):
                 
                 if message[1] == "miranda/mqtt/log":
-
                     message_founded = True   
 
                     message = str(message[2])
@@ -433,12 +432,10 @@ def UPDATE_DEVICES(gateway):
 
                     data = json.loads(message)  
                  
-                    if (data['type']) == "devices":
-                        
+                    if (data['type']) == "devices":                       
                         devices = (data['message'])
                      
-                        for i in range(0, len(devices)):
-                        
+                        for i in range(0, len(devices)):                        
                             device = devices[i]
                             
                             # skip coordinator
@@ -625,16 +622,16 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):
     
         # set previous setting
         if result == True:
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices |Device - " + device.name + " | Setting changed | " + setting_formated)  
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Device - " + device.name + " | Setting changed | " + setting_formated)  
             return True
 
         counter = counter + 1
         time.sleep(1)       
 
     # error message
-    WRITE_LOGFILE_SYSTEM("ERROR", "Devices | Device - " + device.name + " | Setting not confirmed | " + setting_formated)  
-    SEND_EMAIL("ERROR", "Devices | Device - " + device.name + " | Setting not confirmed | " + setting_formated)                
-    return ("Devices | Device - " + device.name + " | Setting not confirmed - " + setting_formated) 
+    WRITE_LOGFILE_SYSTEM("ERROR", "Device - " + device.name + " | Setting not confirmed | " + setting_formated)  
+    SEND_EMAIL("ERROR", "Device - " + device.name + " | Setting not confirmed | " + setting_formated)                
+    return ("Device - " + device.name + " | Setting not confirmed - " + setting_formated) 
                          
 
 def CHECK_MQTT_SETTING(ieeeAddr, setting):        
@@ -721,7 +718,6 @@ def CHECK_ZIGBEE2MQTT():
     counter = 1
 
     while counter != 5:      
-
         for message in GET_MQTT_INCOMING_MESSAGES(10):          
             if message[1] == "miranda/zigbee2mqtt/bridge/state":
             
@@ -742,7 +738,6 @@ def CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
     counter = 1
 
     while counter != 10:      
-
         for message in GET_MQTT_INCOMING_MESSAGES(10):      
             if message[1] == "miranda/zigbee2mqtt/bridge/log":
             
@@ -765,7 +760,6 @@ def CHECK_ZIGBEE2MQTT_PAIRING(pairing_setting):
     counter = 1
 
     while counter != 5:       
-    
         for message in GET_MQTT_INCOMING_MESSAGES(10):
             if message[1] == "miranda/zigbee2mqtt/bridge/config":
             
@@ -793,7 +787,6 @@ def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
     counter = 1
 
     while counter != 10:       
-    
         for message in GET_MQTT_INCOMING_MESSAGES(10):
             if message[1] == "miranda/zigbee2mqtt/bridge/log":
             

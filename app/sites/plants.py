@@ -67,9 +67,9 @@ def plants():
         session['error_download_datafile'] = None
 
 
-    """ ################# """
-    """  plants settings  """
-    """ ################# """   
+    """ ############## """
+    """  table plants  """
+    """ ############## """   
 
     if request.form.get("save_plants_settings") != None: 
         
