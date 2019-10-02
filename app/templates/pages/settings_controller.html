@@ -14,13 +14,6 @@
               </div>  
             </div>  
 
-            <div class="card ">
-              <div class="card-header">
-                <h4 class="card-title"><b>Controller</b></h4>
-              </div>
-            </div>
-
-
 <!-- error message controller tasks -->
 
 {% if error_message_controller_tasks != [] %}
@@ -41,6 +34,17 @@
 {% for entry in list_controller %}
 
 <section id="table_{{entry.id}}"></section>  
+
+<!-- success message change settings controller -->
+
+{% if success_message_change_settings_controller == entry.id %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Einstellungen erfolgreich geändert</span>
+  </div>
+{% endif %}  
 
             <div class="card ">
               <div class="card-header">

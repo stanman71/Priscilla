@@ -41,6 +41,7 @@ def devices():
     error_message_mqtt = ""
     success_message_change_settings_devices     = []         
     error_message_change_settings_devices       = []    
+    success_message_change_settings_exceptions  = False
     success_message_change_settings_mqtt_broker = ""         
     error_message_change_settings_mqtt_broker   = []   
     success_message_zigbee_pairing              = []
@@ -247,9 +248,11 @@ def devices():
                         exception_sensor_ieeeAddr     = "None"
                         exception_sensor_input_values = "None"                                                            
 
-                    SET_DEVICE_EXCEPTION(device.ieeeAddr, exception_option, exception_setting,
-                                         exception_sensor_ieeeAddr, exception_sensor_input_values,
-                                         exception_value_1, exception_value_2, exception_value_3)
+                    if SET_DEVICE_EXCEPTION(device.ieeeAddr, exception_option, exception_setting,
+                                            exception_sensor_ieeeAddr, exception_sensor_input_values,
+                                            exception_value_1, exception_value_2, exception_value_3):
+                        
+                        success_message_change_settings_exceptions = True  
                 
                 
                 else:
@@ -410,6 +413,7 @@ def devices():
                                                     error_message_mqtt=error_message_mqtt,
                                                     success_message_change_settings_devices=success_message_change_settings_devices,
                                                     error_message_change_settings_devices=error_message_change_settings_devices, 
+                                                    success_message_change_settings_exceptions=success_message_change_settings_exceptions,
                                                     error_message_device_exceptions=error_message_device_exceptions,
                                                     success_message_change_settings_mqtt_broker=success_message_change_settings_mqtt_broker,                                                       
                                                     error_message_change_settings_mqtt_broker=error_message_change_settings_mqtt_broker,    
@@ -424,7 +428,7 @@ def devices():
                                                     dropdown_list_operators=dropdown_list_operators,
                                                     mqtt_broker=mqtt_broker,
                                                     zigbee_pairing=zigbee_pairing,
-                                                    timestamp=timestamp,     
+                                                    timestamp=timestamp,                                               
                                                     ) 
                            )
 

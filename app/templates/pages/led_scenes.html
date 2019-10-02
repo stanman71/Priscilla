@@ -1,0 +1,199 @@
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="card ">
+              <div class="card-footer">    
+                <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
+                  <a href="/led/scenes" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Szenen</a>                
+                  <a href="/led/groups" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Gruppen</a>
+                </div>           
+              </div>  
+            </div>  
+
+<!---------------->
+<!--  LED TABLE -->
+<!---------------->   
+
+{% for entry in list_led_scenes %}
+
+<section id="table_{{entry.id}}"></section>  
+
+
+<!-- success message change settings led scene -->
+
+{% if success_message_change_settings_led_scene == entry.id %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Einstellungen erfolgreich geändert</span>
+  </div>
+{% endif %}  
+
+            <div class="card ">
+              <div class="card-header">
+                <a data-toggle="collapse" href="#collapse{{entry.id}}"><font color="white"><b><i class='uil uil-arrow-down'> {{entry.name}} </i></b></font></a>
+                <br>
+                <br>
+              </div>     
+              <form method="POST">      
+                <div id="collapse{{entry.id}}" class="collapse{% if entry.collapse == "True" %}.show{% endif %}">    
+                  <div class="card-body"> 
+                    <div class="table-responsive">
+                      <table class="table tablesorter">
+                        <thead>    
+                          <th scope="col" style="width:3%"></th>                      
+                          <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Szene</th> 
+                          <th></th>
+                          <th style="width:20%"></th>
+                          <th scope="col" style="width:30%"><p style="visibility: hidden;">invisibletextforminlenght</p>RGB</th>
+                          <th scope="col" style="width:10%">Farbtemperatur</th>
+                          <th scope="col" style="width:10%">Helligkeit</th>
+                          <th></th>
+                          <th scope="col" style="width:5%"></th>
+                        </thead>
+                        <tbody> 
+                          <tr>
+                            <td>
+                              <a href="/led/scenes/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                              <a href="/led/scenes/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>                                
+                            </td>                 
+                            <td>
+                              <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                                     
+                            </td> 
+                            <td></td> 
+                            <td>
+                              <button type="submit" onclick="window.location.href='/led/scenes#table_{{ entry.id }}'" name="add_setting_{{ entry.id }}" class="btn btn-fill btn-primary">
+                                <font size="5">+</font>
+                              </button>                  
+                              <button type="submit" onclick="window.location.href='/led/scenes#table_{{ entry.id }}'" name="remove_setting_{{ entry.id }}" class="btn btn-fill btn-primary">
+                                <font size="5">-</font>
+                              </button>      
+                            </td>   
+
+<!-- section 1 -->
+
+                            <td>
+                              <input type="text" name="set_rgb_1_{{ entry.id }}" class="form-control led_1_{{ entry.id }}" value="rgb({{ entry.red_1 }}, {{ entry.green_1 }}, {{ entry.blue_1 }}) "/>
+                            </td>
+                            <td>
+                              <div class="slidecontainer"> 
+                                <input type="range" class="slider" name="set_color_temp_1_{{ entry.id }}" min="0" max="100" value="{{ entry.color_temp_1 }}" />
+                              </div>   
+                            </td>
+                            <td>
+                              <div class="slidecontainer"> 
+                                <input type="range" class="slider" name="set_brightness_1_{{ entry.id }}" min="0" max="254" value="{{ entry.brightness_1 }}" />
+                              </div> 
+                            </td>
+                            <th></th>
+                            <td>
+                              <a href="/led/scenes/delete/{{ entry.id }}#table"><font size="5"><i class='tim-icons icon-trash-simple'></i></font></a>
+                            </td>
+
+<!-- section 2 -->
+
+{% if entry.active_setting_2 == "True" %} 
+
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                              <input type="text" name="set_rgb_2_{{ entry.id }}" class="form-control led_2_{{ entry.id }}" value="rgb({{ entry.red_2 }}, {{ entry.green_2 }}, {{ entry.blue_2 }}) "/>
+                            </td>
+                            <td>
+                              <div class="slidecontainer"> 
+                                <input type="range" class="slider" name="set_color_temp_2_{{ entry.id }}" min="0" max="100" value="{{ entry.color_temp_2 }}" />
+                              </div>   
+                            </td>
+                            <td>
+                              <div class="slidecontainer"> 
+                                <input type="range" class="slider" name="set_brightness_2_{{ entry.id }}" min="0" max="254" value="{{ entry.brightness_2 }}" />
+                              </div> 
+                            </td>
+                            <th></th>
+                          </tr> 
+
+{% endif %}
+
+                        </tbody>
+                      </table> 
+                    </div> 
+                  </div>  
+
+<!-- end table -->
+          
+                  <div class="card-footer">                   
+                    <button type="submit" onclick="window.location.href='/led/scenes#table_{{entry.id}}'" name="save_led_scene_settings" class="btn btn-fill btn-primary">SAVE</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+{% endfor %} 
+
+<!---------------->
+<!-- ADD SCENE  -->
+<!---------------->
+
+<section id="add_led_scene"></section>   
+
+<!-- success message add led scene -->
+
+{% if success_message_add_led_scene == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Szene erfolgreich hinzugefügt</span>
+  </div>
+{% endif %}  
+
+<!-- error message add led scene --> 
+
+{% if error_message_add_led_scene != [] %}
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+    {% for error in error_message_add_led_scene %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title">Szene hinzufügen</h5>
+              </div>   
+              <form method="POST">         
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="row justify-content-md-left">
+                        <div class="col-sm-3">                       
+                          <div class="form-group">
+                            <label>Szene</label>
+                            <input type="text" class="form-control" name="set_name" value="{{ name }}" /> 
+                          </div>
+                        </div>                     
+                      </div>
+                    </div>
+                  </div>                  
+                </div>
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/led/scenes#add_led_scene'" name="add_led_scene" class="btn btn-fill btn-primary">SAVE</button>
+                </div>
+              </form>
+            </div>
+
+
+          </div>
+        </div>
+      </div>                             

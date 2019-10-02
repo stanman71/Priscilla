@@ -37,6 +37,17 @@
             </a>
           </li>  
 
+          {% if data.navigation == "led" %}
+            <li class="active ">
+          {% else %} 
+            <li>
+          {% endif %} 
+            <a href="/led/scenes">
+              <i class='uil uil-lightbulb-alt'></i>
+              <p>Beleuchtung</p>
+            </a>
+          </li>  
+
           {% if data.navigation == "devices" %}
             <li class="active ">
           {% else %} 

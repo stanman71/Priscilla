@@ -31,6 +31,8 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_controller():
+    success_message_change_settings_controller = False
+
     RESET_CONTROLLER_COLLAPSE()
     UPDATE_CONTROLLER_EVENTS()
 
@@ -85,7 +87,8 @@ def settings_controller():
                 else:
                     task_9 = "None"  
                     
-                SET_CONTROLLER_TASKS(i, task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8, task_9)
+                if SET_CONTROLLER_TASKS(i, task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8, task_9):
+                    success_message_change_settings_controller = i
 
                                                     
     """ ######################## """
@@ -125,6 +128,7 @@ def settings_controller():
     return render_template('layouts/default.html',
                             data=data,    
                             content=render_template( 'pages/settings_controller.html', 
+                                                    success_message_change_settings_controller=success_message_change_settings_controller,
                                                     error_message_controller_tasks=error_message_controller_tasks, 
                                                     list_controller=list_controller,
                                                     list_device_command_options=list_device_command_options,

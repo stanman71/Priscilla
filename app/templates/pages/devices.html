@@ -124,6 +124,17 @@
 
 <section id="table_exceptions"></section>    
 
+<!-- success message change settings exceptions -->
+
+{% if success_message_change_settings_exceptions == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Einstellungen erfolgreich geändert</span>
+  </div>
+{% endif %}  
+
 <!-- error message device exceptions -->                    
 
 {% if error_message_device_exceptions != [] %}
@@ -151,8 +162,8 @@
                         {% for entry in list_exception_devices %}
                         
                           <tr>
-                            <td> {{entry.name}} </td>  
-                            <td>      
+                            <td style="width:20%"><p style="visibility: hidden;">invisibletext</p> {{entry.name}} </td>  
+                            <td style="width:70%"><p style="visibility: hidden;">invisibletextforminlenght</p>      
                               <div class="row justify-content-md-center">
                                 <div class="col-sm-6">   
                                   <select id="device_{{ entry.id }}" class="form-control" onchange="Choose_Sensor('{{ entry.id }}')" name="set_exception_option_{{ entry.id }}" style="background-color:#27293D"> 
@@ -201,6 +212,12 @@
                                           {% endfor %}     
                                         {% endif %} 
 
+                                    {% if entry.input_values != "None" %}
+                                      {% for each in entry.input_values.split(',') %}
+                                        <option value= "{{ each }}" > {{ each }} </option>
+                                      {% endfor %}   
+                                    {% endif %}       
+
                                       </select>
                                     </div>        
                                   {% endif %} 
@@ -210,6 +227,7 @@
                                 {% endif %} 
      
                             </td>  
+                            <td style="width:10%"></td>  
                           </tr>
                         
                           <!-- second row --> 
@@ -261,13 +279,15 @@
                                   <div class="col-sm-6"></div>  
                                 {% endif %}   
                               </div>
-                            </tr style="outline: thin solid">    
+                              <td></td>
+                            </tr>    
 
                           {% endif %}  
                           
                           <tr>
                             <td></td>
-                            <td></td>                         
+                            <td></td> 
+                            <td></td>                        
                           </tr>
                                 
                         {% endfor %}  
