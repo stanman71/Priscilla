@@ -104,13 +104,9 @@ def led_scenes():
                 #######
 
                 try:
-                    red_1   = request.form.get("set_red_1_" + str(i))
-                    green_1 = request.form.get("set_green_1_" + str(i))          
-                    blue_1  = request.form.get("set_blue_1_" + str(i))      
+                    hex_1 = request.form.get("set_hex_1_" + str(i))  
                 except:
-                    red_1   = 0
-                    green_1 = 0
-                    blue_1  = 0       
+                    hex_1 = 0  
                                     
                 # check color_temp
                 color_temp_1 = request.form.get("set_color_temp_1_" + str(i))  
@@ -369,9 +365,14 @@ def led_scenes():
                     blue_9 = 0
                     color_temp_9 = 0
                     brightness_9 = 254        
+
+                
+                print(request.form.get("set_hue_" + str(i)))
+                print(request.form.get("set_saturation_" + str(i)))
+                print(request.form.get("set_brightness_" + str(i)))
                     
                     
-                if SET_LED_SCENE(i, name, red_1, green_1, blue_1, color_temp_1, brightness_1,
+                if SET_LED_SCENE(i, name, hex_1, color_temp_1, brightness_1,
                                 red_2, green_2, blue_2, color_temp_2, brightness_2,
                                 red_3, green_3, blue_3, color_temp_3, brightness_3,
                                 red_4, green_4, blue_4, color_temp_4, brightness_4,
@@ -407,7 +408,7 @@ def led_scenes():
 
     list_led_scenes = GET_ALL_LED_SCENES()
 
-    data = {'navigation': 'led', 'notification': ''}
+    data = {'navigation': 'led', 'notification': ''} 
 
     return render_template('layouts/default.html',
                             data=data,    

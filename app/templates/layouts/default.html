@@ -35,6 +35,9 @@
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="/static/demo/demo.css" rel="stylesheet" />
 
+  <link rel="stylesheet" href="https://unpkg.com/huebee@2/dist/huebee.css">
+
+
 </head>
 
 <body class="">
@@ -70,6 +73,23 @@
   <script src="/static/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="/static/js/black-dashboard.min.js?v=1.0.0"></script>
+
+
+
+  <script src="https://unpkg.com/huebee@2/dist/huebee.pkgd.js"></script>
+
+  <script>
+    var colorInput = document.querySelector('.color-input');
+    var hueb = new Huebee( colorInput, {
+      setBGColor: true, 
+      hues: 15, 
+      shades: 10,
+      saturations: 1,
+      notation: 'hex',
+    });
+  </script>
+
+
 
 
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->

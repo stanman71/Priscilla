@@ -46,12 +46,12 @@ def RGBtoXY(r, g, b):
     return (xFinal, yFinal)
 
 
-def SET_LED_BULB_RGB(led_name, red, green, blue, brightness):
+def SET_LED_BULB_RGB(led_name, hex, brightness):
     
-    xy = RGBtoXY(int(red), int(green), int(blue))
+    #xy = RGBtoXY(int(red), int(green), int(blue))
 
     channel = "miranda/zigbee2mqtt/" + led_name + "/set"
-    msg     = '{"state":"ON","brightness":' + str(brightness) + ',"color": { "x":' + str(xy[0]) + ',"y":' + str(xy[1]) + '}}'
+    msg     = '{"state":"ON","brightness":' + str(brightness) + ',"color": { "hex":"' + hex + '"}}'
     
     heapq.heappush(mqtt_message_queue, (5, (channel, msg))) 
     
@@ -309,7 +309,7 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
         brightness_1 = scene.brightness_1*(brightness_global/100)
         
         if led_1.device_type == "led_rgb":
-            SET_LED_BULB_RGB(led_1.name, scene.red_1, scene.green_1, scene.blue_1, int(brightness_1))            
+            SET_LED_BULB_RGB(led_1.name, scene.hex_1, int(brightness_1))            
         if led_1.device_type == "led_white":
             SET_LED_BULB_WHITE(led_1.name, scene.color_temp_1, int(brightness_1))                
         if led_1.device_type == "led_simple":

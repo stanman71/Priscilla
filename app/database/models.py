@@ -122,9 +122,7 @@ class LED_Scenes(db.Model):
     __tablename__ = 'led_scenes'
     id                    = db.Column(db.Integer, primary_key=True, autoincrement = True)
     name                  = db.Column(db.String(50), unique = True) 
-    red_1                 = db.Column(db.Integer, server_default=("0"))
-    green_1               = db.Column(db.Integer, server_default=("0"))
-    blue_1                = db.Column(db.Integer, server_default=("0"))
+    hex_1                 = db.Column(db.String(50), server_default=("0"))
     color_temp_1          = db.Column(db.Integer, server_default=("100"))
     brightness_1          = db.Column(db.Integer, server_default=("254"))
     active_setting_2      = db.Column(db.String(50))
@@ -1389,7 +1387,7 @@ def ADD_LED_SCENE(name):
     return "Szenenlimit erreicht (20)"
 
 
-def SET_LED_SCENE(id, name, red_1, green_1, blue_1, color_temp_1, brightness_1,
+def SET_LED_SCENE(id, name, hex_1, color_temp_1, brightness_1,
                             red_2, green_2, blue_2, color_temp_2, brightness_2,
                             red_3, green_3, blue_3, color_temp_3, brightness_3,
                             red_4, green_4, blue_4, color_temp_4, brightness_4,
@@ -1402,7 +1400,7 @@ def SET_LED_SCENE(id, name, red_1, green_1, blue_1, color_temp_1, brightness_1,
     entry = LED_Scenes.query.filter_by(id=id).first()
 
     if (entry.name != name or 
-        entry.red_1 != int(red_1) or entry.green_1 != int(green_1) or entry.blue_1 != int(blue_1) or entry.color_temp_1 != int(color_temp_1) or entry.brightness_1 != int(brightness_1) or
+        entry.hex_1 != hex_1 or entry.color_temp_1 != int(color_temp_1) or entry.brightness_1 != int(brightness_1) or
         entry.red_2 != int(red_2) or entry.green_2 != int(green_2) or entry.blue_2 != int(blue_2) or entry.color_temp_2 != int(color_temp_2) or entry.brightness_2 != int(brightness_2) or
         entry.red_3 != int(red_3) or entry.green_3 != int(green_3) or entry.blue_3 != int(blue_3) or entry.color_temp_3 != int(color_temp_3) or entry.brightness_3 != int(brightness_3) or
         entry.red_4 != int(red_4) or entry.green_4 != int(green_4) or entry.blue_4 != int(blue_4) or entry.color_temp_4 != int(color_temp_4) or entry.brightness_4 != int(brightness_4) or
@@ -1413,9 +1411,7 @@ def SET_LED_SCENE(id, name, red_1, green_1, blue_1, color_temp_1, brightness_1,
         entry.red_9 != int(red_9) or entry.green_9 != int(green_9) or entry.blue_9 != int(blue_9) or entry.color_temp_9 != int(color_temp_9) or entry.brightness_9 != int(brightness_9)):
 
         entry.name  = name
-        entry.red_1 = red_1
-        entry.green_1 = green_1   
-        entry.blue_1 = blue_1
+        entry.hex_1 = hex_1
         entry.color_temp_1 = color_temp_1
         entry.brightness_1 = brightness_1
         entry.red_2 = red_2

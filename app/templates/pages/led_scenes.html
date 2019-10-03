@@ -69,13 +69,23 @@
   </div>
 {% endif %}  
 
+<!-- load rgb color -->
+<script>
+  var RGBChange_1 = function() {
+    $('#RGB_1_{{entry.id}}').css('background', 'rgb('+{{entry.red_1}}+','+{{entry.green_1}}+','+{{entry.blue_1}}+')')
+  };      
+  window.onload = RGBChange_1;
+</script> 
+
+
+
             <div class="card ">
               <div class="card-header">
                 <a data-toggle="collapse" href="#collapse{{entry.id}}"><font color="white"><b><i class='uil uil-arrow-down'> {{entry.name}} </i></b></font></a>
                 <br>
                 <br>
               </div>    
-              <form method="POST">      
+              <form method="POST">  
                 <div id="collapse{{entry.id}}" class="collapse{% if entry.collapse == "True" %}.show{% endif %}">    
                   <div class="card-body"> 
                     <div class="table-responsive">
@@ -86,7 +96,6 @@
                           <th></th>
                           <th style="width:20%"></th>
                           <th scope="col" style="width:30%"><p style="visibility: hidden;">invisibletextforminlenght</p>RGB</th>
-                          <th scope="col" style="width:10%">Farbtemperatur</th>
                           <th scope="col" style="width:10%">Helligkeit</th>
                           <th></th>
                           <th scope="col" style="width:5%"></th>
@@ -113,17 +122,7 @@
 <!-- section 1 -->
 
                             <td>
-                              <input type="text" class="span2" name="set_red_1_{{ entry.id }}" data-slider-min="0" data-slider-max="255" data-slider-step="1" 
-                                data-slider-value="{{ entry.red_1 }}" data-slider-id="red_1_{{ entry.id }}" id="red_1_{{ entry.id }}" data-slider-tooltip="hide" data-slider-handle="round" />	
-                              <input type="text" class="span2" name="set_green_1_{{ entry.id }}" data-slider-min="0" data-slider-max="255" data-slider-step="1" 
-                                data-slider-value="{{ entry.green_1 }}" data-slider-id="green_1_{{ entry.id }}" id="green_1_{{ entry.id }}" data-slider-tooltip="hide" data-slider-handle="round" />
-                              <input type="text" class="span2" name="set_blue_1_{{ entry.id }}" data-slider-min="0" data-slider-max="255" data-slider-step="1" 
-                                data-slider-value="{{ entry.blue_1 }}" data-slider-id="blue_1_{{ entry.id }}" id="blue_1_{{ entry.id }}" data-slider-tooltip="hide" data-slider-handle="round" />
-                            </td>
-                            <td>
-                              <div class="slidecontainer"> 
-                                <input type="range" class="slider" name="set_color_temp_1_{{ entry.id }}" min="0" max="100" value="{{ entry.color_temp_1 }}" />
-                              </div>   
+                              <input class="form-control" name="set_hex_1_{{ entry.id }}" value="{{ entry.hex_1 }}" data-huebee='{ "setBGColor": true, "hues": 15, "shades": 10, "saturations": 1, "notation": "hex" }' />
                             </td>
                             <td>
                               <div class="slidecontainer"> 
@@ -134,15 +133,6 @@
                             <td>
                               <a href="/led/scenes/delete/{{ entry.id }}#table"><font size="5"><i class='tim-icons icon-trash-simple'></i></font></a>
                             </td>
-                          </tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th colspan="3"><div id="RGB_1_{{ entry.id }}"></div></th>
-                            <th></th>
-                            <th></th>                            
-                          <tr>
 
 <!-- section 2 -->
 
@@ -161,11 +151,6 @@
                                data-slider-value="{{ entry.green_2 }}" data-slider-id="green_2_{{ entry.id }}" id="green_2_{{ entry.id }}" data-slider-tooltip="hide" data-slider-handle="round" />
                               <input type="text" class="span2" name="set_blue_2_{{ entry.id }}" data-slider-min="0" data-slider-max="255" data-slider-step="1" 
                                data-slider-value="{{ entry.blue_2 }}" data-slider-id="blue_2_{{ entry.id }}" id="blue_2_{{ entry.id }}" data-slider-tooltip="hide" data-slider-handle="round" />
-                            </td>
-                            <td>
-                              <div class="slidecontainer"> 
-                                <input type="range" class="slider" name="set_color_temp_2_{{ entry.id }}" min="0" max="100" value="{{ entry.color_temp_2 }}" />
-                              </div>   
                             </td>
                             <td>
                               <div class="slidecontainer"> 
