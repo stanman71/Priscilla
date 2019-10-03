@@ -31,12 +31,24 @@ def permission_required(f):
 @login_required
 @permission_required
 def led_scenes():
-    success_message_change_settings_led_scene = False
+    success_message_change_settings           = []
+    error_message_change_settings             = []    
+    success_message_change_settings_led_scene = ""
+    error_message_change_settings_led_scene   = []    
     success_message_add_led_scene             = False
     error_message_add_led_scene               = []
     name = ""
 
     RESET_LED_SCENE_COLLAPSE()
+
+    # delete message
+    if session.get('delete_led_scene_success', None) != None:
+        success_message_change_settings.append(session.get('delete_led_scene_success')) 
+        session['delete_led_scene_success'] = None
+        
+    if session.get('delete_led_scene_error', None) != None:
+        error_message_change_settings.append(session.get('delete_led_scene_error'))
+        session['delete_led_scene_error'] = None       
 
     """ ################# """
     """  table led scenes """
@@ -79,26 +91,22 @@ def led_scenes():
                 # name already exist
                 elif ((GET_LED_SCENE_BY_NAME(new_name) != None) and (led_scene_data.name != new_name)):
                     name = led_scene_data.name 
-                    error_change_settings = "Name schon vergeben"
+                    error_message_change_settings_led_scene = {"scene_number": i,"message": "Name schon vergeben"}
 
                 # no input commited
                 else:                          
                     name = GET_LED_SCENE_BY_ID(i).name 
-                    error_change_settings = "Keinen Namen angegeben"
+                    error_message_change_settings_led_scene = {"scene_number": i,"message": "Keinen Namen angegeben"}
 
 
                 #######
                 ## 1 ##
                 #######
 
-                # check rgb
-                rgb_1 = request.form.get("set_rgb_1_" + str(i))
-
                 try:
-                    rgb_1   = re.findall(r'\d+', rgb_1)
-                    red_1   = rgb_1[0]
-                    green_1 = rgb_1[1]           
-                    blue_1  = rgb_1[2]      
+                    red_1   = request.form.get("set_red_1_" + str(i))
+                    green_1 = request.form.get("set_green_1_" + str(i))          
+                    blue_1  = request.form.get("set_blue_1_" + str(i))      
                 except:
                     red_1   = 0
                     green_1 = 0
@@ -116,14 +124,10 @@ def led_scenes():
 
                 if GET_LED_SCENE_BY_ID(i).active_setting_2 == "True":
 
-                    # check rgb
-                    rgb_2 = request.form.get("set_rgb_2_" + str(i))
-
                     try:
-                        rgb_2   = re.findall(r'\d+', rgb_2)
-                        red_2   = rgb_2[0]
-                        green_2 = rgb_2[1]           
-                        blue_2  = rgb_2[2]      
+                        red_2   = request.form.get("set_red_2_" + str(i))
+                        green_2 = request.form.get("set_green_2_" + str(i))          
+                        blue_2  = request.form.get("set_blue_2_" + str(i))    
                     except:
                         red_2   = 0
                         green_2 = 0
@@ -408,7 +412,10 @@ def led_scenes():
     return render_template('layouts/default.html',
                             data=data,    
                             content=render_template( 'pages/led_scenes.html', 
+                                                    success_message_change_settings=success_message_change_settings,
+                                                    error_message_change_settings=error_message_change_settings,
                                                     success_message_change_settings_led_scene=success_message_change_settings_led_scene,
+                                                    error_message_change_settings_led_scene=error_message_change_settings_led_scene,  
                                                     success_message_add_led_scene=success_message_add_led_scene,
                                                     error_message_add_led_scene=error_message_add_led_scene,
                                                     list_led_scenes=list_led_scenes,
@@ -423,4 +430,20 @@ def led_scenes():
 @permission_required
 def change_led_scenes_position(id, direction):
     CHANGE_LED_SCENES_POSITION(id, direction)
+    return redirect(url_for('led_scenes'))
+
+
+# delete scene
+@app.route('/led/scenes/delete/<int:id>')
+@login_required
+@permission_required
+def delete_led_scene(id):
+    scene  = GET_LED_SCENE_BY_ID(id).name  
+    result = DELETE_LED_SCENE(id)
+
+    if result:
+        session['delete_led_scene_success'] = scene + " || Erfolgreich gelöscht"
+    else:
+        session['delete_led_scene_error'] = scene + " || " + str(result)
+
     return redirect(url_for('led_scenes'))

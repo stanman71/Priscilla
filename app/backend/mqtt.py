@@ -517,84 +517,11 @@ def UPDATE_DEVICES(gateway):
             WRITE_LOGFILE_SYSTEM("ERROR", "Devices | ZigBee2MQTT | Update | " + str(e))  
             SEND_EMAIL("ERROR", "Devices | ZigBee2MQTT | Update | " + str(e))             
             return ("Devices || ZigBee2MQTT || Update " + str(e))
-
-      
-""" ################### """
-"""    get sensordata   """
-""" ################### """
-
-"""
-
-def REQUEST_SENSORDATA(job_name):
-    sensordata_job  = GET_SENSORDATA_JOB_BY_NAME(job_name)
-    device_gateway  = sensordata_job.device.gateway
-    device_ieeeAddr = sensordata_job.device.ieeeAddr  
-    
-    sensor_key = sensordata_job.sensor_key
-    sensor_key = sensor_key.replace(" ", "")
- 
-    channel = "miranda/" + device_gateway + "/" + device_ieeeAddr + "/get"
-    MQTT_PUBLISH(channel, "")  
-
-    time.sleep(2)
-    
-    for message in GET_MQTT_INCOMING_MESSAGES(5):
-        
-        if message[1] == "miranda/" + device_gateway + "/" + device_ieeeAddr:
-                
-            try:
-
-                data     = json.loads(message[2])
-                filename = sensordata_job.filename
-    
-                WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
-                
-                if device_gateway == "mqtt":
-                    WRITE_LOGFILE_SYSTEM("SUCCESS", "MQTT | Sensor Data saved") 
-                if device_gateway == "zigbee2mqtt":
-                    WRITE_LOGFILE_SYSTEM("SUCCESS", "ZigBee2MQTT | Sensor Data saved")              
-                
-                return
-                
-            except:
-                pass
-
-    if device_gateway == "mqtt":
-        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Message not founded") 
-        SEND_EMAIL("ERROR", "MQTT | Message not founded")       
-    if device_gateway == "zigbee2mqtt":
-        WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Message not founded") 
-        SEND_EMAIL("ERROR", "ZigBee2MQTT | Message not founded") 
-
-   
-def SAVE_SENSORDATA(job_id):
-    
-    sensordata_job  = GET_SENSORDATA_JOB_BY_ID(job_id)
-    device_gateway  = sensordata_job.mqtt_device.gateway
-    device_ieeeAddr = sensordata_job.mqtt_device.ieeeAddr 
      
-    sensor_key = sensordata_job.sensor_key
-    sensor_key = sensor_key.replace(" ", "")
-    
-    for message in GET_MQTT_INCOMING_MESSAGES(10):
-        
-        if (message[1] == "miranda/" + device_gateway + "/" + device_ieeeAddr):
-                                
-            try:
-                data     = json.loads(message[2])
-                filename = sensordata_job.filename
-    
-                WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
-                return
 
-            except:
-                pass
-
-"""            
-
-""" ################### """
-"""  mqtt check setting """
-""" ################### """
+""" ###################### """
+"""  check device setting  """
+""" ###################### """
  
  
 def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, repeats = 10): 

@@ -11,6 +11,33 @@
               </div>  
             </div>  
 
+<!-- success message change settings -->
+
+{% if success_message_change_settings != [] %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for success in success_message_change_settings %}
+      <span data-notify="message">{{ success }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+<!-- error message change settings -->
+
+{% if error_message_change_settings != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_change_settings %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+
 <!---------------->
 <!--  LED TABLE -->
 <!---------------->   
@@ -31,12 +58,23 @@
   </div>
 {% endif %}  
 
+<!-- error message change settings led scene -->
+
+{% if error_message_change_settings_led_scene['scene_number'] == entry.id %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>{{ error_message_change_settings_led_scene['message'] }}</span>
+  </div>
+{% endif %}  
+
             <div class="card ">
               <div class="card-header">
                 <a data-toggle="collapse" href="#collapse{{entry.id}}"><font color="white"><b><i class='uil uil-arrow-down'> {{entry.name}} </i></b></font></a>
                 <br>
                 <br>
-              </div>     
+              </div>    
               <form method="POST">      
                 <div id="collapse{{entry.id}}" class="collapse{% if entry.collapse == "True" %}.show{% endif %}">    
                   <div class="card-body"> 
@@ -65,17 +103,22 @@
                             <td></td> 
                             <td>
                               <button type="submit" onclick="window.location.href='/led/scenes#table_{{ entry.id }}'" name="add_setting_{{ entry.id }}" class="btn btn-fill btn-primary">
-                                <font size="5">+</font>
+                                <b>+</b>
                               </button>                  
                               <button type="submit" onclick="window.location.href='/led/scenes#table_{{ entry.id }}'" name="remove_setting_{{ entry.id }}" class="btn btn-fill btn-primary">
-                                <font size="5">-</font>
+                                <b>-</b>
                               </button>      
                             </td>   
 
 <!-- section 1 -->
 
                             <td>
-                              <input type="text" name="set_rgb_1_{{ entry.id }}" class="form-control led_1_{{ entry.id }}" value="rgb({{ entry.red_1 }}, {{ entry.green_1 }}, {{ entry.blue_1 }}) "/>
+                              <input type="text" class="span2" name="set_red_1_{{ entry.id }}" data-slider-min="0" data-slider-max="255" data-slider-step="1" 
+                                data-slider-value="{{ entry.red_1 }}" data-slider-id="red_1_{{ entry.id }}" id="red_1_{{ entry.id }}" data-slider-tooltip="hide" data-slider-handle="round" />	
+                              <input type="text" class="span2" name="set_green_1_{{ entry.id }}" data-slider-min="0" data-slider-max="255" data-slider-step="1" 
+                                data-slider-value="{{ entry.green_1 }}" data-slider-id="green_1_{{ entry.id }}" id="green_1_{{ entry.id }}" data-slider-tooltip="hide" data-slider-handle="round" />
+                              <input type="text" class="span2" name="set_blue_1_{{ entry.id }}" data-slider-min="0" data-slider-max="255" data-slider-step="1" 
+                                data-slider-value="{{ entry.blue_1 }}" data-slider-id="blue_1_{{ entry.id }}" id="blue_1_{{ entry.id }}" data-slider-tooltip="hide" data-slider-handle="round" />
                             </td>
                             <td>
                               <div class="slidecontainer"> 
@@ -91,6 +134,15 @@
                             <td>
                               <a href="/led/scenes/delete/{{ entry.id }}#table"><font size="5"><i class='tim-icons icon-trash-simple'></i></font></a>
                             </td>
+                          </tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th colspan="3"><div id="RGB_1_{{ entry.id }}"></div></th>
+                            <th></th>
+                            <th></th>                            
+                          <tr>
 
 <!-- section 2 -->
 
@@ -103,7 +155,12 @@
                             <td></td>
                             <td></td>
                             <td>
-                              <input type="text" name="set_rgb_2_{{ entry.id }}" class="form-control led_2_{{ entry.id }}" value="rgb({{ entry.red_2 }}, {{ entry.green_2 }}, {{ entry.blue_2 }}) "/>
+                              <input type="text" class="span2" name="set_red_2_{{ entry.id }}" data-slider-min="0" data-slider-max="255" data-slider-step="1" 
+                                data-slider-value="{{ entry.red_2 }}" data-slider-id="red_2_{{ entry.id }}" id="red_2_{{ entry.id }}" data-slider-tooltip="hide" data-slider-handle="round" />	
+                              <input type="text" class="span2" name="set_green_2_{{ entry.id }}" data-slider-min="0" data-slider-max="255" data-slider-step="1" 
+                               data-slider-value="{{ entry.green_2 }}" data-slider-id="green_2_{{ entry.id }}" id="green_2_{{ entry.id }}" data-slider-tooltip="hide" data-slider-handle="round" />
+                              <input type="text" class="span2" name="set_blue_2_{{ entry.id }}" data-slider-min="0" data-slider-max="255" data-slider-step="1" 
+                               data-slider-value="{{ entry.blue_2 }}" data-slider-id="blue_2_{{ entry.id }}" id="blue_2_{{ entry.id }}" data-slider-tooltip="hide" data-slider-handle="round" />
                             </td>
                             <td>
                               <div class="slidecontainer"> 
@@ -116,7 +173,16 @@
                               </div> 
                             </td>
                             <th></th>
-                          </tr> 
+                            <th></th>
+                          </tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th colspan="3"><div id="RGB_2_{{ entry.id }}"></div></th>
+                            <th></th>
+                            <th></th>                            
+                          <tr>
 
 {% endif %}
 
