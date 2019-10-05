@@ -15,14 +15,14 @@ from app.assets                  import *
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -47,9 +47,9 @@ def led_scenes():
     RESET_LED_SCENE_COLLAPSE()
 
 
-    """ ################# """
-    """  table led scenes """
-    """ ################# """   
+    """ ################## """
+    """  table led scenes  """
+    """ ################## """   
 
 
     # set collapse open for option change led number
@@ -113,7 +113,7 @@ def led_scenes():
                 ## 2 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_setting_2 == "True":
+                if GET_LED_SCENE_BY_ID(i).active_led_2 == "True":
 
                     # check rgb
                     rgb_2 = led_scenes_rgb_values_array[i-1][2-1]
@@ -137,7 +137,7 @@ def led_scenes():
                 ## 3 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_setting_3 == "True":
+                if GET_LED_SCENE_BY_ID(i).active_led_3 == "True":
 
                     # check rgb
                     rgb_3 = led_scenes_rgb_values_array[i-1][3-1]
@@ -161,7 +161,7 @@ def led_scenes():
                 ## 4 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_setting_4 == "True":
+                if GET_LED_SCENE_BY_ID(i).active_led_4 == "True":
 
                     # check rgb
                     rgb_4 = led_scenes_rgb_values_array[i-1][4-1]
@@ -185,7 +185,7 @@ def led_scenes():
                 ## 5 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_setting_5 == "True":
+                if GET_LED_SCENE_BY_ID(i).active_led_5 == "True":
 
                     # check rgb
                     rgb_5 = led_scenes_rgb_values_array[i-1][5-1]
@@ -209,7 +209,7 @@ def led_scenes():
                 ## 6 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_setting_6 == "True":
+                if GET_LED_SCENE_BY_ID(i).active_led_6 == "True":
 
                     # check rgb
                     rgb_6 = led_scenes_rgb_values_array[i-1][6-1]
@@ -233,7 +233,7 @@ def led_scenes():
                 ## 7 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_setting_7 == "True":
+                if GET_LED_SCENE_BY_ID(i).active_led_7 == "True":
 
                     # check rgb
                     rgb_7 = led_scenes_rgb_values_array[i-1][7-1]
@@ -257,7 +257,7 @@ def led_scenes():
                 ## 8 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_setting_8 == "True":
+                if GET_LED_SCENE_BY_ID(i).active_led_8 == "True":
 
                     # check rgb
                     rgb_8 = led_scenes_rgb_values_array[i-1][8-1]
@@ -281,7 +281,7 @@ def led_scenes():
                 ## 9 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_setting_9 == "True":
+                if GET_LED_SCENE_BY_ID(i).active_led_9 == "True":
 
                     # check rgb
                     rgb_9 = led_scenes_rgb_values_array[i-1][9-1]
@@ -358,10 +358,38 @@ def led_scenes():
         scene_2 = GET_LED_SCENE_BY_ID(2)
     except:
         scene_2 = ""
-    try:
+    try: 
         scene_3 = GET_LED_SCENE_BY_ID(3)
     except:
         scene_3 = ""
+    try: 
+        scene_4 = GET_LED_SCENE_BY_ID(4)
+    except:
+        scene_4 = ""
+    try: 
+        scene_5 = GET_LED_SCENE_BY_ID(5)
+    except:
+        scene_5 = ""
+    try: 
+        scene_6 = GET_LED_SCENE_BY_ID(6)
+    except:
+        scene_6 = ""
+    try: 
+        scene_7 = GET_LED_SCENE_BY_ID(7)
+    except:
+        scene_7 = ""
+    try: 
+        scene_8 = GET_LED_SCENE_BY_ID(8)
+    except:
+        scene_8 = ""
+    try: 
+        scene_9 = GET_LED_SCENE_BY_ID(9)
+    except:
+        scene_9 = ""
+    try: 
+        scene_10 = GET_LED_SCENE_BY_ID(10)
+    except:
+        scene_10 = ""
 
 
     list_led_scenes = GET_ALL_LED_SCENES()
@@ -381,7 +409,14 @@ def led_scenes():
                                                     name=name,
                                                     scene_1=scene_1,
                                                     scene_2=scene_2,      
-                                                    scene_3=scene_3,                                                                                                    
+                                                    scene_3=scene_3,    
+                                                    scene_4=scene_4,
+                                                    scene_5=scene_5,
+                                                    scene_6=scene_6,
+                                                    scene_7=scene_7,
+                                                    scene_8=scene_8,
+                                                    scene_9=scene_9,
+                                                    scene_10=scene_10,                                                    
                                                     ) 
                            )
 
@@ -401,11 +436,11 @@ def change_led_scenes_position(id, direction):
 @permission_required
 def change_led_scenes_options(id, option):
     if option == "add_led":
-        ADD_LED_SCENE_SETTING(id)
+        ADD_LED_SCENE_OBJECT(id)
         session['set_collapse_open'] = id
         
     if option == "remove_led":
-        REMOVE_LED_SCENE_SETTING(id)
+        REMOVE_LED_SCENE_OBJECT(id)
         session['set_collapse_open'] = id
 
     return redirect(url_for('led_scenes'))

@@ -125,35 +125,35 @@ class LED_Scenes(db.Model):
     red_1                 = db.Column(db.Integer) 
     green_1               = db.Column(db.Integer) 
     blue_1                = db.Column(db.Integer) 
-    active_setting_2      = db.Column(db.String(50))
+    active_led_2          = db.Column(db.String(50))
     red_2                 = db.Column(db.Integer) 
     green_2               = db.Column(db.Integer) 
     blue_2                = db.Column(db.Integer) 
-    active_setting_3      = db.Column(db.String(50))
+    active_led_3          = db.Column(db.String(50))
     red_3                 = db.Column(db.Integer) 
     green_3               = db.Column(db.Integer) 
     blue_3                = db.Column(db.Integer) 
-    active_setting_4      = db.Column(db.String(50))
+    active_led_4          = db.Column(db.String(50))
     red_4                 = db.Column(db.Integer) 
     green_4               = db.Column(db.Integer) 
     blue_4                = db.Column(db.Integer) 
-    active_setting_5      = db.Column(db.String(50))
+    active_led_5          = db.Column(db.String(50))
     red_5                 = db.Column(db.Integer) 
     green_5               = db.Column(db.Integer) 
     blue_5                = db.Column(db.Integer) 
-    active_setting_6      = db.Column(db.String(50))
+    active_led_6          = db.Column(db.String(50))
     red_6                 = db.Column(db.Integer) 
     green_6               = db.Column(db.Integer) 
     blue_6                = db.Column(db.Integer) 
-    active_setting_7      = db.Column(db.String(50))
+    active_led_7          = db.Column(db.String(50))
     red_7                 = db.Column(db.Integer) 
     green_7               = db.Column(db.Integer) 
     blue_7                = db.Column(db.Integer) 
-    active_setting_8      = db.Column(db.String(50))
+    active_led_8          = db.Column(db.String(50))
     red_8                 = db.Column(db.Integer) 
     green_8               = db.Column(db.Integer) 
     blue_8                = db.Column(db.Integer) 
-    active_setting_9      = db.Column(db.String(50))
+    active_led_9          = db.Column(db.String(50))
     red_9                 = db.Column(db.Integer) 
     green_9               = db.Column(db.Integer) 
     blue_9                = db.Column(db.Integer) 
@@ -999,8 +999,6 @@ def ADD_LED_GROUP(name):
             db.session.add(group)
             db.session.commit()
 
-            RESET_LED_GROUP_ERRORS()
-
             WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Group - " + name + " | added")  
 
             return True
@@ -1020,7 +1018,8 @@ def SET_LED_GROUP(id, name, led_ieeeAddr_1, led_name_1, led_device_type_1,
 
     entry = LED_Groups.query.filter_by(id=id).first()
 
-    if (entry.led_ieeeAddr_1 != led_ieeeAddr_1 or entry.led_name_1 != led_name_1 or entry.led_device_type_1 != led_device_type_1 or 
+    if (entry.name != name or
+        entry.led_ieeeAddr_1 != led_ieeeAddr_1 or entry.led_name_1 != led_name_1 or entry.led_device_type_1 != led_device_type_1 or 
         entry.led_ieeeAddr_2 != led_ieeeAddr_2 or entry.led_name_2 != led_name_2 or entry.led_device_type_2 != led_device_type_2 or
         entry.led_ieeeAddr_3 != led_ieeeAddr_3 or entry.led_name_3 != led_name_3 or entry.led_device_type_3 != led_device_type_3 or
         entry.led_ieeeAddr_4 != led_ieeeAddr_4 or entry.led_name_4 != led_name_4 or entry.led_device_type_4 != led_device_type_4 or
@@ -1030,8 +1029,7 @@ def SET_LED_GROUP(id, name, led_ieeeAddr_1, led_name_1, led_device_type_1,
         entry.led_ieeeAddr_8 != led_ieeeAddr_8 or entry.led_name_8 != led_name_8 or entry.led_device_type_8 != led_device_type_8 or
         entry.led_ieeeAddr_9 != led_ieeeAddr_9 or entry.led_name_9 != led_name_9 or entry.led_device_type_9 != led_device_type_9):
 
-        entry.name = name
-        
+        entry.name              = name
         entry.led_ieeeAddr_1    = led_ieeeAddr_1
         entry.led_name_1        = led_name_1
         entry.led_device_type_1 = led_device_type_1
@@ -1115,55 +1113,55 @@ def UPDATE_LED_GROUP_LED_NAMES():
         entry = LED_Groups.query.filter_by(id=group.id).first()
         
         try:
-            entry.led_name_1        = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_1).name
-            entry.led_device_type_1 = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_1).device_type
+            entry.led_name_1        = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_1).name
+            entry.led_device_type_1 = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_1).device_type
         except:
             pass
         try:
-            entry.led_name_2        = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_2).name
-            entry.led_device_type_2 = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_2).device_type
+            entry.led_name_2        = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_2).name
+            entry.led_device_type_2 = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_2).device_type
         except:
             pass
         try:
-            entry.led_name_3        = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_3).name
-            entry.led_device_type_3 = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_3).device_type
+            entry.led_name_3        = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_3).name
+            entry.led_device_type_3 = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_3).device_type
         except:
             pass
         try:
-            entry.led_name_4        = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_4).name
-            entry.led_device_type_4 = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_4).device_type
+            entry.led_name_4        = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_4).name
+            entry.led_device_type_4 = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_4).device_type
         except:
             pass
         try:
-            entry.led_name_5        = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_5).name
-            entry.led_device_type_5 = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_5).device_type
+            entry.led_name_5        = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_5).name
+            entry.led_device_type_5 = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_5).device_type
         except:
             pass
         try:
-            entry.led_name_6        = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_6).name
-            entry.led_device_type_6 = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_6).device_type
+            entry.led_name_6        = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_6).name
+            entry.led_device_type_6 = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_6).device_type
         except:
             pass
         try:
-            entry.led_name_7        = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_7).name
-            entry.led_device_type_7 = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_7).device_type
+            entry.led_name_7        = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_7).name
+            entry.led_device_type_7 = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_7).device_type
         except:
             pass
         try:
-            entry.led_name_8        = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_8).name
-            entry.led_device_type_8 = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_8).device_type
+            entry.led_name_8        = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_8).name
+            entry.led_device_type_8 = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_8).device_type
         except:
             pass
         try:
-            entry.led_name_9        = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_9).name
-            entry.led_device_type_9 = GET_MQTT_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_9).device_type
+            entry.led_name_9        = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_9).name
+            entry.led_device_type_9 = GET_DEVICE_BY_IEEEADDR(entry.led_ieeeAddr_9).device_type
         except:
             pass            
         
     db.session.commit()
 
 
-def ADD_LED_GROUP_LED(id):
+def ADD_LED_GROUP_OBJECT(id):
     entry = LED_Groups.query.filter_by(id=id).first()
 
     if entry.active_led_2 != "True":
@@ -1200,7 +1198,7 @@ def ADD_LED_GROUP_LED(id):
         return  
 
 
-def REMOVE_LED_GROUP_LED(id):
+def REMOVE_LED_GROUP_OBJECT(id):
     entry = LED_Groups.query.filter_by(id=id).first()
 
     if entry.active_led_9 == "True":
@@ -1268,7 +1266,7 @@ def REMOVE_LED_GROUP_LED(id):
         return 
 
 
-def CHANGE_LED_GROUP_POSITION(id, direction):
+def CHANGE_LED_GROUPS_POSITION(id, direction):
     
     if direction == "up":
         groups_list = GET_ALL_LED_GROUPS()
@@ -1424,60 +1422,60 @@ def SET_LED_SCENE(id, name, red_1, green_1, blue_1, red_2, green_2, blue_2, red_
         return True
 
 
-def ADD_LED_SCENE_SETTING(id):
+def ADD_LED_SCENE_OBJECT(id):
     entry = LED_Scenes.query.filter_by(id=id).first()
 
-    if entry.active_setting_2 != "True":
-        entry.active_setting_2 = "True" 
+    if entry.active_led_2 != "True":
+        entry.active_led_2 = "True" 
         entry.red_2            = 255
         entry.green_2          = 255
         entry.blue_2           = 255          
         db.session.commit()
         return
-    if entry.active_setting_3 != "True":
-        entry.active_setting_3 = "True"     
+    if entry.active_led_3 != "True":
+        entry.active_led_3 = "True"     
         entry.red_3            = 255
         entry.green_3          = 255
         entry.blue_3           = 255         
         db.session.commit()
         return
-    if entry.active_setting_4 != "True":
-        entry.active_setting_4 = "True"   
+    if entry.active_led_4 != "True":
+        entry.active_led_4 = "True"   
         entry.red_4            = 255
         entry.green_4          = 255
         entry.blue_4           = 255        
         db.session.commit()
         return
-    if entry.active_setting_5 != "True":
-        entry.active_setting_5 = "True"  
+    if entry.active_led_5 != "True":
+        entry.active_led_5 = "True"  
         entry.red_5            = 255
         entry.green_5          = 255
         entry.blue_5           = 255        
         db.session.commit()
         return
-    if entry.active_setting_6 != "True":
-        entry.active_setting_6 = "True"   
+    if entry.active_led_6 != "True":
+        entry.active_led_6 = "True"   
         entry.red_6            = 255
         entry.green_6          = 255
         entry.blue_6           = 255        
         db.session.commit()
         return
-    if entry.active_setting_7 != "True":
-        entry.active_setting_7 = "True"  
+    if entry.active_led_7 != "True":
+        entry.active_led_7 = "True"  
         entry.red_7            = 255
         entry.green_7          = 255
         entry.blue_7           = 255        
         db.session.commit()
         return
-    if entry.active_setting_8 != "True":
-        entry.active_setting_8 = "True"     
+    if entry.active_led_8 != "True":
+        entry.active_led_8 = "True"     
         entry.red_8            = 255
         entry.green_8          = 255
         entry.blue_8           = 255        
         db.session.commit()
         return       
-    if entry.active_setting_9 != "True":
-        entry.active_setting_9 = "True"
+    if entry.active_led_9 != "True":
+        entry.active_led_9 = "True"
         entry.red_9            = 255
         entry.green_9          = 255
         entry.blue_9           = 255        
@@ -1485,67 +1483,67 @@ def ADD_LED_SCENE_SETTING(id):
         return  
 
 
-def REMOVE_LED_SCENE_SETTING(id):
+def REMOVE_LED_SCENE_OBJECT(id):
     entry = LED_Scenes.query.filter_by(id=id).first()
 
-    if entry.active_setting_9 == "True":
-        entry.active_setting_9 = "None"
+    if entry.active_led_9 == "True":
+        entry.active_led_9 = "None"
         entry.red_9            = 0
         entry.green_9          = 0
         entry.blue_9           = 0
         db.session.commit()
         return
 
-    if entry.active_setting_8 == "True":
-        entry.active_setting_8 = "None"
+    if entry.active_led_8 == "True":
+        entry.active_led_8 = "None"
         entry.red_8            = 0
         entry.green_8          = 0
         entry.blue_8           = 0
         db.session.commit()
         return
 
-    if entry.active_setting_7 == "True":
-        entry.active_setting_7 = "None"
+    if entry.active_led_7 == "True":
+        entry.active_led_7 = "None"
         entry.red_7            = 0
         entry.green_7          = 0
         entry.blue_7           = 0
         db.session.commit()
         return
 
-    if entry.active_setting_6 == "True":
-        entry.active_setting_6 = "None"
+    if entry.active_led_6 == "True":
+        entry.active_led_6 = "None"
         entry.red_6            = 0
         entry.green_6          = 0
         entry.blue_6           = 0
         db.session.commit()
         return
 
-    if entry.active_setting_5 == "True":
-        entry.active_setting_5 = "None"
+    if entry.active_led_5 == "True":
+        entry.active_led_5 = "None"
         entry.red_5            = 0
         entry.green_5          = 0
         entry.blue_5           = 0
         db.session.commit()
         return
 
-    if entry.active_setting_4 == "True":
-        entry.active_setting_4 = "None"
+    if entry.active_led_4 == "True":
+        entry.active_led_4 = "None"
         entry.red_4            = 0
         entry.green_4          = 0
         entry.blue_4           = 0
         db.session.commit()
         return
 
-    if entry.active_setting_3 == "True":
-        entry.active_setting_3 = "None"
+    if entry.active_led_3 == "True":
+        entry.active_led_3 = "None"
         entry.red_3            = 0
         entry.green_3          = 0
         entry.blue_3           = 0
         db.session.commit()
         return
 
-    if entry.active_setting_2 == "True":
-        entry.active_setting_2 = "None"
+    if entry.active_led_2 == "True":
+        entry.active_led_2 = "None"
         entry.red_2            = 0
         entry.green_2          = 0
         entry.blue_2           = 0

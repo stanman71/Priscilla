@@ -21,8 +21,8 @@
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    {% for message in error_message_controller_tasks %}
-      {{ message }} <br>
+    {% for error in error_message_controller_tasks %}
+      {{ error }} <br>
     {% endfor %}
   </div>      
 {% endif %}  
