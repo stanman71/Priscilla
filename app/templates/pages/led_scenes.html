@@ -37,6 +37,210 @@
   </div>
 {% endif %}  
 
+
+  <script>
+      
+    function load_colorpicker(scene_1) {
+
+      var colorPicker = new iro.ColorPicker(".colorPicker_1_1", { width: 180, color: "rgb({{ scene_1.red_1 }}, {{ scene_1.green_1 }}, {{ scene_1.blue_1 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+        colorPicker.on(["color:init", "color:change"], function(color){
+          var message = new Object();  message.scene_number = 1;   message.led_number = 1;  message.rgb_values = color.rgbString; 
+          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+        });
+      {% if scene_1.active_setting_2 == "True" %}  
+        var colorPicker = new iro.ColorPicker(".colorPicker_2_1", { width: 180, color: "rgb({{ scene_1.red_2 }}, {{ scene_1.green_2 }}, {{ scene_1.blue_2 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 1;  message.led_number = 2;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_1.active_setting_3 == "True" %}      
+        var colorPicker = new iro.ColorPicker(".colorPicker_3_1", { width: 180, color: "rgb({{ scene_1.red_3 }}, {{ scene_1.green_3 }}, {{ scene_1.blue_3 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){ 
+            var message = new Object();  message.scene_number = 1;  message.led_number = 3;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          }); 
+      {% endif %} 
+      {% if scene_1.active_setting_4 == "True" %}              
+        var colorPicker = new iro.ColorPicker(".colorPicker_4_1", { width: 180, color: "rgb({{ scene_1.red_4 }}, {{ scene_1.green_4 }}, {{ scene_1.blue_4 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 1;   message.led_number = 4;  message.rgb_values = color.rgbString; 
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_1.active_setting_5 == "True" %}      
+        var colorPicker = new iro.ColorPicker(".colorPicker_5_1", { width: 180, color: "rgb({{ scene_1.red_5 }}, {{ scene_1.green_5 }}, {{ scene_1.blue_5 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 1;  message.led_number = 5;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_1.active_setting_6 == "True" %}      
+        var colorPicker = new iro.ColorPicker(".colorPicker_6_1", { width: 180, color: "rgb({{ scene_1.red_6 }}, {{ scene_1.green_6 }}, {{ scene_1.blue_6 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){ 
+            var message = new Object();  message.scene_number = 1;  message.led_number = 6;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          }); 
+      {% endif %} 
+      {% if scene_1.active_setting_7 == "True" %}      
+        var colorPicker = new iro.ColorPicker(".colorPicker_7_1", { width: 180, color: "rgb({{ scene_1.red_7 }}, {{ scene_1.green_7 }}, {{ scene_1.blue_7 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 1;   message.led_number = 7;  message.rgb_values = color.rgbString; 
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_1.active_setting_8 == "True" %}              
+        var colorPicker = new iro.ColorPicker(".colorPicker_8_1", { width: 180, color: "rgb({{ scene_1.red_8 }}, {{ scene_1.green_8 }}, {{ scene_1.blue_8 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 1;  message.led_number = 8;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_1.active_setting_9 == "True" %}              
+        var colorPicker = new iro.ColorPicker(".colorPicker_9_1", { width: 180, color: "rgb({{ scene_1.red_9 }}, {{ scene_1.green_9 }}, {{ scene_1.blue_9 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){ 
+            var message = new Object();  message.scene_number = 1;  message.led_number = 9;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });   
+      {% endif %}                   
+
+      {% if scene_2 != "" %}   
+      var colorPicker = new iro.ColorPicker(".colorPicker_1_2", { width: 180, color: "rgb({{ scene_2.red_1 }}, {{ scene_2.green_1 }}, {{ scene_2.blue_1 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+        colorPicker.on(["color:init", "color:change"], function(color){
+          var message = new Object();  message.scene_number = 2;   message.led_number = 1;  message.rgb_values = color.rgbString; 
+          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+        });
+      {% endif %}    
+      {% if scene_2.active_setting_2 == "True" %}            
+        var colorPicker = new iro.ColorPicker(".colorPicker_2_2", { width: 180, color: "rgb({{ scene_2.red_2 }}, {{ scene_2.green_2 }}, {{ scene_2.blue_2 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 2;  message.led_number = 2;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_2.active_setting_3 == "True" %}      
+        var colorPicker = new iro.ColorPicker(".colorPicker_3_2", { width: 180, color: "rgb({{ scene_2.red_3 }}, {{ scene_2.green_3 }}, {{ scene_2.blue_3 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){ 
+            var message = new Object();  message.scene_number = 2;  message.led_number = 3;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          }); 
+      {% endif %} 
+      {% if scene_2.active_setting_4 == "True" %}              
+        var colorPicker = new iro.ColorPicker(".colorPicker_4_2", { width: 180, color: "rgb({{ scene_2.red_4 }}, {{ scene_2.green_4 }}, {{ scene_2.blue_4 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 2;   message.led_number = 4;  message.rgb_values = color.rgbString; 
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_2.active_setting_5 == "True" %}              
+        var colorPicker = new iro.ColorPicker(".colorPicker_5_2", { width: 180, color: "rgb({{ scene_2.red_5 }}, {{ scene_2.green_5 }}, {{ scene_2.blue_5 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 2;  message.led_number = 5;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_2.active_setting_6 == "True" %}              
+        var colorPicker = new iro.ColorPicker(".colorPicker_6_2", { width: 180, color: "rgb({{ scene_2.red_6 }}, {{ scene_2.green_6 }}, {{ scene_2.blue_6 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){ 
+            var message = new Object();  message.scene_number = 2;  message.led_number = 6;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          }); 
+      {% endif %} 
+      {% if scene_2.active_setting_7 == "True" %}             
+        var colorPicker = new iro.ColorPicker(".colorPicker_7_2", { width: 180, color: "rgb({{ scene_2.red_7 }}, {{ scene_2.green_7 }}, {{ scene_2.blue_7 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 2;   message.led_number = 7;  message.rgb_values = color.rgbString; 
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_2.active_setting_8 == "True" %}              
+        var colorPicker = new iro.ColorPicker(".colorPicker_8_2", { width: 180, color: "rgb({{ scene_2.red_8 }}, {{ scene_2.green_8 }}, {{ scene_2.blue_8 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 2;  message.led_number = 8;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_2.active_setting_9 == "True" %}              
+        var colorPicker = new iro.ColorPicker(".colorPicker_9_2", { width: 180, color: "rgb({{ scene_2.red_9 }}, {{ scene_2.green_9 }}, {{ scene_2.blue_9 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){ 
+            var message = new Object();  message.scene_number = 2;  message.led_number = 9;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });     
+      {% endif %}              
+
+
+      {% if scene_3 != "" %}   
+        var colorPicker = new iro.ColorPicker(".colorPicker_1_3", { width: 180, color: "rgb({{ scene_3.red_1 }}, {{ scene_3.green_1 }}, {{ scene_3.blue_1 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 3;   message.led_number = 1;  message.rgb_values = color.rgbString; 
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_3.active_setting_2 == "True" %}           
+        var colorPicker = new iro.ColorPicker(".colorPicker_2_3", { width: 180, color: "rgb({{ scene_3.red_2 }}, {{ scene_3.green_2 }}, {{ scene_3.blue_2 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 3;  message.led_number = 2;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          }); 
+      {% endif %}
+      {% if scene_3.active_setting_3 == "True" %}      
+        var colorPicker = new iro.ColorPicker(".colorPicker_3_3", { width: 180, color: "rgb({{ scene_3.red_3 }}, {{ scene_3.green_3 }}, {{ scene_3.blue_3 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){ 
+            var message = new Object();  message.scene_number = 3;  message.led_number = 3;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          }); 
+      {% endif %} 
+      {% if scene_3.active_setting_4 == "True" %}              
+        var colorPicker = new iro.ColorPicker(".colorPicker_4_3", { width: 180, color: "rgb({{ scene_3.red_4 }}, {{ scene_3.green_4 }}, {{ scene_3.blue_4 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 3;   message.led_number = 4;  message.rgb_values = color.rgbString; 
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_3.active_setting_5 == "True" %}              
+        var colorPicker = new iro.ColorPicker(".colorPicker_5_3", { width: 180, color: "rgb({{ scene_3.red_5 }}, {{ scene_3.green_5 }}, {{ scene_3.blue_5 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 3;  message.led_number = 5;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_3.active_setting_6 == "True" %}              
+        var colorPicker = new iro.ColorPicker(".colorPicker_6_3", { width: 180, color: "rgb({{ scene_3.red_6 }}, {{ scene_3.green_6 }}, {{ scene_3.blue_6 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){ 
+            var message = new Object();  message.scene_number = 3;  message.led_number = 6;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          }); 
+      {% endif %} 
+      {% if scene_3.active_setting_7 == "True" %}             
+        var colorPicker = new iro.ColorPicker(".colorPicker_7_3", { width: 180, color: "rgb({{ scene_3.red_7 }}, {{ scene_3.green_7 }}, {{ scene_3.blue_7 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 3;   message.led_number = 7;  message.rgb_values = color.rgbString; 
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_3.active_setting_8 == "True" %}              
+        var colorPicker = new iro.ColorPicker(".colorPicker_8_3", { width: 180, color: "rgb({{ scene_3.red_8 }}, {{ scene_3.green_8 }}, {{ scene_3.blue_8 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){
+            var message = new Object();  message.scene_number = 3;  message.led_number = 8;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });
+      {% endif %} 
+      {% if scene_3.active_setting_9 == "True" %}              
+        var colorPicker = new iro.ColorPicker(".colorPicker_9_3", { width: 180, color: "rgb({{ scene_3.red_9 }}, {{ scene_3.green_9 }}, {{ scene_3.blue_9 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
+          colorPicker.on(["color:init", "color:change"], function(color){ 
+            var message = new Object();  message.scene_number = 3;  message.led_number = 9;  message.rgb_values = color.rgbString;
+            $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          });     
+      {% endif %}   
+    }  
+
+    window.onload = function () {
+        load_colorpicker("parameter");
+    };
+              
+  </script>
+
+
 <!---------------->
 <!--  LED TABLE -->
 <!---------------->   
@@ -67,9 +271,6 @@
   </div>
 {% endif %}  
 
-
-
-
             <div class="card ">
               <div class="card-header">
                 <a data-toggle="collapse" href="#collapse{{entry.id}}"><font color="white"><b><i class='uil uil-arrow-down'> {{entry.name}} </i></b></font></a>
@@ -77,35 +278,6 @@
                 <br>
               </div>    
               <form method="POST">  
-
-
-
-  <script>
-      
-    window.onload = function () { 
-
-      var colorPicker = new iro.ColorPicker(".colorPicker_1", { width: 180, color: "{{rgb}}", borderWidth: 1, borderColor: "#e14eca" });
-        colorPicker.on(["color:init", "color:change"], function(color){
-          var message = new Object();  message.colorpicker = 1;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
-        });
-      var colorPicker = new iro.ColorPicker(".colorPicker_2", { width: 180, color: "rgb(255, 0, 0)", borderWidth: 1, borderColor: "#e14eca" });
-        colorPicker.on(["color:init", "color:change"], function(color){
-          var message = new Object();  message.colorpicker = 2;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
-        });
-      var colorPicker = new iro.ColorPicker(".colorPicker_3", { width: 180, color: "rgb(255, 0, 0)", borderWidth: 1, borderColor: "#e14eca" });
-        colorPicker.on(["color:init", "color:change"], function(color){ 
-          var message = new Object();  message.colorpicker = 3;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
-        }); 
-    }  
-          
-  </script>
-
-
-
-
                 <div id="collapse{{entry.id}}" class="collapse{% if entry.collapse == "True" %}.show{% endif %}">    
                   <div class="card-body"> 
                     <div class="table-responsive">
@@ -123,34 +295,40 @@
                             </td> 
                             <td></td>
                             <td style="width:5%">
-                              <a href="/led/scenes/add_led/{{ entry.id }}#table_{{entry.id}}"><font size="5"><i class="tim-icons icon-simple-add"></i></font></a>                          
-                              <a href="/led/scenes/remove_led/{{ entry.id }}#table_{{entry.id}}"><font size="5"><i class="tim-icons icon-simple-delete"></i></font></a>    
+                              <a href="/led/scenes/add_led/{{ entry.id }}#table_{{entry.id}}"><font size="6"><i class="tim-icons icon-simple-add"></i></font></a>                          
+                              <br>
+                              <br>                                                          
+                              <a href="/led/scenes/remove_led/{{ entry.id }}#table_{{entry.id}}"><font size="6"><i class="tim-icons icon-simple-delete"></i></font></a>    
                             </td> 
                             <td></td> 
 
 <!-- section 1 / 2 / 3 -->
 
                             <td></td>
-                            <td style="width:24%">
+                            <td style="width:24%">      
                               <br>
-                              <br>                            
+                              <br>               
                               <div class="wrap">
                                 <div class="half">       
-                                  <div class="colorPicker_1"></div>
+                                  <div class="colorPicker_1_{{ entry.id }}"></div>
                                 </div>
-                              </div>
+                              </div>     
+                              <br>
+                              <br>                                                       
                             </td>
 
-                            {% if entry.active_setting_2 == "True" %} 
+                            {% if entry.active_setting_2 == "True" %}    
 
                               <td style="width:24%">
                                 <br>
-                                <br>
+                                <br>                                
                                 <div class="wrap">
                                   <div class="half">
-                                    <div class="colorPicker_2"></div>
+                                    <div class="colorPicker_2_{{ entry.id }}"></div>
                                   </div>
                                 </div>
+                                <br>
+                                <br>                                  
                               </th>
 
                             {% else %}   
@@ -159,41 +337,157 @@
 
                             {% if entry.active_setting_3 == "True" %} 
 
-                              <td style="width:24%">
+                              <td style="width:24%">    
                                 <br>
-                                <br>                              
+                                <br>                                                   
                                 <div class="wrap">
                                   <div class="half">
-                                    <div class="colorPicker_3"></div>
+                                    <div class="colorPicker_3_{{ entry.id }}"></div>
                                   </div>
                                 </div>
+                                <br>
+                                <br>                                 
                               </th>
-                                                      
+
                             {% else %}   
                               <td style="width:24%"></td>
                             {% endif %}   
 
 <!-- section 4 / 5 / 6 -->
 
-{% if entry.active_setting_4 == "True" %} 
+                          {% if entry.active_setting_4 == "True" %} 
 
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-    <div class="wrap">
-      <div class="half">
-        <div class="colorPicker_4"></div>
-      </div>
-    </div>
-                            </th>
-                            <th></th>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <p style="visibility: hidden;">
+                                <td style="width:24%">
+                                  <br>
+                                  <br>                                  
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_4_{{ entry.id }}"></div>
+                                    </div>
+                                  </div>    
+                                  <br>
+                                  <br>                                                                    
+                                </td>
+                              </p>
+                              
+                            {% if entry.active_setting_5 == "True" %} 
 
-{% endif %}
+                              <p style="visibility: hidden;">
+                                <td style="width:24%">
+                                  <br>
+                                  <br>                                  
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_5_{{ entry.id }}"></div>
+                                    </div>
+                                  </div>      
+                                  <br>
+                                  <br>                                                                  
+                                </td>
+                              </p>
+
+                            {% else %}   
+                              <td style="width:24%"></td>
+                            {% endif %}   
+
+                            {% if entry.active_setting_6 == "True" %} 
+
+                              <p style="visibility: hidden;">
+                                <td style="width:24%">
+                                  <br>
+                                  <br>                                 
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_6_{{ entry.id }}"></div>
+                                    </div>
+                                  </div>    
+                                  <br>
+                                  <br>                                                                   
+                                </td>
+                              </p>
+                                                      
+                            {% else %}   
+                              <td style="width:24%"></td>
+                            {% endif %}                                                                              
+
+                          {% endif %}
+
+<!-- section 7 / 8 / 9 -->
+
+                          {% if entry.active_setting_7 == "True" %} 
+
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <p style="visibility: hidden;">
+                                <td style="width:24%">
+                                  <br>
+                                  <br>                                  
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_7_{{ entry.id }}"></div>
+                                    </div>
+                                  </div>    
+                                  <br>
+                                  <br>    
+                                </td>
+                              </p>
+    
+                              {% if entry.active_setting_8 == "True" %} 
+
+                                <p style="visibility: hidden;">
+                                  <td style="width:24%">
+                                    <br>
+                                    <br>                                      
+                                    <div class="wrap">
+                                      <div class="half">
+                                        <div class="colorPicker_8_{{ entry.id }}"></div>
+                                      </div>
+                                    </div>   
+                                    <br>
+                                    <br>                                                                         
+                                  </td>
+                                </p>
+
+                              {% else %}   
+                                <td style="width:24%"></td>
+                              {% endif %}   
+
+                              {% if entry.active_setting_9 == "True" %} 
+
+                                <p style="visibility: hidden;">
+                                  <td style="width:24%">
+                                    <br>
+                                    <br>                                      
+                                    <div class="wrap">
+                                      <div class="half">
+                                        <div class="colorPicker_9_{{ entry.id }}"></div>
+                                      </div>
+                                    </div>   
+                                    <br>
+                                    <br>                                                                         
+                                  </td>
+                                </p>
+                                                        
+                              {% else %}   
+                                <td style="width:24%"></td>
+                              {% endif %}   
+
+                          {% endif %}
 
                           </tr>
                         </tbody>

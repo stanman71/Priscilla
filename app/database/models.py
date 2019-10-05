@@ -122,41 +122,41 @@ class LED_Scenes(db.Model):
     __tablename__ = 'led_scenes'
     id                    = db.Column(db.Integer, primary_key=True, autoincrement = True)
     name                  = db.Column(db.String(50), unique = True) 
-    red_1                 = db.Column(db.Integer, server_default=("0"))
-    green_1               = db.Column(db.Integer, server_default=("0"))
-    blue_1                = db.Column(db.Integer, server_default=("0"))
+    red_1                 = db.Column(db.Integer) 
+    green_1               = db.Column(db.Integer) 
+    blue_1                = db.Column(db.Integer) 
     active_setting_2      = db.Column(db.String(50))
-    red_2                 = db.Column(db.Integer, server_default=("0"))
-    green_2               = db.Column(db.Integer, server_default=("0"))
-    blue_2                = db.Column(db.Integer, server_default=("0"))
+    red_2                 = db.Column(db.Integer) 
+    green_2               = db.Column(db.Integer) 
+    blue_2                = db.Column(db.Integer) 
     active_setting_3      = db.Column(db.String(50))
-    red_3                 = db.Column(db.Integer, server_default=("0"))
-    green_3               = db.Column(db.Integer, server_default=("0"))
-    blue_3                = db.Column(db.Integer, server_default=("0"))
+    red_3                 = db.Column(db.Integer) 
+    green_3               = db.Column(db.Integer) 
+    blue_3                = db.Column(db.Integer) 
     active_setting_4      = db.Column(db.String(50))
-    red_4                 = db.Column(db.Integer, server_default=("0"))
-    green_4               = db.Column(db.Integer, server_default=("0"))
-    blue_4                = db.Column(db.Integer, server_default=("0"))
+    red_4                 = db.Column(db.Integer) 
+    green_4               = db.Column(db.Integer) 
+    blue_4                = db.Column(db.Integer) 
     active_setting_5      = db.Column(db.String(50))
-    red_5                 = db.Column(db.Integer, server_default=("0"))
-    green_5               = db.Column(db.Integer, server_default=("0"))
-    blue_5                = db.Column(db.Integer, server_default=("0"))   
+    red_5                 = db.Column(db.Integer) 
+    green_5               = db.Column(db.Integer) 
+    blue_5                = db.Column(db.Integer) 
     active_setting_6      = db.Column(db.String(50))
-    red_6                 = db.Column(db.Integer, server_default=("0"))
-    green_6               = db.Column(db.Integer, server_default=("0"))
-    blue_6                = db.Column(db.Integer, server_default=("0"))
+    red_6                 = db.Column(db.Integer) 
+    green_6               = db.Column(db.Integer) 
+    blue_6                = db.Column(db.Integer) 
     active_setting_7      = db.Column(db.String(50))
-    red_7                 = db.Column(db.Integer, server_default=("0"))
-    green_7               = db.Column(db.Integer, server_default=("0"))
-    blue_7                = db.Column(db.Integer, server_default=("0"))
+    red_7                 = db.Column(db.Integer) 
+    green_7               = db.Column(db.Integer) 
+    blue_7                = db.Column(db.Integer) 
     active_setting_8      = db.Column(db.String(50))
-    red_8                 = db.Column(db.Integer, server_default=("0"))
-    green_8               = db.Column(db.Integer, server_default=("0"))
-    blue_8                = db.Column(db.Integer, server_default=("0"))
+    red_8                 = db.Column(db.Integer) 
+    green_8               = db.Column(db.Integer) 
+    blue_8                = db.Column(db.Integer) 
     active_setting_9      = db.Column(db.String(50))
-    red_9                 = db.Column(db.Integer, server_default=("0"))
-    green_9               = db.Column(db.Integer, server_default=("0"))
-    blue_9                = db.Column(db.Integer, server_default=("0")) 
+    red_9                 = db.Column(db.Integer) 
+    green_9               = db.Column(db.Integer) 
+    blue_9                = db.Column(db.Integer) 
     collapse              = db.Column(db.String(50))        
 
 class MQTT_Broker(db.Model):
@@ -1358,6 +1358,9 @@ def ADD_LED_SCENE(name):
             scene = LED_Scenes(
                     id = i,
                     name = name,
+                    red_1   = 255, 
+                    green_1 = 255, 
+                    blue_1  = 255,                                         
                 )
             db.session.add(scene)
             db.session.commit()
@@ -1425,36 +1428,59 @@ def ADD_LED_SCENE_SETTING(id):
     entry = LED_Scenes.query.filter_by(id=id).first()
 
     if entry.active_setting_2 != "True":
-        entry.active_setting_2 = "True"   
+        entry.active_setting_2 = "True" 
+        entry.red_2            = 255
+        entry.green_2          = 255
+        entry.blue_2           = 255          
         db.session.commit()
         return
     if entry.active_setting_3 != "True":
-        entry.active_setting_3 = "True"      
+        entry.active_setting_3 = "True"     
+        entry.red_3            = 255
+        entry.green_3          = 255
+        entry.blue_3           = 255         
         db.session.commit()
         return
     if entry.active_setting_4 != "True":
         entry.active_setting_4 = "True"   
+        entry.red_4            = 255
+        entry.green_4          = 255
+        entry.blue_4           = 255        
         db.session.commit()
         return
     if entry.active_setting_5 != "True":
         entry.active_setting_5 = "True"  
+        entry.red_5            = 255
+        entry.green_5          = 255
+        entry.blue_5           = 255        
         db.session.commit()
         return
     if entry.active_setting_6 != "True":
         entry.active_setting_6 = "True"   
+        entry.red_6            = 255
+        entry.green_6          = 255
+        entry.blue_6           = 255        
         db.session.commit()
         return
     if entry.active_setting_7 != "True":
         entry.active_setting_7 = "True"  
+        entry.red_7            = 255
+        entry.green_7          = 255
+        entry.blue_7           = 255        
         db.session.commit()
         return
     if entry.active_setting_8 != "True":
         entry.active_setting_8 = "True"     
+        entry.red_8            = 255
+        entry.green_8          = 255
+        entry.blue_8           = 255        
         db.session.commit()
         return       
     if entry.active_setting_9 != "True":
         entry.active_setting_9 = "True"
-        entry.brightness_9     = 254
+        entry.red_9            = 255
+        entry.green_9          = 255
+        entry.blue_9           = 255        
         db.session.commit()
         return  
 

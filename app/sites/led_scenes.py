@@ -27,10 +27,15 @@ def permission_required(f):
     return wrap
 
 
+led_scenes_rgb_values_array = [[0 for x in range(10)] for y in range(10)] 
+
+
 @app.route('/led/scenes', methods=['GET', 'POST'])
 @login_required
 @permission_required
 def led_scenes():
+    global led_scenes_rgb_values_array
+
     success_message_change_settings           = []
     error_message_change_settings             = []    
     success_message_change_settings_led_scene = ""
@@ -92,7 +97,7 @@ def led_scenes():
                 #######
 
                 # check rgb
-                rgb_1 = request.form.get("set_rgb_1_" + str(i))
+                rgb_1 = led_scenes_rgb_values_array[i-1][1-1]
 
                 try:
                     rgb_1   = re.findall(r'\d+', rgb_1)
@@ -111,7 +116,7 @@ def led_scenes():
                 if GET_LED_SCENE_BY_ID(i).active_setting_2 == "True":
 
                     # check rgb
-                    rgb_2 = request.form.get("set_rgb_2_" + str(i))
+                    rgb_2 = led_scenes_rgb_values_array[i-1][2-1]
 
                     try:
                         rgb_2   = re.findall(r'\d+', rgb_2)
@@ -135,7 +140,7 @@ def led_scenes():
                 if GET_LED_SCENE_BY_ID(i).active_setting_3 == "True":
 
                     # check rgb
-                    rgb_3 = request.form.get("set_rgb_3_" + str(i))
+                    rgb_3 = led_scenes_rgb_values_array[i-1][3-1]
 
                     try:
                         rgb_3   = re.findall(r'\d+', rgb_3)
@@ -159,7 +164,7 @@ def led_scenes():
                 if GET_LED_SCENE_BY_ID(i).active_setting_4 == "True":
 
                     # check rgb
-                    rgb_4 = request.form.get("set_rgb_4_" + str(i))
+                    rgb_4 = led_scenes_rgb_values_array[i-1][4-1]
 
                     try:
                         rgb_4   = re.findall(r'\d+', rgb_4)
@@ -183,7 +188,7 @@ def led_scenes():
                 if GET_LED_SCENE_BY_ID(i).active_setting_5 == "True":
 
                     # check rgb
-                    rgb_5 = request.form.get("set_rgb_5_" + str(i))
+                    rgb_5 = led_scenes_rgb_values_array[i-1][5-1]
 
                     try:
                         rgb_5   = re.findall(r'\d+', rgb_5)
@@ -207,7 +212,7 @@ def led_scenes():
                 if GET_LED_SCENE_BY_ID(i).active_setting_6 == "True":
 
                     # check rgb
-                    rgb_6 = request.form.get("set_rgb_6_" + str(i))
+                    rgb_6 = led_scenes_rgb_values_array[i-1][6-1]
 
                     try:
                         rgb_6   = re.findall(r'\d+', rgb_6)
@@ -231,7 +236,7 @@ def led_scenes():
                 if GET_LED_SCENE_BY_ID(i).active_setting_7 == "True":
 
                     # check rgb
-                    rgb_7 = request.form.get("set_rgb_7_" + str(i))
+                    rgb_7 = led_scenes_rgb_values_array[i-1][7-1]
 
                     try:
                         rgb_7   = re.findall(r'\d+', rgb_7)
@@ -255,7 +260,7 @@ def led_scenes():
                 if GET_LED_SCENE_BY_ID(i).active_setting_8 == "True":
 
                     # check rgb
-                    rgb_8 = request.form.get("set_rgb_8_" + str(i))
+                    rgb_8 = led_scenes_rgb_values_array[i-1][8-1]
 
                     try:
                         rgb_8   = re.findall(r'\d+', rgb_8)
@@ -279,7 +284,7 @@ def led_scenes():
                 if GET_LED_SCENE_BY_ID(i).active_setting_9 == "True":
 
                     # check rgb
-                    rgb_9 = request.form.get("set_rgb_9_" + str(i))
+                    rgb_9 = led_scenes_rgb_values_array[i-1][9-1]
 
                     try:
                         rgb_9   = re.findall(r'\d+', rgb_9)
@@ -304,6 +309,8 @@ def led_scenes():
                                           red_9, green_9, blue_9):
 
                     success_message_change_settings_led_scene = i
+
+            name = ""
 
 
     """ ############### """
@@ -343,6 +350,18 @@ def led_scenes():
             else:
                 error_message_change_settings.append(scene + " || " + str(result))
 
+    try:
+        scene_1 = GET_LED_SCENE_BY_ID(1)
+    except:
+        scene_1 = ""
+    try:
+        scene_2 = GET_LED_SCENE_BY_ID(2)
+    except:
+        scene_2 = ""
+    try:
+        scene_3 = GET_LED_SCENE_BY_ID(3)
+    except:
+        scene_3 = ""
 
 
     list_led_scenes = GET_ALL_LED_SCENES()
@@ -360,7 +379,9 @@ def led_scenes():
                                                     error_message_add_led_scene=error_message_add_led_scene,
                                                     list_led_scenes=list_led_scenes,
                                                     name=name,
-                                                    rgb="rgb(0, 0, 255)",
+                                                    scene_1=scene_1,
+                                                    scene_2=scene_2,      
+                                                    scene_3=scene_3,                                                                                                    
                                                     ) 
                            )
 
@@ -392,12 +413,13 @@ def change_led_scenes_options(id, option):
 
 @app.route("/RGB" ,methods=['POST'])
 def RGB():
+    global led_scenes_rgb_values_array
+
     if request.method == 'POST':
-        colorpicker = request.json['colorpicker']        
-        rgb_values  = request.json['rgb_values']
-        print(rgb_values)
-        print(colorpicker)
-
-
+        scene_number = request.json['scene_number']     
+        led_number   = request.json['led_number']    
+        rgb_values   = request.json['rgb_values']
+        
+        led_scenes_rgb_values_array[scene_number-1][led_number-1] = rgb_values
 	
     return json.dumps({'Status':'OK'})

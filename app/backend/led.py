@@ -1,4 +1,3 @@
-import math
 import time
 import threading
 import json
@@ -13,11 +12,8 @@ from app.backend.shared_resources import mqtt_message_queue
 
 
 def SET_LED_BULB_RGB(led_name, red, green, blue, brightness):
-    
-    #xy = RGBtoXY(int(red), int(green), int(blue))
-
     channel = "miranda/zigbee2mqtt/" + led_name + "/set"
-    msg     = '{"state":"ON","brightness":' + str(brightness) + ',"color": { "r":' + red + ',"g":' + green  + ',"b":' + blue + '}}'
+    msg     = '{"state":"ON","brightness":' + str(brightness) + ',"color": { "r":' + str(red) + ',"g":' + str(green)  + ',"b":' + str(blue) + '}}'
     
     heapq.heappush(mqtt_message_queue, (5, (channel, msg))) 
     
