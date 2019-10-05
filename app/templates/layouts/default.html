@@ -35,9 +35,6 @@
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="/static/demo/demo.css" rel="stylesheet" />
 
-  <link rel="stylesheet" href="https://unpkg.com/huebee@2/dist/huebee.css">
-
-
 </head>
 
 <body class="">
@@ -73,23 +70,8 @@
   <script src="/static/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="/static/js/black-dashboard.min.js?v=1.0.0"></script>
-
-
-
-  <script src="https://unpkg.com/huebee@2/dist/huebee.pkgd.js"></script>
-
-  <script>
-    var colorInput = document.querySelector('.color-input');
-    var hueb = new Huebee( colorInput, {
-      setBGColor: true, 
-      hues: 15, 
-      shades: 10,
-      saturations: 1,
-      notation: 'hex',
-    });
-  </script>
-
-
+  <!--  RGB Color Picker    -->
+  <script src="/static/js/plugins/iro.min.js"></script>
 
 
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->
@@ -107,52 +89,6 @@
       });
     });
   </script>
-
-  <!-- rgb slider function -->
-  <script type="text/javascript">
-    $(document).ready(function() {
-
-      var RGBChange = function() {
-        $('#RGB_1_1').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
-      };
-          
-      var r = $('#red_1_1').slider()
-                .on('slide', RGBChange)
-                .data('slider');
-      var g = $('#green_1_1').slider()
-                .on('slide', RGBChange)
-                .data('slider');
-      var b = $('#blue_1_1').slider()
-                .on('slide', RGBChange)
-                .data('slider');			
-		});
-  </script>
-
-  <!-- rgb slider function -->
-  <script type="text/javascript">
-    $(document).ready(function() {
-
-      var RGBChange = function() {
-        $('#RGB_2_1').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
-      };
-          
-      var r = $('#red_2_1').slider()
-                .on('slide', RGBChange)
-                .data('slider');
-      var g = $('#green_2_1').slider()
-                .on('slide', RGBChange)
-                .data('slider');
-      var b = $('#blue_2_1').slider()
-                .on('slide', RGBChange)
-                .data('slider');			
-		});
-  </script>
-
-
-
-
-
-
 
   <script>
     $(document).ready(function() {

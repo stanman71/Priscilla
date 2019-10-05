@@ -122,57 +122,41 @@ class LED_Scenes(db.Model):
     __tablename__ = 'led_scenes'
     id                    = db.Column(db.Integer, primary_key=True, autoincrement = True)
     name                  = db.Column(db.String(50), unique = True) 
-    hex_1                 = db.Column(db.String(50), server_default=("0"))
-    color_temp_1          = db.Column(db.Integer, server_default=("100"))
-    brightness_1          = db.Column(db.Integer, server_default=("254"))
+    red_1                 = db.Column(db.Integer, server_default=("0"))
+    green_1               = db.Column(db.Integer, server_default=("0"))
+    blue_1                = db.Column(db.Integer, server_default=("0"))
     active_setting_2      = db.Column(db.String(50))
     red_2                 = db.Column(db.Integer, server_default=("0"))
     green_2               = db.Column(db.Integer, server_default=("0"))
     blue_2                = db.Column(db.Integer, server_default=("0"))
-    color_temp_2          = db.Column(db.Integer, server_default=("100"))
-    brightness_2          = db.Column(db.Integer, server_default=("254"))
     active_setting_3      = db.Column(db.String(50))
     red_3                 = db.Column(db.Integer, server_default=("0"))
     green_3               = db.Column(db.Integer, server_default=("0"))
     blue_3                = db.Column(db.Integer, server_default=("0"))
-    color_temp_3          = db.Column(db.Integer, server_default=("100"))
-    brightness_3          = db.Column(db.Integer, server_default=("254"))
     active_setting_4      = db.Column(db.String(50))
     red_4                 = db.Column(db.Integer, server_default=("0"))
     green_4               = db.Column(db.Integer, server_default=("0"))
     blue_4                = db.Column(db.Integer, server_default=("0"))
-    color_temp_4          = db.Column(db.Integer, server_default=("100"))
-    brightness_4          = db.Column(db.Integer, server_default=("254"))
     active_setting_5      = db.Column(db.String(50))
     red_5                 = db.Column(db.Integer, server_default=("0"))
     green_5               = db.Column(db.Integer, server_default=("0"))
-    blue_5                = db.Column(db.Integer, server_default=("0"))
-    color_temp_5          = db.Column(db.Integer, server_default=("100"))
-    brightness_5          = db.Column(db.Integer, server_default=("254"))        
+    blue_5                = db.Column(db.Integer, server_default=("0"))   
     active_setting_6      = db.Column(db.String(50))
     red_6                 = db.Column(db.Integer, server_default=("0"))
     green_6               = db.Column(db.Integer, server_default=("0"))
     blue_6                = db.Column(db.Integer, server_default=("0"))
-    color_temp_6          = db.Column(db.Integer, server_default=("100"))
-    brightness_6          = db.Column(db.Integer, server_default=("254"))
     active_setting_7      = db.Column(db.String(50))
     red_7                 = db.Column(db.Integer, server_default=("0"))
     green_7               = db.Column(db.Integer, server_default=("0"))
     blue_7                = db.Column(db.Integer, server_default=("0"))
-    color_temp_7          = db.Column(db.Integer, server_default=("100"))
-    brightness_7          = db.Column(db.Integer, server_default=("254"))
     active_setting_8      = db.Column(db.String(50))
     red_8                 = db.Column(db.Integer, server_default=("0"))
     green_8               = db.Column(db.Integer, server_default=("0"))
     blue_8                = db.Column(db.Integer, server_default=("0"))
-    color_temp_8          = db.Column(db.Integer, server_default=("100"))
-    brightness_8          = db.Column(db.Integer, server_default=("254"))
     active_setting_9      = db.Column(db.String(50))
     red_9                 = db.Column(db.Integer, server_default=("0"))
     green_9               = db.Column(db.Integer, server_default=("0"))
-    blue_9                = db.Column(db.Integer, server_default=("0"))
-    color_temp_9          = db.Column(db.Integer, server_default=("100"))
-    brightness_9          = db.Column(db.Integer, server_default=("254"))   
+    blue_9                = db.Column(db.Integer, server_default=("0")) 
     collapse              = db.Column(db.String(50))        
 
 class MQTT_Broker(db.Model):
@@ -826,7 +810,8 @@ def DELETE_DEVICE(ieeeAddr):
         if entry.device_ieeeAddr == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
             error_list = error_list + "," + device.name + " eingetragen in System / Sprachsteuerung"            
-        
+    """
+
     # check led groups
     entries = GET_ALL_LED_GROUPS()
     for entry in entries:
@@ -857,8 +842,7 @@ def DELETE_DEVICE(ieeeAddr):
         if entry.led_ieeeAddr_9 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
             error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"            
-        """
-
+        
 
     if error_list != "":
         return error_list[1:]   
@@ -1366,7 +1350,7 @@ def GET_LED_SCENE_BY_NAME(name):
 def ADD_LED_SCENE(name):
 
     # find a unused id
-    for i in range(1,21):
+    for i in range(1,11):
         if LED_Scenes.query.filter_by(id=i).first():
             pass
         else:
@@ -1378,82 +1362,58 @@ def ADD_LED_SCENE(name):
             db.session.add(scene)
             db.session.commit()
 
-            RESET_LED_SCENE_ERRORS()
-
             WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + name + " | added")  
 
             return True
 
-    return "Szenenlimit erreicht (20)"
+    return "Szenenlimit erreicht (10)"
 
 
-def SET_LED_SCENE(id, name, hex_1, color_temp_1, brightness_1,
-                            red_2, green_2, blue_2, color_temp_2, brightness_2,
-                            red_3, green_3, blue_3, color_temp_3, brightness_3,
-                            red_4, green_4, blue_4, color_temp_4, brightness_4,
-                            red_5, green_5, blue_5, color_temp_5, brightness_5,
-                            red_6, green_6, blue_6, color_temp_6, brightness_6,
-                            red_7, green_7, blue_7, color_temp_7, brightness_7,
-                            red_8, green_8, blue_8, color_temp_8, brightness_8,
-                            red_9, green_9, blue_9, color_temp_9, brightness_9):
+def SET_LED_SCENE(id, name, red_1, green_1, blue_1, red_2, green_2, blue_2, red_3, green_3, blue_3, red_4, green_4, blue_4, 
+                            red_5, green_5, blue_5, red_6, green_6, blue_6, red_7, green_7, blue_7, red_8, green_8, blue_8, 
+                            red_9, green_9, blue_9):
 
     entry = LED_Scenes.query.filter_by(id=id).first()
 
     if (entry.name != name or 
-        entry.hex_1 != hex_1 or entry.color_temp_1 != int(color_temp_1) or entry.brightness_1 != int(brightness_1) or
-        entry.red_2 != int(red_2) or entry.green_2 != int(green_2) or entry.blue_2 != int(blue_2) or entry.color_temp_2 != int(color_temp_2) or entry.brightness_2 != int(brightness_2) or
-        entry.red_3 != int(red_3) or entry.green_3 != int(green_3) or entry.blue_3 != int(blue_3) or entry.color_temp_3 != int(color_temp_3) or entry.brightness_3 != int(brightness_3) or
-        entry.red_4 != int(red_4) or entry.green_4 != int(green_4) or entry.blue_4 != int(blue_4) or entry.color_temp_4 != int(color_temp_4) or entry.brightness_4 != int(brightness_4) or
-        entry.red_5 != int(red_5) or entry.green_5 != int(green_5) or entry.blue_5 != int(blue_5) or entry.color_temp_5 != int(color_temp_5) or entry.brightness_5 != int(brightness_5) or
-        entry.red_6 != int(red_6) or entry.green_6 != int(green_6) or entry.blue_6 != int(blue_6) or entry.color_temp_6 != int(color_temp_6) or entry.brightness_6 != int(brightness_6) or
-        entry.red_7 != int(red_7) or entry.green_7 != int(green_7) or entry.blue_7 != int(blue_7) or entry.color_temp_7 != int(color_temp_7) or entry.brightness_7 != int(brightness_7) or
-        entry.red_8 != int(red_8) or entry.green_8 != int(green_8) or entry.blue_8 != int(blue_8) or entry.color_temp_8 != int(color_temp_8) or entry.brightness_8 != int(brightness_8) or
-        entry.red_9 != int(red_9) or entry.green_9 != int(green_9) or entry.blue_9 != int(blue_9) or entry.color_temp_9 != int(color_temp_9) or entry.brightness_9 != int(brightness_9)):
+        entry.red_1 != int(red_1) or entry.green_1 != int(green_1) or entry.blue_1 != int(blue_1) or
+        entry.red_2 != int(red_2) or entry.green_2 != int(green_2) or entry.blue_2 != int(blue_2) or 
+        entry.red_3 != int(red_3) or entry.green_3 != int(green_3) or entry.blue_3 != int(blue_3) or 
+        entry.red_4 != int(red_4) or entry.green_4 != int(green_4) or entry.blue_4 != int(blue_4) or 
+        entry.red_5 != int(red_5) or entry.green_5 != int(green_5) or entry.blue_5 != int(blue_5) or 
+        entry.red_6 != int(red_6) or entry.green_6 != int(green_6) or entry.blue_6 != int(blue_6) or 
+        entry.red_7 != int(red_7) or entry.green_7 != int(green_7) or entry.blue_7 != int(blue_7) or 
+        entry.red_8 != int(red_8) or entry.green_8 != int(green_8) or entry.blue_8 != int(blue_8) or 
+        entry.red_9 != int(red_9) or entry.green_9 != int(green_9) or entry.blue_9 != int(blue_9)):
 
-        entry.name  = name
-        entry.hex_1 = hex_1
-        entry.color_temp_1 = color_temp_1
-        entry.brightness_1 = brightness_1
-        entry.red_2 = red_2
+        entry.name    = name
+        entry.red_1   = red_1
+        entry.green_1 = green_1  
+        entry.blue_1  = blue_1
+        entry.red_2   = red_2
         entry.green_2 = green_2   
-        entry.blue_2 = blue_2
-        entry.color_temp_2 = color_temp_2
-        entry.brightness_2 = brightness_2
-        entry.red_3 = red_3
+        entry.blue_2  = blue_2
+        entry.red_3   = red_3
         entry.green_3 = green_3   
-        entry.blue_3 = blue_3
-        entry.color_temp_3 = color_temp_3
-        entry.brightness_3 = brightness_3    
-        entry.red_4 = red_4
+        entry.blue_3  = blue_3 
+        entry.red_4   = red_4
         entry.green_4 = green_4   
-        entry.blue_4 = blue_4
-        entry.color_temp_4 = color_temp_4
-        entry.brightness_4 = brightness_4
-        entry.red_5 = red_5
+        entry.blue_4  = blue_4
+        entry.red_5   = red_5
         entry.green_5 = green_5   
-        entry.blue_5 = blue_5
-        entry.color_temp_5 = color_temp_5
-        entry.brightness_5 = brightness_5
-        entry.red_6 = red_6
+        entry.blue_5  = blue_5
+        entry.red_6   = red_6
         entry.green_6 = green_6   
-        entry.blue_6 = blue_6
-        entry.color_temp_6 = color_temp_6
-        entry.brightness_6 = brightness_6
-        entry.red_7 = red_7
+        entry.blue_6  = blue_6
+        entry.red_7   = red_7
         entry.green_7 = green_7   
-        entry.blue_7 = blue_7
-        entry.color_temp_7 = color_temp_7
-        entry.brightness_7 = brightness_7
-        entry.red_8 = red_8
+        entry.blue_7  = blue_7
+        entry.red_8   = red_8
         entry.green_8 = green_8   
-        entry.blue_8 = blue_8
-        entry.color_temp_8 = color_temp_8
-        entry.brightness_8 = brightness_8
-        entry.red_9 = red_9
+        entry.blue_8  = blue_8
+        entry.red_9   = red_9
         entry.green_9 = green_9   
-        entry.blue_9 = blue_9
-        entry.color_temp_9 = color_temp_9
-        entry.brightness_9 = brightness_9                    
+        entry.blue_9  = blue_9                
         db.session.commit()  
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + name + " | Settings changed") 
@@ -1507,8 +1467,6 @@ def REMOVE_LED_SCENE_SETTING(id):
         entry.red_9            = 0
         entry.green_9          = 0
         entry.blue_9           = 0
-        entry.color_temp_9     = 0
-        entry.brightness_9     = 254
         db.session.commit()
         return
 
@@ -1517,8 +1475,6 @@ def REMOVE_LED_SCENE_SETTING(id):
         entry.red_8            = 0
         entry.green_8          = 0
         entry.blue_8           = 0
-        entry.color_temp_8     = 0
-        entry.brightness_8     = 254
         db.session.commit()
         return
 
@@ -1527,8 +1483,6 @@ def REMOVE_LED_SCENE_SETTING(id):
         entry.red_7            = 0
         entry.green_7          = 0
         entry.blue_7           = 0
-        entry.color_temp_7     = 0
-        entry.brightness_7     = 254
         db.session.commit()
         return
 
@@ -1537,8 +1491,6 @@ def REMOVE_LED_SCENE_SETTING(id):
         entry.red_6            = 0
         entry.green_6          = 0
         entry.blue_6           = 0
-        entry.color_temp_6     = 0
-        entry.brightness_6     = 254
         db.session.commit()
         return
 
@@ -1547,8 +1499,6 @@ def REMOVE_LED_SCENE_SETTING(id):
         entry.red_5            = 0
         entry.green_5          = 0
         entry.blue_5           = 0
-        entry.color_temp_5     = 0
-        entry.brightness_5     = 254
         db.session.commit()
         return
 
@@ -1557,8 +1507,6 @@ def REMOVE_LED_SCENE_SETTING(id):
         entry.red_4            = 0
         entry.green_4          = 0
         entry.blue_4           = 0
-        entry.color_temp_4     = 0
-        entry.brightness_4     = 254
         db.session.commit()
         return
 
@@ -1567,8 +1515,6 @@ def REMOVE_LED_SCENE_SETTING(id):
         entry.red_3            = 0
         entry.green_3          = 0
         entry.blue_3           = 0
-        entry.color_temp_3     = 0
-        entry.brightness_3     = 254
         db.session.commit()
         return
 
@@ -1577,8 +1523,6 @@ def REMOVE_LED_SCENE_SETTING(id):
         entry.red_2            = 0
         entry.green_2          = 0
         entry.blue_2           = 0
-        entry.color_temp_2     = 0
-        entry.brightness_2     = 254
         db.session.commit()
         return
 

@@ -46,7 +46,6 @@ def plants():
     page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
 
-
     # test message
     if session.get('test_pump', None) != None:
         success_message_change_settings.append(session.get('test_pump')) 

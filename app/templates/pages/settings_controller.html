@@ -64,11 +64,15 @@
                               <a href="/settings/controller/position/down/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-down"></i></a>                           
                             </td>                                 
                             <td style="width:20%"> 
-                              {{ entry.command_1 | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} 
+                              <p style="visibility: hidden;">invisibletext</p>
+                                {{ entry.command_1 | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} 
+                              <p style="visibility: hidden;">invisibletext</p>
                             </td>
                             <td style="width:77%"> 
-                              <input type="text" class="form-control" name="set_task_1_{{entry.id}}" 
-                                value="{% if entry.task_1 != None and entry.task_1 != "None" %}{{ entry.task_1 }}{% endif %}" />
+                              <p style="visibility: hidden;">invisibletextforminlenghtinvisibletextforminlenght</p>
+                                <input type="text" class="form-control" name="set_task_1_{{entry.id}}" 
+                                  value="{% if entry.task_1 != None and entry.task_1 != "None" %}{{ entry.task_1 }}{% endif %}" />
+                              <p style="visibility: hidden;">invisibletextforminlenghtinvisibletextforminlenght</p>
                             </td> 
                           </tr>
                           {% if entry.command_2 != "None" %}

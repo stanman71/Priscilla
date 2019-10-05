@@ -41,30 +41,18 @@ def led_scenes():
 
     RESET_LED_SCENE_COLLAPSE()
 
-    # delete message
-    if session.get('delete_led_scene_success', None) != None:
-        success_message_change_settings.append(session.get('delete_led_scene_success')) 
-        session['delete_led_scene_success'] = None
-        
-    if session.get('delete_led_scene_error', None) != None:
-        error_message_change_settings.append(session.get('delete_led_scene_error'))
-        session['delete_led_scene_error'] = None       
 
     """ ################# """
     """  table led scenes """
     """ ################# """   
 
-    for i in range (1,21):
 
-        # add led setting
-        if request.form.get("add_setting_" + str(i)) != None:
-            ADD_LED_SCENE_SETTING(i)
-            SET_LED_SCENE_COLLAPSE_OPEN(i)
-            
-        # remove led setting
-        if request.form.get("remove_setting_" + str(i)) != None:
-            REMOVE_LED_SCENE_SETTING(i)
-            SET_LED_SCENE_COLLAPSE_OPEN(i)
+    # set collapse open for option change led number
+    if session.get("set_collapse_open", None) != None:
+        SET_LED_SCENE_COLLAPSE_OPEN(session.get('set_collapse_open'))
+        session['set_collapse_open'] = None
+
+    for i in range (1,11):
 
         # change scene
         if request.form.get("save_led_scene_settings") != None:
@@ -103,44 +91,42 @@ def led_scenes():
                 ## 1 ##
                 #######
 
+                # check rgb
+                rgb_1 = request.form.get("set_rgb_1_" + str(i))
+
                 try:
-                    hex_1 = request.form.get("set_hex_1_" + str(i))  
+                    rgb_1   = re.findall(r'\d+', rgb_1)
+                    red_1   = rgb_1[0]
+                    green_1 = rgb_1[1]           
+                    blue_1  = rgb_1[2]      
                 except:
-                    hex_1 = 0  
-                                    
-                # check color_temp
-                color_temp_1 = request.form.get("set_color_temp_1_" + str(i))  
-
-                # check brightness
-                brightness_1 = request.form.get("set_brightness_1_" + str(i))   
-
+                    red_1   = 0
+                    green_1 = 0
+                    blue_1  = 0 
+                                
                 #######
                 ## 2 ##
                 #######
 
                 if GET_LED_SCENE_BY_ID(i).active_setting_2 == "True":
 
+                    # check rgb
+                    rgb_2 = request.form.get("set_rgb_2_" + str(i))
+
                     try:
-                        red_2   = request.form.get("set_red_2_" + str(i))
-                        green_2 = request.form.get("set_green_2_" + str(i))          
-                        blue_2  = request.form.get("set_blue_2_" + str(i))    
+                        rgb_2   = re.findall(r'\d+', rgb_2)
+                        red_2   = rgb_2[0]
+                        green_2 = rgb_2[1]           
+                        blue_2  = rgb_2[2]      
                     except:
                         red_2   = 0
                         green_2 = 0
                         blue_2  = 0 
 
-                    # check color_temp
-                    color_temp_2 = request.form.get("set_color_temp_2_" + str(i))  
-
-                    # check brightness
-                    brightness_2 = request.form.get("set_brightness_2_" + str(i))   
-
                 else:
                     red_2 = 0
                     green_2 = 0
                     blue_2 = 0
-                    color_temp_2 = 0                    
-                    brightness_2 = 254
 
                 #######
                 ## 3 ##
@@ -161,18 +147,10 @@ def led_scenes():
                         green_3 = 0
                         blue_3  = 0 
 
-                    # check color_temp
-                    color_temp_3 = request.form.get("set_color_temp_3_" + str(i))  
-
-                    # check brightness
-                    brightness_3 = request.form.get("set_brightness_3_" + str(i))   
-
                 else:
                     red_3 = 0
                     green_3 = 0
                     blue_3 = 0
-                    color_temp_3 = 0                    
-                    brightness_3 = 254
 
                 #######
                 ## 4 ##
@@ -193,18 +171,10 @@ def led_scenes():
                         green_4 = 0
                         blue_4  = 0 
 
-                    # check color_temp
-                    color_temp_4 = request.form.get("set_color_temp_4_" + str(i))  
-
-                    # check brightness
-                    brightness_4 = request.form.get("set_brightness_4_" + str(i))   
-
                 else:
                     red_4 = 0
                     green_4 = 0
                     blue_4 = 0
-                    color_temp_4 = 0                   
-                    brightness_4 = 254
 
                 #######
                 ## 5 ##
@@ -225,18 +195,10 @@ def led_scenes():
                         green_5 = 0
                         blue_5  = 0 
 
-                    # check color_temp
-                    color_temp_5 = request.form.get("set_color_temp_5_" + str(i))  
-
-                    # check brightness
-                    brightness_5 = request.form.get("set_brightness_5_" + str(i))   
-
                 else:
                     red_5 = 0
                     green_5 = 0
                     blue_5 = 0
-                    color_temp_5 = 0                    
-                    brightness_5 = 254
 
                 #######
                 ## 6 ##
@@ -257,18 +219,10 @@ def led_scenes():
                         green_6 = 0
                         blue_6  = 0 
 
-                    # check color_temp
-                    color_temp_6 = request.form.get("set_color_temp_6_" + str(i))  
-
-                    # check brightness
-                    brightness_6 = request.form.get("set_brightness_6_" + str(i))   
-
                 else:
                     red_6 = 0
                     green_6 = 0
                     blue_6 = 0
-                    color_temp_6 = 0                   
-                    brightness_6 = 254
 
                 #######
                 ## 7 ##
@@ -289,18 +243,10 @@ def led_scenes():
                         green_7 = 0
                         blue_7  = 0 
 
-                    # check color_temp
-                    color_temp_7 = request.form.get("set_color_temp_7_" + str(i))  
-
-                    # check brightness
-                    brightness_7 = request.form.get("set_brightness_7_" + str(i))   
-
                 else:
                     red_7 = 0
                     green_7 = 0
                     blue_7 = 0
-                    color_temp_7 = 0                    
-                    brightness_7 = 254
 
                 #######
                 ## 8 ##
@@ -321,18 +267,10 @@ def led_scenes():
                         green_8 = 0
                         blue_8  = 0 
 
-                    # check color_temp
-                    color_temp_8 = request.form.get("set_color_temp_8_" + str(i))  
-
-                    # check brightness
-                    brightness_8 = request.form.get("set_brightness_8_" + str(i))   
-
                 else:
                     red_8 = 0
                     green_8 = 0
                     blue_8 = 0
-                    color_temp_8 = 0                    
-                    brightness_8 = 254
 
                 #######
                 ## 9 ##
@@ -353,34 +291,17 @@ def led_scenes():
                         green_9 = 0
                         blue_9  = 0 
 
-                    # check color_temp
-                    color_temp_9 = request.form.get("set_color_temp_9_" + str(i))  
-
-                    # check brightness
-                    brightness_9 = request.form.get("set_brightness_9_" + str(i))   
-
                 else:
                     red_9 = 0
                     green_9 = 0
                     blue_9 = 0
-                    color_temp_9 = 0
-                    brightness_9 = 254        
 
-                
-                print(request.form.get("set_hue_" + str(i)))
-                print(request.form.get("set_saturation_" + str(i)))
-                print(request.form.get("set_brightness_" + str(i)))
-                    
-                    
-                if SET_LED_SCENE(i, name, hex_1, color_temp_1, brightness_1,
-                                red_2, green_2, blue_2, color_temp_2, brightness_2,
-                                red_3, green_3, blue_3, color_temp_3, brightness_3,
-                                red_4, green_4, blue_4, color_temp_4, brightness_4,
-                                red_5, green_5, blue_5, color_temp_5, brightness_5,
-                                red_6, green_6, blue_6, color_temp_6, brightness_6,
-                                red_7, green_7, blue_7, color_temp_7, brightness_7,
-                                red_8, green_8, blue_8, color_temp_8, brightness_8,
-                                red_9, green_9, blue_9, color_temp_9, brightness_9):
+
+                if SET_LED_SCENE(i, name, red_1, green_1, blue_1, red_2, green_2, blue_2, 
+                                          red_3, green_3, blue_3, red_4, green_4, blue_4, 
+                                          red_5, green_5, blue_5, red_6, green_6, blue_6, 
+                                          red_7, green_7, blue_7, red_8, green_8, blue_8, 
+                                          red_9, green_9, blue_9):
 
                     success_message_change_settings_led_scene = i
 
@@ -398,13 +319,31 @@ def led_scenes():
             error_message_add_led_scene.append("Name bereits vergeben")               
         else:    
             name = request.form.get("set_name")                 
-            error = ADD_LED_SCENE(name)   
-            if error != None: 
-                error_message_add_led_scene.append(error)         
+            result = ADD_LED_SCENE(name)   
+            if result != True: 
+                error_message_add_led_scene.append(result)         
 
             else:       
                 success_message_add_led_scene = True
                 name = ""
+
+
+    """ ################## """
+    """  delete led scene  """
+    """ ################## """   
+
+    for i in range (1,11):
+
+        if request.form.get("delete_led_scene_" + str(i)) != None:
+            scene  = GET_LED_SCENE_BY_ID(i).name  
+            result = DELETE_LED_SCENE(i)            
+
+            if result:
+                success_message_change_settings.append(scene + " || Erfolgreich gelöscht") 
+            else:
+                error_message_change_settings.append(scene + " || " + str(result))
+
+
 
     list_led_scenes = GET_ALL_LED_SCENES()
 
@@ -421,6 +360,7 @@ def led_scenes():
                                                     error_message_add_led_scene=error_message_add_led_scene,
                                                     list_led_scenes=list_led_scenes,
                                                     name=name,
+                                                    rgb="rgb(0, 0, 255)",
                                                     ) 
                            )
 
@@ -434,17 +374,30 @@ def change_led_scenes_position(id, direction):
     return redirect(url_for('led_scenes'))
 
 
-# delete scene
-@app.route('/led/scenes/delete/<int:id>')
+# led scenes option add / remove led
+@app.route('/led/scenes/<string:option>/<int:id>')
 @login_required
 @permission_required
-def delete_led_scene(id):
-    scene  = GET_LED_SCENE_BY_ID(id).name  
-    result = DELETE_LED_SCENE(id)
-
-    if result:
-        session['delete_led_scene_success'] = scene + " || Erfolgreich gelöscht"
-    else:
-        session['delete_led_scene_error'] = scene + " || " + str(result)
+def change_led_scenes_options(id, option):
+    if option == "add_led":
+        ADD_LED_SCENE_SETTING(id)
+        session['set_collapse_open'] = id
+        
+    if option == "remove_led":
+        REMOVE_LED_SCENE_SETTING(id)
+        session['set_collapse_open'] = id
 
     return redirect(url_for('led_scenes'))
+
+
+@app.route("/RGB" ,methods=['POST'])
+def RGB():
+    if request.method == 'POST':
+        colorpicker = request.json['colorpicker']        
+        rgb_values  = request.json['rgb_values']
+        print(rgb_values)
+        print(colorpicker)
+
+
+	
+    return json.dumps({'Status':'OK'})
