@@ -11,7 +11,10 @@ from app.backend.shared_resources import mqtt_message_queue
 
 
 
-def SET_LED_BULB_RGB(led_name, red, green, blue, brightness):
+def SET_LED_BULB_RGB(led_name, red, green, blue, global_brightness):
+
+    brightness = int(global_brightness*2.55)
+
     channel = "miranda/zigbee2mqtt/" + led_name + "/set"
     msg     = '{"state":"ON","brightness":' + str(brightness) + ',"color": { "r":' + str(red) + ',"g":' + str(green)  + ',"b":' + str(blue) + '}}'
     
@@ -20,7 +23,10 @@ def SET_LED_BULB_RGB(led_name, red, green, blue, brightness):
     time.sleep(1)
 
 
-def SET_LED_BULB_SIMPLE(led_name, brightness):
+def SET_LED_BULB_SIMPLE(led_name, global_brightness):
+
+    brightness = int(global_brightness*2.55)
+
     channel = "miranda/zigbee2mqtt/" + led_name + "/set"
     msg     = '{"state": "ON","brightness":"' + str(brightness) + '"}'
     
@@ -29,7 +35,9 @@ def SET_LED_BULB_SIMPLE(led_name, brightness):
     time.sleep(1)
 
 
-def SET_LED_BULB_BRIGHTNESS(led_name, brightness):
+def SET_LED_BULB_BRIGHTNESS(led_name, global_brightness):
+
+    brightness = int(global_brightness*2.55)    
     
     channel = "miranda/zigbee2mqtt/" + led_name + "/set"
     msg     = '{"state": "ON","brightness":"' + str(brightness) + '"}'
@@ -131,7 +139,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             
             if group.active_led_2 == "True": 
 
-                if scene.active_setting_2 == "True":
+                if scene.active_led_2 == "True":
                     if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_2, setting, 10) == False:
                         error_list.append(led_2.name + " >>> Setting not confirmed")
                                 
@@ -144,7 +152,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             
             if group.active_led_3 == "True": 
 
-                if scene.active_setting_3 == "True":
+                if scene.active_led_3 == "True":
                     if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_3, setting, 10) == False:
                         error_list.append(led_3.name + " >>> Setting not confirmed")
                                 
@@ -157,7 +165,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             
             if group.active_led_4 == "True": 
 
-                if scene.active_setting_4 == "True":
+                if scene.active_led_4 == "True":
                     if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_4, setting, 10) == False:
                         error_list.append(led_4.name + " >>> Setting not confirmed")
                                 
@@ -170,7 +178,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             
             if group.active_led_5 == "True": 
 
-                if scene.active_setting_5 == "True":
+                if scene.active_led_5 == "True":
                     if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_5, setting, 10) == False:
                         error_list.append(led_5.name + " >>> Setting not confirmed")
                                 
@@ -183,7 +191,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             
             if group.active_led_6 == "True": 
 
-                if scene.active_setting_6 == "True":
+                if scene.active_led_6 == "True":
                     if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_6, setting, 10) == False:
                         error_list.append(led_6.name + " >>> Setting not confirmed")
                                 
@@ -196,7 +204,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             
             if group.active_led_7 == "True": 
 
-                if scene.active_setting_7 == "True":
+                if scene.active_led_7 == "True":
                     if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_7, setting, 10) == False:
                         error_list.append(led_7.name + " >>> Setting not confirmed")
                                 
@@ -209,7 +217,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             
             if group.active_led_8 == "True": 
 
-                if scene.active_setting_8 == "True":
+                if scene.active_led_8 == "True":
                     if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_8, setting, 10) == False:
                         error_list.append(led_8.name + " >>> Setting not confirmed")
                                 
@@ -222,7 +230,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             
             if group.active_led_9 == "True": 
 
-                if scene.active_setting_9 == "True":
+                if scene.active_led_9 == "True":
                     if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_9, setting, 10) == False:
                         error_list.append(led_9.name + " >>> Setting not confirmed")
                                 
@@ -268,7 +276,7 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
         led_2 = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_2)
         
         if group.active_led_2 == "True": 
-            if scene.active_setting_2 == "True":
+            if scene.active_led_2 == "True":
             
                 if led_2.device_type == "led_rgb":
                     SET_LED_BULB_RGB(led_2.name, scene.red_2, scene.green_2, scene.blue_2, int(brightness_global))                                                            
@@ -282,7 +290,7 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
         led_3 = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_3)           
         
         if group.active_led_3 == "True": 
-            if scene.active_setting_3 == "True":
+            if scene.active_led_3 == "True":
 
                 if led_3.device_type == "led_rgb":
                     SET_LED_BULB_RGB(led_3.name, scene.red_3, scene.green_3, scene.blue_3, int(brightness_global))                                          
@@ -296,7 +304,7 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
         led_4 = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_4)            
         
         if group.active_led_4 == "True": 
-            if scene.active_setting_4 == "True":
+            if scene.active_led_4 == "True":
 
                 if led_4.device_type == "led_rgb":
                     SET_LED_BULB_RGB(led_4.name, scene.red_4, scene.green_4, scene.blue_4, int(brightness_global))                                        
@@ -310,7 +318,7 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
         led_5 = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_5)           
         
         if group.active_led_5 == "True": 
-            if scene.active_setting_5 == "True":
+            if scene.active_led_5 == "True":
 
                 if led_5.device_type == "led_rgb":
                     SET_LED_BULB_RGB(led_5.name, scene.red_5, scene.green_5, scene.blue_5, int(brightness_global))                                         
@@ -324,7 +332,7 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
         led_6 = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_6)           
         
         if group.active_led_6 == "True": 
-            if scene.active_setting_6 == "True":
+            if scene.active_led_6 == "True":
 
                 if led_6.device_type == "led_rgb":
                     SET_LED_BULB_RGB(led_6.name, scene.red_6, scene.green_6, scene.blue_6, int(brightness_global))                                         
@@ -338,7 +346,7 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
         led_7 = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_7)            
         
         if group.active_led_7 == "True":       
-            if scene.active_setting_7 == "True":
+            if scene.active_led_7 == "True":
 
                 if led_7.device_type == "led_rgb":
                     SET_LED_BULB_RGB(led_7.name, scene.red_7, scene.green_7, scene.blue_7, int(brightness_global))                                          
@@ -352,7 +360,7 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
         led_8 = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_8)           
         
         if group.active_led_8 == "True": 
-            if scene.active_setting_8 == "True":
+            if scene.active_led_8 == "True":
 
                 if led_8.device_type == "led_rgb":
                     SET_LED_BULB_RGB(led_8.name, scene.red_8, scene.green_8, scene.blue_8, int(brightness_global))                                        
@@ -366,7 +374,7 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
         led_9 = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_9)           
         
         if group.active_led_9 == "True":   
-            if scene.active_setting_9 == "True":
+            if scene.active_led_9 == "True":
 
                 if led_9.device_type == "led_rgb":
                     SET_LED_BULB_RGB(led_9.name, scene.red_9, scene.green_9, scene.blue_9, int(brightness_global))                                          

@@ -1729,7 +1729,8 @@ def ADD_PLANT(name, device_ieeeAddr):
 
                 # create data_file
                 CREATE_PLANTS_DATAFILE(name)
-                return
+
+                return True
   
                           
         return "Plantslimit reached (25)"
@@ -1951,7 +1952,7 @@ def ADD_USER(username, email, password):
 
             WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + username + " | added") 
 
-            return 
+            return True
 
         else:
             return "eMail-Address already assigned"               

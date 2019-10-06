@@ -242,9 +242,9 @@ def settings_users():
                     error_message_add_user.append("Passworter nicht identisch")  
 
         if username != "" and email != "" and hashed_password != "":
-            error = ADD_USER(username, email, hashed_password)
+            result = ADD_USER(username, email, hashed_password)
 
-            if error != None:
+            if result != True:
                 error_message_add_user.append(error)
 
             else:

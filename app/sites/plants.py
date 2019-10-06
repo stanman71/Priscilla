@@ -104,8 +104,8 @@ def plants():
                     error_message_change_settings.append(current_name + " || Keinen Namen angegeben") 
                     error_founded = True      
                                                             
-                if request.form.get("radio_group_" + str(i)) != None:
-                    group = request.form.get("radio_group_" + str(i))
+                if request.form.get("set_group_" + str(i)) != "":
+                    group = request.form.get("set_group_" + str(i))
                 else:
                     group = 1
 
@@ -160,7 +160,7 @@ def plants():
             name = request.form.get("set_name")
 
         # check device
-        if request.form.get("set_watering_controller_ieeeAddr") == "":
+        if request.form.get("set_watering_controller_ieeeAddr") == "None":
             error_message_add_plant.append("Kein Gerät angegeben")
         elif GET_PLANT_BY_IEEEADDR(request.form.get("set_watering_controller_ieeeAddr")):
             error_message_add_plant.append("Gerät bereits vergeben")                    
@@ -170,9 +170,9 @@ def plants():
             
         if name != "" and device_ieeeAddr != "":
                         
-            error = ADD_PLANT(name, device_ieeeAddr)   
-            if error != None: 
-                error_message_add_plant.append(error)         
+            result = ADD_PLANT(name, device_ieeeAddr)   
+            if result != True: 
+                error_message_add_plant.append(result)         
 
             else:       
                 success_message_add_plant = True

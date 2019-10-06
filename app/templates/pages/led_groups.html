@@ -99,7 +99,7 @@
                           <th style="width:5%"></th>
                           <th></th>
                           <th scope="col" style="width:12%"><p style="visibility: hidden;">invisibletext</p>LED Model</th>
-                          <th scope="col" style="width:30%"><p style="visibility: hidden;">invisibletextforminlenght</p>LED</th>
+                          <th scope="col" style="width:30%"><p style="visibility: hidden;">invisibletextforminlenghtmuchlonger</p>LED</th>
                           <th style="width:30%"></th>
                         </thead>
                         <tbody> 
@@ -114,7 +114,8 @@
                             <td></td>
                             <td style="width:5%">
                               <a href="/led/groups/add_led/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-add"></i></font></a>                          
-                              <br>                                                                                    
+                              <br>  
+                              <br>                                                                                                                
                               <a href="/led/groups/remove_led/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-delete"></i></font></a>    
                             </td> 
                             <td></td> 
@@ -129,7 +130,7 @@
                                 {% else %}   
                                   <option value = "None" > Gerät </option>   
                                 {% endif %}                       
-                                <option disabled>_________</option>
+                                <option disabled>__________________</option>
                                 {% for each in dropdown_list_leds %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  

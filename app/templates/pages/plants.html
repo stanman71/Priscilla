@@ -73,20 +73,7 @@
                             <a href="/plants/test_pump/{{ entry.id }}#table"><font size="5"><i class='tim-icons icon-triangle-right-17'></i></font></a>
                           </td>                                                                                   
                           <td>                       
-                            <div class="custom-control custom-radio custom-control-inline">
-                              <input type="radio" class="custom-control-input" id="radio_group_1_{{ entry.id }}" {% if entry.group == 1 %} checked="on" {% endif %} value="1" name="radio_group_{{ entry.id }}">
-                              <label class="custom-control-label" for="radio_group_1_{{ entry.id }}">Gruppe 1</label>
-                            </div>     
-                            <br>  
-                            <div class="custom-control custom-radio custom-control-inline">
-                              <input type="radio" class="custom-control-input" id="radio_group_2_{{ entry.id }}" {% if entry.group == 2 %} checked="on" {% endif %} value="2" name="radio_group_{{ entry.id }}">
-                              <label class="custom-control-label" for="radio_group_2_{{ entry.id }}">Gruppe 2</label>
-                            </div> 
-                            <br>       
-                            <div class="custom-control custom-radio custom-control-inline">
-                              <input type="radio" class="custom-control-input" id="radio_group_3_{{ entry.id }}" {% if entry.group == 3 %} checked="on" {% endif %} value="3" name="radio_group_{{ entry.id }}">
-                              <label class="custom-control-label" for="radio_group_3_{{ entry.id }}">Gruppe 3</label>
-                            </div>  
+                            <input type="text" class="form-control" name="set_group_{{ entry.id }}" value="{{ entry.group }}" />  
                           </td>          
                           <td>
                             <div class="row justify-content-md-left">
@@ -190,7 +177,7 @@
                               {% else %}   
                                 <option value = "None" > Gerät </option>   
                               {% endif %}                       
-                              <option disabled>_________</option>
+                              <option disabled>------------------</option>        
                               {% for each in dropdown_list_watering_controller %}
                                 <option value="{{each.ieeeAddr}}"> {{ each.name }} </option>
                               {% endfor %}      

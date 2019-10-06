@@ -1,4 +1,106 @@
 
+<script>
+  var sensor_options_list_1  = '{{ device_1_input_values }}';
+  var sensor_options_list_1  = sensor_options_list_1.split(",");
+  var sensor_options_list_2  = '{{ device_2_input_values }}';
+  var sensor_options_list_2  = sensor_options_list_2.split(",");
+  var sensor_options_list_3  = '{{ device_3_input_values }}';
+  var sensor_options_list_3  = sensor_options_list_3.split(",");
+  var sensor_options_list_4  = '{{ device_4_input_values }}';
+  var sensor_options_list_4  = sensor_options_list_4.split(",");
+  var sensor_options_list_5  = '{{ device_5_input_values }}';
+  var sensor_options_list_5  = sensor_options_list_5.split(",");
+  var sensor_options_list_6  = '{{ device_6_input_values }}';
+  var sensor_options_list_6  = sensor_options_list_6.split(",");
+  var sensor_options_list_7  = '{{ device_7_input_values }}';
+  var sensor_options_list_7  = sensor_options_list_7.split(",");
+  var sensor_options_list_8  = '{{ device_8_input_values }}';
+  var sensor_options_list_8  = sensor_options_list_8.split(",");
+  var sensor_options_list_9  = '{{ device_9_input_values }}';
+  var sensor_options_list_9  = sensor_options_list_9.split(",");
+  var sensor_options_list_10 = '{{ device_10_input_values }}';
+  var sensor_options_list_10 = sensor_options_list_10.split(",");
+  var sensor_options_list_11 = '{{ device_11_input_values }}';
+  var sensor_options_list_11 = sensor_options_list_11.split(",");
+  var sensor_options_list_12 = '{{ device_12_input_values }}';
+  var sensor_options_list_12 = sensor_options_list_12.split(",");
+  var sensor_options_list_13 = '{{ device_13_input_values }}';
+  var sensor_options_list_13 = sensor_options_list_13.split(",");
+  var sensor_options_list_14 = '{{ device_14_input_values }}';
+  var sensor_options_list_14 = sensor_options_list_14.split(",");
+  var sensor_options_list_15 = '{{ device_15_input_values }}';
+  var sensor_options_list_15 = sensor_options_list_15.split(",");
+  var sensor_options_list_16 = '{{ device_16_input_values }}';
+  var sensor_options_list_16 = sensor_options_list_16.split(",");
+  var sensor_options_list_17 = '{{ device_17_input_values }}';
+  var sensor_options_list_17 = sensor_options_list_17.split(",");
+  var sensor_options_list_18 = '{{ device_18_input_values }}';
+  var sensor_options_list_18 = sensor_options_list_18.split(",");
+  var sensor_options_list_19 = '{{ device_19_input_values }}';
+  var sensor_options_list_19 = sensor_options_list_19.split(",");
+  var sensor_options_list_20 = '{{ device_20_input_values }}';
+  var sensor_options_list_20 = sensor_options_list_20.split(",");
+  var sensor_options_list_21 = '{{ device_21_input_values }}';
+  var sensor_options_list_21 = sensor_options_list_21.split(",");
+  var sensor_options_list_22 = '{{ device_22_input_values }}';
+  var sensor_options_list_22 = sensor_options_list_22.split(",");
+  var sensor_options_list_23 = '{{ device_23_input_values }}';
+  var sensor_options_list_23 = sensor_options_list_23.split(",");
+  var sensor_options_list_24 = '{{ device_24_input_values }}';
+  var sensor_options_list_24 = sensor_options_list_24.split(",");
+  var sensor_options_list_25 = '{{ device_25_input_values }}';
+  var sensor_options_list_25 = sensor_options_list_25.split(",");
+  var sensor_options = {};
+
+  sensor_options['1']  = sensor_options_list_1;
+  sensor_options['2']  = sensor_options_list_2;
+  sensor_options['3']  = sensor_options_list_3;
+  sensor_options['4']  = sensor_options_list_4;
+  sensor_options['5']  = sensor_options_list_5;
+  sensor_options['6']  = sensor_options_list_6;
+  sensor_options['7']  = sensor_options_list_7;
+  sensor_options['8']  = sensor_options_list_8;
+  sensor_options['9']  = sensor_options_list_9;
+  sensor_options['10'] = sensor_options_list_10;
+  sensor_options['11'] = sensor_options_list_11;
+  sensor_options['12'] = sensor_options_list_12;
+  sensor_options['13'] = sensor_options_list_13;
+  sensor_options['14'] = sensor_options_list_14;
+  sensor_options['15'] = sensor_options_list_15;
+  sensor_options['16'] = sensor_options_list_16;
+  sensor_options['17'] = sensor_options_list_17;
+  sensor_options['18'] = sensor_options_list_18;
+  sensor_options['19'] = sensor_options_list_19;
+  sensor_options['20'] = sensor_options_list_20;
+  sensor_options['21'] = sensor_options_list_21;
+  sensor_options['22'] = sensor_options_list_22;
+  sensor_options['23'] = sensor_options_list_23;
+  sensor_options['24'] = sensor_options_list_24;
+  sensor_options['25'] = sensor_options_list_25;
+
+  function Choose_Sensor(entry_id) {
+    var device_name = "device_" + entry_id
+    var sensor_list_name = "selected_sensor_" + entry_id
+    var device = document.getElementById(device_name);
+    var sensor_list = document.getElementById(sensor_list_name);
+    var selected_sensor = device.options[device.selectedIndex].value;
+    while (sensor_list.options.length) {
+      sensor_list.remove(0);
+    }
+    var sensors = sensor_options[selected_sensor];
+    if (sensors) {
+      var i;
+      for (i = 0; i < sensors.length; i++) {
+        var sensor = new Option(sensors[i], i);
+        sensor_list.options.add(sensor);
+      }
+    }
+    $('.selectpicker').selectpicker('refresh');
+  } 
+</script>
+
+
+
       <div class="content">
         <div class="row">
           <div class="col-md-12">
@@ -172,14 +274,14 @@
                                     {% else %}   
                                       <option value = "None" > Option </option> 
                                     {% endif %}    
-                                    <option disabled>_________</option>
+                                    <option disabled>------------------</option>
                                       {% for each in dropdown_list_exception_options %}
                                         <option value = {{each}} > {{each}} </option>
                                       {% endfor %}                                                        
                                       {% for each in list_exception_sensors %}
                                         <option value = {{ each.id }} > {{ each.name }} </option>
                                       {% endfor %}    
-                                    <option disabled>_________</option>
+                                    <option disabled>------------------</option>
                                     <option value= "None" > None </option> 
                                   </select>
                                 </div>         
@@ -203,7 +305,7 @@
                                         {% else %}   
                                           <option value = "None" > Sensor </option>   
                                         {% endif %}                 
-                                        <option disabled>_________</option>
+                                        <option disabled>------------------</option>
 
                                         <!-- values from former device --> 
                                         {% if entry.exception_sensor_input_values != None %}
@@ -212,11 +314,12 @@
                                           {% endfor %}     
                                         {% endif %} 
 
-                                    {% if entry.input_values != "None" %}
-                                      {% for each in entry.input_values.split(',') %}
-                                        <option value= "{{ each }}" > {{ each }} </option>
-                                      {% endfor %}   
-                                    {% endif %}       
+                                        <!-- values from javascript --> 
+                                        {% if entry.input_values != "None" %}
+                                          {% for each in entry.input_values.split(',') %}
+                                            <option value= "{{ each }}" > {{ each }} </option>
+                                          {% endfor %}   
+                                        {% endif %}       
 
                                       </select>
                                     </div>        
@@ -246,7 +349,7 @@
                                     {% else %}   
                                       <option value = "None" > Befehl </option> 
                                     {% endif %}                           
-                                    <option disabled>_________</option>
+                                    <option disabled>------------------</option>
                                     {% if entry.commands != None %}  
                                       {% for each in entry.commands.split(' ') %}
                                         <option value= "{{ each | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }}" > {{ each | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} </option>
@@ -264,7 +367,7 @@
                                       {% else %}   
                                         <option value = "None" > Operator </option>   
                                       {% endif %}                       
-                                      <option disabled>_________</option>
+                                      <option disabled>---------</option>
                                       {% for each in dropdown_list_operators %}
                                         <option value= "{{ each }}" > {{ each }} </option>
                                       {% endfor %}          

@@ -1,42 +1,3 @@
-      <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-
-            <div class="card ">
-              <div class="card-footer">    
-                <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
-                  <a href="/led/scenes" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Szenen</a>                
-                  <a href="/led/groups" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Gruppen</a>
-                </div>           
-              </div>  
-            </div>  
-
-<!-- success message change settings -->
-
-{% if success_message_change_settings != [] %}
-  <div class="alert alert-success">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    {% for success in success_message_change_settings %}
-      <span data-notify="message">{{ success }}</span>
-    {% endfor %}
-  </div>
-{% endif %}  
-
-<!-- error message change settings -->
-
-{% if error_message_change_settings != [] %}
-  <div class="alert alert-danger">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    {% for error in error_message_change_settings %}
-      <span data-notify="message">{{ error }}</span>
-    {% endfor %}
-  </div>
-{% endif %}  
-
 
 <script>
     
@@ -689,6 +650,47 @@
 </script>
 
 
+
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="card ">
+              <div class="card-footer">    
+                <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
+                  <a href="/led/scenes" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Szenen</a>                
+                  <a href="/led/groups" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Gruppen</a>
+                </div>           
+              </div>  
+            </div>  
+
+<!-- success message change settings -->
+
+{% if success_message_change_settings != [] %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for success in success_message_change_settings %}
+      <span data-notify="message">{{ success }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+<!-- error message change settings -->
+
+{% if error_message_change_settings != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_change_settings %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+
 <!---------------->
 <!--  LED TABLE -->
 <!---------------->   
@@ -744,7 +746,8 @@
                             <td></td>
                             <td style="width:5%">
                               <a href="/led/scenes/add_led/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-add"></i></font></a>                          
-                              <br>                                                        
+                              <br> 
+                              <br>                                                                                      
                               <a href="/led/scenes/remove_led/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-delete"></i></font></a>    
                             </td> 
                             <td></td> 
