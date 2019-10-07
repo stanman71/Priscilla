@@ -17,6 +17,50 @@
               </div>  
             </div>  
 
+
+<!-------------->
+<!-- ADD USER -->
+<!-------------->
+
+<!-- success message add user -->
+
+{% if success_message_add_user == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Benutzer erfolgreich hinzugefügt</span>
+  </div>
+{% endif %}  
+
+<!-- error message add user -->
+
+{% if error_message_add_user != [] %}
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+    {% for error in error_message_add_user %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}    
+
+
+            <div class="card"> 
+              <form method="POST">        
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/settings/users#add_user'" name="add_user" class="btn btn-fill btn-primary">NEW USER</button>
+                </div>
+              </form>
+            </div>
+
+
+<!------------------>
+<!--  USERS TABLE -->
+<!------------------>
+
 <!-- message admin password not changed -->
 
 {% if message_admin_password_not_changed != "" %}
@@ -54,9 +98,6 @@
   </div>
 {% endif %}  
 
-<!------------------>
-<!--  USERS TABLE -->
-<!------------------>
 
 <section id="users_table"></section>      
 
@@ -120,80 +161,6 @@
                 </div>            
                 <div class="card-footer">                   
                   <button type="submit" onclick="window.location.href='/settings/users#'" name="save_user_settings" class="btn btn-fill btn-primary">Save</button>
-                </div>
-              </form>
-            </div>
-
-<section id="add_user"></section>   
-
-<!-- success message add user -->
-
-{% if success_message_add_user == True %}
-  <div class="alert alert-success">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    <span>Benutzer erfolgreich hinzugefügt</span>
-  </div>
-{% endif %}  
-
-<!-- error message add user -->
-
-{% if error_message_add_user != [] %}
-  <div class="alert alert-info alert-with-icon" data-notify="container">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
-    {% for error in error_message_add_user %}
-      <span data-notify="message">{{ error }}</span>
-    {% endfor %}
-  </div>
-{% endif %}    
-
-<!-------------->
-<!-- ADD USER -->
-<!-------------->
-
-            <div class="card">
-              <div class="card-header">
-                <h5 class="title">Benutzer hinzufügen</h5>
-              </div>   
-              <form method="POST">        
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="row justify-content-md-left">
-                        <div class="col-sm-3">                       
-                          <div class="form-group">
-                            <label>Benutzer</label>
-                            <input type="text" class="form-control" name="set_username" value="{{ username }}" /> 
-                          </div>
-                        </div>
-                        <div class="col-sm-3">                       
-                          <div class="form-group">
-                            <label>eMail</label>
-                            <input type="email" class="form-control" name="set_email" value="{{ email }}" />       
-                          </div>
-                        </div>           
-                        <div class="col-sm-3">                       
-                          <div class="form-group">
-                            <label>Passwort</label>
-                            <input type="password" class="form-control" name="set_password" value="{{ password }}" />       
-                          </div>
-                        </div>        
-                        <div class="col-sm-3">                       
-                          <div class="form-group">
-                            <label>Passwort wiederholen</label>
-                            <input type="password" class="form-control" name="set_password_repeat" value="{{ password_repeat }}" />       
-                          </div>
-                        </div>                                                 
-                      </div>
-                    </div>
-                  </div>                  
-                </div>
-                <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/settings/users#add_user'" name="add_user" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>

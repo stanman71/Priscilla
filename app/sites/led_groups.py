@@ -43,6 +43,19 @@ def led_groups():
     UPDATE_LED_GROUP_LED_NAMES()
 
 
+    """ ############### """
+    """  add led group  """
+    """ ############### """   
+
+    if request.form.get("add_led_group") != None:                 
+        result = ADD_LED_GROUP()   
+        if result != True: 
+            error_message_add_led_group.append(result)         
+
+        else:       
+            success_message_add_led_group = True
+
+
     """ ################## """
     """  table led groups  """
     """ ################## """   
@@ -283,30 +296,6 @@ def led_groups():
                             
                             success_message_change_settings_led_group = i
 
-                name = ""
-
-
-    """ ############### """
-    """  add led group  """
-    """ ############### """   
-
-    if request.form.get("add_led_group") != None: 
-
-        # check name
-        if request.form.get("set_name") == "":
-            error_message_add_led_group.append("Keinen Namen angegeben")
-        elif GET_LED_GROUP_BY_NAME(request.form.get("set_name")):  
-            error_message_add_led_group.append("Name bereits vergeben")               
-        else:    
-            name = request.form.get("set_name")                 
-            result = ADD_LED_GROUP(name)   
-            if result != True: 
-                error_message_add_led_group.append(result)         
-
-            else:       
-                success_message_add_led_group = True
-                name = ""
-
 
     """ ################## """
     """  delete led group  """
@@ -341,8 +330,7 @@ def led_groups():
                                                     success_message_add_led_group=success_message_add_led_group,
                                                     error_message_add_led_group=error_message_add_led_group,
                                                     list_led_groups=list_led_groups,
-                                                    dropdown_list_leds=dropdown_list_leds,
-                                                    name=name,                            
+                                                    dropdown_list_leds=dropdown_list_leds,                         
                                                     ) 
                            )
 

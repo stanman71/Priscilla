@@ -650,7 +650,6 @@
 </script>
 
 
-
       <div class="content">
         <div class="row">
           <div class="col-md-12">
@@ -663,6 +662,50 @@
                 </div>           
               </div>  
             </div>  
+
+<!------------------->
+<!-- ADD LED SCENE -->
+<!------------------->   
+
+<!-- success message add led scene -->
+
+{% if success_message_add_led_scene == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Szene erfolgreich hinzugefügt</span>
+  </div>
+{% endif %}  
+
+<!-- error message add led scene --> 
+
+{% if error_message_add_led_scene != [] %}
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+    {% for error in error_message_add_led_scene %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+
+            <div class="card">
+              <form method="POST">         
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/led/scenes#'" name="add_led_scene" class="btn btn-fill btn-primary">NEW SCENE</button>
+                </div>
+              </form>
+            </div>
+
+
+<!---------------------->
+<!--  LED SCENE TABLE -->
+<!---------------------->   
+
 
 <!-- success message change settings -->
 
@@ -691,9 +734,6 @@
 {% endif %}  
 
 
-<!---------------->
-<!--  LED TABLE -->
-<!---------------->   
 
 {% for entry in list_led_scenes %}
 
@@ -733,7 +773,7 @@
                     <div class="table-responsive">
                       <table class="table tablesorter">
                         <tbody> 
-                          <tr>
+                          <tr style="border-style:hidden;">
                             <td style="width:3%">
                               <a href="/led/scenes/position/up/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-up"></i></a>
                               <a href="/led/scenes/position/down/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-down"></i></a>                                
@@ -808,7 +848,7 @@
                           {% if entry.active_led_4 == "True" %} 
 
                             </tr>
-                            <tr>
+                            <tr style="border-style:hidden;">
                               <td></td>
                               <td></td>
                               <td></td>
@@ -876,7 +916,7 @@
                           {% if entry.active_led_7 == "True" %} 
 
                             </tr>
-                            <tr>
+                            <tr style="border-style:hidden;">
                               <td></td>
                               <td></td>
                               <td></td>
@@ -957,62 +997,6 @@
 
 {% endfor %} 
 
-<!---------------->
-<!-- ADD SCENE  -->
-<!---------------->
-
-<section id="add_led_scene"></section>   
-
-<!-- success message add led scene -->
-
-{% if success_message_add_led_scene == True %}
-  <div class="alert alert-success">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    <span>Szene erfolgreich hinzugefügt</span>
-  </div>
-{% endif %}  
-
-<!-- error message add led scene --> 
-
-{% if error_message_add_led_scene != [] %}
-  <div class="alert alert-info alert-with-icon" data-notify="container">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
-    {% for error in error_message_add_led_scene %}
-      <span data-notify="message">{{ error }}</span>
-    {% endfor %}
-  </div>
-{% endif %}  
-
-
-            <div class="card">
-              <div class="card-header">
-                <h5 class="title">Szene hinzufügen</h5>
-              </div>   
-              <form method="POST">         
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="row justify-content-md-left">
-                        <div class="col-sm-3">                       
-                          <div class="form-group">
-                            <label>Szene</label>
-                            <input type="text" class="form-control" name="set_name" value="{{ name }}" /> 
-                          </div>
-                        </div>                     
-                      </div>
-                    </div>
-                  </div>                  
-                </div>
-                <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/led/scenes#add_led_scene'" name="add_led_scene" class="btn btn-fill btn-primary">SAVE</button>
-                </div>
-              </form>
-            </div>
 
 
           </div>

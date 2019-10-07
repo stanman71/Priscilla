@@ -182,12 +182,42 @@ class Plants(db.Model):
 
 class Scheduler_Tasks(db.Model):
     __tablename__ = 'scheduler_tasks'
-    id     = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    name   = db.Column(db.String(50), unique=True)
-    task   = db.Column(db.String(50))  
-    hour   = db.Column(db.Integer)  
-    minute = db.Column(db.Integer)         
-    pause  = db.Column(db.String(50))
+    id                          = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name                        = db.Column(db.String(50), unique=True)
+    task                        = db.Column(db.String(50))
+    task_type                   = db.Column(db.String(50))   
+    option_time                 = db.Column(db.String(50)) 
+    option_sun                  = db.Column(db.String(50))
+    option_sensors              = db.Column(db.String(50))
+    option_position             = db.Column(db.String(50))
+    option_repeat               = db.Column(db.String(50))
+    option_pause                = db.Column(db.String(50))
+    day                         = db.Column(db.String(50))
+    hour                        = db.Column(db.String(50))
+    minute                      = db.Column(db.String(50))
+    option_sunrise              = db.Column(db.String(50))
+    option_sunset               = db.Column(db.String(50))
+    location                    = db.Column(db.String(50))
+    sunrise                     = db.Column(db.String(50))
+    sunset                      = db.Column(db.String(50))    
+    device_ieeeAddr_1           = db.Column(db.String(50))
+    device_name_1               = db.Column(db.String(50))
+    device_input_values_1       = db.Column(db.String(50))
+    sensor_key_1                = db.Column(db.String(50))
+    value_1                     = db.Column(db.String(50))
+    operator_1                  = db.Column(db.String(50))
+    main_operator_second_sensor = db.Column(db.String(50), server_default=("None"))
+    device_ieeeAddr_2           = db.Column(db.String(50))
+    device_name_2               = db.Column(db.String(50))
+    device_input_values_2       = db.Column(db.String(50))
+    sensor_key_2                = db.Column(db.String(50))
+    value_2                     = db.Column(db.String(50))
+    operator_2                  = db.Column(db.String(50))
+    option_home                 = db.Column(db.String(50))
+    option_away                 = db.Column(db.String(50))
+    ip_addresses                = db.Column(db.String(50))
+    last_ping_result            = db.Column(db.String(50))
+    collapse                    = db.Column(db.String(50))
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
@@ -984,9 +1014,7 @@ def GET_LED_GROUP_BY_NAME(name):
             return group
         
 
-def ADD_LED_GROUP(name):
-
-    # find a unused id
+def ADD_LED_GROUP():
     for i in range(1,21):
         if LED_Groups.query.filter_by(id=i).first():
             pass
@@ -994,13 +1022,12 @@ def ADD_LED_GROUP(name):
             # add the new program
             group = LED_Groups(
                     id = i,
-                    name = name,
+                    name = "new_group_" + str(i),
                 )
             db.session.add(group)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Group - " + name + " | added")  
-
+            WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Group - " + "new_group_" + str(i) + " | added")  
             return True
 
     return "Gruppenlimit erreicht (20)"
@@ -1061,7 +1088,6 @@ def SET_LED_GROUP(id, name, led_ieeeAddr_1, led_name_1, led_device_type_1,
         db.session.commit()  
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Group - " + name + " | Settings changed")  
-
         return True 
 
 
@@ -1319,7 +1345,6 @@ def DELETE_LED_GROUP(id):
     
     LED_Groups.query.filter_by(id=id).delete()
     db.session.commit() 
-
     return True
 
 
@@ -1345,17 +1370,15 @@ def GET_LED_SCENE_BY_NAME(name):
             return scene    
             
 
-def ADD_LED_SCENE(name):
-
-    # find a unused id
+def ADD_LED_SCENE():
     for i in range(1,11):
         if LED_Scenes.query.filter_by(id=i).first():
             pass
         else:
             # add the new program
             scene = LED_Scenes(
-                    id = i,
-                    name = name,
+                    id      = i,
+                    name    = "new_scene_" + str(i),
                     red_1   = 255, 
                     green_1 = 255, 
                     blue_1  = 255,                                         
@@ -1363,8 +1386,7 @@ def ADD_LED_SCENE(name):
             db.session.add(scene)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + name + " | added")  
-
+            WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + "new_scene_" + str(i) + " | added")  
             return True
 
     return "Szenenlimit erreicht (10)"
@@ -1418,7 +1440,6 @@ def SET_LED_SCENE(id, name, red_1, green_1, blue_1, red_2, green_2, blue_2, red_
         db.session.commit()  
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + name + " | Settings changed") 
-
         return True
 
 
@@ -1625,7 +1646,6 @@ def DELETE_LED_SCENE(id):
 
     LED_Scenes.query.filter_by(id=id).delete()
     db.session.commit() 
-
     return True
 
 
@@ -1704,54 +1724,51 @@ def GET_ALL_PLANTS():
     return Plants.query.all()
 
 
-def ADD_PLANT(name, device_ieeeAddr):
-    # name exist ?
-    if not GET_PLANT_BY_NAME(name):
-        
-        # find a unused id
-        for i in range(1,26):
-            if Plants.query.filter_by(id=i).first():
-                pass
-            else:
-                # add the new plant
-                plant = Plants(
-                        id                     = i,
-                        name                   = name, 
-                        device_ieeeAddr        = device_ieeeAddr,     
-                        group                  = 1,
-                        pump_duration_auto     = 0, 
-                        pump_duration_manually = 30,                                               
-                    )
-                db.session.add(plant)
-                db.session.commit()
+def ADD_PLANT():
+    # find a unused id
+    for i in range(1,26):
+        if Plants.query.filter_by(id=i).first():
+            pass
+        else:
+            # add the new plant
+            plant = Plants(
+                    id                     = i,
+                    name                   = "new_plant_" + str(i),  
+                    group                  = 1,
+                    pump_duration_auto     = 0, 
+                    pump_duration_manually = 30,                                               
+                )
+            db.session.add(plant)
+            db.session.commit()
 
-                WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + name + " | added")  
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + "new_plant_" + str(i) + " | added")  
 
-                # create data_file
-                CREATE_PLANTS_DATAFILE(name)
-
-                return True
-  
-                          
-        return "Plantslimit reached (25)"
-
-    else:
-        return "Name already assigned"
+            # create data_file
+            CREATE_PLANTS_DATAFILE("new_plant_" + str(i))
+            return True
+                  
+    return "Pflanzenlimit erreicht (25)"
 
 
-def UPDATE_PLANT_SETTINGS(id, name, group):         
+def UPDATE_PLANT_SETTINGS(id, name, device_ieeeAddr, group):         
     entry = Plants.query.filter_by(id=id).first()
     old_name = entry.name
 
     # values changed ?
-    if (entry.name != name or entry.group != int(group)):
+    if (entry.name != name or entry.device_ieeeAddr != device_ieeeAddr or entry.group != int(group)):
 
-        entry.name  = name
-        entry.group = group        
+        entry.name            = name
+        entry.device_ieeeAddr = device_ieeeAddr
+        entry.group           = group        
         
         db.session.commit()  
+
+        try:
+            device_name = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
+        except:
+            device_name = "None"
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + old_name + " | changed || Name - " + entry.name + " | Group - " + str(entry.group))
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + old_name + " | changed || Name - " + entry.name + " | Device - " + device_name + " | Group - " + str(entry.group))
 
         # rename data_file
         if old_name != name:
@@ -1887,23 +1904,313 @@ def GET_ALL_SCHEDULER_TASKS():
     return Scheduler_Tasks.query.all()    
 
 
-def UPDATE_SCHEDULER_TASK(id, hour, minute, pause): 
+def ADD_SCHEDULER_TASK():
+    for i in range(1,26):
+        if Scheduler_Tasks.query.filter_by(id=i).first():
+            pass
+        else:
+            # add the new task
+            new_task = Scheduler_Tasks(
+                    id            = i,
+                    name          = "new_scheduler_task_" + str(i),
+                    option_repeat = "checked",
+                )
+            db.session.add(new_task)
+            db.session.commit()
+
+            SET_SCHEDULER_TASK_COLLAPSE_OPEN(i)
+        
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Task - " + "new_scheduler_task_" + str(i) + " | added")             
+            return True
+
+    return "Aufgabenlimit erreicht (25)"
+
+
+def SET_SCHEDULER_TASK(id, name, task,
+                       option_time, option_sun, option_sensors, option_position, option_repeat, option_pause, 
+                       day, hour, minute, 
+                       option_sunrise, option_sunset, location,
+                       device_ieeeAddr_1, device_name_1, device_input_values_1, sensor_key_1, operator_1, value_1, main_operator_second_sensor,
+                       device_ieeeAddr_2, device_name_2, device_input_values_2, sensor_key_2, operator_2, value_2, 
+                       option_home, option_away, ip_addresses):
+                             
     entry = Scheduler_Tasks.query.filter_by(id=id).first()
+    old_name = entry.name
 
     # values changed ?
-    if (entry.hour != int(hour) or entry.minute != int(minute) or entry.pause != pause):
+    if (entry.name != name or entry.task != task or entry.option_time != option_time or
+        entry.option_sun != option_sun or entry.option_sensors != option_sensors or 
+        entry.option_position != option_position or entry.option_repeat != option_repeat or entry.option_pause != option_pause or 
+        entry.day != day or entry.hour != hour or entry.minute != minute or
+        entry.option_sunrise != option_sunrise or entry.option_sunset != option_sunset or entry.location != location or
+        entry.device_ieeeAddr_1 != device_ieeeAddr_1 or entry.sensor_key_1 != sensor_key_1 or 
+        entry.operator_1 != operator_1 or entry.value_1 != value_1  or entry.main_operator_second_sensor != main_operator_second_sensor or 
+        entry.device_ieeeAddr_2 != device_ieeeAddr_2 or entry.sensor_key_2 != sensor_key_2 or 
+        entry.operator_2 != operator_2 or entry.value_2 != value_2 or
+        entry.option_home != option_home or entry.option_away != option_away or entry.ip_addresses != ip_addresses):
             
-        entry.hour   = hour
-        entry.minute = minute        
-        entry.pause  = pause      
+        entry.name                        = name
+        entry.task                        = task      
+        entry.option_time                 = option_time    
+        entry.option_sun                  = option_sun            
+        entry.option_sensors              = option_sensors
+        entry.option_position             = option_position        
+        entry.option_repeat               = option_repeat
+        entry.option_pause                = option_pause
+        entry.day                         = day
+        entry.hour                        = hour
+        entry.minute                      = minute
+        entry.option_sunrise              = option_sunrise
+        entry.option_sunset               = option_sunset
+        entry.location                    = location        
+        entry.device_ieeeAddr_1           = device_ieeeAddr_1
+        entry.device_name_1               = device_name_1
+        entry.device_input_values_1       = device_input_values_1
+        entry.sensor_key_1                = sensor_key_1
+        entry.operator_1                  = operator_1
+        entry.value_1                     = value_1
+        entry.main_operator_second_sensor = main_operator_second_sensor
+        entry.device_ieeeAddr_2           = device_ieeeAddr_2
+        entry.device_name_2               = device_name_2
+        entry.device_input_values_2       = device_input_values_2
+        entry.sensor_key_2                = sensor_key_2
+        entry.operator_2                  = operator_2
+        entry.value_2                     = value_2         
+        entry.option_home                 = option_home
+        entry.option_away                 = option_away
+        entry.ip_addresses                = ip_addresses
 
         db.session.commit()   
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Task - " + entry.name + " | changed " +
-                             "|| Time - " + str(entry.hour) + ":" + str(entry.minute) + 
-                             " | Pause - " + str(entry.pause))     
+        log_message = "Scheduler | Task - " + old_name + " | changed || Name - " + entry.name + " | Task - " + entry.task
 
-        return True
+        # option time
+        if entry.option_time == "checked":
+
+            if entry.day == None:
+                entry.day = "None"
+            if entry.hour == None:
+                entry.hour = "None"
+            if entry.minute == None:
+                entry.minute = "None"
+
+            log_message = log_message + (" | Day - " + entry.day + 
+                                         " | Hour - " + entry.hour + 
+                                         " | Minute - " + entry.minute)
+
+        # option sun
+        if entry.option_sun == "checked":
+
+            if entry.location == None:
+                entry.location = "None"
+
+            log_message = log_message + (" | Sunrise - " + entry.option_sunrise +
+                                         " | Sunset - " + entry.option_sunset +
+                                         " | Location - " + entry.location) 
+
+        # option sensors
+        if entry.option_sensors == "checked":
+
+            if entry.main_operator_second_sensor == "None":
+
+                log_message = log_message + (" | Device_1 - " + entry.device_name_1 + 
+                                             " | Sensor_1 - " + entry.sensor_key_1 + 
+                                             " | Operator_1 - " + entry.operator_1 + 
+                                             " | Value_1 - " +  entry.value_1)
+                                                                
+            else:
+
+                log_message = log_message + (" | Device_1 - " + entry.device_name_1 + 
+                                             " | Sensor_1 - " + entry.sensor_key_1 + 
+                                             " | Operator_1 - " + entry.operator_1 + 
+                                             " | Value_1 - " +  entry.value_1 + 
+                                             " | Device_2 - " + entry.device_name_2 + 
+                                             " | Sensor_2 - " + entry.sensor_key_2 + 
+                                             " | Operator_2 - " + entry.operator_2 + 
+                                             " | Value_2 - " + entry.value_2)
+                                
+        # option position
+        if entry.option_position == "checked":
+
+            if entry.ip_addresses == None:
+                entry.ip_addresses = "None"
+
+            log_message = log_message + (" | Home - " + entry.option_home + 
+                                         " | Away - " + entry.option_away + 
+                                         " | IP-Addresses - " + entry.ip_addresses) 
+
+        # option repeat
+        if entry.option_repeat == "checked":
+
+            log_message = log_message + (" | Repeat - " + entry.option_repeat)
+
+
+        # option pause
+        if entry.option_pause == "checked":
+
+            log_message = log_message + (" | Pause - " + entry.option_pause)
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", log_message) 
+
+
+def SET_SCHEDULER_TASK_COLLAPSE_OPEN(id):
+    list_scheduler_tasks = Scheduler_Tasks.query.all()
+    
+    for scheduler_task in list_scheduler_tasks:
+        scheduler_task.collapse = ""
+        db.session.commit()   
+  
+    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+    
+    entry.collapse = "in"
+    db.session.commit()       
+ 
+ 
+def RESET_SCHEDULER_TASK_COLLAPSE():
+    list_scheduler_tasks = Scheduler_Tasks.query.all()
+    
+    for scheduler_task in list_scheduler_tasks:
+        scheduler_task.collapse = ""
+        db.session.commit()   
+  
+
+def GET_SCHEDULER_TASK_SUNRISE(id):    
+    return (Scheduler_Tasks.query.filter_by(id=id).first().sunrise)
+    
+
+def SET_SCHEDULER_TASK_SUNRISE(id, sunrise):    
+    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+
+    entry.sunrise = sunrise
+    db.session.commit()   
+
+
+def GET_SCHEDULER_TASK_SUNSET(id):    
+    return (Scheduler_Tasks.query.filter_by(id=id).first().sunset)
+
+
+def SET_SCHEDULER_TASK_SUNSET(id, sunset):    
+    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+
+    entry.sunset = sunset
+    db.session.commit()   
+
+
+def GET_SCHEDULER_LAST_PING_RESULT(id):    
+    return (Scheduler_Tasks.query.filter_by(id=id).first().last_ping_result)
+
+
+def SET_SCHEDULER_LAST_PING_RESULT(id, result):    
+    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+
+    entry.last_ping_result = result
+    db.session.commit()   
+
+
+def ADD_SCHEDULER_TASK_SECOND_SENSOR(id):
+    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+
+    if entry.main_operator_second_sensor == "None" or entry.main_operator_second_sensor == None:
+        entry.main_operator_second_sensor = "and"
+
+    db.session.commit()
+
+
+def REMOVE_SCHEDULER_TASK_SECOND_SENSOR(id):
+    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+    
+    if entry.main_operator_second_sensor != "None":
+        entry.main_operator_second_sensor = "None"
+
+    db.session.commit()
+
+
+def CHANGE_SCHEDULER_TASKS_POSITION(id, direction):
+    
+    list_scheduler_tasks = Scheduler_Tasks.query.all() 
+    
+    # filter non scheduler table tasks (e.g. mqtt_update or backup)
+    list_scheduler_tasks_filtered = []
+    
+    for scheduler_task in list_scheduler_tasks:
+        if scheduler_task.task_type == "":   
+            list_scheduler_tasks_filtered.append(scheduler_task)
+    
+    if direction == "up":
+        
+        # reverse task list
+        task_list = list_scheduler_tasks_filtered[::-1]
+        
+        for task in task_list:  
+            if task.id < id:
+                
+                new_id = task.id
+                
+                # change ids
+                task_1 = GET_SCHEDULER_TASK_BY_ID(id)
+                task_2 = GET_SCHEDULER_TASK_BY_ID(new_id)
+                
+                task_1.id = 99
+                db.session.commit()
+                
+                task_2.id = id
+                task_1.id = new_id
+                db.session.commit()
+                
+                return 
+
+    if direction == "down":
+        for task in list_scheduler_tasks_filtered:
+            if task.id > id:       
+                new_id = task.id
+                
+                # change ids
+                task_1 = GET_SCHEDULER_TASK_BY_ID(id)
+                task_2 = GET_SCHEDULER_TASK_BY_ID(new_id)
+                
+                task_1.id = 99
+                db.session.commit()
+                
+                task_2.id = id
+                task_1.id = new_id
+                db.session.commit()
+                
+                return 
+       
+       
+def UPDATE_SCHEDULER_DEVICE_NAMES():
+    tasks = GET_ALL_SCHEDULER_TASKS()
+    
+    for task in tasks:
+        
+        entry = Scheduler_Tasks.query.filter_by(id=task.id).first()
+        
+        try:
+            entry.device_name_1         = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr_1).name
+            entry.device_input_values_1 = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr_1).input_values
+        except:
+            pass
+        try:
+            entry.device_name_2         = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr_2).name
+            entry.device_input_values_2 = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr_2).input_values
+        except:
+            pass 
+        
+    db.session.commit()
+            
+
+def DELETE_SCHEDULER_TASK(task_id):
+    entry = GET_SCHEDULER_TASK_BY_ID(task_id)
+    
+    try:
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Task - " + entry.name + " | deleted")   
+    except:
+        pass         
+    
+    Scheduler_Tasks.query.filter_by(id=task_id).delete()
+    db.session.commit()
+
+    return True
 
 
 """ ################### """
@@ -1932,33 +2239,23 @@ def GET_ALL_USERS():
     return User.query.all()  
     
 
-def ADD_USER(username, email, password):
-    # username exist ?
-    if not GET_USER_BY_NAME(username):
-
-        # email exist ?
-        if not GET_USER_BY_EMAIL(email):
-        
+def ADD_USER():
+    for i in range(1,26):
+        if Scheduler_Tasks.query.filter_by(id=i).first():
+            pass
+        else:
             # add the new user
             new_user = User(
-                    username           = username,
-                    email              = email,
-                    password           = password,
+                    id                 = i,
+                    username           = "new_user_" + str(i),
                     role               = "user",
                     email_notification = "False",
                 )
             db.session.add(new_user)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + username + " | added") 
-
+            WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + "new_user_" + str(i) + " | added") 
             return True
-
-        else:
-            return "eMail-Address already assigned"               
-
-    else:
-        return "Name already assigned"    
 
 
 def UPDATE_USER_SETTINGS(id, username, email, role, email_notification):    

@@ -1845,6 +1845,18 @@ pre code {
   border: 0;
 }
 
+table td.minwidth_200 {
+  min-width: 200px;
+}
+
+table td.minwidth_300 {
+  min-width: 300px;
+}
+
+table td.minwidth_600 {
+  min-width: 600px;
+}
+
 .form-control {
   display: block;
   width: 100%;

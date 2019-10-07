@@ -9,6 +9,49 @@
               </div>
             </div>
 
+
+<!---------------->
+<!-- ADD PLANT  -->
+<!---------------->
+
+<!-- success message add plant -->
+
+{% if success_message_add_plant == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Pflanze erfolgreich hinzugefügt</span>
+  </div>
+{% endif %}  
+
+<!-- error message add plant --> 
+
+{% if error_message_add_plant != [] %}
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+    {% for error in error_message_add_plant %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+
+            <div class="card">
+              <form method="POST">         
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/plants#'" name="add_plant" class="btn btn-fill btn-primary">NEW PLANT</button>
+                </div>
+              </form>
+            </div>
+
+<!------------------>
+<!-- PLANT TABLE  -->
+<!------------------>   
+
 <!-- success message change settings -->
 
 {% if success_message_change_settings != [] %}
@@ -35,9 +78,6 @@
   </div>
 {% endif %}  
 
-<!------------------>
-<!-- PLANT TABLE  -->
-<!------------------>   
 
             <div class="card ">
               <form method="POST">          
@@ -47,11 +87,11 @@
                       <thead>
                         <th scope="col" style="width:3%"></th> 
                         <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Pflanze</th>   
-                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Gerät</th>     
+                        <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextform</p>Gerät</th>     
                         <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Test</th>                                          
                         <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Gruppen</th>   
                         <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Pumpdauer (s)</th>                         
-                        <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Feuchtigkeitslevel</th>   
+                        <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextforminlenght</p>Feuchtigkeitslevel</th>   
                         <th scope="col" style="width:5%"></th>                                                    
                       </thead>
                       <tbody> 
@@ -68,7 +108,19 @@
                               </div>
                             </div>
                           </td> 
-                          <td>{{ entry.device.name }}</td>   
+                          <td>
+                            <select class="form-control" data-size="5" name="set_watering_controller_ieeeAddr" style="background-color:#27293D"> 
+                              {% if entry.device_ieeeAddr != "" %}
+                                <option value = "{{ entry.device_ieeeAddr }}" > {{ entry.device.name }} </option>
+                              {% else %}   
+                                <option value = "None" > Gerät </option>   
+                              {% endif %}                       
+                              <option disabled>------------------</option>        
+                              {% for each in dropdown_list_watering_controller %}
+                                <option value="{{each.ieeeAddr}}"> {{ each.name }} </option>
+                              {% endfor %}      
+                            </select>                            
+                          </td>   
                           <td>
                             <a href="/plants/test_pump/{{ entry.id }}#table"><font size="5"><i class='tim-icons icon-triangle-right-17'></i></font></a>
                           </td>                                                                                   
@@ -116,80 +168,6 @@
                 </div>            
                 <div class="card-footer">                   
                   <button type="submit" onclick="window.location.href='/plants#'" name="save_plants_settings" class="btn btn-fill btn-primary">SAVE</button>
-                </div>
-              </form>
-            </div>
-
-
-<!---------------->
-<!-- ADD PLANT  -->
-<!---------------->
-
-<section id="add_plant"></section>   
-
-<!-- success message add plant -->
-
-{% if success_message_add_plant == True %}
-  <div class="alert alert-success">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    <span>Pflanze erfolgreich hinzugefügt</span>
-  </div>
-{% endif %}  
-
-<!-- error message add plant --> 
-
-{% if error_message_add_plant != [] %}
-  <div class="alert alert-info alert-with-icon" data-notify="container">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
-    {% for error in error_message_add_plant %}
-      <span data-notify="message">{{ error }}</span>
-    {% endfor %}
-  </div>
-{% endif %}  
-
-
-            <div class="card">
-              <div class="card-header">
-                <h5 class="title">Pflanze hinzufügen</h5>
-              </div>   
-              <form method="POST">         
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="row justify-content-md-left">
-                        <div class="col-sm-3">                       
-                          <div class="form-group">
-                            <label>Pflanze</label>
-                            <input type="text" class="form-control" name="set_name" value="{{ name }}" /> 
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="form-group">
-                            <label>Gerät</label>
-                            <select class="form-control" data-size="5" name="set_watering_controller_ieeeAddr" style="background-color:#27293D"> 
-                              {% if device_ieeeAddr != "" %}
-                                <option value = "{{ device_ieeeAddr }}" > {{ device_name }} </option>
-                              {% else %}   
-                                <option value = "None" > Gerät </option>   
-                              {% endif %}                       
-                              <option disabled>------------------</option>        
-                              {% for each in dropdown_list_watering_controller %}
-                                <option value="{{each.ieeeAddr}}"> {{ each.name }} </option>
-                              {% endfor %}      
-                            </select>  
-                          </div>
-                        </div>                            
-                      </div>
-                    </div>
-                  </div>                  
-                </div>
-                <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/plants#add_plant'" name="add_plant" class="btn btn-fill btn-primary">SAVE</button>
                 </div>
               </form>
             </div>

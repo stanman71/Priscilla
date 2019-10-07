@@ -56,6 +56,19 @@ def settings_users():
         session['delete_user_error'] = None       
 
 
+    """ ########## """
+    """  add user  """
+    """ ########## """    
+
+    if request.form.get("add_user") != None: 
+        result = ADD_USER()
+
+        if result != True:
+            error_message_add_user.append(result)
+        else:
+            success_message_add_user = True
+
+
     """ ############# """
     """  table users  """
     """ ############# """    
@@ -187,72 +200,10 @@ def settings_users():
                         if changes_saved == True:
                             success_message_change_settings.append(username + " || Einstellungen erfolgreich gespeichert") 
 
-                    username        = ""
-                    email           = ""
-                    password        = ""      
-                    password_repeat = "" 
                                         
                 # no user has administrator rights
                 else:    
                     error_message_change_settings.append("Mindestens ein Benutzer muss Administrator sein")  
-
-
-    """ ########## """
-    """  add user  """
-    """ ########## """    
-
-    if request.form.get("add_user") != None: 
-        
-        if request.form.get("set_username") != None:
-            # missing name
-            if request.form.get("set_username") == "":
-                error_message_add_user.append("Keinen Benutzernamen angegeben")   
-            elif GET_USER_BY_NAME(request.form.get("set_username")):  
-                error_message_add_user.append("Benutzername bereits vergeben")                                                   
-            else:         
-                username = request.form.get("set_username")
-                
-        if request.form.get("set_email") != None:
-            # missing email address
-            if request.form.get("set_email") == "":
-                error_message_add_user.append("Keine eMail-Adresse angegeben") 
-            elif GET_USER_BY_EMAIL(request.form.get("set_email")):  
-                error_message_add_user.append("eMail-Adresse bereits vergeben")   
-            else:         
-                email = request.form.get("set_email")  
-    
-        if request.form.get("set_password") != None:
-            # missing password
-            if request.form.get("set_password") == "":
-                error_message_add_user.append("Kein Passwort angegeben")    
-            elif request.form.get("set_password_repeat") == "":
-                error_message_add_user.append("Passwort nicht bestätigt")                                    
-            else:         
-                password        = request.form.get("set_password")
-                password_repeat = request.form.get("set_password_repeat")
-
-                if password == password_repeat:
-
-                    if 8 <= len(password) <= 20:                
-                        hashed_password = generate_password_hash(password, method='sha256')
-                    else:
-                        error_message_add_user.append("Passwort muss zwischen 8 und 20 Zeichen haben")
-
-                else:
-                    error_message_add_user.append("Passworter nicht identisch")  
-
-        if username != "" and email != "" and hashed_password != "":
-            result = ADD_USER(username, email, hashed_password)
-
-            if result != True:
-                error_message_add_user.append(error)
-
-            else:
-                success_message_add_user = True
-                username        = ""
-                email           = ""
-                password        = ""
-                password_repeat = ""
 
 
     user_list = GET_ALL_USERS()
@@ -274,11 +225,7 @@ def settings_users():
                                                      error_message_add_user=error_message_add_user,
                                                      message_admin_password_not_changed=message_admin_password_not_changed,
                                                      success_message_change_settings=success_message_change_settings,                                                     
-                                                     success_message_add_user=success_message_add_user,
-                                                     username=username,
-                                                     email=email,
-                                                     password=password,  
-                                                     password_repeat=password_repeat,                      
+                                                     success_message_add_user=success_message_add_user,                
                                                      list_users=list_users,
                                                     ) 
                            )

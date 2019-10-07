@@ -22,7 +22,7 @@ def permission_required(f):
             return f(*args, **kwargs)
         else:
             return redirect(url_for('logout'))
-        #except Exception as e:
+       # except Exception as e:
         #    print(e)
         #    return redirect(url_for('logout'))
         
@@ -39,9 +39,6 @@ def plants():
     error_message_add_plant         = []
     error_message_datafile          = ""
 
-    name            = ""
-    device_ieeeAddr = ""
-    device_name     = ""
 
     page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
@@ -64,6 +61,19 @@ def plants():
     if session.get('error_download_datafile', None) != None:
         error_message_datafile = session.get('error_download_datafile') 
         session['error_download_datafile'] = None
+
+
+    """ ########### """
+    """  add plant  """
+    """ ########### """   
+
+    if request.form.get("add_plant") != None: 
+        result = ADD_PLANT()   
+        if result != True: 
+            error_message_add_plant.append(result)         
+
+        else:       
+            success_message_add_plant = True
 
 
     """ ############## """
@@ -103,7 +113,18 @@ def plants():
                     name = GET_PLANT_BY_ID(i).name
                     error_message_change_settings.append(current_name + " || Keinen Namen angegeben") 
                     error_founded = True      
-                                                            
+
+                # check device
+                if request.form.get("set_watering_controller_ieeeAddr") == "None":
+                    error_message_change_settings.append("Kein Gerät angegeben")
+                if (GET_PLANT_BY_IEEEADDR(request.form.get("set_watering_controller_ieeeAddr")) and 
+                    request.form.get("set_watering_controller_ieeeAddr") != GET_PLANT_BY_ID(i).device_ieeeAddr):
+                    
+                    error_message_change_settings.append("Gerät mehrmals vergeben")    
+                                    
+                device_ieeeAddr = request.form.get("set_watering_controller_ieeeAddr")
+
+                # check group
                 if request.form.get("set_group_" + str(i)) != "":
                     group = request.form.get("set_group_" + str(i))
                 else:
@@ -128,7 +149,7 @@ def plants():
 
                     changes_saved = False
 
-                    if UPDATE_PLANT_SETTINGS(i, name, group):
+                    if UPDATE_PLANT_SETTINGS(i, device_ieeeAddr, name, group):
                         changes_saved = True
 
                     if moisture_level != None:
@@ -142,43 +163,7 @@ def plants():
                     if changes_saved == True:    
                         success_message_change_settings.append(name + " || Einstellungen gespeichert") 
 
-                name = ""
-
-
-    """ ########### """
-    """  add plant  """
-    """ ########### """   
-
-    if request.form.get("add_plant") != None: 
-
-        # check name
-        if request.form.get("set_name") == "":
-            error_message_add_plant.append("Keinen Namen angegeben")
-        elif GET_PLANT_BY_NAME(request.form.get("set_name")):  
-            error_message_add_plant.append("Name bereits vergeben")               
-        else:
-            name = request.form.get("set_name")
-
-        # check device
-        if request.form.get("set_watering_controller_ieeeAddr") == "None":
-            error_message_add_plant.append("Kein Gerät angegeben")
-        elif GET_PLANT_BY_IEEEADDR(request.form.get("set_watering_controller_ieeeAddr")):
-            error_message_add_plant.append("Gerät bereits vergeben")                    
-        else:
-            device_ieeeAddr = request.form.get("set_watering_controller_ieeeAddr")
-            device_name     = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
-            
-        if name != "" and device_ieeeAddr != "":
-                        
-            result = ADD_PLANT(name, device_ieeeAddr)   
-            if result != True: 
-                error_message_add_plant.append(result)         
-
-            else:       
-                success_message_add_plant = True
-                name            = ""
-                device_ieeeAddr = ""
-                device_name     = ""
+                    name = ""
 
 
     dropdown_list_watering_controller = GET_ALL_DEVICES("watering_controller")
@@ -199,9 +184,6 @@ def plants():
                                                     error_message_add_plant=error_message_add_plant,     
                                                     error_message_datafile=error_message_datafile,                                                                                             
                                                     dropdown_list_watering_controller=dropdown_list_watering_controller, 
-                                                    name=name,
-                                                    device_ieeeAddr=device_ieeeAddr,
-                                                    device_name=device_name,
                                                     list_plants=list_plants,  
                                                     list_plants_datafiles=list_plants_datafiles,  
                                                     timestamp=timestamp,      

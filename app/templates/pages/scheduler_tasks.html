@@ -1,0 +1,623 @@
+<script>
+  var sensor_options_list_1  = '{{ device_1_input_values }}';
+  var sensor_options_list_1  = sensor_options_list_1.split(",");
+  var sensor_options_list_2  = '{{ device_2_input_values }}';
+  var sensor_options_list_2  = sensor_options_list_2.split(",");
+  var sensor_options_list_3  = '{{ device_3_input_values }}';
+  var sensor_options_list_3  = sensor_options_list_3.split(",");
+  var sensor_options_list_4  = '{{ device_4_input_values }}';
+  var sensor_options_list_4  = sensor_options_list_4.split(",");
+  var sensor_options_list_5  = '{{ device_5_input_values }}';
+  var sensor_options_list_5  = sensor_options_list_5.split(",");
+  var sensor_options_list_6  = '{{ device_6_input_values }}';
+  var sensor_options_list_6  = sensor_options_list_6.split(",");
+  var sensor_options_list_7  = '{{ device_7_input_values }}';
+  var sensor_options_list_7  = sensor_options_list_7.split(",");
+  var sensor_options_list_8  = '{{ device_8_input_values }}';
+  var sensor_options_list_8  = sensor_options_list_8.split(",");
+  var sensor_options_list_9  = '{{ device_9_input_values }}';
+  var sensor_options_list_9  = sensor_options_list_9.split(",");
+  var sensor_options_list_10 = '{{ device_10_input_values }}';
+  var sensor_options_list_10 = sensor_options_list_10.split(",");
+  var sensor_options_list_11 = '{{ device_11_input_values }}';
+  var sensor_options_list_11 = sensor_options_list_11.split(",");
+  var sensor_options_list_12 = '{{ device_12_input_values }}';
+  var sensor_options_list_12 = sensor_options_list_12.split(",");
+  var sensor_options_list_13 = '{{ device_13_input_values }}';
+  var sensor_options_list_13 = sensor_options_list_13.split(",");
+  var sensor_options_list_14 = '{{ device_14_input_values }}';
+  var sensor_options_list_14 = sensor_options_list_14.split(",");
+  var sensor_options_list_15 = '{{ device_15_input_values }}';
+  var sensor_options_list_15 = sensor_options_list_15.split(",");
+  var sensor_options_list_16 = '{{ device_16_input_values }}';
+  var sensor_options_list_16 = sensor_options_list_16.split(",");
+  var sensor_options_list_17 = '{{ device_17_input_values }}';
+  var sensor_options_list_17 = sensor_options_list_17.split(",");
+  var sensor_options_list_18 = '{{ device_18_input_values }}';
+  var sensor_options_list_18 = sensor_options_list_18.split(",");
+  var sensor_options_list_19 = '{{ device_19_input_values }}';
+  var sensor_options_list_19 = sensor_options_list_19.split(",");
+  var sensor_options_list_20 = '{{ device_20_input_values }}';
+  var sensor_options_list_20 = sensor_options_list_20.split(",");
+  var sensor_options_list_21 = '{{ device_21_input_values }}';
+  var sensor_options_list_21 = sensor_options_list_21.split(",");
+  var sensor_options_list_22 = '{{ device_22_input_values }}';
+  var sensor_options_list_22 = sensor_options_list_22.split(",");
+  var sensor_options_list_23 = '{{ device_23_input_values }}';
+  var sensor_options_list_23 = sensor_options_list_23.split(",");
+  var sensor_options_list_24 = '{{ device_24_input_values }}';
+  var sensor_options_list_24 = sensor_options_list_24.split(",");
+  var sensor_options_list_25 = '{{ device_25_input_values }}';
+  var sensor_options_list_25 = sensor_options_list_25.split(",");
+  
+  var sensor_options = {};
+  sensor_options['1']  = sensor_options_list_1;
+  sensor_options['2']  = sensor_options_list_2;
+  sensor_options['3']  = sensor_options_list_3;
+  sensor_options['4']  = sensor_options_list_4;
+  sensor_options['5']  = sensor_options_list_5;
+  sensor_options['6']  = sensor_options_list_6;
+  sensor_options['7']  = sensor_options_list_7;
+  sensor_options['8']  = sensor_options_list_8;
+  sensor_options['9']  = sensor_options_list_9;
+  sensor_options['10'] = sensor_options_list_10;
+  sensor_options['11'] = sensor_options_list_11;
+  sensor_options['12'] = sensor_options_list_12;
+  sensor_options['13'] = sensor_options_list_13;
+  sensor_options['14'] = sensor_options_list_14;
+  sensor_options['15'] = sensor_options_list_15;
+  sensor_options['16'] = sensor_options_list_16;
+  sensor_options['17'] = sensor_options_list_17;
+  sensor_options['18'] = sensor_options_list_18;
+  sensor_options['19'] = sensor_options_list_19;
+  sensor_options['20'] = sensor_options_list_20;
+  sensor_options['21'] = sensor_options_list_21;
+  sensor_options['22'] = sensor_options_list_22;
+  sensor_options['23'] = sensor_options_list_23;
+  sensor_options['24'] = sensor_options_list_24;
+  sensor_options['25'] = sensor_options_list_25;
+
+  function Choose_Sensor_1(entry_id) {
+    var device_name = "device_1_" + entry_id
+    var sensor_list_name = "selected_sensor_1_" + entry_id
+    var device = document.getElementById(device_name);
+    var sensor_list = document.getElementById(sensor_list_name);
+    var selected_sensor = device.options[device.selectedIndex].value;
+    while (sensor_list.options.length) {
+      sensor_list.remove(0);
+    }
+    var sensors = sensor_options[selected_sensor];
+    if (sensors) {
+      var i;
+      for (i = 0; i < sensors.length; i++) {
+        var sensor = new Option(sensors[i], i);
+        sensor_list.options.add(sensor);
+      }
+    }
+    $('.selectpicker').selectpicker('refresh');      
+  } 
+
+  function Choose_Sensor_2(entry_id) {
+    var device_name = "device_2_" + entry_id
+    var sensor_list_name = "selected_sensor_2_" + entry_id
+    var device = document.getElementById(device_name);
+    var sensor_list = document.getElementById(sensor_list_name);
+    var selected_sensor = device.options[device.selectedIndex].value;
+    while (sensor_list.options.length) {
+      sensor_list.remove(0);
+    }
+    var sensors = sensor_options[selected_sensor];
+    if (sensors) {
+      var i;
+      for (i = 0; i < sensors.length; i++) {
+        var sensor = new Option(sensors[i], i);
+        sensor_list.options.add(sensor);
+      }
+    }
+    $('.selectpicker').selectpicker('refresh');      
+  } 
+
+</script>
+
+ 
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title"><b>Aufgaben</b></h4>
+              </div>
+            </div>
+
+
+<!------------------------>
+<!-- ADD SCHEDULER TASK -->
+<!------------------------>
+
+<!-- success message add scheduler task -->
+
+{% if success_message_add_scheduler_task == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Aufgabe erfolgreich hinzugefügt</span>
+  </div>
+{% endif %}  
+
+<!-- error message add scheduler task --> 
+
+{% if error_message_add_scheduler_task != [] %}
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+    {% for error in error_message_add_scheduler_task %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+
+            <div class="card">
+              <form method="POST">         
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/scheduler_tasks#'" name="add_scheduler_task" class="btn btn-fill btn-primary">NEW SCHEDULER TASK</button>
+                </div>
+              </form>
+            </div>
+
+
+<!---------------------------->
+<!-- SCHEDULER TASKS TABLE  -->
+<!---------------------------->   
+
+<!-- success message change settings -->
+
+{% if success_message_change_settings != [] %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for success in success_message_change_settings %}
+      <span data-notify="message">{{ success }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+<!-- error message change settings -->
+
+{% if error_message_change_settings != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_change_settings %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+
+{% for entry in list_scheduler_tasks %}
+
+<section id="table_{{entry.id}}"></section>  
+
+
+             <div class="card ">
+              <div class="card-header">
+                <a data-toggle="collapse" href="#collapse{{entry.id}}"><font color="white"><b><i class='uil uil-arrow-down'> {{entry.name}} </i></b></font></a>
+                <br>
+                <br>
+              </div>   
+              <form method="POST">   
+                <div id="collapse{{entry.id}}" class="collapse{% if entry.collapse == "True" %}.show{% endif %}">           
+                  <div class="card-body"> 
+                    <div class="table-responsive">
+                      <table class="table tablesorter">
+                        <thead>          
+                          <th scope="col" style="width:3%"></th>              
+                          <th scope="col" style="width:17%">Name</th> 
+                          <th scope="col" style="width:35%">Aufgabe</th>  
+                          <th scope="col" style="width:5%"></th>            
+                          <th scope="col" style="width:7%">Zeit</th>                
+                          <th scope="col" style="width:7%">Sonne</th>              
+                          <th scope="col" style="width:7%">Sensoren</th>
+                          <th scope="col" style="width:7%">Position</th>
+                          <th scope="col" style="width:7%">Wiederholen</th>
+                          <th scope="col" style="width:7%">Pause</th>                    
+                        </thead>
+                        <tbody> 
+                          <tr>
+                            <td>
+                              <a href="/scheduler_tasks/position/up/{{ entry.id }}#table_{{ entry.id }}"><i class="tim-icons icon-minimal-up"></i></a>
+                              <a href="/scheduler_tasks/position/down/{{ entry.id }}#table_{{ entry.id }}"><i class="tim-icons icon-minimal-down"></i></a>                           
+                            </td>                       
+                            <td>
+                              <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                                     
+                            </td> 
+                            <td>        
+                              <input type="text" class="form-control" name="set_task_{{ entry.id }}" value = {% if entry.task != None %}"{{ entry.task }}"{% endif %} />  
+                            </td>        
+                            <td></td>                         
+                            <td>
+                              <font size="+2">
+                                <div class="pretty p-default p-curve p-bigger">
+                                  <input type="checkbox" {{ entry.option_time }} name="checkbox_option_time_{{ entry.id }}" >
+                                  <div class="state p-success">
+                                    <label></label>
+                                  </div>
+                                </div>
+                              </font>
+                            </td>                         
+                            <td>
+                              <font size="+2">
+                                <div class="pretty p-default p-curve p-bigger">
+                                  <input type="checkbox" {{ entry.option_sun }} name="checkbox_option_sun_{{ entry.id }}" >
+                                  <div class="state p-success">
+                                    <label></label>
+                                  </div>
+                                </div>
+                              </font>
+                            </td>                                         
+                            <td>
+                              <font size="+2">
+                                <div class="pretty p-default p-curve p-bigger">
+                                  <input type="checkbox" {{ entry.option_sensors }} name="checkbox_option_sensors_{{ entry.id }}" >
+                                  <div class="state p-success">
+                                    <label></label>
+                                  </div>
+                                </div>
+                              </font>
+                            </td>       
+                            <td>
+                              <font size="+2">
+                                <div class="pretty p-default p-curve p-bigger">
+                                  <input type="checkbox" {{ entry.option_position }} name="checkbox_option_position_{{ entry.id }}" >
+                                  <div class="state p-success">
+                                    <label></label>
+                                  </div>
+                                </div>
+                              </font>
+                            </td>                                 
+                            <td>
+                              <font size="+2">
+                                <div class="pretty p-default p-curve p-bigger">
+                                  <input type="checkbox" {{ entry.option_repeat }} name="checkbox_option_repeat_{{ entry.id }}" >
+                                  <div class="state p-success">
+                                    <label></label>
+                                  </div>
+                                </div>
+                              </font>
+                            </td>
+                            <td>
+                              <font size="+2">
+                                <div class="pretty p-default p-curve p-bigger">
+                                  <input type="checkbox" {{ entry.option_pause }} name="checkbox_option_pause_{{ entry.id }}" >
+                                  <div class="state p-success">
+                                    <label></label>
+                                  </div>
+                                </div>
+                              </font>
+                            </td>                      
+                          </tr>
+
+  <!-- section time -->
+
+                          {% if entry.option_time == "checked" %}
+
+                          <tr>
+                            <td colspan="10"></td>
+                          </tr>
+                          <tr>
+                            <td colspan="2">Tag (Mon, Tue, Wed, Thu, Fri, Sat, Sun) /// Stunde (00-23) /// Minute (00-59) /// Alles (*) /// Trenner (,)</td>
+                            <td colspan="8">
+                              <div class="row justify-content-md-center">                                                
+                                <div class="col-sm-4"> 
+                                  <input type="text" class="form-control" placeholder="Tage" name="set_day_{{ entry.id }}"
+                                  value = {% if entry.day != None and entry.day != "None" %}"{{ entry.day }}"{% else %}""{% endif %} /> 
+                                </div>                     
+                                <div class="col-sm-4">                                       
+                                  <input type="text" class="form-control" placeholder="Stunden" name="set_hour_{{ entry.id }}"
+                                  value = {% if entry.hour != None and entry.hour != "None" %}"{{ entry.hour }}"{% else %}""{% endif %} /> 
+                                </div> 
+                                <div class="col-sm-4">   
+                                  <input type="text" class="form-control" placeholder="Minuten" name="set_minute_{{ entry.id }}"
+                                  value = {% if entry.minute != None and entry.minute != "None" %}"{{ entry.minute }}"{% else %}""{% endif %} /> 
+                                </div>
+                              </div>
+                            </td>                           
+                          </tr>
+
+                        {% endif %}
+
+  <!-- section sun -->
+
+                        {% if entry.option_sun == "checked" %}
+
+                          <tr>
+                            <td colspan="10"></td>
+                          </tr>
+                          <tr>
+                            <td colspan="1"></td>
+                            <td colspan="1"></td>
+                            <td colspan="8">
+                              <div class="row justify-content-md-center">
+                                <div class="col-sm-3">  
+                                  <button type="button" style="background-color:transparent" class="btn btn-secondary">Sonnenaufgang ({{ entry.sunrise }})</button>
+                                </div>   
+                                <div class="col-sm-1">   
+                                  <font size="+2">
+                                    <div class="pretty p-default p-curve p-bigger">
+                                      <input type="checkbox" {{ entry.option_sunrise }} name="checkbox_option_sunrise_{{ entry.id }}" >
+                                      <div class="state p-success">
+                                        <label></label>
+                                      </div>
+                                    </div>
+                                  </font>
+                                </div>  
+                                <div class="col-sm-3">  
+                                  <button type="button" style="background-color:transparent" class="btn btn-secondary">Sonnenuntergang ({{ entry.sunset }})</button>
+                                </div>   
+                                <div class="col-sm-1">   
+                                  <font size="+2">
+                                    <div class="pretty p-default p-curve p-bigger">
+                                      <input type="checkbox" {{ entry.option_sunset }} name="checkbox_option_sunset_{{ entry.id }}" >
+                                      <div class="state p-success">
+                                        <label></label>
+                                      </div>
+                                    </div>
+                                  </font>                           
+                                </div>
+
+                                <div class="col-sm-4">
+                                  <select class="selectpicker" data-width="100%" data-live-search="true" name="set_location_{{ entry.id }}">
+                                    {% if entry.location != None and entry.location != "None" %}
+                                      <option value= "{{ entry.location }}" > {{ entry.location }} </option>
+                                    {% else %}
+                                      <option value= "" > Ort </option>
+                                    {% endif %}
+                                    <optgroup>
+                                    {% if error_message_locations_import == "" %}
+                                      {% for each in dropdown_list_locations %}
+                                        <option value= "{{ each }}" > {{ each }} </option>
+                                      {% endfor %}   
+                                    {% endif %}                    
+                                    </optgroup>                                                                             
+                                  </select>                              
+                                </div>
+                              </div>
+                            </td>                           
+                          </tr>
+
+                          {% endif %}
+
+  <!-- section sensors -->
+
+                        {% if entry.option_sensors == "checked" %}
+
+  <!-- section 1 -->
+
+                          <tr>
+                            <td colspan="10"></td>
+                          </tr>            
+                          <tr>
+                            <td colspan="1"></td>
+                            <td colspan="1">
+                              <div class="row justify-content-md-center">
+                                <div class="col-sm-5">  
+                                  <button type="submit" class="btn btn-default" onclick="window.location.href='/scheduler#table_{{ entry.id }}'" name="add_sensor_row_{{ entry.id }}">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                  </button>    
+                                </div>
+                                <div class="col-sm-5">
+                                  <button type="submit" class="btn btn-default" onclick="window.location.href='/scheduler#table_{{ entry.id }}'" name="remove_sensor_row_{{ entry.id }}">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                  </button>                          
+                                </div>
+                              </div>                                   
+                            </td>
+                            
+                            <td colspan="8">    
+                              <div class="row justify-content-md-center">                                                 
+                                <div class="col-sm-4"> 
+                                  <select id="device_1_{{ entry.id }}" onchange="Choose_Sensor_1('{{ entry.id }}')" class="selectpicker" data-width="100%" data-live-search="true" name="set_device_1_{{ entry.id }}">
+                                    {% if entry.device_ieeeAddr_1 != None and entry.device_ieeeAddr_1 != "None" %}
+                                      <option value= "{{ entry.device_ieeeAddr_1 }}" > {{ entry.device_name_1 }} </option>
+                                    {% else %}
+                                      <option value= "" > Gerät </option>
+                                    {% endif %}                                
+                                    <optgroup>
+                                    {% for each in dropdown_list_devices %}
+                                      <option value="{{ each.id }}"> {{ each.name }} </option>
+                                    {% endfor %}                  
+                                    </optgroup>                                                                            
+                                  </select>                              
+                                </div>
+                                
+                                <div class="col-sm-4"> 
+                                  <select id="selected_sensor_1_{{ entry.id }}" class="selectpicker" data-width="100%" name="set_sensor_1_{{ entry.id }}">    
+                                    {% if device_id_1 != None and device_id_1 != "None" and entry.device_ieeeAddr_1 != None and entry.device_ieeeAddr_1 != "None" %}
+                                      <option value= "{{ entry.sensor_key_1 }}" > {{ entry.sensor_key_1 }} </option>
+                                        {% for each in entry.device_input_values_1.split(',') %}
+                                          <option value= "{{ each }}" > {{ each }} </option>
+                                        {% endfor %}                             
+                                      {% else %}
+                                      <option value= "" > Sensor </option>                         
+                                    {% endif %}                                                                                      
+                                  </select>                                
+
+                                {% if entry.main_operator_second_sensor == "and" or entry.main_operator_second_sensor == "or" %}
+                                  
+                                  </div>                                                 
+                                  <div class="col-sm-2">     
+                                    <select class="selectpicker" data-width="100%" name="set_operator_1_{{ entry.id }}">  
+                                      {% if entry.operator_1 != None and entry.operator_1 != "None" and entry.operator_1 != "" %}
+                                        <option value= "{{ entry.operator_1 }}" > {{ entry.operator_1 }} </option>
+                                      {% else %}
+                                        <option value= "" > Operator </option>
+                                      {% endif %}                                   
+                                      <optgroup>                                    
+                                        {% for each in dropdown_list_operators %}
+                                        <option value="{{each}}"> {{ each }} </option>
+                                        {% endfor %}
+                                      </optgroup>                                                                                                                    
+                                    </select>        
+                                  </div>                                           
+                                  <div class="col-sm-2"> 
+                                  <input type="text" class="form-control" name="set_value_1_{{ entry.id }}"
+                                  value = {% if entry.value_1 != None and entry.value_1 != "None" %}"{{ entry.value_1 }}"{% else %}""{% endif %} /> 
+                                {% else %}                 
+                              {% endif %}
+
+                                </div>
+                              </div>
+                              </td>
+                            </tr>  
+
+  <!-- section 2 -->
+
+                          {% if entry.main_operator_second_sensor != "None" and entry.main_operator_second_sensor != None %}            
+                          <tr>
+                            <td colspan="2">
+                              <div class="dropdown text-right">     
+                                <select class="selectpicker" data-width="100%" name="set_main_operator_second_sensor_{{ entry.id }}">
+                                  <option value= "{{ entry.main_operator_second_sensor }}" > {{ entry.main_operator_second_sensor }} </option>
+                                  <optgroup>                                    
+                                    {% for each in dropdown_list_main_operator_second_sensor %}
+                                      <option value="{{each}}"> {{ each }} </option>
+                                    {% endfor %}
+                                  </optgroup>                                                                                                                    
+                                </select>                                    
+                              </div>               
+                            </td>
+                            
+                            <td colspan="8">    
+                              <div class="row justify-content-md-center">                                                 
+                                <div class="col-sm-4"> 
+                                  <select id="device_2_{{ entry.id }}" onchange="Choose_Sensor_2('{{ entry.id }}')" class="selectpicker" data-width="100%" data-live-search="true" name="set_device_2_{{ entry.id }}">
+                                    {% if entry.device_ieeeAddr_2 != None and entry.device_ieeeAddr_2 != "None" %}
+                                      <option value= "{{ entry.device_ieeeAddr_2 }}" > {{ entry.device_name_2 }} </option>
+                                    {% else %}
+                                      <option value= "" > Gerät </option>
+                                    {% endif %}           
+                                    <optgroup>
+                                    {% for each in dropdown_list_devices %}
+                                      <option value="{{ each.id }}"> {{ each.name }} </option>
+                                    {% endfor %}                  
+                                    </optgroup>                                                                            
+                                  </select>    
+                                </div>                                                  
+                                <div class="col-sm-4"> 
+                                  <select id="selected_sensor_2_{{ entry.id }}" class="selectpicker" data-width="100%" name="set_sensor_2_{{ entry.id }}">  
+                                    {% if device_id_2 != None and device_id_2 != "None" and entry.device_ieeeAddr_2 != None and entry.device_ieeeAddr_2 != "None" %}
+                                      <option value= "{{ entry.sensor_key_2 }}" > {{ entry.sensor_key_2 }} </option>
+                                        {% for each in entry.device_input_values_2.split(',') %}
+                                          <option value= "{{ each }}" > {{ each }} </option>
+                                        {% endfor %}                             
+                                      {% else %}
+                                      <option value= "" > Sensor </option>                         
+                                    {% endif %}                                                                                         
+                                  </select>    
+
+                                {% if entry.operator_main_1 == "and" or entry.operator_main_1 == "or" %}
+
+                                  </div>                                               
+                                  <div class="col-sm-2">  
+                                    <select class="selectpicker" data-width="100%" name="set_operator_2_{{ entry.id }}">  
+                                      {% if entry.operator_2 != None and entry.operator_2 != "None" and entry.operator_2 != "" %}
+                                        <option value= "{{ entry.operator_2 }}" > {{ entry.operator_2 }} </option>
+                                      {% else %}
+                                        <option value= "" > Operator </option>
+                                      {% endif %}  
+                                      <optgroup>                                    
+                                        {% for each in dropdown_list_operators %}
+                                        <option value="{{each}}"> {{ each }} </option>
+                                        {% endfor %}
+                                      </optgroup>                                                                                                                    
+                                    </select>  
+                                  </div>                                           
+                                  <div class="col-sm-2">     
+                                    <input type="text" class="form-control" name="set_value_2_{{ entry.id }}"
+                                    value = {% if entry.value_2 != None and entry.value_2 != "None" %}"{{ entry.value_2 }}"{% else %}""{% endif %} />
+                                {% endif %} 
+
+                                </div>
+                              </div>
+                              </td>
+                            </tr> 
+
+                          {% endif %} 
+
+                        {% endif %}
+
+  <!-- section position -->
+
+                        {% if entry.option_position == "checked" %}
+
+                          <tr>
+                            <td colspan="10"></td>
+                          </tr>
+                          <tr>
+                            <td colspan="1"></td>
+                            <td colspan="1"></td>
+                            <td colspan="8">
+                              <div class="row justify-content-md-center">
+                                <div class="col-sm-1">  
+                                  <button type="button" style="background-color:transparent" class="btn btn-secondary">HOME:</button>
+                                </div>                                                   
+                                <div class="col-sm-1"> 
+                                  <font size="+2">
+                                    <div class="pretty p-default p-curve p-bigger">
+                                      <input type="checkbox" {{ entry.option_home }} name="checkbox_option_home_{{ entry.id }}" >
+                                      <div class="state p-success">
+                                        <label></label>
+                                      </div>
+                                    </div>
+                                  </font>
+                                </div>
+                                <div class="col-sm-1">  
+                                  <button type="button" style="background-color:transparent" class="btn btn-secondary">AWAY:</button>
+                                </div>                      
+                                <div class="col-sm-1">                                       
+                                  <font size="+2">
+                                    <div class="pretty p-default p-curve p-bigger">
+                                      <input type="checkbox" {{ entry.option_away }} name="checkbox_option_away_{{ entry.id }}" >
+                                      <div class="state p-success">
+                                        <label></label>
+                                      </div>
+                                    </div>
+                                  </font>
+                                </div>
+                                <div class="col-sm-2">  
+                                  <button type="button" style="background-color:transparent" class="btn btn-secondary">IP-Adressen:</button>
+                                </div>
+                                <div class="col-sm-6">
+                                  <input type="text" class="form-control" name="set_ip_addresses_{{ entry.id }}"
+                                  value = {% if entry.ip_addresses != None and entry.ip_addresses != "None" %}"{{ entry.ip_addresses }}"{% else %}""{% endif %} />
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+
+                        {% endif %}
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>            
+                  <div class="card-footer">                   
+                    <button type="submit" onclick="window.location.href='/scheduler_tasks#table_{{entry.id}}'" name="save_scheduler_settings" class="btn btn-fill btn-primary">SAVE</button>
+                    <button type="submit" onclick="window.location.href='/scheduler_tasks#'" name="delete_scheduler_task_{{entry.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
+                  </div>
+                </form>
+              </div> 
+            </div>
+
+{% endfor %}
+
+          </div>
+        </div>
+      </div>          

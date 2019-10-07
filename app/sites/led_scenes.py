@@ -47,6 +47,19 @@ def led_scenes():
     RESET_LED_SCENE_COLLAPSE()
 
 
+    """ ############### """
+    """  add led scene  """
+    """ ############### """   
+
+    if request.form.get("add_led_scene") != None:             
+        result = ADD_LED_SCENE()   
+        if result != True: 
+            error_message_add_led_scene.append(result)         
+
+        else:       
+            success_message_add_led_scene = True
+            
+
     """ ################## """
     """  table led scenes  """
     """ ################## """   
@@ -310,30 +323,6 @@ def led_scenes():
 
                     success_message_change_settings_led_scene = i
 
-            name = ""
-
-
-    """ ############### """
-    """  add led scene  """
-    """ ############### """   
-
-    if request.form.get("add_led_scene") != None: 
-
-        # check name
-        if request.form.get("set_name") == "":
-            error_message_add_led_scene.append("Keinen Namen angegeben")
-        elif GET_LED_SCENE_BY_NAME(request.form.get("set_name")):  
-            error_message_add_led_scene.append("Name bereits vergeben")               
-        else:    
-            name = request.form.get("set_name")                 
-            result = ADD_LED_SCENE(name)   
-            if result != True: 
-                error_message_add_led_scene.append(result)         
-
-            else:       
-                success_message_add_led_scene = True
-                name = ""
-
 
     """ ################## """
     """  delete led scene  """
@@ -406,7 +395,6 @@ def led_scenes():
                                                     success_message_add_led_scene=success_message_add_led_scene,
                                                     error_message_add_led_scene=error_message_add_led_scene,
                                                     list_led_scenes=list_led_scenes,
-                                                    name=name,
                                                     scene_1=scene_1,
                                                     scene_2=scene_2,      
                                                     scene_3=scene_3,    
@@ -421,7 +409,7 @@ def led_scenes():
                            )
 
 
-# change led_scenes position 
+# change led scenes position 
 @app.route('/led/scenes/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
