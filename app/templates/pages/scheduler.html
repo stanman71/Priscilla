@@ -200,6 +200,32 @@
   </div>
 {% endif %}  
 
+<!-- error message scheduler tasks settings -->
+
+{% if error_message_scheduler_tasks_settings != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_scheduler_tasks_settings %}
+      {{ error }} <br>
+    {% endfor %}
+  </div>      
+{% endif %}  
+
+<!-- error message scheduler tasks -->
+
+{% if error_message_scheduler_tasks != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_scheduler_tasks %}
+      {{ error }} <br>
+    {% endfor %}
+  </div>      
+{% endif %}  
+
 
 {% for entry in list_scheduler_tasks %}
 
@@ -279,19 +305,22 @@
                             <td colspan="10"></td>
                           </tr>
                           <tr>
-                            <td colspan="2">Tage | Stunden | Minuten</td>
+                            <td colspan="2"></td>
                             <td colspan="8">
                               <div class="row justify-content-md-center">                                                
                                 <div class="col-sm-4"> 
-                                  <input type="text" class="form-control" placeholder="Tage (Mon, Tue, Wed, Thu, Fri, Sat, Sun)" name="set_day_{{ entry.id }}"
+                                  <label>Tage (Mon, Tue, Wed, Thu, Fri, Sat, Sun)</label>
+                                  <input type="text" class="form-control" placeholder="Tage" name="set_day_{{ entry.id }}"
                                   value = {% if entry.day != None and entry.day != "None" %}"{{ entry.day }}"{% else %}""{% endif %} /> 
                                 </div>                     
-                                <div class="col-sm-4">                                       
-                                  <input type="text" class="form-control" placeholder="Stunden (00-23)" name="set_hour_{{ entry.id }}"
+                                <div class="col-sm-4">   
+                                  <label>Stunden (00-23)</label>                                    
+                                  <input type="text" class="form-control" placeholder="Stunden" name="set_hour_{{ entry.id }}"
                                   value = {% if entry.hour != None and entry.hour != "None" %}"{{ entry.hour }}"{% else %}""{% endif %} /> 
                                 </div> 
                                 <div class="col-sm-4">   
-                                  <input type="text" class="form-control" placeholder="Minuten (00-59)" name="set_minute_{{ entry.id }}"
+                                  <label>Minuten (00-59)</label>
+                                  <input type="text" class="form-control" placeholder="Minuten" name="set_minute_{{ entry.id }}"
                                   value = {% if entry.minute != None and entry.minute != "None" %}"{{ entry.minute }}"{% else %}""{% endif %} /> 
                                 </div>
                               </div>
@@ -315,11 +344,11 @@
                                 <div class="col-sm-4"> 
                                   <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="checkbox_option_sunrise_{{ entry.id }}" {% if entry.option_sunrise == "True" %} checked="on" {% endif %} name="checkbox_option_sunrise_{{ entry.id }}" >
-                                    <label class="custom-control-label" for="checkbox_option_sunrise_{{ entry.id }}">Sonnenaufgang</label>
+                                    <label class="custom-control-label" for="checkbox_option_sunrise_{{ entry.id }}">Sonnenaufgang ({{ entry.sunrise }})</label>
                                   </div>     
                                   <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="checkbox_option_sunset_{{ entry.id }}" {% if entry.option_sunset == "True" %} checked="on" {% endif %} name="checkbox_option_sunset_{{ entry.id }}" >
-                                    <label class="custom-control-label" for="checkbox_option_sunset_{{ entry.id }}">Sonnenuntergang</label>
+                                    <label class="custom-control-label" for="checkbox_option_sunset_{{ entry.id }}">Sonnenuntergang ({{ entry.sunset }})</label>
                                   </div>   
                                 </div>                     
                                 <div class="col-sm-4">                                         
@@ -356,13 +385,13 @@
                             <td colspan="1"></td>
                             <td colspan="1">
                               <div class="row justify-content-md-center">                                                 
-                                <div class="col-sm-3">                             
+                                <div class="col-sm-2">                             
                                   <a href="/scheduler/add_sensor/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-add"></i></font></a>                                                                                                                                    
                                 </div>                             
-                                <div class="col-sm-3">                                 
+                                <div class="col-sm-2">                                 
                                   <a href="/scheduler/remove_sensor/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-delete"></i></font></a>    
                                 </div>                             
-                                <div class="col-sm-6"> 
+                                <div class="col-sm-8"> 
                                 </div> 
                               </div>                         
                             </td>                 
@@ -523,6 +552,7 @@
                                   </div>   
                                 </div>      
                                 <div class="col-sm-8"> 
+                                  <label>IP-Adressen</label>    
                                   <input type="text" class="form-control" placeholder="IP-Adressen" name="set_ip_addresses_{{ entry.id }}"
                                   value = {% if entry.ip_addresses != None and entry.ip_addresses != "None" %}"{{ entry.ip_addresses }}"{% else %}""{% endif %} />
                                 </div>

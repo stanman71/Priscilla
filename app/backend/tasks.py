@@ -2,7 +2,7 @@ from app                                import app
 from app.backend.led                    import *
 from app.database.models                import *
 from app.backend.mqtt                   import *
-from app.backend.file_management        import SAVE_DATABASE, WRITE_LOGFILE_SYSTEM
+from app.backend.file_management        import BACKUP_DATABASE, WRITE_LOGFILE_SYSTEM
 from app.backend.process_program        import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD, GET_PROGRAM_RUNNING
 #from app.backend.microphone_led_control import MICROPHONE_LED_CONTROL
 from app.backend.backend_spotify        import *
@@ -647,13 +647,13 @@ def START_SCHEDULER_TASK(task_object):
         WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
 
 
-    # #############
-    # save database 
-    # #############
+    # ###############
+    # backup database 
+    # ###############
 
     try:  
-        if "save_database" in task_object.task:
-            SAVE_DATABASE() 
+        if "backup_database" in task_object.task:
+            BACKUP_DATABASE() 
 
 
     except Exception as e:
@@ -820,7 +820,7 @@ def START_SCHEDULER_TASK(task_object):
     # remove scheduler task without repeat
     # ####################################
 
-    if task_object.option_repeat != "checked":
+    if task_object.option_repeat != "True":
         DELETE_SCHEDULER_TASK(task_object.id)
 
 

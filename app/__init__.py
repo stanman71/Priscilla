@@ -34,6 +34,8 @@ from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
 from app.backend.shared_resources   import REFRESH_MQTT_INPUT_MESSAGES_THREAD
 from app.backend.mqtt               import MQTT_RECEIVE_THREAD, MQTT_PUBLISH_THREAD, CHECK_ZIGBEE2MQTT, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.email              import SEND_EMAIL
+from app.backend.file_management    import GET_LOCATION_COORDINATES
+from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
 
 
 """ ################## """
@@ -41,8 +43,6 @@ from app.backend.email              import SEND_EMAIL
 """ ################## """
 
 time.sleep(1)
-
-# lan
 
 try:
     lan_ip_address = netifaces.ifaddresses('eth0')[netifaces.AF_INET][0]["addr"]  
@@ -66,18 +66,40 @@ UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway)
 """ scheduler """
 """ ######### """
 
+from flask_apscheduler import APScheduler
+
 scheduler = APScheduler()
 scheduler.start()   
 
-@scheduler.task('cron', id='scheduler_tasks', minute='*')
-def scheduler_tasks():
-    now = datetime.datetime.now()
-    current_hour   = now.strftime('%H')
-    current_minute = now.strftime('%M')   
 
+@scheduler.task('cron', id='update_sunrise_sunset', hour='*')
+def update_sunrise_sunset():
     for task in GET_ALL_SCHEDULER_TASKS():
-        if (task.hour == int(current_hour) or task.hour == "*") and (task.minute == int(current_minute) or task.minute == "*"):
-            heapq.heappush(process_management_queue, (20, ("scheduler", task.task)))  
+
+        if task.option_sunrise == "True" or task.option_sunset == "True":
+
+            # get coordinates
+            coordinates = GET_LOCATION_COORDINATES(task.location)
+
+            if coordinates != "None" and coordinates != None: 
+
+                # update sunrise / sunset
+                SET_SCHEDULER_TASK_SUNRISE(task.id, GET_SUNRISE_TIME(float(coordinates[0]), float(coordinates[1])))
+                SET_SCHEDULER_TASK_SUNSET(task.id, GET_SUNSET_TIME(float(coordinates[0]), float(coordinates[1])))
+                            
+
+@scheduler.task('cron', id='scheduler_time', minute='*')
+def scheduler_time():
+    for task in GET_ALL_SCHEDULER_TASKS():
+        if (task.option_time == "True" or task.option_sun == "True") and task.option_pause != "True":
+            heapq.heappush(process_management_queue, (20, ("scheduler", "time", task.id)))         
+    
+
+@scheduler.task('cron', id='scheduler_ping', second='0, 10, 20, 30, 40, 50')
+def scheduler_ping(): 
+    for task in GET_ALL_SCHEDULER_TASKS():
+        if task.option_position == "True" and task.option_pause != "True":
+            heapq.heappush(process_management_queue, (20, ("scheduler", "ping", task.id)))
 
 
 """ #### """

@@ -252,9 +252,8 @@ def GET_BACKUP_FILES():
         return file_list 
 
 
-def SAVE_DATABASE():  
+def BACKUP_DATABASE():  
     try:
-        # save database
         shutil.copyfile(PATH + '/app/database/database.db', 
                         backup_location_path + str(datetime.datetime.now().date()) + '_database.db')
                 
@@ -266,16 +265,15 @@ def SAVE_DATABASE():
             oldest_file = min(full_path, key=os.path.getctime)
             os.remove(oldest_file)        
         
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Database_Backup | saved")
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Database | Backup created")
         return True
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Database_Backup | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "Database | " + str(e)) 
         return (e)
 
 
 def RESTORE_DATABASE(filename):
-    # check file
     try:
         if filename.split("_")[1] == "database.db":
             shutil.copyfile(backup_location_path + filename, PATH + '/app/database/database.db')

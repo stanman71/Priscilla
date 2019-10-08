@@ -3,11 +3,13 @@ from flask_login         import current_user, login_required
 from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
-from app                         import app
-from app.database.models         import *
-from app.backend.file_management import GET_ALL_LOCATIONS, GET_LOCATION_COORDINATES
-from app.common                  import COMMON, STATUS
-from app.assets                  import *
+from app                           import app
+from app.database.models           import *
+from app.backend.file_management   import GET_ALL_LOCATIONS, GET_LOCATION_COORDINATES
+from app.backend.checks            import CHECK_TASKS, CHECK_SCHEDULER_TASKS_SETTINGS
+from app.backend.process_scheduler import GET_SUNRISE_TIME, GET_SUNSET_TIME
+from app.common                    import COMMON, STATUS
+from app.assets                    import *
 
 
 # access rights
@@ -225,26 +227,26 @@ def scheduler():
                 # sensor settings
                 # ###############              
 
-                # set mqtt_device 1
-                mqtt_device_1 = request.form.get("set_mqtt_device_1_" + str(i))
+                # set device 1
+                device_1 = request.form.get("set_device_1_" + str(i))
 
-                if GET_DEVICE_BY_IEEEADDR(mqtt_device_1):
-                    mqtt_device_ieeeAddr_1 = mqtt_device_1
-                elif GET_DEVICE_BY_ID(mqtt_device_1):
-                    mqtt_device_ieeeAddr_1 = GET_DEVICE_BY_ID(mqtt_device_1).ieeeAddr
+                if GET_DEVICE_BY_IEEEADDR(device_1):
+                    device_ieeeAddr_1 = device_1
+                elif GET_DEVICE_BY_ID(device_1):
+                    device_ieeeAddr_1 = GET_DEVICE_BY_ID(device_1).ieeeAddr
                 else:
-                    mqtt_device_ieeeAddr_1 = "None"
+                    device_ieeeAddr_1 = "None"
                      
                      
-                # set mqtt_device 2
-                mqtt_device_2 = request.form.get("set_mqtt_device_2_" + str(i))
+                # set device 2
+                device_2 = request.form.get("set_device_2_" + str(i))
 
-                if GET_DEVICE_BY_IEEEADDR(mqtt_device_2):
-                    mqtt_device_ieeeAddr_2 = mqtt_device_2
-                elif GET_DEVICE_BY_ID(mqtt_device_2):
-                    mqtt_device_ieeeAddr_2 = GET_DEVICE_BY_ID(mqtt_device_2).ieeeAddr
+                if GET_DEVICE_BY_IEEEADDR(device_2):
+                    device_ieeeAddr_2 = device_2
+                elif GET_DEVICE_BY_ID(device_2):
+                    device_ieeeAddr_2 = GET_DEVICE_BY_ID(device_2).ieeeAddr
                 else:
-                    mqtt_device_ieeeAddr_2 = "None"
+                    device_ieeeAddr_2 = "None"
                                                 
                 operator_1                  = request.form.get("set_operator_1_" + str(i))
                 operator_2                  = request.form.get("set_operator_2_" + str(i))  
@@ -362,6 +364,8 @@ def scheduler():
                 error_message_change_settings.append(scene + " || " + str(result))
 
 
+    error_message_scheduler_tasks_settings = CHECK_SCHEDULER_TASKS_SETTINGS(GET_ALL_SCHEDULER_TASKS())
+    error_message_scheduler_tasks          = CHECK_TASKS(GET_ALL_SCHEDULER_TASKS(), "scheduler")
 
     list_scheduler_tasks         = GET_ALL_SCHEDULER_TASKS()
 
@@ -511,6 +515,8 @@ def scheduler():
                                                     error_message_change_settings=error_message_change_settings,                         
                                                     success_message_add_scheduler_task=success_message_add_scheduler_task,
                                                     error_message_add_scheduler_task=error_message_add_scheduler_task,
+                                                    error_message_scheduler_tasks_settings=error_message_scheduler_tasks_settings,
+                                                    error_message_scheduler_tasks=error_message_scheduler_tasks,
                                                     device_1_input_values=device_1_input_values,
                                                     device_2_input_values=device_2_input_values,
                                                     device_3_input_values=device_3_input_values,

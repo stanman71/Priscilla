@@ -7,7 +7,7 @@ from ping3               import ping
 from app                         import app
 from app.database.models         import *
 from app.backend.email           import SEND_EMAIL
-from app.backend.file_management import UPDATE_NETWORK_SETTINGS_FILE, GET_BACKUP_FILES, SAVE_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP
+from app.backend.file_management import UPDATE_NETWORK_SETTINGS_FILE, GET_BACKUP_FILES, BACKUP_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
@@ -88,8 +88,8 @@ def settings_system():
     error_message_change_settings_network   = []
     success_message_change_settings_email   = False       
     error_message_change_settings_email     = [] 
-    success_message_backup                  = ""    
-    error_message_backup                    = ""
+    success_message_backup_database         = ""    
+    error_message_backup_database           = ""
 
     message_system              = "" 
     message_ip_config_change    = False
@@ -101,20 +101,20 @@ def settings_system():
 
     # restore message
     if session.get('restore_database_success', None) != None:
-        success_message_backup = session.get('restore_database_success')
+        success_message_backup_database = session.get('restore_database_success')
         session['restore_database_success'] = None
         
     if session.get('restore_database_error', None) != None:
-        error_message_backup = session.get('restore_database_error') 
+        error_message_backup_database = session.get('restore_database_error') 
         session['restore_database_error'] = None       
         
     # delete message
     if session.get('delete_database_success', None) != None:
-        success_message_backup = session.get('delete_database_success')
+        success_message_backup_database = session.get('delete_database_success')
         session['delete_database_success'] = None
         
     if session.get('delete_database_error', None) != None:
-        error_message_backup = session.get('delete_database_error') 
+        error_message_backup_database = session.get('delete_database_error') 
         session['delete_database_error'] = None       
         
 
@@ -268,18 +268,17 @@ def settings_system():
         message_test_settings_email = SEND_EMAIL("TEST", "TEST")
 
 
-    """ ######### """
-    """  backups  """
-    """ ######### """    
+    """ ################ """
+    """  backup database """
+    """ ################ """    
  
-    # save database   
-    if request.form.get("database_save") != None:
-        result = SAVE_DATABASE() 
+    if request.form.get("backup_database") != None:
+        result = BACKUP_DATABASE() 
         
         if result:
-            success_message_backup = "Backup || Erfolgreich erstellt"
+            success_message_backup_database = "Backup || Erfolgreich erstellt"
         else:
-            error_message_backup = "Backup || " + str(result)
+            error_message_backup_database = "Backup || " + str(result)
 
 
     lan_dhcp          = GET_HOST_NETWORK().lan_dhcp
@@ -299,8 +298,8 @@ def settings_system():
                                                     success_message_change_settings_email=success_message_change_settings_email,                                                       
                                                     error_message_change_settings_email=error_message_change_settings_email,
                                                     message_test_settings_email=message_test_settings_email, 
-                                                    error_message_backup=error_message_backup,                                                       
-                                                    success_message_backup=success_message_backup,                                                                                                     
+                                                    error_message_backup_database=error_message_backup_database,                                                       
+                                                    success_message_backup_database=success_message_backup_database,                                                                                                     
                                                     message_system=message_system,
                                                     lan_dhcp=lan_dhcp,
                                                     lan_ip_address=lan_ip_address,

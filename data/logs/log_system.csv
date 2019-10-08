@@ -1586,3 +1586,107 @@ Timestamp,Type,Description
 2019-10-08 10:57:08,ERROR,|ZigBee2MQTT || No Connection|
 2019-10-08 10:57:10,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
 2019-10-08 10:57:43,DATABASE,|Scheduler || Task - plants_group_1uzt || changed |||| Name - plants_group_1uztkjh || Task - /|
+2019-10-08 11:47:22,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 11:47:25,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 11:47:25,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 11:47:27,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 12:38:42,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 12:38:44,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 12:38:45,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 12:38:47,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 12:41:05,DATABASE,|Scheduler || Task - plants_group_1uztkjh || changed |||| Name - plants_group_1uztkjh || Task - /|
+2019-10-08 12:41:15,DATABASE,|Scheduler || Task - plants_group_1uztkjh || changed |||| Name - plants_group_1uztkjh || Task - /|
+2019-10-08 12:50:11,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 12:50:13,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 12:50:14,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 12:50:16,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 12:50:33,DATABASE,|Scheduler || Task - plants_group_1uztkjh || changed |||| Name - plants_group_1uztkjh || Task - /|
+2019-10-08 13:12:09,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:12:11,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:12:12,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:12:14,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:12:19,DATABASE,|Scheduler || Task - plants_group_1uztkjh || changed |||| Name - plants_group_1uztkjh || Task - /|
+2019-10-08 13:12:24,DATABASE,|Scheduler || Task - plants_group_1uztkjh || changed |||| Name - plants_group_1uztkjh || Task - /|
+2019-10-08 13:15:19,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:15:21,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:15:22,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:15:24,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:16:29,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:16:31,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:16:32,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:16:34,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:17:08,DATABASE,|Scheduler || Task - backup_database || changed |||| Name - backup_database || Task - backup_database|
+2019-10-08 13:32:55,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:32:58,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:32:58,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:33:00,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:33:42,DATABASE,|Scheduler || Task - plants_group_1uztkjh || changed |||| Name - plants_group_1uztkjh || Task - /|
+2019-10-08 13:34:28,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:34:30,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:34:31,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:34:33,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:36:00,DATABASE,|Scheduler || Task - plants_group_1uztkjh || changed |||| Name - plants_group_1uztkjh || Task - /|
+2019-10-08 13:36:06,DATABASE,|Scheduler || Task - plants_group_1uztkjh || changed |||| Name - plants_group_1uztkjh || Task - /|
+2019-10-08 13:37:32,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:37:34,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:37:35,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:37:37,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:38:05,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:38:07,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:38:08,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:38:10,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:39:20,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:39:22,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:39:23,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:39:25,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:40:00,DATABASE,|Scheduler || Task - backup_database || changed |||| Name - backup_database || Task - backup_database|
+2019-10-08 13:40:08,DATABASE,|Scheduler || Task - backup_database || changed |||| Name - backup_database || Task - backup_database|
+2019-10-08 13:46:59,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:47:01,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:47:02,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:47:04,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:49:44,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:49:46,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:49:47,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:49:49,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:50:02,ERROR,|Database || [WinError 3] Das System kann den angegebenen Pfad nicht finden: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/backup/'|
+2019-10-08 13:50:04,EVENT,|File || /data/backup/2019-10-08_database.db || deleted|
+2019-10-08 13:50:05,EVENT,|File || /data/backup/2019-09-28_database.db || deleted|
+2019-10-08 13:51:59,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:52:01,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:52:02,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:52:04,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:54:26,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:54:28,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:54:29,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:54:31,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:56:11,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:56:13,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:56:14,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:56:16,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:58:43,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 13:58:46,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 13:58:46,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 13:58:48,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 13:59:00,ERROR,|Database || [WinError 3] Das System kann den angegebenen Pfad nicht finden: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/backup/'|
+2019-10-08 13:59:00,DATABASE,|Scheduler || Task - backup_database || deleted|
+2019-10-08 14:01:50,DATABASE,|Scheduler || Task - plants_group_1uztkjh || changed |||| Name - plants_group_1uztkjh || Task - /|
+2019-10-08 14:01:53,DATABASE,|Scheduler || Task - plants_group_1uztkjh || deleted|
+2019-10-08 14:02:02,DATABASE,|Scheduler || Task - update_devices || changed |||| Name - update_devices || Task - backup|
+2019-10-08 14:02:10,DATABASE,|Scheduler || Task - update_devices || changed |||| Name - update_devices || Task - backup_database|
+2019-10-08 14:02:14,DATABASE,|Scheduler || Task - update_devices || changed |||| Name - update_devices || Task - backup_database|
+2019-10-08 14:02:34,DATABASE,|Scheduler || Task - update_devices || changed |||| Name - backup_database || Task - backup_database|
+2019-10-08 14:03:00,ERROR,|Database || [WinError 3] Das System kann den angegebenen Pfad nicht finden: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/backup/'|
+2019-10-08 14:03:00,DATABASE,|Scheduler || Task - backup_database || deleted|
+2019-10-08 14:06:17,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-08 14:06:19,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-08 14:06:20,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-08 14:06:22,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-08 14:07:31,DATABASE,|Scheduler || Task - plants_group_1 || deleted|
+2019-10-08 14:07:35,DATABASE,|Scheduler || Task - plants_group_2 || deleted|
+2019-10-08 14:07:37,DATABASE,|Scheduler || Task - plants_group_3 || deleted|
+2019-10-08 14:07:48,DATABASE,|Scheduler || Task - backup_database || changed |||| Name - backup_database || Task - backup_database|
+2019-10-08 14:07:53,DATABASE,|Scheduler || Task - backup_database || changed |||| Name - backup_database || Task - backup_database|
+2019-10-08 14:07:56,DATABASE,|Scheduler || Task - update_devices || deleted|
+2019-10-08 14:08:00,ERROR,|Database || [WinError 3] Das System kann den angegebenen Pfad nicht finden: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/backup/'|
+2019-10-08 14:08:00,DATABASE,|Scheduler || Task - backup_database || deleted|

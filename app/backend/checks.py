@@ -74,6 +74,192 @@ def CHECK_LED_GROUP_SETTINGS(settings):
    return list_errors
 
 
+""" ######################### """
+"""  check scheduler settings """
+""" ######################### """
+
+
+def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks): 
+   list_errors = []  
+
+   for task in scheduler_tasks:
+
+      if task.option_time != "True" and task.option_sun != "True" and task.option_sensors != "True" and task.option_position != "True":    
+         list_errors.append(task.name + " >>> Keine Bedingungsoption ausgewählt")          
+
+
+      if task.option_time == "True":
+
+         # check settings sunrise / sunset option
+         if task.option_sun == "True":
+            list_errors.append(task.name + " >>> Ungültige Kombination >>> Zeit und Sonne nur getrennt verwenden")         
+
+         ### check day
+
+         try:
+            if "," in task.day:
+                  days = task.day.replace(" ", "")
+                  days = days.split(",")
+                  for element in days:
+                     if element.lower() not in ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]:
+                        list_errors.append(task.name + " >>> falsche Zeitangabe >>> Tag >>> Gültig: Mon, Tue, Wed, Thu, Fri, Sat, Sun, *")
+                        break                                 
+            else:
+                  if task.day.lower() not in ["mon", "tue", "wed", "thu", "fri", "sat", "sun", "*"] and task.day != "*":
+                     list_errors.append(task.name + " >>> falsche Zeitangabe >>> Tag >>> Gültig: Mon, Tue, Wed, Thu, Fri, Sat, Sun, *") 
+         except:
+            list_errors.append(task.name + " >>> falsche Zeitangabe >>> Tag >>> Gültig: Mon, Tue, Wed, Thu, Fri, Sat, Sun, *")
+
+         ### check hour
+            
+         try:
+            if "," in task.hour:
+                  hours = task.hour.replace(" ", "")                
+                  hours = hours.split(",")
+                  
+                  for element in hours:
+ 
+                     if len(element) == 1 and element != "*":
+                        list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *")
+                        break
+                    
+                     try:
+                        if not (0 <= int(element) <= 24):
+                           list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *")
+                           break
+                        
+                     except:
+                        list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *")
+                        break   
+            else:
+                  
+               if len(task.hour) == 1 and task.hour != "*":
+                  list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *")
+                  break
+                
+               try:
+                  if not (0 <= int(task.hour) <= 24) and task.hour != "*":
+                     list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *") 
+               except:
+                  if task.hour != "*":
+                     list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *")    
+
+         except:
+            list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *")
+
+         ### check minute
+
+         try:
+            if "," in task.minute:
+                  minutes = task.minute.replace(" ", "")                 
+                  minutes = minutes.split(",")
+                  
+                  for element in minutes:
+                      
+                     if len(element) == 1 and element != "*":
+                        list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *")
+                        break                      
+                      
+                     try:
+                        if not (0 <= int(element) <= 60):
+                           list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *") 
+                           break
+                        
+                     except:
+                        list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *") 
+                        break   
+            else:
+                
+               if len(task.minute) == 1 and task.minute != "*":
+                  list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *")
+                  break
+                
+               try:
+                  if not (0 <= int(task.minute) <= 60) and task.minute != "*":
+                     list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *") 
+               except:
+                  if task.minute != "*":
+                     list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *") 
+      
+         except:
+            list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *") 
+
+
+      if task.option_sun == "True":
+
+         # check setting location
+         if task.option_sunrise == "True" or task.option_sunset == "True":
+            if task.location == "None":
+               list_errors.append(task.name + " >>> Zone wurde noch nicht eingestellt")
+
+      if task.option_sensors == "True":
+
+         # check mqtt devices
+         if task.device_ieeeAddr_1 == "None" or task.device_ieeeAddr_1 == "" or task.device_ieeeAddr_1 == None:
+            list_errors.append(task.name + " >>> fehlende Einstellung >>> MQTT-Gerät 1") 
+
+         if task.device_ieeeAddr_2 == "None" or task.device_ieeeAddr_2 == "" or task.device_ieeeAddr_2 == None:
+            if task.main_operator_second_sensor != "None" and task.main_operator_second_sensor != None:
+               list_errors.append(task.name + " >>> fehlende Einstellung >>> MQTT-Gerät 2") 
+                  
+         # check sensors
+         if task.sensor_key_1 == "None" or task.sensor_key_1 == None:
+            list_errors.append(task.name + " >>> fehlende Einstellung >>> Sensor 1") 
+            
+         if task.main_operator_second_sensor != "None" and task.main_operator_second_sensor != None:
+            if task.sensor_key_2 == "None" or task.sensor_key_2 == None:
+               list_errors.append(task.name + " >>> fehlende Einstellung >>> Sensor 2")  
+               
+         # check operators
+         if task.main_operator_second_sensor != "<" and task.main_operator_second_sensor != ">" and task.main_operator_second_sensor != "=":
+            if task.operator_1 == "" or task.operator_1 == "None" or task.operator_1 == None: 
+               list_errors.append(task.name + " >>> fehlende Einstellung >>> Operator 1")
+         
+         if task.main_operator_second_sensor == "and" or task.main_operator_second_sensor == "or":
+            if task.operator_2 == "None" or task.operator_2 == "" or task.operator_2 == None: 
+               list_errors.append(task.name + " >>> fehlende Einstellung >>> Operator 2")  
+
+         # check values
+         if task.main_operator_second_sensor != "<" and task.main_operator_second_sensor != ">" and task.main_operator_second_sensor != "=":   
+            if task.value_1 == "" or task.value_1 == "None" or task.value_1 == None: 
+               list_errors.append(task.name + " >>> fehlende Einstellung >>> Vergleichswert 1")   
+                  
+            elif (task.operator_1 == "<" or task.operator_1 == ">") and not task.value_1.isdigit():
+               list_errors.append(task.name + 
+               " >>> ungültiger Eintrag >>> Vergleichswert 1 >>> nur Zahlen können mit dem gewählten Operator verwendet werden") 
+
+         if task.main_operator_second_sensor == "and" or task.main_operator_second_sensor == "or":
+            if task.value_2 == "" or task.value_2 == "None" or task.value_2 == None:
+               list_errors.append(task.name + " >>> fehlende Einstellung >>> Vergleichswert 2")  
+            elif (task.operator_2 == "<" or task.operator_2 == ">") and not task.value_2.isdigit():
+               list_errors.append(task.name + 
+               " >>> ungültiger Eintrag >>> Vergleichswert 2 >>> nur Zahlen können mit dem gewählten Operator verwendet werden")                 
+  
+               
+      if task.option_position == "True":
+
+         # check setting choosed
+         if task.option_home != "True" and task.option_away != "True":
+            list_errors.append(task.name + " >>> fehlende Einstellung >>> HOME oder AWAY")
+
+         # check setting home / away
+         if task.option_home == "True" and task.option_away == "True":
+            list_errors.append(task.name + " >>> Es kann nur HOME oder AWAY separat gewählt werden")
+
+         # check setting ip-addresses
+         if task.option_home == "True" or task.option_away == "True":
+
+            if task.ip_addresses != "None":
+               
+               # search for wrong chars
+               for element in task.ip_addresses:
+                  if not element.isdigit() and element != "." and element != "," and element != " ":
+                     list_errors.append(task.name + " >>> Ungültige IP-Adressen")
+                     break
+
+   return list_errors
+
+
 """ ################### """
 """     check tasks     """
 """ ################### """
@@ -536,12 +722,12 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
          return list_task_errors
          
 
-      # ###############
-      #  save_database  
-      # ###############  
+      # ################
+      #  backup_database  
+      # ################  
       
            
-      if task == "save_database" and task_type == "scheduler":
+      if task == "backup_database" and task_type == "scheduler":
          return list_task_errors
 
 

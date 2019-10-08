@@ -5,10 +5,11 @@ import time
 
 from app import app
 from app.database.models            import *
-from app.backend.file_management    import SAVE_DATABASE, WRITE_LOGFILE_SYSTEM
+from app.backend.file_management    import WRITE_LOGFILE_SYSTEM
 from app.backend.email              import SEND_EMAIL
 from app.backend.shared_resources   import process_management_queue
 from app.backend.process_controller import PROCESS_CONTROLLER
+from app.backend.process_scheduler  import SCHEDULER_TIME_PROCESS, SCHEDULER_SENSOR_PROCESS, SCHEDULER_PING_PROCESS
 
 
 """ ########################## """
@@ -31,10 +32,9 @@ def PROCESS_MANAGEMENT_THREAD():
 def PROCESS_MANAGEMENT():
     
     while True:
-
+        
         try:
             process = heapq.heappop(process_management_queue)[1]
-
 
             # ############
             #  controller
@@ -45,6 +45,32 @@ def PROCESS_MANAGEMENT():
                 msg      = process[2]
                 
                 PROCESS_CONTROLLER(ieeeAddr, msg)           
+
+
+            # ###########
+            #  scheduler
+            # ###########
+                                    
+            if process[0] == "scheduler":
+                
+                
+                if process[1] == "time":
+                    task = GET_SCHEDULER_TASK_BY_ID(process[2])
+                    
+                    SCHEDULER_TIME_PROCESS(task)
+            
+            
+                if process[1] == "ping":
+                    task = GET_SCHEDULER_TASK_BY_ID(process[2])
+                    
+                    SCHEDULER_PING_PROCESS(task)    
+                        
+                        
+                if process[1] == "sensor":
+                    task     = GET_SCHEDULER_TASK_BY_ID(process[2])
+                    ieeeAddr = process[3]
+                    
+                    SCHEDULER_SENSOR_PROCESS(task, ieeeAddr)                 
 
 
         except Exception as e:         

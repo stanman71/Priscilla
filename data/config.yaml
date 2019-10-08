@@ -1,0 +1,8 @@
+config:
+  backup_location: /home/pi/miranda/backup/
+  database: sqlite:///database/db_miranda.sqlite3
+  version: 1.0
+spotify:
+  client_id: 120de7bdb90e4c139546f0f55919f8c0
+  client_secret: 8454b2fcaf134dff99e582507f0ad428
+  refresh_token: AQCbhhWsNiTTaJt36QpXnyGlWgwOt_lBzeuoNJ7p1L-argj7XPjpOr4dKcCUpMl_FPcmWQCKx7pqZde-QoqYajMXM09_wk3ME3KvkTpbGe1W67ehoMfdS-yZG0AB_RnYr4HsCA

@@ -241,24 +241,12 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                 except:
                     pass                
 
-        """
-        if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "sensor_contact" or device_type == "watering_controller":
-            
-            # save sensor data of passive devices
-            if FIND_SENSORDATA_JOB_INPUT(ieeeAddr) != "":
-                list_jobs = FIND_SENSORDATA_JOB_INPUT(ieeeAddr)
 
-                for job in list_jobs:   
-                    SAVE_SENSORDATA(job) 
-
-                    
         if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "sensor_contact":
-            
-            # start schedular job 
             for task in GET_ALL_SCHEDULER_TASKS():
                 if task.option_sensors == "checked" and task.option_pause != "checked":
                     heapq.heappush(process_management_queue, (10, ("scheduler", "sensor", task.id, ieeeAddr)))
-        """
+
 
         if device_type == "controller":       
             heapq.heappush(process_management_queue, (1, ("controller", ieeeAddr, msg)))
