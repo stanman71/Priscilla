@@ -4,6 +4,7 @@ import shutil
 import csv
 import json
 import pandas as pd
+import yaml
 
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
@@ -162,6 +163,39 @@ def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/logs/log_system.csv | " + str(e)) 
         return (e)   
+
+
+""" ################ """
+"""  file locations  """
+""" ################ """
+
+def GET_ALL_LOCATIONS():
+    try:
+        # open locations file
+        with open(PATH + "/data/locations.ymal", "r") as file_locations:
+            locations = yaml.load(file_locations, Loader=yaml.SafeLoader)
+            file_locations.close()
+
+        return (locations["Locations"].keys())
+        
+    except Exception as e:    
+        return ("ERROR: Locations Import || " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | data/locations.ymal | " + str(e))
+        
+
+def GET_LOCATION_COORDINATES(location):
+    try:
+        # open locations file
+        with open(PATH + "/data/locations.ymal", "r") as file_locations:
+            locations = yaml.load(file_locations, Loader=yaml.SafeLoader)
+            file_locations.close()
+
+        return (locations["Locations"][location])
+        
+    except Exception as e:    
+        return ("ERROR: Locations Import || " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | data/locations.ymal | " + str(e))
+
 
 
 """ ############## """

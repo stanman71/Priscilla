@@ -418,7 +418,7 @@ def change_led_scenes_position(id, direction):
     return redirect(url_for('led_scenes'))
 
 
-# led scenes option add / remove led
+# led scenes option add led / remove led
 @app.route('/led/scenes/<string:option>/<int:id>')
 @login_required
 @permission_required

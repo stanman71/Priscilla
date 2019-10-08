@@ -2062,7 +2062,7 @@ def SET_SCHEDULER_TASK_COLLAPSE_OPEN(id):
   
     entry = Scheduler_Tasks.query.filter_by(id=id).first()
     
-    entry.collapse = "in"
+    entry.collapse = "True"
     db.session.commit()       
  
  
@@ -2129,17 +2129,10 @@ def CHANGE_SCHEDULER_TASKS_POSITION(id, direction):
     
     list_scheduler_tasks = Scheduler_Tasks.query.all() 
     
-    # filter non scheduler table tasks (e.g. mqtt_update or backup)
-    list_scheduler_tasks_filtered = []
-    
-    for scheduler_task in list_scheduler_tasks:
-        if scheduler_task.task_type == "":   
-            list_scheduler_tasks_filtered.append(scheduler_task)
-    
     if direction == "up":
         
         # reverse task list
-        task_list = list_scheduler_tasks_filtered[::-1]
+        task_list = list_scheduler_tasks[::-1]
         
         for task in task_list:  
             if task.id < id:
@@ -2160,7 +2153,7 @@ def CHANGE_SCHEDULER_TASKS_POSITION(id, direction):
                 return 
 
     if direction == "down":
-        for task in list_scheduler_tasks_filtered:
+        for task in list_scheduler_tasks:
             if task.id > id:       
                 new_id = task.id
                 
@@ -2178,7 +2171,7 @@ def CHANGE_SCHEDULER_TASKS_POSITION(id, direction):
                 return 
        
        
-def UPDATE_SCHEDULER_DEVICE_NAMES():
+def UPDATE_SCHEDULER_TASKS_DEVICE_NAMES():
     tasks = GET_ALL_SCHEDULER_TASKS()
     
     for task in tasks:

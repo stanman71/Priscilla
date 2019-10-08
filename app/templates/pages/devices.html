@@ -167,12 +167,12 @@
                         <thead> 
                           <td style="display:none">hidden_names for search function</td>
                           <th scope="col" style="width:3%"></th> 
-                          <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Gerät</th>                        
-                          <th scope="col" style="width:18%"><p style="visibility: hidden;">invisibletextforminlenght</p>Adresse</th> 
-                          <th scope="col" style="width:12%"><p style="visibility: hidden;">invisibletext</p>Modell</th>
-                          <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Gerätetyp</th> 
-                          <th scope="col" style="width:15%"><p style="visibility: hidden;">invisibletextform</p>Beschreibung</th>                                             
-                          <th scope="col" style="width:10%"><p style="visibility: hidden;">invisibletext</p>Letzter Kontakt</th>     
+                          <th scope="col" style="width:20%" class="minwidth_200">Gerät</th>                        
+                          <th scope="col" style="width:18%" class="minwidth_200">Adresse</th> 
+                          <th scope="col" style="width:12%" class="minwidth_100">Modell</th>
+                          <th scope="col" style="width:15%" class="minwidth_150">Gerätetyp</th> 
+                          <th scope="col" style="width:15%" class="minwidth_150">Beschreibung</th>                                             
+                          <th scope="col" style="width:10%" class="minwidth_100">Letzter Kontakt</th>     
                           <th scope="col" style="width:5%"></th>                                                                                
                         </thead>
                         <tbody id="table_devices">
@@ -264,8 +264,8 @@
                         {% for entry in list_exception_devices %}
                         
                           <tr style="border-style:hidden;">
-                            <td style="width:20%"><p style="visibility: hidden;">invisibletext</p> {{entry.name}} </td>  
-                            <td style="width:70%"><p style="visibility: hidden;">invisibletextforminlenght</p>      
+                            <td style="width:20%" class="minwidth_200"> {{entry.name}} </td>  
+                            <td style="width:70%" class="minwidth_200">      
                               <div class="row justify-content-md-center">
                                 <div class="col-sm-6">   
                                   <select id="device_{{ entry.id }}" class="form-control" onchange="Choose_Sensor('{{ entry.id }}')" name="set_exception_option_{{ entry.id }}" style="background-color:#27293D"> 
