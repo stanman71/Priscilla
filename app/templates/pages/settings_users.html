@@ -107,10 +107,10 @@
                   <div class="table-responsive">
                     <table class="table tablesorter">
                       <thead>
-                        <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Benutzer</th>
-                        <th scope="col" style="width:20%"><p style="visibility: hidden;">someinvisibletextforminlenght</p>eMail-Adresse</th>
-                        <th scope="col" style="width:20%"><p style="visibility: hidden;">invisibletextforminlenght</p>Passwort ändern</th>
-                        <th scope="col" style="width:17%"><p style="visibility: hidden;">invisibletextforminlenght</p>Optionen</th>                
+                        <th scope="col" style="width:20%" class="minwidth_200">Benutzer</th>
+                        <th scope="col" style="width:20%" class="minwidth_200">eMail-Adresse</th>
+                        <th scope="col" style="width:20%" class="minwidth_200">Passwort ändern</th>
+                        <th scope="col" style="width:17%" class="minwidth_200">Optionen</th>                
                         <th scope="col" style="width:5%"></th>
                       </thead>
                       <tbody>
@@ -126,7 +126,8 @@
                             <td>
                               <div class="row justify-content-md-left">
                                 <div class="col-sm-10">                                    
-                                  <input type="email" class="form-control" name="set_email_{{ entry.id }}" value="{{ entry.email }}" /> 
+                                  <input type="email" class="form-control" name="set_email_{{ entry.id }}" 
+                                    value="{% if entry.email != None and entry.email != "None" %}{{ entry.email }}{% endif %}" />
                                 </div>
                               </div>                 
                             </td> 

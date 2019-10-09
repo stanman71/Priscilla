@@ -15,14 +15,14 @@ from app.assets                  import *
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        try:
-            if current_user.role == "administrator":
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('logout'))
-        except Exception as e:
-            print(e)
+        #try:
+        if current_user.role == "administrator":
+            return f(*args, **kwargs)
+        else:
             return redirect(url_for('logout'))
+        #except Exception as e:
+        #    print(e)
+        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -69,6 +69,7 @@ def led_scenes():
     if session.get("set_collapse_open", None) != None:
         SET_LED_SCENE_COLLAPSE_OPEN(session.get('set_collapse_open'))
         session['set_collapse_open'] = None
+
 
     for i in range (1,11):
 
@@ -117,10 +118,13 @@ def led_scenes():
                     red_1   = rgb_1[0]
                     green_1 = rgb_1[1]           
                     blue_1  = rgb_1[2]      
+                
                 except:
                     red_1   = 0
                     green_1 = 0
                     blue_1  = 0 
+
+                brightness_1 = request.form.get("set_brightness_1_" + str(i)) 
                                 
                 #######
                 ## 2 ##
@@ -135,16 +139,20 @@ def led_scenes():
                         rgb_2   = re.findall(r'\d+', rgb_2)
                         red_2   = rgb_2[0]
                         green_2 = rgb_2[1]           
-                        blue_2  = rgb_2[2]      
+                        blue_2  = rgb_2[2]    
+
                     except:
                         red_2   = 0
                         green_2 = 0
                         blue_2  = 0 
 
+                    brightness_2 = request.form.get("set_brightness_2_" + str(i)) 
+
                 else:
-                    red_2 = 0
-                    green_2 = 0
-                    blue_2 = 0
+                    red_2        = 0
+                    green_2      = 0
+                    blue_2       = 0
+                    brightness_2 = 0
 
                 #######
                 ## 3 ##
@@ -160,15 +168,19 @@ def led_scenes():
                         red_3   = rgb_3[0]
                         green_3 = rgb_3[1]           
                         blue_3  = rgb_3[2]      
+
                     except:
                         red_3   = 0
                         green_3 = 0
                         blue_3  = 0 
 
+                    brightness_3 = request.form.get("set_brightness_3_" + str(i)) 
+
                 else:
-                    red_3 = 0
-                    green_3 = 0
-                    blue_3 = 0
+                    red_3        = 0
+                    green_3      = 0
+                    blue_3       = 0
+                    brightness_3 = 0
 
                 #######
                 ## 4 ##
@@ -184,15 +196,19 @@ def led_scenes():
                         red_4   = rgb_4[0]
                         green_4 = rgb_4[1]           
                         blue_4  = rgb_4[2]      
+
                     except:
                         red_4   = 0
                         green_4 = 0
                         blue_4  = 0 
 
+                    brightness_4 = request.form.get("set_brightness_4_" + str(i)) 
+
                 else:
-                    red_4 = 0
-                    green_4 = 0
-                    blue_4 = 0
+                    red_4        = 0
+                    green_4      = 0
+                    blue_4       = 0
+                    brightness_4 = 0
 
                 #######
                 ## 5 ##
@@ -208,15 +224,19 @@ def led_scenes():
                         red_5   = rgb_5[0]
                         green_5 = rgb_5[1]           
                         blue_5  = rgb_5[2]      
+
                     except:
                         red_5   = 0
                         green_5 = 0
                         blue_5  = 0 
 
+                    brightness_5 = request.form.get("set_brightness_5_" + str(i)) 
+
                 else:
-                    red_5 = 0
-                    green_5 = 0
-                    blue_5 = 0
+                    red_5        = 0
+                    green_5      = 0
+                    blue_5       = 0
+                    brightness_5 = 0
 
                 #######
                 ## 6 ##
@@ -231,16 +251,20 @@ def led_scenes():
                         rgb_6   = re.findall(r'\d+', rgb_6)
                         red_6   = rgb_6[0]
                         green_6 = rgb_6[1]           
-                        blue_6  = rgb_6[2]      
+                        blue_6  = rgb_6[2]    
+
                     except:
                         red_6   = 0
                         green_6 = 0
                         blue_6  = 0 
 
+                    brightness_6 = request.form.get("set_brightness_6_" + str(i)) 
+
                 else:
-                    red_6 = 0
-                    green_6 = 0
-                    blue_6 = 0
+                    red_6        = 0
+                    green_6      = 0
+                    blue_6       = 0
+                    brightness_6 = 0
 
                 #######
                 ## 7 ##
@@ -255,16 +279,20 @@ def led_scenes():
                         rgb_7   = re.findall(r'\d+', rgb_7)
                         red_7   = rgb_7[0]
                         green_7 = rgb_7[1]           
-                        blue_7  = rgb_7[2]      
+                        blue_7  = rgb_7[2]  
+                            
                     except:
                         red_7   = 0
                         green_7 = 0
                         blue_7  = 0 
 
+                    brightness_7 = request.form.get("set_brightness_7_" + str(i)) 
+
                 else:
-                    red_7 = 0
-                    green_7 = 0
-                    blue_7 = 0
+                    red_7        = 0
+                    green_7      = 0
+                    blue_7       = 0
+                    brightness_7 = 0
 
                 #######
                 ## 8 ##
@@ -279,16 +307,20 @@ def led_scenes():
                         rgb_8   = re.findall(r'\d+', rgb_8)
                         red_8   = rgb_8[0]
                         green_8 = rgb_8[1]           
-                        blue_8  = rgb_8[2]      
+                        blue_8  = rgb_8[2]  
+
                     except:
                         red_8   = 0
                         green_8 = 0
                         blue_8  = 0 
 
+                    brightness_8 = request.form.get("set_brightness_8_" + str(i)) 
+
                 else:
-                    red_8 = 0
-                    green_8 = 0
-                    blue_8 = 0
+                    red_8        = 0
+                    green_8      = 0
+                    blue_8       = 0
+                    brightness_8 = 0
 
                 #######
                 ## 9 ##
@@ -303,83 +335,86 @@ def led_scenes():
                         rgb_9   = re.findall(r'\d+', rgb_9)
                         red_9   = rgb_9[0]
                         green_9 = rgb_9[1]           
-                        blue_9  = rgb_9[2]      
+                        blue_9  = rgb_9[2]  
+
                     except:
                         red_9   = 0
                         green_9 = 0
                         blue_9  = 0 
 
+                    brightness_9 = request.form.get("set_brightness_9_" + str(i)) 
+
                 else:
-                    red_9 = 0
-                    green_9 = 0
-                    blue_9 = 0
+                    red_9        = 0
+                    green_9      = 0
+                    blue_9       = 0
+                    brightness_9 = 0
 
 
-                if SET_LED_SCENE(i, name, red_1, green_1, blue_1, red_2, green_2, blue_2, 
-                                          red_3, green_3, blue_3, red_4, green_4, blue_4, 
-                                          red_5, green_5, blue_5, red_6, green_6, blue_6, 
-                                          red_7, green_7, blue_7, red_8, green_8, blue_8, 
-                                          red_9, green_9, blue_9):
+                if SET_LED_SCENE(i, name, red_1, green_1, blue_1, brightness_1, red_2, green_2, blue_2, brightness_2, red_3, green_3, blue_3, brightness_3, 
+                                          red_4, green_4, blue_4, brightness_4, red_5, green_5, blue_5, brightness_5, red_6, green_6, blue_6, brightness_6, 
+                                          red_7, green_7, blue_7, brightness_7, red_8, green_8, blue_8, brightness_8, red_9, green_9, blue_9, brightness_9):
 
                     success_message_change_settings_led_scene = i
 
 
-    """ ################## """
-    """  delete led scene  """
-    """ ################## """   
+    """ ################# """
+    """  reset led scene  """
+    """ ################# """   
 
     for i in range (1,11):
 
-        if request.form.get("delete_led_scene_" + str(i)) != None:
+        if request.form.get("reset_led_scene_" + str(i)) != None:
             scene  = GET_LED_SCENE_BY_ID(i).name  
-            result = DELETE_LED_SCENE(i)            
+            result = RESET_LED_SCENE(i)    
+
+            SET_LED_SCENE_COLLAPSE_OPEN(i)          
 
             if result:
-                success_message_change_settings.append(scene + " || Erfolgreich gelöscht") 
+                success_message_change_settings.append(scene + " || Erfolgreich zurückgesetzt") 
             else:
                 error_message_change_settings.append(scene + " || " + str(result))
 
     try:
         scene_1 = GET_LED_SCENE_BY_ID(1)
     except:
-        scene_1 = ""
+        scene_1 = "None"
     try:
         scene_2 = GET_LED_SCENE_BY_ID(2)
     except:
-        scene_2 = ""
+        scene_2 = "None"
     try: 
         scene_3 = GET_LED_SCENE_BY_ID(3)
     except:
-        scene_3 = ""
+        scene_3 = "None"
     try: 
         scene_4 = GET_LED_SCENE_BY_ID(4)
     except:
-        scene_4 = ""
+        scene_4 = "None"
     try: 
         scene_5 = GET_LED_SCENE_BY_ID(5)
     except:
-        scene_5 = ""
+        scene_5 = "None"
     try: 
         scene_6 = GET_LED_SCENE_BY_ID(6)
     except:
-        scene_6 = ""
+        scene_6 = "None"
     try: 
         scene_7 = GET_LED_SCENE_BY_ID(7)
     except:
-        scene_7 = ""
+        scene_7 = "None"
     try: 
         scene_8 = GET_LED_SCENE_BY_ID(8)
     except:
-        scene_8 = ""
+        scene_8 = "None"
     try: 
         scene_9 = GET_LED_SCENE_BY_ID(9)
     except:
-        scene_9 = ""
+        scene_9 = "None"
     try: 
         scene_10 = GET_LED_SCENE_BY_ID(10)
     except:
-        scene_10 = ""
-
+        scene_10 = "None"
 
     list_led_scenes = GET_ALL_LED_SCENES()
 

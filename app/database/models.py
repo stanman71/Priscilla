@@ -125,38 +125,47 @@ class LED_Scenes(db.Model):
     red_1                 = db.Column(db.Integer) 
     green_1               = db.Column(db.Integer) 
     blue_1                = db.Column(db.Integer) 
+    brightness_1          = db.Column(db.Integer) 
     active_led_2          = db.Column(db.String(50))
     red_2                 = db.Column(db.Integer) 
     green_2               = db.Column(db.Integer) 
     blue_2                = db.Column(db.Integer) 
+    brightness_2          = db.Column(db.Integer)     
     active_led_3          = db.Column(db.String(50))
     red_3                 = db.Column(db.Integer) 
     green_3               = db.Column(db.Integer) 
     blue_3                = db.Column(db.Integer) 
+    brightness_3          = db.Column(db.Integer) 
     active_led_4          = db.Column(db.String(50))
     red_4                 = db.Column(db.Integer) 
     green_4               = db.Column(db.Integer) 
     blue_4                = db.Column(db.Integer) 
+    brightness_4          = db.Column(db.Integer) 
     active_led_5          = db.Column(db.String(50))
     red_5                 = db.Column(db.Integer) 
     green_5               = db.Column(db.Integer) 
     blue_5                = db.Column(db.Integer) 
+    brightness_5          = db.Column(db.Integer) 
     active_led_6          = db.Column(db.String(50))
     red_6                 = db.Column(db.Integer) 
     green_6               = db.Column(db.Integer) 
     blue_6                = db.Column(db.Integer) 
+    brightness_6          = db.Column(db.Integer) 
     active_led_7          = db.Column(db.String(50))
     red_7                 = db.Column(db.Integer) 
     green_7               = db.Column(db.Integer) 
     blue_7                = db.Column(db.Integer) 
+    brightness_7          = db.Column(db.Integer) 
     active_led_8          = db.Column(db.String(50))
     red_8                 = db.Column(db.Integer) 
     green_8               = db.Column(db.Integer) 
     blue_8                = db.Column(db.Integer) 
+    brightness_8          = db.Column(db.Integer) 
     active_led_9          = db.Column(db.String(50))
     red_9                 = db.Column(db.Integer) 
     green_9               = db.Column(db.Integer) 
     blue_9                = db.Column(db.Integer) 
+    brightness_9          = db.Column(db.Integer) 
     collapse              = db.Column(db.String(50))        
 
 class MQTT_Broker(db.Model):
@@ -221,8 +230,8 @@ class Scheduler_Tasks(db.Model):
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
-    id                 = db.Column(db.Integer,     primary_key=True)
-    username           = db.Column(db.String(64),  unique = True)
+    id                 = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    username           = db.Column(db.String(64), unique = True)
     email              = db.Column(db.String(120), unique = True)
     role               = db.Column(db.String(50))   
     password           = db.Column(db.String(100))
@@ -262,6 +271,23 @@ if Host.query.filter_by().first() is None:
     db.session.commit()
 
 
+# add default led scenes
+for i in range(1,11):
+    if LED_Scenes.query.filter_by(id=i).first():
+        pass
+    else:
+        scene = LED_Scenes(
+                id           = i,
+                name         = "default_scene_" + str(i),
+                red_1        = 255, 
+                green_1      = 255, 
+                blue_1       = 255,   
+                brightness_1 = 255,                                                   
+            )
+        db.session.add(scene)
+        db.session.commit()
+
+
 # create default mqtt broker settings
 if MQTT_Broker.query.filter_by().first() is None:
     mqtt_broker = MQTT_Broker(
@@ -273,39 +299,43 @@ if MQTT_Broker.query.filter_by().first() is None:
     db.session.commit()
 
 
-# create default scheduler settings
-if Scheduler_Tasks.query.filter_by().first() is None:
-    scheduler_task_plants_group_1 = Scheduler_Tasks(
-        name   = "plants_group_1",
-    )
-    db.session.add(scheduler_task_plants_group_1)
+# create system scheduler jobs
+job_update_devices_founded  = False
+job_backup_database_founded = False
 
-    scheduler_task_plants_group_2 = Scheduler_Tasks(
-        name   = "plants_group_2",
-    )
-    db.session.add(scheduler_task_plants_group_2)
+for task in Scheduler_Tasks.query.all():
 
-    scheduler_task_plants_group_3 = Scheduler_Tasks(
-        name   = "plants_group_3",
-    )
-    db.session.add(scheduler_task_plants_group_3)
+    if task.name.lower() == "update_devices":
+        job_update_devices_founded = True
+    if task.name.lower() == "backup_database":
+        job_backup_database_founded = True
 
+if job_update_devices_founded == False:
     scheduler_task_update_devices = Scheduler_Tasks(
-        name   = "update_devices",
-        task   = "update_devices",
-        hour   = "*",
-        minute = "15",       
+        name          = "update_devices",
+        task          = "update_devices",
+        option_time   = "True",
+        option_repeat = "True",
+        day           = "*",        
+        hour          = "*",
+        minute        = "30",       
     )
     db.session.add(scheduler_task_update_devices)
-
-    scheduler_task_backup = Scheduler_Tasks(
-        name   = "backup_database",
-        task   = "create_database_backup",
-        hour   = "0",
-        minute = "0",        
-    )
-    db.session.add(scheduler_task_backup)
     db.session.commit()
+
+if job_backup_database_founded == False:
+    scheduler_task_backup_database = Scheduler_Tasks(
+        name          = "backup_database",
+        task          = "backup_database",
+        option_time   = "True",
+        option_repeat = "True",
+        day           = "*",        
+        hour          = "00",
+        minute        = "00",        
+    )
+    db.session.add(scheduler_task_backup_database)
+    db.session.commit()
+
 
 # create default user
 if User.query.filter_by(username='admin').first() is None:
@@ -1370,73 +1400,60 @@ def GET_LED_SCENE_BY_NAME(name):
             return scene    
             
 
-def ADD_LED_SCENE():
-    for i in range(1,11):
-        if LED_Scenes.query.filter_by(id=i).first():
-            pass
-        else:
-            # add the new program
-            scene = LED_Scenes(
-                    id      = i,
-                    name    = "new_scene_" + str(i),
-                    red_1   = 255, 
-                    green_1 = 255, 
-                    blue_1  = 255,                                         
-                )
-            db.session.add(scene)
-            db.session.commit()
-
-            WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + "new_scene_" + str(i) + " | added")  
-            return True
-
-    return "Szenenlimit erreicht (10)"
-
-
-def SET_LED_SCENE(id, name, red_1, green_1, blue_1, red_2, green_2, blue_2, red_3, green_3, blue_3, red_4, green_4, blue_4, 
-                            red_5, green_5, blue_5, red_6, green_6, blue_6, red_7, green_7, blue_7, red_8, green_8, blue_8, 
-                            red_9, green_9, blue_9):
+def SET_LED_SCENE(id, name, red_1, green_1, blue_1, brightness_1, red_2, green_2, blue_2, brightness_2, red_3, green_3, blue_3, brightness_3, 
+                            red_4, green_4, blue_4, brightness_4, red_5, green_5, blue_5, brightness_5, red_6, green_6, blue_6, brightness_6, 
+                            red_7, green_7, blue_7, brightness_7, red_8, green_8, blue_8, brightness_8, red_9, green_9, blue_9, brightness_9):
 
     entry = LED_Scenes.query.filter_by(id=id).first()
 
     if (entry.name != name or 
-        entry.red_1 != int(red_1) or entry.green_1 != int(green_1) or entry.blue_1 != int(blue_1) or
-        entry.red_2 != int(red_2) or entry.green_2 != int(green_2) or entry.blue_2 != int(blue_2) or 
-        entry.red_3 != int(red_3) or entry.green_3 != int(green_3) or entry.blue_3 != int(blue_3) or 
-        entry.red_4 != int(red_4) or entry.green_4 != int(green_4) or entry.blue_4 != int(blue_4) or 
-        entry.red_5 != int(red_5) or entry.green_5 != int(green_5) or entry.blue_5 != int(blue_5) or 
-        entry.red_6 != int(red_6) or entry.green_6 != int(green_6) or entry.blue_6 != int(blue_6) or 
-        entry.red_7 != int(red_7) or entry.green_7 != int(green_7) or entry.blue_7 != int(blue_7) or 
-        entry.red_8 != int(red_8) or entry.green_8 != int(green_8) or entry.blue_8 != int(blue_8) or 
-        entry.red_9 != int(red_9) or entry.green_9 != int(green_9) or entry.blue_9 != int(blue_9)):
+        entry.red_1 != int(red_1) or entry.green_1 != int(green_1) or entry.blue_1 != int(blue_1) or entry.brightness_1 != brightness_1 or
+        entry.red_2 != int(red_2) or entry.green_2 != int(green_2) or entry.blue_2 != int(blue_2) or entry.brightness_2 != brightness_3 or 
+        entry.red_3 != int(red_3) or entry.green_3 != int(green_3) or entry.blue_3 != int(blue_3) or entry.brightness_3 != brightness_3 or
+        entry.red_4 != int(red_4) or entry.green_4 != int(green_4) or entry.blue_4 != int(blue_4) or entry.brightness_4 != brightness_4 or 
+        entry.red_5 != int(red_5) or entry.green_5 != int(green_5) or entry.blue_5 != int(blue_5) or entry.brightness_5 != brightness_5 or 
+        entry.red_6 != int(red_6) or entry.green_6 != int(green_6) or entry.blue_6 != int(blue_6) or entry.brightness_6 != brightness_6 or 
+        entry.red_7 != int(red_7) or entry.green_7 != int(green_7) or entry.blue_7 != int(blue_7) or entry.brightness_7 != brightness_7 or 
+        entry.red_8 != int(red_8) or entry.green_8 != int(green_8) or entry.blue_8 != int(blue_8) or entry.brightness_8 != brightness_8 or 
+        entry.red_9 != int(red_9) or entry.green_9 != int(green_9) or entry.blue_9 != int(blue_9) or entry.brightness_9 != brightness_9):
 
-        entry.name    = name
-        entry.red_1   = red_1
-        entry.green_1 = green_1  
-        entry.blue_1  = blue_1
-        entry.red_2   = red_2
-        entry.green_2 = green_2   
-        entry.blue_2  = blue_2
-        entry.red_3   = red_3
-        entry.green_3 = green_3   
-        entry.blue_3  = blue_3 
-        entry.red_4   = red_4
-        entry.green_4 = green_4   
-        entry.blue_4  = blue_4
-        entry.red_5   = red_5
-        entry.green_5 = green_5   
-        entry.blue_5  = blue_5
-        entry.red_6   = red_6
-        entry.green_6 = green_6   
-        entry.blue_6  = blue_6
-        entry.red_7   = red_7
-        entry.green_7 = green_7   
-        entry.blue_7  = blue_7
-        entry.red_8   = red_8
-        entry.green_8 = green_8   
-        entry.blue_8  = blue_8
-        entry.red_9   = red_9
-        entry.green_9 = green_9   
-        entry.blue_9  = blue_9                
+        entry.name         = name
+        entry.red_1        = red_1
+        entry.green_1      = green_1  
+        entry.blue_1       = blue_1
+        entry.brightness_1 = brightness_1
+        entry.red_2        = red_2
+        entry.green_2      = green_2   
+        entry.blue_2       = blue_2
+        entry.brightness_2 = brightness_2        
+        entry.red_3        = red_3
+        entry.green_3      = green_3   
+        entry.blue_3       = blue_3 
+        entry.brightness_3 = brightness_3        
+        entry.red_4        = red_4
+        entry.green_4      = green_4   
+        entry.blue_4       = blue_4
+        entry.brightness_4 = brightness_4        
+        entry.red_5        = red_5
+        entry.green_5      = green_5   
+        entry.blue_5       = blue_5
+        entry.brightness_5 = brightness_5       
+        entry.red_6        = red_6
+        entry.green_6      = green_6   
+        entry.blue_6       = blue_6
+        entry.brightness_6 = brightness_6        
+        entry.red_7        = red_7
+        entry.green_7      = green_7   
+        entry.blue_7       = blue_7
+        entry.brightness_7 = brightness_7        
+        entry.red_8        = red_8
+        entry.green_8      = green_8   
+        entry.blue_8       = blue_8
+        entry.brightness_8 = brightness_8        
+        entry.red_9        = red_9
+        entry.green_9      = green_9   
+        entry.blue_9       = blue_9 
+        entry.brightness_9 = brightness_9                       
         db.session.commit()  
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + name + " | Settings changed") 
@@ -1450,56 +1467,64 @@ def ADD_LED_SCENE_OBJECT(id):
         entry.active_led_2 = "True" 
         entry.red_2            = 255
         entry.green_2          = 255
-        entry.blue_2           = 255          
+        entry.blue_2           = 255  
+        entry.brightness_2     = 255                  
         db.session.commit()
         return
     if entry.active_led_3 != "True":
         entry.active_led_3 = "True"     
         entry.red_3            = 255
         entry.green_3          = 255
-        entry.blue_3           = 255         
+        entry.blue_3           = 255    
+        entry.brightness_3     = 255               
         db.session.commit()
         return
     if entry.active_led_4 != "True":
         entry.active_led_4 = "True"   
         entry.red_4            = 255
         entry.green_4          = 255
-        entry.blue_4           = 255        
+        entry.blue_4           = 255     
+        entry.brightness_4     = 255             
         db.session.commit()
         return
     if entry.active_led_5 != "True":
         entry.active_led_5 = "True"  
         entry.red_5            = 255
         entry.green_5          = 255
-        entry.blue_5           = 255        
+        entry.blue_5           = 255  
+        entry.brightness_5     = 255                 
         db.session.commit()
         return
     if entry.active_led_6 != "True":
         entry.active_led_6 = "True"   
         entry.red_6            = 255
         entry.green_6          = 255
-        entry.blue_6           = 255        
+        entry.blue_6           = 255   
+        entry.brightness_6     = 255      
         db.session.commit()
         return
     if entry.active_led_7 != "True":
         entry.active_led_7 = "True"  
         entry.red_7            = 255
         entry.green_7          = 255
-        entry.blue_7           = 255        
+        entry.blue_7           = 255    
+        entry.brightness_7     = 255   
         db.session.commit()
         return
     if entry.active_led_8 != "True":
         entry.active_led_8 = "True"     
         entry.red_8            = 255
         entry.green_8          = 255
-        entry.blue_8           = 255        
+        entry.blue_8           = 255     
+        entry.brightness_8     = 255           
         db.session.commit()
         return       
     if entry.active_led_9 != "True":
         entry.active_led_9 = "True"
         entry.red_9            = 255
         entry.green_9          = 255
-        entry.blue_9           = 255        
+        entry.blue_9           = 255    
+        entry.brightness_9     = 255 
         db.session.commit()
         return  
 
@@ -1512,6 +1537,7 @@ def REMOVE_LED_SCENE_OBJECT(id):
         entry.red_9            = 0
         entry.green_9          = 0
         entry.blue_9           = 0
+        entry.brightness_9     = 0  
         db.session.commit()
         return
 
@@ -1520,6 +1546,7 @@ def REMOVE_LED_SCENE_OBJECT(id):
         entry.red_8            = 0
         entry.green_8          = 0
         entry.blue_8           = 0
+        entry.brightness_8     = 0          
         db.session.commit()
         return
 
@@ -1528,6 +1555,7 @@ def REMOVE_LED_SCENE_OBJECT(id):
         entry.red_7            = 0
         entry.green_7          = 0
         entry.blue_7           = 0
+        entry.brightness_7     = 0          
         db.session.commit()
         return
 
@@ -1536,6 +1564,7 @@ def REMOVE_LED_SCENE_OBJECT(id):
         entry.red_6            = 0
         entry.green_6          = 0
         entry.blue_6           = 0
+        entry.brightness_6     = 0          
         db.session.commit()
         return
 
@@ -1544,6 +1573,7 @@ def REMOVE_LED_SCENE_OBJECT(id):
         entry.red_5            = 0
         entry.green_5          = 0
         entry.blue_5           = 0
+        entry.brightness_5     = 0          
         db.session.commit()
         return
 
@@ -1552,6 +1582,7 @@ def REMOVE_LED_SCENE_OBJECT(id):
         entry.red_4            = 0
         entry.green_4          = 0
         entry.blue_4           = 0
+        entry.brightness_4     = 0          
         db.session.commit()
         return
 
@@ -1560,6 +1591,7 @@ def REMOVE_LED_SCENE_OBJECT(id):
         entry.red_3            = 0
         entry.green_3          = 0
         entry.blue_3           = 0
+        entry.brightness_3     = 0          
         db.session.commit()
         return
 
@@ -1568,6 +1600,7 @@ def REMOVE_LED_SCENE_OBJECT(id):
         entry.red_2            = 0
         entry.green_2          = 0
         entry.blue_2           = 0
+        entry.brightness_2     = 0          
         db.session.commit()
         return
 
@@ -1636,16 +1669,28 @@ def CHANGE_LED_SCENES_POSITION(id, direction):
                 return 
 
 
-def DELETE_LED_SCENE(id):
+def RESET_LED_SCENE(id):
     name = GET_LED_SCENE_BY_ID(id).name
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + name + " | deleted") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + name + " | reseted") 
     except:
         pass 
 
     LED_Scenes.query.filter_by(id=id).delete()
     db.session.commit() 
+
+    # replace old scene
+    scene = LED_Scenes(
+            id           = id,
+            name         = "default_scene_" + str(id),
+            red_1        = 255, 
+            green_1      = 255, 
+            blue_1       = 255,   
+            brightness_1 = 255,                                                   
+        )
+    db.session.add(scene)
+    db.session.commit()
     return True
 
 
@@ -2234,7 +2279,7 @@ def GET_ALL_USERS():
 
 def ADD_USER():
     for i in range(1,26):
-        if Scheduler_Tasks.query.filter_by(id=i).first():
+        if User.query.filter_by(id=i).first():
             pass
         else:
             # add the new user

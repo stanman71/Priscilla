@@ -1,53 +1,549 @@
+#brightness_slider_1_1 {
+	width: 180px;
+}
+#brightness_slider_1_1 .slider-handle {
+	background: black;
+}
+#brightness_slider_2_1 {
+	width: 180px;
+}
+#brightness_slider_2_1 .slider-handle {
+	background: black;
+}
+#brightness_slider_3_1 {
+	width: 180px;
+}
+#brightness_slider_3_1 .slider-handle {
+	background: black;
+}
+#brightness_slider_4_1 {
+	width: 180px;
+}
+#brightness_slider_4_1 .slider-handle {
+	background: black;
+}
+#brightness_slider_5_1 {
+	width: 180px;
+}
+#brightness_slider_5_1 .slider-handle {
+	background: black;
+}
+#brightness_slider_6_1 {
+	width: 180px;
+}
+#brightness_slider_6_1 .slider-handle {
+	background: black;
+}
+#brightness_slider_7_1 {
+	width: 180px;
+}
+#brightness_slider_7_1 .slider-handle {
+	background: black;
+}
+#brightness_slider_8_1 {
+	width: 180px;
+}
+#brightness_slider_8_1 .slider-handle {
+	background: black;
+}
+#brightness_slider_9_1 {
+	width: 180px;
+}
+#brightness_slider_9_1 .slider-handle {
+	background: black;
+}
 
-#RGB_1_1 {
-  height: 20px;
-  background: rgb(128, 128, 128);
+#brightness_slider_1_2 {
+	width: 180px;
 }
-#red_1_1 .slider-selection {
-  background: #FF8282;
+#brightness_slider_1_2 .slider-handle {
+	background: black;
 }
-#red_1_1 .slider-handle {
-  background: red;
+#brightness_slider_2_2 {
+	width: 180px;
 }
-#green_1_1 .slider-selection {
-  background: #428041;
+#brightness_slider_2_2 .slider-handle {
+	background: black;
 }
-#green_1_1 .slider-handle {
-  background: green;
+#brightness_slider_3_2 {
+	width: 180px;
 }
-#blue_1_1 .slider-selection {
-  background: #8283FF;
+#brightness_slider_3_2 .slider-handle {
+	background: black;
 }
-#blue_1_1 .slider-handle {
-  border-bottom-color: blue;
+#brightness_slider_4_2 {
+	width: 180px;
 }
-#red_1_1, #green_1_1, #blue_1_1 {
-  width: 300px;
+#brightness_slider_4_2 .slider-handle {
+	background: black;
+}
+#brightness_slider_5_2 {
+	width: 180px;
+}
+#brightness_slider_5_2 .slider-handle {
+	background: black;
+}
+#brightness_slider_6_2 {
+	width: 180px;
+}
+#brightness_slider_6_2 .slider-handle {
+	background: black;
+}
+#brightness_slider_7_2 {
+	width: 180px;
+}
+#brightness_slider_7_2 .slider-handle {
+	background: black;
+}
+#brightness_slider_8_2 {
+	width: 180px;
+}
+#brightness_slider_8_2 .slider-handle {
+	background: black;
+}
+#brightness_slider_9_2 {
+	width: 180px;
+}
+#brightness_slider_9_2 .slider-handle {
+	background: black;
 }
 
+#brightness_slider_1_3 {
+	width: 180px;
+}
+#brightness_slider_1_3 .slider-handle {
+	background: black;
+}
+#brightness_slider_2_3 {
+	width: 180px;
+}
+#brightness_slider_2_3 .slider-handle {
+	background: black;
+}
+#brightness_slider_3_3 {
+	width: 180px;
+}
+#brightness_slider_3_3 .slider-handle {
+	background: black;
+}
+#brightness_slider_4_3 {
+	width: 180px;
+}
+#brightness_slider_4_3 .slider-handle {
+	background: black;
+}
+#brightness_slider_5_3 {
+	width: 180px;
+}
+#brightness_slider_5_3 .slider-handle {
+	background: black;
+}
+#brightness_slider_6_3 {
+	width: 180px;
+}
+#brightness_slider_6_3 .slider-handle {
+	background: black;
+}
+#brightness_slider_7_3 {
+	width: 180px;
+}
+#brightness_slider_7_3 .slider-handle {
+	background: black;
+}
+#brightness_slider_8_3 {
+	width: 180px;
+}
+#brightness_slider_8_3 .slider-handle {
+	background: black;
+}
+#brightness_slider_9_3 {
+	width: 180px;
+}
+#brightness_slider_9_3 .slider-handle {
+	background: black;
+}
 
-#RGB_2_1 {
-  height: 20px;
-  background: rgb(128, 128, 128);
+#brightness_slider_1_4 {
+	width: 180px;
 }
-#red_2_1 .slider-selection {
-  background: #FF8282;
+#brightness_slider_1_4 .slider-handle {
+	background: black;
 }
-#red_2_1 .slider-handle {
-  background: red;
+#brightness_slider_2_4 {
+	width: 180px;
 }
-#green_2_1 .slider-selection {
-  background: #428041;
+#brightness_slider_2_4 .slider-handle {
+	background: black;
 }
-#green_2_1 .slider-handle {
-  background: green;
+#brightness_slider_3_4 {
+	width: 180px;
 }
-#blue_2_1 .slider-selection {
-  background: #8283FF;
+#brightness_slider_3_4 .slider-handle {
+	background: black;
 }
-#blue_2_1 .slider-handle {
-  border-bottom-color: blue;
+#brightness_slider_4_4 {
+	width: 180px;
 }
-#red_2_1, #green_2_1, #blue_2_1 {
-  width: 300px;
+#brightness_slider_4_4 .slider-handle {
+	background: black;
+}
+#brightness_slider_5_4 {
+	width: 180px;
+}
+#brightness_slider_5_4 .slider-handle {
+	background: black;
+}
+#brightness_slider_6_4 {
+	width: 180px;
+}
+#brightness_slider_6_4 .slider-handle {
+	background: black;
+}
+#brightness_slider_7_4 {
+	width: 180px;
+}
+#brightness_slider_7_4 .slider-handle {
+	background: black;
+}
+#brightness_slider_8_4 {
+	width: 180px;
+}
+#brightness_slider_8_4 .slider-handle {
+	background: black;
+}
+#brightness_slider_9_4 {
+	width: 180px;
+}
+#brightness_slider_9_4 .slider-handle {
+	background: black;
+}
+
+#brightness_slider_1_5 {
+	width: 180px;
+}
+#brightness_slider_1_5 .slider-handle {
+	background: black;
+}
+#brightness_slider_2_5 {
+	width: 180px;
+}
+#brightness_slider_2_5 .slider-handle {
+	background: black;
+}
+#brightness_slider_3_5 {
+	width: 180px;
+}
+#brightness_slider_3_5 .slider-handle {
+	background: black;
+}
+#brightness_slider_4_5 {
+	width: 180px;
+}
+#brightness_slider_4_5 .slider-handle {
+	background: black;
+}
+#brightness_slider_5_5 {
+	width: 180px;
+}
+#brightness_slider_5_5 .slider-handle {
+	background: black;
+}
+#brightness_slider_6_5 {
+	width: 180px;
+}
+#brightness_slider_6_5 .slider-handle {
+	background: black;
+}
+#brightness_slider_7_5 {
+	width: 180px;
+}
+#brightness_slider_7_5 .slider-handle {
+	background: black;
+}
+#brightness_slider_8_5 {
+	width: 180px;
+}
+#brightness_slider_8_5 .slider-handle {
+	background: black;
+}
+#brightness_slider_9_5 {
+	width: 180px;
+}
+#brightness_slider_9_5 .slider-handle {
+	background: black;
+}
+
+#brightness_slider_1_6 {
+	width: 180px;
+}
+#brightness_slider_1_6 .slider-handle {
+	background: black;
+}
+#brightness_slider_2_6 {
+	width: 180px;
+}
+#brightness_slider_2_6 .slider-handle {
+	background: black;
+}
+#brightness_slider_3_6 {
+	width: 180px;
+}
+#brightness_slider_3_6 .slider-handle {
+	background: black;
+}
+#brightness_slider_4_6 {
+	width: 180px;
+}
+#brightness_slider_4_6 .slider-handle {
+	background: black;
+}
+#brightness_slider_5_6 {
+	width: 180px;
+}
+#brightness_slider_5_6 .slider-handle {
+	background: black;
+}
+#brightness_slider_6_6 {
+	width: 180px;
+}
+#brightness_slider_6_6 .slider-handle {
+	background: black;
+}
+#brightness_slider_7_6 {
+	width: 180px;
+}
+#brightness_slider_7_6 .slider-handle {
+	background: black;
+}
+#brightness_slider_8_6 {
+	width: 180px;
+}
+#brightness_slider_8_6 .slider-handle {
+	background: black;
+}
+#brightness_slider_9_6 {
+	width: 180px;
+}
+#brightness_slider_9_6 .slider-handle {
+	background: black;
+}
+
+#brightness_slider_1_7 {
+	width: 180px;
+}
+#brightness_slider_1_7 .slider-handle {
+	background: black;
+}
+#brightness_slider_2_7 {
+	width: 180px;
+}
+#brightness_slider_2_7 .slider-handle {
+	background: black;
+}
+#brightness_slider_3_7 {
+	width: 180px;
+}
+#brightness_slider_3_7 .slider-handle {
+	background: black;
+}
+#brightness_slider_4_7 {
+	width: 180px;
+}
+#brightness_slider_4_7 .slider-handle {
+	background: black;
+}
+#brightness_slider_5_7 {
+	width: 180px;
+}
+#brightness_slider_5_7 .slider-handle {
+	background: black;
+}
+#brightness_slider_6_7 {
+	width: 180px;
+}
+#brightness_slider_6_7 .slider-handle {
+	background: black;
+}
+#brightness_slider_7_7 {
+	width: 180px;
+}
+#brightness_slider_7_7 .slider-handle {
+	background: black;
+}
+#brightness_slider_8_7 {
+	width: 180px;
+}
+#brightness_slider_8_7 .slider-handle {
+	background: black;
+}
+#brightness_slider_9_7 {
+	width: 180px;
+}
+#brightness_slider_9_7 .slider-handle {
+	background: black;
+}
+
+#brightness_slider_1_8 {
+	width: 180px;
+}
+#brightness_slider_1_8 .slider-handle {
+	background: black;
+}
+#brightness_slider_2_8 {
+	width: 180px;
+}
+#brightness_slider_2_8 .slider-handle {
+	background: black;
+}
+#brightness_slider_3_8 {
+	width: 180px;
+}
+#brightness_slider_3_8 .slider-handle {
+	background: black;
+}
+#brightness_slider_4_8 {
+	width: 180px;
+}
+#brightness_slider_4_8 .slider-handle {
+	background: black;
+}
+#brightness_slider_5_8 {
+	width: 180px;
+}
+#brightness_slider_5_8 .slider-handle {
+	background: black;
+}
+#brightness_slider_6_8 {
+	width: 180px;
+}
+#brightness_slider_6_8 .slider-handle {
+	background: black;
+}
+#brightness_slider_7_8 {
+	width: 180px;
+}
+#brightness_slider_7_8 .slider-handle {
+	background: black;
+}
+#brightness_slider_8_8 {
+	width: 180px;
+}
+#brightness_slider_8_8 .slider-handle {
+	background: black;
+}
+#brightness_slider_9_8 {
+	width: 180px;
+}
+#brightness_slider_9_8 .slider-handle {
+	background: black;
+}
+
+#brightness_slider_1_9 {
+	width: 180px;
+}
+#brightness_slider_1_9 .slider-handle {
+	background: black;
+}
+#brightness_slider_2_9 {
+	width: 180px;
+}
+#brightness_slider_2_9 .slider-handle {
+	background: black;
+}
+#brightness_slider_3_9 {
+	width: 180px;
+}
+#brightness_slider_3_9 .slider-handle {
+	background: black;
+}
+#brightness_slider_4_9 {
+	width: 180px;
+}
+#brightness_slider_4_9 .slider-handle {
+	background: black;
+}
+#brightness_slider_5_9 {
+	width: 180px;
+}
+#brightness_slider_5_9 .slider-handle {
+	background: black;
+}
+#brightness_slider_6_9 {
+	width: 180px;
+}
+#brightness_slider_6_9 .slider-handle {
+	background: black;
+}
+#brightness_slider_7_9 {
+	width: 180px;
+}
+#brightness_slider_7_9 .slider-handle {
+	background: black;
+}
+#brightness_slider_8_9 {
+	width: 180px;
+}
+#brightness_slider_8_9 .slider-handle {
+	background: black;
+}
+#brightness_slider_9_9 {
+	width: 180px;
+}
+#brightness_slider_9_9 .slider-handle {
+	background: black;
+}
+
+#brightness_slider_1_10 {
+	width: 180px;
+}
+#brightness_slider_1_10 .slider-handle {
+	background: black;
+}
+#brightness_slider_2_10 {
+	width: 180px;
+}
+#brightness_slider_2_10 .slider-handle {
+	background: black;
+}
+#brightness_slider_3_10 {
+	width: 180px;
+}
+#brightness_slider_3_10 .slider-handle {
+	background: black;
+}
+#brightness_slider_4_10 {
+	width: 180px;
+}
+#brightness_slider_4_10 .slider-handle {
+	background: black;
+}
+#brightness_slider_5_10 {
+	width: 180px;
+}
+#brightness_slider_5_10 .slider-handle {
+	background: black;
+}
+#brightness_slider_6_10 {
+	width: 180px;
+}
+#brightness_slider_6_10 .slider-handle {
+	background: black;
+}
+#brightness_slider_7_10 {
+	width: 180px;
+}
+#brightness_slider_7_10 .slider-handle {
+	background: black;
+}
+#brightness_slider_8_10 {
+	width: 180px;
+}
+#brightness_slider_8_10 .slider-handle {
+	background: black;
+}
+#brightness_slider_9_10 {
+	width: 180px;
+}
+#brightness_slider_9_10 .slider-handle {
+	background: black;
 }

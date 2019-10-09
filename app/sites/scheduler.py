@@ -367,7 +367,14 @@ def scheduler():
     error_message_scheduler_tasks_settings = CHECK_SCHEDULER_TASKS_SETTINGS(GET_ALL_SCHEDULER_TASKS())
     error_message_scheduler_tasks          = CHECK_TASKS(GET_ALL_SCHEDULER_TASKS(), "scheduler")
 
-    list_scheduler_tasks         = GET_ALL_SCHEDULER_TASKS()
+    list_scheduler_tasks_all = GET_ALL_SCHEDULER_TASKS()
+    list_scheduler_tasks     = []
+
+    # remove system tasks
+    for task in list_scheduler_tasks_all:
+        if task.name != "update_devices" and task.name != "backup_database":
+            list_scheduler_tasks.append(task)
+
 
     dropdown_list_devices                     = GET_ALL_DEVICES("sensors")
     dropdown_list_operators                   = ["=", ">", "<"]
