@@ -2002,3 +2002,7 @@ Timestamp,Type,Description
 2019-10-09 10:10:19,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
 2019-10-09 10:10:33,DATABASE,|LED || Scene - default_scene_3 || Settings changed|
 2019-10-09 10:11:04,DATABASE,|LED || Scene - default_scene_3 || reseted|
+2019-10-09 11:31:08,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 11:31:10,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 11:31:11,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 11:31:13,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|

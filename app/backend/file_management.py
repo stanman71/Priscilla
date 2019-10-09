@@ -165,6 +165,73 @@ def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):
         return (e)   
 
 
+""" ############# """
+"""  file config  """
+""" ############# """
+
+try:
+    # open config file
+    with open(PATH + "/data/config.yaml", "r") as file_config:
+        config = yaml.load(file_config, Loader=yaml.SafeLoader)
+        file_config.close()
+
+except Exception as e:
+    print("##### ERROR: config file not founded #####")
+    WRITE_LOGFILE_SYSTEM("ERROR", "File | data/config.ymal | " + str(e) + " | !!! DEFAULT SETTINGS LOADED !!! ")
+
+
+def GET_MQTT_BROKER():
+    try:
+        return str(config['mqtt']['broker'])
+    except:
+        return "localhost"   
+
+def GET_MQTT_BROKER_USERNAME():
+    try:
+        return str(config['mqtt']['username'])
+    except:
+        return ""   
+
+def GET_MQTT_BROKER_PASSWORD():
+    try:
+        return str(config['mqtt']['password'])
+    except:
+        return ""   
+        
+def GET_SPOTIFY_CLIENT_ID():
+    try:
+        return str(config['spotify']['client_id'])
+    except:
+        return ""        
+
+def GET_SPOTIFY_CLIENT_SECRET():
+    try:
+        return str(config['spotify']['client_secret'])
+    except:
+        return ""     
+
+def GET_SPOTIFY_REFRESH_TOKEN():
+    try:
+        return str(config['spotify']['refresh_token'])
+    except:
+        return ""     
+
+def SET_SPOTIFY_REFRESH_TOKEN(REFRESH_TOKEN):
+    
+    try:
+        with open(PATH + "/data/config.yaml") as file_config:
+            upload_config = yaml.load(file_config)
+
+        upload_config['spotify']['refresh_token'] = REFRESH_TOKEN
+
+        with open(PATH + "/data/config.yaml", 'w') as file_config:
+            yaml.dump(upload_config, file_config)
+            
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/config.yaml | " + str(e))  
+        return ("ERROR: " + str(e))
+        
+
 """ ################ """
 """  file locations  """
 """ ################ """

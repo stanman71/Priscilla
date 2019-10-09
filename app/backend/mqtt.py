@@ -146,31 +146,31 @@ def MQTT_RECEIVE():
 
     def on_connect(client, userdata, flags, rc):   
         if rc != 0:
-            print("ERROR: MQTT | Broker - " + str(GET_MQTT_BROKER_SETTINGS().broker) + " | Bad Connection | Returned Code = " + str(rc)) 
+            print("ERROR: MQTT | Broker - " + GET_MQTT_BROKER() + " | Bad Connection | Returned Code = " + str(rc)) 
         
-            WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Broker - " + str(GET_MQTT_BROKER_SETTINGS().broker) + " | Bad Connection | Returned Code = " + str(rc))         
+            WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Broker - " + GET_MQTT_BROKER() + " | Bad Connection | Returned Code = " + str(rc))         
         
         else:
             client.subscribe("miranda/#")
   
-            print("MQTT | Broker - " + str(GET_MQTT_BROKER_SETTINGS().broker) + " | Connected") 
-            WRITE_LOGFILE_SYSTEM("EVENT", "MQTT | Broker - " + str(GET_MQTT_BROKER_SETTINGS().broker) + " | Connected")
+            print("MQTT | Broker - " + GET_MQTT_BROKER() + " | Connected") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "MQTT | Broker - " + GET_MQTT_BROKER() + " | Connected")
                 
  
     client = mqtt.Client()
-    client.username_pw_set(username=GET_MQTT_BROKER_SETTINGS().user,password=GET_MQTT_BROKER_SETTINGS().password)
+    client.username_pw_set(username=GET_MQTT_BROKER_USERNAME(),password=GET_MQTT_BROKER_PASSWORD())
     client.on_connect = on_connect
     client.on_message = on_message
      
     try:
-        client.connect(GET_MQTT_BROKER_SETTINGS().broker)
+        client.connect(GET_MQTT_BROKER())
         client.loop_forever()
 
     except Exception as e:
-        print("ERROR: MQTT | Broker - " + str(GET_MQTT_BROKER_SETTINGS().broker) + " | " + str(e))
+        print("ERROR: MQTT | Broker - " + GET_MQTT_BROKER() + " | " + str(e))
         
-        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Broker - " + str(GET_MQTT_BROKER_SETTINGS().broker) + " | " + str(e))
-        SEND_EMAIL("ERROR", "MQTT | Broker - " + str(GET_MQTT_BROKER_SETTINGS().broker) + " | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Broker - " + GET_MQTT_BROKER() + " | " + str(e))
+        SEND_EMAIL("ERROR", "MQTT | Broker - " + GET_MQTT_BROKER() + " | " + str(e))
 
 
 """ ############# """
@@ -278,9 +278,9 @@ def MQTT_PUBLISH():
                 print ('Message Published...')
 
             client = mqtt.Client()
-            client.username_pw_set(username=GET_MQTT_BROKER_SETTINGS().user,password=GET_MQTT_BROKER_SETTINGS().password)          
+            client.username_pw_set(username=GET_MQTT_BROKER_USERNAME(),password=GET_MQTT_BROKER_PASSWORD())          
             client.on_publish = on_publish
-            client.connect(GET_MQTT_BROKER_SETTINGS().broker)      
+            client.connect(GET_MQTT_BROKER())      
             client.publish(mqtt_message[0],mqtt_message[1])        
             client.disconnect()
 
@@ -617,9 +617,9 @@ def CHECK_MQTT():
             print ('Message Published...')
 
         client = mqtt.Client()
-        client.username_pw_set(username=GET_MQTT_BROKER_SETTINGS().user,password=GET_MQTT_BROKER_SETTINGS().password)          
+        client.username_pw_set(username=GET_MQTT_BROKER_USERNAME(),password=GET_MQTT_BROKER_PASSWORD())          
         client.on_publish = on_publish
-        client.connect(GET_MQTT_BROKER_SETTINGS().broker)      
+        client.connect(GET_MQTT_BROKER())      
         client.publish(MQTT_TOPIC,MQTT_MSG)    
         client.disconnect()
 

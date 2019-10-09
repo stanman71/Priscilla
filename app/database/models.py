@@ -168,16 +168,6 @@ class LED_Scenes(db.Model):
     brightness_9          = db.Column(db.Integer) 
     collapse              = db.Column(db.String(50))        
 
-class MQTT_Broker(db.Model):
-    __tablename__     = 'mqtt_broker'
-    id                = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    broker            = db.Column(db.String(50))
-    user              = db.Column(db.String(50))
-    password          = db.Column(db.String(50))
-    previous_broker   = db.Column(db.String(50))
-    previous_user     = db.Column(db.String(50))
-    previous_password = db.Column(db.String(50))    
-
 class Plants(db.Model):
     __tablename__  = 'plants'
     id                     = db.Column(db.Integer, primary_key=True, autoincrement = True)   
@@ -286,18 +276,7 @@ for i in range(1,11):
             )
         db.session.add(scene)
         db.session.commit()
-
-
-# create default mqtt broker settings
-if MQTT_Broker.query.filter_by().first() is None:
-    mqtt_broker = MQTT_Broker(
-        broker   = "localhost",
-        user     = "",
-        password = "",
-    )
-    db.session.add(mqtt_broker)
-    db.session.commit()
-
+        
 
 # create system scheduler jobs
 job_update_devices_founded  = False
@@ -1692,55 +1671,6 @@ def RESET_LED_SCENE(id):
     db.session.add(scene)
     db.session.commit()
     return True
-
-
-""" ################### """
-""" ################### """
-"""     mqtt broker     """
-""" ################### """
-""" ################### """
-
-
-def GET_MQTT_BROKER_SETTINGS():
-    return MQTT_Broker.query.filter_by().first()
-
-
-def SET_MQTT_BROKER_SETTINGS(broker, user, password):
-    entry = MQTT_Broker.query.filter_by().first()
-
-    if (entry.broker != broker or entry.user != user or entry.password != password):
- 
-        entry.previous_broker   = entry.broker
-        entry.previous_user     = entry.user
-        entry.previous_password = entry.password
-        entry.broker            = broker
-        entry.user              = user
-        entry.password          = password
-
-        db.session.commit()  
-    
-        WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Broker Settings changed")
-
-        return True
-
-
-def RESTORE_MQTT_BROKER_SETTINGS():
-    entry = MQTT_Broker.query.filter_by().first()
-
-    broker                  = entry.broker
-    user                    = entry.user
-    password                = entry.password
-
-    entry.broker            = entry.previous_broker
-    entry.user              = entry.previous_user
-    entry.password          = entry.previous_password
-    entry.previous_broker   = broker
-    entry.previous_user     = user
-    entry.previous_password = password
-
-    db.session.commit()
-
-    WRITE_LOGFILE_SYSTEM("DATABASE", "MQTT | Broker Settings restored")
 
 
 """ ################### """

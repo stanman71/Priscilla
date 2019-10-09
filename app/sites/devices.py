@@ -42,8 +42,6 @@ def devices():
     success_message_change_settings_devices     = []         
     error_message_change_settings_devices       = []    
     success_message_change_settings_exceptions  = False
-    success_message_change_settings_mqtt_broker = ""         
-    error_message_change_settings_mqtt_broker   = []   
     success_message_zigbee_pairing              = []
     error_message_zigbee_pairing                = []
     success_message_logfile                     = False
@@ -274,31 +272,6 @@ def devices():
                     print(e)                        
 
 
-    """ ############# """
-    """  mqtt broker  """
-    """ ############# """
-
-    if request.form.get("save_mqtt_broker_settings") != None:
-
-        if request.form.get("set_mqtt_broker") != "":                 
-            mqtt_broker = request.form.get("set_mqtt_broker")
-        else:
-            mqtt_broker = ""
-            error_message_change_settings_mqtt_broker.append("MQTT Broker || Keinen Broker angegeben")   
-             
-        mqtt_broker_user     = request.form.get("set_mqtt_broker_user")
-        mqtt_broker_password = request.form.get("set_mqtt_broker_password")
-
-        if mqtt_broker != "":
-            if SET_MQTT_BROKER_SETTINGS(mqtt_broker, mqtt_broker_user, mqtt_broker_password):
-                success_message_change_settings_mqtt_broker = "Einstellungen erfolgreich geändert"
-
-
-    if request.form.get("restore_mqtt_broker_settings") != None:
-        RESTORE_MQTT_BROKER_SETTINGS()
-        success_message_change_settings_mqtt_broker = "Einstellungen erfolgreich wiederhergestellt"
-
-
     """ ######## """
     """  zigbee  """
     """ ######## """
@@ -398,7 +371,6 @@ def devices():
     dropdown_list_operators         = ["=", ">", "<"]
     
     list_devices   = GET_ALL_DEVICES("")
-    mqtt_broker    = GET_MQTT_BROKER_SETTINGS()
     zigbee_pairing = GET_ZIGBEE2MQTT_PAIRING()
 
     data = {'navigation': 'devices', 'notification': ''}
@@ -542,8 +514,6 @@ def devices():
                                                     error_message_change_settings_devices=error_message_change_settings_devices, 
                                                     success_message_change_settings_exceptions=success_message_change_settings_exceptions,
                                                     error_message_device_exceptions=error_message_device_exceptions,
-                                                    success_message_change_settings_mqtt_broker=success_message_change_settings_mqtt_broker,                                                       
-                                                    error_message_change_settings_mqtt_broker=error_message_change_settings_mqtt_broker,    
                                                     success_message_zigbee_pairing=success_message_zigbee_pairing,
                                                     error_message_zigbee_pairing=error_message_zigbee_pairing,
                                                     success_message_logfile=success_message_logfile,     
@@ -553,7 +523,6 @@ def devices():
                                                     list_exception_sensors=list_exception_sensors,
                                                     dropdown_list_exception_options=dropdown_list_exception_options,
                                                     dropdown_list_operators=dropdown_list_operators,
-                                                    mqtt_broker=mqtt_broker,
                                                     zigbee_pairing=zigbee_pairing,
                                                     timestamp=timestamp,      
                                                     device_1_input_values=device_1_input_values,
