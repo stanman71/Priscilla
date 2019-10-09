@@ -358,63 +358,32 @@ def led_scenes():
                     success_message_change_settings_led_scene = i
 
 
-    """ ################# """
-    """  reset led scene  """
-    """ ################# """   
+    """ ################## """
+    """  delete led scene  """
+    """ ################## """   
 
     for i in range (1,11):
 
-        if request.form.get("reset_led_scene_" + str(i)) != None:
+        if request.form.get("delete_led_scene_" + str(i)) != None:
             scene  = GET_LED_SCENE_BY_ID(i).name  
-            result = RESET_LED_SCENE(i)    
-
-            SET_LED_SCENE_COLLAPSE_OPEN(i)          
+            result = DELETE_LED_SCENE(i)    
 
             if result:
-                success_message_change_settings.append(scene + " || Erfolgreich zurückgesetzt") 
+                success_message_change_settings.append(scene + " || Erfolgreich gelöscht") 
             else:
                 error_message_change_settings.append(scene + " || " + str(result))
 
-    try:
-        scene_1 = GET_LED_SCENE_BY_ID(1)
-    except:
-        scene_1 = "None"
-    try:
-        scene_2 = GET_LED_SCENE_BY_ID(2)
-    except:
-        scene_2 = "None"
-    try: 
-        scene_3 = GET_LED_SCENE_BY_ID(3)
-    except:
-        scene_3 = "None"
-    try: 
-        scene_4 = GET_LED_SCENE_BY_ID(4)
-    except:
-        scene_4 = "None"
-    try: 
-        scene_5 = GET_LED_SCENE_BY_ID(5)
-    except:
-        scene_5 = "None"
-    try: 
-        scene_6 = GET_LED_SCENE_BY_ID(6)
-    except:
-        scene_6 = "None"
-    try: 
-        scene_7 = GET_LED_SCENE_BY_ID(7)
-    except:
-        scene_7 = "None"
-    try: 
-        scene_8 = GET_LED_SCENE_BY_ID(8)
-    except:
-        scene_8 = "None"
-    try: 
-        scene_9 = GET_LED_SCENE_BY_ID(9)
-    except:
-        scene_9 = "None"
-    try: 
-        scene_10 = GET_LED_SCENE_BY_ID(10)
-    except:
-        scene_10 = "None"
+
+    scene_1  = GET_LED_SCENE_BY_ID(1)
+    scene_2  = GET_LED_SCENE_BY_ID(2)
+    scene_3  = GET_LED_SCENE_BY_ID(3)
+    scene_4  = GET_LED_SCENE_BY_ID(4)
+    scene_5  = GET_LED_SCENE_BY_ID(5)
+    scene_6  = GET_LED_SCENE_BY_ID(6)
+    scene_7  = GET_LED_SCENE_BY_ID(7)
+    scene_8  = GET_LED_SCENE_BY_ID(8)
+    scene_9  = GET_LED_SCENE_BY_ID(9)
+    scene_10 = GET_LED_SCENE_BY_ID(10)
 
     list_led_scenes = GET_ALL_LED_SCENES()
 

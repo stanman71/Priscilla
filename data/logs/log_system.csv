@@ -2006,3 +2006,145 @@ Timestamp,Type,Description
 2019-10-09 11:31:10,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
 2019-10-09 11:31:11,ERROR,|ZigBee2MQTT || No Connection|
 2019-10-09 11:31:13,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 19:33:09,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 19:33:12,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 19:33:12,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 19:33:15,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 20:09:02,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 20:09:04,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 20:09:05,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 20:09:07,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 20:09:56,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 20:09:58,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 20:09:59,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 20:10:01,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 20:30:03,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-10-09 20:30:04,ERROR,|MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 20:30:05,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-10-09 20:30:06,ERROR,|eMail || None || ERROR || MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 20:30:07,WARNING,|Devices || ZigBee2MQTT || Update || No Message founded|
+2019-10-09 20:30:09,ERROR,|eMail || None || WARNING || Devices || ZigBee2MQTT || Update || No Message founded || No recipients have been added|
+2019-10-09 20:30:11,ERROR,|MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 20:30:13,ERROR,|eMail || None || ERROR || MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:01:32,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:01:35,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:01:35,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:01:37,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:02:49,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:02:51,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:02:52,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:02:54,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:05:03,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:05:05,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:05:06,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:05:08,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:05:53,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:05:55,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:05:56,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:05:58,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:06:26,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:06:28,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:06:29,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:06:31,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:13:44,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:13:46,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:13:47,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:13:49,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:15:56,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:15:58,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:15:59,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:16:01,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:18:51,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:18:53,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:18:54,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:18:56,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:21:00,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:21:02,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:21:03,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:21:05,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:22:14,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:22:16,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:22:17,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:22:19,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:24:55,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:24:57,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:24:58,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:25:00,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:30:03,WARNING,|Devices || MQTT || Update || No Message founded|
+2019-10-09 21:30:04,ERROR,|MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:30:05,ERROR,|eMail || None || WARNING || Devices || MQTT || Update || No Message founded || No recipients have been added|
+2019-10-09 21:30:06,ERROR,|eMail || None || ERROR || MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:30:07,WARNING,|Devices || ZigBee2MQTT || Update || No Message founded|
+2019-10-09 21:30:09,ERROR,|eMail || None || WARNING || Devices || ZigBee2MQTT || Update || No Message founded || No recipients have been added|
+2019-10-09 21:30:10,ERROR,|MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:30:12,ERROR,|eMail || None || ERROR || MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:31:00,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:31:02,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:31:03,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:31:05,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:31:07,DATABASE,|LED || Scene - new_scene_1 || added|
+2019-10-09 21:31:27,DATABASE,|LED || Scene - new_scene_2 || added|
+2019-10-09 21:32:29,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:32:31,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:32:32,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:32:34,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:33:03,DATABASE,|LED || Scene - new_scene_3 || added|
+2019-10-09 21:33:04,DATABASE,|LED || Scene - new_scene_4 || added|
+2019-10-09 21:33:05,DATABASE,|LED || Scene - new_scene_5 || added|
+2019-10-09 21:33:08,DATABASE,|LED || Scene - new_scene_6 || added|
+2019-10-09 21:33:09,DATABASE,|LED || Scene - new_scene_7 || added|
+2019-10-09 21:33:09,DATABASE,|LED || Scene - new_scene_8 || added|
+2019-10-09 21:33:10,DATABASE,|LED || Scene - new_scene_9 || added|
+2019-10-09 21:33:11,DATABASE,|LED || Scene - new_scene_10 || added|
+2019-10-09 21:33:38,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:33:40,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:33:41,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:33:43,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:35:24,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:35:26,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:35:27,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:35:29,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:36:51,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:36:53,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:36:54,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:36:56,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:37:42,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:37:44,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:37:45,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:37:47,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:38:02,DATABASE,|LED || Scene - new_scene_1 || deleted|
+2019-10-09 21:38:24,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-09 21:38:26,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-09 21:38:27,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-09 21:38:29,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-09 21:38:49,DATABASE,|LED || Scene - new_scene_2 || deleted|
+2019-10-09 21:38:51,DATABASE,|LED || Scene - new_scene_1 || added|
+2019-10-09 21:38:55,DATABASE,|LED || Scene - new_scene_3 || deleted|
+2019-10-09 21:38:57,DATABASE,|LED || Scene - new_scene_4 || deleted|
+2019-10-09 21:38:59,DATABASE,|LED || Scene - new_scene_5 || deleted|
+2019-10-09 21:39:00,DATABASE,|LED || Scene - new_scene_6 || deleted|
+2019-10-09 21:39:02,DATABASE,|LED || Scene - new_scene_7 || deleted|
+2019-10-09 21:39:04,DATABASE,|LED || Scene - new_scene_8 || deleted|
+2019-10-09 21:39:06,DATABASE,|LED || Scene - new_scene_9 || deleted|
+2019-10-09 21:39:07,DATABASE,|LED || Scene - new_scene_10 || deleted|
+2019-10-09 21:39:08,DATABASE,|LED || Scene - new_scene_2 || added|
+2019-10-09 21:39:10,DATABASE,|LED || Scene - new_scene_3 || added|
+2019-10-09 21:39:15,DATABASE,|LED || Scene - new_scene_2 || deleted|
+2019-10-09 21:39:21,DATABASE,|LED || Scene - new_scene_2 || added|
+2019-10-09 21:39:23,DATABASE,|LED || Scene - new_scene_4 || added|
+2019-10-09 21:39:24,DATABASE,|LED || Scene - new_scene_5 || added|
+2019-10-09 21:39:26,DATABASE,|LED || Scene - new_scene_3 || deleted|
+2019-10-09 21:39:29,DATABASE,|LED || Scene - new_scene_2 || deleted|
+2019-10-09 21:39:38,DATABASE,|LED || Scene - new_scene_4 || deleted|
+2019-10-09 21:39:43,DATABASE,|LED || Scene - new_scene_1 || deleted|
+2019-10-09 21:39:45,DATABASE,|LED || Scene - new_scene_5 || deleted|
+2019-10-09 21:39:47,DATABASE,|LED || Scene - new_scene_1 || added|
+2019-10-09 21:39:48,DATABASE,|LED || Scene - new_scene_2 || added|
+2019-10-09 21:39:56,DATABASE,|LED || Scene - test || Settings changed|
+2019-10-09 21:40:02,DATABASE,|LED || Scene - test || Settings changed|
+2019-10-09 21:40:08,DATABASE,|LED || Scene - test_1 || Settings changed|
+2019-10-09 21:40:14,DATABASE,|LED || Scene - test_1 || Settings changed|
+2019-10-09 21:40:20,DATABASE,|LED || Scene - new_scene_3 || added|
+2019-10-09 21:40:21,DATABASE,|LED || Scene - new_scene_4 || added|
+2019-10-09 21:40:25,DATABASE,|LED || Scene - new_scene_3 || deleted|
+2019-10-09 21:40:28,DATABASE,|LED || Scene - new_scene_4 || deleted|

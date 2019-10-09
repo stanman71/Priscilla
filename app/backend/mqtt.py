@@ -389,14 +389,13 @@ def UPDATE_DEVICES(gateway):
             else:    
                 WRITE_LOGFILE_SYSTEM("WARNING", "Devices | MQTT | Update | No Message founded")
                 SEND_EMAIL("WARNING", "Devices | MQTT | Update | No Message founded")             
-                return "Devices || MQTT || Update || Kein Message gefunden"
+                return "Devices | MQTT | Update | Kein Message gefunden"
             
-       
         except Exception as e:
             if str(e) == "string index out of range":
                 WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | No Connection") 
                 SEND_EMAIL("ERROR", "MQTT | No Connection")                 
-                return ("Devices || Update || " + str(error))     
+                return ("Devices | Update | " + str(error))     
 
 
     if gateway == "zigbee2mqtt":
@@ -480,7 +479,7 @@ def UPDATE_DEVICES(gateway):
                                         input_events = device_data.input_events
                                         commands     = device_data.commands 
                                  
-                                        error = "Error: >>> " + str(model) + " not founded >>> " + str(e)
+                                        error = "Error | " + str(model) + " not founded | " + str(e)
                                                                  
                                     UPDATE_DEVICE(id, name, gateway, model, device_type, description, input_values, input_events, commands)
 
@@ -490,21 +489,21 @@ def UPDATE_DEVICES(gateway):
                 if error != "":
                     WRITE_LOGFILE_SYSTEM("ERROR", "Devices | ZigBee2MQTT | Update | " + str(error))
                     SEND_EMAIL("ERROR", "Devices | ZigBee2MQTT | Update | " + str(error))                 
-                    return ("Devices || ZigBee2MQTT || Update || " + str(error)) 
+                    return ("Devices | ZigBee2MQTT | Update | " + str(error)) 
                 else:
-                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices || ZigBee2MQTT || Update")
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | ZigBee2MQTT | Update")
                     return True
                                 
             else:           
                 WRITE_LOGFILE_SYSTEM("WARNING", "Devices | ZigBee2MQTT | Update | No Message founded")
                 SEND_EMAIL("WARNING", "Devices | ZigBee2MQTT | Update | No Message founded")              
-                return "Devices || ZigBee2MQTT || Update || Keine Message gefunden"                  
+                return "Devices | ZigBee2MQTT | Update | Keine Message gefunden"                  
         
         
         except Exception as e:
             WRITE_LOGFILE_SYSTEM("ERROR", "Devices | ZigBee2MQTT | Update | " + str(e))  
             SEND_EMAIL("ERROR", "Devices | ZigBee2MQTT | Update | " + str(e))             
-            return ("Devices || ZigBee2MQTT || Update " + str(e))
+            return ("Devices | ZigBee2MQTT | Update " + str(e))
      
 
 """ ###################### """
@@ -626,7 +625,7 @@ def CHECK_MQTT():
         return True
 
     except Exception as e:
-        return ("MQTT || " + str(e))    
+        return ("MQTT | " + str(e))    
 
 
 def CHECK_ZIGBEE2MQTT():                     

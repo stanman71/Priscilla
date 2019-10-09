@@ -16,7 +16,6 @@ from app import app
 """ path """
 """ #### """
 
-
 # windows
 if os.name == "nt":                 
     PATH = os.path.abspath("") 
@@ -159,7 +158,6 @@ def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):
 
             return data_reversed_filtered[0:rows]
             
-    
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/logs/log_system.csv | " + str(e)) 
         return (e)   
@@ -262,7 +260,6 @@ def GET_LOCATION_COORDINATES(location):
     except Exception as e:    
         return ("ERROR: Locations Import || " + str(e))
         WRITE_LOGFILE_SYSTEM("ERROR", "File | data/locations.ymal | " + str(e))
-
 
 
 """ ############## """
@@ -446,7 +443,6 @@ def DELETE_PLANTS_DATAFILE(filename):
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + filename + " | " + str(e))  
         return(e)
-
 
 
 """ ################################ """

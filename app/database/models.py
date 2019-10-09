@@ -3,8 +3,8 @@ from flask_login import UserMixin
 
 
 from app                         import app
+from app.backend.file_management import *
 from app.common                  import COMMON, STATUS, DATATYPE
-from app.backend.file_management import WRITE_LOGFILE_SYSTEM, WRITE_PLANTS_DATAFILE, CREATE_PLANTS_DATAFILE, RENAME_PLANTS_DATAFILE, DELETE_PLANTS_DATAFILE
 
 import datetime
 import re
@@ -245,7 +245,7 @@ db.create_all()
 
 
 # create default email
-if eMail.query.filter_by().first() is None:
+if eMail.query.filter_by().first() == None:
     email = eMail(
         id = 1,
     )
@@ -254,29 +254,12 @@ if eMail.query.filter_by().first() is None:
 
 
 # create default host settings
-if Host.query.filter_by().first() is None:
+if Host.query.filter_by().first() == None:
     host = Host(
     )
     db.session.add(host)
     db.session.commit()
-
-
-# add default led scenes
-for i in range(1,11):
-    if LED_Scenes.query.filter_by(id=i).first():
-        pass
-    else:
-        scene = LED_Scenes(
-                id           = i,
-                name         = "default_scene_" + str(i),
-                red_1        = 255, 
-                green_1      = 255, 
-                blue_1       = 255,   
-                brightness_1 = 255,                                                   
-            )
-        db.session.add(scene)
-        db.session.commit()
-        
+   
 
 # create system scheduler jobs
 job_update_devices_founded  = False
@@ -325,7 +308,6 @@ if User.query.filter_by(username='admin').first() is None:
         password           = "sha256$OeDkVenT$bc8d974603b713097e69fc3efa1132991bfb425c59ec00f207e4b009b91f4339",    
         email_notification = "True"
     )           
-    
     db.session.add(user)
     db.session.commit()
 
@@ -379,13 +361,11 @@ def ADD_CONTROLLER(device_ieeeAddr):
                 
                 controller_name = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
 
-                WRITE_LOGFILE_SYSTEM("DATABASE", "Controller - " + controller_name + " | added")  
-
+                WRITE_LOGFILE_SYSTEM("DATABASE", "Controller - " + controller_name + " | Added")  
                 return True
 
 
 def UPDATE_CONTROLLER_EVENTS(): 
-    
     for controller in GET_ALL_CONTROLLER():
     
         device_input_events = GET_DEVICE_BY_IEEEADDR(controller.device_ieeeAddr).input_events
@@ -480,11 +460,13 @@ def SET_CONTROLLER_TASKS(id, task_1 = "", task_2 = "", task_3 = "", task_4 = "",
         entry.task_9 = task_9               
         db.session.commit() 
 
+        controller_name = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Controller - " + controller_name + " | Changed")  
         return True
 
 
 def CHANGE_CONTROLLER_POSITION(id, direction):
-    
     if direction == "up":
         controller_list = GET_ALL_CONTROLLER()
         controller_list = controller_list[::-1]
@@ -503,8 +485,7 @@ def CHANGE_CONTROLLER_POSITION(id, direction):
                 
                 controller_2.id = id
                 controller_1.id = new_id
-                db.session.commit()
-                
+                db.session.commit()     
                 return 
 
     if direction == "down":
@@ -521,8 +502,7 @@ def CHANGE_CONTROLLER_POSITION(id, direction):
                 
                 controller_2.id = id
                 controller_1.id = new_id
-                db.session.commit()
-                
+                db.session.commit()     
                 return 
 
 
@@ -773,7 +753,6 @@ def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting, exceptio
 
     
 def CHANGE_DEVICE_POSITION(id, direction):
-    
     if direction == "up":
         device_list = GET_ALL_DEVICES("")
         device_list = device_list[::-1]
@@ -827,8 +806,6 @@ def DELETE_DEVICE(ieeeAddr):
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
             error_list = error_list + "," + device.name + " eingetragen in Bewässung"
     
-
-    """
     # check scheduler sensor
     entries = GET_ALL_SCHEDULER_TASKS()
     for entry in entries:
@@ -836,6 +813,8 @@ def DELETE_DEVICE(ieeeAddr):
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
             error_list = error_list + "," + device.name + " eingetragen in Aufgabenplanung"
     
+
+    """
     # check sensordata
     entries = GET_ALL_SENSORDATA_JOBS()
     for entry in entries:
@@ -882,7 +861,6 @@ def DELETE_DEVICE(ieeeAddr):
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
             error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"            
         
-
     if error_list != "":
         return error_list[1:]   
                
@@ -898,8 +876,7 @@ def DELETE_DEVICE(ieeeAddr):
             Devices.query.filter_by(ieeeAddr=ieeeAddr).delete()
             db.session.commit() 
             
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + device_name + " | deleted")
-                        
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + device_name + " | deleted")                      
             return True
 
         except Exception as e:
@@ -944,8 +921,7 @@ def SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password
         entry.password       = password
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "eMail | Server Settings | changed")
-        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "eMail | Server Settings | changed") 
         return True
 
 
@@ -1302,7 +1278,6 @@ def REMOVE_LED_GROUP_OBJECT(id):
 
 
 def CHANGE_LED_GROUPS_POSITION(id, direction):
-    
     if direction == "up":
         groups_list = GET_ALL_LED_GROUPS()
         groups_list = groups_list[::-1]
@@ -1321,8 +1296,7 @@ def CHANGE_LED_GROUPS_POSITION(id, direction):
                 
                 group_2.id = id
                 group_1.id = new_id
-                db.session.commit()
-                
+                db.session.commit()           
                 return 
 
     if direction == "down":
@@ -1339,8 +1313,7 @@ def CHANGE_LED_GROUPS_POSITION(id, direction):
                 
                 group_2.id = id
                 group_1.id = new_id
-                db.session.commit()
-                
+                db.session.commit()           
                 return 
 
 
@@ -1378,6 +1351,29 @@ def GET_LED_SCENE_BY_NAME(name):
         if scene.name.lower() == name.lower():
             return scene    
             
+
+def ADD_LED_SCENE():
+    for i in range(1,11):
+        if LED_Scenes.query.filter_by(id=i).first():
+            pass
+        else:
+            # add the new scene
+            scene = LED_Scenes(
+                    id           = i,
+                    name         = "new_scene_" + str(i),
+                    red_1        = 255,
+                    green_1      = 255,
+                    blue_1       = 255, 
+                    brightness_1 = 255,                                
+                )
+            db.session.add(scene)
+            db.session.commit()
+
+            WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + "new_scene_" + str(i) + " | added")  
+            return True
+
+    return "Szenenlimit erreicht (10)"
+
 
 def SET_LED_SCENE(id, name, red_1, green_1, blue_1, brightness_1, red_2, green_2, blue_2, brightness_2, red_3, green_3, blue_3, brightness_3, 
                             red_4, green_4, blue_4, brightness_4, red_5, green_5, blue_5, brightness_5, red_6, green_6, blue_6, brightness_6, 
@@ -1450,6 +1446,7 @@ def ADD_LED_SCENE_OBJECT(id):
         entry.brightness_2     = 255                  
         db.session.commit()
         return
+
     if entry.active_led_3 != "True":
         entry.active_led_3 = "True"     
         entry.red_3            = 255
@@ -1458,6 +1455,7 @@ def ADD_LED_SCENE_OBJECT(id):
         entry.brightness_3     = 255               
         db.session.commit()
         return
+
     if entry.active_led_4 != "True":
         entry.active_led_4 = "True"   
         entry.red_4            = 255
@@ -1466,6 +1464,7 @@ def ADD_LED_SCENE_OBJECT(id):
         entry.brightness_4     = 255             
         db.session.commit()
         return
+
     if entry.active_led_5 != "True":
         entry.active_led_5 = "True"  
         entry.red_5            = 255
@@ -1474,6 +1473,7 @@ def ADD_LED_SCENE_OBJECT(id):
         entry.brightness_5     = 255                 
         db.session.commit()
         return
+
     if entry.active_led_6 != "True":
         entry.active_led_6 = "True"   
         entry.red_6            = 255
@@ -1482,6 +1482,7 @@ def ADD_LED_SCENE_OBJECT(id):
         entry.brightness_6     = 255      
         db.session.commit()
         return
+
     if entry.active_led_7 != "True":
         entry.active_led_7 = "True"  
         entry.red_7            = 255
@@ -1490,6 +1491,7 @@ def ADD_LED_SCENE_OBJECT(id):
         entry.brightness_7     = 255   
         db.session.commit()
         return
+
     if entry.active_led_8 != "True":
         entry.active_led_8 = "True"     
         entry.red_8            = 255
@@ -1497,7 +1499,8 @@ def ADD_LED_SCENE_OBJECT(id):
         entry.blue_8           = 255     
         entry.brightness_8     = 255           
         db.session.commit()
-        return       
+        return    
+
     if entry.active_led_9 != "True":
         entry.active_led_9 = "True"
         entry.red_9            = 255
@@ -1606,7 +1609,6 @@ def RESET_LED_SCENE_COLLAPSE():
 
 
 def CHANGE_LED_SCENES_POSITION(id, direction):
-    
     if direction == "up":
         scenes_list = GET_ALL_LED_SCENES()
         scenes_list = scenes_list[::-1]
@@ -1625,8 +1627,7 @@ def CHANGE_LED_SCENES_POSITION(id, direction):
                 
                 scene_2.id = id
                 scene_1.id = new_id
-                db.session.commit()
-                
+                db.session.commit()     
                 return 
 
     if direction == "down":
@@ -1643,33 +1644,20 @@ def CHANGE_LED_SCENES_POSITION(id, direction):
                 
                 scene_2.id = id
                 scene_1.id = new_id
-                db.session.commit()
-                
+                db.session.commit()          
                 return 
 
 
-def RESET_LED_SCENE(id):
+def DELETE_LED_SCENE(id):
     name = GET_LED_SCENE_BY_ID(id).name
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + name + " | reseted") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + name + " | deleted") 
     except:
         pass 
 
     LED_Scenes.query.filter_by(id=id).delete()
     db.session.commit() 
-
-    # replace old scene
-    scene = LED_Scenes(
-            id           = id,
-            name         = "default_scene_" + str(id),
-            red_1        = 255, 
-            green_1      = 255, 
-            blue_1       = 255,   
-            brightness_1 = 255,                                                   
-        )
-    db.session.add(scene)
-    db.session.commit()
     return True
 
 
@@ -1798,7 +1786,6 @@ def SET_PLANT_PUMP_DURATION_MANUALLY(id, pump_duration_manually):
 
 
 def CHANGE_PLANTS_POSITION(id, direction):
-    
     if direction == "up":
         plants_list = GET_ALL_PLANTS()
         plants_list = plants_list[::-1]
@@ -1817,8 +1804,7 @@ def CHANGE_PLANTS_POSITION(id, direction):
                 
                 plant_2.id = id
                 plant_1.id = new_id
-                db.session.commit()
-                
+                db.session.commit()        
                 return 
 
     if direction == "down":
@@ -1835,8 +1821,7 @@ def CHANGE_PLANTS_POSITION(id, direction):
                 
                 plant_2.id = id
                 plant_1.id = new_id
-                db.session.commit()
-                
+                db.session.commit()     
                 return 
 
 
@@ -2123,8 +2108,7 @@ def CHANGE_SCHEDULER_TASKS_POSITION(id, direction):
                 
                 task_2.id = id
                 task_1.id = new_id
-                db.session.commit()
-                
+                db.session.commit()         
                 return 
 
     if direction == "down":
@@ -2141,8 +2125,7 @@ def CHANGE_SCHEDULER_TASKS_POSITION(id, direction):
                 
                 task_2.id = id
                 task_1.id = new_id
-                db.session.commit()
-                
+                db.session.commit()      
                 return 
        
        
@@ -2177,7 +2160,6 @@ def DELETE_SCHEDULER_TASK(task_id):
     
     Scheduler_Tasks.query.filter_by(id=task_id).delete()
     db.session.commit()
-
     return True
 
 
@@ -2256,7 +2238,6 @@ def CHANGE_USER_PASSWORD(id, hashed_password):
         db.session.commit()
         
         WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + entry.username + " | Password changed")
-
         return True
     
 
