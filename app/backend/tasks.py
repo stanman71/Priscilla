@@ -5,7 +5,7 @@ from app.backend.mqtt                   import *
 from app.backend.file_management        import BACKUP_DATABASE, WRITE_LOGFILE_SYSTEM
 from app.backend.process_program        import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD, GET_PROGRAM_RUNNING
 #from app.backend.microphone_led_control import MICROPHONE_LED_CONTROL
-from app.backend.backend_spotify        import *
+from app.backend.spotify                import *
 from app.backend.shared_resources       import mqtt_message_queue
 
 from difflib import SequenceMatcher

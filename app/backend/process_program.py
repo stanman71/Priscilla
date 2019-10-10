@@ -6,9 +6,10 @@ import spotipy
 from app                          import app
 from app.database.models          import *
 from app.backend.file_management  import *
-from app.backend.shared_resources import process_management_queue
+from app.backend.shared_resources import mqtt_message_queue
 from app.backend.mqtt             import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD
-from app.backend.backend_spotify  import *
+from app.backend.led              import SET_LED_GROUP_SCENE, SET_LED_GROUP_TURN_OFF, CHECK_LED_GROUP_SETTING_THREAD
+from app.backend. spotify         import *
 
 
 program_running = None
@@ -19,19 +20,30 @@ repeat_program  = False
 def START_PROGRAM_THREAD(program_id):
     global program_running
 
-    Thread = threading.Thread(target=PROGRAM_THREAD, args=(program_id, ))
-    Thread.start()    
+    try:
+        Thread = threading.Thread(target=PROGRAM_THREAD, args=(program_id, ))
+        Thread.start()    
+        
+        program_name = GET_PROGRAM_BY_ID(program_id).name
+        WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+        program_running = program_name
+        return True
     
-    program_name = GET_PROGRAM_BY_ID(program_id).name
-    WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
-    program_running = program_name
+    except Exception as e:
+        return e
     
     
 def STOP_PROGRAM_THREAD():
-    global stop_program, program_running, repeat_program
-    stop_program    = True
-    program_running = None
-    repeat_program  = False
+
+    try:
+        global stop_program, program_running, repeat_program
+        stop_program    = True
+        program_running = None
+        repeat_program  = False
+        return True
+
+    except Exception as e:
+        return e   
     
    
 def REPEAT_PROGRAM_THREAD():
@@ -114,7 +126,7 @@ def PROGRAM_THREAD(program_id):
                             time.sleep(int(line_content[1]))          
                             
                             
-                        #  device
+                        # device
 
                         if "device" in line[1]:
                                 
@@ -124,7 +136,7 @@ def PROGRAM_THREAD(program_id):
                                       
                                 device_name = line_content[1]    
                                 device      = ""
-                                device      = GET_MQTT_DEVICE_BY_NAME(device_name)
+                                device      = GET_DEVICE_BY_NAME(device_name)
                                 
                                 program_setting_formated = line_content[2]
                                  
@@ -159,111 +171,59 @@ def PROGRAM_THREAD(program_id):
 
                                     if new_setting == True: 
 
-                                        # mqtt
                                         if device.gateway == "mqtt":
+                                            channel = "miranda/mqtt/" + device.ieeeAddr + "/set"  
+                                        if device.gateway == "zigbee2mqtt":   
+                                            channel = "miranda/zigbee2mqtt/" + device.name + "/set"          
 
-                                            channel  = "miranda/mqtt/" + device.ieeeAddr + "/set"                  
-                                            msg      = program_setting
+                                        msg = program_setting
 
-                                            heapq.heappush(process_management_queue, (30,  ("program", "device", channel, msg))) 
-
-                                            CHECK_MQTT_SETTING_THREAD(device.ieeeAddr, program_setting, 5, 20)
-
-
-                                        # zigbee2mqtt
-                                        if device.gateway == "zigbee2mqtt":
-
-                                            channel  = "miranda/zigbee2mqtt/" + device.name + "/set"                  
-                                            msg      = program_setting
-
-                                            heapq.heappush(process_management_queue, (30,  ("program", "device", channel, msg)))
-
-                                            CHECK_ZIGBEE2MQTT_SETTING_THREAD(device.name, program_setting, 5, 20)      
-                                        
-                                            
+                                        heapq.heappush(mqtt_message_queue, (10, (channel, msg)))    
+                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_setting, 20)     
+                                                         
                                     else:
-
-                                        if device.gateway == "mqtt":
-                                            WRITE_LOGFILE_SYSTEM("STATUS", "MQTT | Device - " + device.name + " | " + program_setting_formated) 
-
-                                        if device.gateway == "zigbee2mqtt":
-                                            WRITE_LOGFILE_SYSTEM("STATUS", "Zigbee2MQTT | Device - " + device.name + " | " + program_setting_formated)                                     
-
+                                        WRITE_LOGFILE_SYSTEM("STATUS", "Devices | Device - " + device.name + " | " + program_setting)                                
 
                                 else:
                                     WRITE_LOGFILE_SYSTEM("WARNING", "Program - " + program_name + " | " + check_result)
                                 
-
                             except Exception as e:
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
                            
-       
-                        #  led
+
+                        # led 
                                  
-                        if "led" in line[1] and "led_group" not in line[1]:
+                        if "scene" in line[1]:
                                 
                             line_content = line[1].split(" /// ")
                             
                             try:
-                                led_name = line_content[1]    
-                                led_type = GET_MQTT_DEVICE_BY_NAME(led_name).device_type
-                                
-                                
-                                # setting led_rgb or led_white                      
-                                if (led_type == "led_rgb" or led_type == "led_white") and line_content[2] != "off" and line_content[2] != "OFF": 
-                                    
-                                    led_color_setting = line_content[2]
-                                    global_brightness = line_content[3]
-                                    led_brightness    = int((int(global_brightness)*254)/100)
-                                    
-                                    heapq.heappush(process_management_queue, (30,  ("program", led_type, led_name, led_color_setting, led_brightness)))
-                             
-                             
-                                # setting led_simple                           
-                                elif led_type == "led_simple" and line_content[2] != "off" and line_content[2] != "OFF":       
-                                            
-                                    global_brightness = line_content[2]
-                                    led_brightness    = int((int(global_brightness)*254)/100)
-                                    
-                                    heapq.heappush(process_management_queue, (30,  ("program", led_type, led_name, led_brightness)))                        
-                                 
-                                   
-                                # setting led turn_off   
-                                else:  
-                                        
-                                    heapq.heappush(process_management_queue, (30,  ("program", "turn_off", led_name)))                              
-                              
-                                
-                            except Exception as e:
-                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
-
-
-                        #  led group
-                                 
-                        if "led_group" in line[1]:
-                                
-                            line_content = line[1].split(" /// ")
-                            
-                            try:
-                                led_group_name = line_content[1]    
+                                group_name = line_content[1]    
                                 
                                 if line_content[2] != "off" and line_content[2] != "OFF":
 
-                                    group_scene       = line_content[2]
+                                    scene_name        = line_content[2]
                                     global_brightness = line_content[3]
-                                    
-                                    heapq.heappush(process_management_queue, (30,  ("program", "led_group", led_group_name, group_scene, int(global_brightness))))
-                                    
-                                if line_content[2] == "off" or line_content[2] == "OFF":
-                                                   
-                                    heapq.heappush(process_management_queue, (30,  ("program", "led_group", led_group_name, "turn_off")))                        
 
+                                    group = GET_LED_GROUP_BY_NAME(group_name)
+                                    scene = GET_LED_SCENE_BY_NAME(scene_name)
+
+                                    SET_LED_GROUP_SCENE(group.id, scene.id, int(global_brightness))
+                                    CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, global_brightness, 2, 10)
+
+                                if line_content[2] == "off" or line_content[2] == "OFF":
+
+                                    group = GET_LED_GROUP_BY_NAME(group_name)
+                                    scene = GET_LED_SCENE_BY_NAME(scene_name)
+                                                   
+                                    SET_LED_GROUP_TURN_OFF(group.id)
+                                    CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)                  
 
                             except Exception as e:
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
                                 
 
-                        #  spotify
+                        # spotify
 
                         if "spotify" in line[1]:
                                 

@@ -179,6 +179,51 @@ class Plants(db.Model):
     pump_duration_manually = db.Column(db.Integer)            
     moisture_level         = db.Column(db.String(50)) 
 
+class Programs(db.Model):
+    __tablename__ = 'programs'
+    id                = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name              = db.Column(db.String(50), unique = True)
+    line_active_1     = db.Column(db.String(50), server_default=("True"))
+    line_content_1    = db.Column(db.String(50), server_default=(""))
+    line_active_2     = db.Column(db.String(50), server_default=(""))
+    line_content_2    = db.Column(db.String(50), server_default=(""))
+    line_active_3     = db.Column(db.String(50), server_default=(""))
+    line_content_3    = db.Column(db.String(50), server_default=(""))
+    line_active_4     = db.Column(db.String(50), server_default=(""))
+    line_content_4    = db.Column(db.String(50), server_default=(""))
+    line_active_5     = db.Column(db.String(50), server_default=(""))
+    line_content_5    = db.Column(db.String(50), server_default=(""))
+    line_active_6     = db.Column(db.String(50), server_default=(""))
+    line_content_6    = db.Column(db.String(50), server_default=(""))
+    line_active_7     = db.Column(db.String(50), server_default=(""))
+    line_content_7    = db.Column(db.String(50), server_default=(""))
+    line_active_8     = db.Column(db.String(50), server_default=(""))
+    line_content_8    = db.Column(db.String(50), server_default=(""))
+    line_active_9     = db.Column(db.String(50), server_default=(""))
+    line_content_9    = db.Column(db.String(50), server_default=(""))
+    line_active_10    = db.Column(db.String(50), server_default=(""))
+    line_content_10   = db.Column(db.String(50), server_default=(""))
+    line_active_11    = db.Column(db.String(50), server_default=(""))
+    line_content_11   = db.Column(db.String(50), server_default=(""))
+    line_active_12    = db.Column(db.String(50), server_default=(""))
+    line_content_12   = db.Column(db.String(50), server_default=(""))
+    line_active_13    = db.Column(db.String(50), server_default=(""))
+    line_content_13   = db.Column(db.String(50), server_default=(""))
+    line_active_14    = db.Column(db.String(50), server_default=(""))
+    line_content_14   = db.Column(db.String(50), server_default=(""))
+    line_active_15    = db.Column(db.String(50), server_default=(""))
+    line_content_15   = db.Column(db.String(50), server_default=(""))
+    line_active_16    = db.Column(db.String(50), server_default=(""))
+    line_content_16   = db.Column(db.String(50), server_default=(""))
+    line_active_17    = db.Column(db.String(50), server_default=(""))
+    line_content_17   = db.Column(db.String(50), server_default=(""))
+    line_active_18    = db.Column(db.String(50), server_default=(""))
+    line_content_18   = db.Column(db.String(50), server_default=(""))
+    line_active_19    = db.Column(db.String(50), server_default=(""))
+    line_content_19   = db.Column(db.String(50), server_default=(""))
+    line_active_20    = db.Column(db.String(50), server_default=(""))
+    line_content_20   = db.Column(db.String(50), server_default=(""))
+
 class Scheduler_Tasks(db.Model):
     __tablename__ = 'scheduler_tasks'
     id                          = db.Column(db.Integer, primary_key=True, autoincrement = True)
@@ -1840,6 +1885,488 @@ def DELETE_PLANT(id):
 
     except Exception as e:
         return(e)
+
+
+""" ################### """
+""" ################### """
+"""       programs      """
+""" ################### """
+""" ################### """
+
+
+def GET_ALL_PROGRAMS():
+    return Programs.query.all()   
+
+
+def GET_PROGRAM_BY_NAME(name):
+    for program in Programs.query.all():
+        
+        if program.name.lower() == name.lower():
+            return program    
+    
+
+def GET_PROGRAM_BY_ID(id):
+    return Programs.query.filter_by(id=id).first()
+
+
+def ADD_PROGRAM():
+    for i in range(1,21):
+        if Programs.query.filter_by(id=i).first():
+            pass
+        else:
+            # add the new program
+            program = Programs(
+                    id = i,
+                    name = "new_program_" + str(i), 
+                )
+            db.session.add(program)
+            db.session.commit()
+
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Program - " + "new_program_" + str(i) + " | added")  
+
+            return True
+
+    return "Programmlimit erreicht (20)"
+
+
+def SET_PROGRAM_SETTINGS(id, name, line_content_1,  line_content_2,  line_content_3,  line_content_4,  line_content_5, 
+                                   line_content_6,  line_content_7,  line_content_8,  line_content_9,  line_content_10,
+                                   line_content_11, line_content_12, line_content_13, line_content_14, line_content_15, 
+                                   line_content_16, line_content_17, line_content_18, line_content_19, line_content_20): 
+
+    entry = Programs.query.filter_by(id=id).first()
+
+    if (entry.name != name  or entry.line_content_1  != line_content_1  or entry.line_content_2  != line_content_2  or 
+                               entry.line_content_3  != line_content_3  or entry.line_content_4  != line_content_4  or 
+                               entry.line_content_5  != line_content_5  or entry.line_content_6  != line_content_6  or 
+                               entry.line_content_7  != line_content_7  or entry.line_content_8  != line_content_8  or 
+                               entry.line_content_9  != line_content_9  or entry.line_content_10 != line_content_10 or 
+                               entry.line_content_11 != line_content_11 or entry.line_content_12 != line_content_12 or
+                               entry.line_content_13 != line_content_13 or entry.line_content_14 != line_content_14 or
+                               entry.line_content_15 != line_content_15 or entry.line_content_16 != line_content_16 or
+                               entry.line_content_17 != line_content_17 or entry.line_content_18 != line_content_18 or 
+                               entry.line_content_19 != line_content_19 or entry.line_content_20 != line_content_20):
+
+        entry.name            = name 
+        entry.line_content_1  = line_content_1 
+        entry.line_content_2  = line_content_2 
+        entry.line_content_3  = line_content_3 
+        entry.line_content_4  = line_content_4 
+        entry.line_content_5  = line_content_5 
+        entry.line_content_6  = line_content_6 
+        entry.line_content_7  = line_content_7 
+        entry.line_content_8  = line_content_8 
+        entry.line_content_9  = line_content_9 
+        entry.line_content_10 = line_content_10 
+        entry.line_content_11 = line_content_11 
+        entry.line_content_12 = line_content_12 
+        entry.line_content_13 = line_content_13 
+        entry.line_content_14 = line_content_14 
+        entry.line_content_15 = line_content_15 
+        entry.line_content_16 = line_content_16 
+        entry.line_content_17 = line_content_17 
+        entry.line_content_18 = line_content_18 
+        entry.line_content_19 = line_content_19 
+        entry.line_content_20 = line_content_20 
+        db.session.commit()
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Program - " + entry.name + " | changed")  
+        return True
+
+
+def ADD_PROGRAM_LINE(id):
+    entry = Programs.query.filter_by(id=id).first()
+
+    if entry.line_active_2 != "True":
+        entry.line_active_2 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_3 != "True":
+        entry.line_active_3 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_4 != "True":
+        entry.line_active_4 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_5 != "True":
+        entry.line_active_5 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_6 != "True":
+        entry.line_active_6 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_7 != "True":
+        entry.line_active_7 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_8 != "True":
+        entry.line_active_8 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_9 != "True":
+        entry.line_active_9 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_10 != "True":
+        entry.line_active_10 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_11 != "True":
+        entry.line_active_11 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_12 != "True":
+        entry.line_active_12 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_13 != "True":
+        entry.line_active_13 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_14 != "True":
+        entry.line_active_14 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_15 != "True":
+        entry.line_active_15 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_16 != "True":
+        entry.line_active_16 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_17 != "True":
+        entry.line_active_17 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_18 != "True":
+        entry.line_active_18 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_19 != "True":
+        entry.line_active_19 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_20 != "True":
+        entry.line_active_20 = "True"
+        db.session.commit()
+        return
+
+
+def REMOVE_PROGRAM_LINE(id):
+    entry = Programs.query.filter_by(id=id).first()
+
+    if entry.line_active_20 == "True":
+        entry.line_active_20    = ""
+        entry.line_content_20   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_19 == "True":
+        entry.line_active_19    = ""
+        entry.line_content_19   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_18 == "True":
+        entry.line_active_18    = ""
+        entry.line_content_18   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_17 == "True":
+        entry.line_active_17    = ""
+        entry.line_content_17   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_16 == "True":
+        entry.line_active_16    = ""
+        entry.line_content_16   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_15 == "True":
+        entry.line_active_15    = ""
+        entry.line_content_15   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_14 == "True":
+        entry.line_active_14    = ""
+        entry.line_content_14   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_13 == "True":
+        entry.line_active_13    = ""
+        entry.line_content_13   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_12 == "True":
+        entry.line_active_12    = ""
+        entry.line_content_12   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_11 == "True":
+        entry.line_active_11    = ""
+        entry.line_content_11   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_10 == "True":
+        entry.line_active_10    = ""
+        entry.line_content_10   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_9 == "True":
+        entry.line_active_9    = ""
+        entry.line_content_9   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_8 == "True":
+        entry.line_active_8    = ""
+        entry.line_content_8   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_7 == "True":
+        entry.line_active_7    = ""
+        entry.line_content_7   = ""
+        entry.line_exception_7 = ""
+        db.session.commit()
+        return 
+    if entry.line_active_6 == "True":
+        entry.line_active_6    = ""
+        entry.line_content_6   = ""
+        db.session.commit()
+        return
+    if entry.line_active_5 == "True":
+        entry.line_active_5    = ""
+        entry.line_content_5   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_4 == "True":
+        entry.line_active_4    = ""
+        entry.line_content_4   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_3 == "True":
+        entry.line_active_3    = ""
+        entry.line_content_3   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_2 == "True":
+        entry.line_active_2    = ""
+        entry.line_content_2   = ""
+        db.session.commit()
+        return 
+
+
+def CHANGE_PROGRAMS_LINE_POSITION(id, line, direction):
+    entry = Programs.query.filter_by(id=id).first()
+
+    if direction == "up":
+
+        if line == 2:
+            line_content_temp      = entry.line_content_1
+            entry.line_content_1   = entry.line_content_2
+            entry.line_content_2   = line_content_temp
+            db.session.commit()
+        if line == 3:
+            line_content_temp      = entry.line_content_2
+            entry.line_content_2   = entry.line_content_3
+            entry.line_content_3   = line_content_temp
+            db.session.commit()
+        if line == 4:
+            line_content_temp      = entry.line_content_3
+            entry.line_content_3   = entry.line_content_4
+            entry.line_content_4   = line_content_temp
+            db.session.commit()
+        if line == 5:
+            line_content_temp      = entry.line_content_4
+            entry.line_content_4   = entry.line_content_5
+            entry.line_content_5   = line_content_temp
+            db.session.commit()
+        if line == 6:
+            line_content_temp      = entry.line_content_5
+            entry.line_content_5   = entry.line_content_6
+            entry.line_content_6   = line_content_temp
+            db.session.commit()
+        if line == 7:
+            line_content_temp      = entry.line_content_6
+            entry.line_content_6   = entry.line_content_7
+            entry.line_content_7   = line_content_temp
+            db.session.commit()
+        if line == 8:
+            line_content_temp      = entry.line_content_7
+            entry.line_content_7   = entry.line_content_8
+            entry.line_content_8   = line_content_temp
+            db.session.commit()
+        if line == 9:
+            line_content_temp      = entry.line_content_8
+            entry.line_content_8   = entry.line_content_9
+            entry.line_content_9   = line_content_temp
+            db.session.commit()
+        if line == 10:
+            line_content_temp       = entry.line_content_9
+            entry.line_content_9    = entry.line_content_10
+            entry.line_content_10   = line_content_temp
+            db.session.commit()
+        if line == 11:
+            line_content_temp       = entry.line_content_10
+            entry.line_content_10   = entry.line_content_11
+            entry.line_content_11   = line_content_temp
+            db.session.commit()
+        if line == 12:
+            line_content_temp       = entry.line_content_11
+            entry.line_content_11   = entry.line_content_12
+            entry.line_content_12   = line_content_temp
+            db.session.commit()
+        if line == 13:
+            line_content_temp       = entry.line_content_12
+            entry.line_content_12   = entry.line_content_13
+            entry.line_content_13   = line_content_temp
+            db.session.commit()
+        if line == 14:
+            line_content_temp       = entry.line_content_13
+            entry.line_content_13   = entry.line_content_14
+            entry.line_content_14   = line_content_temp
+            db.session.commit()
+        if line == 15:
+            line_content_temp       = entry.line_content_14
+            entry.line_content_14   = entry.line_content_15
+            entry.line_content_15   = line_content_temp
+            db.session.commit()
+        if line == 16:
+            line_content_temp       = entry.line_content_15
+            entry.line_content_15   = entry.line_content_16
+            entry.line_content_16   = line_content_temp
+            db.session.commit()
+        if line == 17:
+            line_content_temp       = entry.line_content_16
+            entry.line_content_16   = entry.line_content_17
+            entry.line_content_17   = line_content_temp
+            db.session.commit()
+        if line == 18:
+            line_content_temp       = entry.line_content_17
+            entry.line_content_17   = entry.line_content_18
+            entry.line_content_18   = line_content_temp
+            db.session.commit()
+        if line == 19:
+            line_content_temp       = entry.line_content_18
+            entry.line_content_18   = entry.line_content_19
+            entry.line_content_19   = line_content_temp
+            db.session.commit()
+        if line == 20:
+            line_content_temp       = entry.line_content_19
+            entry.line_content_19   = entry.line_content_20
+            entry.line_content_20   = line_content_temp
+            db.session.commit()
+
+    if direction == "down":
+
+        if line == 1 and entry.line_active_2 == "True":
+            line_content_temp      = entry.line_content_2
+            entry.line_content_2   = entry.line_content_1
+            entry.line_content_1   = line_content_temp 
+            db.session.commit()
+        if line == 2 and entry.line_active_3 == "True":
+            line_content_temp      = entry.line_content_3
+            entry.line_content_3   = entry.line_content_2
+            entry.line_content_2   = line_content_temp 
+            db.session.commit()
+        if line == 3 and entry.line_active_4 == "True":
+            line_content_temp      = entry.line_content_4
+            entry.line_content_4   = entry.line_content_3
+            entry.line_content_3   = line_content_temp 
+            db.session.commit()
+        if line == 4 and entry.line_active_5 == "True":
+            line_content_temp      = entry.line_content_5
+            entry.line_content_5   = entry.line_content_4
+            entry.line_content_4   = line_content_temp 
+            db.session.commit()
+        if line == 5 and entry.line_active_6 == "True":
+            line_content_temp      = entry.line_content_6
+            entry.line_content_6   = entry.line_content_5
+            entry.line_content_5   = line_content_temp 
+            db.session.commit()
+        if line == 6 and entry.line_active_7 == "True":
+            line_content_temp      = entry.line_content_7
+            entry.line_content_7   = entry.line_content_6
+            entry.line_content_6   = line_content_temp 
+            db.session.commit()
+        if line == 7 and entry.line_active_8 == "True":
+            line_content_temp      = entry.line_content_8
+            entry.line_content_8   = entry.line_content_7
+            entry.line_content_7   = line_content_temp 
+            db.session.commit()
+        if line == 8 and entry.line_active_9 == "True":
+            line_content_temp      = entry.line_content_9
+            entry.line_content_9   = entry.line_content_8
+            entry.line_content_8   = line_content_temp 
+            db.session.commit()
+        if line == 9 and entry.line_active_10 == "True":
+            line_content_temp      = entry.line_content_10
+            entry.line_content_10  = entry.line_content_9
+            entry.line_content_9   = line_content_temp 
+            db.session.commit()
+        if line == 10 and entry.line_active_11 == "True":
+            line_content_temp      = entry.line_content_11
+            entry.line_content_11  = entry.line_content_10
+            entry.line_content_10   = line_content_temp 
+            db.session.commit()
+        if line == 11 and entry.line_active_12 == "True":
+            line_content_temp      = entry.line_content_12
+            entry.line_content_12  = entry.line_content_11
+            entry.line_content_11   = line_content_temp 
+            db.session.commit()
+        if line == 12 and entry.line_active_13 == "True":
+            line_content_temp      = entry.line_content_13
+            entry.line_content_13  = entry.line_content_12
+            entry.line_content_12   = line_content_temp 
+            db.session.commit()
+        if line == 13 and entry.line_active_14 == "True":
+            line_content_temp      = entry.line_content_14
+            entry.line_content_14  = entry.line_content_13
+            entry.line_content_13   = line_content_temp 
+            db.session.commit()
+        if line == 14 and entry.line_active_15 == "True":
+            line_content_temp      = entry.line_content_15
+            entry.line_content_15  = entry.line_content_14
+            entry.line_content_14   = line_content_temp 
+            db.session.commit()
+        if line == 15 and entry.line_active_16 == "True":
+            line_content_temp      = entry.line_content_16
+            entry.line_content_16  = entry.line_content_15
+            entry.line_content_15   = line_content_temp 
+            db.session.commit()
+        if line == 16 and entry.line_active_17 == "True":
+            line_content_temp      = entry.line_content_17
+            entry.line_content_17  = entry.line_content_16
+            entry.line_content_16   = line_content_temp 
+            db.session.commit()
+        if line == 17 and entry.line_active_18 == "True":
+            line_content_temp      = entry.line_content_18
+            entry.line_content_18  = entry.line_content_17
+            entry.line_content_17   = line_content_temp 
+            db.session.commit()
+        if line == 18 and entry.line_active_19 == "True":
+            line_content_temp      = entry.line_content_19
+            entry.line_content_19  = entry.line_content_18
+            entry.line_content_18   = line_content_temp 
+            db.session.commit()
+        if line == 19 and entry.line_active_20 == "True":
+            line_content_temp      = entry.line_content_20
+            entry.line_content_20  = entry.line_content_19
+            entry.line_content_19   = line_content_temp 
+            db.session.commit()
+
+
+def DELETE_PROGRAM(id):
+    name = Programs.query.filter_by(id=id).first().name
+    
+    try:
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Program - " + name + " | deleted")  
+    except:
+        pass 
+
+    Programs.query.filter_by(id=id).delete()
+    db.session.commit() 
+    return True
 
 
 """ ################## """

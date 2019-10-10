@@ -1,0 +1,588 @@
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title"><b>Programme</b></h4>
+              </div>
+            </div>
+
+
+<!----------------->
+<!-- ADD PROGRAM -->
+<!----------------->
+
+<!-- success message add program -->
+
+{% if success_message_add_program == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Programm erfolgreich hinzugefügt</span>
+  </div>
+{% endif %}  
+
+<!-- error message add program --> 
+
+{% if error_message_add_program != [] %}
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+    {% for error in error_message_add_program %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+
+            <div class="card">
+              <form method="POST">         
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/programs#'" name="add_program" class="btn btn-fill btn-primary">NEW PROGRAM</button>
+                </div>
+              </form>
+            </div>
+
+<!--------------------->
+<!-- PROGRAMS TABLE  -->
+<!--------------------->   
+
+<!-- success message change settings -->
+
+{% if success_message_change_settings != [] %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for success in success_message_change_settings %}
+      <span data-notify="message">{{ success }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+<!-- error message change settings -->
+
+{% if error_message_change_settings != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_change_settings %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+
+            <div class="card ">
+              <form method="POST">                  
+                <div class="card-footer">  
+                  <div class="row justify-content-md-left">
+                    <div class="col-sm-3">                     
+                      <select class="form-control" data-size="5" name="select_program" style="background-color:#27293D"> 
+                        {% for each in dropdown_list_programs %}
+                          {% if each != None %}
+                          <option value="{{each.name}}">{{each.name}}</option>
+                          {% endif %}
+                        {% endfor %}       
+                      </select>      
+                    </div>
+                  </div>  
+                  <br>                              
+                  <button type="submit" onclick="window.location.href='/programs#'" name="open_program" class="btn btn-fill btn-primary">OPEN</button>          
+                </div>
+              </form>
+            </div>
+
+
+{% if selected_program != "" %}
+  
+<section id="selected_program"></section>
+
+<!-- success message change settings program -->
+
+{% if success_message_change_settings_program != [] %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for success in success_message_change_settings_program %}
+      <span data-notify="message">{{ success }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+<!-- error message change settings led scene -->
+
+{% if error_message_change_settings_program != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_change_settings_program %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+            <div class="card ">         
+              <form method="POST">                  
+                <div class="card-body">  
+                  <div class="row justify-content-md-left">
+                    <div class="col-sm-1">            
+                      <div class="row justify-content-md-center">
+                        <div class="col-sm-6">                            
+                          <a href="/programs/add_line/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-simple-add"></i></font></a>     
+                        </div>
+                        <div class="col-sm-6">   
+                          <a href="/programs/remove_line/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-simple-delete"></i></font></a> 
+                        </div> 
+                      </div> 
+                    </div> 
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" name="set_name_{{ selected_program.id }}" value="{% if selected_program.name != None %}{{ selected_program.name }}{% endif %}" />
+                    </div>  
+                    <div class="col-sm-8"></div>    
+                  </div>   
+                  <br>
+                  <br>
+ 
+<!-- start program lines -->
+
+                  <div class="row justify-content-md-left">
+                    <div class="col-sm-1">        
+                      <div class="row justify-content-md-center">
+                        <div class="col-sm-6">                            
+                          <a href="/programs/position/up/1/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                        </div>
+                        <div class="col-sm-6">   
+                          <a href="/programs/position/down/1/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                        </div> 
+                      </div> 
+                    </div> 
+                    <div class="col-sm-11">  
+                      <input type="text" class="form-control" name="set_line_content_1_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_1 != None %}"{{ selected_program.line_content_1 }}"{% endif %} />
+                    </div>   
+                  </div>           
+                
+                  {% if selected_program.line_active_2 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/2/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/2/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_2_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_2 != None %}"{{ selected_program.line_content_2 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+                  
+                  {% if selected_program.line_active_3 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/3/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/3/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_3_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_3 != None %}"{{ selected_program.line_content_3 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                  {% if selected_program.line_active_4 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/4/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/4/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_4_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_4 != None %}"{{ selected_program.line_content_4 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                  {% if selected_program.line_active_5 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/5/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/5/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_5_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_5 != None %}"{{ selected_program.line_content_5 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                  {% if selected_program.line_active_6 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/6/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/6/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_6_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_6 != None %}"{{ selected_program.line_content_6 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+                      
+                  {% if selected_program.line_active_7 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/7/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/7/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_7_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_7 != None %}"{{ selected_program.line_content_7 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+                  
+                  {% if selected_program.line_active_8 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/8/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/8/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_8_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_8 != None %}"{{ selected_program.line_content_8 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                  {% if selected_program.line_active_9 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/9/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/9/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_9_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_9 != None %}"{{ selected_program.line_content_9 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                  {% if selected_program.line_active_10 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/10/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/10/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_10_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_10 != None %}"{{ selected_program.line_content_10 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                  {% if selected_program.line_active_11 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/11/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/11/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_11_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_11 != None %}"{{ selected_program.line_content_11 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                  {% if selected_program.line_active_12 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/12/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/12/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_12_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_12 != None %}"{{ selected_program.line_content_12 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+                  
+                  {% if selected_program.line_active_13 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/13/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/13/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_13_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_13 != None %}"{{ selected_program.line_content_13 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                  {% if selected_program.line_active_14 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/14/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/14/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_14_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_14 != None %}"{{ selected_program.line_content_14 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                  {% if selected_program.line_active_15 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/15/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/15/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_15_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_15 != None %}"{{ selected_program.line_content_15 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                  {% if selected_program.line_active_16 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/16/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/16/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_16_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_16 != None %}"{{ selected_program.line_content_16 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+                  
+                  {% if selected_program.line_active_17 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/17/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/17/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_17_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_17 != None %}"{{ selected_program.line_content_17 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                  {% if selected_program.line_active_18 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/18/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/18/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_18_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_18 != None %}"{{ selected_program.line_content_18 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                  {% if selected_program.line_active_19 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/19/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/19/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_19_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_19 != None %}"{{ selected_program.line_content_19 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                  {% if selected_program.line_active_20 == "True" %}
+                  
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-1">   
+                        <div class="row justify-content-md-center">
+                          <div class="col-sm-6">                            
+                            <a href="/programs/position/up/20/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>
+                          </div>
+                          <div class="col-sm-6">   
+                            <a href="/programs/position/down/20/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a>  
+                          </div> 
+                        </div> 
+                      </div> 
+                      <div class="col-sm-11">  
+                        <input type="text" class="form-control" name="set_line_content_20_{{ selected_program.id }}"
+                        value = {% if selected_program.line_content_20 != None %}"{{ selected_program.line_content_20 }}"{% endif %} >
+                      </div>
+                    </div>
+
+                  {% endif %} 
+
+                </div>            
+                <div class="card-footer">                   
+                  <button type="submit" onclick="window.location.href='/programs#selected_program'" name="save_program_settings" class="btn btn-fill btn-primary">SAVE</button>
+
+                  <button type="submit" onclick="window.location.href='/programs#selected_program'" name="start_program_{{ selected_program.id }}" class="btn btn-fill btn-info">START PROGRAM</button>
+                  <button type="submit" onclick="window.location.href='/programs#selected_program'" name="stop_program_{{ selected_program.id }}" class="btn btn-fill btn-info">STOP PROGRAM</button>
+            
+                  <button type="submit" onclick="window.location.href='/programs#'" name="delete_program_{{selected_program.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
+                </div>
+              </form>
+            </div>
+
+{% endif %}
+
+          </div>
+        </div>
+      </div>          
