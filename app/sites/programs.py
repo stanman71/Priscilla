@@ -6,6 +6,7 @@ from functools           import wraps
 from app                         import app
 from app.database.models         import *
 from app.backend.process_program import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD
+from app.backend.checks          import CHECK_PROGRAM
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
@@ -14,14 +15,14 @@ from app.assets                  import *
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -181,6 +182,12 @@ def programs():
 
     dropdown_list_programs = GET_ALL_PROGRAMS()
 
+    if selected_program != "":
+        error_message_program_tasks = CHECK_PROGRAM(selected_program.id)        
+    else:
+        error_message_program_tasks = []
+
+
     data = {'navigation': 'programs', 'notification': ''}    
 
     return render_template('layouts/default.html',
@@ -192,9 +199,9 @@ def programs():
                                                     error_message_change_settings=error_message_change_settings,
                                                     success_message_change_settings_program=success_message_change_settings_program,
                                                     error_message_change_settings_program=error_message_change_settings_program,
+                                                    error_message_program_tasks=error_message_program_tasks,
                                                     dropdown_list_programs=dropdown_list_programs,
                                                     selected_program=selected_program,
-
                                                     ) 
                            )
 
