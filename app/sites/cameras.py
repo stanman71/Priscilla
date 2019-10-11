@@ -260,32 +260,32 @@ def delete_camera(id):
 
 
 # camera streams
-@app.route('/data/cameras/video_feed_1')
+@app.route('/cameras/data/video_feed_1')
 def data_video_feed_1():
     return Response(GENERATE_FRAME(camera_1_url),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/data/cameras/video_feed_2')
+@app.route('/cameras/data/video_feed_2')
 def data_video_feed_2():
     return Response(GENERATE_FRAME(camera_2_url),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/data/cameras/video_feed_3')
+@app.route('/cameras/data/video_feed_3')
 def data_video_feed_3():
     return Response(GENERATE_FRAME(camera_3_url),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
                     
-@app.route('/data/cameras/video_feed_4')
+@app.route('/cameras/data/video_feed_4')
 def data_video_feed_4():
     return Response(GENERATE_FRAME(camera_4_url),
                     mimetype='multipart/x-mixed-replace; boundary=frame') 
  
-@app.route('/data/cameras/video_feed_5')
+@app.route('/cameras/data/video_feed_5')
 def data_video_feed_5():
     return Response(GENERATE_FRAME(camera_5_url),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/data/cameras/video_feed_6')
+@app.route('/cameras/data/video_feed_6')
 def data_video_feed_6():
     return Response(GENERATE_FRAME(camera_6_url),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
