@@ -600,7 +600,7 @@ def remove_device(ieeeAddr):
 @login_required
 @permission_required
 def download_devices_topology(filepath): 
-    path = GET_PATH() + "/data/"
+    path = GET_PATH() + "/app/static/temp/"
     
     if os.path.isfile(path + filepath) is False:
         return redirect(url_for('devices'))

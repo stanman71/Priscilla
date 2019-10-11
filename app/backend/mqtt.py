@@ -220,7 +220,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             from graphviz import Source, render
 
             src = Source(msg)
-            src.render(filename = GET_PATH() + '/data/zigbee_topology', format='png', cleanup=True) 
+            src.render(filename = GET_PATH() + '/app/static/temp/zigbee_topology', format='png', cleanup=True) 
                 
     except:
         

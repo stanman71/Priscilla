@@ -414,9 +414,8 @@ def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
 
 def READ_SENSORDATA_FILE(filename):
     try:
-        # open csv file with pandas
         file = PATH + "/data/csv/" + filename
-        
+
         df = pd.read_csv(file, sep = ",", skiprows = 1, names = ["Timestamp","Device","Sensor","Sensor_Value"])
         return df
 

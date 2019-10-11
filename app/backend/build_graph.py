@@ -11,7 +11,7 @@ from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 
 
-from app.components.file_management import GET_PATH
+from app.backend.file_management import GET_PATH
 
 
 def BUILD_GRAPH(df_sensors):
@@ -109,11 +109,9 @@ def BUILD_GRAPH(df_sensors):
 
 		plt.gcf().autofmt_xdate()
 				
-		plt.savefig(GET_PATH() + '/app/static/images/graph.png', transparent=True)
+		plt.savefig(GET_PATH() + '/app/static/temp/graph.png', transparent=True)
 		plt.close()
-		
 		return True   
 	
 	except Exception as e:
-		return ("Fehler in der Grapherstellung: " + str(e))
-
+		return ("ERROR | Create Graph | " + str(e))

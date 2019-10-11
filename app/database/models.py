@@ -2839,7 +2839,7 @@ def FIND_SENSORDATA_JOB_INPUT(incoming_ieeeAddr):
     list_jobs = []
 
     for entry in entries:
-        if entry.mqtt_device.ieeeAddr == incoming_ieeeAddr and entry.always_active == "checked":
+        if entry.device.ieeeAddr == incoming_ieeeAddr and entry.always_active == "True":
             list_jobs.append(entry.id)
 
     return list_jobs

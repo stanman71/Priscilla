@@ -1,0 +1,175 @@
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="card ">
+              <div class="card-footer">    
+                <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
+                  <a href="/sensordata/jobs" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Jobs</a>                
+                  <a href="/sensordata/statistics" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Statistiken</a>
+                </div>           
+              </div>  
+            </div>  
+
+<!---------------------->
+<!-- SELECT DATAFILES -->
+<!---------------------->
+
+<section id="select_datafiles"></section>    
+
+<!-- error message select datafiles -->
+
+{% if error_message_select_datafiles != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_select_datafiles %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}   
+
+            <div class="card">                
+              <form method="POST">         
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <select class="form-control" name="get_file_1" style="background-color:#27293D"> 
+                        {% if data_file_1 != "" %}
+                          <option value= "{{ data_file_1 }}" > {{ data_file_1 }} </option> 
+                        {% else %}                                                               
+                          <option value= "None" > None </option>                                                                          
+                        {% endif %}   
+                        <option disabled>------------------</option>
+                        {% for each in dropdown_list_sensordata_files %}
+                          {% if each != None %}
+                          <option value="{{ each }}">{{ each }}</option>
+                          {% endif %}
+                        {% endfor %}  
+                        <option disabled>------------------</option>  
+                        <option value= "None" > None </option> 
+                      </select>  
+                    </div>     
+                    <div class="col-md-4">
+                      <select class="form-control" name="get_file_2" style="background-color:#27293D"> 
+                        {% if data_file_2 != "" %}
+                          <option value= "{{ data_file_2 }}" > {{ data_file_2 }} </option> 
+                        {% else %}                                                               
+                          <option value= "None" > None </option>                                                                          
+                        {% endif %}   
+                        <option disabled>------------------</option>
+                        {% for each in dropdown_list_sensordata_files %}
+                          {% if each != None %}
+                          <option value="{{ each }}">{{ each }}</option>
+                          {% endif %}
+                        {% endfor %}  
+                        <option disabled>------------------</option>  
+                        <option value= "None" > None </option> 
+                      </select>  
+                    </div>     
+                    <div class="col-md-4">
+                      <select class="form-control" name="get_file_3" style="background-color:#27293D"> 
+                        {% if data_file_3 != "" %}
+                          <option value= "{{ data_file_3 }}" > {{ data_file_3 }} </option> 
+                        {% else %}                                                               
+                          <option value= "None" > None </option>                                                                          
+                        {% endif %}   
+                        <option disabled>------------------</option>
+                        {% for each in dropdown_list_sensordata_files %}
+                          {% if each != None %}
+                          <option value="{{ each }}">{{ each }}</option>
+                          {% endif %}
+                        {% endfor %}  
+                        <option disabled>------------------</option>  
+                        <option value= "None" > None </option> 
+                      </select>  
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/sensordata/statistics#select_datafiles'" name="select_datafiles" class="btn btn-fill btn-info">SELECT DATAFILES</button>
+                </div>
+              </div>
+
+<!------------------>
+<!-- CREATE GRAPH -->
+<!------------------>
+
+{% if data_file_1 != "" %}
+
+  <section id="create_graph"></section>    
+
+  <!-- error message create graph -->
+
+  {% if error_message_create_graph != [] %}
+    <div class="alert alert-danger">
+      <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="tim-icons icon-simple-remove"></i>
+      </button>
+      {% for error in error_message_create_graph %}
+        <span data-notify="message">{{ error }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}   
+
+              <div class="card">                      
+                <div class="card-body">
+                  <label>Geräte</label>
+                  <input type="text" class="form-control" name="set_devices" value="{% if devices != None %}{{ devices }}{% endif %}" /> 
+                  <br>
+                  <label>Sensoren</label>
+                  <input type="text" class="form-control" name="set_sensors" value="{% if sensors != None %}{{ sensors }}{% endif %}" /> 
+                  <br>
+                  <label>Zeitraum</label>
+                  <div class="row justify-content-md-center">
+                    <div class="col-sm-3">
+                      <select class="form-control" name="set_date_start" style="background-color:#27293D"> 
+                        <option value= "{{ date_start }}" > {{ date_start }} </option>
+                        <option disabled>------------------</option> 
+                        {% for each in dropdown_list_dates %}
+                          <option value="{{ each }}"> {{ each }} </option>
+                        {% endfor %}                          
+                      </select>        
+                    </div> 
+                    <div class="col-sm-3">
+                      <select class="form-control" name="set_date_stop" style="background-color:#27293D"> 
+                        <option value= "{{ date_stop }}" > {{ date_stop }} </option>
+                        <option disabled>------------------</option> 
+                        {% for each in dropdown_list_dates %}
+                          <option value="{{ each }}"> {{ each }} </option>
+                        {% endfor %}                          
+                      </select>    
+                    </div> 
+                    <div class="col-sm-6"></div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/sensordata/statistics#create_graph'" name="create_graph" class="btn btn-fill btn-info">CREATE GRAPH</button>
+                </div>
+              </form>
+            </div>
+
+{% endif %}
+
+<!------------>
+<!--  GRAPH -->
+<!------------>
+
+{% if graph_created == True %}
+
+            <div class="card">                      
+              <div class="card-body">
+                <div class="img-container-graph">
+                  <div class="img">
+                    <div><img src="{{ url_for('static', filename='temp/graph.png') }}"></img></div>
+                  </div>
+                </div>       
+              </div>
+            </div>
+
+{% endif %}
+
+          </div>
+        </div>
+      </div>                             
