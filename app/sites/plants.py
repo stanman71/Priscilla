@@ -17,14 +17,14 @@ import heapq
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-       # except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -149,7 +149,7 @@ def plants():
 
                     changes_saved = False
 
-                    if UPDATE_PLANT_SETTINGS(i, device_ieeeAddr, name, group):
+                    if SET_PLANT_SETTINGS(i, device_ieeeAddr, name, group):
                         changes_saved = True
 
                     if moisture_level != None:

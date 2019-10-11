@@ -6,7 +6,7 @@ from functools           import wraps
 from app                         import app
 from app.database.models         import *
 from app.backend.process_program import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD
-from app.backend.checks          import CHECK_PROGRAM
+from app.backend.checks          import CHECK_PROGRAM_TASKS
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
@@ -183,7 +183,7 @@ def programs():
     dropdown_list_programs = GET_ALL_PROGRAMS()
 
     if selected_program != "":
-        error_message_program_tasks = CHECK_PROGRAM(selected_program.id)        
+        error_message_program_tasks = CHECK_PROGRAM_TASKS(selected_program.id)        
     else:
         error_message_program_tasks = []
 

@@ -4,62 +4,62 @@
     var colorPicker = new iro.ColorPicker(".colorPicker_1_1", { width: 180, color: "rgb({{ scene_1.red_1 }}, {{ scene_1.green_1 }}, {{ scene_1.blue_1 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
       colorPicker.on(["color:init", "color:change"], function(color){
         var message = new Object();  message.scene_number = 1;   message.led_number = 1;  message.rgb_values = color.rgbString; 
-        $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+        $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
       });
     {% if scene_1.active_led_2 == "True" %}  
       var colorPicker = new iro.ColorPicker(".colorPicker_2_1", { width: 180, color: "rgb({{ scene_1.red_2 }}, {{ scene_1.green_2 }}, {{ scene_1.blue_2 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 1;  message.led_number = 2;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_1.active_led_3 == "True" %}      
       var colorPicker = new iro.ColorPicker(".colorPicker_3_1", { width: 180, color: "rgb({{ scene_1.red_3 }}, {{ scene_1.green_3 }}, {{ scene_1.blue_3 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 1;  message.led_number = 3;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_1.active_led_4 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_4_1", { width: 180, color: "rgb({{ scene_1.red_4 }}, {{ scene_1.green_4 }}, {{ scene_1.blue_4 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 1;   message.led_number = 4;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_1.active_led_5 == "True" %}      
       var colorPicker = new iro.ColorPicker(".colorPicker_5_1", { width: 180, color: "rgb({{ scene_1.red_5 }}, {{ scene_1.green_5 }}, {{ scene_1.blue_5 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 1;  message.led_number = 5;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_1.active_led_6 == "True" %}      
       var colorPicker = new iro.ColorPicker(".colorPicker_6_1", { width: 180, color: "rgb({{ scene_1.red_6 }}, {{ scene_1.green_6 }}, {{ scene_1.blue_6 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 1;  message.led_number = 6;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_1.active_led_7 == "True" %}      
       var colorPicker = new iro.ColorPicker(".colorPicker_7_1", { width: 180, color: "rgb({{ scene_1.red_7 }}, {{ scene_1.green_7 }}, {{ scene_1.blue_7 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 1;   message.led_number = 7;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_1.active_led_8 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_8_1", { width: 180, color: "rgb({{ scene_1.red_8 }}, {{ scene_1.green_8 }}, {{ scene_1.blue_8 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 1;  message.led_number = 8;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_1.active_led_9 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_9_1", { width: 180, color: "rgb({{ scene_1.red_9 }}, {{ scene_1.green_9 }}, {{ scene_1.blue_9 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 1;  message.led_number = 9;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });   
     {% endif %}                   
   }
@@ -70,62 +70,62 @@
     var colorPicker = new iro.ColorPicker(".colorPicker_1_2", { width: 180, color: "rgb({{ scene_2.red_1 }}, {{ scene_2.green_1 }}, {{ scene_2.blue_1 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
       colorPicker.on(["color:init", "color:change"], function(color){
         var message = new Object();  message.scene_number = 2;   message.led_number = 1;  message.rgb_values = color.rgbString; 
-        $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+        $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
       });
     {% if scene_2.active_led_2 == "True" %}            
       var colorPicker = new iro.ColorPicker(".colorPicker_2_2", { width: 180, color: "rgb({{ scene_2.red_2 }}, {{ scene_2.green_2 }}, {{ scene_2.blue_2 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 2;  message.led_number = 2;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_2.active_led_3 == "True" %}      
       var colorPicker = new iro.ColorPicker(".colorPicker_3_2", { width: 180, color: "rgb({{ scene_2.red_3 }}, {{ scene_2.green_3 }}, {{ scene_2.blue_3 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 2;  message.led_number = 3;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_2.active_led_4 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_4_2", { width: 180, color: "rgb({{ scene_2.red_4 }}, {{ scene_2.green_4 }}, {{ scene_2.blue_4 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 2;   message.led_number = 4;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_2.active_led_5 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_5_2", { width: 180, color: "rgb({{ scene_2.red_5 }}, {{ scene_2.green_5 }}, {{ scene_2.blue_5 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 2;  message.led_number = 5;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_2.active_led_6 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_6_2", { width: 180, color: "rgb({{ scene_2.red_6 }}, {{ scene_2.green_6 }}, {{ scene_2.blue_6 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 2;  message.led_number = 6;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_2.active_led_7 == "True" %}             
       var colorPicker = new iro.ColorPicker(".colorPicker_7_2", { width: 180, color: "rgb({{ scene_2.red_7 }}, {{ scene_2.green_7 }}, {{ scene_2.blue_7 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 2;   message.led_number = 7;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_2.active_led_8 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_8_2", { width: 180, color: "rgb({{ scene_2.red_8 }}, {{ scene_2.green_8 }}, {{ scene_2.blue_8 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 2;  message.led_number = 8;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_2.active_led_9 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_9_2", { width: 180, color: "rgb({{ scene_2.red_9 }}, {{ scene_2.green_9 }}, {{ scene_2.blue_9 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 2;  message.led_number = 9;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });     
     {% endif %}              
   }
@@ -136,62 +136,62 @@
     var colorPicker = new iro.ColorPicker(".colorPicker_1_3", { width: 180, color: "rgb({{ scene_3.red_1 }}, {{ scene_3.green_1 }}, {{ scene_3.blue_1 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
       colorPicker.on(["color:init", "color:change"], function(color){
         var message = new Object();  message.scene_number = 3;   message.led_number = 1;  message.rgb_values = color.rgbString; 
-        $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+        $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
       });
     {% if scene_3.active_led_2 == "True" %}           
       var colorPicker = new iro.ColorPicker(".colorPicker_2_3", { width: 180, color: "rgb({{ scene_3.red_2 }}, {{ scene_3.green_2 }}, {{ scene_3.blue_2 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 3;  message.led_number = 2;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %}
     {% if scene_3.active_led_3 == "True" %}      
       var colorPicker = new iro.ColorPicker(".colorPicker_3_3", { width: 180, color: "rgb({{ scene_3.red_3 }}, {{ scene_3.green_3 }}, {{ scene_3.blue_3 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 3;  message.led_number = 3;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_3.active_led_4 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_4_3", { width: 180, color: "rgb({{ scene_3.red_4 }}, {{ scene_3.green_4 }}, {{ scene_3.blue_4 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 3;   message.led_number = 4;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_3.active_led_5 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_5_3", { width: 180, color: "rgb({{ scene_3.red_5 }}, {{ scene_3.green_5 }}, {{ scene_3.blue_5 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 3;  message.led_number = 5;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_3.active_led_6 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_6_3", { width: 180, color: "rgb({{ scene_3.red_6 }}, {{ scene_3.green_6 }}, {{ scene_3.blue_6 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 3;  message.led_number = 6;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_3.active_led_7 == "True" %}             
       var colorPicker = new iro.ColorPicker(".colorPicker_7_3", { width: 180, color: "rgb({{ scene_3.red_7 }}, {{ scene_3.green_7 }}, {{ scene_3.blue_7 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 3;   message.led_number = 7;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_3.active_led_8 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_8_3", { width: 180, color: "rgb({{ scene_3.red_8 }}, {{ scene_3.green_8 }}, {{ scene_3.blue_8 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 3;  message.led_number = 8;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_3.active_led_9 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_9_3", { width: 180, color: "rgb({{ scene_3.red_9 }}, {{ scene_3.green_9 }}, {{ scene_3.blue_9 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 3;  message.led_number = 9;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });     
     {% endif %}   
   }
@@ -202,62 +202,62 @@
     var colorPicker = new iro.ColorPicker(".colorPicker_1_4", { width: 180, color: "rgb({{ scene_4.red_1 }}, {{ scene_4.green_1 }}, {{ scene_4.blue_1 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
       colorPicker.on(["color:init", "color:change"], function(color){
         var message = new Object();  message.scene_number = 4;   message.led_number = 1;  message.rgb_values = color.rgbString; 
-        $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+        $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
       });
     {% if scene_4.active_led_2 == "True" %}           
       var colorPicker = new iro.ColorPicker(".colorPicker_2_4", { width: 180, color: "rgb({{ scene_4.red_2 }}, {{ scene_4.green_2 }}, {{ scene_4.blue_2 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 4;  message.led_number = 2;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %}
     {% if scene_4.active_led_3 == "True" %}      
       var colorPicker = new iro.ColorPicker(".colorPicker_3_4", { width: 180, color: "rgb({{ scene_4.red_3 }}, {{ scene_4.green_3 }}, {{ scene_4.blue_3 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 4;  message.led_number = 3;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_4.active_led_4 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_4_4", { width: 180, color: "rgb({{ scene_4.red_4 }}, {{ scene_4.green_4 }}, {{ scene_4.blue_4 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 4;   message.led_number = 4;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_4.active_led_5 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_5_4", { width: 180, color: "rgb({{ scene_4.red_5 }}, {{ scene_4.green_5 }}, {{ scene_4.blue_5 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 4;  message.led_number = 5;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_4.active_led_6 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_6_4", { width: 180, color: "rgb({{ scene_4.red_6 }}, {{ scene_4.green_6 }}, {{ scene_4.blue_6 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 4;  message.led_number = 6;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_4.active_led_7 == "True" %}             
       var colorPicker = new iro.ColorPicker(".colorPicker_7_4", { width: 180, color: "rgb({{ scene_4.red_7 }}, {{ scene_4.green_7 }}, {{ scene_4.blue_7 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 4;   message.led_number = 7;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_4.active_led_8 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_8_4", { width: 180, color: "rgb({{ scene_4.red_8 }}, {{ scene_4.green_8 }}, {{ scene_4.blue_8 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 4;  message.led_number = 8;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_4.active_led_9 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_9_4", { width: 180, color: "rgb({{ scene_4.red_9 }}, {{ scene_4.green_9 }}, {{ scene_4.blue_9 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 4;  message.led_number = 9;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });     
     {% endif %}   
   }
@@ -268,62 +268,62 @@
     var colorPicker = new iro.ColorPicker(".colorPicker_1_5", { width: 180, color: "rgb({{ scene_5.red_1 }}, {{ scene_5.green_1 }}, {{ scene_5.blue_1 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
       colorPicker.on(["color:init", "color:change"], function(color){
         var message = new Object();  message.scene_number = 5;   message.led_number = 1;  message.rgb_values = color.rgbString; 
-        $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+        $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
       });
     {% if scene_5.active_led_2 == "True" %}           
       var colorPicker = new iro.ColorPicker(".colorPicker_2_5", { width: 180, color: "rgb({{ scene_5.red_2 }}, {{ scene_5.green_2 }}, {{ scene_5.blue_2 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 5;  message.led_number = 2;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %}
     {% if scene_5.active_led_3 == "True" %}      
       var colorPicker = new iro.ColorPicker(".colorPicker_3_5", { width: 180, color: "rgb({{ scene_5.red_3 }}, {{ scene_5.green_3 }}, {{ scene_5.blue_3 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 5;  message.led_number = 3;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_5.active_led_4 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_4_5", { width: 180, color: "rgb({{ scene_5.red_4 }}, {{ scene_5.green_4 }}, {{ scene_5.blue_4 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 5;   message.led_number = 4;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_5.active_led_5 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_5_5", { width: 180, color: "rgb({{ scene_5.red_5 }}, {{ scene_5.green_5 }}, {{ scene_5.blue_5 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 5;  message.led_number = 5;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_5.active_led_6 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_6_5", { width: 180, color: "rgb({{ scene_5.red_6 }}, {{ scene_5.green_6 }}, {{ scene_5.blue_6 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 5;  message.led_number = 6;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_5.active_led_7 == "True" %}             
       var colorPicker = new iro.ColorPicker(".colorPicker_7_5", { width: 180, color: "rgb({{ scene_5.red_7 }}, {{ scene_5.green_7 }}, {{ scene_5.blue_7 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 5;   message.led_number = 7;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_5.active_led_8 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_8_5", { width: 180, color: "rgb({{ scene_5.red_8 }}, {{ scene_5.green_8 }}, {{ scene_5.blue_8 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 5;  message.led_number = 8;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_5.active_led_9 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_9_5", { width: 180, color: "rgb({{ scene_5.red_9 }}, {{ scene_5.green_9 }}, {{ scene_5.blue_9 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 5;  message.led_number = 9;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });     
     {% endif %}   
   }
@@ -334,62 +334,62 @@
     var colorPicker = new iro.ColorPicker(".colorPicker_1_6", { width: 180, color: "rgb({{ scene_6.red_1 }}, {{ scene_6.green_1 }}, {{ scene_6.blue_1 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
       colorPicker.on(["color:init", "color:change"], function(color){
         var message = new Object();  message.scene_number = 6;   message.led_number = 1;  message.rgb_values = color.rgbString; 
-        $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+        $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
       });
     {% if scene_6.active_led_2 == "True" %}           
       var colorPicker = new iro.ColorPicker(".colorPicker_2_6", { width: 180, color: "rgb({{ scene_6.red_2 }}, {{ scene_6.green_2 }}, {{ scene_6.blue_2 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 6;  message.led_number = 2;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %}
     {% if scene_6.active_led_3 == "True" %}      
       var colorPicker = new iro.ColorPicker(".colorPicker_3_6", { width: 180, color: "rgb({{ scene_6.red_3 }}, {{ scene_6.green_3 }}, {{ scene_6.blue_3 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 6;  message.led_number = 3;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_6.active_led_4 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_4_6", { width: 180, color: "rgb({{ scene_6.red_4 }}, {{ scene_6.green_4 }}, {{ scene_6.blue_4 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 6;   message.led_number = 4;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_6.active_led_5 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_5_6", { width: 180, color: "rgb({{ scene_6.red_5 }}, {{ scene_6.green_5 }}, {{ scene_6.blue_5 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 6;  message.led_number = 5;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_6.active_led_6 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_6_6", { width: 180, color: "rgb({{ scene_6.red_6 }}, {{ scene_6.green_6 }}, {{ scene_6.blue_6 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 6;  message.led_number = 6;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_6.active_led_7 == "True" %}             
       var colorPicker = new iro.ColorPicker(".colorPicker_7_6", { width: 180, color: "rgb({{ scene_6.red_7 }}, {{ scene_6.green_7 }}, {{ scene_6.blue_7 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 6;   message.led_number = 7;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_6.active_led_8 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_8_6", { width: 180, color: "rgb({{ scene_6.red_8 }}, {{ scene_6.green_8 }}, {{ scene_6.blue_8 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 6;  message.led_number = 8;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_6.active_led_9 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_9_6", { width: 180, color: "rgb({{ scene_6.red_9 }}, {{ scene_6.green_9 }}, {{ scene_6.blue_9 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 6;  message.led_number = 9;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %}              
   }
@@ -400,62 +400,62 @@
     var colorPicker = new iro.ColorPicker(".colorPicker_1_7", { width: 180, color: "rgb({{ scene_7.red_1 }}, {{ scene_7.green_1 }}, {{ scene_7.blue_1 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
       colorPicker.on(["color:init", "color:change"], function(color){
         var message = new Object();  message.scene_number = 7;   message.led_number = 1;  message.rgb_values = color.rgbString; 
-        $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+        $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
       }); 
     {% if scene_7.active_led_2 == "True" %}           
       var colorPicker = new iro.ColorPicker(".colorPicker_2_7", { width: 180, color: "rgb({{ scene_7.red_2 }}, {{ scene_7.green_2 }}, {{ scene_7.blue_2 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 7;  message.led_number = 2;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %}
     {% if scene_7.active_led_3 == "True" %}      
       var colorPicker = new iro.ColorPicker(".colorPicker_3_7", { width: 180, color: "rgb({{ scene_7.red_3 }}, {{ scene_7.green_3 }}, {{ scene_7.blue_3 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 7;  message.led_number = 3;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_7.active_led_4 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_4_7", { width: 180, color: "rgb({{ scene_7.red_4 }}, {{ scene_7.green_4 }}, {{ scene_7.blue_4 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 7;   message.led_number = 4;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_7.active_led_5 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_5_7", { width: 180, color: "rgb({{ scene_7.red_5 }}, {{ scene_7.green_5 }}, {{ scene_7.blue_5 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 7;  message.led_number = 5;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_7.active_led_6 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_6_7", { width: 180, color: "rgb({{ scene_7.red_6 }}, {{ scene_7.green_6 }}, {{ scene_7.blue_6 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 7;  message.led_number = 6;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_7.active_led_7 == "True" %}             
       var colorPicker = new iro.ColorPicker(".colorPicker_7_7", { width: 180, color: "rgb({{ scene_7.red_7 }}, {{ scene_7.green_7 }}, {{ scene_7.blue_7 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 7;   message.led_number = 7;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_7.active_led_8 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_8_7", { width: 180, color: "rgb({{ scene_7.red_8 }}, {{ scene_7.green_8 }}, {{ scene_7.blue_8 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 7;  message.led_number = 8;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_7.active_led_9 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_9_7", { width: 180, color: "rgb({{ scene_7.red_9 }}, {{ scene_7.green_9 }}, {{ scene_7.blue_9 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 7;  message.led_number = 9;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });    
     {% endif %}  
   }
@@ -466,62 +466,62 @@
       var colorPicker = new iro.ColorPicker(".colorPicker_1_8", { width: 180, color: "rgb({{ scene_8.red_1 }}, {{ scene_8.green_1 }}, {{ scene_8.blue_1 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 8;   message.led_number = 1;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% if scene_8.active_led_2 == "True" %}           
       var colorPicker = new iro.ColorPicker(".colorPicker_2_8", { width: 180, color: "rgb({{ scene_8.red_2 }}, {{ scene_8.green_2 }}, {{ scene_8.blue_2 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 8;  message.led_number = 2;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %}
     {% if scene_8.active_led_3 == "True" %}      
       var colorPicker = new iro.ColorPicker(".colorPicker_3_8", { width: 180, color: "rgb({{ scene_8.red_3 }}, {{ scene_8.green_3 }}, {{ scene_8.blue_3 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 8;  message.led_number = 3;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_8.active_led_4 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_4_8", { width: 180, color: "rgb({{ scene_8.red_4 }}, {{ scene_8.green_4 }}, {{ scene_8.blue_4 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 8;   message.led_number = 4;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_8.active_led_5 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_5_8", { width: 180, color: "rgb({{ scene_8.red_5 }}, {{ scene_8.green_5 }}, {{ scene_8.blue_5 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 8;  message.led_number = 5;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_8.active_led_6 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_6_8", { width: 180, color: "rgb({{ scene_8.red_6 }}, {{ scene_8.green_6 }}, {{ scene_8.blue_6 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 8;  message.led_number = 6;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_8.active_led_7 == "True" %}             
       var colorPicker = new iro.ColorPicker(".colorPicker_7_8", { width: 180, color: "rgb({{ scene_8.red_7 }}, {{ scene_8.green_7 }}, {{ scene_8.blue_7 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 8;   message.led_number = 7;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_8.active_led_8 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_8_8", { width: 180, color: "rgb({{ scene_8.red_8 }}, {{ scene_8.green_8 }}, {{ scene_8.blue_8 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 8;  message.led_number = 8;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_8.active_led_9 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_9_8", { width: 180, color: "rgb({{ scene_8.red_9 }}, {{ scene_8.green_9 }}, {{ scene_8.blue_9 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 8;  message.led_number = 9;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });    
     {% endif %}          
   }
@@ -532,62 +532,62 @@
     var colorPicker = new iro.ColorPicker(".colorPicker_1_9", { width: 180, color: "rgb({{ scene_9.red_1 }}, {{ scene_9.green_1 }}, {{ scene_9.blue_1 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
       colorPicker.on(["color:init", "color:change"], function(color){
         var message = new Object();  message.scene_number = 9;   message.led_number = 1;  message.rgb_values = color.rgbString; 
-        $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+        $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
       });
     {% if scene_9.active_led_2 == "True" %}           
       var colorPicker = new iro.ColorPicker(".colorPicker_2_9", { width: 180, color: "rgb({{ scene_9.red_2 }}, {{ scene_9.green_2 }}, {{ scene_9.blue_2 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 9;  message.led_number = 2;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %}
     {% if scene_9.active_led_3 == "True" %}      
       var colorPicker = new iro.ColorPicker(".colorPicker_3_9", { width: 180, color: "rgb({{ scene_9.red_3 }}, {{ scene_9.green_3 }}, {{ scene_9.blue_3 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 9;  message.led_number = 3;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_9.active_led_4 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_4_9", { width: 180, color: "rgb({{ scene_9.red_4 }}, {{ scene_9.green_4 }}, {{ scene_9.blue_4 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 9;   message.led_number = 4;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_9.active_led_5 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_5_9", { width: 180, color: "rgb({{ scene_9.red_5 }}, {{ scene_9.green_5 }}, {{ scene_9.blue_5 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 9;  message.led_number = 5;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_9.active_led_6 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_6_9", { width: 180, color: "rgb({{ scene_9.red_6 }}, {{ scene_9.green_6 }}, {{ scene_9.blue_6 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 9;  message.led_number = 6;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_9.active_led_7 == "True" %}             
       var colorPicker = new iro.ColorPicker(".colorPicker_7_9", { width: 180, color: "rgb({{ scene_9.red_7 }}, {{ scene_9.green_7 }}, {{ scene_9.blue_7 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 9;   message.led_number = 7;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_9.active_led_8 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_8_9", { width: 180, color: "rgb({{ scene_9.red_8 }}, {{ scene_9.green_8 }}, {{ scene_9.blue_8 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 9;  message.led_number = 8;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_9.active_led_9 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_9_9", { width: 180, color: "rgb({{ scene_9.red_9 }}, {{ scene_9.green_9 }}, {{ scene_9.blue_9 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 9;  message.led_number = 9;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });     
     {% endif %} 
   }
@@ -598,62 +598,62 @@
     var colorPicker = new iro.ColorPicker(".colorPicker_1_10", { width: 180, color: "rgb({{ scene_10.red_1 }}, {{ scene_10.green_1 }}, {{ scene_10.blue_1 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
       colorPicker.on(["color:init", "color:change"], function(color){
         var message = new Object();  message.scene_number = 10;   message.led_number = 1;  message.rgb_values = color.rgbString; 
-        $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+        $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
       });   
     {% if scene_10.active_led_2 == "True" %}           
       var colorPicker = new iro.ColorPicker(".colorPicker_2_10", { width: 180, color: "rgb({{ scene_10.red_2 }}, {{ scene_10.green_2 }}, {{ scene_10.blue_2 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 10;  message.led_number = 2;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %}
     {% if scene_10.active_led_3 == "True" %}      
       var colorPicker = new iro.ColorPicker(".colorPicker_3_10", { width: 180, color: "rgb({{ scene_10.red_3 }}, {{ scene_10.green_3 }}, {{ scene_10.blue_3 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 10;  message.led_number = 3;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_10.active_led_4 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_4_10", { width: 180, color: "rgb({{ scene_10.red_4 }}, {{ scene_10.green_4 }}, {{ scene_10.blue_4 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 10;   message.led_number = 4;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_10.active_led_5 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_5_10", { width: 180, color: "rgb({{ scene_10.red_5 }}, {{ scene_10.green_5 }}, {{ scene_10.blue_5 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 10;  message.led_number = 5;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_10.active_led_6 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_6_10", { width: 180, color: "rgb({{ scene_10.red_6 }}, {{ scene_10.green_6 }}, {{ scene_10.blue_6 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 10;  message.led_number = 6;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         }); 
     {% endif %} 
     {% if scene_10.active_led_7 == "True" %}             
       var colorPicker = new iro.ColorPicker(".colorPicker_7_10", { width: 180, color: "rgb({{ scene_10.red_7 }}, {{ scene_10.green_7 }}, {{ scene_10.blue_7 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 10;   message.led_number = 7;  message.rgb_values = color.rgbString; 
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_10.active_led_8 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_8_10", { width: 180, color: "rgb({{ scene_10.red_8 }}, {{ scene_10.green_8 }}, {{ scene_10.blue_8 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){
           var message = new Object();  message.scene_number = 10;  message.led_number = 8;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });
     {% endif %} 
     {% if scene_10.active_led_9 == "True" %}              
       var colorPicker = new iro.ColorPicker(".colorPicker_9_10", { width: 180, color: "rgb({{ scene_10.red_9 }}, {{ scene_10.green_9 }}, {{ scene_10.blue_9 }})", borderWidth: 0.25, borderColor: "#6c757d", layout: [{component: iro.ui.Wheel,options: {}}] });
         colorPicker.on(["color:init", "color:change"], function(color){ 
           var message = new Object();  message.scene_number = 10;  message.led_number = 9;  message.rgb_values = color.rgbString;
-          $.ajax({ type: "POST", url: "/RGB", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
+          $.ajax({ type: "POST", url: "/data/led_scenes/rgb_values", data: JSON.stringify(message), success: function(){}, dataType: "json", contentType : "application/json" });
         });     
     {% endif %}   
   }  

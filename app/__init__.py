@@ -27,7 +27,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.add_template_global(assets     , 'assets')
 app.add_template_global(app.config , 'cfg'   )
 
-from app.sites                      import index, dashboard, scheduler, programs, plants, led_scenes, led_groups, devices, settings_system, settings_controller, settings_speechcontrol, settings_users, settings_system_log, errors
+from app.sites                      import index, dashboard, scheduler, programs, plants, led_scenes, led_groups, cameras, devices, settings_system, settings_controller, settings_speechcontrol, settings_users, settings_system_log, errors
 from app.database.models            import *
 from app.backend.shared_resources   import process_management_queue
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD

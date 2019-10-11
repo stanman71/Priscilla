@@ -1,0 +1,291 @@
+from flask               import json, url_for, redirect, render_template, flash, g, session, jsonify, request, Response
+from flask_login         import current_user, login_required
+from werkzeug.exceptions import HTTPException, NotFound, abort
+from functools           import wraps
+
+from app                          import app
+from app.database.models          import *
+from app.common                   import COMMON, STATUS
+from app.assets                   import *
+
+import cv2
+
+# access rights
+def permission_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs): 
+        try:
+            if current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
+            return redirect(url_for('logout'))
+        
+    return wrap
+
+
+try:
+    camera_1_url = "rtsp://" + GET_CAMERA_BY_ID(1).user + ":" + GET_CAMERA_BY_ID(1).password + "@" + GET_CAMERA_BY_ID(1).url 
+except:
+    camera_1_url = None
+ 
+try:
+    camera_2_url = "rtsp://" + GET_CAMERA_BY_ID(2).user + ":" + GET_CAMERA_BY_ID(2).password + "@" + GET_CAMERA_BY_ID(2).url
+except:
+    camera_2_url = None
+    
+try:
+    camera_3_url = "rtsp://" + GET_CAMERA_BY_ID(3).user + ":" + GET_CAMERA_BY_ID(3).password + "@" + GET_CAMERA_BY_ID(3).url            
+except:
+    camera_3_url = None
+
+try:
+    camera_4_url = "rtsp://" + GET_CAMERA_BY_ID(4).user + ":" + GET_CAMERA_BY_ID(4).password + "@" + GET_CAMERA_BY_ID(4).url              
+except:
+    camera_4_url = None
+
+try:
+    camera_5_url = "rtsp://" + GET_CAMERA_BY_ID(5).user + ":" + GET_CAMERA_BY_ID(5).password + "@" + GET_CAMERA_BY_ID(5).url             
+except:
+    camera_5_url = None
+    
+try:
+    camera_6_url = "rtsp://" + GET_CAMERA_BY_ID(6).user + ":" + GET_CAMERA_BY_ID(6).password + "@" + GET_CAMERA_BY_ID(6).url               
+except:
+    camera_6_url = None
+    
+
+# generate frame by frame from camera
+def GENERATE_FRAME(camera_url):
+    
+    try:
+        # Capture frame-by-frame
+        success, frame = cv2.VideoCapture(camera_url).read()  
+
+        ret, buffer = cv2.imencode('.jpg', frame)
+        frame = buffer.tobytes()
+
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+
+    except:
+        pass
+
+
+@app.route('/cameras', methods=['GET', 'POST'])
+@login_required
+@permission_required
+def cameras():
+    success_message_change_settings = []      
+    error_message_change_settings   = []    
+    success_message_add_camera      = False       
+    error_message_add_camera        = []
+
+
+    page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
+    page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
+
+
+    # delete message
+    if session.get('delete_camera_success', None) != None:
+        success_message_change_settings.append(session.get('delete_camera_success')) 
+        session['delete_camera_success'] = None
+        
+    if session.get('delete_camera_error', None) != None:
+        error_message_change_settings.append(session.get('delete_camera_error'))
+        session['delete_camera_error'] = None       
+
+
+    """ ############ """
+    """  add camera  """
+    """ ############ """   
+
+    if request.form.get("add_camera") != None: 
+        result = ADD_CAMERA()   
+        if result != True: 
+            error_message_add_camera.append(result)         
+
+        else:       
+            success_message_add_camera = True
+
+
+    """ ############### """
+    """  table cameras  """
+    """ ############### """   
+
+    if request.form.get("save_cameras_settings") != None: 
+        
+        for i in range (1,26):
+
+            if request.form.get("set_name_" + str(i)) != None:
+
+                error_founded = False
+        
+                # check url   
+                if request.form.get("set_name_" + str(i)) != "":                                    
+                    current_name = GET_CAMERA_BY_ID(i).name
+                    new_name     = request.form.get("set_name_" + str(i))
+
+                    if new_name != current_name:  
+
+                        # name already exist ?         
+                        if not GET_CAMERA_BY_NAME(new_name):  
+                            name = new_name                            
+                        else: 
+                            error_message_change_settings.append(current_name + " || Name bereits vergeben")  
+                            error_founded = True
+                            name = current_name
+
+                    else:
+                        name = current_name
+
+                else:
+                    name = GET_CAMERA_BY_ID(i).name
+                    error_message_change_settings.append(current_name + " || Keinen Namen angegeben") 
+                    error_founded = True      
+
+
+                # check url   
+                if request.form.get("set_url_" + str(i)) != "":
+                    current_url = GET_CAMERA_BY_ID(i).url                  
+                    new_url     = request.form.get("set_url_" + str(i))
+
+                    if new_url != current_url:  
+
+                        # url already exist ?         
+                        if not GET_CAMERA_BY_URL(new_url):  
+                            url = new_url                            
+                        else: 
+                            error_message_change_settings.append(current_name + " || URL bereits vergeben")  
+                            error_founded = True
+                            url = current_url
+
+                    else:
+                        url = current_url
+
+                else:
+                    url = GET_CAMERA_BY_ID(i).url
+                    error_message_change_settings.append(current_name + " || Keine URL angegeben") 
+                    error_founded = True      
+
+                user     = request.form.get("set_user_" + str(i))
+                password = request.form.get("set_password_" + str(i))
+
+
+                # save settings
+                if error_founded == False: 
+                    if SET_CAMERA_SETTINGS(i, name, url, user, password):
+                        success_message_change_settings.append(name + " || Einstellungen gespeichert") 
+
+
+    """ ############# """
+    """  camera data  """
+    """ ############# """   
+
+    try:
+        camera_1 = GET_CAMERA_BY_ID(1)
+    except:
+        camera_1 = None      
+    try:
+        camera_2 = GET_CAMERA_BY_ID(2)
+    except:
+        camera_2 = None       
+    try:
+        camera_3 = GET_CAMERA_BY_ID(3)
+    except:
+        camera_3 = None
+    try:
+        camera_4 = GET_CAMERA_BY_ID(4)
+    except:
+        camera_4 = None
+    try:
+        camera_5 = GET_CAMERA_BY_ID(5)
+    except:
+        camera_5 = None
+    try:
+        camera_6 = GET_CAMERA_BY_ID(6)
+    except:
+        camera_6 = None        
+
+
+    list_cameras = GET_ALL_CAMERAS()
+
+    data = {'navigation': 'cameras', 'notification': ''}
+
+    timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
+
+    return render_template('layouts/default.html',
+                            data=data,    
+                            content=render_template( 'pages/cameras.html',
+                                                    success_message_change_settings=success_message_change_settings,                               
+                                                    error_message_change_settings=error_message_change_settings,   
+                                                    success_message_add_camera=success_message_add_camera,                            
+                                                    error_message_add_camera=error_message_add_camera,     
+                                                    list_cameras=list_cameras,  
+                                                    camera_1=camera_1,    
+                                                    camera_2=camera_2, 
+                                                    camera_3=camera_3,
+                                                    camera_4=camera_4,    
+                                                    camera_5=camera_5, 
+                                                    camera_6=camera_6,                                                              
+                                                    ) 
+                           )
+
+
+# change cameras position 
+@app.route('/cameras/position/<string:direction>/<int:id>')
+@login_required
+@permission_required
+def change_cameras_position(id, direction):
+    CHANGE_CAMERAS_POSITION(id, direction)
+    return redirect(url_for('cameras'))
+
+
+# delete camera
+@app.route('/cameras/delete/<int:id>')
+@login_required
+@permission_required
+def delete_camera(id):
+    camera  = GET_CAMERA_BY_ID(id).name  
+    result  = DELETE_CAMERA(id)
+
+    if result:
+        session['delete_camera_success'] = camera + " || Erfolgreich gelöscht"
+    else:
+        session['delete_camera_error'] = camera + " || " + str(result)
+
+    return redirect(url_for('cameras'))
+
+
+# camera streams
+@app.route('/data/cameras/video_feed_1')
+def data_video_feed_1():
+    return Response(GENERATE_FRAME(camera_1_url),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/data/cameras/video_feed_2')
+def data_video_feed_2():
+    return Response(GENERATE_FRAME(camera_2_url),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/data/cameras/video_feed_3')
+def data_video_feed_3():
+    return Response(GENERATE_FRAME(camera_3_url),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+                    
+@app.route('/data/cameras/video_feed_4')
+def data_video_feed_4():
+    return Response(GENERATE_FRAME(camera_4_url),
+                    mimetype='multipart/x-mixed-replace; boundary=frame') 
+ 
+@app.route('/data/cameras/video_feed_5')
+def data_video_feed_5():
+    return Response(GENERATE_FRAME(camera_5_url),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/data/cameras/video_feed_6')
+def data_video_feed_6():
+    return Response(GENERATE_FRAME(camera_6_url),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')

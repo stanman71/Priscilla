@@ -11,6 +11,14 @@ import re
 
 db = SQLAlchemy(app)
 
+class Camera(db.Model):
+    __tablename__   = 'camera'
+    id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name            = db.Column(db.String(50))
+    url             = db.Column(db.String(50))
+    user            = db.Column(db.String(50))
+    password        = db.Column(db.String(50))   
+
 class Controller(db.Model):
     __tablename__   = 'controller'
     id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
@@ -364,6 +372,128 @@ if ZigBee2MQTT.query.filter_by().first() is None:
     )
     db.session.add(zigbee2mqtt)
     db.session.commit()
+
+
+""" ################## """
+""" ################## """
+"""       Cameras      """
+""" ################## """
+""" ################## """
+
+
+def GET_CAMERA_BY_ID(id):
+    return Camera.query.filter_by(id=id).first()
+    
+    
+def GET_CAMERA_BY_NAME(name):
+    return Camera.query.filter_by(name=name).first()
+    
+
+def GET_CAMERA_BY_URL(url):
+    return Camera.query.filter_by(url=url).first()
+
+    
+def GET_ALL_CAMERAS():   
+    return Camera.query.all()
+        
+
+def ADD_CAMERA():
+    for i in range(1,10):
+        if Camera.query.filter_by(id=i).first():
+            pass
+        else:
+            # add the new camera
+            camera = Camera(
+                    id       = i,
+                    name     = "new_camera_" + str(i),                            
+                )
+            db.session.add(camera)
+            db.session.commit()
+
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Camera - " + "new_camera_" + str(i) + " | added")               
+            return True
+            
+    return "Kameralimit erreicht (9)"
+
+
+def SET_CAMERA_SETTINGS(id, name, url, user, password):         
+    entry = Camera.query.filter_by(id=id).first()
+    old_name = entry.name
+
+    # values changed ?
+    if (entry.name != name or entry.url != url or entry.user != user or entry.password != password):
+
+        entry.name     = name
+        entry.url      = url
+        entry.user     = user     
+        entry.password = password                  
+        
+        db.session.commit()  
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Camera - " + old_name + " | changed")
+
+        return True
+
+
+def CHANGE_CAMERAS_POSITION(id, direction):
+    if direction == "up" and id <= 8:
+        camera_list = GET_ALL_CAMERAS()
+        camera_list = camera_list[::-1]
+        
+        for camera in camera_list:
+
+            if camera.id == (int(id) + 1):     
+                new_id = camera.id
+                
+                # change ids
+                camera_1 = GET_CAMERA_BY_ID(id)
+                camera_2 = GET_CAMERA_BY_ID(new_id)
+                
+                camera_1.id = 99
+                db.session.commit()
+                
+                camera_2.id = id
+                camera_1.id = new_id
+                db.session.commit()
+                return
+
+        # id + 1 is not in use
+        camera = GET_CAMERA_BY_ID(id) 
+        camera.id = int(id) + 1              
+        db.session.commit()    
+                 
+
+    if direction == "down" and id >= 2:
+        for camera in GET_ALL_CAMERAS():
+            if camera.id == (int(id) - 1):      
+                new_id = camera.id
+                
+                # change ids
+                camera_1 = GET_CAMERA_BY_ID(id)
+                camera_2 = GET_CAMERA_BY_ID(new_id)
+                
+                camera_1.id = 99
+                db.session.commit()
+                
+                camera_2.id = id
+                camera_1.id = new_id
+                db.session.commit()  
+                return 
+
+        # id - 1 is not in use
+        camera = GET_CAMERA_BY_ID(id) 
+        camera.id = int(id) - 1              
+        db.session.commit()    
+
+
+def DELETE_CAMERA(id):
+    camera_name = GET_CAMERA_BY_ID(id).name
+
+    Camera.query.filter_by(id=id).delete()
+    db.session.commit() 
+    
+    WRITE_LOGFILE_SYSTEM("DATABASE", "Camera - " + camera_name + " | deleted")   
+    return True
 
 
 """ ################## """
@@ -1758,7 +1888,7 @@ def ADD_PLANT():
     return "Pflanzenlimit erreicht (25)"
 
 
-def UPDATE_PLANT_SETTINGS(id, name, device_ieeeAddr, group):         
+def SET_PLANT_SETTINGS(id, name, device_ieeeAddr, group):         
     entry = Plants.query.filter_by(id=id).first()
     old_name = entry.name
 

@@ -438,8 +438,8 @@ def change_led_scenes_options(id, option):
     return redirect(url_for('led_scenes'))
 
 
-@app.route("/RGB" ,methods=['POST'])
-def RGB():
+@app.route("/data/led_scenes/rgb_values" ,methods=['POST'])
+def data_rgb_values():
     global led_scenes_rgb_values_array
 
     if request.method == 'POST':

@@ -78,7 +78,7 @@ def CHECK_LED_GROUP_SETTINGS(settings):
 """  check program """
 """ ############## """
 
-def CHECK_PROGRAM(program_id):
+def CHECK_PROGRAM_TASKS(program_id):
    list_errors = []
    
    lines = [[GET_PROGRAM_BY_ID(program_id).line_active_1,  GET_PROGRAM_BY_ID(program_id).line_content_1],

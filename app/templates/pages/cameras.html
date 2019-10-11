@@ -1,0 +1,266 @@
+
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title"><b>Kameras</b></h4>
+              </div>
+            </div>
+
+<!------------------>
+<!-- CAMERA BOARD -->
+<!------------------>
+
+            <div class="card">        
+              <div class="card-body">
+
+                {% if camera_1 != None or camera_2 != None %}
+
+                  <div class="row justify-content-md-center">
+                    <div class="col-sm-6">           
+                      {% if camera_1 != None %}
+                        {% if camera_1.url != None and camera_1.url != "" %} 
+                          <b> {{ camera_1.name }} </b>
+                          <div class="img-container-video">
+                            <div class="img">
+                              <a href= "http://{{ camera_1.url.split(":")[0] }}" target="_blank">                   
+                                <img src="{{ url_for('data_video_feed_1') }}" width="100%">
+                              </a>              
+                            </div>
+                          </div>  
+                        {% endif %}  
+                      {% endif %} 
+                    </div>    
+                    <div class="col-sm-6"> 
+                      {% if camera_2 != None %}      
+                        {% if camera_2.url != None and camera_2.url != "" %} 
+                          <b> {{ camera_2.name }} </b>  
+                          <div class="img-container-video">
+                            <div class="img">
+                              <a href= "http://{{ camera_2.url.split(":")[0] }}" target="_blank">                   
+                                <img src="{{ url_for('data_video_feed_2') }}" width="100%">
+                              </a>            
+                            </div>
+                          </div>   
+                        {% endif %} 
+                      {% endif %}     
+                    </div>
+                  </div> 
+
+                {% endif %}  
+
+                {% if camera_3 != None or camera_4 != None %}
+
+                  <div class="row justify-content-md-center">
+                    <div class="col-sm-6">           
+                      {% if camera_3 != None %}
+                        {% if camera_3.url != None and camera_3.url != "" %}  
+                          <b> {{ camera_3.name }} </b>
+                          <div class="img-container-video">
+                            <div class="img">
+                              <a href= "http://{{ camera_3.url.split(":")[0] }}" target="_blank">                   
+                                <img src="{{ url_for('data_video_feed_3') }}" width="100%">
+                              </a>
+                            </div>
+                          </div>   
+                        {% endif %} 
+                      {% endif %} 
+                    </div>    
+                    <div class="col-sm-6"> 
+                      {% if camera_4 != None %}     
+                        {% if camera_4.url != None and camera_4.url != "" %} 
+                          <b> {{ camera_4.name }} </b>  
+                          <div class="img-container-video">
+                            <div class="img">
+                              <a href= "http://{{ camera_4.url.split(":")[0] }}" target="_blank">                   
+                                <img src="{{ url_for('data_video_feed_4') }}" width="100%">
+                              </a>                   
+                            </div>
+                          </div>   
+                        {% endif %} 
+                      {% endif %}     
+                    </div>
+                  </div> 
+
+                {% endif %}  
+
+                {% if camera_5 != None or camera_6 != None %}
+
+                  <div class="row justify-content-md-center">
+                    <div class="col-sm-6">           
+                      {% if camera_5 != None %}
+                        {% if camera_5.url != None and camera_5.url != "" %}   
+                          <b> {{ camera_5.name }} </b>
+                          <div class="img-container-video">
+                            <div class="img">
+                              <a href= "http://{{ camera_5.url.split(":")[0] }}" target="_blank">                   
+                                <img src="{{ url_for('data_video_feed_5') }}" width="100%">
+                              </a>
+                            </div>
+                          </div>   
+                        {% endif %} 
+                      {% endif %} 
+                    </div>    
+                    <div class="col-sm-6"> 
+                      {% if camera_6 != None %}     
+                        {% if camera_6.url != None and camera_6.url != "" %}   
+                          <b> {{ camera_6.name }} </b>  
+                          <div class="img-container-video">
+                            <div class="img">
+                              <a href= "http://{{ camera_6.url.split(":")[0] }}" target="_blank">                   
+                                <img src="{{ url_for('data_video_feed_6') }}" width="100%">
+                              </a>
+                            </div>
+                          </div>   
+                        {% endif %} 
+                      {% endif %}     
+                    </div>
+                  </div> 
+
+                {% endif %}   
+
+              </div>
+            </div>
+
+
+<!---------------->
+<!-- ADD CAMERA -->
+<!---------------->
+
+<!-- success message add camera -->
+
+{% if success_message_add_camera == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Kamera erfolgreich hinzugefügt</span>
+  </div>
+{% endif %}  
+
+<!-- error message add camera --> 
+
+{% if error_message_add_camera != [] %}
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+    {% for error in error_message_add_camera %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+
+            <div class="card">
+              <form method="POST">         
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/cameras#'" name="add_camera" class="btn btn-fill btn-primary">NEW CAMERA</button>
+                </div>
+              </form>
+            </div>
+
+
+<!------------------>
+<!-- CAMERA TABLE -->
+<!------------------>   
+
+<!-- success message change settings -->
+
+{% if success_message_change_settings != [] %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for success in success_message_change_settings %}
+      <span data-notify="message">{{ success }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+<!-- error message change settings -->
+
+{% if error_message_change_settings != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_change_settings %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+
+            <div class="card ">
+              <form method="POST">          
+                <div class="card-body"> 
+                  <div class="table-responsive">
+                    <table class="table tablesorter">
+                      <thead>
+                        <th scope="col" style="width:3%"></th> 
+                        <th scope="col" style="width:20%" class="minwidth_200">Kamera</th>   
+                        <th scope="col" style="width:30%" class="minwidth_200">URL</th>     
+                        <th scope="col" style="width:20%" class="minwidth_200">Benutzername</th>                                          
+                        <th scope="col" style="width:20%" class="minwidth_200">Passwort</th>   
+                        <th scope="col" style="width:5%"></th>                                                    
+                      </thead>
+                      <tbody> 
+                        {% for entry in list_cameras %}
+                        <tr>
+                          <td>
+                            <a href="/cameras/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                            <a href="/cameras/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
+                          </td>                   
+                          <td>
+                            <div class="row justify-content-md-left">
+                              <div class="col-sm-10">                                    
+                                <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />  
+                              </div>
+                            </div>
+                          </td> 
+                          <td>
+                            <div class="row justify-content-md-left">
+                              <div class="col-sm-10">                                    
+                                <input type="text" class="form-control" name="set_url_{{ entry.id }}" 
+                                  value= {% if entry.url != None and entry.url != "None" %}"{{ entry.url }}"{% else %}""{% endif %} />  
+                              </div>
+                            </div>
+                          </td> 
+                          <td>
+                            <div class="row justify-content-md-left">
+                              <div class="col-sm-10">                                    
+                                <input type="text" class="form-control" name="set_user_{{ entry.id }}" 
+                                  value= {% if entry.user != None and entry.user != "None" %}"{{ entry.user }}"{% else %}""{% endif %} />  
+                              </div>
+                            </div>
+                          </td> 
+                          <td>
+                            <div class="row justify-content-md-left">
+                              <div class="col-sm-10">                                    
+                                <input type="text" class="form-control" name="set_password_{{ entry.id }}" 
+                                  value= {% if entry.password != None and entry.password != "None" %}"{{ entry.password }}"{% else %}""{% endif %} /> 
+                              </div>
+                            </div>
+                          </td>                           
+                          <td>
+                            <a href="/cameras/delete/{{ entry.id }}#table"><font size="5"><i class='tim-icons icon-trash-simple'></i></font></a>
+                          </td>   
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>            
+                <div class="card-footer">                   
+                  <button type="submit" onclick="window.location.href='/cameras#'" name="save_cameras_settings" class="btn btn-fill btn-primary">SAVE</button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>          

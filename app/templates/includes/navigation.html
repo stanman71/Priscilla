@@ -59,6 +59,28 @@
             </a>
           </li>  
 
+          {% if data.navigation == "cameras" %}
+            <li class="active ">
+          {% else %} 
+            <li>
+          {% endif %} 
+            <a href="/cameras">
+              <i class='uil uil-video'></i>
+              <p>Kameras</p>
+            </a>
+          </li>  
+
+          {% if data.navigation == "sensordata" %}
+            <li class="active ">
+          {% else %} 
+            <li>
+          {% endif %} 
+            <a href="/sensordata/jobs">
+              <i class='uil uil-database-alt'></i>
+              <p>Sensordaten</p>
+            </a>
+          </li>  
+
           {% if data.navigation == "devices" %}
             <li class="active ">
           {% else %} 
