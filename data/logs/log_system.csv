@@ -3122,3 +3122,15 @@ Timestamp,Type,Description
 2019-10-11 18:39:05,ERROR,|eMail || None || ERROR || Devices || Request Sensordata || Message not founded || No recipients have been added|
 2019-10-11 18:39:05,ERROR,|MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2019-10-11 18:39:07,ERROR,|eMail || None || ERROR || MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-11 18:45:04,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-11 18:45:06,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-11 18:45:07,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-11 18:45:09,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-11 18:46:00,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-11 18:46:02,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-11 18:46:03,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-11 18:46:05,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-11 18:46:07,ERROR,|Devices || Request Sensordata || Message not founded|
+2019-10-11 18:46:09,ERROR,|eMail || None || ERROR || Devices || Request Sensordata || Message not founded || No recipients have been added|
+2019-10-11 18:46:10,ERROR,|MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-11 18:46:12,ERROR,|eMail || None || ERROR || MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|

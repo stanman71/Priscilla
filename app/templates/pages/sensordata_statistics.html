@@ -96,7 +96,7 @@
 <!-- CREATE GRAPH -->
 <!------------------>
 
-{% if data_file_1 != "" %}
+{% if data_file_1 != "" or data_file_2 != "" or data_file_3 != "" %}
 
   <section id="create_graph"></section>    
 
@@ -152,19 +152,15 @@
 
 {% endif %}
 
-<!------------>
-<!--  GRAPH -->
-<!------------>
+<!---------------->
+<!-- SHOW GRAPH -->
+<!---------------->
 
 {% if graph_created == True %}
 
             <div class="card">                      
               <div class="card-body">
-                <div class="img-container-graph">
-                  <div class="img">
-                    <div><img src="{{ url_for('static', filename='temp/graph.png') }}"></img></div>
-                  </div>
-                </div>       
+                <div><img src="{{ url_for('static', filename='temp/graph.png') }}"></img></div>   
               </div>
             </div>
 
