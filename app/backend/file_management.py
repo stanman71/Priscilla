@@ -360,22 +360,22 @@ def DELETE_DATABASE_BACKUP(filename):
         return (e)
 
 
-""" ###### """
-""" plants """
-""" ###### """
+""" ########## """
+""" sensordata """
+""" ########## """
 
-def GET_PLANTS_DATAFILES():
+def GET_SENSORDATA_FILES():
     file_list = []
     for files in os.walk(PATH + "/data/csv/"):  
         file_list.append(files)   
 
     if file_list == []:
-        return "No Files founded"
+        return ""
     else:
         return file_list[0][2]    
 
 
-def CREATE_PLANTS_DATAFILE(filename):
+def CREATE_SENSORDATA_FILE(filename):
     if os.path.isfile(PATH + "/data/csv/" + filename + ".csv") is False:
 
         try:
@@ -383,66 +383,55 @@ def CREATE_PLANTS_DATAFILE(filename):
             file = PATH + "/data/csv/" + filename + ".csv"
             with open(file, 'w', encoding='utf-8') as csvfile:
                 filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                       
-                filewriter.writerow(["Timestamp","Device","Pumptime","Moisture","Watertank"])
+                filewriter.writerow(['Timestamp','Device','Sensor','Sensor_Value'])
                 csvfile.close()
 
             WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/csv/" + filename + ".csv | created") 
-            return True 
+            return True
                 
         except Exception as e:
             WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + filename + ".csv | " + str(e))
-            return(e)
+
+    else:
+        return True
 
 
-def WRITE_PLANTS_DATAFILE(filename, device, pumptime, moisture, watertank):
-    if os.path.isfile(PATH + "/csv/" + filename + ".csv") is False:
-        CREATE_PLANTS_DATAFILE(filename)
+def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
+    if os.path.isfile(PATH + "/data/csv/" + filename + ".csv") is False:
+        CREATE_SENSORDATA_FILE(filename)
 
     try:
         # open csv file
         file = PATH + "/data/csv/" + filename + ".csv"
         with open(file, 'a', newline='', encoding='utf-8') as csvfile:
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                                        
-            filewriter.writerow( [str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), str(device), str(pumptime), str(moisture), str(watertank)])
+            filewriter.writerow( [str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), str(device), str(sensor), str(value) ])
             csvfile.close()
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + filename + ".csv | " + str(e))
-        return(e)
 
 
-def READ_PLANTS_DATAFILE(filename):
+def READ_SENSORDATA_FILE(filename):
     try:
         # open csv file with pandas
         file = PATH + "/data/csv/" + filename
         
-        df = pd.read_csv(file, sep = ",", skiprows = 1, names = ["Timestamp","Device","Pumptime","Moisture","Watertank"])
+        df = pd.read_csv(file, sep = ",", skiprows = 1, names = ["Timestamp","Device","Sensor","Sensor_Value"])
         return df
 
     except Exception as e:
         if "Error tokenizing data. C error: Calling read(nbytes) on source failed. Try engine='python'." not in str(e):
-            WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + filename + " | " + str(e))   
-            return(e) 
+            print(e)
+            WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + filename + " | " + str(e))    
 
 
-def RENAME_PLANTS_DATAFILE(old_filename, new_filename):
+def DELETE_SENSORDATA_FILE(filename):
     try:
-        os.rename(PATH + '/data/csv/' + old_filename + ".csv", PATH + '/data/csv/' + new_filename + ".csv") 
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/csv/" + old_filename + " | renamed | New name - " + new_filename)
-        return True
-    except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + old_filename + " | " + str(e))  
-        return(e)
-
-
-def DELETE_PLANTS_DATAFILE(filename):
-    try:
-        os.remove (PATH + '/data/csv/' + filename + ".csv")
+        os.remove (PATH + '/data/csv/' + filename)
         WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/csv/" + filename + " | deleted")
-        return True
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + filename + " | " + str(e))  
-        return(e)
 
 
 """ ################################ """

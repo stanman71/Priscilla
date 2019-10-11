@@ -242,12 +242,22 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                     pass                
 
 
-        if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "sensor_contact":
+        if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "sensor_contact" or device_type == "watering_controller":
+            
+            # save sensor data of passive devices
+            if FIND_SENSORDATA_JOB_INPUT(ieeeAddr) != "":
+                list_jobs = FIND_SENSORDATA_JOB_INPUT(ieeeAddr)
+
+                for job in list_jobs:   
+                    SAVE_SENSORDATA(job) 
+
+            # start schedular job 
             for task in GET_ALL_SCHEDULER_TASKS():
                 if task.option_sensors == "checked" and task.option_pause != "checked":
                     heapq.heappush(process_management_queue, (10, ("scheduler", "sensor", task.id, ieeeAddr)))
 
 
+        # start controller job  
         if device_type == "controller":       
             heapq.heappush(process_management_queue, (1, ("controller", ieeeAddr, msg)))
 
@@ -725,7 +735,6 @@ def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
 
 
 def CHECK_DEVICE_EXCEPTIONS(id, setting):
-    
     device = GET_DEVICE_BY_ID(id)
 
     try:
@@ -802,3 +811,63 @@ def CHECK_DEVICE_EXCEPTIONS(id, setting):
 
     except:
         return True
+
+
+""" ############### """
+"""    sensordata   """
+""" ############### """
+
+def REQUEST_SENSORDATA(job_name):
+    sensordata_job  = GET_SENSORDATA_JOB_BY_NAME(job_name)
+    device_gateway  = sensordata_job.device.gateway
+    device_ieeeAddr = sensordata_job.device.ieeeAddr  
+    
+    sensor_key = sensordata_job.sensor_key
+    sensor_key = sensor_key.replace(" ", "")
+ 
+    channel = "miranda/" + device_gateway + "/" + device_ieeeAddr + "/get"
+ 
+    heapq.heappush(mqtt_message_queue, (20, (channel, "")))        
+    time.sleep(2) 
+  
+    for message in GET_MQTT_INCOMING_MESSAGES(5):
+        
+        if message[1] == "miranda/" + device_gateway + "/" + device_ieeeAddr:
+                
+            try:
+
+                data     = json.loads(message[2])
+                filename = sensordata_job.filename
+    
+                WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | Sensor Data saved")  
+                return True
+                
+            except:
+                pass
+
+    WRITE_LOGFILE_SYSTEM("ERROR", "Devices | Request Sensordata | Message not founded") 
+    SEND_EMAIL("ERROR", "Devices | Request Sensordata | Message not founded")       
+
+   
+def SAVE_SENSORDATA(job_id):
+    sensordata_job  = GET_SENSORDATA_JOB_BY_ID(job_id)
+    device_gateway  = sensordata_job.device.gateway
+    device_ieeeAddr = sensordata_job.device.ieeeAddr 
+     
+    sensor_key = sensordata_job.sensor_key
+    sensor_key = sensor_key.replace(" ", "")
+    
+    for message in GET_MQTT_INCOMING_MESSAGES(10):
+        
+        if (message[1] == "miranda/" + device_gateway + "/" + device_ieeeAddr):
+                                
+            try:
+                data     = json.loads(message[2])
+                filename = sensordata_job.filename
+    
+                WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
+                return True
+
+            except:
+                pass

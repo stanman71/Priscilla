@@ -1,0 +1,309 @@
+   <script>
+    var sensor_options_list_1  = '{{ device_1_input_values }}';
+    var sensor_options_list_1  = sensor_options_list_1.split(",");
+    var sensor_options_list_2  = '{{ device_2_input_values }}';
+    var sensor_options_list_2  = sensor_options_list_2.split(",");
+    var sensor_options_list_3  = '{{ device_3_input_values }}';
+    var sensor_options_list_3  = sensor_options_list_3.split(",");
+    var sensor_options_list_4  = '{{ device_4_input_values }}';
+    var sensor_options_list_4  = sensor_options_list_4.split(",");
+    var sensor_options_list_5  = '{{ device_5_input_values }}';
+    var sensor_options_list_5  = sensor_options_list_5.split(",");
+    var sensor_options_list_6  = '{{ device_6_input_values }}';
+    var sensor_options_list_6  = sensor_options_list_6.split(",");
+    var sensor_options_list_7  = '{{ device_7_input_values }}';
+    var sensor_options_list_7  = sensor_options_list_7.split(",");
+    var sensor_options_list_8  = '{{ device_8_input_values }}';
+    var sensor_options_list_8  = sensor_options_list_8.split(",");
+    var sensor_options_list_9  = '{{ device_9_input_values }}';
+    var sensor_options_list_9  = sensor_options_list_9.split(",");
+    var sensor_options_list_10 = '{{ device_10_input_values }}';
+    var sensor_options_list_10 = sensor_options_list_10.split(",");
+    var sensor_options_list_11 = '{{ device_11_input_values }}';
+    var sensor_options_list_11 = sensor_options_list_11.split(",");
+    var sensor_options_list_12 = '{{ device_12_input_values }}';
+    var sensor_options_list_12 = sensor_options_list_12.split(",");
+    var sensor_options_list_13 = '{{ device_13_input_values }}';
+    var sensor_options_list_13 = sensor_options_list_13.split(",");
+    var sensor_options_list_14 = '{{ device_14_input_values }}';
+    var sensor_options_list_14 = sensor_options_list_14.split(",");
+    var sensor_options_list_15 = '{{ device_15_input_values }}';
+    var sensor_options_list_15 = sensor_options_list_15.split(",");
+    var sensor_options_list_16 = '{{ device_16_input_values }}';
+    var sensor_options_list_16 = sensor_options_list_16.split(",");
+    var sensor_options_list_17 = '{{ device_17_input_values }}';
+    var sensor_options_list_17 = sensor_options_list_17.split(",");
+    var sensor_options_list_18 = '{{ device_18_input_values }}';
+    var sensor_options_list_18 = sensor_options_list_18.split(",");
+    var sensor_options_list_19 = '{{ device_19_input_values }}';
+    var sensor_options_list_19 = sensor_options_list_19.split(",");
+    var sensor_options_list_20 = '{{ device_20_input_values }}';
+    var sensor_options_list_20 = sensor_options_list_20.split(",");
+    var sensor_options_list_21 = '{{ device_21_input_values }}';
+    var sensor_options_list_21 = sensor_options_list_21.split(",");
+    var sensor_options_list_22 = '{{ device_22_input_values }}';
+    var sensor_options_list_22 = sensor_options_list_22.split(",");
+    var sensor_options_list_23 = '{{ device_23_input_values }}';
+    var sensor_options_list_23 = sensor_options_list_23.split(",");
+    var sensor_options_list_24 = '{{ device_24_input_values }}';
+    var sensor_options_list_24 = sensor_options_list_24.split(",");
+    var sensor_options_list_25 = '{{ device_25_input_values }}';
+    var sensor_options_list_25 = sensor_options_list_25.split(",");
+    var sensor_options = {};
+    sensor_options['1']  = sensor_options_list_1;
+    sensor_options['2']  = sensor_options_list_2;
+    sensor_options['3']  = sensor_options_list_3;
+    sensor_options['4']  = sensor_options_list_4;
+    sensor_options['5']  = sensor_options_list_5;
+    sensor_options['6']  = sensor_options_list_6;
+    sensor_options['7']  = sensor_options_list_7;
+    sensor_options['8']  = sensor_options_list_8;
+    sensor_options['9']  = sensor_options_list_9;
+    sensor_options['10'] = sensor_options_list_10;
+    sensor_options['11'] = sensor_options_list_11;
+    sensor_options['12'] = sensor_options_list_12;
+    sensor_options['13'] = sensor_options_list_13;
+    sensor_options['14'] = sensor_options_list_14;
+    sensor_options['15'] = sensor_options_list_15;
+    sensor_options['16'] = sensor_options_list_16;
+    sensor_options['17'] = sensor_options_list_17;
+    sensor_options['18'] = sensor_options_list_18;
+    sensor_options['19'] = sensor_options_list_19;
+    sensor_options['20'] = sensor_options_list_20;
+    sensor_options['21'] = sensor_options_list_21;
+    sensor_options['22'] = sensor_options_list_22;
+    sensor_options['23'] = sensor_options_list_23;
+    sensor_options['24'] = sensor_options_list_24;
+    sensor_options['25'] = sensor_options_list_25;
+
+    function Choose_Sensor(entry_id) {
+      var device_name = "device_" + entry_id
+      var sensor_list_name = "selected_sensor_" + entry_id
+      var device = document.getElementById(device_name);
+      var sensor_list = document.getElementById(sensor_list_name);
+      var selected_sensor = device.options[device.selectedIndex].value;
+      while (sensor_list.options.length) {
+        sensor_list.remove(0);
+      }
+      var sensors = sensor_options[selected_sensor];
+      if (sensors) {
+        var i;
+        for (i = 0; i < sensors.length; i++) {
+          var sensor = new Option(sensors[i], i);
+          sensor_list.options.add(sensor);
+        }
+      }
+    } 
+  </script> 
+  
+  
+      <div class="content">
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="card ">
+              <div class="card-footer">    
+                <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
+                  <a href="/sensordata/jobs" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Jobs</a>                
+                  <a href="/sensordata/statistics" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Statistiken</a>
+                </div>           
+              </div>  
+            </div>  
+
+
+<!-------------->
+<!-- ADD JOB  -->
+<!-------------->
+
+<!-- success message add job -->
+
+{% if success_message_add_job == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Job erfolgreich hinzugefügt</span>
+  </div>
+{% endif %}  
+
+<!-- error message add job --> 
+
+{% if error_message_add_job != [] %}
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+    {% for error in error_message_add_job %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+
+            <div class="card">
+              <form method="POST">         
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/sensordata/jobs#'" name="add_sensordata_job" class="btn btn-fill btn-primary">NEW JOB</button>
+                </div>
+              </form>
+            </div>
+
+<!---------------->
+<!-- JOBS TABLE -->
+<!---------------->
+
+<section id="table_sensordata_jobs"></section>    
+
+<!-- success message change settings -->
+
+{% if success_message_change_settings != [] %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for success in success_message_change_settings %}
+      <span data-notify="message">{{ success }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+<!-- error message change settings -->
+
+{% if error_message_change_settings != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_change_settings %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+
+            <div class="card ">
+              <form method="POST">          
+                <div class="card-body"> 
+                  <div class="table-responsive">
+                    <table class="table tablesorter">
+
+                      <thead>
+                        <th scope="col" style="width:3%"></th>  
+                        <th scope="col" style="width:20%" class="minwidth_200">Job</th>  
+                        <th scope="col" style="width:20%" class="minwidth_200">Datei</th>   
+                        <th scope="col" style="width:18%" class="minwidth_200">Gerät</th>
+                        <th scope="col" style="width:18%" class="minwidth_200">Sensor</th>
+                        <th></th> 
+                        <th scope="col" style="width:16%" class="minwidth_100"></th>
+                        <th scope="col" style="width:5%"></th>
+                      </thead>
+                      <tbody> 
+                        {% for entry in list_sensordata_jobs %}
+                        <tr>
+                          <td>
+                            <a href="/sensordata/jobs/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                            <a href="/sensordata/jobs/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>                            
+                          </td>                     
+                          <td>
+                            <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                    
+                          </td> 
+                          <td>
+                            <input type="text" class="form-control" name="set_filename_{{ entry.id }}" 
+                              value= {% if entry.filename != None and entry.filename != "None" %}"{{ entry.filename }}"{% else %}""{% endif %} />                 
+                          </td> 
+                          <td>
+                            <select id="device_{{ entry.id }}" class="form-control" onchange="Choose_Sensor('{{ entry.id }}')" name="set_device_{{ entry.id }}" style="background-color:#27293D"> 
+                              {% if entry.device_ieeeAddr != "None" and entry.device_ieeeAddr != None and entry.device_ieeeAddr != "" %}
+                                <option value = "{{ entry.device_ieeeAddr }}" > {{ entry.device.name }} </option>
+                              {% else %}   
+                                <option value = "None" > Gerät </option> 
+                              {% endif %}    
+                              <option disabled>------------------</option>
+                              {% for each in dropdown_list_devices %}
+                                <option value="{{ each.id }}"> {{ each.name }} </option>
+                              {% endfor %}
+                            </select>                           
+                          </td>
+                          <td>       
+                            <select id="selected_sensor_{{ entry.id }}" class="form-control" name="set_sensor_{{ entry.id }}" style="background-color:#27293D"> 
+                              {% if entry.sensor_key != "None" and entry.sensor_key != None and entry.sensor_key != "" %}
+                                <option value= "{{ entry.sensor_key }}" > {{ entry.sensor_key }} </option>                     
+                              {% else %}                         
+                                <option value= "None" > Sensor </option> 
+                              {% endif %}                
+                              <option disabled>------------------</option>
+                              {% if entry.device_ieeeAddr != None and entry.device_ieeeAddr != "" %}
+                                {% for each in entry.device.input_values.split(',') %}
+                                  <option value= "{{ each }}" > {{ each }} </option>
+                                {% endfor %}     
+                              {% endif %} 
+                            </select>                    
+                          </td> 
+                          <td></td>
+                          <td>
+                            <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="checkbox_always_active_{{ entry.id }}" {% if entry.always_active == "True" %} checked="on" {% endif %} name="checkbox_always_active_{{ entry.id }}">
+                              <label class="custom-control-label" for="checkbox_always_active_{{ entry.id }}">Alles speichern</label>
+                            </div>
+                          </td>     
+                          <td>   
+                            <a href="/sensordata/jobs/delete/{{ entry.id }}#table"><font size="5"><i class='tim-icons icon-trash-simple'></i></font></a>   
+                          </td>   
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>         
+                  </div>
+                </div>            
+                <div class="card-footer">                   
+                  <button type="submit" onclick="window.location.href='/sensordata/jobs#table_sensordata_jobs'" name="save_sensordata_jobs_settings" class="btn btn-fill btn-primary">SAVE</button>
+                </div>
+              </form>
+            </div>
+
+<!---------------->
+<!--  DATAFILES -->
+<!---------------->   
+
+<section id="table_sensordata_files"></section>    
+
+<!-- error message datafile --> 
+
+{% if error_message_datafile != "" %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {{ error_message_datafile }}
+  </div>
+{% endif %}  
+
+            <div class="card ">
+              <div class="card-header">
+                <h5 class="title">Sensordaten</h5>
+              </div>         
+              <div class="card-body"> 
+                {% if list_plants_datafiles != "No Files founded" %}
+                  <div class="table-responsive">
+                    <table class="table tablesorter">         
+                      <tbody> 
+                        {% for entry in list_sensordata_files %}
+                        <tr>
+                          <td>{{ entry }}</td> 
+                          <td class="text-right"><a href="/sensordata/download/file/{{ entry }}?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD</b></font></a></td>  
+                          <td class="text-right"><a href="/sensordata/delete/{{ entry }}#table_sensordata_files"><font size="5"><i class='tim-icons icon-trash-simple'></i></font></a> </td> 
+                        </tr>
+                        {% endfor %} 
+                      </tbody>
+                    </table>
+                  </div>
+                {% else %}
+                  {{ list_sensordata_files }}
+                {% endif %}
+              </div>            
+            </div>
+
+          </div>
+        </div>
+      </div>                             

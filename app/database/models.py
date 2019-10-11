@@ -271,6 +271,16 @@ class Scheduler_Tasks(db.Model):
     last_ping_result            = db.Column(db.String(50))
     collapse                    = db.Column(db.String(50))
 
+class Sensordata_Jobs(db.Model):
+    __tablename__  = 'sensordata_jobs'
+    id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name            = db.Column(db.String(50), unique=True)
+    filename        = db.Column(db.String(50))
+    device_ieeeAddr = db.Column(db.String(50), db.ForeignKey('devices.ieeeAddr'))  
+    device          = db.relationship('Devices')  
+    sensor_key      = db.Column(db.String(50)) 
+    always_active   = db.Column(db.String(50))
+
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
     id                 = db.Column(db.Integer, primary_key=True, autoincrement = True)
@@ -435,14 +445,14 @@ def SET_CAMERA_SETTINGS(id, name, url, user, password):
         return True
 
 
-def CHANGE_CAMERAS_POSITION(id, direction):
-    if direction == "up" and id <= 8:
+def CHANGE_CAMERAS_POSITION(id, direction): 
+    if direction == "up":
         camera_list = GET_ALL_CAMERAS()
         camera_list = camera_list[::-1]
         
         for camera in camera_list:
-
-            if camera.id == (int(id) + 1):     
+            
+            if camera.id < id:  
                 new_id = camera.id
                 
                 # change ids
@@ -454,36 +464,25 @@ def CHANGE_CAMERAS_POSITION(id, direction):
                 
                 camera_2.id = id
                 camera_1.id = new_id
-                db.session.commit()
-                return
-
-        # id + 1 is not in use
-        camera = GET_CAMERA_BY_ID(id) 
-        camera.id = int(id) + 1              
-        db.session.commit()    
-                 
-
-    if direction == "down" and id >= 2:
-        for camera in GET_ALL_CAMERAS():
-            if camera.id == (int(id) - 1):      
-                new_id = camera.id
-                
-                # change ids
-                camera_1 = GET_CAMERA_BY_ID(id)
-                camera_2 = GET_CAMERA_BY_ID(new_id)
-                
-                camera_1.id = 99
-                db.session.commit()
-                
-                camera_2.id = id
-                camera_1.id = new_id
-                db.session.commit()  
+                db.session.commit()    
                 return 
 
-        # id - 1 is not in use
-        camera = GET_CAMERA_BY_ID(id) 
-        camera.id = int(id) - 1              
-        db.session.commit()    
+    if direction == "down":
+        for camera in GET_ALL_CAMERAS():
+            if camera.id > id:    
+                new_id = camera.id
+                
+                # change ids
+                camera_1 = GET_CAMERA_BY_ID(id)
+                camera_2 = GET_CAMERA_BY_ID(new_id)
+                
+                camera_1.id = 99
+                db.session.commit()
+                
+                camera_2.id = id
+                camera_1.id = new_id
+                db.session.commit()    
+                return 
 
 
 def DELETE_CAMERA(id):
@@ -988,15 +987,15 @@ def DELETE_DEVICE(ieeeAddr):
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
             error_list = error_list + "," + device.name + " eingetragen in Aufgabenplanung"
     
-
-    """
     # check sensordata
     entries = GET_ALL_SENSORDATA_JOBS()
     for entry in entries:
         if entry.device_ieeeAddr == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
             error_list = error_list + "," + device.name + " eingetragen in Sensordaten / Jobs"
-        
+
+
+    """      
     # check speechcontrol
     entries = GET_ALL_SPEECHCONTROL_DEVICE_TASKS()
     for entry in entries:
@@ -1880,9 +1879,6 @@ def ADD_PLANT():
             db.session.commit()
 
             WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + "new_plant_" + str(i) + " | added")  
-
-            # create data_file
-            CREATE_PLANTS_DATAFILE("new_plant_" + str(i))
             return True
                   
     return "Pflanzenlimit erreicht (25)"
@@ -1907,11 +1903,6 @@ def SET_PLANT_SETTINGS(id, name, device_ieeeAddr, group):
             device_name = "None"
         
         WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + old_name + " | changed || Name - " + entry.name + " | Device - " + device_name + " | Group - " + str(entry.group))
-
-        # rename data_file
-        if old_name != name:
-            RENAME_PLANTS_DATAFILE(old_name, name)
-
         return True
 
 
@@ -2530,7 +2521,7 @@ def ADD_SCHEDULER_TASK():
             new_task = Scheduler_Tasks(
                     id            = i,
                     name          = "new_scheduler_task_" + str(i),
-                    option_repeat = "checked",
+                    option_repeat = "True",
                 )
             db.session.add(new_task)
             db.session.commit()
@@ -2816,6 +2807,131 @@ def DELETE_SCHEDULER_TASK(task_id):
         pass         
     
     Scheduler_Tasks.query.filter_by(id=task_id).delete()
+    db.session.commit()
+    return True
+
+
+""" ################### """
+""" ################### """
+"""   sensordata jobs   """
+""" ################### """
+""" ################### """
+
+
+def GET_SENSORDATA_JOB_BY_ID(id):
+    return Sensordata_Jobs.query.filter_by(id=id).first()
+
+
+def GET_SENSORDATA_JOB_BY_NAME(name):
+    for job in Sensordata_Jobs.query.all():
+        
+        if job.name.lower() == name.lower():
+            return job   
+            
+            
+def GET_ALL_SENSORDATA_JOBS():
+    return Sensordata_Jobs.query.all()
+    
+
+def FIND_SENSORDATA_JOB_INPUT(incoming_ieeeAddr):
+    entries = Sensordata_Jobs.query.all()
+    
+    list_jobs = []
+
+    for entry in entries:
+        if entry.mqtt_device.ieeeAddr == incoming_ieeeAddr and entry.always_active == "checked":
+            list_jobs.append(entry.id)
+
+    return list_jobs
+
+
+def ADD_SENSORDATA_JOB():
+    for i in range(1,26):
+        if Sensordata_Jobs.query.filter_by(id=i).first():
+            pass
+        else:
+            # add the new job
+            sensordata_job = Sensordata_Jobs(
+                    id             = i,
+                    name           = "new_job_" + str(i),           
+                )
+            db.session.add(sensordata_job)
+            db.session.commit()
+
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata Job - " + "new_job_" + str(i) + " | added")                    
+            return True
+
+    return "Job-Limit erreicht (25)"
+
+
+def SET_SENSORDATA_JOB_SETTINGS(id, name, filename, device_ieeeAddr, sensor_key, always_active):        
+    entry = Sensordata_Jobs.query.filter_by(id=id).first()
+    old_name = entry.name
+
+    # values changed?
+    if (entry.name != name or entry.filename != filename or entry.device_ieeeAddr != device_ieeeAddr or 
+        entry.sensor_key != sensor_key or entry.always_active != always_active):
+
+        entry.name = name
+        entry.filename = filename
+        entry.device_ieeeAddr =device_ieeeAddr
+        entry.sensor_key = sensor_key
+        entry.always_active = always_active
+        db.session.commit()    
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata Job - " + entry.name + " | changed")   
+        return True 
+
+
+def CHANGE_SENSORDATA_JOBS_POSITION(id, direction): 
+    if direction == "up":
+        sensordata_jobs_list = GET_ALL_SENSORDATA_JOBS()
+        sensordata_jobs_list = sensordata_jobs_list[::-1]
+        
+        for sensordata_job in sensordata_jobs_list:
+            
+            if sensordata_job.id < id:  
+                new_id = sensordata_job.id
+                
+                # change ids
+                sensordata_job_1 = GET_SENSORDATA_JOB_BY_ID(id)
+                sensordata_job_2 = GET_SENSORDATA_JOB_BY_ID(new_id)
+                
+                sensordata_job_1.id = 99
+                db.session.commit()
+                
+                sensordata_job_2.id = id
+                sensordata_job_1.id = new_id
+                db.session.commit()    
+                return 
+
+    if direction == "down":
+        for sensordata_job in GET_ALL_SENSORDATA_JOBS():
+            if sensordata_job.id > id:    
+                new_id = sensordata_job.id
+                
+                # change ids
+                sensordata_job_1 = GET_SENSORDATA_JOB_BY_ID(id)
+                sensordata_job_2 = GET_SENSORDATA_JOB_BY_ID(new_id)
+                
+                sensordata_job_1.id = 99
+                db.session.commit()
+                
+                sensordata_job_2.id = id
+                sensordata_job_1.id = new_id
+                db.session.commit()    
+                return 
+
+
+def DELETE_SENSORDATA_JOB(id):
+    entry = GET_SENSORDATA_JOB_BY_ID(id)
+    
+    try:
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata Job - " + entry.name + " | deleted")
+    except:
+        pass     
+ 
+    Sensordata_Jobs.query.filter_by(id=id).delete()
     db.session.commit()
     return True
 

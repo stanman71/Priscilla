@@ -98,8 +98,8 @@
                         {% for entry in list_plants %}
                         <tr>
                           <td>
-                            <a href="/plants/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
-                            <a href="/plants/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
+                            <a href="/plants/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                            <a href="/plants/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
                           </td>                   
                           <td>
                             <div class="row justify-content-md-left">
@@ -170,45 +170,6 @@
                   <button type="submit" onclick="window.location.href='/plants#'" name="save_plants_settings" class="btn btn-fill btn-primary">SAVE</button>
                 </div>
               </form>
-            </div>
-
-<!---------------------->
-<!-- PLANTS DATAFILES -->
-<!---------------------->   
-
-<!-- error message datafile --> 
-
-{% if error_message_datafile != "" %}
-  <div class="alert alert-danger">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    {{ error_message_datafile }}
-  </div>
-{% endif %}  
-
-            <div class="card ">
-              <div class="card-header">
-                <h5 class="title">Pflanzendaten</h5>
-              </div>         
-              <div class="card-body"> 
-                {% if list_plants_datafiles != "No Files founded" %}
-                  <div class="table-responsive">
-                    <table class="table tablesorter">         
-                      <tbody> 
-                        {% for entry in list_plants_datafiles %}
-                        <tr>
-                          <td>{{ entry }}</td> 
-                          <td class="text-right"><a href="/plants/download/file/{{ entry }}?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD</b></font></a></td>  
-                        </tr>
-                        {% endfor %} 
-                      </tbody>
-                    </table>
-                  </div>
-                {% else %}
-                  {{ list_plants_datafiles }}
-                {% endif %}
-              </div>            
             </div>
 
 

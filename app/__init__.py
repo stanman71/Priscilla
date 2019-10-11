@@ -16,7 +16,6 @@ import heapq
 # Grabs the folder where the script runs.
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY']                     = "randon"        #os.urandom(20).hex()
 app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///' + os.path.join(basedir, 'database/database.db')
@@ -27,7 +26,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.add_template_global(assets     , 'assets')
 app.add_template_global(app.config , 'cfg'   )
 
-from app.sites                      import index, dashboard, scheduler, programs, plants, led_scenes, led_groups, cameras, devices, settings_system, settings_controller, settings_speechcontrol, settings_users, settings_system_log, errors
+from app.sites                      import index, dashboard, scheduler, programs, plants, led_scenes, led_groups, cameras, sensordata_jobs, devices, settings_system, settings_controller, settings_speechcontrol, settings_users, settings_system_log, errors
 from app.database.models            import *
 from app.backend.shared_resources   import process_management_queue
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
@@ -110,6 +109,7 @@ try:
     print("###### Start MQTT ######")
     MQTT_RECEIVE_THREAD()
     MQTT_PUBLISH_THREAD()
+    REFRESH_MQTT_INPUT_MESSAGES_THREAD()
 
 except Exception as e:
     print("ERROR: MQTT | " + str(e))
@@ -140,8 +140,7 @@ if CHECK_ZIGBEE2MQTT():
         WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Pairing disabled") 
     else:             
         WRITE_LOGFILE_SYSTEM("WARNING", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")    
-
-
+        
 else:
     print("ERROR: ZigBee2MQTT | No connection") 
     
@@ -150,12 +149,10 @@ else:
 
 
 """ ################## """
-""" background threads """
+""" process management """
 """ ################## """
 
 PROCESS_MANAGEMENT_THREAD()
-REFRESH_MQTT_INPUT_MESSAGES_THREAD()
-
 
 
 app.run(host = GET_HOST_NETWORK().lan_ip_address, port = 80, debug=False)

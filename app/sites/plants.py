@@ -5,7 +5,6 @@ from functools           import wraps
 
 from app                          import app
 from app.database.models          import *
-from app.backend.file_management  import GET_PATH, GET_PLANTS_DATAFILES
 from app.backend.shared_resources import process_management_queue
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
@@ -37,7 +36,6 @@ def plants():
     error_message_change_settings   = []    
     success_message_add_plant       = False       
     error_message_add_plant         = []
-    error_message_datafile          = ""
 
 
     page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
@@ -56,11 +54,6 @@ def plants():
     if session.get('delete_plant_error', None) != None:
         error_message_change_settings.append(session.get('delete_plant_error'))
         session['delete_plant_error'] = None       
-
-    # error download datafile
-    if session.get('error_download_datafile', None) != None:
-        error_message_datafile = session.get('error_download_datafile') 
-        session['error_download_datafile'] = None
 
 
     """ ########### """
@@ -168,8 +161,7 @@ def plants():
 
     dropdown_list_watering_controller = GET_ALL_DEVICES("watering_controller")
 
-    list_plants           = GET_ALL_PLANTS()
-    list_plants_datafiles = GET_PLANTS_DATAFILES()
+    list_plants = GET_ALL_PLANTS()
 
     data = {'navigation': 'plants', 'notification': ''}
 
@@ -181,12 +173,9 @@ def plants():
                                                     success_message_change_settings=success_message_change_settings,                               
                                                     error_message_change_settings=error_message_change_settings,   
                                                     success_message_add_plant=success_message_add_plant,                            
-                                                    error_message_add_plant=error_message_add_plant,     
-                                                    error_message_datafile=error_message_datafile,                                                                                             
+                                                    error_message_add_plant=error_message_add_plant,                                                                                              
                                                     dropdown_list_watering_controller=dropdown_list_watering_controller, 
-                                                    list_plants=list_plants,  
-                                                    list_plants_datafiles=list_plants_datafiles,  
-                                                    timestamp=timestamp,      
+                                                    list_plants=list_plants,     
                                                     ) 
                            )
 
@@ -228,20 +217,3 @@ def delete_plant(id):
         session['delete_plant_error'] = plant + " || " + str(result)
 
     return redirect(url_for('plants'))
-
-
-# download plants datafile
-@app.route('/plants/download/file/<path:filepath>')
-@login_required
-@permission_required
-def download_plants_datafile(filepath):
-    path = GET_PATH() + "/csv/"  
-
-    try:
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /csv/" + filepath + " | downloaded") 
-
-    except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /csv/" + filepath + " | " + str(e))
-        session['error_download_datafile'] = "Download Datafile || " + str(e)
-
-    return send_from_directory(path, filepath)
