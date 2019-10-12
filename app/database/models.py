@@ -1556,15 +1556,15 @@ def SET_LED_SCENE(id, name, red_1, green_1, blue_1, brightness_1, red_2, green_2
     entry = LED_Scenes.query.filter_by(id=id).first()
 
     if (entry.name != name or 
-        entry.red_1 != int(red_1) or entry.green_1 != int(green_1) or entry.blue_1 != int(blue_1) or entry.brightness_1 != brightness_1 or
-        entry.red_2 != int(red_2) or entry.green_2 != int(green_2) or entry.blue_2 != int(blue_2) or entry.brightness_2 != brightness_3 or 
-        entry.red_3 != int(red_3) or entry.green_3 != int(green_3) or entry.blue_3 != int(blue_3) or entry.brightness_3 != brightness_3 or
-        entry.red_4 != int(red_4) or entry.green_4 != int(green_4) or entry.blue_4 != int(blue_4) or entry.brightness_4 != brightness_4 or 
-        entry.red_5 != int(red_5) or entry.green_5 != int(green_5) or entry.blue_5 != int(blue_5) or entry.brightness_5 != brightness_5 or 
-        entry.red_6 != int(red_6) or entry.green_6 != int(green_6) or entry.blue_6 != int(blue_6) or entry.brightness_6 != brightness_6 or 
-        entry.red_7 != int(red_7) or entry.green_7 != int(green_7) or entry.blue_7 != int(blue_7) or entry.brightness_7 != brightness_7 or 
-        entry.red_8 != int(red_8) or entry.green_8 != int(green_8) or entry.blue_8 != int(blue_8) or entry.brightness_8 != brightness_8 or 
-        entry.red_9 != int(red_9) or entry.green_9 != int(green_9) or entry.blue_9 != int(blue_9) or entry.brightness_9 != brightness_9):
+        entry.red_1 != int(red_1) or entry.green_1 != int(green_1) or entry.blue_1 != int(blue_1) or entry.brightness_1 != int(brightness_1) or
+        entry.red_2 != int(red_2) or entry.green_2 != int(green_2) or entry.blue_2 != int(blue_2) or entry.brightness_2 != int(brightness_2) or 
+        entry.red_3 != int(red_3) or entry.green_3 != int(green_3) or entry.blue_3 != int(blue_3) or entry.brightness_3 != int(brightness_3) or
+        entry.red_4 != int(red_4) or entry.green_4 != int(green_4) or entry.blue_4 != int(blue_4) or entry.brightness_4 != int(brightness_4) or 
+        entry.red_5 != int(red_5) or entry.green_5 != int(green_5) or entry.blue_5 != int(blue_5) or entry.brightness_5 != int(brightness_5) or 
+        entry.red_6 != int(red_6) or entry.green_6 != int(green_6) or entry.blue_6 != int(blue_6) or entry.brightness_6 != int(brightness_6) or 
+        entry.red_7 != int(red_7) or entry.green_7 != int(green_7) or entry.blue_7 != int(blue_7) or entry.brightness_7 != int(brightness_7) or 
+        entry.red_8 != int(red_8) or entry.green_8 != int(green_8) or entry.blue_8 != int(blue_8) or entry.brightness_8 != int(brightness_8) or 
+        entry.red_9 != int(red_9) or entry.green_9 != int(green_9) or entry.blue_9 != int(blue_9) or entry.brightness_9 != int(brightness_9)):
 
         entry.name         = name
         entry.red_1        = red_1

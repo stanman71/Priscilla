@@ -163,7 +163,7 @@ def plants():
 
     list_plants = GET_ALL_PLANTS()
 
-    data = {'navigation': 'plants', 'notification': ''}
+    data = {'navigation': 'plants'}
 
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
 

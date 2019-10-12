@@ -34,7 +34,7 @@ def settings_speechcontrol():
     error_message_logfile   = ""
     
 
-    data = {'navigation': 'settings', 'notification': ''}
+    data = {'navigation': 'settings'}
 
     return render_template('layouts/default.html',
                             data=data,    

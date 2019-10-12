@@ -288,7 +288,7 @@ def settings_system():
     email_settings    = GET_EMAIL_SETTINGS()
     list_backup_files = GET_BACKUP_FILES()
 
-    data = {'navigation': 'settings', 'notification': ''}
+    data = {'navigation': 'settings'}
 
     return render_template('layouts/default.html',
                             data=data,    

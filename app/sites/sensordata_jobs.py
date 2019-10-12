@@ -162,7 +162,7 @@ def sensordata_jobs():
     dropdown_list_devices = GET_ALL_DEVICES("sensors") 
     list_sensordata_files = GET_SENSORDATA_FILES()
 
-    data = {'navigation': 'sensordata', 'notification': ''}
+    data = {'navigation': 'sensordata'}
 
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 

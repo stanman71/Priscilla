@@ -37,7 +37,7 @@ def dashboard():
     page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
 
-    data = {'navigation': 'dashboard', 'notification': ''}
+    data = {'navigation': 'dashboard'}
 
     # try to match the pages defined in -> pages/
     return render_template('layouts/default.html',

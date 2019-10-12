@@ -373,7 +373,7 @@ def devices():
     list_devices   = GET_ALL_DEVICES("")
     zigbee_pairing = GET_ZIGBEE2MQTT_PAIRING()
 
-    data = {'navigation': 'devices', 'notification': ''}
+    data = {'navigation': 'devices'}
 
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
 

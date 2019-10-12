@@ -216,7 +216,7 @@ def settings_users():
 
     list_users = GET_ALL_USERS()
 
-    data = {'navigation': 'settings', 'notification': ''}
+    data = {'navigation': 'settings'}
 
     return render_template('layouts/default.html',
                             data=data,    

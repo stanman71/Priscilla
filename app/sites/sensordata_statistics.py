@@ -215,7 +215,7 @@ def sensordata_statistics():
 
     dropdown_list_sensordata_files = GET_SENSORDATA_FILES() 
 
-    data = {'navigation': 'sensordata', 'notification': ''}
+    data = {'navigation': 'sensordata'}
 
     return render_template('layouts/default.html',
                             data=data,    

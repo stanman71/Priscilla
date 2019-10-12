@@ -110,7 +110,7 @@ def settings_system_log():
 
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
 
-    data = {'navigation': 'settings', 'notification': ''}
+    data = {'navigation': 'settings'}
 
     return render_template('layouts/default.html',
                             data=data,    

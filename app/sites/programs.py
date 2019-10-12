@@ -188,7 +188,7 @@ def programs():
         error_message_program_tasks = []
 
 
-    data = {'navigation': 'programs', 'notification': ''}    
+    data = {'navigation': 'programs'}    
 
     return render_template('layouts/default.html',
                             data=data,    

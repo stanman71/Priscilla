@@ -387,7 +387,7 @@ def led_scenes():
 
     list_led_scenes = GET_ALL_LED_SCENES()
 
-    data = {'navigation': 'led', 'notification': ''} 
+    data = {'navigation': 'led'} 
 
     return render_template('layouts/default.html',
                             data=data,    

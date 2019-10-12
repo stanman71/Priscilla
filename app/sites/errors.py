@@ -29,7 +29,7 @@ def e400(e):
     page_title = 'Login - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, login page.'
 
-    data          = {'navigation': 'None', 'notification': 'None'}
+    data          = {'navigation': 'None'}
     error_message = http_err( 400)
 
     return render_template( 'layouts/default.html',
@@ -47,7 +47,7 @@ def e401(e):
     page_title = 'Login - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, login page.'
 
-    data          = {'navigation': 'None', 'notification': 'None'}
+    data          = {'navigation': 'None'}
     error_message = http_err( 401)
 
     return render_template( 'layouts/default.html',
@@ -65,7 +65,7 @@ def e403(e):
     page_title = 'Login - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, login page.'
 
-    data          = {'navigation': 'None', 'notification': 'None'}
+    data          = {'navigation': 'None'}
     error_message = http_err( 403)
 
     return render_template( 'layouts/default.html',
@@ -83,7 +83,7 @@ def e404(e):
     page_title = 'Login - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, login page.'
 
-    data          = {'navigation': 'None', 'notification': 'None'}
+    data          = {'navigation': 'None'}
     error_message = http_err( 404)
 
     return render_template( 'layouts/default.html',
@@ -101,7 +101,7 @@ def e410(e):
     page_title = 'Login - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, login page.'
 
-    data          = {'navigation': 'None', 'notification': 'None'}
+    data          = {'navigation': 'None'}
     error_message = http_err( 410)
 
     return render_template( 'layouts/default.html',
@@ -119,7 +119,7 @@ def e500(e):
     page_title = 'Login - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, login page.'
 
-    data          = {'navigation': 'None', 'notification': 'None'}
+    data          = {'navigation': 'None'}
     error_message = http_err( 500)
 
     return render_template( 'layouts/default.html',

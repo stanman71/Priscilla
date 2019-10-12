@@ -317,7 +317,7 @@ def led_groups():
     dropdown_list_leds = GET_ALL_DEVICES("led")
     list_led_groups    = GET_ALL_LED_GROUPS()
 
-    data = {'navigation': 'led', 'notification': ''}
+    data = {'navigation': 'led'}
 
     return render_template('layouts/default.html',
                             data=data,    

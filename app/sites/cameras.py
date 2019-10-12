@@ -212,7 +212,7 @@ def cameras():
 
     list_cameras = GET_ALL_CAMERAS()
 
-    data = {'navigation': 'cameras', 'notification': ''}
+    data = {'navigation': 'cameras'}
 
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
 

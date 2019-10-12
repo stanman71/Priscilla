@@ -63,7 +63,7 @@ def index():
         else:
             msg = "Wrong Username"
 
-    data = {'navigation': 'None', 'notification': 'None'}
+    data = {'navigation': 'None'}
 
     # try to match the pages defined in -> themes/light-bootstrap/pages/
     return render_template( 'layouts/default.html',
