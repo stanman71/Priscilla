@@ -81,39 +81,50 @@ def sensordata_jobs():
 
                 error_founded = False            
 
-                # check name  
-                if request.form.get("set_name_" + str(i)) != "":
+                # ############
+                # name setting
+                # ############
 
-                    current_name = GET_SENSORDATA_JOB_BY_ID(i).name                   
-                    new_name     = request.form.get("set_name_" + str(i))
+                sensordata_job = GET_SENSORDATA_JOB_BY_ID(i)
+                input_name     = request.form.get("set_name_" + str(i))                    
 
-                    if new_name != current_name:  
+                # add new name
+                if ((input_name != "") and (GET_SENSORDATA_JOB_BY_NAME(input_name) == None)):
+                    name = request.form.get("set_name_" + str(i)) 
+                    
+                # nothing changed 
+                elif input_name == sensordata_job.name:
+                    name = sensordata_job.name                        
+                    
+                # name already exist
+                elif ((GET_SENSORDATA_JOB_BY_NAME(input_name) != None) and (sensordata_job.name != input_name)):
+                    error_message_change_settings.append(sensordata_job.name + " || Name bereits vergeben")  
+                    error_founded = True
+                    name = sensordata_job.name
 
-                        # name already exist ?         
-                        if not GET_SENSORDATA_JOB_BY_NAME(new_name):  
-                            name = new_name                            
-                        else: 
-                            error_message_change_settings.append(current_name + " || Name bereits vergeben")  
-                            error_founded = True
-                            name = current_name
-
-                    else:
-                        name = current_name
-
-                else:
+                # no input commited
+                else:                          
                     name = GET_SENSORDATA_JOB_BY_ID(i).name
-                    error_message_change_settings.append(current_name + " || Keinen Namen angegeben") 
-                    error_founded = True      
+                    error_message_change_settings.append(sensordata_job.name + " || Keinen Namen angegeben") 
+                    error_founded = True  
 
-                # check filename
+
+                # ################
+                # filename setting
+                # ################
+
                 if request.form.get("set_filename_" + str(i)) != "":
                     filename = request.form.get("set_filename_" + str(i)) 
                 
                 else:
                     filename = GET_SENSORDATA_JOB_BY_ID(i).filename 
-                    error_message_change_settings.append(current_name + " >>> Keine Datei angegeben")  
-                                        
-                # check device
+                    error_message_change_settings.append(sensordata_job.name + " >>> Keine Datei angegeben")  
+
+
+                # ##############
+                # device setting
+                # ##############
+
                 device = request.form.get("set_device_" + str(i)) 
 
                 if GET_DEVICE_BY_IEEEADDR(device):
@@ -121,13 +132,17 @@ def sensordata_jobs():
                 elif GET_DEVICE_BY_ID(device):
                     device_ieeeAddr = GET_DEVICE_BY_ID(device).ieeeAddr
                 else:
-                    error_message_change_settings.append(current_name + " >>> Kein Gerät angegeben") 
+                    error_message_change_settings.append(sensordata_job.name + " >>> Kein Gerät angegeben") 
                     device_ieeeAddr = ""
                     sensor_key      = ""
   
-                # check sensor
+
+                # ##############
+                # sensor setting
+                # ##############
+
                 if device_ieeeAddr == "":
-                    error_message_change_settings.append(current_name + " >>> Keinen Sensor angegeben") 
+                    error_message_change_settings.append(sensordata_job.name + " >>> Keinen Sensor angegeben") 
 
                 else:
                     # replace array_position to sensor name 
@@ -144,6 +159,7 @@ def sensordata_jobs():
                             sensor_list = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).input_values
                             sensor_list = sensor_list.split(",")
                             sensor_key  = sensor_list[int(sensor_key)-2]
+
 
                 # check checkbox
                 if request.form.get("checkbox_always_active_" + str(i)):

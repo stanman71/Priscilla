@@ -83,27 +83,33 @@ def programs():
     if request.form.get("save_program_settings") != None: 
         for i in range (1,26):
 
-            # rename program   
             if request.form.get("set_name_" + str(i)) != None:
 
+                # ############
+                # name setting
+                # ############
+
                 selected_program = GET_PROGRAM_BY_ID(i)
-                current_name     = GET_PROGRAM_BY_ID(i).name                  
-                new_name         = request.form.get("set_name_" + str(i))
+                input_name       = request.form.get("set_name_" + str(i))                    
 
-                if new_name == "":
-                    error_message_change_settings_program.append(current_name + " || Keinen Namen angegeben")  
-                    name = current_name
-                
-                # name already exist ?      
-                elif new_name != current_name:              
-                    if not GET_PROGRAM_BY_NAME(new_name):  
-                        name = new_name                            
-                    else: 
-                        error_message_change_settings_program.append(current_name + " || Name bereits vergeben")  
-                        name = current_name
+                # add new name
+                if ((input_name != "") and (GET_PROGRAM_BY_NAME(input_name) == None)):
+                    name = request.form.get("set_name_" + str(i)) 
+                    
+                # nothing changed 
+                elif input_name == selected_program.name:
+                    name = selected_program.name                        
+                    
+                # name already exist
+                elif ((GET_PROGRAM_BY_NAME(input_name) != None) and (selected_program.name != input_name)):
+                    error_message_change_settings_program.append(selected_program.name + " || Name bereits vergeben")  
+                    name = selected_program.name
 
-                else:
-                    name = current_name
+                # no input commited
+                else:                          
+                    name = GET_PROGRAM_BY_ID(i).name
+                    error_message_change_settings_program.append(selected_program.name + " || Keinen Namen angegeben") 
+
 
                 line_content_1  = request.form.get("set_line_content_1_" + str(i))
                 line_content_2  = request.form.get("set_line_content_2_" + str(i))

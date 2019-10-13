@@ -284,7 +284,7 @@ class Sensordata_Jobs(db.Model):
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
     id                 = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    username           = db.Column(db.String(64), unique = True)
+    name               = db.Column(db.String(64), unique = True)
     email              = db.Column(db.String(120), unique = True)
     role               = db.Column(db.String(50))   
     password           = db.Column(db.String(100))
@@ -363,9 +363,9 @@ if job_backup_database_founded == False:
 
 
 # create default user
-if User.query.filter_by(username='admin').first() is None:
+if User.query.filter_by(name='admin').first() is None:
     user = User(
-        username           = "admin",
+        name               = "admin",
         email              = "member@example.com",
         role               = "administrator",
         password           = "sha256$OeDkVenT$bc8d974603b713097e69fc3efa1132991bfb425c59ec00f207e4b009b91f4339",    
@@ -737,7 +737,6 @@ def GET_ALL_DEVICES(selector):
     if selector == "led":
         for device in devices:
             if (device.device_type == "led_rgb" or 
-                device.device_type == "led_white" or 
                 device.device_type == "led_simple"):
                     
                 device_list.append(device)    
@@ -836,15 +835,6 @@ def SET_DEVICE_LAST_VALUES(ieeeAddr, last_values):
     entry.last_values_formated = last_values_formated
     entry.last_contact         = timestamp
     db.session.commit()   
-
-    # write data_file
-    for plant in GET_ALL_PLANTS():
-        if plant.device_ieeeAddr == ieeeAddr:
-            device_name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
-            
-            # extract numbers
-            list_values = re.findall(r'\b\d+\b', last_values_formated)
-            WRITE_PLANTS_DATAFILE(plant.name, device_name, list_values[0], list_values[1], list_values[2])
 
 
 def UPDATE_DEVICE(id, name, gateway, model, device_type = "", description = "", input_values = "", input_events = "", commands = ""):
@@ -983,7 +973,7 @@ def DELETE_DEVICE(ieeeAddr):
     # check scheduler sensor
     entries = GET_ALL_SCHEDULER_TASKS()
     for entry in entries:
-        if (entry.device_ieeeAddr_1 == ieeeAddr) or (entry.device_ieeeAddr_2 == ieeeAddr) or (entry.device_ieeeAddr_3 == ieeeAddr):
+        if (entry.device_ieeeAddr_1 == ieeeAddr) or (entry.device_ieeeAddr_2 == ieeeAddr):
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
             error_list = error_list + "," + device.name + " eingetragen in Aufgabenplanung"
     
@@ -1071,7 +1061,7 @@ def GET_EMAIL_SETTINGS():
 def GET_EMAIL_ADDRESSES(address_type): 
     if address_type == "TEST":
         mail_list = []
-        mail_list.append(eMail.query.filter_by().first().username)
+        mail_list.append(eMail.query.filter_by().first().name)
         return mail_list
 
     if address_type == "NOTIFICATION":
@@ -2659,6 +2649,7 @@ def SET_SCHEDULER_TASK(id, name, task,
             log_message = log_message + (" | Pause - " + entry.option_pause)
 
         WRITE_LOGFILE_SYSTEM("DATABASE", log_message) 
+        return True
 
 
 def SET_SCHEDULER_TASK_COLLAPSE_OPEN(id):
@@ -2947,10 +2938,10 @@ def GET_USER_BY_ID(id):
     return User.query.get(int(id))
 
 
-def GET_USER_BY_NAME(username):
+def GET_USER_BY_NAME(name):
     for user in User.query.all():
         
-        if user.username.lower() == username.lower():
+        if user.name.lower() == name.lower():
             return user       
  
 
@@ -2970,7 +2961,7 @@ def ADD_USER():
             # add the new user
             new_user = User(
                     id                 = i,
-                    username           = "new_user_" + str(i),
+                    name               = "new_user_" + str(i),
                     role               = "user",
                     email_notification = "False",
                 )
@@ -2981,21 +2972,21 @@ def ADD_USER():
             return True
 
 
-def UPDATE_USER_SETTINGS(id, username, email, role, email_notification):    
+def UPDATE_USER_SETTINGS(id, name, email, role, email_notification):    
     
     entry = User.query.filter_by(id=id).first()
-    old_username = entry.username
+    old_name = entry.name
 
     # values changed ?
-    if (entry.username != username or entry.email != email or entry.role != role or entry.email_notification != email_notification):
+    if (entry.name != name or entry.email != email or entry.role != role or entry.email_notification != email_notification):
 
-        entry.username           = username
+        entry.name               = name
         entry.email              = email
         entry.role               = role 
         entry.email_notification = email_notification
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + old_username + " | changed || Username - " + entry.username +
+        WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + old_name + " | changed || name - " + entry.name +
                              " | eMail - " + entry.email + " | Role - " + entry.role + " | eMail-Notification - " + entry.email_notification)
 
         return True
@@ -3010,7 +3001,7 @@ def CHANGE_USER_PASSWORD(id, hashed_password):
         entry.password = hashed_password    
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + entry.username + " | Password changed")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + entry.name + " | Password changed")
         return True
     
 
@@ -3018,7 +3009,7 @@ def DELETE_USER(user_id):
     entry = GET_USER_BY_ID(user_id)
 
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + entry.username + " | deleted")    
+        WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + entry.name + " | deleted")    
         User.query.filter_by(id=user_id).delete()
         db.session.commit()    
         return True

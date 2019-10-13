@@ -32,10 +32,11 @@ def permission_required(f):
 @login_required
 @permission_required
 def scheduler():
-    success_message_change_settings    = []
-    error_message_change_settings      = []       
-    success_message_add_scheduler_task = []
-    error_message_add_scheduler_task   = []
+    success_message_change_settings                = []
+    error_message_change_settings                  = []       
+    success_message_add_scheduler_task             = []
+    error_message_add_scheduler_task               = []
+    success_message_change_settings_scheduler_task = "" 
 
     RESET_SCHEDULER_TASK_COLLAPSE()
     UPDATE_SCHEDULER_TASKS_DEVICE_NAMES()
@@ -72,42 +73,39 @@ def scheduler():
                 SET_SCHEDULER_TASK_COLLAPSE_OPEN(i)    
 
                 error_founded = False          
-                current_name  = GET_SCHEDULER_TASK_BY_ID(i).name                
 
                 # ############
                 # name setting
                 # ############
 
-                # change name   
-                if request.form.get("set_name_" + str(i)) != "":
-                                    
-                    new_name = request.form.get("set_name_" + str(i))
+                scheduler_task = GET_SCHEDULER_TASK_BY_ID(i)
+                input_name     = request.form.get("set_name_" + str(i))                    
 
-                    if new_name != current_name:       
+                # add new name
+                if ((input_name != "") and (GET_SCHEDULER_TASK_BY_NAME(input_name) == None)):
+                    name = request.form.get("set_name_" + str(i)) 
+                    
+                # nothing changed 
+                elif input_name == scheduler_task.name:
+                    name = scheduler_task.name                        
+                    
+                # name already exist
+                elif ((GET_SCHEDULER_TASK_BY_NAME(input_name) != None) and (scheduler_task.name != input_name)):
+                    error_message_change_settings.append(scheduler_task.name + " || Name bereits vergeben")  
+                    error_founded = True
+                    name = scheduler_task.name
 
-                        # name already exist ?    
-                        if not GET_SCHEDULER_TASK_BY_NAME(new_name):  
-                            name = new_name                            
-                        else: 
-                            error_message_change_settings.append(current_name + " || Name bereits vergeben")  
-                            error_founded = True
-                            name = current_name
-
-                    else:
-                        name = current_name
-
-                else:
+                # no input commited
+                else:                          
                     name = GET_SCHEDULER_TASK_BY_ID(i).name
-                    error_message_change_settings.append(current_name + " || Keinen Namen angegeben") 
+                    error_message_change_settings.append(scheduler_task.name + " || Keinen Namen angegeben") 
                     error_founded = True  
-               
+
 
                 # ############
                 # task setting
                 # ############
 
-
-                # set task
                 if request.form.get("set_task_" + str(i)) != "":
                     task = request.form.get("set_task_" + str(i))
                 else:
@@ -118,7 +116,6 @@ def scheduler():
                 # #################
                 # checkbox settings
                 # #################
-
 
                 # set checkbox time
                 if request.form.get("checkbox_option_time_" + str(i)):
@@ -161,20 +158,17 @@ def scheduler():
                 # time settings
                 # #############
 
-
                 # set day
                 if request.form.get("set_day_" + str(i)) != "":
                     day = request.form.get("set_day_" + str(i))
                 else:
                     day = GET_SCHEDULER_TASK_BY_ID(i).day
 
-
                 # set hour
                 if request.form.get("set_hour_" + str(i)) != "":
                     hour = request.form.get("set_hour_" + str(i))
                 else:
                     hour = GET_SCHEDULER_TASK_BY_ID(i).hour
-
 
                 # set minute
                 if request.form.get("set_minute_" + str(i)) != "":
@@ -187,13 +181,11 @@ def scheduler():
                 # sun settings
                 # ############
 
-
                 # set option sunrise
                 if request.form.get("checkbox_option_sunrise_" + str(i)):
                     option_sunrise = "checked"
                 else:
                     option_sunrise = "None"  
-
 
                 # set option sunset
                 if request.form.get("checkbox_option_sunset_" + str(i)):
@@ -201,14 +193,12 @@ def scheduler():
                 else:              
                     option_sunset = "None"  
 
-
                 # set location
                 location = request.form.get("set_location_" + str(i))
                 
                 if location == "" or location == None:           
                     location = "None"  
-                    
-                               
+                                                  
                 # update sunrise / sunset  
                 if location != "None":
                     
@@ -236,8 +226,7 @@ def scheduler():
                     device_ieeeAddr_1 = GET_DEVICE_BY_ID(device_1).ieeeAddr
                 else:
                     device_ieeeAddr_1 = "None"
-                     
-                     
+                                        
                 # set device 2
                 device_2 = request.form.get("set_device_2_" + str(i))
 
@@ -316,7 +305,6 @@ def scheduler():
                 # position settings
                 # #################   
 
-
                 # set option home
                 if request.form.get("checkbox_option_home_" + str(i)):
                     option_home = "checked"
@@ -336,16 +324,17 @@ def scheduler():
                     ip_addresses = "None"
                     
 
-                SET_SCHEDULER_TASK(i, name, task, 
-                                      option_time, option_sun, option_sensors, option_position, option_repeat, option_pause,
-                                      day, hour, minute,
-                                      option_sunrise, option_sunset, location,
-                                      device_ieeeAddr_1, device_name_1, device_input_values_1, 
-                                      sensor_key_1, operator_1, value_1, main_operator_second_sensor,
-                                      device_ieeeAddr_2, device_name_2, device_input_values_2, 
-                                      sensor_key_2, operator_2, value_2, 
-                                      option_home, option_away, ip_addresses)
+                if SET_SCHEDULER_TASK(i, name, task, 
+                                         option_time, option_sun, option_sensors, option_position, option_repeat, option_pause,
+                                         day, hour, minute,
+                                         option_sunrise, option_sunset, location,
+                                         device_ieeeAddr_1, device_name_1, device_input_values_1, 
+                                         sensor_key_1, operator_1, value_1, main_operator_second_sensor,
+                                         device_ieeeAddr_2, device_name_2, device_input_values_2, 
+                                         sensor_key_2, operator_2, value_2, 
+                                         option_home, option_away, ip_addresses):
 
+                    success_message_change_settings_scheduler_task = i
 
 
     """ ####################### """
@@ -524,6 +513,7 @@ def scheduler():
                                                     error_message_add_scheduler_task=error_message_add_scheduler_task,
                                                     error_message_scheduler_tasks_settings=error_message_scheduler_tasks_settings,
                                                     error_message_scheduler_tasks=error_message_scheduler_tasks,
+                                                    success_message_change_settings_scheduler_task=success_message_change_settings_scheduler_task,
                                                     device_1_input_values=device_1_input_values,
                                                     device_2_input_values=device_2_input_values,
                                                     device_3_input_values=device_3_input_values,

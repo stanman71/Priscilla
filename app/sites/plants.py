@@ -5,7 +5,7 @@ from functools           import wraps
 
 from app                          import app
 from app.database.models          import *
-from app.backend.shared_resources import process_management_queue
+from app.backend.shared_resources import mqtt_message_queue
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
@@ -82,32 +82,39 @@ def plants():
                 error_founded          = False
                 moisture_level         = None
                 pump_duration_manually = None                
-                current_name           = GET_PLANT_BY_ID(i).name
 
-                # rename plants   
-                if request.form.get("set_name_" + str(i)) != "":
-                                      
-                    new_name = request.form.get("set_name_" + str(i))
+                # ############
+                # name setting
+                # ############
 
-                    if new_name != current_name:  
+                plant      = GET_PLANT_BY_ID(i)
+                input_name = request.form.get("set_name_" + str(i))                    
 
-                        # name already exist ?         
-                        if not GET_PLANT_BY_NAME(new_name):  
-                            name = new_name                            
-                        else: 
-                            error_message_change_settings.append(current_name + " || Name bereits vergeben")  
-                            error_founded = True
-                            name = current_name
+                # add new name
+                if ((input_name != "") and (GET_PLANT_BY_NAME(input_name) == None)):
+                    name = request.form.get("set_name_" + str(i)) 
+                    
+                # nothing changed 
+                elif input_name == plant.name:
+                    name = plant.name                        
+                    
+                # name already exist
+                elif ((GET_PLANT_BY_NAME(input_name) != None) and (plant.name != input_name)):
+                    error_message_change_settings.append(plant.name + " || Name bereits vergeben")  
+                    error_founded = True
+                    name = plant.name
 
-                    else:
-                        name = current_name
-
-                else:
+                # no input commited
+                else:                          
                     name = GET_PLANT_BY_ID(i).name
-                    error_message_change_settings.append(current_name + " || Keinen Namen angegeben") 
-                    error_founded = True      
+                    error_message_change_settings.append(plant.name + " || Keinen Namen angegeben") 
+                    error_founded = True  
 
-                # check device
+
+                # ##############
+                # device setting
+                # ##############
+
                 if request.form.get("set_watering_controller_ieeeAddr") == "None":
                     error_message_change_settings.append("Kein Gerät angegeben")
                 if (GET_PLANT_BY_IEEEADDR(request.form.get("set_watering_controller_ieeeAddr")) and 
@@ -117,7 +124,10 @@ def plants():
                                     
                 device_ieeeAddr = request.form.get("set_watering_controller_ieeeAddr")
 
-                # check group
+                # #############
+                # group setting
+                # #############
+
                 if request.form.get("set_group_" + str(i)) != "":
                     group = request.form.get("set_group_" + str(i))
                 else:
@@ -131,10 +141,10 @@ def plants():
 
                     try: 
                         if not 5 < int(pump_duration_manually) < 200:
-                            error_message_change_settings.append(current_name + " || Pumpzeit muss eine Zahl zwischen 5 und 200 sein") 
+                            error_message_change_settings.append(plant.name + " || Pumpzeit muss eine Zahl zwischen 5 und 200 sein") 
                             error_founded = True 
                     except:
-                        error_message_change_settings.append(current_name + " || Pumpzeit muss eine Zahl zwischen 5 und 200 sein") 
+                        error_message_change_settings.append(plant.name + " || Pumpzeit muss eine Zahl zwischen 5 und 200 sein") 
                         error_founded = True        
 
                 # save settings
@@ -142,7 +152,7 @@ def plants():
 
                     changes_saved = False
 
-                    if SET_PLANT_SETTINGS(i, device_ieeeAddr, name, group):
+                    if SET_PLANT_SETTINGS(i, name, device_ieeeAddr, group):
                         changes_saved = True
 
                     if moisture_level != None:
@@ -154,10 +164,9 @@ def plants():
                             changes_saved = True     
 
                     if changes_saved == True:    
-                        success_message_change_settings.append(name + " || Einstellungen gespeichert") 
+                        success_message_change_settings.append(plant.name + " || Einstellungen gespeichert") 
 
                     name = ""
-
 
     dropdown_list_watering_controller = GET_ALL_DEVICES("watering_controller")
 
@@ -199,7 +208,7 @@ def test_pump(id):
     channel  =  "miranda/mqtt/" + GET_PLANT_BY_ID(id).device_ieeeAddr + "/set"
     msg      = '{"pump":"ON","pump_time":5}'
 
-    heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))  
+    heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
     return redirect(url_for('plants'))
 
 

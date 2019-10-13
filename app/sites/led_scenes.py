@@ -81,23 +81,23 @@ def led_scenes():
                 SET_LED_SCENE_COLLAPSE_OPEN(i)      
 
                 # ############
-                # name setting
+                #  check name
                 # ############
 
-                led_scene_data = GET_LED_SCENE_BY_ID(i)
-                new_name       = request.form.get("set_name_" + str(i))                    
+                led_scene  = GET_LED_SCENE_BY_ID(i)
+                input_name = request.form.get("set_name_" + str(i))                    
 
                 # add new name
-                if ((new_name != "") and (GET_LED_SCENE_BY_NAME(new_name) == None)):
+                if ((input_name != "") and (GET_LED_SCENE_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 
-                elif new_name == led_scene_data.name:
-                    name = led_scene_data.name                        
+                elif input_name == led_scene.name:
+                    name = led_scene.name                        
                     
                 # name already exist
-                elif ((GET_LED_SCENE_BY_NAME(new_name) != None) and (led_scene_data.name != new_name)):
-                    name = led_scene_data.name 
+                elif ((GET_LED_SCENE_BY_NAME(input_name) != None) and (led_scene.name != input_name)):
+                    name = led_scene.name 
                     error_message_change_settings_led_scene = {"scene_number": i,"message": "Name schon vergeben"}
 
                 # no input commited

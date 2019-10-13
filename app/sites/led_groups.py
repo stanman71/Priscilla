@@ -79,20 +79,20 @@ def led_groups():
                 # name setting
                 # ############
 
-                led_group_data = GET_LED_GROUP_BY_ID(i)
-                new_name       = request.form.get("set_name_" + str(i))                    
+                led_group  = GET_LED_GROUP_BY_ID(i)
+                input_name = request.form.get("set_name_" + str(i))                    
 
                 # add new name
-                if ((new_name != "") and (GET_LED_GROUP_BY_NAME(new_name) == None)):
+                if ((input_name != "") and (GET_LED_GROUP_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 
-                elif new_name == led_group_data.name:
-                    name = led_group_data.name                        
+                elif input_name == led_group.name:
+                    name = led_group.name                        
                     
                 # name already exist
-                elif ((GET_LED_GROUP_BY_NAME(new_name) != None) and (led_group_data.name != new_name)):
-                    name = led_group_data.name 
+                elif ((GET_LED_GROUP_BY_NAME(input_name) != None) and (led_group.name != input_name)):
+                    name = led_group.name 
                     error_message_change_settings_led_group = {"group_number": i,"message": "Name schon vergeben"}
 
                 # no input commited

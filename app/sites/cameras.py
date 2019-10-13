@@ -123,52 +123,64 @@ def cameras():
 
                 error_founded = False
         
-                # check url   
-                if request.form.get("set_name_" + str(i)) != "":                                    
-                    current_name = GET_CAMERA_BY_ID(i).name
-                    new_name     = request.form.get("set_name_" + str(i))
+                # ############
+                # name setting
+                # ############
 
-                    if new_name != current_name:  
+                camera    = GET_CAMERA_BY_ID(i)
+                input_name = request.form.get("set_name_" + str(i))                    
 
-                        # name already exist ?         
-                        if not GET_CAMERA_BY_NAME(new_name):  
-                            name = new_name                            
-                        else: 
-                            error_message_change_settings.append(current_name + " || Name bereits vergeben")  
-                            error_founded = True
-                            name = current_name
+                # add new name
+                if ((input_name != "") and (GET_CAMERA_BY_NAME(input_name) == None)):
+                    name = request.form.get("set_name_" + str(i)) 
+                    
+                # nothing changed 
+                elif input_name == camera.name:
+                    name = camera.name                        
+                    
+                # name already exist
+                elif ((GET_CAMERA_BY_NAME(input_name) != None) and (camera.name != input_name)):
+                    error_message_change_settings.append(camera.name + " || Name bereits vergeben")  
+                    error_founded = True
+                    name = camera.name
 
-                    else:
-                        name = current_name
-
-                else:
+                # no input commited
+                else:                          
                     name = GET_CAMERA_BY_ID(i).name
-                    error_message_change_settings.append(current_name + " || Keinen Namen angegeben") 
-                    error_founded = True      
+                    error_message_change_settings.append(camera.name + " || Keinen Namen angegeben") 
+                    error_founded = True  
 
 
-                # check url   
-                if request.form.get("set_url_" + str(i)) != "":
-                    current_url = GET_CAMERA_BY_ID(i).url                  
-                    new_url     = request.form.get("set_url_" + str(i))
+                # ###########
+                # url setting
+                # ###########
 
-                    if new_url != current_url:  
+                input_url = request.form.get("set_url_" + str(i))                    
 
-                        # url already exist ?         
-                        if not GET_CAMERA_BY_URL(new_url):  
-                            url = new_url                            
-                        else: 
-                            error_message_change_settings.append(current_name + " || URL bereits vergeben")  
-                            error_founded = True
-                            url = current_url
+                # add new url
+                if ((input_url != "") and (GET_CAMERA_BY_URL(input_url) == None)):
+                    url = request.form.get("set_url_" + str(i)) 
+                    
+                # nothing changed 
+                elif input_url == camera.url:
+                    url = camera.url                        
+                    
+                # url already exist
+                elif ((GET_CAMERA_BY_URL(input_url) != None) and (camera.url != input_url)):
+                    error_message_change_settings.append(camera.name + " || URL bereits vergeben")  
+                    error_founded = True
+                    url = camera.url
 
-                    else:
-                        url = current_url
-
-                else:
+                # no input commited
+                else:                          
                     url = GET_CAMERA_BY_ID(i).url
-                    error_message_change_settings.append(current_name + " || Keine URL angegeben") 
-                    error_founded = True      
+                    error_message_change_settings.append(camera.name + " || Keine URL angegeben") 
+                    error_founded = True  
+
+            
+                # ##################
+                # credential setting
+                # ##################
 
                 user     = request.form.get("set_user_" + str(i))
                 password = request.form.get("set_password_" + str(i))

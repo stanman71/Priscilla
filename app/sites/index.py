@@ -22,8 +22,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 class LoginForm(FlaskForm):
-	username    = StringField  (u'Username'        , validators=[DataRequired()])
-	password    = PasswordField(u'Password'        , validators=[DataRequired()])
+	name        = StringField  (u'Name'    , validators=[DataRequired()])
+	password    = PasswordField(u'Password', validators=[DataRequired()])
 	remember    = BooleanField('remember me')
 
 @login_manager.user_loader
@@ -49,7 +49,7 @@ def index():
     page_description = 'Open-Source Flask Dark Dashboard, login page.'
 
     if form.validate_on_submit():
-        user = GET_USER_BY_NAME(form.username.data)
+        user = GET_USER_BY_NAME(form.name.data)
 
         if user:
             
@@ -61,7 +61,7 @@ def index():
                 msg = "Wrong Password"
 
         else:
-            msg = "Wrong Username"
+            msg = "Wrong Name"
 
     data = {'navigation': 'None'}
 
