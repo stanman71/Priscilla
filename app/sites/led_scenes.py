@@ -81,7 +81,7 @@ def led_scenes():
                 SET_LED_SCENE_COLLAPSE_OPEN(i)      
 
                 # ############
-                #  check name
+                # name setting
                 # ############
 
                 led_scene  = GET_LED_SCENE_BY_ID(i)

@@ -70,6 +70,17 @@
             </a>
           </li>  
 
+          {% if data.navigation == "music" %}
+            <li class="active ">
+          {% else %} 
+            <li>
+          {% endif %} 
+            <a href="/music">
+              <i class='uil uil-music'></i>
+              <p>Musik</p>
+            </a>
+          </li>  
+
           {% if data.navigation == "sensordata" %}
             <li class="active ">
           {% else %} 

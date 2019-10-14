@@ -1117,7 +1117,7 @@ def UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
 
 def UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway):
     entry = Host.query.filter_by().first()
-    
+
     # values changed ?
     if entry.lan_ip_address != lan_ip_address or entry.lan_gateway != lan_gateway:   
      

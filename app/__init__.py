@@ -21,20 +21,11 @@ app.config['SECRET_KEY']                     = "randon"        #os.urandom(20).h
 app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///' + os.path.join(basedir, 'database/database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+from app.database.models import *
 
 # Expose globals to Jinja2 templates
 app.add_template_global(assets     , 'assets')
 app.add_template_global(app.config , 'cfg'   )
-
-from app.sites                      import index, dashboard, scheduler, programs, plants, led_scenes, led_groups, cameras, sensordata_jobs, sensordata_statistics, devices, settings_system, settings_controller, settings_speechcontrol, settings_users, settings_system_log, errors
-from app.database.models            import *
-from app.backend.shared_resources   import process_management_queue
-from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
-from app.backend.shared_resources   import REFRESH_MQTT_INPUT_MESSAGES_THREAD
-from app.backend.mqtt               import MQTT_RECEIVE_THREAD, MQTT_PUBLISH_THREAD, CHECK_ZIGBEE2MQTT, CHECK_ZIGBEE2MQTT_PAIRING
-from app.backend.email              import SEND_EMAIL
-from app.backend.file_management    import GET_LOCATION_COORDINATES
-from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
 
 
 """ ################## """
@@ -59,6 +50,17 @@ except:
     lan_gateway = ""
     
 UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway)
+
+
+from app.sites                      import index, dashboard, scheduler, programs, plants, led_scenes, led_groups, cameras, music, sensordata_jobs, sensordata_statistics, devices, settings_system, settings_controller, settings_speechcontrol, settings_users, settings_system_log, errors
+from app.backend.shared_resources   import process_management_queue
+from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
+from app.backend.shared_resources   import REFRESH_MQTT_INPUT_MESSAGES_THREAD
+from app.backend.mqtt               import MQTT_RECEIVE_THREAD, MQTT_PUBLISH_THREAD, CHECK_ZIGBEE2MQTT, CHECK_ZIGBEE2MQTT_PAIRING
+from app.backend.email              import SEND_EMAIL
+from app.backend.file_management    import GET_LOCATION_COORDINATES
+from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
+from app.backend.spotify            import REFRESH_SPOTIFY_TOKEN_THREAD
 
 
 """ ######### """
@@ -148,11 +150,12 @@ else:
     SEND_EMAIL("ERROR", "ZigBee2MQTT | No Connection")          
 
 
-""" ################## """
-""" process management """
-""" ################## """
+""" #################### """
+""" background processes """
+""" #################### """
 
 PROCESS_MANAGEMENT_THREAD()
+REFRESH_SPOTIFY_TOKEN_THREAD(3000)
 
 
 app.run(host = GET_HOST_NETWORK().lan_ip_address, port = 80, debug=False)

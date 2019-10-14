@@ -46,8 +46,8 @@ from urllib.parse import quote
 """ ######################## """
 
 #  Client Keys
-CLIENT_ID             = "" # GET_SPOTIFY_CLIENT_ID()
-CLIENT_SECRET         = "" # GET_SPOTIFY_CLIENT_SECRET()
+CLIENT_ID             = GET_SPOTIFY_CLIENT_ID()
+CLIENT_SECRET         = GET_SPOTIFY_CLIENT_SECRET()
 
 # Spotify URLS
 SPOTIFY_AUTH_URL      = "https://accounts.spotify.com/authorize"
@@ -57,7 +57,11 @@ API_VERSION           = "v1"
 SPOTIFY_API_URL       = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
 
 # Server-side Parameters
-#REDIRECT_URI          = "http://" + GET_HOST_NETWORK().lan_ip_address + ":80/spotify/token"
+if GET_HOST_NETWORK().lan_ip_address == "":
+    REDIRECT_URI = "http://127.0.0.1:80/music/spotify/token"
+else:
+    REDIRECT_URI = "http://" + GET_HOST_NETWORK().lan_ip_address + ":80/music/spotify/token"
+
 SCOPE                 = "playlist-read-private user-read-recently-played user-read-currently-playing user-read-playback-state streaming"
 STATE                 = ""
 SHOW_DIALOG_bool      = True
@@ -65,7 +69,7 @@ SHOW_DIALOG_str       = str(SHOW_DIALOG_bool).lower()
 
 #  Client Tokens
 SPOTIFY_TOKEN         = ''
-SPOTIFY_REFRESH_TOKEN = "" # GET_SPOTIFY_REFRESH_TOKEN()
+SPOTIFY_REFRESH_TOKEN = GET_SPOTIFY_REFRESH_TOKEN()
     
     
 def GET_SPOTIFY_AUTHORIZATION():
@@ -291,8 +295,8 @@ def SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playl
 
     sp       = spotipy.Spotify(auth=spotify_token)
     sp.trace = False    
-    
-    sp.start_playback(device_id=spotify_device_id, context_uri=playlist_uri, uris=None, offset = None, position_ms = None)     
+
+    sp.start_playback(device_id=spotify_device_id, context_uri=playlist_uri, uris=None, offset = None)     
     sp.volume(int(playlist_volume), device_id=spotify_device_id)  
     sp.shuffle(True, device_id=spotify_device_id)
     sp.next_track(device_id=spotify_device_id) 
