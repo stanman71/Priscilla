@@ -135,7 +135,7 @@ def settings_system_log():
 @login_required
 @permission_required
 def download_system_log(filepath): 
-    path = GET_PATH() + "/logs/"  
+    path = GET_PATH() + "/data/logs/"  
 
     try:
         if os.path.isfile(path + filepath) is False:

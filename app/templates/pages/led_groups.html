@@ -171,7 +171,7 @@
                                 {% else %}   
                                   <option value = "None" > LED 1 </option>   
                                 {% endif %}                       
-                                <option disabled>__________________</option>
+                                <option disabled>------------------</option>
                                 {% for each in dropdown_list_leds %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
@@ -198,7 +198,7 @@
                                 {% else %}   
                                   <option value = "None" > LED 2 </option>   
                                 {% endif %}                       
-                                <option disabled>_________</option>
+                                <option disabled>------------------</option>
                                 {% for each in dropdown_list_leds %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
@@ -227,7 +227,7 @@
                                 {% else %}   
                                   <option value = "None" > LED 3 </option>   
                                 {% endif %}                       
-                                <option disabled>_________</option>
+                                <option disabled>------------------</option>
                                 {% for each in dropdown_list_leds %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
@@ -256,7 +256,7 @@
                                 {% else %}   
                                   <option value = "None" > LED 4 </option>   
                                 {% endif %}                       
-                                <option disabled>_________</option>
+                                <option disabled>------------------</option>
                                 {% for each in dropdown_list_leds %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
@@ -285,7 +285,7 @@
                                 {% else %}   
                                   <option value = "None" > LED 5 </option>   
                                 {% endif %}                       
-                                <option disabled>_________</option>
+                                <option disabled>------------------</option>
                                 {% for each in dropdown_list_leds %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
@@ -314,7 +314,7 @@
                                 {% else %}   
                                   <option value = "None" > LED 6 </option>   
                                 {% endif %}                       
-                                <option disabled>_________</option>
+                                <option disabled>------------------</option>
                                 {% for each in dropdown_list_leds %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
@@ -343,7 +343,7 @@
                                 {% else %}   
                                   <option value = "None" > LED 7 </option>   
                                 {% endif %}                       
-                                <option disabled>_________</option>
+                                <option disabled>------------------</option>
                                 {% for each in dropdown_list_leds %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
@@ -372,7 +372,7 @@
                                 {% else %}   
                                   <option value = "None" > LED 8 </option>   
                                 {% endif %}                       
-                                <option disabled>_________</option>
+                                <option disabled>------------------</option>
                                 {% for each in dropdown_list_leds %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
@@ -401,7 +401,7 @@
                                 {% else %}   
                                   <option value = "None" > LED 9 </option>   
                                 {% endif %}                       
-                                <option disabled>_________</option>
+                                <option disabled>------------------</option>
                                 {% for each in dropdown_list_leds %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
@@ -418,7 +418,26 @@
                   </div>            
                   <div class="card-footer">                   
                     <button type="submit" onclick="window.location.href='/led/groups#table_{{entry.id}}'" name="save_led_group_settings" class="btn btn-fill btn-primary">SAVE</button>
-                    <button type="submit" onclick="window.location.href='/led/groups#'" name="delete_led_group_{{entry.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">
+                      DELETE
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="delete_dialog_{{entry.id}}">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Delete {{entry.name}} ?</h5>
+                          </div>          
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                            <button type="submit" onclick="window.location.href='/led/groups#'" name="delete_led_group_{{entry.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>   
+
                   </div>
                 </form>
               </div>

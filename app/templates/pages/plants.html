@@ -157,8 +157,7 @@
                               </div>  
                             {% endif %}
                           </td>
-                          <td>
-                           
+                          <td>          
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">
                               DELETE
@@ -168,7 +167,7 @@
                               <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle{{entry.id}}">Deleting {{entry.name}} ?</h5>
+                                    <h5 class="modal-title">Delete {{entry.name}} ?</h5>
                                   </div>          
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
@@ -177,7 +176,6 @@
                                 </div>
                               </div>
                             </div>
-
                           </td>   
                         </tr>
                         {% endfor %}

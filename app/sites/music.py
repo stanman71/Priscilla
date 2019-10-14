@@ -190,7 +190,7 @@ def music():
         spotify_devices        = ""
         volume                 = 50        
 
-    data = {'navigation': 'plants'}    
+    data = {'navigation': 'music'}    
 
     return render_template('layouts/default.html',
                             data=data,    

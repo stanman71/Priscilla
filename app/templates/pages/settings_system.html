@@ -33,9 +33,46 @@
 
             <div class="card">          
               <form method="POST">
-                <div class="card-footer">                  
-                  <button type="submit" onclick="window.location.href='/settings/system#'" name="restart_system" class="btn btn-fill btn-info">Restart</button>
-                  <button type="submit" onclick="window.location.href='/settings/system#'" name="shutdown_system" class="btn btn-fill btn-info pull-right">Shutdown</button>
+                <div class="card-footer">        
+
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-fill btn-info pull-left" data-toggle="modal" data-target="#restart_dialog">
+                    RESTART
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="restart_dialog">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Restart System ?</h5>
+                        </div>          
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                          <button type="submit" onclick="window.location.href='/settings/system#'" name="restart_system" class="btn btn-fill btn-info pull-right">RESTART</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>   
+
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-fill btn-info pull-right" data-toggle="modal" data-target="#shutdown_dialog">
+                    SHUTDOWN
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="shutdown_dialog">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Shutdown System ?</h5>
+                        </div>          
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                          <button type="submit" onclick="window.location.href='/settings/system#'" name="shutdown_system" class="btn btn-fill btn-info pull-right">SHUTDOWN</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>   
+
                 </div>  
               </form>
             </div>
@@ -266,8 +303,46 @@
                           {% for entry in list_backup_files %}
                           <tr>
                             <td style="width:80%">{{ entry }}</td> 
-                            <td style="width:10%"><a href="/settings/system/backup/restore/backup_database/{{ entry }}#backup"><font color="orange"><b>RESTORE</b></font></a></td>  
-                            <td style="width:10%"><a href="/settings/system/backup/delete/backup_database/{{ entry }}#backup"><font size="5"><i class='uil uil-trash-alt'></i></font></a>
+                            <td style="width:10%">
+                              <!-- Button trigger modal -->
+                              <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#restore_database_dialog_{{entry.id}}">
+                                RESTORE
+                              </button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="restore_database_dialog_{{entry.id}}">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title">Restore {{entry}} ?</h5>
+                                    </div>          
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                      <a class="btn btn-warning" href="/settings/system/backup/restore/backup_database/{{ entry }}#backup" role="button">RESTORE</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>       
+                            </td>  
+                            <td style="width:10%">
+                              <!-- Button trigger modal -->
+                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_backup_dialog_{{entry.id}}">
+                                DELETE
+                              </button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="delete_backup_dialog_{{entry.id}}">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title">Delete {{entry}} ?</h5>
+                                    </div>          
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                      <a class="btn btn-danger" href="/settings/system/backup/delete/backup_database/{{ entry }}#backup" role="button">DELETE</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>       
+                            </td>
                           </tr>
                           {% endfor %} 
                         </tbody>

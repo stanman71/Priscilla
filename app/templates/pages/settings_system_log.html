@@ -124,12 +124,27 @@
             <div class="card">
               <div class="card-body">
                 <form method="POST"> 
-                  <a href="/settings/system_log/download/log_system.csv?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD SYSTEM LOG</b></font></a>
-                  <br>
-                  <br>                  
-                  <div class="dropdown text-right">
-                    <button type="submit" onclick="window.location.href='/settings/system_log#logfile'" name="reset_logfile" class="btn btn-danger text-right">RESET SYSTEM LOG</button>                    
-                  </div>
+                  <a class="btn btn-info pull-left" href="/settings/system_log/download/log_system.csv?time={{ timestamp }}" role="button">DOWNLOAD SYSTEM LOG</a>
+
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#reset_dialog">
+                    RESET SYSTEM LOG
+                  </button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="reset_dialog">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Reset System Log ?</h5>
+                        </div>          
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                          <button type="submit" onclick="window.location.href='/settings/system_log#logfile'" name="reset_logfile" class="btn btn-fill btn-danger pull-right">RESET SYSTEM LOG</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>                     
+
                 </form>
               </div>
             </div>

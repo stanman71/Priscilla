@@ -86,8 +86,6 @@
                       </tbody>
                     </table>
                   </div>
-                </div>            
-                <div class="card-footer">    
                   <button type="submit" onclick="window.location.href='/spotify#'" class="btn btn-default" name="set_spotify_play">
                     <i class='uil uil-play'></i>
                   </button>                               
@@ -103,7 +101,7 @@
                   <button type="submit" onclick="window.location.href='/spotify#'" class="btn btn-default" name="set_spotify_volume">
                     <i class='uil uil-volume'></i>
                   </button>
-                  <input id="volume_slider_main_control" data-slider-id="volume_slider_main_control" name="get_spotify_volume" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}"/>                       
+                  <input type="range" class="slider" name="get_spotify_volume" min="0" max="100" value="{{ volume }}" />     
                 </div>
               </form>
             </div>
@@ -218,15 +216,13 @@
                     <div class="row justify-content-md-left">
                       <div class="col-sm-3"> 
                         <input type="text" class="form-control" name="get_spotify_search_track" placeholder="Track" value="{{ track_name }}" />
-                      </div>  
-                      <div class="col-sm-1"></div>            
+                      </div>           
                       <div class="col-sm-3"> 
                         <input type="text" class="form-control" name="get_spotify_search_track_artist" placeholder="Artist" value="{{ track_artist }}" />
                       </div>  
-                      <div class="col-sm-1">                                      
-                        <input type="submit" onclick="window.location.href='/music#table_track'" class="btn btn-default" name="spotify_search_track" value="Suchen" />
-                      </div>
-                    </div>
+                    </div>    
+                    <br>                                                 
+                    <input type="submit" onclick="window.location.href='/music#table_track'" class="btn btn-default" name="spotify_search_track" value="Suchen" />                  
                     <br>
                     <br>
                   
@@ -333,15 +329,13 @@
                     <div class="row justify-content-md-left">
                       <div class="col-sm-3"> 
                         <input type="text" class="form-control" name="get_spotify_search_album" placeholder="Album" value="{{ album_name }}" />
-                      </div>  
-                      <div class="col-sm-1"></div>            
+                      </div>           
                       <div class="col-sm-3"> 
                         <input type="text" class="form-control" name="get_spotify_search_album_artist" placeholder="Artist" value="{{ album_artist }}" />
                       </div>  
-                      <div class="col-sm-1">                                      
-                        <input type="submit" onclick="window.location.href='/music#table_album'" class="btn btn-default" name="spotify_search_album" value="Suchen" />
-                      </div>
                     </div>
+                    <br>                                   
+                    <input type="submit" onclick="window.location.href='/music#table_album'" class="btn btn-default" name="spotify_search_album" value="Suchen" />
                     <br>
                     <br>
                   

@@ -247,7 +247,24 @@
                             </div>
                           </td>                           
                           <td>
-                            <a href="/cameras/delete/{{ entry.id }}#table"><font size="5"><i class='tim-icons icon-trash-simple'></i></font></a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">
+                              DELETE
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="delete_dialog_{{entry.id}}">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">Delete {{entry.name}} ?</h5>
+                                  </div>          
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                    <a class="btn btn-danger" href="/cameras/delete/{{ entry.id }}#table" role="button">DELETE</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>                          
                           </td>   
                         </tr>
                         {% endfor %}

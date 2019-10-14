@@ -248,7 +248,24 @@
                             </div>
                           </td>     
                           <td>   
-                            <a href="/sensordata/jobs/delete/{{ entry.id }}#table"><font size="5"><i class='tim-icons icon-trash-simple'></i></font></a>   
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">
+                              DELETE
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="delete_dialog_{{entry.id}}">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">Delete {{entry.name}} ?</h5>
+                                  </div>          
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                    <a class="btn btn-danger" href="/sensordata/jobs/delete/{{ entry.id }}#table" role="button">DELETE</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>                          
                           </td>   
                         </tr>
                         {% endfor %}
@@ -290,9 +307,30 @@
                       <tbody> 
                         {% for entry in list_sensordata_files %}
                         <tr>
-                          <td>{{ entry }}</td> 
-                          <td class="text-right"><a href="/sensordata/download/file/{{ entry }}?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD</b></font></a></td>  
-                          <td class="text-right"><a href="/sensordata/delete/{{ entry }}#table_sensordata_files"><font size="5"><i class='tim-icons icon-trash-simple'></i></font></a> </td> 
+                          <td style="width:80%">{{ entry }}</td> 
+                          <td style="width:10%">
+                            <a class="btn btn-info pull-left" href="/sensordata/download/file/{{ entry }}?time={{ timestamp }}" role="button">DOWNLOAD</a>
+                          </td>  
+                          <td style="width:10%">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_file_dialog_{{entry.id}}">
+                              DELETE
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="delete_file_dialog_{{entry.id}}">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">Delete {{entry}} ?</h5>
+                                  </div>          
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                    <a class="btn btn-danger" href="/sensordata/delete/{{ entry }}#table_sensordata_files" role="button">DELETE</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>                                
+                          </td> 
                         </tr>
                         {% endfor %} 
                       </tbody>
