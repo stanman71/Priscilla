@@ -63,7 +63,11 @@
                       <tbody> 
                         <tr>
                           <td>
-                            {{ tupel_current_playback[0] }}
+                            {% if "multiroom" in tupel_current_playback[0] %}
+                              multiroom
+                            {% else %}
+                              {{ tupel_current_playback[0] }}
+                            {% endif %}    
                           </td>   
                           <td>
                             {{ tupel_current_playback[2] }}
@@ -136,10 +140,18 @@
                             {% if device['type'] != "Smartphone" %}
 
                               <td>
-                                {{ device['name'] }}
+                                {% if "multiroom" in device['name'] %}
+                                  multiroom
+                                {% else %}
+                                  {{ device['name'] }}
+                                {% endif %}      
                               </td>                     
                               <td>
-                                {{ device['type'] }}
+                                {% if "multiroom" in device['name'] %}
+                                  Multiroom Group
+                                {% else %}
+                                  {{ device['type'] }}
+                                {% endif %}      
                               </td>     
                               <td>    
                                 <select class="form-control" data-size="5" name="set_spotify_playlist:{{ device['id'] }}" style="background-color:#27293D"> 
