@@ -69,6 +69,7 @@ def devices():
         error_message_logfile = session.get('error_download_log')
         session['error_download_log'] = None
 
+
     """ ############### """
     """  table devices  """
     """ ############### """
@@ -79,61 +80,51 @@ def devices():
 
             if request.form.get("set_name_" + str(i)) != None:
 
-                # ############
-                # name setting
-                # ############
-
-                device     = GET_DEVICE_BY_ID(i)
-                input_name = request.form.get("set_name_" + str(i))                    
-
-                # add new name
-                if ((input_name != "") and (GET_DEVICE_BY_NAME(input_name) == None)):
-                    name = request.form.get("set_name_" + str(i)) 
-
-                    ieeeAddr = GET_DEVICE_BY_ID(i).ieeeAddr   
-                    gateway  = GET_DEVICE_BY_ID(i).gateway
-
-                    if gateway == "mqtt":
-                        SET_DEVICE_NAME(ieeeAddr, new_name)   
-                        success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert")  
+                # rename devices   
+                if request.form.get("set_name_" + str(i)) != "":
+                                      
+                    new_name = request.form.get("set_name_" + str(i))
+                    old_name = GET_DEVICE_BY_ID(i).name
                     
-                    if gateway == "zigbee2mqtt":
+                    if new_name != old_name:  
 
-                        # check mqtt
-                        result = CHECK_MQTT()
-                        if result != True:
-                            error_message_change_settings_devices.append(result)  
+                        # name already exist ?         
+                        if not GET_DEVICE_BY_NAME(new_name):  
+                            ieeeAddr = GET_DEVICE_BY_ID(i).ieeeAddr   
+                            gateway  = GET_DEVICE_BY_ID(i).gateway
+
+                            if gateway == "mqtt":
+                                SET_DEVICE_NAME(ieeeAddr, new_name)   
+                                success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert")  
+                           
+                            if gateway == "zigbee2mqtt":
+
+                                # check mqtt
+                                result = CHECK_MQTT()
+                                if result != True:
+                                    error_message_change_settings_devices.append(result)  
+                                
+                                else:
+                                    channel  = "miranda/zigbee2mqtt/bridge/config/rename"
+                                    msg      = '{"old": "' + old_name + '", "new": "' + new_name + '"}'
+
+                                    heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
+
+                                    if CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
+                                        SET_DEVICE_NAME(ieeeAddr, new_name)  
+                                        success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert")       
+                                    else:
+                                        error_message_change_settings_devices.append(old_name + " || Name konnte nicht verändert werden")       
                         
-                        else:
-                            channel  = "miranda/zigbee2mqtt/bridge/config/rename"
-                            msg      = '{"old": "' + old_name + '", "new": "' + new_name + '"}'
+                        else: 
+                            error_message_change_settings_devices.append(old_name + " || Ungültige Eingabe || Name bereits vergeben")  
 
-                            heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
-
-                            if CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
-                                SET_DEVICE_NAME(ieeeAddr, new_name)  
-                                success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert")       
-                            else:
-                                error_message_change_settings_devices.append(old_name + " || Name konnte nicht verändert werden")       
-                    
-
-                # nothing changed 
-                elif input_name == device.name:
-                    name = device.name                        
-                    
-                # name already exist
-                elif ((GET_DEVICE_BY_NAME(input_name) != None) and (device.name != input_name)):
-                    error_message_change_settings_devices.append(device.name + " || Name bereits vergeben")  
-
-                # no input commited
-                else:                          
-                    error_message_change_settings_devices.append(device.name + " || Keinen Namen angegeben") 
+                else:
+                    name = GET_DEVICE_BY_ID(i).name
+                    error_message_change_settings_devices.append(name + " || Ungültige Eingabe || Keinen Namen angegeben")    
 
 
-    # ##################
     # update device list
-    # ##################
-
     if request.form.get("update_devices") != None:     
         result_mqtt        = UPDATE_DEVICES("mqtt")
         result_zigbee2mqtt = UPDATE_DEVICES("zigbee2mqtt")

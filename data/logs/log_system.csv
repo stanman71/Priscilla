@@ -89,3 +89,37 @@ Timestamp,Type,Description
 2019-10-16 15:15:32,SUCCESS,|Device - 0x21008 || Setting changed || spotify|
 2019-10-16 15:19:02,ERROR,|Device - 0x21008 || Setting not confirmed || multiroom|
 2019-10-16 15:19:02,ERROR,|eMail || None || ERROR || Device - 0x21008 || Setting not confirmed || multiroom || No recipients have been added|
+2019-10-16 15:20:07,EVENT,|MQTT || Broker - localhost || Connected|
+2019-10-16 15:20:10,EVENT,|ZigBee2MQTT || Connected|
+2019-10-16 15:20:11,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-10-16 15:20:12,SUCCESS,|Spotify || Token updated|
+2019-10-16 15:26:23,DATABASE,|LED || Scene - test_1g || Settings changed|
+2019-10-16 15:26:25,DATABASE,|LED || Scene - test_1 || Settings changed|
+2019-10-16 15:26:30,DATABASE,|Plant - hgfhgfhgf || changed |||| Name - hgfhgfhgfjg || Device - None || Group - 1|
+2019-10-16 15:26:32,DATABASE,|Plant - hgfhgfhgfjg || changed |||| Name - fhgfhgf || Device - None || Group - 1|
+2019-10-16 15:29:13,EVENT,|MQTT || Broker - localhost || Connected|
+2019-10-16 15:29:16,EVENT,|ZigBee2MQTT || Connected|
+2019-10-16 15:29:17,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-10-16 15:29:17,SUCCESS,|Spotify || Token updated|
+2019-10-16 15:29:55,EVENT,|MQTT || Broker - localhost || Connected|
+2019-10-16 15:29:58,EVENT,|ZigBee2MQTT || Connected|
+2019-10-16 15:29:59,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-10-16 15:30:00,SUCCESS,|Spotify || Token updated|
+2019-10-16 15:30:05,SUCCESS,|Devices || MQTT || Update|
+2019-10-16 15:30:07,SUCCESS,|Devices || ZigBee2MQTT || Update|
+2019-10-16 15:31:42,EVENT,|MQTT || Broker - localhost || Connected|
+2019-10-16 15:31:45,EVENT,|ZigBee2MQTT || Connected|
+2019-10-16 15:31:46,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-10-16 15:31:46,SUCCESS,|Spotify || Token updated|
+2019-10-16 15:33:44,EVENT,|MQTT || Broker - localhost || Connected|
+2019-10-16 15:33:47,EVENT,|ZigBee2MQTT || Connected|
+2019-10-16 15:33:52,WARNING,|ZigBee2MQTT || Pairing disabled || Setting not confirmed|
+2019-10-16 15:33:52,SUCCESS,|Spotify || Token updated|
+2019-10-16 15:34:07,DATABASE,|Device || 0x21008 || Name changed |||| Name - 0x21008iou|
+2019-10-16 15:34:58,EVENT,|MQTT || Broker - localhost || Connected|
+2019-10-16 15:35:01,EVENT,|ZigBee2MQTT || Connected|
+2019-10-16 15:35:06,WARNING,|ZigBee2MQTT || Pairing disabled || Setting not confirmed|
+2019-10-16 15:35:06,SUCCESS,|Spotify || Token updated|
+2019-10-16 15:36:28,DATABASE,|Device || Steckdose_TV || Name changed |||| Name - Steckdose_T|
+2019-10-16 15:36:37,DATABASE,|Device || Steckdose_T || Name changed |||| Name - Steckdose_TV|
+2019-10-16 15:37:16,DATABASE,|Device || 0x21008iou || Name changed |||| Name - Q Acoustics 3020i|

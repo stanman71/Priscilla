@@ -513,3 +513,47 @@ node[shape=record];
 2019-10-16 15:15:32,miranda/mqtt/0x21008,spotify
 2019-10-16 15:18:23,miranda/mqtt/test,
 2019-10-16 15:18:43,miranda/mqtt/0x21008/set,multiroom
+2019-10-16 15:20:07,miranda/zigbee2mqtt/bridge/state,online
+2019-10-16 15:20:07,miranda/zigbee2mqtt/bridge/config,|{"version":"1.5.1","commit":"ac3b924","coordinator":20190608,"log_level":"info","permit_join":false}|
+2019-10-16 15:22:14,miranda/zigbee2mqtt/Steckdose_TV,|{"state":"ON","linkquality":41}|
+2019-10-16 15:22:15,miranda/zigbee2mqtt/Steckdose_Server,|{"state":"ON","linkquality":85}|
+2019-10-16 15:24:11,miranda/mqtt/test,
+2019-10-16 15:24:56,miranda/mqtt/test,
+2019-10-16 15:26:35,miranda/mqtt/test,
+2019-10-16 15:26:38,miranda/mqtt/test,
+2019-10-16 15:26:38,miranda/mqtt/test,
+2019-10-16 15:29:13,miranda/zigbee2mqtt/bridge/state,online
+2019-10-16 15:29:13,miranda/zigbee2mqtt/bridge/config,|{"version":"1.5.1","commit":"ac3b924","coordinator":20190608,"log_level":"info","permit_join":false}|
+2019-10-16 15:29:56,miranda/zigbee2mqtt/bridge/state,online
+2019-10-16 15:29:56,miranda/zigbee2mqtt/bridge/config,|{"version":"1.5.1","commit":"ac3b924","coordinator":20190608,"log_level":"info","permit_join":false}|
+2019-10-16 15:30:00,miranda/mqtt/devices,
+2019-10-16 15:30:00,miranda/mqtt/log,|{"ieeeAddr":"0x21008","model":"music_client hifiberry","device_type":"music_client","description":"MQTT Music Client","input_values":[],"input_events":[],"commands":[]}|
+2019-10-16 15:30:01,miranda/mqtt/devices,
+2019-10-16 15:30:01,miranda/mqtt/log,|{"ieeeAddr":"0x21008","model":"music_client hifiberry","device_type":"music_client","description":"MQTT Music Client","input_values":[],"input_events":[],"commands":[]}|
+2019-10-16 15:30:03,miranda/mqtt/0x21008/get,
+2019-10-16 15:30:03,miranda/mqtt/0x21008,spotify
+2019-10-16 15:30:04,miranda/mqtt/0x21008/get,
+2019-10-16 15:30:04,miranda/mqtt/0x21008,spotify
+2019-10-16 15:30:04,miranda/mqtt/0x21008/get,
+2019-10-16 15:30:04,miranda/mqtt/0x21008,spotify
+2019-10-16 15:30:04,miranda/mqtt/0x21008/get,
+2019-10-16 15:30:04,miranda/mqtt/0x21008,spotify
+2019-10-16 15:30:05,miranda/zigbee2mqtt/bridge/config/devices,
+2019-10-16 15:30:06,miranda/zigbee2mqtt/bridge/log,|{"type":"devices","message":[{"ieeeAddr":"0x00124b001d41c72d","type":"Coordinator"},{"ieeeAddr":"0x7cb03eaa0a02fa78","type":"Router","model":"AB3257001NJ","friendly_name":"Steckdose_TV","nwkAddr":39768,"manufId":48042,"manufName":"OSRAM","powerSource":"Mains (single phase)","modelId":"Plug 01","hwVersion":1,"swBuildId":"V1.04.12","dateCode":"20140331DEOS****"},{"ieeeAddr":"0x8418260000105fa0","type":"Router","model":"AB3257001NJ","friendly_name":"Steckdose_Server","nwkAddr":54337,"manufId":48042,"manufName":"OSRAM","powerSource":"Mains (single phase)","modelId":"Plug 01","hwVersion":1,"swBuildId":"V1.04.12","dateCode":"20140331DEOS****"},{"ieeeAddr":"0x00158d000349876a","type":"EndDevice","model":"WSDCGQ11LM","friendly_name":"0x00158d000349876a","nwkAddr":31406,"manufId":4151,"manufName":"LUMI","powerSource":"Battery","modelId":"lumi.weather","hwVersion":30,"swBuildId":"3000-0001","dateCode":"20161129"},{"ieeeAddr":"0x00178801067147c7","type":"EndDevice","model":"324131092621","friendly_name":"HUE_Dimmer","nwkAddr":34027,"manufId":4107,"manufName":"Philips","powerSource":"Battery","modelId":"RWL021","hwVersion":1,"swBuildId":"5.45.1.17846","dateCode":"20160302"},{"ieeeAddr":"0x00158d000275de23","type":"EndDevice","model":"MFKZQ01LM","friendly_name":"Cube_Spotify","nwkAddr":51079,"manufId":4151,"manufName":"LUMI","powerSource":"Battery","modelId":"lumi.sensor_cube"},{"ieeeAddr":"0x000b3cfffef56003","type":"Router","model":"LED1649C5","friendly_name":"0x000b3cfffef56003","nwkAddr":25577,"manufId":4476,"manufName":"IKEA of Sweden","powerSource":"Mains (single phase)","modelId":"TRADFRI bulb E14 W op/ch 400lm","hwVersion":1,"swBuildId":"1.2.214","dateCode":"20170302"},{"ieeeAddr":"0x000b3cfffeff0aa8","type":"Router","model":"LED1649C5","friendly_name":"0x000b3cfffeff0aa8","nwkAddr":39066,"manufId":4476,"manufName":"IKEA of Sweden","powerSource":"Mains (single phase)","modelId":"TRADFRI bulb E14 W op/ch 400lm","hwVersion":1,"swBuildId":"1.2.214","dateCode":"20170302"},{"ieeeAddr":"0x0017880104878b88","type":"Router","model":"9290012573A","friendly_name":"0x0017880104878b88","nwkAddr":40619,"manufId":4107,"manufName":"Philips","powerSource":"Mains (single phase)","modelId":"LCT015"},{"ieeeAddr":"0x00178801040c9476","type":"Router","model":"9290012573A","friendly_name":"0x00178801040c9476","nwkAddr":56049,"manufId":4107,"manufName":"Philips","powerSource":"Mains (single phase)","modelId":"LCT015","hwVersion":1,"swBuildId":"1.29.0_r21169","dateCode":"20170908"}]}|
+2019-10-16 15:31:42,miranda/zigbee2mqtt/bridge/state,online
+2019-10-16 15:31:42,miranda/zigbee2mqtt/bridge/config,|{"version":"1.5.1","commit":"ac3b924","coordinator":20190608,"log_level":"info","permit_join":false}|
+2019-10-16 15:33:44,miranda/zigbee2mqtt/bridge/state,online
+2019-10-16 15:33:44,miranda/zigbee2mqtt/bridge/config,|{"version":"1.5.1","commit":"ac3b924","coordinator":20190608,"log_level":"info","permit_join":true}|
+2019-10-16 15:34:03,miranda/mqtt/test,
+2019-10-16 15:34:07,miranda/mqtt/test,
+2019-10-16 15:34:58,miranda/zigbee2mqtt/bridge/state,online
+2019-10-16 15:34:58,miranda/zigbee2mqtt/bridge/config,|{"version":"1.5.1","commit":"ac3b924","coordinator":20190608,"log_level":"info","permit_join":true}|
+2019-10-16 15:36:27,miranda/mqtt/test,
+2019-10-16 15:36:27,miranda/mqtt/test,
+2019-10-16 15:36:28,miranda/zigbee2mqtt/bridge/config/rename,|{"old": "Steckdose_TV", "new": "Steckdose_T"}|
+2019-10-16 15:36:28,miranda/zigbee2mqtt/bridge/log,|{"type":"device_renamed","message":{"from":"Steckdose_TV","to":"Steckdose_T"}}|
+2019-10-16 15:36:35,miranda/mqtt/test,
+2019-10-16 15:36:36,miranda/mqtt/test,
+2019-10-16 15:36:36,miranda/zigbee2mqtt/bridge/config/rename,|{"old": "Steckdose_T", "new": "Steckdose_TV"}|
+2019-10-16 15:36:36,miranda/zigbee2mqtt/bridge/log,|{"type":"device_renamed","message":{"from":"Steckdose_T","to":"Steckdose_TV"}}|
+2019-10-16 15:37:16,miranda/mqtt/test,
