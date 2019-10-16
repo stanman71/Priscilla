@@ -15,3 +15,77 @@ Timestamp,Type,Description
 2019-10-15 00:03:21,SUCCESS,|Spotify || Token updated|
 2019-10-15 00:03:24,DATABASE,|User - new_user_2 || added|
 2019-10-15 00:03:28,DATABASE,|User - new_user_2 || deleted|
+2019-10-15 03:57:23,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-15 03:57:25,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-15 03:57:26,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-15 03:57:28,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-15 03:57:28,SUCCESS,|Spotify || Token updated|
+2019-10-15 03:58:43,EVENT,|File || /data/csv/test.csv || downloaded|
+2019-10-15 04:04:13,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-15 04:04:15,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-15 04:04:16,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-15 04:04:18,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-15 04:04:18,SUCCESS,|Spotify || Token updated|
+2019-10-15 04:04:54,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-15 04:04:56,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-15 04:04:57,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-15 04:04:59,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-15 04:04:59,SUCCESS,|Spotify || Token updated|
+2019-10-16 14:24:52,DATABASE,|Host || Network settings changed || LAN -  : |
+2019-10-16 14:24:57,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-16 14:24:59,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-16 14:25:00,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-16 14:25:02,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-16 14:25:02,SUCCESS,|Spotify || Token updated|
+2019-10-16 14:28:11,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-16 14:28:13,ERROR,|eMail || None || ERROR || MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-16 14:28:14,ERROR,|ZigBee2MQTT || No Connection|
+2019-10-16 14:28:16,ERROR,|eMail || None || ERROR || ZigBee2MQTT || No Connection || No recipients have been added|
+2019-10-16 14:28:16,SUCCESS,|Spotify || Token updated|
+2019-10-16 14:30:03,SUCCESS,|Devices || MQTT || Update|
+2019-10-16 14:30:04,ERROR,|MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-16 14:30:05,SUCCESS,|Devices || ZigBee2MQTT || Update|
+2019-10-16 14:30:06,ERROR,|eMail || None || ERROR || MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-16 14:30:11,ERROR,|MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-10-16 14:30:13,ERROR,|eMail || None || ERROR || MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte || No recipients have been added|
+2019-10-16 14:40:22,DATABASE,|Host || Network settings changed || LAN - 192.168.1.111 : 192.168.1.1|
+2019-10-16 14:40:24,EVENT,|MQTT || Broker - localhost || Connected|
+2019-10-16 14:40:27,EVENT,|ZigBee2MQTT || Connected|
+2019-10-16 14:40:28,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-10-16 14:40:29,SUCCESS,|Spotify || Token updated|
+2019-10-16 14:44:14,EVENT,|MQTT || Broker - localhost || Connected|
+2019-10-16 14:44:17,EVENT,|ZigBee2MQTT || Connected|
+2019-10-16 14:44:18,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-10-16 14:44:19,SUCCESS,|Spotify || Token updated|
+2019-10-16 14:46:49,EVENT,|MQTT || Broker - localhost || Connected|
+2019-10-16 14:46:52,EVENT,|ZigBee2MQTT || Connected|
+2019-10-16 14:46:53,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-10-16 14:46:54,SUCCESS,|Spotify || Token updated|
+2019-10-16 14:48:44,EVENT,|MQTT || Broker - localhost || Connected|
+2019-10-16 14:48:47,EVENT,|ZigBee2MQTT || Connected|
+2019-10-16 14:48:48,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-10-16 14:48:48,SUCCESS,|Spotify || Token updated|
+2019-10-16 15:01:01,EVENT,|MQTT || Broker - localhost || Connected|
+2019-10-16 15:01:04,EVENT,|ZigBee2MQTT || Connected|
+2019-10-16 15:01:05,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-10-16 15:01:05,SUCCESS,|Spotify || Token updated|
+2019-10-16 15:02:06,EVENT,|MQTT || Broker - localhost || Connected|
+2019-10-16 15:02:09,EVENT,|ZigBee2MQTT || Connected|
+2019-10-16 15:02:10,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-10-16 15:02:10,SUCCESS,|Spotify || Token updated|
+2019-10-16 15:02:22,SUCCESS,|Device - 0x21008 || Setting changed || multiroom|
+2019-10-16 15:02:36,SUCCESS,|Device - 0x21008 || Setting changed || spotify|
+2019-10-16 15:02:59,SUCCESS,|Device - 0x21008 || Setting changed || multiroom|
+2019-10-16 15:05:07,EVENT,|MQTT || Broker - localhost || Connected|
+2019-10-16 15:05:10,EVENT,|ZigBee2MQTT || Connected|
+2019-10-16 15:05:11,EVENT,|ZigBee2MQTT || Pairing disabled|
+2019-10-16 15:05:11,SUCCESS,|Spotify || Token updated|
+2019-10-16 15:05:22,SUCCESS,|Device - 0x21008 || Setting changed || spotify|
+2019-10-16 15:05:35,SUCCESS,|Device - 0x21008 || Setting changed || multiroom|
+2019-10-16 15:05:55,SUCCESS,|Device - 0x21008 || Setting changed || spotify|
+2019-10-16 15:10:22,SUCCESS,|Device - 0x21008 || Setting changed || multiroom|
+2019-10-16 15:10:40,SUCCESS,|Device - 0x21008 || Setting changed || spotify|
+2019-10-16 15:15:13,SUCCESS,|Device - 0x21008 || Setting changed || multiroom|
+2019-10-16 15:15:32,SUCCESS,|Device - 0x21008 || Setting changed || spotify|
+2019-10-16 15:19:02,ERROR,|Device - 0x21008 || Setting not confirmed || multiroom|
+2019-10-16 15:19:02,ERROR,|eMail || None || ERROR || Device - 0x21008 || Setting not confirmed || multiroom || No recipients have been added|

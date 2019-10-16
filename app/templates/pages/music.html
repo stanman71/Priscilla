@@ -411,6 +411,82 @@
 
 {% endif %} 
 
+<!-------------------------->
+<!-- MUSIC CLIENTS TABLE  -->
+<!-------------------------->
+
+<section id="music_clients"></section> 
+
+<!-- success message change settings music clients -->
+
+{% if success_message_change_settings_music_clients != [] %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for success in success_message_change_settings_music_clients %}
+      <span data-notify="message">{{ success }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+<!-- error message change settings music clients -->
+
+{% if error_message_change_settings_music_clients != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_change_settings_music_clients %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+            <div class="card">
+              <form method="POST">          
+                <div class="card-body"> 
+                  <div class="table-responsive">
+                    <table class="table tablesorter">
+
+                      <thead>
+                        <th scope="col" style="width:20%" class="minwidth_200">Client</th>   
+                        <th scope="col" style="width:20%" class="minwidth_200">Geräte Typ</th>                                  
+                        <th scope="col" style="width:20%" class="minwidth_200">Einstellung</th>
+                        <th scope="col" style="width:40%"></th>                            
+                      </thead>
+                      <tbody> 
+                        
+                        {% for entry in list_music_clients %}
+                        
+                          <tr>
+                            <td>{{ entry.name }}</td> 
+                            <td>{{ entry.model }}</td> 
+                            <td>
+                              <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="radio_spotify_{{ entry.id }}" {% if entry.last_values_formated == "spotify" %} checked="on" {% endif %} value="spotify" name="radio_music_client_setting_{{ entry.id }}">
+                                <label class="custom-control-label" for="radio_spotify_{{ entry.id }}">Spotify</label>
+                              </div> 
+                              <br>       
+                              <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="radio_multiroom_{{ entry.id }}" {% if entry.last_values_formated == "multiroom" %} checked="on" {% endif %} value="multiroom" name="radio_music_client_setting_{{ entry.id }}">
+                                <label class="custom-control-label" for="radio_multiroom_{{ entry.id }}">Multiroom</label>
+                              </div>                              
+                            <td></td>                         
+                          </tr>
+                          
+                        {% endfor %}    
+                                  
+                      </tbody>
+                    </table>
+                  </div>      
+                <div class="card-footer">                   
+                  <button type="submit" onclick="window.location.href='/music#music_clients'" name="save_music_clients_settings" class="btn btn-fill btn-primary">SAVE</button>
+                </div>
+              </form>
+            </div>
+
           </div>
         </div>
       </div>                

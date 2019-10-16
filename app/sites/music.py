@@ -3,9 +3,12 @@ from flask_login         import current_user, login_required
 from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
-from app                  import app
-from app.database.models  import *
-from app.backend.spotify  import *
+from app                          import app
+from app.database.models          import *
+from app.backend.spotify          import *
+from app.backend.shared_resources import mqtt_message_queue
+from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS
+
 from app.common           import COMMON, STATUS
 from app.assets           import *
 
@@ -13,6 +16,7 @@ import requests
 import json
 import spotipy
 import socket 
+import heapq
 
 # access rights
 def permission_required(f):
@@ -44,20 +48,27 @@ def music():
     global list_search_track_results
     global list_search_album_results
     
-    error_message_search_track = ""
-    error_message_search_album = ""
-    error_message_spotify      = ""
-    
+    error_message_search_track                    = ""
+    error_message_search_album                    = ""
+    error_message_spotify                         = ""
+    success_message_change_settings_music_clients = []
+    error_message_change_settings_music_clients   = [] 
+
     track_name   = ""
     track_artist = ""
     album_name   = "" 
     album_artist = ""  
+
     collapse_search_track_open = ""   
     collapse_search_album_open = ""        
     
     spotify_token = GET_SPOTIFY_TOKEN()
 
-    # check spotify login 
+
+    """ ################# """
+    """  spotify control  """
+    """ ################# """   
+
     if spotify_token != "":
         
         try:
@@ -93,9 +104,9 @@ def music():
                 SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume)
 
 
-            """ ##### """
-            """ track """
-            """ ##### """   
+            # ############
+            # search track
+            # ############
         
             if "spotify_search_track" in request.form:
         
@@ -109,8 +120,7 @@ def music():
                 if isinstance(list_search_track_results, str):
                     error_message_search_track = list_search_track_results
                     list_search_track_results  = []  
-                    
-            
+                          
             if "spotify_track_play" in request.form:
                 
                 collapse_search_track_open = "True"  
@@ -121,11 +131,10 @@ def music():
                 
                 SPOTIFY_START_TRACK(spotify_token, spotify_device_id, track_uri, track_volume)
 
-                            
-        
-            """ ##### """
-            """ album """
-            """ ##### """   
+                                 
+            # ############
+            # search album
+            # ############
         
             if "spotify_search_album" in request.form:
                 
@@ -139,8 +148,7 @@ def music():
                 if isinstance(list_search_album_results, str):
                     error_message_search_album = list_search_album_results 
                     list_search_album_results  = []  
-                        
-                    
+                                   
             if "spotify_album_play" in request.form:
                 
                 collapse_search_album_open = "True" 
@@ -152,9 +160,9 @@ def music():
                 SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
     
             
-            """ ############ """
-            """ account data """
-            """ ############ """   
+            # ############
+            # account data
+            # ############
                      
             spotify_user           = sp.current_user()["display_name"]   
             spotify_devices        = sp.devices()["devices"]        
@@ -180,8 +188,8 @@ def music():
             spotify_playlists = ""
             spotify_devices = ""
             volume = 50         
-    
-    
+
+
     # not logged in
     else:     
         tupel_current_playback = ""
@@ -189,6 +197,36 @@ def music():
         spotify_playlists      = ""
         spotify_devices        = ""
         volume                 = 50        
+
+
+    """ ##################### """
+    """  table music clients  """
+    """ ##################### """   
+
+    if request.form.get("save_music_clients_settings") != None:
+        
+        for i in range (1,26):
+
+            if request.form.get("radio_music_client_setting_" + str(i)) != None:
+                
+                music_client_setting = request.form.get("radio_music_client_setting_" + str(i))
+                device               = GET_DEVICE_BY_ID(i)
+
+                if music_client_setting != device.last_values_formated:
+                    changes_saved = True
+                    
+                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", music_client_setting)))     
+
+                    result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, music_client_setting, 20)
+                    
+                    if result != True:
+                        error_message_change_settings_music_clients.append(result)
+                    else:
+                        success_message_change_settings_music_clients.append(device.name + " || Einstellungen gespeichert")
+                        SET_DEVICE_LAST_VALUES(device.ieeeAddr, music_client_setting)
+                        
+
+    list_music_clients = GET_ALL_DEVICES("music_clients")
 
     data = {'navigation': 'music'}    
 
@@ -198,6 +236,8 @@ def music():
                                                     error_message_search_track=error_message_search_track,
                                                     error_message_search_album=error_message_search_album,
                                                     error_message_spotify=error_message_spotify,
+                                                    success_message_change_settings_music_clients=success_message_change_settings_music_clients,
+                                                    error_message_change_settings_music_clients=error_message_change_settings_music_clients, 
                                                     spotify_user=spotify_user,  
                                                     tupel_current_playback=tupel_current_playback,
                                                     spotify_playlists=spotify_playlists,
@@ -209,6 +249,7 @@ def music():
                                                     album_name=album_name,
                                                     album_artist=album_artist,   
                                                     volume=volume, 
+                                                    list_music_clients=list_music_clients,
                                                     collapse_search_track_open=collapse_search_track_open,   
                                                     collapse_search_album_open=collapse_search_album_open,        
                                                     ) 
@@ -223,9 +264,7 @@ def spotify_login(forwarding_site):
     
     forwarding_site_global = forwarding_site
     
-    auth_url = GET_SPOTIFY_AUTHORIZATION()
-    
-    return redirect(auth_url)  
+    return redirect(GET_SPOTIFY_AUTHORIZATION())  
  
  
 @app.route("/music/spotify/token")

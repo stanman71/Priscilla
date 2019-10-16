@@ -740,7 +740,13 @@ def GET_ALL_DEVICES(selector):
                 device.device_type == "led_simple"):
                     
                 device_list.append(device)    
-                
+
+    if selector == "music_clients":
+        for device in devices:
+            if (device.device_type == "music_client"):
+                    
+                device_list.append(device)        
+
     if selector == "sensors":
         for device in devices:
             

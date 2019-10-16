@@ -204,9 +204,7 @@
                             <td>{{ entry.last_contact }}</td>                       
                             <td>
                               <!-- Button trigger modal -->
-                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">
-                                DELETE
-                              </button>
+                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>
                               <!-- Modal -->
                               <div class="modal fade" id="delete_dialog_{{entry.id}}">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -524,12 +522,10 @@
             <div class="card">
               <div class="card-body">
                 <form method="POST"> 
-                  <a class="btn btn-info pull-left" href="/devices/download/log_devices.csv?time={{ timestamp }}" role="button">DOWNLOAD DEVICE LOG</a>                
+                  <a class="btn btn-default pull-left" href="/devices/download/log_devices.csv?time={{ timestamp }}" role="button">DOWNLOAD DEVICE LOG</a>                
 
                   <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#reset_dialog">
-                    RESET DEVICE LOG
-                  </button>
+                  <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#reset_dialog">RESET DEVICE LOG</button>
                   <!-- Modal -->
                   <div class="modal fade" id="reset_dialog">
                     <div class="modal-dialog modal-dialog-centered" role="document">

@@ -249,9 +249,7 @@
                           </td>     
                           <td>   
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">
-                              DELETE
-                            </button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>
                             <!-- Modal -->
                             <div class="modal fade" id="delete_dialog_{{entry.id}}">
                               <div class="modal-dialog modal-dialog-centered" role="document">
@@ -309,13 +307,11 @@
                         <tr>
                           <td style="width:80%">{{ entry }}</td> 
                           <td style="width:10%">
-                            <a class="btn btn-info pull-left" href="/sensordata/download/file/{{ entry }}?time={{ timestamp }}" role="button">DOWNLOAD</a>
+                            <a class="btn btn-default pull-left" href="/sensordata/download/file/{{ entry }}?time={{ timestamp }}" role="button">DOWNLOAD</a>
                           </td>  
                           <td style="width:10%">
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_file_dialog_{{entry.id}}">
-                              DELETE
-                            </button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_file_dialog_{{entry.id}}">DELETE</button>
                             <!-- Modal -->
                             <div class="modal fade" id="delete_file_dialog_{{entry.id}}">
                               <div class="modal-dialog modal-dialog-centered" role="document">

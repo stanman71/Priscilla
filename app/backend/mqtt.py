@@ -41,9 +41,9 @@ def GET_MQTT_INCOMING_MESSAGES(limit):
     return message_list
 
 
-""" #################### """
-""" mqtt receive message """
-""" #################### """
+""" ###################### """
+"""  mqtt receive message  """
+""" ###################### """
     
     
 def MQTT_RECEIVE_THREAD():
@@ -94,11 +94,7 @@ def MQTT_RECEIVE():
             
             
         # message block ?
-        if (device_type == "led_rgb" or
-            device_type == "led_white" or
-            device_type == "led_simple" or
-            device_type == "power_switch" or
-            device_type == "heater"):
+        if (device_type == "led_rgb" or device_type == "led_simple" or device_type == "power_switch" or device_type == "heater"):
     
             for existing_message in GET_MQTT_INCOMING_MESSAGES(3):              
                 
@@ -147,7 +143,6 @@ def MQTT_RECEIVE():
     def on_connect(client, userdata, flags, rc):   
         if rc != 0:
             print("ERROR: MQTT | Broker - " + GET_MQTT_BROKER() + " | Bad Connection | Returned Code = " + str(rc)) 
-        
             WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Broker - " + GET_MQTT_BROKER() + " | Bad Connection | Returned Code = " + str(rc))         
         
         else:
@@ -173,9 +168,9 @@ def MQTT_RECEIVE():
         SEND_EMAIL("ERROR", "MQTT | Broker - " + GET_MQTT_BROKER() + " | " + str(e))
 
 
-""" ############# """
-"""  mqtt message """
-""" ############# """
+""" ############## """
+"""  mqtt message  """
+""" ############## """
 
 
 def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
@@ -262,9 +257,9 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             heapq.heappush(process_management_queue, (1, ("controller", ieeeAddr, msg)))
 
 
-""" #################### """
-""" mqtt publish message """
-""" #################### """
+""" ###################### """
+"""  mqtt publish message  """
+""" ###################### """
 
 def MQTT_PUBLISH_THREAD():
 
@@ -314,16 +309,14 @@ def MQTT_PUBLISH():
 """ ################################ """
 
 
-""" ################### """
-"""    update devices   """
-""" ################### """
+""" ################ """
+"""  update devices  """
+""" ################ """
 
 def UPDATE_DEVICES(gateway):
    
     if gateway == "mqtt":
         
-        message_founded = False
-
         heapq.heappush(mqtt_message_queue, (20, ("miranda/mqtt/devices", "")))
         time.sleep(3)
 
@@ -331,7 +324,6 @@ def UPDATE_DEVICES(gateway):
             for message in GET_MQTT_INCOMING_MESSAGES(5):
                 
                 if message[1] == "miranda/mqtt/log":
-                    message_founded = True   
 
                     message = str(message[2])
                    
@@ -389,18 +381,13 @@ def UPDATE_DEVICES(gateway):
                         SET_DEVICE_LAST_CONTACT(ieeeAddr)
                       
                     # update input values
-                    MQTT_PUBLISH("miranda/mqtt/" + ieeeAddr + "/get", "")  
+                    heapq.heappush(mqtt_message_queue, (20, ("miranda/mqtt/" + ieeeAddr + "/get", "")))
+                    time.sleep(1)
+
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | MQTT | Update")
+            return True
 
 
-            if message_founded == True:
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | MQTT | Update ")
-                return True
-                
-            else:    
-                WRITE_LOGFILE_SYSTEM("WARNING", "Devices | MQTT | Update | No Message founded")
-                SEND_EMAIL("WARNING", "Devices | MQTT | Update | No Message founded")             
-                return "Devices | MQTT | Update | Kein Message gefunden"
-            
         except Exception as e:
             if str(e) == "string index out of range":
                 WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | No Connection") 
@@ -410,7 +397,6 @@ def UPDATE_DEVICES(gateway):
 
     if gateway == "zigbee2mqtt":
         
-        message_founded = False
         error = ""
     
         heapq.heappush(mqtt_message_queue, (20, ("miranda/zigbee2mqtt/bridge/config/devices", "")))        
@@ -421,8 +407,6 @@ def UPDATE_DEVICES(gateway):
             for message in GET_MQTT_INCOMING_MESSAGES(5):
                     
                 if message[1] == "miranda/zigbee2mqtt/bridge/log":
-
-                    message_founded = True
 
                     message = str(message[2])
                     message = message.replace("'","")
@@ -493,23 +477,16 @@ def UPDATE_DEVICES(gateway):
                                                                  
                                     UPDATE_DEVICE(id, name, gateway, model, device_type, description, input_values, input_events, commands)
 
-
-            if message_founded == True:
-                           
-                if error != "":
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Devices | ZigBee2MQTT | Update | " + str(error))
-                    SEND_EMAIL("ERROR", "Devices | ZigBee2MQTT | Update | " + str(error))                 
-                    return ("Devices | ZigBee2MQTT | Update | " + str(error)) 
-                else:
-                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | ZigBee2MQTT | Update")
-                    return True
+     
+            if error != "":
+                WRITE_LOGFILE_SYSTEM("ERROR", "Devices | ZigBee2MQTT | Update | " + str(error))
+                SEND_EMAIL("ERROR", "Devices | ZigBee2MQTT | Update | " + str(error))                 
+                return ("Devices | ZigBee2MQTT | Update | " + str(error)) 
+            else:
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | ZigBee2MQTT | Update")
+                return True
                                 
-            else:           
-                WRITE_LOGFILE_SYSTEM("WARNING", "Devices | ZigBee2MQTT | Update | No Message founded")
-                SEND_EMAIL("WARNING", "Devices | ZigBee2MQTT | Update | No Message founded")              
-                return "Devices | ZigBee2MQTT | Update | Keine Message gefunden"                  
-        
-        
+            
         except Exception as e:
             WRITE_LOGFILE_SYSTEM("ERROR", "Devices | ZigBee2MQTT | Update | " + str(e))  
             SEND_EMAIL("ERROR", "Devices | ZigBee2MQTT | Update | " + str(e))             
@@ -612,9 +589,9 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
     return False
    
 
-""" ################### """
-"""   check functions   """
-""" ################### """
+""" ################# """
+"""  check functions  """
+""" ################# """
  
  
 def CHECK_MQTT():
@@ -729,9 +706,9 @@ def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
     return False
 
 
-""" ######################## """
-"""  check device exceptions """
-""" ######################## """
+""" ######################### """
+"""  check device exceptions  """
+""" ######################### """
 
 
 def CHECK_DEVICE_EXCEPTIONS(id, setting):
@@ -813,9 +790,9 @@ def CHECK_DEVICE_EXCEPTIONS(id, setting):
         return True
 
 
-""" ############### """
-"""    sensordata   """
-""" ############### """
+""" ############ """
+"""  sensordata  """
+""" ############ """
 
 def REQUEST_SENSORDATA(job_name):
     sensordata_job  = GET_SENSORDATA_JOB_BY_NAME(job_name)

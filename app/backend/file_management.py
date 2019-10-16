@@ -6,15 +6,15 @@ import json
 import pandas as pd
 import yaml
 
-from flask import send_from_directory
+from flask          import send_from_directory
 from werkzeug.utils import secure_filename
 
 from app import app
 
 
-""" #### """
-""" path """
-""" #### """
+""" ###### """
+"""  path  """
+""" ###### """
 
 # windows
 if os.name == "nt":                 
@@ -28,9 +28,9 @@ def GET_PATH():
     return (PATH)
 
 
-""" #### """
-""" logs """
-""" #### """
+""" ###### """
+"""  logs  """
+""" ###### """
 
 def CREATE_LOGFILE(filename):
     try:
@@ -218,7 +218,7 @@ def SET_SPOTIFY_REFRESH_TOKEN(REFRESH_TOKEN):
     
     try:
         with open(PATH + "/data/config.yaml") as file_config:
-            upload_config = yaml.load(file_config)
+            upload_config = yaml.load(file_config, Loader=yaml.SafeLoader)
 
         upload_config['spotify']['refresh_token'] = REFRESH_TOKEN
 
@@ -262,9 +262,9 @@ def GET_LOCATION_COORDINATES(location):
         WRITE_LOGFILE_SYSTEM("ERROR", "File | data/locations.ymal | " + str(e))
 
 
-""" ############## """
-""" network config """
-""" ############## """
+""" ################ """
+"""  network config  """
+""" ################ """
 
 def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
     
@@ -294,18 +294,13 @@ def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
         return(e)
 
 
-""" ############### """
-""" backup database """
-""" ############### """
-
-
-# get backup path
-backup_location_path = PATH + '/data/backup/'
-
+""" ################# """
+"""  backup database  """
+""" ################# """
 
 def GET_BACKUP_FILES():
     file_list = []
-    for files in os.walk(backup_location_path):  
+    for files in os.walk(PATH + '/data/backup/'):  
         file_list.append(files)
 
     if file_list == []:
@@ -319,11 +314,11 @@ def GET_BACKUP_FILES():
 def BACKUP_DATABASE():  
     try:
         shutil.copyfile(PATH + '/app/database/database.db', 
-                        backup_location_path + str(datetime.datetime.now().date()) + '_database.db')
+                        PATH + '/data/backup/' + str(datetime.datetime.now().date()) + '_database.db')
                 
         # if more then 10 backups saved, delete oldest backup file
         list_of_files = os.listdir(PATH + '/backup/')    
-        full_path     = [backup_location_path + '{0}'.format(x) for x in list_of_files]
+        full_path     = [PATH + '/data/backup/' + '{0}'.format(x) for x in list_of_files]
 
         if len([name for name in list_of_files]) > 7:
             oldest_file = min(full_path, key=os.path.getctime)
@@ -340,7 +335,7 @@ def BACKUP_DATABASE():
 def RESTORE_DATABASE(filename):
     try:
         if filename.split("_")[1] == "database.db":
-            shutil.copyfile(backup_location_path + filename, PATH + '/app/database/database.db')
+            shutil.copyfile(PATH + '/data/backup/' + filename, PATH + '/app/database/database.db')
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Database_Backup | " + filename + " | restored")
             return True
             
@@ -351,7 +346,7 @@ def RESTORE_DATABASE(filename):
         
 def DELETE_DATABASE_BACKUP(filename):
     try:
-        os.remove (backup_location_path + filename)
+        os.remove (PATH + '/data/backup/' + filename)
         WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/backup/" + filename + " | deleted")
         return True
         
@@ -360,9 +355,9 @@ def DELETE_DATABASE_BACKUP(filename):
         return (e)
 
 
-""" ########## """
-""" sensordata """
-""" ########## """
+""" ############ """
+"""  sensordata  """
+""" ############ """
 
 def GET_SENSORDATA_FILES():
     file_list = []
@@ -433,9 +428,9 @@ def DELETE_SENSORDATA_FILE(filename):
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + filename + " | " + str(e))  
 
 
-""" ################################ """
-"""  file zigbee device informations """
-""" ################################ """
+""" ################################# """
+"""  file zigbee device informations  """
+""" ################################# """
 
 def GET_DEVICE_INFORMATIONS(model):
     
