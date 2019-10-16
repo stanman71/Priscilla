@@ -741,9 +741,9 @@ def GET_ALL_DEVICES(selector):
                     
                 device_list.append(device)    
 
-    if selector == "music_clients":
+    if selector == "client_music":
         for device in devices:
-            if (device.device_type == "music_client"):
+            if (device.device_type == "client_music"):
                     
                 device_list.append(device)        
 

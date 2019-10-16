@@ -22,14 +22,14 @@ import heapq
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -48,11 +48,11 @@ def music():
     global list_search_track_results
     global list_search_album_results
     
-    error_message_search_track                    = ""
-    error_message_search_album                    = ""
-    error_message_spotify                         = ""
-    success_message_change_settings_music_clients = []
-    error_message_change_settings_music_clients   = [] 
+    error_message_search_track                   = ""
+    error_message_search_album                   = ""
+    error_message_spotify                        = ""
+    success_message_change_settings_client_music = []
+    error_message_change_settings_client_music   = [] 
 
     track_name   = ""
     track_artist = ""
@@ -200,33 +200,33 @@ def music():
 
 
     """ ##################### """
-    """  table music clients  """
+    """  table clients music  """
     """ ##################### """   
 
-    if request.form.get("save_music_clients_settings") != None:
+    if request.form.get("save_client_music_settings") != None:
         
         for i in range (1,26):
 
-            if request.form.get("radio_music_client_setting_" + str(i)) != None:
+            if request.form.get("radio_client_music_setting_" + str(i)) != None:
                 
-                music_client_setting = request.form.get("radio_music_client_setting_" + str(i))
+                client_music_setting = request.form.get("radio_client_music_setting_" + str(i))
                 device               = GET_DEVICE_BY_ID(i)
 
-                if music_client_setting != device.last_values_formated:
+                if client_music_setting != device.last_values_formated:
                     changes_saved = True
                     
-                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", music_client_setting)))     
+                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", client_music_setting)))     
 
-                    result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, music_client_setting, 20)
+                    result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, client_music_setting, 20)
                     
                     if result != True:
-                        error_message_change_settings_music_clients.append(result)
+                        error_message_change_settings_client_music.append(result)
                     else:
-                        success_message_change_settings_music_clients.append(device.name + " || Einstellungen gespeichert")
-                        SET_DEVICE_LAST_VALUES(device.ieeeAddr, music_client_setting)
+                        success_message_change_settings_client_music.append(device.name + " || Einstellungen gespeichert")
+                        SET_DEVICE_LAST_VALUES(device.ieeeAddr, client_music_setting)
                         
 
-    list_music_clients = GET_ALL_DEVICES("music_clients")
+    list_client_music = GET_ALL_DEVICES("client_music")
 
     data = {'navigation': 'music'}    
 
@@ -236,8 +236,8 @@ def music():
                                                     error_message_search_track=error_message_search_track,
                                                     error_message_search_album=error_message_search_album,
                                                     error_message_spotify=error_message_spotify,
-                                                    success_message_change_settings_music_clients=success_message_change_settings_music_clients,
-                                                    error_message_change_settings_music_clients=error_message_change_settings_music_clients, 
+                                                    success_message_change_settings_client_music=success_message_change_settings_client_music,
+                                                    error_message_change_settings_client_music=error_message_change_settings_client_music, 
                                                     spotify_user=spotify_user,  
                                                     tupel_current_playback=tupel_current_playback,
                                                     spotify_playlists=spotify_playlists,
@@ -249,7 +249,7 @@ def music():
                                                     album_name=album_name,
                                                     album_artist=album_artist,   
                                                     volume=volume, 
-                                                    list_music_clients=list_music_clients,
+                                                    list_client_music=list_client_music,
                                                     collapse_search_track_open=collapse_search_track_open,   
                                                     collapse_search_album_open=collapse_search_album_open,        
                                                     ) 

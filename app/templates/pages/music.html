@@ -411,33 +411,33 @@
 
 {% endif %} 
 
-<!-------------------------->
-<!-- MUSIC CLIENTS TABLE  -->
-<!-------------------------->
+<!------------------------>
+<!-- CLIENT MUSIC TABLE -->
+<!------------------------>
 
-<section id="music_clients"></section> 
+<section id="client_music"></section> 
 
-<!-- success message change settings music clients -->
+<!-- success message change settings client music -->
 
-{% if success_message_change_settings_music_clients != [] %}
+{% if success_message_change_settings_client_music != [] %}
   <div class="alert alert-success">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    {% for success in success_message_change_settings_music_clients %}
+    {% for success in success_message_change_settings_client_music %}
       <span data-notify="message">{{ success }}</span>
     {% endfor %}
   </div>
 {% endif %}  
 
-<!-- error message change settings music clients -->
+<!-- error message change settings client music -->
 
-{% if error_message_change_settings_music_clients != [] %}
+{% if error_message_change_settings_client_music != [] %}
   <div class="alert alert-danger">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    {% for error in error_message_change_settings_music_clients %}
+    {% for error in error_message_change_settings_client_music %}
       <span data-notify="message">{{ error }}</span>
     {% endfor %}
   </div>
@@ -458,19 +458,19 @@
                       </thead>
                       <tbody> 
                         
-                        {% for entry in list_music_clients %}
+                        {% for entry in list_client_music %}
                         
                           <tr>
                             <td>{{ entry.name }}</td> 
                             <td>{{ entry.model }}</td> 
                             <td>
                               <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="radio_spotify_{{ entry.id }}" {% if entry.last_values_formated == "spotify" %} checked="on" {% endif %} value="spotify" name="radio_music_client_setting_{{ entry.id }}">
+                                <input type="radio" class="custom-control-input" id="radio_spotify_{{ entry.id }}" {% if entry.last_values_formated == "spotify" %} checked="on" {% endif %} value="spotify" name="radio_client_music_setting_{{ entry.id }}">
                                 <label class="custom-control-label" for="radio_spotify_{{ entry.id }}">Spotify</label>
                               </div> 
                               <br>       
                               <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="radio_multiroom_{{ entry.id }}" {% if entry.last_values_formated == "multiroom" %} checked="on" {% endif %} value="multiroom" name="radio_music_client_setting_{{ entry.id }}">
+                                <input type="radio" class="custom-control-input" id="radio_multiroom_{{ entry.id }}" {% if entry.last_values_formated == "multiroom" %} checked="on" {% endif %} value="multiroom" name="radio_client_music_setting_{{ entry.id }}">
                                 <label class="custom-control-label" for="radio_multiroom_{{ entry.id }}">Multiroom</label>
                               </div>                              
                             <td></td>                         
@@ -482,7 +482,7 @@
                     </table>
                   </div>      
                 <div class="card-footer">                   
-                  <button type="submit" onclick="window.location.href='/music#music_clients'" name="save_music_clients_settings" class="btn btn-fill btn-primary">SAVE</button>
+                  <button type="submit" onclick="window.location.href='/music#client_music'" name="save_client_music_settings" class="btn btn-fill btn-primary">SAVE</button>
                 </div>
               </form>
             </div>
