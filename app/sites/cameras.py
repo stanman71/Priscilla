@@ -84,7 +84,7 @@ def cameras():
     error_message_add_camera        = []
 
 
-    page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
+    page_title       = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
 
 
