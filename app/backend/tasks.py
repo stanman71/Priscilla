@@ -345,9 +345,17 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 list_spotify_devices = sp.devices()["devices"]  
                 
                 for device in list_spotify_devices:
+
+                    # spotify client
                     if device['name'].lower() == device_name.lower():
                         spotify_device_id = device['id']  
-                        continue                                
+                        continue      
+
+                    # multiroom
+                    if device_name.lower() == "multiroom":
+                        if "multiroom" in device['name'].lower():
+                            spotify_device_id = device['id']  
+                            continue                                   
                 
                 # get playlist_uri
                 playlist_name          = task[3]
@@ -373,10 +381,18 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 list_spotify_devices = sp.devices()["devices"]  
                 
                 for device in list_spotify_devices:
+
+                    # spotify client
                     if device['name'].lower() == device_name.lower():
                         spotify_device_id = device['id']  
-                        continue                                
-                
+                        continue      
+
+                    # multiroom
+                    if device_name.lower() == "multiroom":
+                        if "multiroom" in device['name'].lower():
+                            spotify_device_id = device['id']  
+                            continue                              
+           
                 # get playlist_uri
                 track_uri = SPOTIFY_SEARCH_TRACK(spotify_token, task[3], task[4], 1) [0][2]
                       
@@ -395,9 +411,17 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 list_spotify_devices = sp.devices()["devices"]  
                 
                 for device in list_spotify_devices:
+                    
+                    # spotify client
                     if device['name'].lower() == device_name.lower():
                         spotify_device_id = device['id']  
-                        continue                                
+                        continue      
+
+                    # multiroom
+                    if device_name.lower() == "multiroom":
+                        if "multiroom" in device['name'].lower():
+                            spotify_device_id = device['id']  
+                            continue                                
                 
                 # get album_uri
                 album_uri = SPOTIFY_SEARCH_ALBUM(spotify_token, task[3], task[4], 1) [0][2]
@@ -744,9 +768,17 @@ def START_SCHEDULER_TASK(task_object):
                     list_spotify_devices = sp.devices()["devices"]  
                     
                     for device in list_spotify_devices:
+                    
+                        # spotify client
                         if device['name'].lower() == device_name.lower():
                             spotify_device_id = device['id']  
-                            continue                                
+                            continue      
+
+                        # multiroom
+                        if device_name.lower() == "multiroom":
+                            if "multiroom" in device['name'].lower():
+                                spotify_device_id = device['id']  
+                                continue                             
                     
                     # get playlist_uri
                     playlist_name          = task[3]
@@ -772,9 +804,17 @@ def START_SCHEDULER_TASK(task_object):
                     list_spotify_devices = sp.devices()["devices"]  
                     
                     for device in list_spotify_devices:
+                    
+                        # spotify client
                         if device['name'].lower() == device_name.lower():
                             spotify_device_id = device['id']  
-                            continue                                
+                            continue      
+
+                        # multiroom
+                        if device_name.lower() == "multiroom":
+                            if "multiroom" in device['name'].lower():
+                                spotify_device_id = device['id']  
+                                continue                                 
                     
                     # get playlist_uri
                     track_uri = SPOTIFY_SEARCH_TRACK(spotify_token, task[3], task[4], 1) [0][2]
@@ -794,9 +834,17 @@ def START_SCHEDULER_TASK(task_object):
                     list_spotify_devices = sp.devices()["devices"]  
                     
                     for device in list_spotify_devices:
+                    
+                        # spotify client
                         if device['name'].lower() == device_name.lower():
                             spotify_device_id = device['id']  
-                            continue                                
+                            continue      
+
+                        # multiroom
+                        if device_name.lower() == "multiroom":
+                            if "multiroom" in device['name'].lower():
+                                spotify_device_id = device['id']  
+                                continue                                  
                     
                     # get album_uri
                     album_uri = SPOTIFY_SEARCH_ALBUM(spotify_token, task[3], task[4], 1) [0][2]

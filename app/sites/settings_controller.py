@@ -7,9 +7,11 @@ from app                         import app
 from app.database.models         import *
 from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 from app.backend.checks          import CHECK_TASKS
+from app.backend.spotify         import GET_SPOTIFY_TOKEN
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
+import spotipy
 
 # access rights
 def permission_required(f):
@@ -101,8 +103,6 @@ def settings_controller():
     for device in GET_ALL_DEVICES("devices"):
         list_device_command_options.append((device.name, device.commands))
          
-
-    """     
     # list spotify devices / playlists
     spotify_token = GET_SPOTIFY_TOKEN()    
     
@@ -117,7 +117,6 @@ def settings_controller():
         spotify_devices   = ""       
         spotify_playlists = ""      
 
-    """  
 
     error_message_controller_tasks = CHECK_TASKS(GET_ALL_CONTROLLER(), "controller")
         
@@ -132,8 +131,8 @@ def settings_controller():
                                                     error_message_controller_tasks=error_message_controller_tasks, 
                                                     list_controller=list_controller,
                                                     list_device_command_options=list_device_command_options,
-                                                    spotify_devices="",     
-                                                    spotify_playlists="",      
+                                                    spotify_devices=spotify_devices,     
+                                                    spotify_playlists=spotify_playlists,      
                                                     ) 
                            )
 

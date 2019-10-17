@@ -634,7 +634,7 @@ def SET_CONTROLLER_TASKS(id, task_1 = "", task_2 = "", task_3 = "", task_4 = "",
         entry.task_9 = task_9               
         db.session.commit() 
 
-        controller_name = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
+        controller_name = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr).name
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "Controller - " + controller_name + " | Changed")  
         return True

@@ -389,7 +389,11 @@
                               <div class="col-sm-8">   
                                 > {% for device in spotify_devices %}
                                     {% if device['type'] != "Smartphone" %}
-                                      {{ device['name'] }} |
+                                      {% if "multiroom" in device['name'] %}
+                                        multiroom |
+                                      {% else %}
+                                        {{ device['name'] }} |
+                                      {% endif %}                                          
                                     {% endif %}
                                   {% endfor %}
                               </div>
