@@ -76,7 +76,7 @@ def music():
             sp       = spotipy.Spotify(auth=spotify_token)
             sp.trace = False
             
-            spotify_volume = request.form.get("get_spotify_volume")
+            spotify_volume = request.form.get("set_spotify_volume")
         
             if "set_spotify_play" in request.form:  
                 SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
@@ -112,8 +112,8 @@ def music():
         
                 collapse_search_track_open = "True"   
 
-                track_name   = request.form.get("get_spotify_search_track")
-                track_artist = request.form.get("get_spotify_search_track_artist")
+                track_name   = request.form.get("set_spotify_search_track")
+                track_artist = request.form.get("set_spotify_search_track_artist")
                 
                 list_search_track_results = SPOTIFY_SEARCH_TRACK(spotify_token, track_name, track_artist, 5)
             
@@ -126,8 +126,8 @@ def music():
                 collapse_search_track_open = "True"  
                 
                 track_uri         = request.form.get("spotify_track_play")
-                spotify_device_id = request.form.get("get_spotify_track_device:" + track_uri)
-                track_volume      = request.form.get("get_spotify_track_volume:" + track_uri)
+                spotify_device_id = request.form.get("set_spotify_track_device:" + track_uri)
+                track_volume      = request.form.get("set_spotify_track_volume:" + track_uri)
                 
                 SPOTIFY_START_TRACK(spotify_token, spotify_device_id, track_uri, track_volume)
 
@@ -140,8 +140,8 @@ def music():
                 
                 collapse_search_album_open = "True"  
 
-                album_name   = request.form.get("get_spotify_search_album")
-                album_artist = request.form.get("get_spotify_search_album_artist")
+                album_name   = request.form.get("set_spotify_search_album")
+                album_artist = request.form.get("set_spotify_search_album_artist")
 
                 list_search_album_results = SPOTIFY_SEARCH_ALBUM(spotify_token, album_name, album_artist, 5)  
     
@@ -154,8 +154,8 @@ def music():
                 collapse_search_album_open = "True" 
                 
                 album_uri         = request.form.get("spotify_album_play")
-                spotify_device_id = request.form.get("get_spotify_album_device:" + album_uri)
-                album_volume      = request.form.get("get_spotify_album_volume:" + album_uri)
+                spotify_device_id = request.form.get("set_spotify_album_device:" + album_uri)
+                album_volume      = request.form.get("set_spotify_album_volume:" + album_uri)
                 
                 SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
     
@@ -207,24 +207,42 @@ def music():
         
         for i in range (1,26):
 
-            if request.form.get("radio_client_music_setting_" + str(i)) != None:
-                
-                client_music_setting = request.form.get("radio_client_music_setting_" + str(i))
-                device               = GET_DEVICE_BY_ID(i)
-
-                if client_music_setting != device.last_values_formated:
-                    changes_saved = True
+            if request.form.get("radio_client_music_interface_" + str(i)) != None:
+     
+                client_music_interface = request.form.get("radio_client_music_interface_" + str(i))
+                client_music_volume    = request.form.get("set_client_music_volume_" + str(i))                
+                device                 = GET_DEVICE_BY_ID(i)
+                   
+                # last values existing
+                try:
+                    data = json.loads(device.last_values)
                     
-                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", client_music_setting)))     
+                    if client_music_interface != data["interface"] or str(client_music_volume) != str(data["volume"]):
 
-                    result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, client_music_setting, 20)
+                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')))     
+
+                        result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}', 20)
+                        
+                        if result != True:
+                            error_message_change_settings_client_music.append(result)
+                        else:
+                            success_message_change_settings_client_music.append(device.name + " || Einstellungen gespeichert")
+                            SET_DEVICE_LAST_VALUES(device.ieeeAddr, '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')
+
+                # no valid last values existing                        
+                except:
+
+                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')))     
+
+                    result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}', 20)
                     
                     if result != True:
                         error_message_change_settings_client_music.append(result)
                     else:
                         success_message_change_settings_client_music.append(device.name + " || Einstellungen gespeichert")
-                        SET_DEVICE_LAST_VALUES(device.ieeeAddr, client_music_setting)
+                        SET_DEVICE_LAST_VALUES(device.ieeeAddr, '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')
                         
+
 
     list_client_music = GET_ALL_DEVICES("client_music")
 
