@@ -685,9 +685,9 @@ def START_SCHEDULER_TASK(task_object):
         WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))     
 
 
-    # ###################
+    # ##############
     # update devices
-    # ###################
+    # ##############
 
     try:
         if "update_devices" in task_object.task:
@@ -715,9 +715,9 @@ def START_SCHEDULER_TASK(task_object):
         WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))              
 
 
-    # ##################
-    #      spotify
-    # ##################
+    # #######
+    # spotify
+    # #######
 
     try:
         if "spotify" in task_object.task:

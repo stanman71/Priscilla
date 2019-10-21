@@ -26,9 +26,9 @@ from ping3 import ping
 
 def SCHEDULER_TIME_PROCESS(task):
    
-   # ######
-   #  time
-   # ######
+   # ####
+   # time
+   # ####
    
    if task.option_time == "True":
       if not CHECK_SCHEDULER_TIME(task):
@@ -55,9 +55,9 @@ def SCHEDULER_TIME_PROCESS(task):
       START_SCHEDULER_TASK(task)
 
 
-   # ##################
-   #  sunrise / sunset
-   # ##################
+   # ################
+   # sunrise / sunset
+   # ################
    
    if task.option_sun == "True":
        
@@ -334,7 +334,6 @@ def CHECK_SCHEDULER_SENSORS(task):
             passing = False
 
 
-
    # ########
    # two rows
    # ########
@@ -600,6 +599,7 @@ def CHECK_SCHEDULER_SUNSET(task):
 """         sunrise / sunset         """
 """ ################################ """
 """ ################################ """
+   
    
 # https://stackoverflow.com/questions/41072147/python-retrieve-the-sunrise-and-sunset-times-from-google
 

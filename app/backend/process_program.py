@@ -9,7 +9,7 @@ from app.backend.file_management  import *
 from app.backend.shared_resources import mqtt_message_queue
 from app.backend.mqtt             import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD
 from app.backend.led              import SET_LED_GROUP_SCENE, SET_LED_GROUP_TURN_OFF, CHECK_LED_GROUP_SETTING_THREAD
-from app.backend. spotify         import *
+from app.backend.spotify          import *
 
 
 program_running = None
@@ -118,15 +118,18 @@ def PROGRAM_THREAD(program_id):
                     # line active ?
                     if line[0] == "True":
                             
+                        # #####
                         # break
+                        # #####
                                 
                         if "pause" in line[1]:
                                 
                             line_content = line[1].split(" /// ")
                             time.sleep(int(line_content[1]))          
                             
-                            
+                        # ######    
                         # device
+                        # ######
 
                         if "device" in line[1]:
                                 
@@ -190,8 +193,9 @@ def PROGRAM_THREAD(program_id):
                             except Exception as e:
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
                            
-
+                        # ###
                         # led 
+                        # ###
                                  
                         if "scene" in line[1]:
                                 
@@ -222,14 +226,15 @@ def PROGRAM_THREAD(program_id):
                             except Exception as e:
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
                                 
-
+                        # #######
                         # spotify
+                        # #######
 
                         if "spotify" in line[1]:
                                 
                             line_content = line[1].split(" /// ")
 
-                            if GET_SPOTIFY_TOKEN() == "" and GET_SPOTIFY_REFRESH_TOKEN_TEMP() != "":
+                            if GET_SPOTIFY_TOKEN() == "" and GET_SPOTIFY_REFRESH_TOKEN() != "":
                                 REFRESH_SPOTIFY_TOKEN()
 
                             spotify_token = GET_SPOTIFY_TOKEN()
@@ -353,8 +358,10 @@ def PROGRAM_THREAD(program_id):
                         line_number = line_number + 1
                         time.sleep(1)
                     
-                 
+            # ################     
             # repeat program ?
+            # ################
+
             if repeat_program == True:        
                 repeat = True
             else:

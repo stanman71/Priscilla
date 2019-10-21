@@ -76,25 +76,25 @@ def music():
             sp       = spotipy.Spotify(auth=spotify_token)
             sp.trace = False
             
-            spotify_volume = request.form.get("set_spotify_volume")
+            spotify_current_volume = request.form.get("set_spotify_current_volume")
         
             if "set_spotify_play" in request.form:  
-                SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
+                SPOTIFY_CONTROL(spotify_token, "play", spotify_current_volume)       
     
             if "set_spotify_previous" in request.form: 
-                SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
+                SPOTIFY_CONTROL(spotify_token, "previous", spotify_current_volume)   
 
             if "set_spotify_next" in request.form:
-                SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
+                SPOTIFY_CONTROL(spotify_token, "next", spotify_current_volume)     
 
             if "set_spotify_stop" in request.form:  
-                SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)   
+                SPOTIFY_CONTROL(spotify_token, "stop", spotify_current_volume)   
 
             if "set_spotify_shuffle" in request.form:  
-                SPOTIFY_CONTROL(spotify_token, "shuffle", spotify_volume)   
+                SPOTIFY_CONTROL(spotify_token, "shuffle", spotify_current_volume)   
 
             if "set_spotify_volume" in request.form: 
-                SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)          
+                SPOTIFY_CONTROL(spotify_token, "volume", spotify_current_volume)          
                         
             if "spotify_start_playlist" in request.form:    
                 spotify_device_id = request.form.get("spotify_start_playlist")
@@ -108,8 +108,7 @@ def music():
             # search track
             # ############
         
-            if "spotify_search_track" in request.form:
-        
+            if "spotify_search_track" in request.form:     
                 collapse_search_track_open = "True"   
 
                 track_name   = request.form.get("set_spotify_search_track")
@@ -121,8 +120,7 @@ def music():
                     error_message_search_track = list_search_track_results
                     list_search_track_results  = []  
                           
-            if "spotify_track_play" in request.form:
-                
+            if "spotify_track_play" in request.form:       
                 collapse_search_track_open = "True"  
                 
                 track_uri         = request.form.get("spotify_track_play")
@@ -136,8 +134,7 @@ def music():
             # search album
             # ############
         
-            if "spotify_search_album" in request.form:
-                
+            if "spotify_search_album" in request.form:     
                 collapse_search_album_open = "True"  
 
                 album_name   = request.form.get("set_spotify_search_album")
@@ -149,8 +146,7 @@ def music():
                     error_message_search_album = list_search_album_results 
                     list_search_album_results  = []  
                                    
-            if "spotify_album_play" in request.form:
-                
+            if "spotify_album_play" in request.form:   
                 collapse_search_album_open = "True" 
                 
                 album_uri         = request.form.get("spotify_album_play")
@@ -213,7 +209,7 @@ def music():
                 client_music_volume    = request.form.get("set_client_music_volume_" + str(i))                
                 device                 = GET_DEVICE_BY_ID(i)
                    
-                # last values existing
+                # last values founded
                 try:
                     data = json.loads(device.last_values)
                     

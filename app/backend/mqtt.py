@@ -135,9 +135,9 @@ def MQTT_RECEIVE():
                     Thread = threading.Thread(target=MQTT_MESSAGE, args=(channel, msg, ieeeAddr, device_type,))
                     Thread.start()   
                 except Exception as e:
-                     WRITE_LOGFILE_SYSTEM("ERROR", "Thread | MQTT Message | " + str(e)) 
-                     SEND_EMAIL("ERROR", "Thread | MQTT Message | " + str(e))                    
-                     print(e)
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Thread | MQTT Message | " + str(e)) 
+                    SEND_EMAIL("ERROR", "Thread | MQTT Message | " + str(e))                    
+                    print(e)
 
 
     def on_connect(client, userdata, flags, rc):   
@@ -230,7 +230,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                 try:
                     data = json.loads(msg)
                     
-                    if int(data["battery"]) < 20:
+                    if int(data["battery"]) < 25:
                         WRITE_LOGFILE_SYSTEM("WARNING", "Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")
                         SEND_EMAIL("WARNING", "Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")                         
                 except:
@@ -369,10 +369,12 @@ def UPDATE_DEVICES(gateway):
 
 
                     # add new device
+
                     if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):
                         ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, description, input_values, input_events, commands)
                       
                     # update existing device
+
                     else:
                         id   = GET_DEVICE_BY_IEEEADDR(ieeeAddr).id
                         name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
@@ -381,6 +383,7 @@ def UPDATE_DEVICES(gateway):
                         SET_DEVICE_LAST_CONTACT(ieeeAddr)
                       
                     # update input values
+                    
                     heapq.heappush(mqtt_message_queue, (20, ("miranda/mqtt/" + ieeeAddr + "/get", "")))
                     time.sleep(1)
 

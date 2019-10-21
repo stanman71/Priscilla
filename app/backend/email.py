@@ -8,7 +8,7 @@ from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 
 def SEND_EMAIL(subject, message):
 
-    def eMAIL_SETTINGS():     
+    def CHECK_EMAIL_SETTINGS():     
         settings = GET_EMAIL_SETTINGS()
 
         if settings.encoding == "ssl":
@@ -39,9 +39,9 @@ def SEND_EMAIL(subject, message):
             return "None"
 
 
-    if eMAIL_SETTINGS() != "None":
+    if CHECK_EMAIL_SETTINGS() != "None":
 
-        app.config.update(eMAIL_SETTINGS())
+        app.config.update(CHECK_EMAIL_SETTINGS())
         mail = Mail(app)
 
         recipients = GET_EMAIL_ADDRESSES(subject)
@@ -49,13 +49,13 @@ def SEND_EMAIL(subject, message):
         try:
             with app.app_context():
                 msg = Message(subject    = "MIRANDA | " + subject + " | " + message,
-                            sender     = app.config.get("MAIL_USERNAME"),
-                            recipients = recipients,
-                            body       = "")
+                              sender     = app.config.get("MAIL_USERNAME"),
+                              recipients = recipients,
+                              body       = "")
                 
-                # attachment
+                """                            
+                ### attachment ###
 
-                """
                 # pictures
                 with app.open_resource("/home/pi/SmartHome/app/static/images/background.jpg") as fp:
                     msg.attach("background.jpg","image/jpg", fp.read())

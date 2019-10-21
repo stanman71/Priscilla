@@ -41,9 +41,9 @@ import threading
 
 from urllib.parse import quote
 
-""" ######################## """
-""" spotify authentification """
-""" ######################## """
+""" ########################## """
+"""  spotify authentification  """
+""" ########################## """
 
 #  Client Keys
 CLIENT_ID             = GET_SPOTIFY_CLIENT_ID()
@@ -141,9 +141,9 @@ def DELETE_SPOTIFY_TOKEN():
     SET_SPOTIFY_REFRESH_TOKEN("")
 
 
-""" #################### """
-""" token refresh thread """
-""" #################### """
+""" ###################### """
+"""  token refresh thread  """
+""" ###################### """
 
 
 def REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
@@ -208,9 +208,9 @@ def REFRESH_SPOTIFY_TOKEN(first_delay):
             time.sleep(1)
 
 
-""" ############### """
-""" spotify control """
-""" ############### """
+""" ################# """
+"""  spotify control  """
+""" ################# """
 
 
 def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
@@ -285,8 +285,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             
     except Exception as e:
         if str(e) == "'NoneType' object is not subscriptable":
-            pass
-            #WRITE_LOGFILE_SYSTEM("ERROR", "Spotify | No active Device founded")                     
+            pass                
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Spotify | " + str(e)) 
 
@@ -321,9 +320,9 @@ def SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volum
 
 
 
-""" #################### """
-""" get current playback """
-""" #################### """
+""" ###################### """
+"""  get current playback  """
+""" ###################### """
 
 def GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token):
 
@@ -436,9 +435,9 @@ def GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token):
     return tupel_current_playback
 
 
-""" ############ """
-""" search track """
-""" ############ """
+""" ############## """
+"""  search track  """
+""" ############## """
 
 def SPOTIFY_SEARCH_TRACK(spotify_token, track_name, track_artist, number_results):
 
@@ -487,9 +486,9 @@ def SPOTIFY_SEARCH_TRACK(spotify_token, track_name, track_artist, number_results
         return ("ERROR: " + str(e))  
                         
 
-""" ############ """
-""" search album """
-""" ############ """
+""" ############## """
+"""  search album  """
+""" ############## """
 
 def SPOTIFY_SEARCH_ALBUM(spotify_token, album_name, album_artist, number_results):
 

@@ -32,7 +32,9 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             json_data_event = json.loads(msg)
             
-            #command_1
+            # #########
+            # command_1
+            # #########
             
             try:
                 
@@ -69,9 +71,10 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                     print(e)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_1[1:-1].replace('"','') + " | " + str(e))    
-                
-                
-            #command_2
+                               
+            # #########
+            # command_2
+            # #########
             
             try:
 
@@ -108,9 +111,10 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                     print(e)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_2[1:-1].replace('"','') + " | " + str(e))    
-                
-                
-            #command_3
+                               
+            # #########
+            # command_3
+            # #########
 
             try:
 
@@ -147,9 +151,10 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                     print(e)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_3[1:-1].replace('"','') + " | " + str(e))    
-                
-                
-            #command_4
+                                           
+            # #########
+            # command_4
+            # #########
             
             try:
 
@@ -186,9 +191,10 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                     print(e)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_4[1:-1].replace('"','') + " | " + str(e))    
-                
-                
-            #command_5
+                               
+            # #########
+            # command_5
+            # #########
             
             try:
 
@@ -225,9 +231,10 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                     print(e)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_5[1:-1].replace('"','') + " | " + str(e))    
-                
-                
-            #command_6
+                               
+            # #########
+            # command_6
+            # #########
             
             try:
 
@@ -264,9 +271,10 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                     print(e)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_6[1:-1].replace('"','') + " | " + str(e))    
-                
-                
-            #command_7
+                               
+            # #########
+            # command_7
+            # #########
             
             try:
 
@@ -303,9 +311,10 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                     print(e)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_7[1:-1].replace('"','') + " | " + str(e))    
-                
-                
-            #command_8
+                               
+            # #########
+            # command_8
+            # #########
             
             try:
 
@@ -342,9 +351,10 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                     print(e)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_8[1:-1].replace('"','') + " | " + str(e))    
-                
-                
-            #command_9
+                               
+            # #########
+            # command_9
+            # #########
             
             try:
 
@@ -381,5 +391,3 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                     print(e)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_9[1:-1].replace('"','') + " | " + str(e))    
-                
-                                

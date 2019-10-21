@@ -36,9 +36,9 @@ def PROCESS_MANAGEMENT():
         try:
             process = heapq.heappop(process_management_queue)[1]
 
-            # ############
-            #  controller
-            # ############
+            # ##########
+            # controller
+            # ##########
             
             if process[0] == "controller":
                 ieeeAddr = process[1]
@@ -47,9 +47,9 @@ def PROCESS_MANAGEMENT():
                 PROCESS_CONTROLLER(ieeeAddr, msg)           
 
 
-            # ###########
-            #  scheduler
-            # ###########
+            # #########
+            # scheduler
+            # #########
                                     
             if process[0] == "scheduler":
                 

@@ -629,9 +629,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
 
    try:
       
-      # #############
-      #  start_scene
-      # #############
+      # ###########
+      # start_scene
+      # ###########
       
       if "scene" in task:
          if " /// " in task:
@@ -736,9 +736,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
             return list_task_errors
      
      
-      # ###################
-      #  brightness dimmer
-      # ###################
+      # #################
+      # brightness dimmer
+      # #################
       
       
       if "brightness" in task and task_type == "controller":
@@ -774,9 +774,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
             return list_task_errors
 
 
-      # #########
-      #  led_off
-      # #########
+      # #######
+      # led_off
+      # #######
       
       
       if "led_off" in task:
@@ -863,9 +863,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
             return list_task_errors
 
 
-      # ########
-      #  device
-      # ########
+      # ######
+      # device
+      # ######
       
       
       if "device" in task and "update" not in task:
@@ -917,9 +917,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
             return list_task_errors
             
 
-      # #########
-      #  program
-      # #########
+      # #######
+      # program
+      # #######
       
       
       if "program" in task:
@@ -963,9 +963,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
             return list_task_errors
          
 
-      # #################
-      #  watering_plants
-      # #################
+      # ###############
+      # watering_plants
+      # ###############
       
       
       if "watering_plants" in task and task_type == "scheduler":
@@ -983,27 +983,27 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
          return list_task_errors
          
 
-      # ################
-      #  backup_database  
-      # ################  
+      # ###############
+      # backup_database  
+      # ###############  
       
            
       if task == "backup_database" and task_type == "scheduler":
          return list_task_errors
 
 
-      # ################
-      #  update_devices
-      # #################
+      # ##############
+      # update_devices
+      # ##############
       
       
       if task == "update_devices" and task_type == "scheduler":
          return list_task_errors
 
 
-      # ####################
-      #  request_sensordata
-      # ####################
+      # ##################
+      # request_sensordata
+      # ##################
       
       
       if "request_sensordata" in task and task_type == "scheduler":
@@ -1028,9 +1028,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
             return list_task_errors
 
 
-      # #########
-      #  spotify     
-      # #########
+      # #######
+      # spotify     
+      # #######
       
          
       if "spotify" in task:
@@ -1168,17 +1168,17 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
             return list_task_errors
             
 
-      # ########################
-      #  task "None" controller
-      # ########################
+      # ######################
+      # task "None" controller
+      # ######################
       
       if "None" in task and task_type == "controller": 
          return list_task_errors
 
 
-      # ###############
-      #  nothing found
-      # ###############
+      # #############
+      # nothing found
+      # #############
       
       
       if task_type == "controller":
