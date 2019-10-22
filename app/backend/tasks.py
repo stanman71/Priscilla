@@ -343,6 +343,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 # get spotify_device_id
                 device_name          = task[2]                                    
                 list_spotify_devices = sp.devices()["devices"]  
+                spotify_device_id    = 0
                 
                 for device in list_spotify_devices:
 
@@ -354,9 +355,31 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                     # multiroom
                     if device_name.lower() == "multiroom":
                         if "multiroom" in device['name'].lower():
+                            spotify_device_id = device['id'] 
+                            continue    
+
+                # if device not founded, reset raspotify on client music               
+                if spotify_device_id == 0:
+                    device = GET_DEVICE_BY_NAME(device_name)
+
+                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"multiroom"}')))
+                    time.sleep(5)
+                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify"}')))
+                    time.sleep(5)
+
+                    for device in list_spotify_devices:
+
+                        # spotify client
+                        if device['name'].lower() == device_name.lower():
                             spotify_device_id = device['id']  
-                            continue                                   
-                
+                            continue      
+
+                        # multiroom
+                        if device_name.lower() == "multiroom":
+                            if "multiroom" in device['name'].lower():
+                                spotify_device_id = device['id'] 
+                                continue                        
+            
                 # get playlist_uri
                 playlist_name          = task[3]
                 list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]
@@ -365,10 +388,9 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                     if playlist['name'].lower() == playlist_name.lower():
                         playlist_uri = playlist['uri']
                         continue
-                        
+         
                 # get volume
-                playlist_volume = int(task[4])
-                
+                playlist_volume = int(task[4]) 
                 SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume)
         
         
@@ -379,6 +401,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 # get spotify_device_id
                 device_name          = task[2]                                    
                 list_spotify_devices = sp.devices()["devices"]  
+                spotify_device_id    = 0
                 
                 for device in list_spotify_devices:
 
@@ -390,8 +413,30 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                     # multiroom
                     if device_name.lower() == "multiroom":
                         if "multiroom" in device['name'].lower():
+                            spotify_device_id = device['id'] 
+                            continue    
+
+                # if device not founded, reset raspotify on client music               
+                if spotify_device_id == 0:
+                    device = GET_DEVICE_BY_NAME(device_name)
+
+                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"multiroom"}')))
+                    time.sleep(5)
+                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify"}')))
+                    time.sleep(5)
+
+                    for device in list_spotify_devices:
+
+                        # spotify client
+                        if device['name'].lower() == device_name.lower():
                             spotify_device_id = device['id']  
-                            continue                              
+                            continue      
+
+                        # multiroom
+                        if device_name.lower() == "multiroom":
+                            if "multiroom" in device['name'].lower():
+                                spotify_device_id = device['id'] 
+                                continue                            
            
                 # get playlist_uri
                 track_uri = SPOTIFY_SEARCH_TRACK(spotify_token, task[3], task[4], 1) [0][2]
@@ -409,9 +454,10 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 # get spotify_device_id
                 device_name          = task[2]                                    
                 list_spotify_devices = sp.devices()["devices"]  
+                spotify_device_id    = 0
                 
                 for device in list_spotify_devices:
-                    
+
                     # spotify client
                     if device['name'].lower() == device_name.lower():
                         spotify_device_id = device['id']  
@@ -420,8 +466,30 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                     # multiroom
                     if device_name.lower() == "multiroom":
                         if "multiroom" in device['name'].lower():
+                            spotify_device_id = device['id'] 
+                            continue    
+
+                # if device not founded, reset raspotify on client music               
+                if spotify_device_id == 0:
+                    device = GET_DEVICE_BY_NAME(device_name)
+
+                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"multiroom"}')))
+                    time.sleep(5)
+                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify"}')))
+                    time.sleep(5)
+
+                    for device in list_spotify_devices:
+
+                        # spotify client
+                        if device['name'].lower() == device_name.lower():
                             spotify_device_id = device['id']  
-                            continue                                
+                            continue      
+
+                        # multiroom
+                        if device_name.lower() == "multiroom":
+                            if "multiroom" in device['name'].lower():
+                                spotify_device_id = device['id'] 
+                                continue                                 
                 
                 # get album_uri
                 album_uri = SPOTIFY_SEARCH_ALBUM(spotify_token, task[3], task[4], 1) [0][2]
@@ -766,9 +834,10 @@ def START_SCHEDULER_TASK(task_object):
                     # get spotify_device_id
                     device_name          = task[2]                                    
                     list_spotify_devices = sp.devices()["devices"]  
+                    spotify_device_id    = 0
                     
                     for device in list_spotify_devices:
-                    
+
                         # spotify client
                         if device['name'].lower() == device_name.lower():
                             spotify_device_id = device['id']  
@@ -777,8 +846,30 @@ def START_SCHEDULER_TASK(task_object):
                         # multiroom
                         if device_name.lower() == "multiroom":
                             if "multiroom" in device['name'].lower():
+                                spotify_device_id = device['id'] 
+                                continue    
+
+                    # if device not founded, reset raspotify on client music               
+                    if spotify_device_id == 0:
+                        device = GET_DEVICE_BY_NAME(device_name)
+
+                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"multiroom"}')))
+                        time.sleep(5)
+                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify"}')))
+                        time.sleep(5)
+
+                        for device in list_spotify_devices:
+
+                            # spotify client
+                            if device['name'].lower() == device_name.lower():
                                 spotify_device_id = device['id']  
-                                continue                             
+                                continue      
+
+                            # multiroom
+                            if device_name.lower() == "multiroom":
+                                if "multiroom" in device['name'].lower():
+                                    spotify_device_id = device['id'] 
+                                    continue                               
                     
                     # get playlist_uri
                     playlist_name          = task[3]
@@ -802,9 +893,10 @@ def START_SCHEDULER_TASK(task_object):
                     # get spotify_device_id
                     device_name          = task[2]                                    
                     list_spotify_devices = sp.devices()["devices"]  
+                    spotify_device_id    = 0
                     
                     for device in list_spotify_devices:
-                    
+
                         # spotify client
                         if device['name'].lower() == device_name.lower():
                             spotify_device_id = device['id']  
@@ -813,8 +905,30 @@ def START_SCHEDULER_TASK(task_object):
                         # multiroom
                         if device_name.lower() == "multiroom":
                             if "multiroom" in device['name'].lower():
+                                spotify_device_id = device['id'] 
+                                continue    
+
+                    # if device not founded, reset raspotify on client music               
+                    if spotify_device_id == 0:
+                        device = GET_DEVICE_BY_NAME(device_name)
+
+                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"multiroom"}')))
+                        time.sleep(5)
+                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify"}')))
+                        time.sleep(5)
+
+                        for device in list_spotify_devices:
+
+                            # spotify client
+                            if device['name'].lower() == device_name.lower():
                                 spotify_device_id = device['id']  
-                                continue                                 
+                                continue      
+
+                            # multiroom
+                            if device_name.lower() == "multiroom":
+                                if "multiroom" in device['name'].lower():
+                                    spotify_device_id = device['id'] 
+                                    continue                                 
                     
                     # get playlist_uri
                     track_uri = SPOTIFY_SEARCH_TRACK(spotify_token, task[3], task[4], 1) [0][2]
@@ -832,9 +946,10 @@ def START_SCHEDULER_TASK(task_object):
                     # get spotify_device_id
                     device_name          = task[2]                                    
                     list_spotify_devices = sp.devices()["devices"]  
+                    spotify_device_id    = 0
                     
                     for device in list_spotify_devices:
-                    
+
                         # spotify client
                         if device['name'].lower() == device_name.lower():
                             spotify_device_id = device['id']  
@@ -843,8 +958,30 @@ def START_SCHEDULER_TASK(task_object):
                         # multiroom
                         if device_name.lower() == "multiroom":
                             if "multiroom" in device['name'].lower():
+                                spotify_device_id = device['id'] 
+                                continue    
+
+                    # if device not founded, reset raspotify on client music               
+                    if spotify_device_id == 0:
+                        device = GET_DEVICE_BY_NAME(device_name)
+
+                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"multiroom"}')))
+                        time.sleep(5)
+                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify"}')))
+                        time.sleep(5)
+
+                        for device in list_spotify_devices:
+
+                            # spotify client
+                            if device['name'].lower() == device_name.lower():
                                 spotify_device_id = device['id']  
-                                continue                                  
+                                continue      
+
+                            # multiroom
+                            if device_name.lower() == "multiroom":
+                                if "multiroom" in device['name'].lower():
+                                    spotify_device_id = device['id'] 
+                                    continue                                   
                     
                     # get album_uri
                     album_uri = SPOTIFY_SEARCH_ALBUM(spotify_token, task[3], task[4], 1) [0][2]

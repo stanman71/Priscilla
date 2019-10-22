@@ -4,7 +4,8 @@
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h>          
 #include <ArduinoJson.h>     
-#include <PubSubClient.h>     
+#include <PubSubClient.h>   
+#include <Adafruit_NeoPixel.h>  
 
 // MQTT
 char mqtt_server[40];
@@ -19,17 +20,24 @@ PubSubClient client(espClient);
 //wifi manager
 bool shouldSaveConfig = false;   
 
-// INPUT
-int PIN_ANALOG  = A0;
-int PIN_DIGITAL = 16;
-
 // OUTPUT 
-int PIN_PUMP      = 5;
-int PIN_LED_GREEN = 14;
-int PIN_LED_RED   = 12;
+#define PIN_LED 5 // D1
 
 // RESET 
-int PIN_RESET_SETTING = 13;
+int PIN_RESET_SETTING = 16;  // D0
+
+// NEOPIXEL
+#define NUMPIXELS 100
+
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN_LED, NEO_GRB + NEO_KHZ800);
+
+String state   = "OFF";
+int brightness = 0;
+int red        = 0;
+int green      = 0;
+int blue       = 0;
+
+boolean state_changed = true;
 
 // ############
 // split string
@@ -230,9 +238,6 @@ void get_ieeeAddr() {
 void reconnect() {
     while (!client.connected()) {
 
-        digitalWrite(PIN_LED_RED, HIGH);
-        digitalWrite(PIN_LED_GREEN, LOW);      
-
         Serial.print("MQTT: ");       
         Serial.print("Connecting...");
 
@@ -243,7 +248,7 @@ void reconnect() {
 
         if (client.connect(clientId.c_str(), mqtt_username, mqtt_password)) { 
   
-            send_default_mqtt_message(0);
+            default_mqtt_message();
 
             client.subscribe("miranda/mqtt/#");
             Serial.println("MQTT Connected...");
@@ -259,6 +264,39 @@ void reconnect() {
     }
 }
 
+
+// ####################
+// mqtt default message
+// ####################
+
+void default_mqtt_message() {
+
+    // create channel  
+    String payload_path = "miranda/mqtt/" + String(ieeeAddr);      
+    char attributes[100];
+    payload_path.toCharArray( path, 100 );    
+ 
+    // create msg as json
+    DynamicJsonDocument msg(128);
+
+    msg["state"]      = state;
+    msg["brightness"] = brightness;
+    msg["color"]["r"] = red;
+    msg["color"]["g"] = green;
+    msg["color"]["b"] = blue;
+ 
+    // convert msg to char
+    char msg_Char[128];
+    serializeJson(msg, msg_Char);
+
+    Serial.print("Channel: ");
+    Serial.println(path);
+    Serial.print("Publish message: ");
+    Serial.println(msg_Char);
+    Serial.println();
+    
+    client.publish(path, msg_Char);    
+}
 
 // #############
 // MQTT messages
@@ -283,20 +321,15 @@ void callback (char* topic, byte* payload, unsigned int length) {
         DynamicJsonDocument msg(512);
         
         msg["ieeeAddr"]    = ieeeAddr;
-        msg["model"]       = "watering_controller_v1";
-        msg["device_type"] = "watering_controller";
-        msg["description"] = "MQTT Watering_Controller v1";
+        msg["model"]       = "client led_rgb";
+        msg["device_type"] = "led_rgb";
+        msg["description"] = "MQTT Client LED RGB";
     
         JsonArray data_inputs = msg.createNestedArray("inputs");
-        data_inputs.add("pump");
-        data_inputs.add("pump_time");        
-        data_inputs.add("sensor_moisture");
-        data_inputs.add("sensor_watertank");        
+        data_inputs.add("");   
 
         JsonArray data_commands = msg.createNestedArray("commands");
-        data_commands.add("{'pump':'ON','pump_time':5}");     
-        data_commands.add("{'pump':'ON'}");              
-        data_commands.add("{'pump':'OFF'}");   
+        data_commands.add("");     
 
         // convert msg to char
         char msg_Char[512];
@@ -313,7 +346,7 @@ void callback (char* topic, byte* payload, unsigned int length) {
 
     // get 
     if (check_ieeeAddr == ieeeAddr and check_command == "get"){
-        send_default_mqtt_message(0);    
+        default_mqtt_message();    
     }    
 
 
@@ -333,110 +366,57 @@ void callback (char* topic, byte* payload, unsigned int length) {
         // convert msg to json
         DynamicJsonDocument msg_json(128);
         deserializeJson(msg_json, msg);
-    
-        String pump_setting  = msg_json["pump"];
-        int pumptime         = msg_json["pump_time"];
 
-        // control pump automatically  
-        if (pump_setting == "ON" and pumptime != 0) {
+        String temp_state = msg_json["state"];
+        
+        state      = temp_state;    
+        brightness = msg_json["brightness"];
+        red        = msg_json["color"]["r"];
+        green      = msg_json["color"]["g"];
+        blue       = msg_json["color"]["b"];
 
-            digitalWrite(PIN_PUMP, HIGH);
+        state_changed = true;
 
-            send_default_mqtt_message(pumptime);
-            
-            Serial.println("PUMP_ON");
+        if (state == "ON"){   
 
-            delay(pumptime * 1000);
-            
-            // #########
-            // stop pump
-            // #########
-            
-            digitalWrite(PIN_PUMP, LOW);
-     
-            while (!client.connected()) {
-                reconnect();
-            }
-            
-            send_default_mqtt_message(0);
-            Serial.println("PUMP_OFF");                               
+            Serial.print("State: ");
+            Serial.print(state); 
+            Serial.print(" / Brightmess: ");
+            Serial.print(brightness);            
+            Serial.print(" / Red: ");
+            Serial.print(red);            
+            Serial.print(" / Green: ");
+            Serial.print(green);            
+            Serial.print(" / Blue: "); 
+            Serial.println(blue);             
+
+        } else {
+                   
+            brightness = 0;
+            red        = 0;
+            green      = 0;
+            blue       = 0;
+
+            Serial.print("State: ");
+            Serial.print(state); 
+            Serial.print(" / Brightmess: ");
+            Serial.print(brightness);            
+            Serial.print(" / Red: ");
+            Serial.print(red);            
+            Serial.print(" / Green: ");
+            Serial.print(green);            
+            Serial.print(" / Blue: "); 
+            Serial.println(blue);       
+         
+        }       
+
+        while (!client.connected()) {
+            reconnect();
         }
-
-        // start pump manually    
-        if (pump_setting == "ON" and pumptime == 0) {
-
-            digitalWrite(PIN_PUMP, HIGH);
-     
-            while (!client.connected()) {
-                reconnect();
-            }
-            
-            send_default_mqtt_message(0);
-            Serial.println("PUMP_ON");                                
-        }
-
-        // stop pump manually    
-        if (pump_setting == "OFF") {
-
-            digitalWrite(PIN_PUMP, LOW);
-     
-            while (!client.connected()) {
-                reconnect();
-            }
-            
-            send_default_mqtt_message(0);
-            Serial.println("PUMP_OFF");                                
-        }
+        
+        default_mqtt_message();                          
     }     
 }
-
-
-// ####################
-// mqtt default message
-// ####################
-
-void send_default_mqtt_message(int pumptime_value) {
-
-    // create channel  
-    String payload_path = "miranda/mqtt/" + String(ieeeAddr);      
-    char attributes[100];
-    payload_path.toCharArray( path, 100 );    
- 
-    // create msg as json
-    DynamicJsonDocument msg(128);
-
-    // get pump state
-    if (digitalRead(PIN_PUMP) == 1) { 
-      
-        msg["pump"] = "ON";
-        
-    } else { 
-      
-        msg["pump"] = "OFF";
-    }
-
-    msg["pump_time"] = pumptime_value;
-
-    // get sensor data
-    int sensor_moisture  = analogRead(PIN_ANALOG);
-    int sensor_watertank = digitalRead(PIN_DIGITAL);
-
-    msg["sensor_moisture"]  = sensor_moisture;
-    msg["sensor_watertank"] = sensor_watertank;
-
-    // convert msg to char
-    char msg_Char[128];
-    serializeJson(msg, msg_Char);
-
-    Serial.print("Channel: ");
-    Serial.println(path);
-    Serial.print("Publish message: ");
-    Serial.println(msg_Char);
-    Serial.println();
-    
-    client.publish(path, msg_Char);    
-}
-
 
 // #####
 // setup
@@ -447,18 +427,10 @@ void setup() {
     Serial.begin(115200);
     Serial.println();
         
-    pinMode(PIN_DIGITAL,INPUT);
-    pinMode(PIN_PUMP,OUTPUT);
-    pinMode(PIN_LED_RED,OUTPUT);
-    pinMode(PIN_LED_GREEN,OUTPUT);
     pinMode(BUILTIN_LED, OUTPUT); 
     pinMode(PIN_RESET_SETTING,INPUT);
 
     digitalWrite(BUILTIN_LED, HIGH); 
-    digitalWrite(PIN_PUMP, LOW); 
-
-    digitalWrite(PIN_LED_RED, HIGH);
-    digitalWrite(PIN_LED_GREEN, LOW);
 
     Serial.println(digitalRead(PIN_RESET_SETTING));    
 
@@ -475,6 +447,8 @@ void setup() {
     
     client.setServer(mqtt_server, 1883);
     client.setCallback(callback); 
+
+    pixels.begin(); 
 }
 
 
@@ -487,19 +461,21 @@ void loop() {
     if (!client.connected()) {
         reconnect();
     }
-    
-    int sensor_1 = digitalRead(PIN_DIGITAL);
 
-    if (sensor_1 == 0) {
-      digitalWrite(PIN_LED_RED, HIGH);
-      digitalWrite(PIN_LED_GREEN, HIGH);
+    if (state_changed == true){   
+
+        for(int i=0; i<NUMPIXELS; i++) { 
+            pixels.setPixelColor(i, pixels.Color(red, green, blue));
+            pixels.show();  
+            delay(10);
+        }
+
+        delay(250);
+            
+        pixels.setBrightness(brightness);
+        pixels.show(); 
     }
-
-    if (sensor_1 == 1) {
-      digitalWrite(PIN_LED_RED, LOW);
-      digitalWrite(PIN_LED_GREEN, HIGH);
-    }   
-
+    
     delay(100);
     client.loop();
 }

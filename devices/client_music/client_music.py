@@ -194,6 +194,7 @@ def on_message(client, userdata, message):
         # #################
 
         if data["interface"] == "spotify" and current_interface != "spotify":
+
             try:
                 os.system("sudo systemctl stop squeezelite")
                 print("Squeezelite | Stopped")                   
@@ -202,19 +203,24 @@ def on_message(client, userdata, message):
                 print("Raspotify | Started")                    
                 time.sleep(2)
 
-                # volume changed ?
-                if str(data["volume"]) != str(current_volume):
-                    try:
-                        os.system("amixer -c " + GET_SOUNDCARD_NUMBER() + " cset numid=1 " + str(data["volume"]))
-                        print("AlsaMixer | Volume adjusted")                    
-                        time.sleep(2)
-                        UPDATE_CURRENT_VOLUME(str(data["volume"]))
+                try:
+                    # volume changed ?
+                    if str(data["volume"]) != str(current_volume):
+                        try:
+                            os.system("amixer -c " + GET_SOUNDCARD_NUMBER() + " cset numid=1 " + str(data["volume"]))
+                            print("AlsaMixer | Volume adjusted")                    
+                            time.sleep(2)
+                            UPDATE_CURRENT_VOLUME(str(data["volume"]))
 
-                    except Exception as e:
-                        print("AlsaMixer | Error | " + str(e))                     
-                        MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
+                        except Exception as e:
+                            print("AlsaMixer | Error | " + str(e))                     
+                            MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
 
-                MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + '}')
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + '}')
+
+                except:
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"spotify"}')
+
                 UPDATE_CURRENT_INTERFACE("spotify")
 
             except Exception as e:
@@ -227,6 +233,7 @@ def on_message(client, userdata, message):
         # ###################
 
         if data["interface"] == "multiroom" and current_interface != "multiroom":
+            
             try:
                 os.system("sudo systemctl stop raspotify")
                 print("Raspotify | Stopped")                    
@@ -235,19 +242,24 @@ def on_message(client, userdata, message):
                 print("Squeezelite | Started")                    
                 time.sleep(2)
 
-                # volume changed ?
-                if str(data["volume"]) != str(current_volume):
-                    try:
-                        os.system("amixer -c " + GET_SOUNDCARD_NUMBER() + " cset numid=1 " + str(data["volume"]))
-                        print("AlsaMixer | Volume adjusted")                    
-                        time.sleep(2)
-                        UPDATE_CURRENT_VOLUME(str(data["volume"]))
+                try:
+                    # volume changed ?
+                    if str(data["volume"]) != str(current_volume):
+                        try:
+                            os.system("amixer -c " + GET_SOUNDCARD_NUMBER() + " cset numid=1 " + str(data["volume"]))
+                            print("AlsaMixer | Volume adjusted")                    
+                            time.sleep(2)
+                            UPDATE_CURRENT_VOLUME(str(data["volume"]))
 
-                    except Exception as e:
-                        print("AlsaMixer | Error | " + str(e))                     
-                        MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
+                        except Exception as e:
+                            print("AlsaMixer | Error | " + str(e))                     
+                            MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
 
-                MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + '}')
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + '}')
+
+                except:
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"multiroom"}')        
+                    
                 UPDATE_CURRENT_INTERFACE("multiroom")
 
             except Exception as e:
@@ -259,21 +271,24 @@ def on_message(client, userdata, message):
         # volume
         # ######
 
-        if str(data["volume"]) != str(current_volume):
-            try:
-                os.system("amixer -c " + GET_SOUNDCARD_NUMBER() + " cset numid=1 " + str(data["volume"]))
-                print("AlsaMixer | Volume adjusted")                    
-                time.sleep(2)
-                MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + data["interface"] + '","volume":' + str(data["volume"]) + '}')
-                UPDATE_CURRENT_VOLUME(str(data["volume"]))
+        try:
+            if str(data["volume"]) != str(current_volume):
+                try:
+                    os.system("amixer -c " + GET_SOUNDCARD_NUMBER() + " cset numid=1 " + str(data["volume"]))
+                    print("AlsaMixer | Volume adjusted")                    
+                    time.sleep(2)
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + data["interface"] + '","volume":' + str(data["volume"]) + '}')
+                    UPDATE_CURRENT_VOLUME(str(data["volume"]))
 
-            except Exception as e:
-                print("AlsaMixer | Error | " + str(e))                     
-                MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
-
+                except Exception as e:
+                    print("AlsaMixer | Error | " + str(e))                     
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
+        
+        except:
+            pass
 
     if channel == "miranda/mqtt/" + device_ieeeAddr + "/get":   
-        MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, current_setting)
+        MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + '}')
 
 
 """ ###################### """
