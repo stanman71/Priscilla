@@ -502,6 +502,8 @@ https://de.aliexpress.com/item/32803068018.html
   <img src="https://github.com/stanman71/Watering_Control/blob/master/devices/E18-MS1PA1-PCB/Flashing/Programmer%20connection%20to%20E18-MS1PA1-PCB.png">
 </p>
 
+</br>
+
 - connect the CC debugger to the PC
 
 - if the light on the CC debugger is RED
