@@ -27,7 +27,7 @@ bool shouldSaveConfig = false;
 int PIN_RESET_SETTING = 16;  // D0
 
 // NEOPIXEL
-#define NUMPIXELS 100
+#define NUMPIXELS 300
 
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN_LED, NEO_GRB + NEO_KHZ800);
 
