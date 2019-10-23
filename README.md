@@ -487,8 +487,6 @@ https://de.aliexpress.com/item/32803068018.html
 
 - connect the debugger to the E18-MS1PA1-PCB 
 
-       >>> overview in /devices/E18-MS1PA1-PCB/Flashing/Programmer connection to E18-MS1PA1-PCB.png
-
        >>> CC debugger -> E18-MS1PA1-PCB
 
            1 -> GND
@@ -500,7 +498,7 @@ https://de.aliexpress.com/item/32803068018.html
 
            connect pin 2 and 9
 
-![alt text](https://github.com/stanman71/Watering_Control/blob/master/devices/E18-MS1PA1-PCB/Flashing/Programmer%20connection%20to%20E18-MS1PA1-PCB.png)
+           ![alt text](https://github.com/stanman71/Watering_Control/blob/master/devices/E18-MS1PA1-PCB/Flashing/Programmer%20connection%20to%20E18-MS1PA1-PCB.png)
 
 - connect the CC debugger to the PC
 
