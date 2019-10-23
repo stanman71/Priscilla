@@ -553,8 +553,8 @@ https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 
        >>> sudo nano /boot/config.txt 
 	   
-	    enable_uart=1
-	    dtoverlay=pi3-disable-bt
+           enable_uart=1
+           dtoverlay=pi3-disable-bt
 
 - disable the modem system service 
 
