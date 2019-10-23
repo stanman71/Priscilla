@@ -2,20 +2,69 @@
 
 A raspberry pi controller to record voice. 
 
-   * <a href="#1 Client Speechcontrol">1 Client Speechcontrol</a>
-      * <a href="#1.1 Installation">1.1 Installation</a>
-      * <a href="#1.2 Sound settings">1.2 Sound settings</a>      
-      * <a href="#1.3 Test Sound settings">1.3 Test Sound settings</a>
-      * <a href="#1.4 Replace alsa.conf">1.4 Replace alsa.conf</a>
-      * <a href="#1.5 Create new Snowboy hotwords">1.5 Create new Snowboy hotwords</a>
+   * <a href="#1 Prepare Raspian">1 Prepare Raspian</a>
+   * <a href="#2 Client Speechcontrol">2 Client Speechcontrol</a>
+      * <a href="#2.1 Installation">2.1 Installation</a>
+      * <a href="#2.2 Sound settings">2.2 Sound settings</a>      
+      * <a href="#2.3 Test Sound settings">2.3 Test Sound settings</a>
+      * <a href="#2.4 Replace alsa.conf">2.4 Replace alsa.conf</a>
+      * <a href="#2.5 Create new Snowboy hotwords">2.5 Create new Snowboy hotwords</a>
 
 </br>
 ------------
 </br>
 
-<a name="1 Client Speechcontrol"></a>
+<a name="1 Prepare Raspian"></a>
 
-### 1 Client Speechcontrol
+### 1 Prepare Raspian 
+
+- activate ssh
+
+       >>> sudo raspi-config
+       >>> Interfacing Options > SSH > Yes
+
+       Putty Connection:
+
+       Login IP
+       Port 22
+       User: pi
+       Password: raspberry
+
+- update raspian
+
+       >>> sudo apt-get update && sudo apt-get upgrade
+
+- install remote server
+
+       >>> sudo apt-get purge realvnc-vnc-server
+
+- enable VNC Server:
+
+       >>> sudo raspi-config       
+
+       Navigate to Interfacing Options
+       Scroll down and select VNC 
+       Yes
+
+- install xrdp:
+
+       >>> sudo apt-get install xrdp
+
+- upgrade pip
+
+       >>> pip install --upgrade pip
+
+- open hostname file and insert new name
+
+       >>> sudo nano /etc/hostname
+
+</br>
+------------
+</br>
+
+<a name="2 Client Speechcontrol"></a>
+
+### 2 Client Speechcontrol
 
 https://github.com/Kitt-AI/snowboy
 </br>
@@ -29,9 +78,22 @@ https://pimylifeup.com/raspberry-pi-snowboy/
 </br>
 </br>
 
-<a name="1.1 Installation"></a>
+<a name="2.1 Installation"></a>
 
-#### 1.1 Installation
+#### 2.1 Installation
+
+- create the new folder "/home/pi/python" and copy all client_speechcontrol files into it
+
+       >>> mkdir python
+
+       FileZilla
+
+       Protocol:   SFTP
+       Server:     Raspberry PI IP-Address
+       Port:       ---
+       Connection: normal
+       user:       pi
+       password:   raspberry
 
 - install dependencies
 
@@ -47,11 +109,11 @@ https://pimylifeup.com/raspberry-pi-snowboy/
 
 </br>
 
-<a name="1.2 Sound settings"></a>
+<a name="2.2 Sound settings"></a>
 
-#### 1.2 Sound settings
+#### 2.2 Sound settings
 
-- create ".asoundrc" in your home folder with correct hw settings (see example file in https://github.com/wanleg/snowboyPi or /devices/client_speechcontrol/Snowboy)
+- create ".asoundrc" in your home folder with correct hw settings (see example file in https://github.com/wanleg/snowboyPi or /devices/client_speechcontrol/support/snowboy)
 
        >>> sudo nano /home/pi/.asoundrc
 
@@ -74,9 +136,9 @@ https://pimylifeup.com/raspberry-pi-snowboy/
 
 </br>
 
-<a name="1.3 Test Sound settings"></a>
+<a name="2.3 Test Sound settings"></a>
 
-#### 1.3 Test Sound settings
+#### 2.3 Test Sound settings
 
 - audio out
 
@@ -92,11 +154,11 @@ https://pimylifeup.com/raspberry-pi-snowboy/
 
 </br>
 
-<a name="1.4 Replace alsa.conf"></a>
+<a name="2.4 Replace alsa.conf"></a>
 
-#### 1.4 Replace alsa.conf
+#### 2.4 Replace alsa.conf
 
-       >>> sudo cp /home/pi/python/Snowboy/alsa.conf /usr/share/alsa/alsa.conf
+       >>> sudo cp /home/pi/python/support/snowboy/alsa.conf /usr/share/alsa/alsa.conf
 
            https://www.raspberrypi.org/forums/viewtopic.php?t=136974
 
@@ -126,7 +188,7 @@ https://pimylifeup.com/raspberry-pi-snowboy/
 
 - extract snowboy git archiv
 
-       >>> unzip /home/pi/python/Snowboy/snowboy_1.3.0.zip -d /home/pi/snowboy
+       >>> unzip /home/pi/python/support/snowboy_1.3.0.zip -d /home/pi/snowboy
 
 - create new detection files
 
@@ -145,9 +207,9 @@ https://pimylifeup.com/raspberry-pi-snowboy/
 
 </br>
 
-<a name="1.5 Create new Snowboy hotwords"></a>
+<a name="2.5 Create new Snowboy hotwords"></a>
 
-#### 1.5 Create new Snowboy hotwords
+#### 2.5 Create new Snowboy hotwords
 
 - log into https://snowboy.kitt.ai
 - create a new hotword (try to find hotwords as different as possible)

@@ -2,25 +2,26 @@
 
 This project creates a smarthome environment.
 
-   * <a href="#1 Miranda">1 Miranda</a>
-      * <a href="#1.1 Installation">1.1 Installation</a>
-      * <a href="#1.2 Autostart">1.2 Autostart</a>      
-      * <a href="#1.3 Manually Control">1.3 Manually Control</a>
-   * <a href="#2 Mosquitto">2 Mosquitto</a>
-      * <a href="#2.1 Installation">2.1 Installation</a>   
-      * <a href="#2.2 Test">2.2 Test</a>    
-      * <a href="#2.3 Autostart">2.3 Autostart</a>   
-      * <a href="#2.4 Authentification">2.4 Authentification</a>          
-   * <a href="#3 Zigbee2MQTT">3 Zigbee2MQTT</a>
+   * <a href="#1 Prepare Raspian">1 Prepare Raspian</a>
+   * <a href="#2 Miranda">2 Miranda</a>
+      * <a href="#2.1 Installation">2.1 Installation</a>
+      * <a href="#2.2 Autostart">2.2 Autostart</a>      
+      * <a href="#2.3 Manually Control">2.3 Manually Control</a>
+   * <a href="#3 Mosquitto">3 Mosquitto</a>
       * <a href="#3.1 Installation">3.1 Installation</a>   
-      * <a href="#3.2 Configuration">3.2 Configuration</a>   
-      * <a href="#3.3 Manually Control">3.3 Manually Control</a>   
-      * <a href="#3.4 Pairing">3.4 Pairing</a>   
-      * <a href="#3.5 Autostart">3.5 Autostart</a>   
-   * <a href="#4 Zigbee2MQTT Hardware">4 Zigbee2MQTT Hardware</a>
-      * <a href="#4.1 Flashing E18-MS1PA1-PCB">4.1 Flashing E18-MS1PA1-PCB</a>
-      * <a href="#4.2 Raspberry Pi Connection">4.2 Raspberry Pi Connection</a>
-      * <a href="#4.3 Raspberry Pi Configuration">4.3 Raspberry Pi Configuration</a>
+      * <a href="#3.2 Test Mosquitto">3.2 Test Mosquitto</a>    
+      * <a href="#3.3 Autostart">3.3 Autostart</a>   
+      * <a href="#3.4 Authentification">3.4 Authentification</a>          
+   * <a href="#4 Zigbee2MQTT">4 Zigbee2MQTT</a>
+      * <a href="#4.1 Installation">4.1 Installation</a>   
+      * <a href="#4.2 Configuration">4.2 Configuration</a>   
+      * <a href="#4.3 Manually Control">4.3 Manually Control</a>   
+      * <a href="#4.4 Pairing">4.4 Pairing</a>   
+      * <a href="#4.5 Autostart">4.5 Autostart</a>   
+   * <a href="#5 Zigbee2MQTT Hardware">5 Zigbee2MQTT Hardware</a>
+      * <a href="#5.1 Flashing E18-MS1PA1-PCB">5.1 Flashing E18-MS1PA1-PCB</a>
+      * <a href="#5.2 Raspberry Pi Connection">5.2 Raspberry Pi Connection</a>
+      * <a href="#5.3 Raspberry Pi Configuration">5.3 Raspberry Pi Configuration</a>
 
 ### Features
 
@@ -40,22 +41,41 @@ This project creates a smarthome environment.
 ------------
 </br>
 
-<a name="1 Miranda"></a>
+<a name="1 Prepare Raspian"></a>
 
-### 1 Miranda
-
-<a name="1.1 Installation"></a>
-
-#### 1.1 Installation 
+### 1 Prepare Raspian 
 
 - activate ssh
 
        >>> sudo raspi-config
        >>> Interfacing Options > SSH > Yes
 
+       Putty Connection:
+
+       Login IP
+       Port 22
+       User: pi
+       Password: raspberry
+
 - update raspian
 
        >>> sudo apt-get update && sudo apt-get upgrade
+
+- install remote server
+
+       >>> sudo apt-get purge realvnc-vnc-server
+
+- enable VNC Server:
+
+       >>> sudo raspi-config       
+
+       Navigate to Interfacing Options
+       Scroll down and select VNC 
+       Yes
+
+- install xrdp:
+
+       >>> sudo apt-get install xrdp
 
 - upgrade pip
 
@@ -65,7 +85,19 @@ This project creates a smarthome environment.
 
        >>> sudo nano /etc/hostname
            miranda
-          
+
+</br>
+------------
+</br>
+
+<a name="2 Miranda"></a>
+
+### 2 Miranda
+
+<a name="2.1 Installation"></a>
+
+#### 2.1 Installation 
+       
 - create the new folder "/home/pi/miranda" and copy all Miranda files into it
 
        >>> mkdir miranda
@@ -112,9 +144,9 @@ This project creates a smarthome environment.
 
 </br>
 
-<a name="1.2 Autostart"></a>
+<a name="2.2 Autostart"></a>
 
-#### 1.2 Autostart
+#### 2.2 Autostart
 
 - create an autostart-file
 
@@ -148,9 +180,9 @@ This project creates a smarthome environment.
 
 </br>
 
-<a name="1.3 Manually Control"></a>
+<a name="2.3 Manually Control"></a>
 
-#### 1.3 Manually Control 
+#### 2.3 Manually Control 
 
 - deactivate the miranda service
 
@@ -169,9 +201,9 @@ This project creates a smarthome environment.
 ------------
 </br>
 
-<a name="2 Mosquitto"></a>
+<a name="3 Mosquitto"></a>
 
-### 2 Mosquitto (MQTT)
+### 3 Mosquitto (MQTT)
 
 https://mosquitto.org/
 </br>
@@ -184,17 +216,17 @@ https://medium.com/@eranda/setting-up-authentication-on-mosquitto-mqtt-broker-de
 https://www.auxnet.de/verschluesseltes-mqtt-vom-und-zum-mosquitto-server/
 </br>
 
-<a name="2.1 Installation"></a>
+<a name="3.1 Installation"></a>
 
-#### 2.1 Installation
+#### 3.1 Installation
 
        >>> sudo apt-get install mosquitto mosquitto-clients -y
 
 </br>
 
-<a name="2.2 Test"></a>
+<a name="3.2 Test Mosquitto"></a>
 
-#### 2.2 Test
+#### 3.2 Test Mosquitto
 
 - subscribe a channel
 
@@ -206,9 +238,9 @@ https://www.auxnet.de/verschluesseltes-mqtt-vom-und-zum-mosquitto-server/
 
 </br>
 
-<a name="2.3 Autostart"></a>
+<a name="3.3 Autostart"></a>
 
-#### 2.3 Autostart
+#### 3.3 Autostart
 
 - create an autostart-file
 
@@ -242,9 +274,9 @@ https://www.auxnet.de/verschluesseltes-mqtt-vom-und-zum-mosquitto-server/
 
 </br>
 
-<a name="2.4 Authentification"></a>
+<a name="3.4 Authentification"></a>
 
-#### 2.4 Authentification
+#### 3.4 Authentification
 
 - stop mosquitto
 
@@ -278,9 +310,9 @@ https://www.auxnet.de/verschluesseltes-mqtt-vom-und-zum-mosquitto-server/
 ------------
 </br>
 
-<a name="3 ZigBee2MQTT"></a>
+<a name="4 ZigBee2MQTT"></a>
 
-### 3 ZigBee2MQTT
+### 4 ZigBee2MQTT
 
 https://gadget-freakz.com/diy-zigbee-gateway/
 </br>
@@ -289,9 +321,9 @@ https://www.zigbee2mqtt.io/
 https://github.com/Koenkk/zigbee2mqtt
 </br>
 
-<a name="3.1 Installation"></a>
+<a name="4.1 Installation"></a>
 
-#### 3.1 Installation
+#### 4.1 Installation
 
 - install Node.js
 
@@ -324,9 +356,9 @@ https://github.com/Koenkk/zigbee2mqtt
 
 </br>
 
-<a name="3.2 Configuration"></a>
+<a name="4.2 Configuration"></a>
 
-#### 3.2 Configuration
+#### 4.2 Configuration
 
 - change file permissions
 
@@ -355,9 +387,9 @@ https://github.com/Koenkk/zigbee2mqtt
 
 </br>
 
-<a name="3.3 Manually Control"></a>
+<a name="4.3 Manually Control"></a>
 
-#### 3.3 Manually Control
+#### 4.3 Manually Control
 
 - start command
 
@@ -378,18 +410,18 @@ https://github.com/Koenkk/zigbee2mqtt
 
 </br>
 
-<a name="3.4 Pairing"></a>
+<a name="4.4 Pairing"></a>
 
-#### 3.4 Pairing
+#### 4.4 Pairing
 
 - bridge software must be running to pairing new devices automatically
 - zigbee2mqtt setting: {permit_join: true}
 
 </br>
 
-<a name="3.5 Autostart"></a>
+<a name="4.5 Autostart"></a>
 
-#### 3.5 Autostart
+#### 4.5 Autostart
 
 - create an autostart-file
 
@@ -427,9 +459,9 @@ https://github.com/Koenkk/zigbee2mqtt
 ------------
 </br>
 
-<a name="4 Zigbee2MQTT Hardware"></a>
+<a name="5 Zigbee2MQTT Hardware"></a>
 
-### 4 Zigbee2MQTT Hardware
+### 5 Zigbee2MQTT Hardware
 
 https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 </br>
@@ -441,9 +473,9 @@ https://de.aliexpress.com/item/32803068018.html?spm=a2g0x.search0604.3.1.72bf1da
 </br>
 </br>
 
-<a name="4.1 Flashing E18-MS1PA1-PCB"></a>
+<a name="5.1 Flashing E18-MS1PA1-PCB"></a>
 
-#### 4.1 Flashing E18-MS1PA1-PCB (Windows Environment)
+#### 5.1 Flashing E18-MS1PA1-PCB (Windows Environment)
 
 - install SmartRF Flash programmer and CC debugger driver (admin rights necessary)
 
@@ -486,9 +518,9 @@ https://de.aliexpress.com/item/32803068018.html?spm=a2g0x.search0604.3.1.72bf1da
 
 </br>
 
-<a name="4.2 Raspberry Pi Connection"></a>
+<a name="5.2 Raspberry Pi Connection"></a>
 
-#### 4.2 Raspberry Pi Connection 
+#### 5.2 Raspberry Pi Connection 
 
 - Connect the E18-MS1PA1-PCB to the Raspberry
 
@@ -501,9 +533,9 @@ https://de.aliexpress.com/item/32803068018.html?spm=a2g0x.search0604.3.1.72bf1da
 
 </br>
 
-<a name="4.3 Raspberry Pi Configuration"></a>
+<a name="5.3 Raspberry Pi Configuration"></a>
 
-#### 4.3 Raspberry Pi Configuration 
+#### 5.3 Raspberry Pi Configuration 
 
 - add following at the end of the config file
 

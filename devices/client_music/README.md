@@ -1,49 +1,85 @@
 # Client Music
 
-A raspberry pi controller to play music by using spotify. 
+A raspberry pi controller to play music by using spotify and lms. 
 
-   * <a href="#1 Client Music">1 Client Music</a>
-      * <a href="#1.1 Installation">1.1 Installation</a>
-      * <a href="#1.2 Volume Control">1.2 Volume Control</a>      
-      * <a href="#1.3 Autostart">1.3 Autostart</a>
-      * <a href="#1.4 Manually Control">1.4 Manually Control</a>
-   * <a href="#2 Comitup">2 Comitup</a>
-   * <a href="#3 Squeezelite Client">3 Squeezelite Client</a>
-      * <a href="#3.1 Raspian">3.1 Raspian</a>
-      * <a href="#3.2 Windows 10">3.2 Windows 10</a>
-   * <a href="#4 Raspotify">4 Raspotify</a>
-   * <a href="#5 piCorePlayer & LMS">5 piCorePlayer & LMS</a>
-      * <a href="#5.1 General Settings">5.1 General Settings</a>
-      * <a href="#5.2 Squeezelite">5.2 Squeezelite</a>
-      * <a href="#5.3 LMS">5.3 LMS</a>
-      * <a href="#5.4 LMS Configuration">5.4 LMS Configuration</a>
+   * <a href="#1 Prepare Raspian">1 Prepare Raspian</a>
+   * <a href="#2 Client Music">2 Client Music</a>
+      * <a href="#2.1 Installation">2.1 Installation</a>
+      * <a href="#2.2 Volume Control">2.2 Volume Control</a>      
+      * <a href="#2.3 Autostart">2.3 Autostart</a>
+      * <a href="#2.4 Manually Control">2.4 Manually Control</a>
+   * <a href="#3 Comitup">3 Comitup</a>
+   * <a href="#4 Squeezelite Client">4 Squeezelite Client</a>
+      * <a href="#4.1 Raspian">4.1 Raspian</a>
+      * <a href="#4.2 Windows 10">4.2 Windows 10</a>
+   * <a href="#5 Raspotify">5 Raspotify</a>
+   * <a href="#6 piCorePlayer & LMS">6 piCorePlayer & LMS</a>
+      * <a href="#6.1 General Settings">6.1 General Settings</a>
+      * <a href="#6.2 Squeezelite">6.2 Squeezelite</a>
+      * <a href="#6.3 LMS">6.3 LMS</a>
+      * <a href="#6.4 LMS Configuration">6.4 LMS Configuration</a>
 
 </br>
 ------------
 </br>
 
-<a name="1 Client Music"></a>
+<a name="1 Prepare Raspian"></a>
 
-### 1 Client Music 
-
-<a name="1.1 Installation"></a>
-
-#### 1.1 Installation
+### 1 Prepare Raspian 
 
 - activate ssh
 
        >>> sudo raspi-config
        >>> Interfacing Options > SSH > Yes
 
+       Putty Connection:
+
+       Login IP
+       Port 22
+       User: pi
+       Password: raspberry
+
 - update raspian
 
        >>> sudo apt-get update && sudo apt-get upgrade
 
+- install remote server
+
+       >>> sudo apt-get purge realvnc-vnc-server
+
+- enable VNC Server:
+
+       >>> sudo raspi-config       
+
+       Navigate to Interfacing Options
+       Scroll down and select VNC 
+       Yes
+
+- install xrdp:
+
+       >>> sudo apt-get install xrdp
+
 - upgrade pip
 
        >>> pip install --upgrade pip
-          
-- create the new folder "python" and copy all files into it
+
+- open hostname file and insert new name (equal to squeezelite name)
+
+       >>> sudo nano /etc/hostname
+           
+</br>
+------------
+</br>
+
+<a name="2 Client Music"></a>
+
+### 2 Client Music 
+
+<a name="2.1 Installation"></a>
+
+#### 2.1 Installation
+
+- create the new folder "python" and copy all client_music files into it
 
        >>> mkdir python
 
@@ -66,7 +102,9 @@ A raspberry pi controller to play music by using spotify.
 
 </br>
 
-<a name="1.2 Volume Control"></a>
+<a name="2.2 Volume Control"></a>
+
+#### 2.2 Volume Control
 
 ##### GUI
 
@@ -104,9 +142,9 @@ https://blog.amnuts.com/2017/01/11/rotary-volume-control-for-the-raspberry-pi/
 
 </br>
 
-<a name="1.3 Autostart"></a>
+<a name="2.3 Autostart"></a>
 
-#### 1.3 Autostart
+#### 2.3 Autostart
 
 - create an autostart-file
 
@@ -155,9 +193,9 @@ http://www.server-wissen.de/linux-debian/ctrl-m-aus-einer-linux-datei-entfernen-
 
 </br>
 
-<a name="1.4 Manually Control"></a>
+<a name="2.4 Manually Control"></a>
 
-#### 1.4 Manually Control 
+#### 2.4 Manually Control 
 
 - stop the client_music service
 
@@ -175,9 +213,9 @@ http://www.server-wissen.de/linux-debian/ctrl-m-aus-einer-linux-datei-entfernen-
 ------------
 </br>
 
-<a name="2 Comitup"></a>
+<a name="3 Comitup"></a>
 
-### 2 Comitup (creates a Hotspot without wlan connection)
+### 3 Comitup (creates a Hotspot without wlan connection)
 
 https://github.com/davesteele/comitup/wiki/Tutorial
 </br>
@@ -205,13 +243,13 @@ https://packages.debian.org/sid/all/comitup/filelist
 ------------
 </br>  
 
-<a name="3 Squeezelite Client"></a>
+<a name="4 Squeezelite Client"></a>
 
-### 3 Squeezelite Client
+### 4 Squeezelite Client
 
-<a name="3.1 Raspian"></a>
+<a name="4.1 Raspian"></a>
 
-#### 3.1 Raspian
+#### 4.1 Raspian
 
 https://forums.slimdevices.com/showthread.php?110523-squeezelite-shows-up-in-lms-settings-but-not-in-players
 </br>
@@ -222,10 +260,6 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 - installation
 
        >>> sudo apt-get install squeezelite / sudo apt install /home/pi/python/support/squeezelite_1.8-4.1+b1_armhf.deb
-       
-- change Hostname (equal to squeezelite name)
-
-       >>> sudo nano /etc/hostname
 
 - get sound device informations
 
@@ -248,9 +282,9 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 
 </br>
     
-<a name="3.2 Windows 10"></a>
+<a name="4.2 Windows 10"></a>
 
-#### 3.2 Windows 10
+#### 4.2 Windows 10
 
 - installation
 
@@ -260,9 +294,9 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 ------------
 </br>
 
-<a name="4 Raspotify"></a>
+<a name="5 Raspotify"></a>
 
-### 4 Raspotify (Spotify Connect Client for Raspian)
+### 5 Raspotify (Spotify Connect Client for Raspian)
 
 https://github.com/dtcooper/raspotify
 </br>
@@ -300,9 +334,9 @@ https://github.com/dtcooper/raspotify
 ------------
 </br>
 
-<a name="5 piCorePlayer & LMS"></a>
+<a name="6 piCorePlayer & LMS"></a>
 
-### 5 piCorePlayer & LMS (Logitech Media Server)
+### 6 piCorePlayer & LMS (Logitech Media Server)
 
 https://www.picoreplayer.org/
 </br>
@@ -310,9 +344,9 @@ https://www.basecube.de/2018/03/17/download/
 </br>
 </br>
 
-<a name="5.1 General Settings"></a>
+<a name="6.1 General Settings"></a>
 
-#### 5.1 General Settings
+#### 6.1 General Settings
 
 - change settings option to beta (options are at the bottom corner on the main site)
 
@@ -330,9 +364,9 @@ https://www.basecube.de/2018/03/17/download/
 
 </br>
 
-<a name="5.2 Squeezelite"></a>
+<a name="6.2 Squeezelite"></a>
 
-#### 5.2 Squeezelite 
+#### 6.2 Squeezelite 
 
 - create a multiroom group placeholder
 
@@ -346,9 +380,9 @@ https://www.basecube.de/2018/03/17/download/
 
 </br>
 
-<a name="5.3 LMS"></a>
+<a name="6.3 LMS"></a>
 
-#### 5.3 LMS 
+#### 6.3 LMS 
 
 - installation
 
@@ -361,9 +395,9 @@ https://www.basecube.de/2018/03/17/download/
 
 </br>
 
-<a name="5.4 LMS Configuration"></a>
+<a name="6.4 LMS Configuration"></a>
 
-#### 5.4 LMS Configuration (seperate WEB_GUI)
+#### 6.4 LMS Configuration (seperate WEB_GUI)
 
 - IP-address
 
