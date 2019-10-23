@@ -207,13 +207,8 @@ This project creates a smarthome environment.
 
 https://mosquitto.org/
 </br>
-https://forum-raspberrypi.de/forum/thread/31959-mosquitto-autostart/
-</br>
 https://github.com/eclipse/mosquitto
 </br>
-https://medium.com/@eranda/setting-up-authentication-on-mosquitto-mqtt-broker-de5df2e29afc
-</br>
-https://www.auxnet.de/verschluesseltes-mqtt-vom-und-zum-mosquitto-server/
 </br>
 
 <a name="3.1 Installation"></a>
@@ -232,7 +227,7 @@ https://www.auxnet.de/verschluesseltes-mqtt-vom-und-zum-mosquitto-server/
 
        >>> mosquitto_sub -d -h localhost -p 1883 -t "test_channel"
 
-- send a message
+- send a message (in an other console)
 
        >>> mosquitto_pub -d -h localhost -p 1883 -t "test_channel" -m "Hello World"
 
@@ -241,6 +236,10 @@ https://www.auxnet.de/verschluesseltes-mqtt-vom-und-zum-mosquitto-server/
 <a name="3.3 Autostart"></a>
 
 #### 3.3 Autostart
+
+https://forum-raspberrypi.de/forum/thread/31959-mosquitto-autostart/
+</br>
+</br>
 
 - create an autostart-file
 
@@ -277,6 +276,12 @@ https://www.auxnet.de/verschluesseltes-mqtt-vom-und-zum-mosquitto-server/
 <a name="3.4 Authentification"></a>
 
 #### 3.4 Authentification
+
+https://medium.com/@eranda/setting-up-authentication-on-mosquitto-mqtt-broker-de5df2e29afc
+</br>
+https://www.auxnet.de/verschluesseltes-mqtt-vom-und-zum-mosquitto-server/
+</br>
+</br>
 
 - stop mosquitto
 
@@ -463,13 +468,11 @@ https://github.com/Koenkk/zigbee2mqtt
 
 ### 5 Zigbee2MQTT Hardware
 
-https://www.zigbee2mqtt.io/information/connecting_cc2530.html
-</br>
 https://github.com/Koenkk/Z-Stack-firmware
 </br>
 https://github.com/Koenkk/zigbee2mqtt/issues/1437
 </br>
-https://de.aliexpress.com/item/32803068018.html?spm=a2g0x.search0604.3.1.72bf1da4p5aRPJ&ws_ab_test=searchweb0_0,searchweb201602_4_10065_10068_10547_319_317_10548_10696_10084_453_10083_454_10618_10304_10307_10820_10821_537_10302_536_10843_10059_10884_10887_321_322_10103,searchweb201603_52,ppcSwitch_0&algo_expid=b4469d30-8afc-4863-971b-96231ae6da3e-0&algo_pvid=b4469d30-8afc-4863-971b-96231ae6da3e
+https://de.aliexpress.com/item/32803068018.html
 </br>
 </br>
 
@@ -484,7 +487,7 @@ https://de.aliexpress.com/item/32803068018.html?spm=a2g0x.search0604.3.1.72bf1da
 
 - connect the debugger to the E18-MS1PA1-PCB 
 
-       >>> /devices/E18-MS1PA1-PCB/Flashing/Programmer connection to E18-MS1PA1-PCB.png
+       >>> overview in /devices/E18-MS1PA1-PCB/Flashing/Programmer connection to E18-MS1PA1-PCB.png
 
        >>> CC debugger -> E18-MS1PA1-PCB
 
@@ -505,10 +508,9 @@ https://de.aliexpress.com/item/32803068018.html?spm=a2g0x.search0604.3.1.72bf1da
        >>> if the light is still red, check the connection to the E18-MS1PA1-PCB   
        >>> GREEN light > ready for the next step   
 
-- firewares 
+- firewares (CC2530_CC2592)
 
        >>> /home/pi/miranda/devices/E18-MS1PA1-PCB/z-stack_firmware.zip
-       >>> search for CC2530_CC2592
 
 - start SmartRF Flash Programmer
 
@@ -521,6 +523,10 @@ https://de.aliexpress.com/item/32803068018.html?spm=a2g0x.search0604.3.1.72bf1da
 <a name="5.2 Raspberry Pi Connection"></a>
 
 #### 5.2 Raspberry Pi Connection 
+
+https://www.zigbee2mqtt.io/information/connecting_cc2530.html
+</br>
+</br>
 
 - Connect the E18-MS1PA1-PCB to the Raspberry
 
@@ -537,12 +543,16 @@ https://de.aliexpress.com/item/32803068018.html?spm=a2g0x.search0604.3.1.72bf1da
 
 #### 5.3 Raspberry Pi Configuration 
 
+https://www.zigbee2mqtt.io/information/connecting_cc2530.html
+</br>
+</br>
+
 - add following at the end of the config file
 
        >>> sudo nano /boot/config.txt 
 	   
-	         enable_uart=1
-	         dtoverlay=pi3-disable-bt
+	    enable_uart=1
+	    dtoverlay=pi3-disable-bt
 
 - disable the modem system service 
 

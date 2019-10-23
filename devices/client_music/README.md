@@ -232,12 +232,21 @@ https://packages.debian.org/sid/all/comitup/filelist
        >>> sudo touch /boot/ssh
        >>> sudo reboot
 
-- LAN connected      > LAN-ADDRESS
-- LAN not conneted   > 10.42.0.1 (Hotspot "comitup-")
+- LAN connected      
 
-- Connections folder > /etc/NetworkManager/system-connections
-- Install folder     > /usr/share/comitup
+       >>> LAN-ADDRESS
 
+- LAN not conneted
+
+       >>> 10.42.0.1 (Hotspot "comitup-")
+
+- Connections folder 
+
+       >>> /etc/NetworkManager/system-connections
+
+- Install folder 
+
+       >>> /usr/share/comitup
 
 </br>
 ------------
@@ -259,7 +268,11 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 
 - installation
 
-       >>> sudo apt-get install squeezelite / sudo apt install /home/pi/python/support/squeezelite_1.8-4.1+b1_armhf.deb
+       >>> sudo apt-get install squeezelite 
+
+       or
+
+       >>> sudo apt install /home/pi/python/support/squeezelite_1.8-4.1+b1_armhf.deb
 
 - get sound device informations
 
@@ -269,8 +282,8 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 
        >>> sudo nano /etc/default/squeezelite
 
-	   SL_SOUNDCARD="hw:CARD=sndrpihifiberry,DEV=0"
-	   SB_EXTRA_ARGS="-a 180"
+	    SL_SOUNDCARD="hw:CARD=sndrpihifiberry,DEV=0"
+	    SB_EXTRA_ARGS="-a 180"
 
 - deactivate autostart
 
@@ -314,9 +327,9 @@ https://github.com/dtcooper/raspotify
 
        >>> sudo nano /etc/default/raspotify
 
-	   DEVICE_NAME=" ... " 
-	   BITRATE="320"
-	   OPTIONS="--username <USERNAME> --password <PASSWORD> --device hw:0,1"
+	    DEVICE_NAME=" ... " 
+	    BITRATE="320"
+	    OPTIONS="--username <USERNAME> --password <PASSWORD> --device hw:0,1"
 
 - restart raspotify 
 
