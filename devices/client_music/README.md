@@ -5,9 +5,10 @@ A raspberry pi controller to play music by using spotify and lms.
    * <a href="#1 Prepare Raspian">1 Prepare Raspian</a>
    * <a href="#2 Client Music">2 Client Music</a>
       * <a href="#2.1 Installation">2.1 Installation</a>
-      * <a href="#2.2 Volume Control">2.2 Volume Control</a>      
-      * <a href="#2.3 Autostart">2.3 Autostart</a>
-      * <a href="#2.4 Manually Control">2.4 Manually Control</a>
+      * <a href="#2.2 Volume Control GUI">2.2 Volume Control GUI</a>      
+      * <a href="#2.3 Volume Control Console">2.3 Volume Control Console</a>          
+      * <a href="#2.4 Autostart">2.4 Autostart</a>
+      * <a href="#2.5 Manually Control">2.5 Manually Control</a>
    * <a href="#3 Comitup">3 Comitup</a>
    * <a href="#4 Squeezelite Client">4 Squeezelite Client</a>
       * <a href="#4.1 Raspian">4.1 Raspian</a>
@@ -102,11 +103,9 @@ A raspberry pi controller to play music by using spotify and lms.
 
 </br>
 
-<a name="2.2 Volume Control"></a>
+<a name="2.2 Volume Control GUI"></a>
 
-#### 2.2 Volume Control
-
-##### GUI
+#### 2.2 Volume Control GUI
 
 - open the alsamixer
 
@@ -115,7 +114,11 @@ A raspberry pi controller to play music by using spotify and lms.
            press "F6" and setect sound-device
            use arrow keys and change "Digital" 
 
-##### Console
+</br>
+
+<a name="2.3 Volume Control Console"></a>
+
+#### 2.3 Volume Control Console
 
 https://blog.amnuts.com/2017/01/11/rotary-volume-control-for-the-raspberry-pi/
 </br>
@@ -142,9 +145,9 @@ https://blog.amnuts.com/2017/01/11/rotary-volume-control-for-the-raspberry-pi/
 
 </br>
 
-<a name="2.3 Autostart"></a>
+<a name="2.4 Autostart"></a>
 
-#### 2.3 Autostart
+#### 2.4 Autostart
 
 - create an autostart-file
 
@@ -193,9 +196,9 @@ http://www.server-wissen.de/linux-debian/ctrl-m-aus-einer-linux-datei-entfernen-
 
 </br>
 
-<a name="2.4 Manually Control"></a>
+<a name="2.5 Manually Control"></a>
 
-#### 2.4 Manually Control 
+#### 2.5 Manually Control 
 
 - stop the client_music service
 
@@ -225,7 +228,12 @@ https://packages.debian.org/sid/all/comitup/filelist
 
 - installation steps:
 
-       >>> sudo apt-get install comitup / sudo apt install /home/pi/python/support/comitup_1.3.1-1_all.deb
+       >>> sudo apt-get install comitup 
+
+       or
+       
+       >>> sudo apt install /home/pi/python/support/comitup_1.3.1-1_all.deb
+       
        >>> sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
        >>> sudo systemctl disable systemd-resolved
        >>> sudo systemctl stop systemd-resolved
