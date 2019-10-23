@@ -499,7 +499,7 @@ https://de.aliexpress.com/item/32803068018.html
            connect pin 2 and 9
 
 <p align="center">
-  ![Connection](https://github.com/stanman71/Watering_Control/blob/master/devices/E18-MS1PA1-PCB/Flashing/Programmer%20connection%20to%20E18-MS1PA1-PCB.png)
+  <img width="600" height="600" src="https://github.com/stanman71/Watering_Control/blob/master/devices/E18-MS1PA1-PCB/Flashing/Programmer%20connection%20to%20E18-MS1PA1-PCB.png">
 </p>
 
 - connect the CC debugger to the PC
