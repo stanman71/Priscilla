@@ -445,12 +445,9 @@ https://de.aliexpress.com/item/32803068018.html?spm=a2g0x.search0604.3.1.72bf1da
 
 #### 4.1 Flashing E18-MS1PA1-PCB (Windows Environment)
 
-- install SmartRF Flash programmer (admin rights necessary)
+- install SmartRF Flash programmer and CC debugger driver (admin rights necessary)
 
        >>> /devices/E18-MS1PA1-PCB/Flashing/flash-programmer-1.12.8.zip
-
-- install the CC debugger driver
-
        >>> /devices/E18-MS1PA1-PCB/Flashing/swrc212a.zip
 
 - connect the debugger to the E18-MS1PA1-PCB 
@@ -473,7 +470,8 @@ https://de.aliexpress.com/item/32803068018.html?spm=a2g0x.search0604.3.1.72bf1da
 - if the light on the CC debugger is RED
 
        >>> press set reset button on the CC debugger
-       >>> if the light is still red, check the connection to the E18-MS1PA1-PCB      
+       >>> if the light is still red, check the connection to the E18-MS1PA1-PCB   
+       >>> GREEN light > ready for the next step   
 
 - firewares 
 
