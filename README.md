@@ -510,7 +510,10 @@ https://de.aliexpress.com/item/32803068018.html
 
        >>> press set reset button on the CC debugger
        >>> if the light is still red, check the connection to the E18-MS1PA1-PCB   
-       >>> GREEN light > ready for the next step   
+
+- if the light on the CC debugger is GREEN 
+
+       >>> ready for the next step   
 
 - firewares (CC2530_CC2592)
 
