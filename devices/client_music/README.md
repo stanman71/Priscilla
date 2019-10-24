@@ -42,27 +42,32 @@ A raspberry pi controller to play music by using spotify and lms.
 
 - update raspian
 
-       >>> sudo apt-get update && sudo apt-get upgrade
+       >>> sudo apt-get update && sudo apt-get upgrade -y
 
 - install remote server
 
-       >>> sudo apt-get purge realvnc-vnc-server
+       >>> sudo apt-get purge realvnc-vnc-server -y
 
 - enable VNC Server:
 
        >>> sudo raspi-config       
 
-       Navigate to Interfacing Options
-       Scroll down and select VNC 
-       Yes
+           Navigate to Interfacing Options
+           Scroll down and select VNC 
+           Yes
 
 - install xrdp:
 
-       >>> sudo apt-get install xrdp
+       >>> sudo apt-get install xrdp -y
 
 - upgrade pip
 
        >>> pip install --upgrade pip
+
+- install python modules
+
+       >>> sudo pip3 install pyyaml
+       >>> sudo pip3 install paho-mqtt
 
 - open hostname file and insert new name (equal to squeezelite name)
 
@@ -84,22 +89,24 @@ A raspberry pi controller to play music by using spotify and lms.
 
        >>> mkdir python
 
-       FileZilla
-
-       Protocol:   SFTP
-       Server:     RaspberryPi IP-Address
-       Port:       ---
-       Connection: normal
-       user:       pi
-       password:   raspberry
+           FileZilla
+   
+           Protocol:   SFTP
+           Server:     RaspberryPi IP-Address
+           Port:       ---
+           Connection: normal
+           user:       pi
+           password:   raspberry
 
 - change folder permissions
 
-       >>> sudo chmod -v -R 070 /home/pi/python
+       >>> sudo chmod -v -R 770 /home/pi/python
 
 - update config settings 
 
        >>> sudo nano /home/pi/python/config.yaml
+
+           audio card settings > <a href="#2.3 Volume Control Console">2.3 Volume Control Console</a>
 
 </br>
 
