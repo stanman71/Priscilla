@@ -79,13 +79,13 @@ def settings_users():
             
             if request.form.get("set_name_" + str(i)) != None:
                 
-                check_administrator = False
+                administrator_exist = False
                 error_founded       = False
                 hashed_password     = None
 
                 # current user has administrator rights ?
-                if request.form.get("checkbox_administrator_" + str(i)) != None:
-                    check_administrator = True
+                if request.form.get("radio_role_" + str(i)) == "administrator":
+                    administrator_exist = True
                     
                 else:
                     
@@ -94,7 +94,7 @@ def settings_users():
                         
                         try:
                             if (i != j) and GET_USER_BY_ID(j).role == "administrator":      
-                                check_administrator = True
+                                administrator_exist = True
                                 continue      
                                 
                         except:
@@ -102,7 +102,7 @@ def settings_users():
 
 
                 # one user has administrator rights
-                if check_administrator == True: 
+                if administrator_exist == True: 
                     
 
                     # ############
@@ -184,10 +184,7 @@ def settings_users():
 
 
                     # role
-                    if request.form.get("checkbox_administrator_" + str(i)) != None:
-                        role = "administrator"
-                    else:
-                        role = "user"
+                    role = request.form.get("radio_role_" + str(i))
 
                     # notification
                     if request.form.get("checkbox_email_notification_" + str(i)) != None:

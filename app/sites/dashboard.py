@@ -16,7 +16,7 @@ def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
         try:
-            if current_user.role == "administrator" or current_user.role == "user":
+            if current_user.role == "dashboard_only" or current_user.role == "user" or current_user.role == "administrator":
                 return f(*args, **kwargs)
             else:
                 return redirect(url_for('logout'))
@@ -42,4 +42,7 @@ def dashboard():
     # try to match the pages defined in -> pages/
     return render_template('layouts/default.html',
                             data=data,
-                            content=render_template( 'pages/dashboard.html') )
+                            content=render_template( 'pages/dashboard.html',
+                                                    ) 
+                            )
+

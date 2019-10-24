@@ -41,6 +41,5 @@ def settings_speechcontrol():
                             content=render_template( 'pages/settings_speechcontrol.html', 
                                                     error_message_logfile=error_message_logfile,
                                                     success_message_logfile=success_message_logfile,
-                                 
                                                     ) 
                            )

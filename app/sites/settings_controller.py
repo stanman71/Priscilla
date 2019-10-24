@@ -132,7 +132,7 @@ def settings_controller():
                                                     list_controller=list_controller,
                                                     list_device_command_options=list_device_command_options,
                                                     spotify_devices=spotify_devices,     
-                                                    spotify_playlists=spotify_playlists,      
+                                                    spotify_playlists=spotify_playlists,     
                                                     ) 
                            )
 

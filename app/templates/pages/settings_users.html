@@ -5,9 +5,9 @@
 
             <div class="card ">
               <div class="card-footer">    
-
                 <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
                   <a href="/settings/system" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">System</a>
+                  <a href="/settings/devices" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Geräte</a>                  
                   <a href="/settings/controller" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Controller</a>
                   <a href="/settings/speechcontrol" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Sprachsteuerung</a>                                       
                   <a href="/settings/users" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Benutzer</a>                  
@@ -142,10 +142,22 @@
                               </div>
                             </td> 
                             <td>
-                              <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkbox_administrator_{{ entry.id }}" {% if entry.role == "administrator" %} checked="on" {% endif %} name="checkbox_administrator_{{ entry.id }}">
-                                <label class="custom-control-label" for="checkbox_administrator_{{ entry.id }}">Administrator</label>
-                              </div>       
+                              <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="radio_role_dashboard_only_{{ entry.id }}" {% if entry.role == "dashboard_only" %} checked="on" {% endif %} value="dashboard_only" name="radio_role_{{ entry.id }}">
+                                <label class="custom-control-label" for="radio_role_dashboard_only_{{ entry.id }}">Dashboard-Only</label>
+                              </div>     
+                              <br>  
+                              <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="radio_role_user_{{ entry.id }}" {% if entry.role == "user" %} checked="on" {% endif %} value="user" name="radio_role_{{ entry.id }}">
+                                <label class="custom-control-label" for="radio_role_user_{{ entry.id }}">User</label>
+                              </div> 
+                              <br>       
+                              <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="radio_role_administrator_{{ entry.id }}" {% if entry.role == "administrator" %} checked="on" {% endif %} value="administrator" name="radio_role_{{ entry.id }}">
+                                <label class="custom-control-label" for="radio_role_administrator_{{ entry.id }}">Administrator</label>
+                              </div>  
+                              <br>
+                              <br>   
                               <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="checkbox_email_notification_{{ entry.id }}" {% if entry.email_notification == "True" %} checked="on" {% endif %} name="checkbox_email_notification_{{ entry.id }}">
                                 <label class="custom-control-label" for="checkbox_email_notification_{{ entry.id }}">Benachrichtigungen</label>

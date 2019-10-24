@@ -14,104 +14,101 @@
             </a>
           </li>
 
-          {% if data.navigation == "scheduler" %}
-            <li class="active ">
-          {% else %} 
-            <li>
-          {% endif %} 
-            <a href="/scheduler">
-              <i class='uil uil-calendar-alt'></i>
-              <p>Aufgaben</p>
-            </a>
-          </li>  
+          {% if current_user.role == "user" or current_user.role == "administrator" %}
 
-          {% if data.navigation == "programs" %}
-            <li class="active ">
-          {% else %} 
-            <li>
-          {% endif %} 
-            <a href="/programs">
-              <i class='uil uil-process'></i>
-              <p>Programme</p>
-            </a>
-          </li>            
+            {% if data.navigation == "scheduler" %}
+              <li class="active ">
+            {% else %} 
+              <li>
+            {% endif %} 
+              <a href="/scheduler">
+                <i class='uil uil-calendar-alt'></i>
+                <p>Aufgaben</p>
+              </a>
+            </li>  
 
-          {% if data.navigation == "plants" %}
-            <li class="active ">
-          {% else %} 
-            <li>
-          {% endif %} 
-            <a href="/plants">
-              <i class='uil uil-club'></i>
-              <p>Pflanzen</p>
-            </a>
-          </li>  
+            {% if data.navigation == "programs" %}
+              <li class="active ">
+            {% else %} 
+              <li>
+            {% endif %} 
+              <a href="/programs">
+                <i class='uil uil-process'></i>
+                <p>Programme</p>
+              </a>
+            </li>            
 
-          {% if data.navigation == "led" %}
-            <li class="active ">
-          {% else %} 
-            <li>
-          {% endif %} 
-            <a href="/led/scenes">
-              <i class='uil uil-lightbulb-alt'></i>
-              <p>Beleuchtung</p>
-            </a>
-          </li>  
+            {% if data.navigation == "plants" %}
+              <li class="active ">
+            {% else %} 
+              <li>
+            {% endif %} 
+              <a href="/plants">
+                <i class='uil uil-club'></i>
+                <p>Pflanzen</p>
+              </a>
+            </li>  
 
-          {% if data.navigation == "cameras" %}
-            <li class="active ">
-          {% else %} 
-            <li>
-          {% endif %} 
-            <a href="/cameras">
-              <i class='uil uil-video'></i>
-              <p>Kameras</p>
-            </a>
-          </li>  
+            {% if data.navigation == "led" %}
+              <li class="active ">
+            {% else %} 
+              <li>
+            {% endif %} 
+              <a href="/led/scenes">
+                <i class='uil uil-lightbulb-alt'></i>
+                <p>Beleuchtung</p>
+              </a>
+            </li>  
 
-          {% if data.navigation == "music" %}
-            <li class="active ">
-          {% else %} 
-            <li>
-          {% endif %} 
-            <a href="/music">
-              <i class='uil uil-music'></i>
-              <p>Musik</p>
-            </a>
-          </li>  
+            {% if data.navigation == "cameras" %}
+              <li class="active ">
+            {% else %} 
+              <li>
+            {% endif %} 
+              <a href="/cameras">
+                <i class='uil uil-video'></i>
+                <p>Kameras</p>
+              </a>
+            </li>  
 
-          {% if data.navigation == "sensordata" %}
-            <li class="active ">
-          {% else %} 
-            <li>
-          {% endif %} 
-            <a href="/sensordata/jobs">
-              <i class='uil uil-database-alt'></i>
-              <p>Sensordaten</p>
-            </a>
-          </li>  
+            {% if data.navigation == "music" %}
+              <li class="active ">
+            {% else %} 
+              <li>
+            {% endif %} 
+              <a href="/music">
+                <i class='uil uil-music'></i>
+                <p>Musik</p>
+              </a>
+            </li>  
 
-          {% if data.navigation == "devices" %}
-            <li class="active ">
-          {% else %} 
-            <li>
-          {% endif %} 
-            <a href="/devices">
-              <i class='uil uil-share-alt'></i>
-              <p>Geräte</p>
-            </a>
-          </li>  
+            {% if data.navigation == "sensordata" %}
+              <li class="active ">
+            {% else %} 
+              <li>
+            {% endif %} 
+              <a href="/sensordata/jobs">
+                <i class='uil uil-database-alt'></i>
+                <p>Sensordaten</p>
+              </a>
+            </li>  
 
-          {% if data.navigation == "settings" %}
-            <li class="active ">
-          {% else %} 
-            <li>
-          {% endif %} 
-            <a href="/settings/system">
-              <i class='uil uil-cog'></i>
-              <p>Einstellungen</p>
-            </a>
-          </li>  
+          {% endif %}
+
+          {% if current_user.role == "administrator" %}         
+
+            {% if data.navigation == "settings" %}
+              <li class="active ">
+            {% else %} 
+              <li>
+            {% endif %} 
+              <a href="/settings/system">
+                <i class='uil uil-cog'></i>
+                <p>Einstellungen</p>
+              </a>
+            </li>  
+
+          {% endif %}
 
           {% if current_user.is_authenticated %}
             <li>

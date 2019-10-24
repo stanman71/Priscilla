@@ -52,7 +52,7 @@ except:
 UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway)
 
 
-from app.sites                      import index, dashboard, scheduler, programs, plants, led_scenes, led_groups, cameras, music, sensordata_jobs, sensordata_statistics, devices, settings_system, settings_controller, settings_speechcontrol, settings_users, settings_system_log, errors
+from app.sites                      import index, dashboard, scheduler, programs, plants, led_scenes, led_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_devices, settings_controller, settings_speechcontrol, settings_users, settings_system_log, errors
 from app.backend.shared_resources   import process_management_queue
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
 from app.backend.shared_resources   import REFRESH_MQTT_INPUT_MESSAGES_THREAD

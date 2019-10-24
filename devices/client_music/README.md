@@ -233,7 +233,7 @@ https://packages.debian.org/sid/all/comitup/filelist
        or
        
        >>> sudo apt install /home/pi/python/support/comitup_1.3.1-1_all.deb
-       
+
        >>> sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
        >>> sudo systemctl disable systemd-resolved
        >>> sudo systemctl stop systemd-resolved
@@ -321,12 +321,18 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 
 https://github.com/dtcooper/raspotify
 </br>
+https://dtcooper.github.io/raspotify/
+</br>
 </br>
 
 - installation
 
        >>> curl -sL https://dtcooper.github.io/raspotify/install.sh | sh
-       
+
+       or
+
+       >>> sudo apt install /home/pi/python/support/raspotify-latest.deb
+
 - get audio device informations
 
        >>> aplay -l

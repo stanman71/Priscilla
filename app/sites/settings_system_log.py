@@ -125,7 +125,7 @@ def settings_system_log():
                                                     selected_type_warning=selected_type_warning,                                                      
                                                     selected_type_error=selected_type_error,                    
                                                     data_log_system=data_log_system,  
-                                                    log_search=log_search,                                     
+                                                    log_search=log_search,                                   
                                                     ) 
                            )
 

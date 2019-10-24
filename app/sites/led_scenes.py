@@ -16,7 +16,7 @@ def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
         try:
-            if current_user.role == "administrator":
+            if current_user.role == "user" or current_user.role == "administrator":
                 return f(*args, **kwargs)
             else:
                 return redirect(url_for('logout'))
@@ -408,7 +408,7 @@ def led_scenes():
                                                     scene_7=scene_7,
                                                     scene_8=scene_8,
                                                     scene_9=scene_9,
-                                                    scene_10=scene_10,                                                    
+                                                    scene_10=scene_10,                                                
                                                     ) 
                            )
 
