@@ -106,7 +106,7 @@ A raspberry pi controller to play music by using spotify and lms.
 
        >>> sudo nano /home/pi/python/config.yaml
 
-           audio card settings > <a href="#2.3 Volume Control Console">2.3 Volume Control Console</a>
+           audio card number > 2.3 Volume Control Console
 
 </br>
 

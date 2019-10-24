@@ -1,8 +1,8 @@
 general:
   model: 
-  current_interface: 
+  current_interface: spotify
   soundcard_number: 
-  current_volume: 
+  current_volume: 130
   ieeeAddr: 
 mqtt:
   broker: 
