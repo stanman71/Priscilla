@@ -478,22 +478,56 @@
                             <td>{{ entry.model }}</td> 
                             <td>
                                 
-                              <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="radio_spotify_{{ entry.id }}" {% if "spotify" in entry.last_values_formated %} checked="on" {% endif %} value="spotify" name="radio_client_music_interface_{{ entry.id }}">
-                                <label class="custom-control-label" for="radio_spotify_{{ entry.id }}">Spotify</label>
-                              </div> 
-                              <br>       
-                              <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="radio_multiroom_{{ entry.id }}" {% if "multiroom" in entry.last_values_formated %} checked="on" {% endif %} value="multiroom" name="radio_client_music_interface_{{ entry.id }}">
-                                <label class="custom-control-label" for="radio_multiroom_{{ entry.id }}">Multiroom</label>
-                              </div>  
-                            <td>
-                              <div class="slidecontainer"> 
-                                <div class="col-md-10 text-center"> 
-                                  <input type="range" class="slider" name="set_client_music_volume_{{ entry.id }}" min="100" max="207" value="{{ entry.last_values.split(':')[2] | replace('}', '') }}" />
+                              {% if entry.last_values_formated != None %} 
+                                
+                                <div class="custom-control custom-radio custom-control-inline">
+                                  <input type="radio" class="custom-control-input" id="radio_spotify_{{ entry.id }}" {% if "spotify" in entry.last_values_formated %} checked="on" {% endif %} value="spotify" name="radio_client_music_interface_{{ entry.id }}">
+                                  <label class="custom-control-label" for="radio_spotify_{{ entry.id }}">Spotify</label>
                                 </div> 
-                              </div>                             
-                            </td>                               
+                                <br>       
+                                <div class="custom-control custom-radio custom-control-inline">
+                                  <input type="radio" class="custom-control-input" id="radio_multiroom_{{ entry.id }}" {% if "multiroom" in entry.last_values_formated %} checked="on" {% endif %} value="multiroom" name="radio_client_music_interface_{{ entry.id }}">
+                                  <label class="custom-control-label" for="radio_multiroom_{{ entry.id }}">Multiroom</label>
+                                </div>
+                                
+                              <!-- no values founded -->
+
+                              {% else %}
+
+                                <div class="custom-control custom-radio custom-control-inline">
+                                  <input type="radio" class="custom-control-input" id="radio_spotify_{{ entry.id }}" value="spotify" name="radio_client_music_interface_{{ entry.id }}">
+                                  <label class="custom-control-label" for="radio_spotify_{{ entry.id }}">Spotify</label>
+                                </div> 
+                                <br>       
+                                <div class="custom-control custom-radio custom-control-inline">
+                                  <input type="radio" class="custom-control-input" id="radio_multiroom_{{ entry.id }}" value="multiroom" name="radio_client_music_interface_{{ entry.id }}">
+                                  <label class="custom-control-label" for="radio_multiroom_{{ entry.id }}">Multiroom</label>
+                                </div>
+
+                              {% endif %}
+                              
+                            <td>
+                            
+                              {% if entry.last_values != None %}
+                              
+                                <div class="slidecontainer"> 
+                                  <div class="col-md-10 text-center"> 
+                                    <input type="range" class="slider" name="set_client_music_volume_{{ entry.id }}" min="100" max="207" value="{{ entry.last_values.split(':')[2] | replace('}', '') }}" />
+                                  </div> 
+                                </div>
+
+                              <!-- no values founded -->         
+
+                              {% else %}
+                              
+                                <div class="slidecontainer"> 
+                                  <div class="col-md-10 text-center"> 
+                                    <input type="range" class="slider" name="set_client_music_volume_{{ entry.id }}" min="100" max="207" value="100" />
+                                  </div> 
+                                </div>
+
+                              {% endif %}       
+
                             <td></td>                         
                           </tr>
                           

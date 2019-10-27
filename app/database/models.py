@@ -347,7 +347,7 @@ if job_check_mqtt_connetion_founded == False:
         option_repeat = "True",
         day           = "*",        
         hour          = "*",
-        minute        = "0,10,20,30,40,50",       
+        minute        = "00,10,20,30,40,50",       
     )
     db.session.add(scheduler_check_mqtt_connetion)
     db.session.commit()
