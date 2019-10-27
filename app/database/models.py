@@ -237,7 +237,7 @@ class Scheduler_Tasks(db.Model):
     id                          = db.Column(db.Integer, primary_key=True, autoincrement = True)
     name                        = db.Column(db.String(50), unique=True)
     task                        = db.Column(db.String(50))
-    task_type                   = db.Column(db.String(50))   
+    visible                     = db.Column(db.String(50))   
     option_time                 = db.Column(db.String(50)) 
     option_sun                  = db.Column(db.String(50))
     option_sensors              = db.Column(db.String(50))
@@ -325,20 +325,38 @@ if Host.query.filter_by().first() == None:
    
 
 # create system scheduler jobs
-job_update_devices_founded  = False
-job_backup_database_founded = False
+job_check_mqtt_connetion_founded = False
+job_update_devices_founded         = False
+job_backup_database_founded        = False
 
 for task in Scheduler_Tasks.query.all():
-
+    if task.name.lower() == "check_mqtt_connetion":
+        job_check_mqtt_connetion_founded = True
     if task.name.lower() == "update_devices":
         job_update_devices_founded = True
     if task.name.lower() == "backup_database":
         job_backup_database_founded = True
 
+
+if job_check_mqtt_connetion_founded == False:
+    scheduler_check_mqtt_connetion = Scheduler_Tasks(
+        name          = "check_mqtt_connetion",
+        task          = "check_mqtt_connetion",
+        visible       = "False",
+        option_time   = "True",
+        option_repeat = "True",
+        day           = "*",        
+        hour          = "*",
+        minute        = "0,10,20,30,40,50",       
+    )
+    db.session.add(scheduler_check_mqtt_connetion)
+    db.session.commit()
+
 if job_update_devices_founded == False:
     scheduler_task_update_devices = Scheduler_Tasks(
         name          = "update_devices",
         task          = "update_devices",
+        visible       = "False",
         option_time   = "True",
         option_repeat = "True",
         day           = "*",        
@@ -352,6 +370,7 @@ if job_backup_database_founded == False:
     scheduler_task_backup_database = Scheduler_Tasks(
         name          = "backup_database",
         task          = "backup_database",
+        visible       = "False",        
         option_time   = "True",
         option_repeat = "True",
         day           = "*",        
@@ -2517,6 +2536,7 @@ def ADD_SCHEDULER_TASK():
             new_task = Scheduler_Tasks(
                     id            = i,
                     name          = "new_scheduler_task_" + str(i),
+                    visible       = "True",
                     option_repeat = "True",
                 )
             db.session.add(new_task)

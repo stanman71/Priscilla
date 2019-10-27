@@ -72,5 +72,6 @@ def SEND_EMAIL(subject, message):
             return   
             
         except Exception as e:
-            WRITE_LOGFILE_SYSTEM("ERROR", "eMail | " + str(recipients) + " | " + subject + " | " + message + " | " + str(e))  
-            return ("ERROR eMail || " + str(e))  
+            if str(e) != "No recipients have been added":
+                WRITE_LOGFILE_SYSTEM("ERROR", "eMail | " + str(recipients) + " | " + subject + " | " + message + " | " + str(e))  
+                return ("ERROR eMail || " + str(e))  

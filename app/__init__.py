@@ -56,7 +56,7 @@ from app.sites                      import index, dashboard, scheduler, programs
 from app.backend.shared_resources   import process_management_queue
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
 from app.backend.shared_resources   import REFRESH_MQTT_INPUT_MESSAGES_THREAD
-from app.backend.mqtt               import MQTT_RECEIVE_THREAD, MQTT_PUBLISH_THREAD, CHECK_ZIGBEE2MQTT, CHECK_ZIGBEE2MQTT_PAIRING
+from app.backend.mqtt               import MQTT_RECEIVE_THREAD, MQTT_PUBLISH_THREAD, CHECK_MQTT, CHECK_ZIGBEE2MQTT_AT_STARTUP, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.email              import SEND_EMAIL
 from app.backend.file_management    import GET_LOCATION_COORDINATES
 from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
@@ -113,6 +113,9 @@ try:
     MQTT_PUBLISH_THREAD()
     REFRESH_MQTT_INPUT_MESSAGES_THREAD()
 
+    CHECK_MQTT()   
+    time.sleep(3)    
+
 except Exception as e:
     print("ERROR: MQTT | " + str(e))
     WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e)) 
@@ -122,9 +125,7 @@ except Exception as e:
 """ zigbee """
 """ ###### """
  
-time.sleep(3)
-
-if CHECK_ZIGBEE2MQTT():  
+if CHECK_ZIGBEE2MQTT_AT_STARTUP():  
     print("ZigBee2MQTT | Connected") 
     
     WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Connected")

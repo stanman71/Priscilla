@@ -119,17 +119,27 @@
               </div>  
             </div>  
 
-<!-- message error mqtt -->
+<!-- message error mqtt connection -->
 
-{% if error_message_mqtt != "" %}
+{% if error_message_mqtt_connection == True %}
   <div class="alert alert-danger">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    <span>{{ error_message_mqtt }}</span>
+    <span>Keine MQTT-Verbindung</span>
   </div>  
 {% endif %}   
 
+<!-- message error zigbee2mqtt connection -->
+
+{% if error_message_zigbee2mqtt_connection == True %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Keine ZIGBEE2MQTT-Verbindung</span>
+  </div>  
+{% endif %}   
 
 <!-------------------->
 <!-- DEVICES TABLE  -->

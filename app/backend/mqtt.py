@@ -8,7 +8,7 @@ import time
 from app import app
 from app.database.models import *
 from app.backend.file_management import *
-from app.backend.shared_resources import process_management_queue, mqtt_incoming_messages_list, mqtt_message_queue
+from app.backend.shared_resources import process_management_queue, mqtt_incoming_messages_list, mqtt_message_queue, SET_DEVICE_CONNECTION_MQTT, SET_DEVICE_CONNECTION_ZIGBEE2MQTT
 from app.backend.email import SEND_EMAIL
 
 from ping3 import ping
@@ -318,10 +318,10 @@ def UPDATE_DEVICES(gateway):
     if gateway == "mqtt":
         
         heapq.heappush(mqtt_message_queue, (20, ("miranda/mqtt/devices", "")))
-        time.sleep(3)
+        time.sleep(10)
 
         try:
-            for message in GET_MQTT_INCOMING_MESSAGES(5):
+            for message in GET_MQTT_INCOMING_MESSAGES(10):
                 
                 if message[1] == "miranda/mqtt/log":
 
@@ -403,7 +403,7 @@ def UPDATE_DEVICES(gateway):
         error = ""
     
         heapq.heappush(mqtt_message_queue, (20, ("miranda/zigbee2mqtt/bridge/config/devices", "")))        
-        time.sleep(2)
+        time.sleep(5)
       
         try:
 
@@ -596,7 +596,6 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
 """  check functions  """
 """ ################# """
  
- 
 def CHECK_MQTT():
     MQTT_TOPIC = "miranda/mqtt/test"
     MQTT_MSG   = ""
@@ -612,13 +611,15 @@ def CHECK_MQTT():
         client.publish(MQTT_TOPIC,MQTT_MSG)    
         client.disconnect()
 
+        SET_DEVICE_CONNECTION_MQTT(True)
         return True
 
     except Exception as e:
+        SET_DEVICE_CONNECTION_MQTT(False)
         return ("MQTT | " + str(e))    
 
 
-def CHECK_ZIGBEE2MQTT():                     
+def CHECK_ZIGBEE2MQTT_AT_STARTUP():     
     counter = 1
 
     while counter != 5:      
@@ -627,6 +628,7 @@ def CHECK_ZIGBEE2MQTT():
             
                 try:
                     if message[2] == "online":
+                        SET_DEVICE_CONNECTION_ZIGBEE2MQTT(True)
                         return True
 
                 except:
@@ -634,7 +636,8 @@ def CHECK_ZIGBEE2MQTT():
 
         counter = counter + 1
         time.sleep(1)
-                
+
+    SET_DEVICE_CONNECTION_ZIGBEE2MQTT(False)     
     return False
 
 

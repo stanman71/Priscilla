@@ -7,12 +7,15 @@ from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 from app.backend.email           import SEND_EMAIL
 
 process_management_queue = []
-mqtt_message_queue       = []
 
 
-# mqtt_incoming_messages
+""" ################ """
+"""  mqtt functions  """
+""" ################ """
 
+mqtt_message_queue          = []
 mqtt_incoming_messages_list = []
+
 
 def REFRESH_MQTT_INPUT_MESSAGES_THREAD():
 
@@ -48,3 +51,27 @@ def REFRESH_MQTT_INPUT_MESSAGES():
 			print(e)
 			
 		time.sleep(1)
+
+
+""" ################# """
+"""  system messages  """
+""" ################# """
+
+device_connetion_mqtt        = False
+device_connetion_zigbee2mqtt = False
+
+def SET_DEVICE_CONNECTION_MQTT(value):
+	global device_connetion_mqtt
+	device_connetion_mqtt = value
+
+def GET_DEVICE_CONNECTION_MQTT():
+    global device_connetion_mqtt
+    return device_connetion_mqtt 
+
+def SET_DEVICE_CONNECTION_ZIGBEE2MQTT(value):
+	global device_connetion_zigbee2mqtt
+	device_connetion_zigbee2mqtt = value	
+
+def GET_DEVICE_CONNECTION_ZIGBEE2MQTT():
+    global device_connetion_zigbee2mqtt
+    return device_connetion_zigbee2mqtt	

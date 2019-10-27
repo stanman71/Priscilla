@@ -7,7 +7,7 @@ from app                          import app
 from app.database.models          import *
 from app.backend.mqtt             import CHECK_MQTT, UPDATE_DEVICES, CHECK_ZIGBEE2MQTT_NAME_CHANGED, CHECK_ZIGBEE2MQTT_DEVICE_DELETED, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.file_management  import GET_PATH, RESET_LOGFILE, WRITE_LOGFILE_SYSTEM
-from app.backend.shared_resources import mqtt_message_queue
+from app.backend.shared_resources import mqtt_message_queue, GET_DEVICE_CONNECTION_MQTT, GET_DEVICE_CONNECTION_ZIGBEE2MQTT
 from app.backend.checks           import CHECK_DEVICE_EXCEPTION_SETTINGS
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
@@ -38,7 +38,8 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_devices():
-    error_message_mqtt = ""
+    error_message_mqtt_connection               = False
+    error_message_zigbee2mqtt_connection        = False    
     success_message_change_settings_devices     = []         
     error_message_change_settings_devices       = []    
     success_message_change_settings_exceptions  = False
@@ -47,13 +48,14 @@ def settings_devices():
     success_message_logfile                     = False
     error_message_logfile                       = ""
 
-    page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
+    page_title       = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
 
-    # check mqtt
-    result = CHECK_MQTT()
-    if result != True:
-        error_message_mqtt = result
+    if GET_DEVICE_CONNECTION_MQTT() == False:
+        error_message_mqtt_connection = True
+
+    if GET_DEVICE_CONNECTION_ZIGBEE2MQTT() == False:
+        error_message_zigbee2mqtt_connection = True
 
     # delete message
     if session.get('delete_device_success', None) != None:
@@ -510,7 +512,8 @@ def settings_devices():
     return render_template('layouts/default.html',
                             data=data,    
                             content=render_template( 'pages/settings_devices.html',
-                                                    error_message_mqtt=error_message_mqtt,
+                                                    error_message_mqtt_connection=error_message_mqtt_connection,
+                                                    error_message_zigbee2mqtt_connection=error_message_zigbee2mqtt_connection,
                                                     success_message_change_settings_devices=success_message_change_settings_devices,
                                                     error_message_change_settings_devices=error_message_change_settings_devices, 
                                                     success_message_change_settings_exceptions=success_message_change_settings_exceptions,

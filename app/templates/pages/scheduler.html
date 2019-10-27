@@ -229,18 +229,20 @@
 
 {% for entry in list_scheduler_tasks %}
 
-<section id="table_{{entry.id}}"></section>  
+  {% if entry.visible =="True" %}
 
-<!-- success message change settings scheduler task -->
+  <section id="table_{{entry.id}}"></section>  
 
-{% if success_message_change_settings_scheduler_task == entry.id %}
-  <div class="alert alert-success">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    <span>Einstellungen erfolgreich geändert</span>
-  </div>
-{% endif %}  
+  <!-- success message change settings scheduler task -->
+
+  {% if success_message_change_settings_scheduler_task == entry.id %}
+    <div class="alert alert-success">
+      <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="tim-icons icon-simple-remove"></i>
+      </button>
+      <span>Einstellungen erfolgreich geändert</span>
+    </div>
+  {% endif %}  
 
 
              <div class="card ">
@@ -600,6 +602,8 @@
                 </form>
               </div> 
             </div>
+
+  {% endif %}
 
 {% endfor %}
 
