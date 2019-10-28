@@ -321,7 +321,7 @@ def UPDATE_DEVICES(gateway):
         time.sleep(10)
 
         try:
-            for message in GET_MQTT_INCOMING_MESSAGES(10):
+            for message in GET_MQTT_INCOMING_MESSAGES(15):
                 
                 if message[1] == "miranda/mqtt/log":
 
@@ -407,7 +407,7 @@ def UPDATE_DEVICES(gateway):
       
         try:
 
-            for message in GET_MQTT_INCOMING_MESSAGES(5):
+            for message in GET_MQTT_INCOMING_MESSAGES(10):
                     
                 if message[1] == "miranda/zigbee2mqtt/bridge/log":
 

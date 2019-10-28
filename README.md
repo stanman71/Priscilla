@@ -86,6 +86,17 @@ This project creates a smarthome environment.
        >>> sudo nano /etc/hostname
            miranda
 
+- disable swap        
+
+       >>> sudo /sbin/dphys-swapfile swapoff
+
+- minimise syslogging 
+
+       >>> sudo nano /etc/rsyslog.conf
+
+           deactivate all logging modules
+
+
 </br>
 ------------
 </br>

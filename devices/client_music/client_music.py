@@ -14,7 +14,6 @@ import random
                            
 PATH = "/home/pi/python/"
 
-
 """ ############# """
 """  config file  """
 """ ############# """
@@ -177,6 +176,11 @@ def on_message(client, userdata, message):
     print("### " + channel)
     print("### " + msg) 
 
+
+    # #######
+    # devices
+    # #######
+
     if channel == "miranda/mqtt/devices":
         channel = "miranda/mqtt/log"
         msg     = '{"ieeeAddr":"' + device_ieeeAddr + '","model":"' + GET_MODEL() + '","device_type":"client_music","description":"MQTT Client Music","input_values":[],"input_events":[],"commands":[]}'
@@ -184,14 +188,15 @@ def on_message(client, userdata, message):
         MQTT_PUBLISH(channel, msg)
 
 
+    # ###
+    # set
+    # ###
+
     if channel == "miranda/mqtt/" + device_ieeeAddr + "/set":
 
         data = json.loads(msg)   
 
-
-        # #################
         # interface spotify
-        # #################
 
         if data["interface"] == "spotify" and current_interface != "spotify":
 
@@ -228,9 +233,7 @@ def on_message(client, userdata, message):
                 MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
 
 
-        # ###################
         # interface multiroom
-        # ###################
 
         if data["interface"] == "multiroom" and current_interface != "multiroom":
             
@@ -267,9 +270,39 @@ def on_message(client, userdata, message):
                 MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
 
 
-        # ######
+        # reset interface
+
+        try:
+            if str(data["interface"]) == "restart":
+                try:
+
+                    if current_interface == "spotify":
+                        os.system("sudo systemctl stop raspotify")
+                        print("Raspotify | Stopped")                    
+                        time.sleep(2)
+                        os.system("sudo systemctl start raspotify")
+                        print("Raspotify | Started")                    
+                        time.sleep(2)
+
+                    if current_interface == "multiroom":
+                        os.system("sudo systemctl stop squeezelite")
+                        print("Squeezelite | Stopped")                    
+                        time.sleep(2)
+                        os.system("sudo systemctl start squeezelite")
+                        print("Squeezelite | Started")                    
+                        time.sleep(2)
+
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + '}')
+
+                except Exception as e:
+                    print("Reset | Error | " + str(e))                     
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
+        
+        except:
+            pass     
+
+
         # volume
-        # ######
 
         try:
             if str(data["volume"]) != str(current_volume):
@@ -285,7 +318,12 @@ def on_message(client, userdata, message):
                     MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
         
         except:
-            pass
+            pass   
+
+
+    # ###
+    # get
+    # ###
 
     if channel == "miranda/mqtt/" + device_ieeeAddr + "/get":   
         MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + '}')

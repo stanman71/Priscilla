@@ -362,9 +362,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 if spotify_device_id == 0:
                     device = GET_DEVICE_BY_NAME(device_name)
 
-                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"multiroom"}')))
-                    time.sleep(5)
-                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify"}')))
+                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
                     time.sleep(5)
 
                     for device in list_spotify_devices:
@@ -420,9 +418,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 if spotify_device_id == 0:
                     device = GET_DEVICE_BY_NAME(device_name)
 
-                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"multiroom"}')))
-                    time.sleep(5)
-                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify"}')))
+                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
                     time.sleep(5)
 
                     for device in list_spotify_devices:
@@ -473,9 +469,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 if spotify_device_id == 0:
                     device = GET_DEVICE_BY_NAME(device_name)
 
-                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"multiroom"}')))
-                    time.sleep(5)
-                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify"}')))
+                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
                     time.sleep(5)
 
                     for device in list_spotify_devices:
@@ -866,9 +860,7 @@ def START_SCHEDULER_TASK(task_object):
                     if spotify_device_id == 0:
                         device = GET_DEVICE_BY_NAME(device_name)
 
-                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"multiroom"}')))
-                        time.sleep(5)
-                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify"}')))
+                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
                         time.sleep(5)
 
                         for device in list_spotify_devices:
@@ -925,9 +917,7 @@ def START_SCHEDULER_TASK(task_object):
                     if spotify_device_id == 0:
                         device = GET_DEVICE_BY_NAME(device_name)
 
-                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"multiroom"}')))
-                        time.sleep(5)
-                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify"}')))
+                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
                         time.sleep(5)
 
                         for device in list_spotify_devices:
@@ -978,9 +968,7 @@ def START_SCHEDULER_TASK(task_object):
                     if spotify_device_id == 0:
                         device = GET_DEVICE_BY_NAME(device_name)
 
-                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"multiroom"}')))
-                        time.sleep(5)
-                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify"}')))
+                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
                         time.sleep(5)
 
                         for device in list_spotify_devices:

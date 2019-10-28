@@ -58,6 +58,16 @@ A raspberry pi controller to record voice.
 
        >>> sudo nano /etc/hostname
 
+- disable swap        
+
+       >>> sudo /sbin/dphys-swapfile swapoff
+
+- minimise syslogging 
+
+       >>> sudo nano /etc/rsyslog.conf
+
+           deactivate all logging modules
+
 </br>
 ------------
 </br>

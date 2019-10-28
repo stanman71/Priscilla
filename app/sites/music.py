@@ -239,6 +239,13 @@ def music():
                         SET_DEVICE_LAST_VALUES(device.ieeeAddr, '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')
                         
 
+    if request.form.get("restart_client_music_services") != None:
+
+        list_client_music = GET_ALL_DEVICES("client_music")
+
+        for client_music in list_client_music:
+            heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
+
 
     list_client_music = GET_ALL_DEVICES("client_music")
 
