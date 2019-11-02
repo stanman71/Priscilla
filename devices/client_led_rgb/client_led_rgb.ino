@@ -25,6 +25,7 @@ int PIN_RESET_SETTING = 12;  // D6
 
 // FASTLED
 #define DATA_PIN 5           // D1
+#define TRANSISTOR_PIN 4     // D2
 #define NUM_LEDS 300
 
 CRGB leds[NUM_LEDS];
@@ -426,9 +427,11 @@ void setup() {
     Serial.println();
         
     pinMode(BUILTIN_LED, OUTPUT); 
+    pinMode(TRANSISTOR_PIN, OUTPUT);     
     pinMode(PIN_RESET_SETTING,INPUT);
 
     digitalWrite(BUILTIN_LED, HIGH); 
+    digitalWrite(TRANSISTOR_PIN, LOW);     
 
     Serial.println(digitalRead(PIN_RESET_SETTING));    
 
@@ -461,12 +464,22 @@ void loop() {
     }
 
     if (state_changed == true){   
-        FastLED.clear();
-        fill_solid( leds, NUM_LEDS, CRGB(green, red, blue));
-        FastLED.setBrightness(brightness);
-        FastLED.show();
+
+        if (brightness != 0){   
+            digitalWrite(TRANSISTOR_PIN, LOW); 
+
+            delay(250);
+          
+            FastLED.clear();
+            fill_solid( leds, NUM_LEDS, CRGB(green, red, blue));
+            FastLED.setBrightness(brightness);
+            FastLED.show();
+
+        } else {
+            digitalWrite(TRANSISTOR_PIN, HIGH);  
+        }
     }
-    
+
     delay(100);
     client.loop();
 }

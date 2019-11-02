@@ -19,6 +19,8 @@ This project controls customized led stripes.
 
 https://www.youtube.com/watch?v=QnvircC22hU
 </br>
+http://www.thesmarthomehookup.com/the-complete-guide-to-selecting-individually-addressable-led-strips/
+</br>
 </br>
 
 #### 1.1 LED Strip
@@ -74,9 +76,14 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
        >>> https://www.ebay.de/itm/Kohleschicht-Widerstande-0-25W-5-Werte-und-Menge-WAHLBAR-5-10-50-100-Widerstand/221833069520
 
+- relais
+
+       >>> https://www.ebay.de/itm/1-Kanal-Relais-5V-230V-Raspberry-Pi-Modul-Channel-Relay-Arduino/252713915632
+
 - internal cable connectors
 
        >>> https://www.ebay.de/itm/JST-XH-2-54-Stecker-inkl-15cm-Kabel-XH-Buchse-2-3-4-5-6-7-8-9-10-Pin-24AWG-RC/183748172867
+       >>> https://www.ebay.de/itm/40p-10cm-Jumper-Wire-Steckbrucken-Steckbrett-Kabel-male-female-mannlich-wei/252795046460
 
 - case
 
