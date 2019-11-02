@@ -5,7 +5,7 @@
 #include <WiFiManager.h>          
 #include <ArduinoJson.h>     
 #include <PubSubClient.h>   
-#include <Adafruit_NeoPixel.h>  
+#include <FastLED.h>  
 
 // MQTT
 char mqtt_server[40];
@@ -20,16 +20,14 @@ PubSubClient client(espClient);
 //wifi manager
 bool shouldSaveConfig = false;   
 
-// OUTPUT 
-#define PIN_LED 5 // D1
-
 // RESET 
-int PIN_RESET_SETTING = 16;  // D0
+int PIN_RESET_SETTING = 12;  // D6
 
-// NEOPIXEL
-#define NUMPIXELS 300
+// FASTLED
+#define DATA_PIN 5           // D1
+#define NUM_LEDS 300
 
-Adafruit_NeoPixel pixels(NUMPIXELS, PIN_LED, NEO_GRB + NEO_KHZ800);
+CRGB leds[NUM_LEDS];
 
 String state   = "OFF";
 int brightness = 0;
@@ -448,7 +446,7 @@ void setup() {
     client.setServer(mqtt_server, 1883);
     client.setCallback(callback); 
 
-    pixels.begin(); 
+    FastLED.addLeds<WS2813, DATA_PIN, RGB>(leds, NUM_LEDS);
 }
 
 
@@ -463,17 +461,10 @@ void loop() {
     }
 
     if (state_changed == true){   
-
-        for(int i=0; i<NUMPIXELS; i++) { 
-            pixels.setPixelColor(i, pixels.Color(red, green, blue));
-            pixels.show();  
-            delay(10);
-        }
-
-        delay(250);
-            
-        pixels.setBrightness(brightness);
-        pixels.show(); 
+        FastLED.clear();
+        fill_solid( leds, NUM_LEDS, CRGB(green, red, blue));
+        FastLED.setBrightness(brightness);
+        FastLED.show();
     }
     
     delay(100);
