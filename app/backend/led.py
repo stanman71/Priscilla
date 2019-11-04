@@ -11,7 +11,7 @@ from app.backend.shared_resources import mqtt_message_queue
 
 
 
-def SET_LED_BULB_RGB(led_ieeeAddr, red, green, blue, brightness):
+def SET_LED_RGB(led_ieeeAddr, red, green, blue, brightness):
     device = GET_DEVICE_BY_IEEEADDR(led_ieeeAddr)
     
     if device.gateway == "mqtt":
@@ -26,7 +26,7 @@ def SET_LED_BULB_RGB(led_ieeeAddr, red, green, blue, brightness):
     time.sleep(1)
 
 
-def SET_LED_BULB_SIMPLE(led_ieeeAddr, brightness):
+def SET_LED_SIMPLE(led_ieeeAddr, brightness):
     device = GET_DEVICE_BY_IEEEADDR(led_ieeeAddr)
 
     if device.gateway == "mqtt":
@@ -41,7 +41,7 @@ def SET_LED_BULB_SIMPLE(led_ieeeAddr, brightness):
     time.sleep(1)
 
 
-def SET_LED_BULB_BRIGHTNESS(led_ieeeAddr, brightness):
+def SET_LED_BRIGHTNESS(led_ieeeAddr, brightness):
     device = GET_DEVICE_BY_IEEEADDR(led_ieeeAddr)
 
     if device.gateway == "mqtt":
@@ -56,16 +56,16 @@ def SET_LED_BULB_BRIGHTNESS(led_ieeeAddr, brightness):
     time.sleep(1)
     
 
-def SET_LED_BULB_TURN_OFF(led_ieeeAddr):
+def SET_LED_TURN_OFF(led_ieeeAddr):
     device = GET_DEVICE_BY_IEEEADDR(led_ieeeAddr)
 
     if device.gateway == "mqtt":
         channel = "miranda/mqtt/" + device.ieeeAddr + "/set"
-        msg = '{"state": "OFF"}'
+        msg = '{"state": "OFF","brightness":0}'
 
     if device.gateway == "zigbee2mqtt":
         channel = "miranda/zigbee2mqtt/" + device.name + "/set"     
-        msg = '{"state": "OFF"}'
+        msg = '{"state": "OFF","brightness":0}'
     
     heapq.heappush(mqtt_message_queue, (5, (channel, msg))) 
     time.sleep(1)
@@ -283,9 +283,9 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
         brightness_1 = scene.brightness_1*(brightness_global/100)
 
         if led_1.device_type == "led_rgb":
-            SET_LED_BULB_RGB(group.led_ieeeAddr_1, scene.red_1, scene.green_1, scene.blue_1, int(brightness_1))                      
+            SET_LED_RGB(group.led_ieeeAddr_1, scene.red_1, scene.green_1, scene.blue_1, int(brightness_1))                      
         if led_1.device_type == "led_simple":
-            SET_LED_BULB_SIMPLE(group.led_ieeeAddr_1, int(brightness_global))   
+            SET_LED_SIMPLE(group.led_ieeeAddr_1, int(brightness_global))   
 
         # led 2
         led_2        = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_2)           
@@ -295,12 +295,12 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
             if scene.active_led_2 == "True":
             
                 if led_2.device_type == "led_rgb":
-                    SET_LED_BULB_RGB(group.led_ieeeAddr_2, scene.red_2, scene.green_2, scene.blue_2, int(brightness_2))                                                            
+                    SET_LED_RGB(group.led_ieeeAddr_2, scene.red_2, scene.green_2, scene.blue_2, int(brightness_2))                                                            
                 if led_2.device_type == "led_simple":
-                    SET_LED_BULB_SIMPLE(group.led_ieeeAddr_2, int(brightness_global))  
+                    SET_LED_SIMPLE(group.led_ieeeAddr_2, int(brightness_global))  
                     
             else:
-                SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_2)
+                SET_LED_TURN_OFF(group.led_ieeeAddr_2)
 
         # led 3  
         led_3        = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_3)           
@@ -310,12 +310,12 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
             if scene.active_led_3 == "True":
 
                 if led_3.device_type == "led_rgb":
-                    SET_LED_BULB_RGB(group.led_ieeeAddr_3, scene.red_3, scene.green_3, scene.blue_3, int(brightness_3))                                          
+                    SET_LED_RGB(group.led_ieeeAddr_3, scene.red_3, scene.green_3, scene.blue_3, int(brightness_3))                                          
                 if led_3.device_type == "led_simple":
-                    SET_LED_BULB_SIMPLE(group.led_ieeeAddr_3, int(brightness_global))   
+                    SET_LED_SIMPLE(group.led_ieeeAddr_3, int(brightness_global))   
 
             else:
-                SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_3)
+                SET_LED_TURN_OFF(group.led_ieeeAddr_3)
             
         # led 4
         led_4        = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_4)           
@@ -325,12 +325,12 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
             if scene.active_led_4 == "True":
 
                 if led_4.device_type == "led_rgb":
-                    SET_LED_BULB_RGB(group.led_ieeeAddr_4, scene.red_4, scene.green_4, scene.blue_4, int(brightness_4))                                        
+                    SET_LED_RGB(group.led_ieeeAddr_4, scene.red_4, scene.green_4, scene.blue_4, int(brightness_4))                                        
                 if led_4.device_type == "led_simple":
-                    SET_LED_BULB_SIMPLE(group.led_ieeeAddr_4, int(brightness_global))  
+                    SET_LED_SIMPLE(group.led_ieeeAddr_4, int(brightness_global))  
 
             else:
-                SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_4)
+                SET_LED_TURN_OFF(group.led_ieeeAddr_4)
             
         # led 5 
         led_5        = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_5)           
@@ -340,12 +340,12 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
             if scene.active_led_5 == "True":
 
                 if led_5.device_type == "led_rgb":
-                    SET_LED_BULB_RGB(group.led_ieeeAddr_5, scene.red_5, scene.green_5, scene.blue_5, int(brightness_5))                                         
+                    SET_LED_RGB(group.led_ieeeAddr_5, scene.red_5, scene.green_5, scene.blue_5, int(brightness_5))                                         
                 if led_5.device_type == "led_simple":
-                    SET_LED_BULB_SIMPLE(group.led_ieeeAddr_5, int(brightness_global))  
+                    SET_LED_SIMPLE(group.led_ieeeAddr_5, int(brightness_global))  
     
             else:
-                SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_5)
+                SET_LED_TURN_OFF(group.led_ieeeAddr_5)
                                 
         # led 6    
         led_6        = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_6)   
@@ -355,12 +355,12 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
             if scene.active_led_6 == "True":
 
                 if led_6.device_type == "led_rgb":
-                    SET_LED_BULB_RGB(group.led_ieeeAddr_6, scene.red_6, scene.green_6, scene.blue_6, int(brightness_6))                                         
+                    SET_LED_RGB(group.led_ieeeAddr_6, scene.red_6, scene.green_6, scene.blue_6, int(brightness_6))                                         
                 if led_6.device_type == "led_simple":
-                    SET_LED_BULB_SIMPLE(group.led_ieeeAddr_6, int(brightness_global))                       
+                    SET_LED_SIMPLE(group.led_ieeeAddr_6, int(brightness_global))                       
     
             else:
-                SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_6)
+                SET_LED_TURN_OFF(group.led_ieeeAddr_6)
                                 
         # led 7
         led_7        = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_7)          
@@ -370,12 +370,12 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
             if scene.active_led_7 == "True":
 
                 if led_7.device_type == "led_rgb":
-                    SET_LED_BULB_RGB(group.led_ieeeAddr_7, scene.red_7, scene.green_7, scene.blue_7, int(brightness_7))                                          
+                    SET_LED_RGB(group.led_ieeeAddr_7, scene.red_7, scene.green_7, scene.blue_7, int(brightness_7))                                          
                 if led_7.device_type == "led_simple":
-                    SET_LED_BULB_SIMPLE(group.led_ieeeAddr_7, int(brightness_global))    
+                    SET_LED_SIMPLE(group.led_ieeeAddr_7, int(brightness_global))    
         
             else:
-                SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_7)
+                SET_LED_TURN_OFF(group.led_ieeeAddr_7)
                                 
         # led 8 
         led_8        = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_8)           
@@ -385,12 +385,12 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
             if scene.active_led_8 == "True":
 
                 if led_8.device_type == "led_rgb":
-                    SET_LED_BULB_RGB(group.led_ieeeAddr_8, scene.red_8, scene.green_8, scene.blue_8, int(brightness_8))                                        
+                    SET_LED_RGB(group.led_ieeeAddr_8, scene.red_8, scene.green_8, scene.blue_8, int(brightness_8))                                        
                 if led_8.device_type == "led_simple":
-                    SET_LED_BULB_SIMPLE(group.led_ieeeAddr_8, int(brightness_global))   
+                    SET_LED_SIMPLE(group.led_ieeeAddr_8, int(brightness_global))   
     
             else:
-                SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_8)
+                SET_LED_TURN_OFF(group.led_ieeeAddr_8)
                                 
         # led 9  
         led_9        = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_9)           
@@ -400,12 +400,12 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
             if scene.active_led_9 == "True":
 
                 if led_9.device_type == "led_rgb":
-                    SET_LED_BULB_RGB(group.led_ieeeAddr_9, scene.red_9, scene.green_9, scene.blue_9, int(brightness_9))                                          
+                    SET_LED_RGB(group.led_ieeeAddr_9, scene.red_9, scene.green_9, scene.blue_9, int(brightness_9))                                          
                 if led_9.device_type == "led_simple":
-                    SET_LED_BULB_SIMPLE(group.led_ieeeAddr_9, int(brightness_global))                                           
+                    SET_LED_SIMPLE(group.led_ieeeAddr_9, int(brightness_global))                                           
     
             else:
-                SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_9)                       
+                SET_LED_TURN_OFF(group.led_ieeeAddr_9)                       
 
         return True
 
@@ -448,55 +448,55 @@ def SET_LED_GROUP_BRIGHTNESS(group_id, brightness_global = 100):
         # led 1
         brightness_1 = scene.brightness_1*(brightness_global/100)
         
-        SET_LED_BULB_BRIGHTNESS(group.led_ieeeAddr_1, int(brightness_1))
+        SET_LED_BRIGHTNESS(group.led_ieeeAddr_1, int(brightness_1))
             
         # led 2
         if group.active_led_2 == "True":         
             brightness_2 = scene.brightness_2*(brightness_global/100)
 
-            SET_LED_BULB_BRIGHTNESS(group.led_ieeeAddr_2, int(brightness_2))
+            SET_LED_BRIGHTNESS(group.led_ieeeAddr_2, int(brightness_2))
 
         # led 3
         if group.active_led_3 == "True":       
             brightness_3 = scene.brightness_3*(brightness_global/100)
 
-            SET_LED_BULB_BRIGHTNESS(group.led_ieeeAddr_3, int(brightness_3))
+            SET_LED_BRIGHTNESS(group.led_ieeeAddr_3, int(brightness_3))
 
         # led 4
         if group.active_led_4 == "True":      
             brightness_4 = scene.brightness_4*(brightness_global/100)
 
-            SET_LED_BULB_BRIGHTNESS(group.led_ieeeAddr_4, int(brightness_4))
+            SET_LED_BRIGHTNESS(group.led_ieeeAddr_4, int(brightness_4))
 
         # led 5
         if group.active_led_5 == "True":      
             brightness_5 = scene.brightness_5*(brightness_global/100)
 
-            SET_LED_BULB_BRIGHTNESS(group.led_ieeeAddr_5, int(brightness_5))
+            SET_LED_BRIGHTNESS(group.led_ieeeAddr_5, int(brightness_5))
 
         # led 6
         if group.active_led_6 == "True":       
             brightness_6 = scene.brightness_6*(brightness_global/100)
 
-            SET_LED_BULB_BRIGHTNESS(group.led_ieeeAddr_6, int(brightness_6))
+            SET_LED_BRIGHTNESS(group.led_ieeeAddr_6, int(brightness_6))
 
         # led 7
         if group.active_led_7 == "True":      
             brightness_7 = scene.brightness_7*(brightness_global/100)
 
-            SET_LED_BULB_BRIGHTNESS(group.led_ieeeAddr_7, int(brightness_7))
+            SET_LED_BRIGHTNESS(group.led_ieeeAddr_7, int(brightness_7))
 
         # led 8
         if group.active_led_8 == "True":      
             brightness_8 = scene.brightness_8*(brightness_global/100)
 
-            SET_LED_BULB_BRIGHTNESS(group.led_ieeeAddr_8, int(brightness_8))
+            SET_LED_BRIGHTNESS(group.led_ieeeAddr_8, int(brightness_8))
 
         # led 9
         if group.active_led_9 == "True":      
             brightness_9 = scene.brightness_9*(brightness_global/100)
 
-            SET_LED_BULB_BRIGHTNESS(group.led_ieeeAddr_9, int(brightness_9))
+            SET_LED_BRIGHTNESS(group.led_ieeeAddr_9, int(brightness_9))
             
         return True
     
@@ -513,32 +513,32 @@ def SET_LED_GROUP_TURN_OFF(group_id):
         group = GET_LED_GROUP_BY_ID(group_id)
         
         # led 1
-        SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_1)
+        SET_LED_TURN_OFF(group.led_ieeeAddr_1)
             
         # led 2
         if group.active_led_2 == "True": 
-            SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_2)
+            SET_LED_TURN_OFF(group.led_ieeeAddr_2)
         # led 3
         if group.active_led_3 == "True": 
-            SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_3)
+            SET_LED_TURN_OFF(group.led_ieeeAddr_3)
         # led 4
         if group.active_led_4 == "True": 
-            SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_4)
+            SET_LED_TURN_OFF(group.led_ieeeAddr_4)
         # led 5
         if group.active_led_5 == "True": 
-            SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_5)
+            SET_LED_TURN_OFF(group.led_ieeeAddr_5)
         # led 6
         if group.active_led_6 == "True": 
-            SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_6)
+            SET_LED_TURN_OFF(group.led_ieeeAddr_6)
         # led 7
         if group.active_led_7 == "True": 
-            SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_7)
+            SET_LED_TURN_OFF(group.led_ieeeAddr_7)
         # led 8
         if group.active_led_8 == "True": 
-            SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_8)
+            SET_LED_TURN_OFF(group.led_ieeeAddr_8)
         # led 9
         if group.active_led_9 == "True": 
-            SET_LED_BULB_TURN_OFF(group.led_ieeeAddr_9)
+            SET_LED_TURN_OFF(group.led_ieeeAddr_9)
         
         return True
 

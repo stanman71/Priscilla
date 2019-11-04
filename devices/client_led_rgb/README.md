@@ -87,7 +87,7 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
 - case
 
-       >>> https://www.ebay.de/itm/Projekt-Box-Gehause-Plastik-Project-Wemos-Arduino-Nano-NodeMCU-Mini-10x6x2-5cm/252756226537
+       >>> https://www.ebay.de/itm/Kunststoff-Gehause-Box-IP65-Modulgehause-Kunststoff-fur-elektronische-Bauteile/123699322855 (115 * 85 * 35)
 
 - LED connector
 
