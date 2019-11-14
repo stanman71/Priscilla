@@ -356,8 +356,7 @@ def scheduler():
     error_message_scheduler_tasks_settings = CHECK_SCHEDULER_TASKS_SETTINGS(GET_ALL_SCHEDULER_TASKS())
     error_message_scheduler_tasks          = CHECK_TASKS(GET_ALL_SCHEDULER_TASKS(), "scheduler")
 
-    list_scheduler_tasks_all = GET_ALL_SCHEDULER_TASKS()
-    list_scheduler_tasks     = []
+    list_scheduler_tasks = GET_ALL_SCHEDULER_TASKS()
 
     dropdown_list_devices                     = GET_ALL_DEVICES("sensors")
     dropdown_list_operators                   = ["=", ">", "<"]

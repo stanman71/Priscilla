@@ -3,13 +3,13 @@
 A raspberry pi controller to play music by using spotify and lms. 
 
    * <a href="#1 Prepare Raspian">1 Prepare Raspian</a>
-   * <a href="#2 Client Music">2 Client Music</a>
-      * <a href="#2.1 Installation">2.1 Installation</a>
-      * <a href="#2.2 Volume Control GUI">2.2 Volume Control GUI</a>      
-      * <a href="#2.3 Volume Control Console">2.3 Volume Control Console</a>          
-      * <a href="#2.4 Autostart">2.4 Autostart</a>
-      * <a href="#2.5 Manually Control">2.5 Manually Control</a>
-   * <a href="#3 Comitup">3 Comitup</a>
+   * <a href="#2 Comitup">2 Comitup</a>   
+   * <a href="#3 Client Music">3 Client Music</a>
+      * <a href="#3.1 Configuration">3.1 Configuration</a>
+      * <a href="#3.2 Volume Control GUI">3.2 Volume Control GUI</a>      
+      * <a href="#3.3 Volume Control Console">3.3 Volume Control Console</a>          
+      * <a href="#3.4 Autostart">3.4 Autostart</a>
+      * <a href="#3.5 Manually Control">3.5 Manually Control</a>
    * <a href="#4 Squeezelite Client">4 Squeezelite Client</a>
       * <a href="#4.1 Raspian">4.1 Raspian</a>
       * <a href="#4.2 Windows 10">4.2 Windows 10</a>
@@ -28,6 +28,16 @@ A raspberry pi controller to play music by using spotify and lms.
 
 ### 1 Prepare Raspian 
 
+https://domoticproject.com/extending-life-raspberry-pi-sd-card/
+</br>
+https://www.antary.de/2018/12/28/raspberry-pi-ein-blick-auf-den-stromverbrauch/
+</br>
+https://scribles.net/disabling-bluetooth-on-raspberry-pi/
+</br>
+https://buyzero.de/blogs/news/raspberry-pi-strom-sparen-tipps-tricks
+</br>
+</br>
+
 - activate ssh
 
        >>> sudo raspi-config
@@ -44,25 +54,9 @@ A raspberry pi controller to play music by using spotify and lms.
 
        >>> sudo apt-get update && sudo apt-get upgrade -y
 
-- install remote server
+- install pip
 
-       >>> sudo apt-get purge realvnc-vnc-server -y
-
-- enable VNC Server:
-
-       >>> sudo raspi-config       
-
-           Navigate to Interfacing Options
-           Scroll down and select VNC 
-           Yes
-
-- install xrdp:
-
-       >>> sudo apt-get install xrdp -y
-
-- upgrade pip
-
-       >>> pip install --upgrade pip
+       >>> sudo apt-get install python3-pip -y
 
 - install python modules
 
@@ -83,17 +77,31 @@ A raspberry pi controller to play music by using spotify and lms.
 
            deactivate all logging modules  
 
-</br>
-------------
-</br>
+- remove bluetooth
 
-<a name="2 Client Music"></a>
+       >>> sudo apt-get purge bluez -y
+           sudo apt-get autoremove -y
 
-### 2 Client Music 
+- config power savings
 
-<a name="2.1 Installation"></a>
+       >>> sudo nano /boot/config.txt      
 
-#### 2.1 Installation
+           # Disable HDMI
+           disable_splash=1
+           hdmi_blanking=1
+           hdmi_ignore_hotplug=1
+           hdmi_ignore_composite=1
+
+           # Disable BLUETOOTH
+           dtoverlay=pi3-disable-bt
+
+           # Disable the ACT LED.
+           dtparam=act_led_trigger=none
+           dtparam=act_led_activelow=off
+
+           # Disable the PWR LED.
+           dtparam=pwr_led_trigger=none
+           dtparam=pwr_led_activelow=off
 
 - create the new folder "python" and copy all client_music files into it
 
@@ -112,17 +120,87 @@ A raspberry pi controller to play music by using spotify and lms.
 
        >>> sudo chmod -v -R 770 /home/pi/python
 
+</br>
+------------
+</br>
+
+<a name="2 Comitup"></a>
+
+### 2 Comitup (creates a Hotspot without wlan connection)
+
+https://davesteele.github.io/comitup/
+</br>
+https://packages.debian.org/sid/all/comitup/filelist
+</br>
+</br>
+
+- installation steps:
+
+       >>> sudo apt-get install comitup -y
+
+       or
+       
+       >>> sudo apt install /home/pi/python/support/comitup_1.3.1-1_all.deb -y
+
+       >>> sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
+       >>> sudo systemctl disable systemd-resolved
+       >>> sudo systemctl stop systemd-resolved
+       >>> sudo touch /boot/ssh
+       >>> sudo reboot
+
+- LAN connected      
+
+       >>> LAN-ADDRESS
+
+- LAN not conneted
+
+       >>> 10.42.0.1 
+
+- configuration
+
+       >>> /etc/comitup.conf
+
+           replace ap_name and insert default_music_client
+
+- remove ssid-number
+
+       >>> sudo rm /var/lib/comitup/comitup.json
+
+- saved network connections  
+
+       >>> /etc/NetworkManager/system-connections
+
+- install folder 
+
+       >>> /usr/share/comitup
+
+</br>
+------------
+</br>  
+
+<a name="3 Client Music"></a>
+
+### 3 Client Music 
+
+<a name="3.1 Configuration"></a>
+
+#### 3.1 Configuration
+
+- get audio card informations
+
+       >>> cat /proc/asound/cards
+
 - update config settings 
 
        >>> sudo nano /home/pi/python/config.yaml
 
-           audio card number > 2.3 Volume Control Console
+- insert your soundcard number in config.yaml
 
 </br>
 
-<a name="2.2 Volume Control GUI"></a>
+<a name="3.2 Volume Control GUI"></a>
 
-#### 2.2 Volume Control GUI
+#### 3.2 Volume Control GUI
 
 - open the alsamixer
 
@@ -133,9 +211,9 @@ A raspberry pi controller to play music by using spotify and lms.
 
 </br>
 
-<a name="2.3 Volume Control Console"></a>
+<a name="3.3 Volume Control Console"></a>
 
-#### 2.3 Volume Control Console
+#### 3.3 Volume Control Console
 
 https://blog.amnuts.com/2017/01/11/rotary-volume-control-for-the-raspberry-pi/
 </br>
@@ -158,13 +236,11 @@ https://blog.amnuts.com/2017/01/11/rotary-volume-control-for-the-raspberry-pi/
 
        >>> amixer -c [soundcard number] cset numid=1 175
 
-- insert your soundcard number in config.yaml
-
 </br>
 
-<a name="2.4 Autostart"></a>
+<a name="3.4 Autostart"></a>
 
-#### 2.4 Autostart
+#### 3.4 Autostart
 
 - create an autostart-file
 
@@ -213,9 +289,9 @@ http://www.server-wissen.de/linux-debian/ctrl-m-aus-einer-linux-datei-entfernen-
 
 </br>
 
-<a name="2.5 Manually Control"></a>
+<a name="3.5 Manually Control"></a>
 
-#### 2.5 Manually Control 
+#### 3.5 Manually Control 
 
 - stop the client_music service
 
@@ -232,50 +308,6 @@ http://www.server-wissen.de/linux-debian/ctrl-m-aus-einer-linux-datei-entfernen-
 </br>
 ------------
 </br>
-
-<a name="3 Comitup"></a>
-
-### 3 Comitup (creates a Hotspot without wlan connection)
-
-https://github.com/davesteele/comitup/wiki/Tutorial
-</br>
-https://packages.debian.org/sid/all/comitup/filelist
-</br>
-</br>
-
-- installation steps:
-
-       >>> sudo apt-get install comitup 
-
-       or
-       
-       >>> sudo apt install /home/pi/python/support/comitup_1.3.1-1_all.deb
-
-       >>> sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
-       >>> sudo systemctl disable systemd-resolved
-       >>> sudo systemctl stop systemd-resolved
-       >>> sudo touch /boot/ssh
-       >>> sudo reboot
-
-- LAN connected      
-
-       >>> LAN-ADDRESS
-
-- LAN not conneted
-
-       >>> 10.42.0.1 (Hotspot "comitup-")
-
-- Connections folder 
-
-       >>> /etc/NetworkManager/system-connections
-
-- Install folder 
-
-       >>> /usr/share/comitup
-
-</br>
-------------
-</br>  
 
 <a name="4 Squeezelite Client"></a>
 
@@ -297,7 +329,7 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 
        or
 
-       >>> sudo apt install /home/pi/python/support/squeezelite_1.8-4.1+b1_armhf.deb
+       >>> sudo apt install /home/pi/python/support/squeezelite_1.8-4.1+b1_armhf.deb -y
 
 - get sound device informations
 
@@ -307,7 +339,8 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 
        >>> sudo nano /etc/default/squeezelite
 
-	    SL_SOUNDCARD="hw:CARD=sndrpihifiberry,DEV=0"
+           # ALSA output device:
+	    SL_SOUNDCARD="hw:CARD=sndrpihifiberry,DEV=0
 	    SB_EXTRA_ARGS="-a 180"
 
 - deactivate autostart
@@ -359,7 +392,6 @@ https://dtcooper.github.io/raspotify/
        >>> sudo nano /etc/default/raspotify
 
 	    DEVICE_NAME=" ... " 
-	    BITRATE="320"
 	    OPTIONS="--username <USERNAME> --password <PASSWORD> --device hw:0,1"
 
 - restart raspotify 

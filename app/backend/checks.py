@@ -995,9 +995,18 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       # ##############
       # update_devices
       # ##############
-      
-      
+   
+   
       if task == "update_devices" and task_type == "scheduler":
+         return list_task_errors
+         
+
+      # ####################
+      # check_mqtt_connetion
+      # ####################
+      
+      
+      if task == "check_mqtt_connetion" and task_type == "scheduler":
          return list_task_errors
 
 

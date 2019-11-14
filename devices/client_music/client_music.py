@@ -14,6 +14,7 @@ import random
                            
 PATH = "/home/pi/python/"
 
+
 """ ############# """
 """  config file  """
 """ ############# """
@@ -367,6 +368,6 @@ client.on_message = on_message
 try:
     client.connect(GET_MQTT_BROKER(), 1883, 60)
     client.loop_forever()
-
+    
 except Exception as e:
     print("ERROR: MQTT | Broker - " + GET_MQTT_BROKER() + " | " + str(e))

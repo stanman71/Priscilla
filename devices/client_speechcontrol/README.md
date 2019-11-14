@@ -18,6 +18,14 @@ A raspberry pi controller to record voice.
 
 ### 1 Prepare Raspian 
 
+https://domoticproject.com/extending-life-raspberry-pi-sd-card/
+</br>
+https://www.antary.de/2018/12/28/raspberry-pi-ein-blick-auf-den-stromverbrauch/
+</br>
+https://scribles.net/disabling-bluetooth-on-raspberry-pi/
+</br>
+</br>
+
 - activate ssh
 
        >>> sudo raspi-config
@@ -67,6 +75,32 @@ A raspberry pi controller to record voice.
        >>> sudo nano /etc/rsyslog.conf
 
            deactivate all logging modules
+
+- remove bluetooth
+
+       >>> sudo apt-get purge bluez -y
+           sudo apt-get autoremove -y
+
+- config power savings
+
+       >>> sudo nano /boot/config.txt      
+
+           # Disable HDMI
+           disable_splash=1
+           hdmi_blanking=1
+           hdmi_ignore_hotplug=1
+           hdmi_ignore_composite=1
+
+           # Disable BLUETOOTH
+           dtoverlay=pi3-disable-bt
+
+           # Disable the ACT LED.
+           dtparam=act_led_trigger=none
+           dtparam=act_led_activelow=off
+
+           # Disable the PWR LED.
+           dtparam=pwr_led_trigger=none
+           dtparam=pwr_led_activelow=off
 
 </br>
 ------------

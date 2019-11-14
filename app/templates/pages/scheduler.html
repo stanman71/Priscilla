@@ -229,7 +229,7 @@
 
 {% for entry in list_scheduler_tasks %}
 
-  {% if entry.visible =="True" %}
+  {% if entry.visible == "True" %}
 
   <section id="table_{{entry.id}}"></section>  
 
@@ -247,7 +247,9 @@
 
              <div class="card ">
               <div class="card-header">
-                <a data-toggle="collapse" href="#collapse{{entry.id}}"><font color="white"><b><i class='uil uil-arrow-down'> {{entry.name}} </i></b></font></a>
+                <a data-toggle="collapse" href="#collapse{{entry.id}}"><font color="white"><b>
+                  <i class='uil uil-arrow-down'> {{entry.name}} {% if entry.option_pause == "True" %} (pausiert) {% endif %}</i></b></font>
+                </a>
                 <br>
                 <br>
               </div>   

@@ -89,7 +89,11 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
        >>> https://www.ebay.de/itm/Kunststoff-Gehause-Box-IP65-Modulgehause-Kunststoff-fur-elektronische-Bauteile/123699322855 (115 * 85 * 35)
 
-- LED connector
+- LED socket
+
+       >>> https://www.ebay.de/itm/LED-Fassung-Schraube-Halter-Screw-3-5-8-10-mm-Leuchtkappe-Montageringe-Clips-DIY/173621485247
+
+- LED strip connector
 
        >>> https://www.ebay.de/itm/2-6-polig-M13-Steckverbinder-Paare-Kupplungen-Einbaustecker-5A-Metall/323694504483?hash=item4b5db22a23:m:m2bkEBP3zzAsnkZ22qxPWCw
 

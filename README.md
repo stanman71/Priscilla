@@ -45,6 +45,14 @@ This project creates a smarthome environment.
 
 ### 1 Prepare Raspian 
 
+https://domoticproject.com/extending-life-raspberry-pi-sd-card/
+</br>
+https://www.antary.de/2018/12/28/raspberry-pi-ein-blick-auf-den-stromverbrauch/
+</br>
+https://scribles.net/disabling-bluetooth-on-raspberry-pi/
+</br>
+</br>
+
 - activate ssh
 
        >>> sudo raspi-config
@@ -96,6 +104,10 @@ This project creates a smarthome environment.
 
            deactivate all logging modules
 
+- remove bluetooth
+
+       >>> sudo apt-get purge bluez -y
+           sudo apt-get autoremove -y
 
 </br>
 ------------
