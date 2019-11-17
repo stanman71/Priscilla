@@ -1,4 +1,6 @@
-# Client Music IMAGE installation
+# Client Music - IMAGE Guide
+
+A raspberry pi controller to play music by using spotify and lms. 
 
 ! This manuell discribes the IMAGE based installation only !
 

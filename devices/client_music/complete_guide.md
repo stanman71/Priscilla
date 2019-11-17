@@ -1,10 +1,8 @@
-# Client Music
+# Client Music - Complete Guide
 
 A raspberry pi controller to play music by using spotify and lms. 
 
 ! This is the complete installation !
-
-IMAGE installation guide: Link
 
    * <a href="#1 Hardware">1 Hardware</a>
       * <a href="#1.1 Small Speaker (max 3W)">1.1 Small Speaker (max 3W)</a>
