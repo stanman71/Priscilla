@@ -20,16 +20,15 @@ PubSubClient client(espClient);
 bool shouldSaveConfig = false;   
 
 // INPUT
-int PIN_ANALOG  = A0;
-int PIN_DIGITAL = 16;
+int PIN_WATERTANK = 13;     // D7
 
 // OUTPUT 
-int PIN_PUMP      = 5;
-int PIN_LED_GREEN = 14;
-int PIN_LED_RED   = 12;
+int PIN_PUMP      = 5;      // D1
+int PIN_LED_GREEN = 14;     // D5
+int PIN_LED_RED   = 12;     // D6
 
 // RESET 
-int PIN_RESET_SETTING = 13;
+int PIN_RESET_SETTING = 4;  // D2
 
 // ############
 // split string
@@ -290,7 +289,6 @@ void callback (char* topic, byte* payload, unsigned int length) {
         JsonArray data_inputs = msg.createNestedArray("inputs");
         data_inputs.add("pump");
         data_inputs.add("pump_time");        
-        data_inputs.add("sensor_moisture");
         data_inputs.add("sensor_watertank");        
 
         JsonArray data_commands = msg.createNestedArray("commands");
@@ -418,10 +416,8 @@ void send_default_mqtt_message(int pumptime_value) {
     msg["pump_time"] = pumptime_value;
 
     // get sensor data
-    int sensor_moisture  = analogRead(PIN_ANALOG);
-    int sensor_watertank = digitalRead(PIN_DIGITAL);
+    int sensor_watertank = digitalRead(PIN_WATERTANK);
 
-    msg["sensor_moisture"]  = sensor_moisture;
     msg["sensor_watertank"] = sensor_watertank;
 
     // convert msg to char
@@ -447,7 +443,7 @@ void setup() {
     Serial.begin(115200);
     Serial.println();
         
-    pinMode(PIN_DIGITAL,INPUT);
+    pinMode(PIN_WATERTANK,INPUT);   
     pinMode(PIN_PUMP,OUTPUT);
     pinMode(PIN_LED_RED,OUTPUT);
     pinMode(PIN_LED_GREEN,OUTPUT);
@@ -488,14 +484,14 @@ void loop() {
         reconnect();
     }
     
-    int sensor_1 = digitalRead(PIN_DIGITAL);
+    int sensor_watertank = digitalRead(PIN_WATERTANK);
 
-    if (sensor_1 == 0) {
+    if (sensor_watertank == 0) {
       digitalWrite(PIN_LED_RED, HIGH);
       digitalWrite(PIN_LED_GREEN, HIGH);
     }
 
-    if (sensor_1 == 1) {
+    if (sensor_watertank == 1) {
       digitalWrite(PIN_LED_RED, LOW);
       digitalWrite(PIN_LED_GREEN, HIGH);
     }   

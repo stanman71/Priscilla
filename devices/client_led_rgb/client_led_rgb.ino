@@ -21,7 +21,7 @@ PubSubClient client(espClient);
 bool shouldSaveConfig = false;   
 
 // RESET 
-int PIN_RESET_SETTING = 12;  // D6
+int PIN_RESET_SETTING = 16;  // D0
 
 // FASTLED
 #define DATA_PIN 5           // D1

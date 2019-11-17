@@ -2,31 +2,94 @@
 
 A raspberry pi controller to play music by using spotify and lms. 
 
-   * <a href="#1 Prepare Raspian">1 Prepare Raspian</a>
-   * <a href="#2 Comitup">2 Comitup</a>   
-   * <a href="#3 Client Music">3 Client Music</a>
-      * <a href="#3.1 Configuration">3.1 Configuration</a>
-      * <a href="#3.2 Volume Control GUI">3.2 Volume Control GUI</a>      
-      * <a href="#3.3 Volume Control Console">3.3 Volume Control Console</a>          
-      * <a href="#3.4 Autostart">3.4 Autostart</a>
-      * <a href="#3.5 Manually Control">3.5 Manually Control</a>
-   * <a href="#4 Squeezelite Client">4 Squeezelite Client</a>
-      * <a href="#4.1 Raspian">4.1 Raspian</a>
-      * <a href="#4.2 Windows 10">4.2 Windows 10</a>
-   * <a href="#5 Raspotify">5 Raspotify</a>
-   * <a href="#6 piCorePlayer & LMS">6 piCorePlayer & LMS</a>
-      * <a href="#6.1 General Settings">6.1 General Settings</a>
-      * <a href="#6.2 Squeezelite">6.2 Squeezelite</a>
-      * <a href="#6.3 LMS">6.3 LMS</a>
-      * <a href="#6.4 LMS Configuration">6.4 LMS Configuration</a>
+! This is the complete installation !
+
+   * <a href="#1 Hardware">1 Hardware</a>
+      * <a href="#1.1 Small Speaker (max 3W)">1.1 Small Speaker (max 3W)</a>
+      * <a href="#1.2 Big Speaker (max 30W)">1.2 Big Speaker (max 30W)</a>        
+   * <a href="#2 Prepare Raspian">2 Prepare Raspian</a>
+   * <a href="#3 Comitup">3 Comitup</a>   
+   * <a href="#4 Client Music">4 Client Music</a>
+      * <a href="#4.1 Configuration">4.1 Configuration</a>
+      * <a href="#4.2 Volume Control GUI">4.2 Volume Control GUI</a>      
+      * <a href="#4.3 Volume Control Console">4.3 Volume Control Console</a>          
+      * <a href="#4.4 Autostart">4.4 Autostart</a>
+      * <a href="#4.5 Manually Control">4.5 Manually Control</a>
+   * <a href="#5 Squeezelite Client">5 Squeezelite Client</a>
+      * <a href="#5.1 Raspian">5.1 Raspian</a>
+      * <a href="#5.2 Windows 10">5.2 Windows 10</a>
+   * <a href="#6 Raspotify">6 Raspotify</a>
+   * <a href="#7 piCorePlayer & LMS">7 piCorePlayer & LMS</a>
+      * <a href="#7.1 General Settings">7.1 General Settings</a>
+      * <a href="#7.2 Squeezelite">7.2 Squeezelite</a>
+      * <a href="#7.3 LMS">7.3 LMS</a>
+      * <a href="#7.4 LMS Configuration">7.4 LMS Configuration</a>
 
 </br>
 ------------
 </br>
 
-<a name="1 Prepare Raspian"></a>
+<a name="1 Hardware"></a>
 
-### 1 Prepare Raspian 
+### 1 Hardware
+
+<a name="1.1 Small Speaker (max 3W)"></a>
+
+#### 1.1 Small Speaker (max 3W)
+
+- Raspberry Pi Zero WH
+
+       >>> https://www.berrybase.de/raspberry-pi-zero-wh
+
+- Micro SD-Card
+
+       >>> https://www.amazon.de/dp/B073K14CVB/ref=twister_B073ZQ3L66?_encoding=UTF8&psc=1
+
+- Hifiberry miniAMP
+
+       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/erweiterungsboards/hifiberry/hifiberry-miniamp
+
+- Power Source
+
+       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/stromversorgung/netzteile-fuer-die-steckdose/micro-usb-netzteil-5v/3-1a-schwarz
+
+- Hifiberry Case
+
+       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi-zero/gehaeuse/geh-228-use-f-252-r-hifiberry-miniamp-und-raspberry-pi-zero-schwarz
+
+</br>
+
+<a name="1.2 Big Speaker (max 30W)"></a>
+
+#### 1.2 Big Speaker (max 30W)
+
+- Raspberry Pi Zero WH
+
+       >>> https://www.berrybase.de/raspberry-pi-zero-wh
+
+- Micro SD-Card
+
+       >>> https://www.amazon.de/dp/B073K14CVB/ref=twister_B073ZQ3L66?_encoding=UTF8&psc=1
+
+- Hifiberry AMP2 
+
+       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/erweiterungsboards/hifiberry/hifiberry-amp2
+
+- Power Source
+
+       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
+
+- Hifiberry Case
+
+       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/gehaeuse/fuer-raspberry-pi-3-modell-b/highpi-case-f-252-r-hifiberry-dac-43-rca/digi-43/amp-43-und-raspberry-pi-3-2-modell-b/
+
+</br>
+------------
+</br>
+
+<a name="2 Prepare Raspian"></a>
+
+### 2 Prepare Raspian 
 
 https://domoticproject.com/extending-life-raspberry-pi-sd-card/
 </br>
@@ -124,9 +187,9 @@ https://buyzero.de/blogs/news/raspberry-pi-strom-sparen-tipps-tricks
 ------------
 </br>
 
-<a name="2 Comitup"></a>
+<a name="3 Comitup"></a>
 
-### 2 Comitup (creates a Hotspot without wlan connection)
+### 3 Comitup (creates a Hotspot without wlan connection)
 
 https://davesteele.github.io/comitup/
 </br>
@@ -174,17 +237,21 @@ https://packages.debian.org/sid/all/comitup/filelist
 
        >>> /usr/share/comitup
 
+- delete ssid-number
+
+       >>> sudo rm /var/lib/comitup/comitup.json
+
 </br>
 ------------
 </br>  
 
-<a name="3 Client Music"></a>
+<a name="4 Client Music"></a>
 
-### 3 Client Music 
+### 4 Client Music 
 
-<a name="3.1 Configuration"></a>
+<a name="4.1 Configuration"></a>
 
-#### 3.1 Configuration
+#### 4.1 Configuration
 
 - get audio card informations
 
@@ -198,9 +265,9 @@ https://packages.debian.org/sid/all/comitup/filelist
 
 </br>
 
-<a name="3.2 Volume Control GUI"></a>
+<a name="4.2 Volume Control GUI"></a>
 
-#### 3.2 Volume Control GUI
+#### 4.2 Volume Control GUI
 
 - open the alsamixer
 
@@ -211,9 +278,9 @@ https://packages.debian.org/sid/all/comitup/filelist
 
 </br>
 
-<a name="3.3 Volume Control Console"></a>
+<a name="4.3 Volume Control Console"></a>
 
-#### 3.3 Volume Control Console
+#### 4.3 Volume Control Console
 
 https://blog.amnuts.com/2017/01/11/rotary-volume-control-for-the-raspberry-pi/
 </br>
@@ -238,9 +305,9 @@ https://blog.amnuts.com/2017/01/11/rotary-volume-control-for-the-raspberry-pi/
 
 </br>
 
-<a name="3.4 Autostart"></a>
+<a name="4.4 Autostart"></a>
 
-#### 3.4 Autostart
+#### 4.4 Autostart
 
 - create an autostart-file
 
@@ -289,9 +356,9 @@ http://www.server-wissen.de/linux-debian/ctrl-m-aus-einer-linux-datei-entfernen-
 
 </br>
 
-<a name="3.5 Manually Control"></a>
+<a name="4.5 Manually Control"></a>
 
-#### 3.5 Manually Control 
+#### 4.5 Manually Control 
 
 - stop the client_music service
 
@@ -309,13 +376,13 @@ http://www.server-wissen.de/linux-debian/ctrl-m-aus-einer-linux-datei-entfernen-
 ------------
 </br>
 
-<a name="4 Squeezelite Client"></a>
+<a name="5 Squeezelite Client"></a>
 
-### 4 Squeezelite Client
+### 5 Squeezelite Client
 
-<a name="4.1 Raspian"></a>
+<a name="5.1 Raspian"></a>
 
-#### 4.1 Raspian
+#### 5.1 Raspian
 
 https://forums.slimdevices.com/showthread.php?110523-squeezelite-shows-up-in-lms-settings-but-not-in-players
 </br>
@@ -353,9 +420,9 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 
 </br>
     
-<a name="4.2 Windows 10"></a>
+<a name="5.2 Windows 10"></a>
 
-#### 4.2 Windows 10
+#### 5.2 Windows 10
 
 - installation
 
@@ -365,9 +432,9 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 ------------
 </br>
 
-<a name="5 Raspotify"></a>
+<a name="6 Raspotify"></a>
 
-### 5 Raspotify (Spotify Connect Client for Raspian)
+### 6 Raspotify (Spotify Connect Client for Raspian)
 
 https://github.com/dtcooper/raspotify
 </br>
@@ -410,9 +477,9 @@ https://dtcooper.github.io/raspotify/
 ------------
 </br>
 
-<a name="6 piCorePlayer & LMS"></a>
+<a name="7 piCorePlayer & LMS"></a>
 
-### 6 piCorePlayer & LMS (Logitech Media Server)
+### 7 piCorePlayer & LMS (Logitech Media Server)
 
 https://www.picoreplayer.org/
 </br>
@@ -420,9 +487,9 @@ https://www.basecube.de/2018/03/17/download/
 </br>
 </br>
 
-<a name="6.1 General Settings"></a>
+<a name="7.1 General Settings"></a>
 
-#### 6.1 General Settings
+#### 7.1 General Settings
 
 - change settings option to beta (options are at the bottom corner on the main site)
 
@@ -440,9 +507,9 @@ https://www.basecube.de/2018/03/17/download/
 
 </br>
 
-<a name="6.2 Squeezelite"></a>
+<a name="7.2 Squeezelite"></a>
 
-#### 6.2 Squeezelite 
+#### 7.2 Squeezelite 
 
 - create a multiroom group placeholder
 
@@ -456,9 +523,9 @@ https://www.basecube.de/2018/03/17/download/
 
 </br>
 
-<a name="6.3 LMS"></a>
+<a name="7.3 LMS"></a>
 
-#### 6.3 LMS 
+#### 7.3 LMS 
 
 - installation
 
@@ -471,9 +538,9 @@ https://www.basecube.de/2018/03/17/download/
 
 </br>
 
-<a name="6.4 LMS Configuration"></a>
+<a name="7.4 LMS Configuration"></a>
 
-#### 6.4 LMS Configuration (seperate WEB_GUI)
+#### 7.4 LMS Configuration (seperate WEB_GUI)
 
 - IP-address
 

@@ -35,7 +35,7 @@ https://www.amazon.de/UpgradeWS2812B-Individuell-Adressierbar-Wasserdicht-5M-WS2
 
        >>> WS2815 Chip
        >>> 12V
-       >>> backup function (all LEDs behind a broken LED stay online)
+       >>> backup function (all LEDs behind a broken LED still addressable)
 
 </br>
 
@@ -76,6 +76,18 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
        >>> https://www.ebay.de/itm/Kohleschicht-Widerstande-0-25W-5-Werte-und-Menge-WAHLBAR-5-10-50-100-Widerstand/221833069520
 
+- resistor 330
+
+       >>> https://www.ebay.de/itm/Kohleschicht-Widerstande-0-25W-5-Werte-und-Menge-WAHLBAR-5-10-50-100-Widerstand/221833069520
+
+- LED diode red / green
+
+       >>> https://www.ebay.de/itm/25-HuiYuan-5019R1G6C-DHB-DUO-LEDs-5mm-klar-rot-grun-LED-BI-COLOR-858859/312135571388
+
+- micro taster 
+
+       >>> https://www.ebay.de/itm/Mikrotaster-Mikroschalter-Drucktaster-Micro-Taster-4-Pin-6x6x5mm-10-20-30-Stuck/183654164880
+
 - relais
 
        >>> https://www.ebay.de/itm/1-Kanal-Relais-5V-230V-Raspberry-Pi-Modul-Channel-Relay-Arduino/252713915632
@@ -83,15 +95,15 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 - internal cable connectors
 
        >>> https://www.ebay.de/itm/JST-XH-2-54-Stecker-inkl-15cm-Kabel-XH-Buchse-2-3-4-5-6-7-8-9-10-Pin-24AWG-RC/183748172867
-       >>> https://www.ebay.de/itm/40p-10cm-Jumper-Wire-Steckbrucken-Steckbrett-Kabel-male-female-mannlich-wei/252795046460
 
-- case
+- socket strip (3 pin)
 
-       >>> https://www.ebay.de/itm/Kunststoff-Gehause-Box-IP65-Modulgehause-Kunststoff-fur-elektronische-Bauteile/123699322855 (115 * 85 * 35)
+       >>> https://www.ebay.de/itm/20x-Buchsenleiste-2-3-4-5-6-7-8-10-12-20-40-Pin-RM-2-54-mm/182572936179
 
-- LED socket
+- case (115 * 85 * 35)
 
-       >>> https://www.ebay.de/itm/LED-Fassung-Schraube-Halter-Screw-3-5-8-10-mm-Leuchtkappe-Montageringe-Clips-DIY/173621485247
+       >>> https://www.ebay.de/itm/Kunststoff-Gehause-Box-IP65-Modulgehause-Kunststoff-fur-elektronische-Bauteile/123699322855 
+           https://www.ebay.de/itm/Kunststoff-Gehause-Box-Platinen-Verteilerkasten-Elektronik-Netzteil-Montage-Neu/132994940466
 
 - LED strip connector
 

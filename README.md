@@ -546,7 +546,10 @@ https://de.aliexpress.com/item/32803068018.html
 
        >>> select the new firmware (.hex file)
        >>> don't keep the old ieeeAddr
+	   >>> select "Erase, program and verify"
        >>> click “Perform actions” 
+
+- if something fails, reset the CC debugger and restart the process
 
 </br>
 
