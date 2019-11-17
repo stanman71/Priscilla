@@ -4,6 +4,8 @@ A raspberry pi controller to play music by using spotify and lms.
 
 ! This is the complete installation !
 
+IMAGE installation guide: Link
+
    * <a href="#1 Hardware">1 Hardware</a>
       * <a href="#1.1 Small Speaker (max 3W)">1.1 Small Speaker (max 3W)</a>
       * <a href="#1.2 Big Speaker (max 30W)">1.2 Big Speaker (max 30W)</a>        
@@ -299,7 +301,7 @@ https://blog.amnuts.com/2017/01/11/rotary-volume-control-for-the-raspberry-pi/
 
        >>> amixer cget -c [soundcard number] numid=1
 
-- volume adjusting 
+- volume adjusting (example)
 
        >>> amixer -c [soundcard number] cset numid=1 175
 
@@ -402,12 +404,12 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 
        >>> aplay -L
 
-- squeezelite config
+- squeezelite config (example)
 
-       >>> sudo nano /etc/default/squeezelite
+       >>> sudo nano /etc/default/squeezelite 
 
            # ALSA output device:
-	    SL_SOUNDCARD="hw:CARD=sndrpihifiberry,DEV=0
+	    SL_SOUNDCARD="hw:CARD=sndrpihifiberry,DEV=0 
 	    SB_EXTRA_ARGS="-a 180"
 
 - deactivate autostart
@@ -454,12 +456,12 @@ https://dtcooper.github.io/raspotify/
 
        >>> aplay -l
 
-- raspotify config
+- raspotify config (example)
 
        >>> sudo nano /etc/default/raspotify
 
 	    DEVICE_NAME=" ... " 
-	    OPTIONS="--username <USERNAME> --password <PASSWORD> --device hw:0,1"
+	    OPTIONS="--username <USERNAME> --password <PASSWORD> --device hw:0,1" 
 
 - restart raspotify 
 

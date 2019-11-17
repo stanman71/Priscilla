@@ -129,7 +129,7 @@
 
        >>> aplay -L
 
-- squeezelite config
+- squeezelite config (example)
 
        >>> sudo nano /etc/default/squeezelite
 
@@ -153,7 +153,7 @@
 
        >>> aplay -l
 
-- raspotify config
+- raspotify config (example)
 
        >>> sudo nano /etc/default/raspotify
 

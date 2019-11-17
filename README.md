@@ -538,7 +538,7 @@ https://de.aliexpress.com/item/32803068018.html
 
        >>> ready for the next step   
 
-- firewares (CC2530_CC2592)
+- unzip the firmware files
 
        >>> /home/pi/miranda/devices/E18-MS1PA1-PCB/z-stack_firmware.zip
 
@@ -546,7 +546,7 @@ https://de.aliexpress.com/item/32803068018.html
 
        >>> select the new firmware (.hex file)
        >>> don't keep the old ieeeAddr
-	   >>> select "Erase, program and verify"
+	>>> select "Erase, program and verify"
        >>> click “Perform actions” 
 
 - if something fails, reset the CC debugger and restart the process
@@ -567,7 +567,7 @@ https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 	   
            VCC -> 3,3V (Pin1)
            GND -> GND  (Pin6)
-           P02 -> TXD  (Pin8 / BCM 14)
+           P02 -> TXD  (Pin8  / BCM 14)
            P03 -> RXD  (Pin10 / BCM 15)
 
 </br>
