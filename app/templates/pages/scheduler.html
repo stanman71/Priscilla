@@ -326,17 +326,17 @@
                                 <div class="col-sm-4"> 
                                   <label>Tage (Mon, Tue, Wed, Thu, Fri, Sat, Sun)</label>
                                   <input type="text" class="form-control" placeholder="Tage" name="set_day_{{ entry.id }}"
-                                  value = {% if entry.day != None and entry.day != "None" %}"{{ entry.day }}"{% else %}""{% endif %} /> 
+                                    value = {% if entry.day != None and entry.day != "None" %}"{{ entry.day }}"{% else %}""{% endif %} /> 
                                 </div>                     
                                 <div class="col-sm-4">   
                                   <label>Stunden (00-23)</label>                                    
                                   <input type="text" class="form-control" placeholder="Stunden" name="set_hour_{{ entry.id }}"
-                                  value = {% if entry.hour != None and entry.hour != "None" %}"{{ entry.hour }}"{% else %}""{% endif %} /> 
+                                    value = {% if entry.hour != None and entry.hour != "None" %}"{{ entry.hour }}"{% else %}""{% endif %} /> 
                                 </div> 
                                 <div class="col-sm-4">   
                                   <label>Minuten (00-59)</label>
                                   <input type="text" class="form-control" placeholder="Minuten" name="set_minute_{{ entry.id }}"
-                                  value = {% if entry.minute != None and entry.minute != "None" %}"{{ entry.minute }}"{% else %}""{% endif %} /> 
+                                    value = {% if entry.minute != None and entry.minute != "None" %}"{{ entry.minute }}"{% else %}""{% endif %} /> 
                                 </div>
                               </div>
                             </td>                           

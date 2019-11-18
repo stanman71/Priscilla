@@ -79,9 +79,7 @@ def plants():
 
             if request.form.get("set_name_" + str(i)) != None:
 
-                error_founded          = False
-                moisture_level         = None
-                pump_duration_manually = None                
+                error_founded = False     
 
                 # ############
                 # name setting
@@ -101,8 +99,8 @@ def plants():
                 # name already exist
                 elif ((GET_PLANT_BY_NAME(input_name) != None) and (plant.name != input_name)):
                     error_message_change_settings.append(plant.name + " || Name bereits vergeben")  
-                    error_founded = True
                     name = plant.name
+                    error_founded = True  
 
                 # no input commited
                 else:                          
@@ -110,19 +108,25 @@ def plants():
                     error_message_change_settings.append(plant.name + " || Keinen Namen angegeben") 
                     error_founded = True  
 
-
                 # ##############
                 # device setting
                 # ##############
 
+                # no input commited                
                 if request.form.get("set_watering_controller_ieeeAddr") == "None":
                     error_message_change_settings.append("Kein Gerät angegeben")
-                if (GET_PLANT_BY_IEEEADDR(request.form.get("set_watering_controller_ieeeAddr")) and 
+                    error_founded = True                      
+
+                # device already in use
+                elif (GET_PLANT_BY_IEEEADDR(request.form.get("set_watering_controller_ieeeAddr")) and 
                     request.form.get("set_watering_controller_ieeeAddr") != GET_PLANT_BY_ID(i).device_ieeeAddr):
                     
                     error_message_change_settings.append("Gerät mehrmals vergeben")    
-                                    
-                device_ieeeAddr = request.form.get("set_watering_controller_ieeeAddr")
+                    error_founded = True  
+
+                # add new device
+                else:
+                    device_ieeeAddr = request.form.get("set_watering_controller_ieeeAddr")
 
                 # #############
                 # group setting
@@ -130,40 +134,37 @@ def plants():
 
                 if request.form.get("set_group_" + str(i)) != "":
                     group = request.form.get("set_group_" + str(i))
+
                 else:
                     group = 1
 
-                if request.form.get("radio_moisture_level_" + str(i)) != None:
-                    moisture_level = request.form.get("radio_moisture_level_" + str(i))
+                # #####################
+                # pump duration setting
+                # #####################
 
-                if request.form.get("set_pump_duration_manually_" + str(i)) != None:
-                    pump_duration_manually = request.form.get("set_pump_duration_manually_" + str(i))
+                if request.form.get("set_pump_duration_" + str(i)) != "":
+                    pump_duration = request.form.get("set_pump_duration_" + str(i))
 
                     try: 
-                        if not 5 < int(pump_duration_manually) < 200:
+                        if not 5 <= int(pump_duration) <= 200:
                             error_message_change_settings.append(plant.name + " || Pumpzeit muss eine Zahl zwischen 5 und 200 sein") 
                             error_founded = True 
                     except:
                         error_message_change_settings.append(plant.name + " || Pumpzeit muss eine Zahl zwischen 5 und 200 sein") 
                         error_founded = True        
 
+                else:
+                    error_message_change_settings.append(plant.name + " || Pumpzeit muss eine Zahl zwischen 5 und 200 sein") 
+                    error_founded = True                         
+
+
+                # #############
                 # save settings
+                # #############
+
                 if error_founded == False: 
 
-                    changes_saved = False
-
-                    if SET_PLANT_SETTINGS(i, name, device_ieeeAddr, group):
-                        changes_saved = True
-
-                    if moisture_level != None:
-                        if SET_PLANT_MOISTURE_LEVEL(i, moisture_level):
-                            changes_saved = True
-
-                    if pump_duration_manually != None:
-                        if SET_PLANT_PUMP_DURATION_MANUALLY(i, pump_duration_manually):
-                            changes_saved = True     
-
-                    if changes_saved == True:    
+                    if SET_PLANT_SETTINGS(i, name, device_ieeeAddr, group, pump_duration):
                         success_message_change_settings.append(plant.name + " || Einstellungen gespeichert") 
 
                     name = ""
@@ -173,8 +174,6 @@ def plants():
     list_plants = GET_ALL_PLANTS()
 
     data = {'navigation': 'plants'}
-
-    timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
 
     return render_template('layouts/default.html',
                             data=data,    

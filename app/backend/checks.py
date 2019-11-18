@@ -528,19 +528,7 @@ def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks):
 def CHECK_TASKS(tasks, task_type):
    list_task_errors = []
 
-
-   if task_type == "scheduler": 
-
-      for element in tasks:
-
-         result = CHECK_TASK_OPERATION(element.task, element.name, task_type)
-         
-         if result != []:
-            
-            for error in result:   
-               list_task_errors.append(error)
-               
-
+   # controller
    if task_type == "controller": 
 
       for controller in tasks:
@@ -617,8 +605,31 @@ def CHECK_TASKS(tasks, task_type):
             if result != []:
                
                for error in result:   
-                  list_task_errors.append(error)             
-    
+                  list_task_errors.append(error)            
+
+   # scheduler
+   if task_type == "scheduler":
+
+      for element in tasks:
+         result = CHECK_TASK_OPERATION(element.task, element.name, task_type)
+         
+         if result != []:
+            
+            for error in result:   
+               list_task_errors.append(error)
+
+   # speechcontrol
+   if task_type == "speechcontrol":
+
+      for element in tasks:
+         result = CHECK_TASK_OPERATION(element.task, element.name, task_type)
+         
+         if result != []:
+            
+            for error in result:   
+               list_task_errors.append(error)
+
+
    return list_task_errors
 
 

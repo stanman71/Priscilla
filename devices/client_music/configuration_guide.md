@@ -1,4 +1,4 @@
-# Client Music - IMAGE Guide
+# Client Music - Configuration Guide
 
 A raspberry pi controller to play music by using spotify and lms. 
 

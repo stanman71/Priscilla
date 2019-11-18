@@ -288,11 +288,11 @@ void callback (char* topic, byte* payload, unsigned int length) {
     
         JsonArray data_inputs = msg.createNestedArray("inputs");
         data_inputs.add("pump");
-        data_inputs.add("pump_time");        
+        data_inputs.add("pump_duration");        
         data_inputs.add("sensor_watertank");        
 
         JsonArray data_commands = msg.createNestedArray("commands");
-        data_commands.add("{'pump':'ON','pump_time':5}");     
+        data_commands.add("{'pump':'ON','pump_duration':5}");     
         data_commands.add("{'pump':'ON'}");              
         data_commands.add("{'pump':'OFF'}");   
 
@@ -333,18 +333,18 @@ void callback (char* topic, byte* payload, unsigned int length) {
         deserializeJson(msg_json, msg);
     
         String pump_setting  = msg_json["pump"];
-        int pumptime         = msg_json["pump_time"];
+        int pump_duration    = msg_json["pump_duration"];
 
         // control pump automatically  
-        if (pump_setting == "ON" and pumptime != 0) {
+        if (pump_setting == "ON" and pump_duration != 0) {
 
             digitalWrite(PIN_PUMP, HIGH);
 
-            send_default_mqtt_message(pumptime);
+            send_default_mqtt_message(pump_duration);
             
             Serial.println("PUMP_ON");
 
-            delay(pumptime * 1000);
+            delay(pump_duration * 1000);
             
             // #########
             // stop pump
@@ -361,7 +361,7 @@ void callback (char* topic, byte* payload, unsigned int length) {
         }
 
         // start pump manually    
-        if (pump_setting == "ON" and pumptime == 0) {
+        if (pump_setting == "ON" and pump_duration == 0) {
 
             digitalWrite(PIN_PUMP, HIGH);
      
@@ -393,7 +393,7 @@ void callback (char* topic, byte* payload, unsigned int length) {
 // mqtt default message
 // ####################
 
-void send_default_mqtt_message(int pumptime_value) {
+void send_default_mqtt_message(int pump_duration_value) {
 
     // create channel  
     String payload_path = "miranda/mqtt/" + String(ieeeAddr);      
@@ -413,7 +413,7 @@ void send_default_mqtt_message(int pumptime_value) {
         msg["pump"] = "OFF";
     }
 
-    msg["pump_time"] = pumptime_value;
+    msg["pump_duration"] = pump_duration_value;
 
     // get sensor data
     int sensor_watertank = digitalRead(PIN_WATERTANK);

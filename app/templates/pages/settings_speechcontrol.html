@@ -16,17 +16,160 @@
               </div>  
             </div>  
 
-<!---------------->
-<!--  SETTINGS  -->
-<!---------------->
+<!----------------------------->
+<!-- ADD SPEECHCONTROL TASK  -->
+<!----------------------------->
+
+<!-- success message add speechcontrol task -->
+
+{% if success_message_add_speechcontrol_task == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Aufgabe erfolgreich hinzugefügt</span>
+  </div>
+{% endif %}  
+
+<!-- error message add speechcontrol task --> 
+
+{% if error_message_add_speechcontrol_task != [] %}
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+    {% for error in error_message_add_speechcontrol_task %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
 
             <div class="card">
-              <div class="card-body">
-                <form method="POST">
-
-                </form>     
-              </div>
+              <form method="POST">         
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/settings/speechcontrol#'" name="add_speechcontrol_task" class="btn btn-fill btn-primary">NEW TASK</button>
+                </div>
+              </form>
             </div>
+
+
+<!-------------------------------->
+<!-- SPEECHCONTROL TASKS TABLE  -->
+<!-------------------------------->   
+
+<section id="table"></section>  
+
+<!-- success message change settings -->
+
+{% if success_message_change_settings != [] %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for success in success_message_change_settings %}
+      <span data-notify="message">{{ success }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+<!-- error message change settings -->
+
+{% if error_message_change_settings != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_change_settings %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+<!-- error message speechcontrol tasks -->
+
+{% if error_message_speechcontrol_tasks != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_speechcontrol_tasks %}
+      {{ error }} <br>
+    {% endfor %}
+  </div>      
+{% endif %}  
+
+{% if list_speechcontrol_tasks != [] %}
+
+            <div class="card">
+              <form method="POST">          
+                <div class="card-body"> 
+                  <div class="table-responsive">
+                    <table class="table tablesorter">
+                      <thead>
+                        <th scope="col" style="width:3%"></th>              
+                        <th scope="col" style="width:20%" class="minwidth_200">Name</th> 
+                        <th scope="col" style="width:30%" class="minwidth_300">Aufgabe</th>         
+                        <th scope="col" style="width:30%" class="minwidth_300">Schlüsselwörter</th>                             
+                        <th scope="col" style="width:17%" class="minwidth_100">Optionen</th>                               
+                      </thead>
+                      <tbody> 
+                        {% for entry in list_speechcontrol_tasks %}
+                          <tr>
+                            <td>
+                              <a href="/settings/speechcontrol/position/up/{{ entry.id }}#table_{{ entry.id }}"><i class="tim-icons icon-minimal-up"></i></a>
+                              <a href="/settings/speechcontrol/position/down/{{ entry.id }}#table_{{ entry.id }}"><i class="tim-icons icon-minimal-down"></i></a>                           
+                            </td>                       
+                            <td>
+                              <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                                
+                            </td> 
+                            <td>        
+                              <input type="text" class="form-control" name="set_task_{{ entry.id }}"  
+                                value = {% if entry.task != None and entry.task != "None" %}"{{ entry.task }}"{% else %}""{% endif %} />
+                            </td>        
+                            <td>        
+                              <input type="text" class="form-control" name="set_keywords_{{ entry.id }}" 
+                                value = {% if entry.keywords != None and entry.keywords != "None" %}"{{ entry.keywords }}"{% else %}""{% endif %} />
+                            </td>                                                    
+                            <td>   
+                              <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="checkbox_option_pause_{{ entry.id }}" {% if entry.option_pause == "True" %} checked="on" {% endif %} name="checkbox_option_pause_{{ entry.id }}" >
+                                <label class="custom-control-label" for="checkbox_option_pause_{{ entry.id }}">Pausiert</label>
+                              </div>     
+                            </td>  
+                            <td>
+                              <!-- Button trigger modal -->
+                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="delete_dialog_{{entry.id}}">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title">Delete {{entry.name}} ?</h5>
+                                    </div>          
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                      <a class="btn btn-danger" href="/settings/speechcontrol/delete/{{ entry.id }}#table" role="button">DELETE</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>            
+                <div class="card-footer">                   
+                  <button type="submit" onclick="window.location.href='/settings/speechcontrol#table'" name="save_speechcontrol_task_settings" class="btn btn-fill btn-primary">SAVE</button>
+                </div>
+              </form>
+            </div> 
+
+{% endif %} 
+
 
           </div>
         </div>

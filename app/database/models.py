@@ -178,14 +178,13 @@ class LED_Scenes(db.Model):
 
 class Plants(db.Model):
     __tablename__  = 'plants'
-    id                     = db.Column(db.Integer, primary_key=True, autoincrement = True)   
-    name                   = db.Column(db.String(50), unique=True)
-    device_ieeeAddr        = db.Column(db.String(50), db.ForeignKey('devices.ieeeAddr'))   
-    device                 = db.relationship('Devices')  
-    group                  = db.Column(db.Integer)        
-    pump_duration_auto     = db.Column(db.Integer)  
-    pump_duration_manually = db.Column(db.Integer)            
-    moisture_level         = db.Column(db.String(50)) 
+    id               = db.Column(db.Integer, primary_key=True, autoincrement = True)   
+    name             = db.Column(db.String(50), unique=True)
+    device_ieeeAddr  = db.Column(db.String(50), db.ForeignKey('devices.ieeeAddr'))   
+    device           = db.relationship('Devices')  
+    group            = db.Column(db.Integer)        
+    pump_duration    = db.Column(db.Integer)             
+    sensor_watertank = db.Column(db.Integer) 
 
 class Programs(db.Model):
     __tablename__ = 'programs'
@@ -280,6 +279,14 @@ class Sensordata_Jobs(db.Model):
     device          = db.relationship('Devices')  
     sensor_key      = db.Column(db.String(50)) 
     always_active   = db.Column(db.String(50))
+
+class Speechcontrol_Tasks(db.Model):
+    __tablename__ = 'speechcontrol_tasks'
+    id           = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name         = db.Column(db.String(50), unique=True)
+    task         = db.Column(db.String(50))
+    keywords     = db.Column(db.String(50))   
+    option_pause = db.Column(db.String(50))
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
@@ -1884,11 +1891,10 @@ def ADD_PLANT():
         else:
             # add the new plant
             plant = Plants(
-                    id                     = i,
-                    name                   = "new_plant_" + str(i),  
-                    group                  = 1,
-                    pump_duration_auto     = 0, 
-                    pump_duration_manually = 30,                                               
+                    id            = i,
+                    name          = "new_plant_" + str(i),  
+                    group         = 1,
+                    pump_duration = 30,                                          
                 )
             db.session.add(plant)
             db.session.commit()
@@ -1899,17 +1905,18 @@ def ADD_PLANT():
     return "Pflanzenlimit erreicht (25)"
 
 
-def SET_PLANT_SETTINGS(id, name, device_ieeeAddr, group):         
+def SET_PLANT_SETTINGS(id, name, device_ieeeAddr, group, pump_duration):         
     entry = Plants.query.filter_by(id=id).first()
     old_name = entry.name
 
     # values changed ?
-    if (entry.name != name or entry.device_ieeeAddr != device_ieeeAddr or entry.group != int(group)):
+    if (entry.name != name or entry.device_ieeeAddr != device_ieeeAddr or entry.group != int(group) or entry.pump_duration != int(pump_duration)):
 
         entry.name            = name
         entry.device_ieeeAddr = device_ieeeAddr
         entry.group           = group        
-        
+        entry.pump_duration   = pump_duration    
+
         db.session.commit()  
 
         try:
@@ -1917,53 +1924,13 @@ def SET_PLANT_SETTINGS(id, name, device_ieeeAddr, group):
         except:
             device_name = "None"
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + old_name + " | changed || Name - " + entry.name + " | Device - " + device_name + " | Group - " + str(entry.group))
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + old_name + 
+                             " | changed || Name - " + entry.name + 
+                             " | Device - " + device_name + 
+                             " | Group - " + str(entry.group) + 
+                             " | Pump_Duration - " + str(entry.pump_duration))                           
+        
         return True
-
-
-def SET_PLANT_MOISTURE_LEVEL(id, moisture_level):         
-    entry = Plants.query.filter_by(id=id).first()
-
-    # values changed ?
-    if entry.moisture_level != moisture_level: 
-
-        entry.moisture_level = moisture_level
-        db.session.commit()  
-        
-        if entry.moisture_level != "None":
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + entry.name + " | changed || Moisture_Level - " + str(entry.moisture_level))   
-
-        return True 
-
-    
-def SET_PLANT_PUMP_DURATION_AUTO(id, pump_duration_auto):         
-    entry = Plants.query.filter_by(id=id).first()
-
-    # values changed ?
-    if entry.pump_duration_auto != int(pump_duration_auto):      
-
-        entry.pump_duration_auto = pump_duration_auto
-        db.session.commit()  
-        
-        if entry.pump_duration_auto != "None":
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + entry.name + " | changed || Pump_Duration_Auto - " + str(entry.pump_duration_auto)) 
-
-        return True    
-
-
-def SET_PLANT_PUMP_DURATION_MANUALLY(id, pump_duration_manually):         
-    entry = Plants.query.filter_by(id=id).first()
-
-    # values changed ?
-    if entry.pump_duration_manually != int(pump_duration_manually):       
-
-        entry.pump_duration_manually = pump_duration_manually
-        db.session.commit()  
-        
-        if entry.pump_duration_manually != "None":
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + entry.name + " | changed || Pump_Duration_Manually - " + str(entry.pump_duration_manually))   
-
-        return True                               
 
 
 def CHANGE_PLANTS_POSITION(id, direction):
@@ -2058,7 +2025,7 @@ def ADD_PROGRAM():
             db.session.add(program)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Program - " + "new_program_" + str(i) + " | added")  
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Program | " + "new_program_" + str(i) + " | added")  
 
             return True
 
@@ -2106,7 +2073,7 @@ def SET_PROGRAM_SETTINGS(id, name, line_content_1,  line_content_2,  line_conten
         entry.line_content_20 = line_content_20 
         db.session.commit()
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Program - " + entry.name + " | changed")  
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Program | " + entry.name + " | changed")  
         return True
 
 
@@ -2496,7 +2463,7 @@ def DELETE_PROGRAM(id):
     name = Programs.query.filter_by(id=id).first().name
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Program - " + name + " | deleted")  
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Program | " + name + " | deleted")  
     except:
         pass 
 
@@ -2606,75 +2573,7 @@ def SET_SCHEDULER_TASK(id, name, task,
 
         db.session.commit()   
 
-        log_message = "Scheduler | Task - " + old_name + " | changed || Name - " + entry.name + " | Task - " + entry.task
-
-        # option time
-        if entry.option_time == "checked":
-
-            if entry.day == None:
-                entry.day = "None"
-            if entry.hour == None:
-                entry.hour = "None"
-            if entry.minute == None:
-                entry.minute = "None"
-
-            log_message = log_message + (" | Day - " + entry.day + 
-                                         " | Hour - " + entry.hour + 
-                                         " | Minute - " + entry.minute)
-
-        # option sun
-        if entry.option_sun == "checked":
-
-            if entry.location == None:
-                entry.location = "None"
-
-            log_message = log_message + (" | Sunrise - " + entry.option_sunrise +
-                                         " | Sunset - " + entry.option_sunset +
-                                         " | Location - " + entry.location) 
-
-        # option sensors
-        if entry.option_sensors == "checked":
-
-            if entry.main_operator_second_sensor == "None":
-
-                log_message = log_message + (" | Device_1 - " + entry.device_name_1 + 
-                                             " | Sensor_1 - " + entry.sensor_key_1 + 
-                                             " | Operator_1 - " + entry.operator_1 + 
-                                             " | Value_1 - " +  entry.value_1)
-                                                                
-            else:
-
-                log_message = log_message + (" | Device_1 - " + entry.device_name_1 + 
-                                             " | Sensor_1 - " + entry.sensor_key_1 + 
-                                             " | Operator_1 - " + entry.operator_1 + 
-                                             " | Value_1 - " +  entry.value_1 + 
-                                             " | Device_2 - " + entry.device_name_2 + 
-                                             " | Sensor_2 - " + entry.sensor_key_2 + 
-                                             " | Operator_2 - " + entry.operator_2 + 
-                                             " | Value_2 - " + entry.value_2)
-                                
-        # option position
-        if entry.option_position == "checked":
-
-            if entry.ip_addresses == None:
-                entry.ip_addresses = "None"
-
-            log_message = log_message + (" | Home - " + entry.option_home + 
-                                         " | Away - " + entry.option_away + 
-                                         " | IP-Addresses - " + entry.ip_addresses) 
-
-        # option repeat
-        if entry.option_repeat == "checked":
-
-            log_message = log_message + (" | Repeat - " + entry.option_repeat)
-
-
-        # option pause
-        if entry.option_pause == "checked":
-
-            log_message = log_message + (" | Pause - " + entry.option_pause)
-
-        WRITE_LOGFILE_SYSTEM("DATABASE", log_message) 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Task - " + entry.name + " | changed") 
         return True
 
 
@@ -2949,6 +2848,123 @@ def DELETE_SENSORDATA_JOB(id):
         pass     
  
     Sensordata_Jobs.query.filter_by(id=id).delete()
+    db.session.commit()
+    return True
+
+
+""" ################## """
+""" ################## """
+"""    speechcontrol   """
+""" ################## """
+""" ################## """
+
+
+def GET_SPEECHCONTROL_TASK_BY_ID(id):
+    return Speechcontrol_Tasks.query.filter_by(id=id).first()
+
+
+def GET_SPEECHCONTROL_TASK_BY_NAME(name):
+    for task in Speechcontrol_Tasks.query.all():
+        
+        if task.name.lower() == name.lower():
+            return task    
+    
+
+def GET_ALL_SPEECHCONTROL_TASKS():
+    return Speechcontrol_Tasks.query.all()    
+
+
+def ADD_SPEECHCONTROL_TASK():
+    for i in range(1,26):
+        if Speechcontrol_Tasks.query.filter_by(id=i).first():
+            pass
+        else:
+            # add the new task
+            new_task = Speechcontrol_Tasks(
+                    id            = i,
+                    name          = "new_speechcontrol_task_" + str(i),
+                )
+            db.session.add(new_task)
+            db.session.commit()
+
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Speechcontrol | Task - " + "new_speechcontrol_task_" + str(i) + " | added")             
+            return True
+
+    return "Aufgabenlimit erreicht (25)"
+
+
+def SET_SPEECHCONTROL_TASK(id, name, task, keywords, option_pause):
+                             
+    entry = Speechcontrol_Tasks.query.filter_by(id=id).first()
+    old_name = entry.name
+
+    # values changed ?
+    if (entry.name != name or entry.task != task or entry.keywords != keywords or entry.option_pause != option_pause):
+            
+        entry.name         = name
+        entry.task         = task      
+        entry.keywords     = keywords    
+        entry.option_pause = option_pause
+
+        db.session.commit()   
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Speechcontrol | Task - " + entry.name + " | changed") 
+        return True
+
+
+def CHANGE_SPEECHCONTROL_TASKS_POSITION(id, direction):
+    
+    list_speechcontrol_tasks = Speechcontrol_Tasks.query.all() 
+    
+    if direction == "up":
+        
+        # reverse task list
+        task_list = list_speechcontrol_tasks[::-1]
+        
+        for task in task_list:  
+            if task.id < id:
+                
+                new_id = task.id
+                
+                # change ids
+                task_1 = GET_SPEECHCONTROL_TASK_BY_ID(id)
+                task_2 = GET_SPEECHCONTROL_TASK_BY_ID(new_id)
+                
+                task_1.id = 99
+                db.session.commit()
+                
+                task_2.id = id
+                task_1.id = new_id
+                db.session.commit()         
+                return 
+
+    if direction == "down":
+        for task in list_speechcontrol_tasks:
+            if task.id > id:       
+                new_id = task.id
+                
+                # change ids
+                task_1 = GET_SPEECHCONTROL_TASK_BY_ID(id)
+                task_2 = GET_SPEECHCONTROL_TASK_BY_ID(new_id)
+                
+                task_1.id = 99
+                db.session.commit()
+                
+                task_2.id = id
+                task_1.id = new_id
+                db.session.commit()      
+                return 
+       
+
+def DELETE_SPEECHCONTROL_TASK(task_id):
+    entry = GET_SPEECHCONTROL_TASK_BY_ID(task_id)
+    
+    try:
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Speechcontrol | Task - " + entry.name + " | deleted")   
+    except:
+        pass         
+    
+    Speechcontrol_Tasks.query.filter_by(id=task_id).delete()
     db.session.commit()
     return True
 

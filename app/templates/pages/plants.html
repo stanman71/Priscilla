@@ -52,6 +52,8 @@
 <!-- PLANT TABLE  -->
 <!------------------>   
 
+<section id="table"></section>  
+
 <!-- success message change settings -->
 
 {% if success_message_change_settings != [] %}
@@ -88,10 +90,10 @@
                         <th scope="col" style="width:3%"></th> 
                         <th scope="col" style="width:20%" class="minwidth_200">Pflanze</th>   
                         <th scope="col" style="width:20%" class="minwidth_200">Gerät</th>     
-                        <th scope="col" style="width:15%" class="minwidth_150">Test</th>                                          
-                        <th scope="col" style="width:15%" class="minwidth_150">Gruppen</th>   
+                        <th scope="col" style="width:15%" class="minwidth_100">Test</th>                                          
+                        <th scope="col" style="width:15%" class="minwidth_100">Gruppen</th>   
                         <th scope="col" style="width:15%" class="minwidth_150">Pumpdauer (s)</th>                         
-                        <th scope="col" style="width:15%" class="minwidth_150">Feuchtigkeitslevel</th>   
+                        <th scope="col" style="width:15%" class="minwidth_150">Wasserstand</th>   
                         <th scope="col" style="width:5%"></th>                                                    
                       </thead>
                       <tbody> 
@@ -128,35 +130,11 @@
                             <input type="text" class="form-control" name="set_group_{{ entry.id }}" value="{{ entry.group }}" />  
                           </td>          
                           <td>
-                            <div class="row justify-content-md-left">
-                              <div class="col-sm-10">                                    
-                                {% if entry.device.device_type == "watering_controller auto" %}          
-                                  {{ entry.pump_duration_auto }}
-                                {% else %}
-                                  <input type="text" class="form-control" name="set_pump_duration_manually_{{ entry.id }}" 
-                                  value="{% if entry.pump_duration_manually != None and entry.pump_duration_manually != "None" %}{{ entry.pump_duration_manually }}{% endif %}" /> 
-                                {% endif %}
-                              </div>
-                            </div>
-                          </td>                            
+                            <input type="text" class="form-control" name="set_pump_duration_{{ entry.id }}" value="{{ entry.pump_duration }}" />    
+                          </td>    
                           <td>
-                            {% if entry.device.device_type == "watering_controller auto" %}   
-                              <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="radio_moisture_level_high_{{ entry.id }}" {% if entry.moisture_level == "high" %} checked="on" {% endif %} value="high" name="radio_moisture_level_{{ entry.id }}">
-                                <label class="custom-control-label" for="radio_moisture_level_high_{{ entry.id }}">Hoch</label>
-                              </div>     
-                              <br>  
-                              <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="radio_moisture_level_normal_{{ entry.id }}" {% if entry.moisture_level == "normal" %} checked="on" {% endif %} value="normal" name="radio_moisture_level_{{ entry.id }}">
-                                <label class="custom-control-label" for="radio_moisture_level_normal_{{ entry.id }}">Normal</label>
-                              </div> 
-                              <br>       
-                              <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="radio_moisture_level_low_{{ entry.id }}" {% if entry.moisture_level == "low" %} checked="on" {% endif %} value="low" name="radio_moisture_level_{{ entry.id }}">
-                                <label class="custom-control-label" for="radio_moisture_level_low_{{ entry.id }}">Niedrig</label>
-                              </div>  
-                            {% endif %}
-                          </td>
+                            {% if entry.senser_watertank == 1 %} <font color="lightgreen">OK</font> {% else %} <font color="salmon">NIEDRIG</font> {% endif %}  
+                          </td>                                                     
                           <td>          
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>
