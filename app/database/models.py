@@ -282,11 +282,10 @@ class Sensordata_Jobs(db.Model):
 
 class Speechcontrol_Tasks(db.Model):
     __tablename__ = 'speechcontrol_tasks'
-    id           = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    name         = db.Column(db.String(50), unique=True)
-    task         = db.Column(db.String(50))
-    keywords     = db.Column(db.String(50))   
-    option_pause = db.Column(db.String(50))
+    id         = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name       = db.Column(db.String(50))
+    parameters = db.Column(db.String(50))
+    keywords   = db.Column(db.String(50))   
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
@@ -313,8 +312,10 @@ class ZigBee2MQTT(db.Model):
 # create all database tables
 db.create_all()
 
+# #####
+# email
+# #####
 
-# create default email
 if eMail.query.filter_by().first() == None:
     email = eMail(
         id = 1,
@@ -322,30 +323,34 @@ if eMail.query.filter_by().first() == None:
     db.session.add(email)
     db.session.commit()
 
+# ####
+# host 
+# ####
 
-# create default host settings
 if Host.query.filter_by().first() == None:
     host = Host(
     )
     db.session.add(host)
     db.session.commit()
    
+# ###############
+# scheduler tasks
+# ###############
 
-# create system scheduler jobs
-job_check_mqtt_connetion_founded = False
-job_update_devices_founded         = False
-job_backup_database_founded        = False
+check_mqtt_connetion_founded = False
+update_devices_founded       = False
+backup_database_founded      = False
 
 for task in Scheduler_Tasks.query.all():
     if task.name.lower() == "check_mqtt_connetion":
-        job_check_mqtt_connetion_founded = True
+        check_mqtt_connetion_founded = True
     if task.name.lower() == "update_devices":
-        job_update_devices_founded = True
+        update_devices_founded = True
     if task.name.lower() == "backup_database":
-        job_backup_database_founded = True
+        backup_database_founded = True
 
 
-if job_check_mqtt_connetion_founded == False:
+if check_mqtt_connetion_founded == False:
     scheduler_check_mqtt_connetion = Scheduler_Tasks(
         name          = "check_mqtt_connetion",
         task          = "check_mqtt_connetion",
@@ -359,7 +364,7 @@ if job_check_mqtt_connetion_founded == False:
     db.session.add(scheduler_check_mqtt_connetion)
     db.session.commit()
 
-if job_update_devices_founded == False:
+if update_devices_founded == False:
     scheduler_task_update_devices = Scheduler_Tasks(
         name          = "update_devices",
         task          = "update_devices",
@@ -373,7 +378,7 @@ if job_update_devices_founded == False:
     db.session.add(scheduler_task_update_devices)
     db.session.commit()
 
-if job_backup_database_founded == False:
+if backup_database_founded == False:
     scheduler_task_backup_database = Scheduler_Tasks(
         name          = "backup_database",
         task          = "backup_database",
@@ -387,8 +392,150 @@ if job_backup_database_founded == False:
     db.session.add(scheduler_task_backup_database)
     db.session.commit()
 
+# ###################
+# speechcontrol tasks
+# ###################
 
-# create default user
+led_scene_start_founded             = False
+led_scene_change_brightness_founded = False
+led_scene_turn_off_founded          = False
+led_scene_turn_off_all_founded      = False
+program_start_founded               = False
+program_stop_founded                = False
+spotify_play_founded                = False
+spotify_previous_founded            = False
+spotify_next_founded                = False
+spotify_stop_founded                = False
+spotify_change_volume_founded       = False
+
+for task in Speechcontrol_Tasks.query.all():
+    if task.name == "LED | Szene starten (Optional Helligkeit)":
+        led_scene_start_founded = True
+    if task.name == "LED | Helligkeit ändern":
+        led_scene_change_brightness_founded = True
+    if task.name == "LED | Gruppe ausschalten":
+        led_scene_turn_off_founded = True
+    if task.name == "LED | alle Gruppen ausschalten":
+        led_scene_turn_off_all_founded = True
+    if task.name == "PROGRAMM | starten":
+        program_start_founded = True
+    if task.name == "PROGRAMM | stoppen":
+        program_stop_founded = True
+    if task.name == "MUSIK | abspielen starten (Gerät muss aktiv sein)":
+        spotify_play_founded = True
+    if task.name == "MUSIK | vorheriger Track":
+        spotify_previous_founded = True
+    if task.name == "MUSIK | nächster Track":
+        spotify_next_founded = True
+    if task.name == "MUSIK | abspielen stoppen":
+        spotify_stop_founded = True
+    if task.name == "MUSIK | Lautstärke ändern":
+        spotify_change_volume_founded = True
+
+
+if led_scene_start_founded == False:
+    led_scene_start = Speechcontrol_Tasks(
+        name       = "LED | Szene starten (Optional Helligkeit)",
+        parameters = "[Gruppenname] [Szenenname] [Helligkeit in Prozent]",
+        keywords   = "",   
+    )
+    db.session.add(led_scene_start)
+    db.session.commit()
+
+if led_scene_change_brightness_founded == False:
+    led_scene_change_brightness = Speechcontrol_Tasks(
+        name       = "LED | Helligkeit ändern",
+        parameters = "[Gruppenname] [Helligkeit in Prozent]",
+        keywords   = "",   
+    )
+    db.session.add(led_scene_change_brightness)
+    db.session.commit()
+
+if led_scene_turn_off_founded == False:
+    led_scene_turn_off = Speechcontrol_Tasks(
+        name       = "LED | Gruppe ausschalten",
+        parameters = "[Gruppenname]",
+        keywords   = "",   
+    )
+    db.session.add(led_scene_turn_off)
+    db.session.commit()
+
+if led_scene_turn_off_all_founded == False:
+    led_scene_turn_off_all = Speechcontrol_Tasks(
+        name       = "LED | alle Gruppen ausschalten",
+        parameters = "",
+        keywords   = "",   
+    )
+    db.session.add(led_scene_turn_off_all)
+    db.session.commit()
+
+if program_start_founded == False:
+    program_start = Speechcontrol_Tasks(
+        name       = "PROGRAMM | starten",
+        parameters = "",
+        keywords   = "",   
+    )
+    db.session.add(program_start)
+    db.session.commit()
+
+if program_stop_founded == False:
+    program_stop = Speechcontrol_Tasks(
+        name       = "PROGRAMM | stoppen",
+        parameters = "",
+        keywords   = "",   
+    )
+    db.session.add(program_stop)
+    db.session.commit()
+
+if spotify_play_founded == False:
+    spotify_play = Speechcontrol_Tasks(
+        name       = "MUSIK | abspielen starten (Gerät muss aktiv sein)",
+        parameters = "",
+        keywords   = "",   
+    )
+    db.session.add(spotify_play)
+    db.session.commit()
+
+if spotify_previous_founded == False:
+    spotify_previous = Speechcontrol_Tasks(
+        name       = "MUSIK | vorheriger Track",
+        parameters = "",
+        keywords   = "",   
+    )
+    db.session.add(spotify_previous)
+    db.session.commit()
+
+if spotify_next_founded == False:
+    spotify_next = Speechcontrol_Tasks(
+        name       = "MUSIK | nächster Track",
+        parameters = "",
+        keywords   = "",   
+    )
+    db.session.add(spotify_next)
+    db.session.commit()
+
+if spotify_stop_founded == False:
+    spotify_stop = Speechcontrol_Tasks(
+        name       = "MUSIK | abspielen stoppen",
+        parameters = "",
+        keywords   = "",   
+    )
+    db.session.add(spotify_stop)
+    db.session.commit()
+
+if spotify_change_volume_founded == False:
+    spotify_change_volume = Speechcontrol_Tasks(
+        name       = "MUSIK | Lautstärke ändern",
+        parameters = "[Lautstärke in Prozent]",
+        keywords   = "",   
+    )
+    db.session.add(spotify_change_volume)
+    db.session.commit()
+
+# ####
+# user
+# ####
+
 if User.query.filter_by(name='admin').first() is None:
     user = User(
         name               = "admin",
@@ -400,8 +547,10 @@ if User.query.filter_by(name='admin').first() is None:
     db.session.add(user)
     db.session.commit()
 
+# ###########
+# zigbee2mqtt 
+# ###########
 
-# create default zigbee2mqtt settings
 if ZigBee2MQTT.query.filter_by().first() is None:
     zigbee2mqtt = ZigBee2MQTT(
         pairing = "False",
@@ -2874,100 +3023,20 @@ def GET_ALL_SPEECHCONTROL_TASKS():
     return Speechcontrol_Tasks.query.all()    
 
 
-def ADD_SPEECHCONTROL_TASK():
-    for i in range(1,26):
-        if Speechcontrol_Tasks.query.filter_by(id=i).first():
-            pass
-        else:
-            # add the new task
-            new_task = Speechcontrol_Tasks(
-                    id            = i,
-                    name          = "new_speechcontrol_task_" + str(i),
-                )
-            db.session.add(new_task)
-            db.session.commit()
-
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Speechcontrol | Task - " + "new_speechcontrol_task_" + str(i) + " | added")             
-            return True
-
-    return "Aufgabenlimit erreicht (25)"
-
-
-def SET_SPEECHCONTROL_TASK(id, name, task, keywords, option_pause):
+def SET_SPEECHCONTROL_TASK(id, keywords):
                              
     entry = Speechcontrol_Tasks.query.filter_by(id=id).first()
     old_name = entry.name
 
     # values changed ?
-    if (entry.name != name or entry.task != task or entry.keywords != keywords or entry.option_pause != option_pause):
-            
-        entry.name         = name
-        entry.task         = task      
-        entry.keywords     = keywords    
-        entry.option_pause = option_pause
+    if (entry.keywords != keywords):
+        entry.keywords = keywords    
 
         db.session.commit()   
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "Speechcontrol | Task - " + entry.name + " | changed") 
         return True
-
-
-def CHANGE_SPEECHCONTROL_TASKS_POSITION(id, direction):
-    
-    list_speechcontrol_tasks = Speechcontrol_Tasks.query.all() 
-    
-    if direction == "up":
-        
-        # reverse task list
-        task_list = list_speechcontrol_tasks[::-1]
-        
-        for task in task_list:  
-            if task.id < id:
-                
-                new_id = task.id
-                
-                # change ids
-                task_1 = GET_SPEECHCONTROL_TASK_BY_ID(id)
-                task_2 = GET_SPEECHCONTROL_TASK_BY_ID(new_id)
-                
-                task_1.id = 99
-                db.session.commit()
-                
-                task_2.id = id
-                task_1.id = new_id
-                db.session.commit()         
-                return 
-
-    if direction == "down":
-        for task in list_speechcontrol_tasks:
-            if task.id > id:       
-                new_id = task.id
-                
-                # change ids
-                task_1 = GET_SPEECHCONTROL_TASK_BY_ID(id)
-                task_2 = GET_SPEECHCONTROL_TASK_BY_ID(new_id)
-                
-                task_1.id = 99
-                db.session.commit()
-                
-                task_2.id = id
-                task_1.id = new_id
-                db.session.commit()      
-                return 
-       
-
-def DELETE_SPEECHCONTROL_TASK(task_id):
-    entry = GET_SPEECHCONTROL_TASK_BY_ID(task_id)
-    
-    try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Speechcontrol | Task - " + entry.name + " | deleted")   
-    except:
-        pass         
-    
-    Speechcontrol_Tasks.query.filter_by(id=task_id).delete()
-    db.session.commit()
-    return True
-
+ 
 
 """ ################### """
 """ ################### """

@@ -618,17 +618,6 @@ def CHECK_TASKS(tasks, task_type):
             for error in result:   
                list_task_errors.append(error)
 
-   # speechcontrol
-   if task_type == "speechcontrol":
-
-      for element in tasks:
-         result = CHECK_TASK_OPERATION(element.task, element.name, task_type)
-         
-         if result != []:
-            
-            for error in result:   
-               list_task_errors.append(error)
-
 
    return list_task_errors
 

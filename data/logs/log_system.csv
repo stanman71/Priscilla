@@ -428,3 +428,38 @@ Timestamp,Type,Description
 2019-11-18 16:34:14,DATABASE,|Speechcontrol || Task - new_speechcontrol_task_1 || changed|
 2019-11-18 16:34:22,DATABASE,|Speechcontrol || Task - new_speechcontrol_task_1 || changed|
 2019-11-18 16:34:28,DATABASE,|Speechcontrol || Task - new_speechcontrol_task_1 || changed|
+2019-11-18 22:56:40,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-18 22:56:47,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-18 22:56:49,SUCCESS,|Spotify || Token updated|
+2019-11-18 23:00:00,ERROR,|Scheduler || Task - new_speechcontrol_task_1 || Group - bad || not founded|
+2019-11-18 23:02:09,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-18 23:02:16,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-18 23:02:18,SUCCESS,|Spotify || Token updated|
+2019-11-18 23:06:06,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-18 23:06:13,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-18 23:06:15,SUCCESS,|Spotify || Token updated|
+2019-11-18 23:13:15,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-18 23:13:22,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-18 23:13:24,SUCCESS,|Spotify || Token updated|
+2019-11-18 23:14:10,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-18 23:14:17,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-18 23:14:19,SUCCESS,|Spotify || Token updated|
+2019-11-18 23:15:45,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-18 23:15:52,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-18 23:15:55,SUCCESS,|Spotify || Token updated|
+2019-11-18 23:17:30,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-18 23:17:37,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-18 23:17:39,SUCCESS,|Spotify || Token updated|
+2019-11-18 23:17:44,DATABASE,|Speechcontrol || Task - MUSIK || abspielen starten (Gerät muss aktiv sein) || changed|
+2019-11-18 23:17:52,DATABASE,|Speechcontrol || Task - MUSIK || abspielen starten (Gerät muss aktiv sein) || changed|
+2019-11-18 23:17:52,DATABASE,|Speechcontrol || Task - MUSIK || nächster Track || changed|
+2019-11-18 23:18:55,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-18 23:19:02,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-18 23:19:04,SUCCESS,|Spotify || Token updated|
+2019-11-18 23:19:09,DATABASE,|Speechcontrol || Task - MUSIK || nächster Track || changed|
+2019-11-18 23:19:16,DATABASE,|Speechcontrol || Task - MUSIK || abspielen stoppen || changed|
+2019-11-18 23:19:21,DATABASE,|Speechcontrol || Task - MUSIK || abspielen stoppen || changed|
+2019-11-18 23:20:00,ERROR,|Scheduler || Task - new_speechcontrol_task_1 || Group - bad || not founded|
+2019-11-18 23:20:55,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-18 23:21:02,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-18 23:21:04,SUCCESS,|Spotify || Token updated|
