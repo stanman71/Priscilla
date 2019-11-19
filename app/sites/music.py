@@ -223,7 +223,16 @@ def music():
                             error_message_change_settings_client_music.append(result)
                         else:
                             success_message_change_settings_client_music.append(device.name + " || Einstellungen gespeichert")
-                            SET_DEVICE_LAST_VALUES(device.ieeeAddr, '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')
+                            
+                            # update last values for GUI
+                            last_values = GET_DEVICE_BY_ID(i).last_values
+                            
+                            data              = json.loads(last_values)
+                            data['interface'] = client_music_interface                 
+                            data['volume']    = int(client_music_volume)
+                            
+                            SAVE_DEVICE_LAST_VALUES(GET_DEVICE_BY_ID(i).ieeeAddr, str(data).replace(" ","").replace("'", '"'))
+                
 
                 # no valid last values existing                        
                 except:
@@ -236,8 +245,16 @@ def music():
                         error_message_change_settings_client_music.append(result)
                     else:
                         success_message_change_settings_client_music.append(device.name + " || Einstellungen gespeichert")
-                        SET_DEVICE_LAST_VALUES(device.ieeeAddr, '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')
+               
+                        # update last values for GUI 
+                        last_values = GET_DEVICE_BY_ID(i).last_values
                         
+                        data              = json.loads(last_values)
+                        data['interface'] = client_music_interface                 
+                        data['volume']    = int(client_music_volume)
+                        
+                        SAVE_DEVICE_LAST_VALUES(GET_DEVICE_BY_ID(i).ieeeAddr, str(data).replace(" ","").replace("'", '"'))
+
 
     if request.form.get("restart_client_music_services") != None:
 

@@ -1002,7 +1002,7 @@ def SET_DEVICE_LAST_CONTACT(ieeeAddr):
     db.session.commit()       
 
 
-def SET_DEVICE_LAST_VALUES(ieeeAddr, last_values):
+def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
     entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
     
     last_values_formated = last_values.replace("{","")

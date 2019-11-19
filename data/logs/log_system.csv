@@ -463,3 +463,32 @@ Timestamp,Type,Description
 2019-11-18 23:20:55,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2019-11-18 23:21:02,ERROR,|ZigBee2MQTT || No Connection|
 2019-11-18 23:21:04,SUCCESS,|Spotify || Token updated|
+2019-11-19 06:11:59,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-19 06:12:06,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-19 06:12:08,SUCCESS,|Spotify || Token updated|
+2019-11-19 06:12:37,DATABASE,|Device - Steckdose_TV || Exception Settings changed |||| Exception - IP-Address || Exception Setting - state: ON || Exception ieeeAddr - None || Exception Value 1 - 192.168.1.20 || Exception Value 2 - None || Exception Value 3 - None|
+2019-11-19 06:12:37,DATABASE,|Device - qAcousticsONE || Exception Settings changed |||| Exception - None || Exception Setting - None || Exception ieeeAddr - None || Exception Value 1 - None || Exception Value 2 - None || Exception Value 3 - None|
+2019-11-19 06:12:37,DATABASE,|Device - qAcousticsTWO || Exception Settings changed |||| Exception - None || Exception Setting - None || Exception ieeeAddr - None || Exception Value 1 - None || Exception Value 2 - None || Exception Value 3 - None|
+2019-11-19 06:12:37,DATABASE,|Device - 0x298863 || Exception Settings changed |||| Exception - None || Exception Setting - None || Exception ieeeAddr - None || Exception Value 1 - None || Exception Value 2 - None || Exception Value 3 - None|
+2019-11-19 06:12:37,DATABASE,|Device - 0x00158d0002337aa7 || Exception Settings changed |||| Exception - None || Exception Setting - None || Exception ieeeAddr - None || Exception Value 1 - None || Exception Value 2 - None || Exception Value 3 - None|
+2019-11-19 06:12:37,DATABASE,|Device - 0x200235 || Exception Settings changed |||| Exception - None || Exception Setting - None || Exception ieeeAddr - None || Exception Value 1 - None || Exception Value 2 - None || Exception Value 3 - None|
+2019-11-19 06:12:41,DATABASE,|Device - Steckdose_TV || Exception Settings changed |||| Exception - IP-Address || Exception Setting - state: OFF || Exception ieeeAddr - None || Exception Value 1 - 192.168.1.20 || Exception Value 2 - None || Exception Value 3 - None|
+2019-11-19 06:12:45,DATABASE,|Device - Steckdose_Server || Exception Settings changed |||| Exception - IP-Address || Exception Setting - None || Exception ieeeAddr - None || Exception Value 1 - None || Exception Value 2 - None || Exception Value 3 - None|
+2019-11-19 06:12:54,DATABASE,|Device - Steckdose_Server || Exception Settings changed |||| Exception - IP-Address || Exception Setting - state: OFF || Exception ieeeAddr - None || Exception Value 1 - 192.168.1.10 || Exception Value 2 - None || Exception Value 3 - None|
+2019-11-19 06:20:00,ERROR,|Scheduler || Task - new_speechcontrol_task_1 || Group - bad || not founded|
+2019-11-19 06:30:00,ERROR,|Scheduler || Task - new_speechcontrol_task_1 || Group - bad || not founded|
+2019-11-19 06:30:05,ERROR,|MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-19 06:30:10,SUCCESS,|Devices || MQTT || Update|
+2019-11-19 06:30:14,ERROR,|MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-19 06:30:15,SUCCESS,|Devices || ZigBee2MQTT || Update|
+2019-11-19 06:40:00,ERROR,|Scheduler || Task - new_speechcontrol_task_1 || Group - bad || not founded|
+2019-11-19 06:50:00,ERROR,|Scheduler || Task - new_speechcontrol_task_1 || Group - bad || not founded|
+2019-11-19 07:00:00,ERROR,|Scheduler || Task - new_speechcontrol_task_1 || Group - bad || not founded|
+2019-11-19 07:02:25,SUCCESS,|Spotify || Token updated|
+2019-11-19 07:10:00,ERROR,|Scheduler || Task - new_speechcontrol_task_1 || Group - bad || not founded|
+2019-11-19 07:20:00,ERROR,|Scheduler || Task - new_speechcontrol_task_1 || Group - bad || not founded|
+2019-11-19 07:30:00,ERROR,|Scheduler || Task - new_speechcontrol_task_1 || Group - bad || not founded|
+2019-11-19 07:30:05,ERROR,|MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-19 07:30:10,SUCCESS,|Devices || MQTT || Update|
+2019-11-19 07:30:15,ERROR,|MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-19 07:30:16,SUCCESS,|Devices || ZigBee2MQTT || Update|

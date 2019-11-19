@@ -125,6 +125,7 @@ https://buyzero.de/blogs/news/raspberry-pi-strom-sparen-tipps-tricks
 
        >>> sudo pip3 install pyyaml
        >>> sudo pip3 install paho-mqtt
+       >>> sudo pip3 install netifaces
 
 - open hostname file and insert new name (equal to squeezelite name)
 

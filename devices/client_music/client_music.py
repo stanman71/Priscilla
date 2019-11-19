@@ -6,6 +6,7 @@ import os
 import time
 import yaml
 import random
+import netifaces
 
 
 """ ###### """
@@ -14,6 +15,18 @@ import random
                            
 PATH = "/home/pi/python/"
 
+
+""" ############ """
+""" get wlan_ip  """
+""" ############ """
+
+time.sleep(10)
+
+try:
+    wlan_ip_address = netifaces.ifaddresses('wlan0')[netifaces.AF_INET][0]["addr"]
+except:
+    wlan_ip_address = ""
+    
 
 """ ############# """
 """  config file  """
@@ -222,10 +235,10 @@ def on_message(client, userdata, message):
                             print("AlsaMixer | Error | " + str(e))                     
                             MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
 
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + '}')
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + ',"wlan_ip_address":"' + wlan_ip_address + '"}')
 
                 except:
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"spotify"}')
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"spotify","wlan_ip_address":"' + wlan_ip_address + '"}')
 
                 UPDATE_CURRENT_INTERFACE("spotify")
 
@@ -259,10 +272,10 @@ def on_message(client, userdata, message):
                             print("AlsaMixer | Error | " + str(e))                     
                             MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
 
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + '}')
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + ',"wlan_ip_address":"' + wlan_ip_address + '"}')
 
                 except:
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"multiroom"}')        
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","wlan_ip_address":"' + wlan_ip_address + '"}')      
                     
                 UPDATE_CURRENT_INTERFACE("multiroom")
 
@@ -293,7 +306,7 @@ def on_message(client, userdata, message):
                         print("Squeezelite | Started")                    
                         time.sleep(2)
 
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + '}')
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + ',"wlan_ip_address":"' + wlan_ip_address + '"}')
 
                 except Exception as e:
                     print("Reset | Error | " + str(e))                     
@@ -311,7 +324,7 @@ def on_message(client, userdata, message):
                     os.system("amixer -c " + GET_SOUNDCARD_NUMBER() + " cset numid=1 " + str(data["volume"]))
                     print("AlsaMixer | Volume adjusted")                    
                     time.sleep(2)
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + data["interface"] + '","volume":' + str(data["volume"]) + '}')
+                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + data["interface"] + '","volume":' + str(data["volume"]) + ',"wlan_ip_address":"' + wlan_ip_address + '"}')
                     UPDATE_CURRENT_VOLUME(str(data["volume"]))
 
                 except Exception as e:
@@ -327,7 +340,7 @@ def on_message(client, userdata, message):
     # ###
 
     if channel == "miranda/mqtt/" + device_ieeeAddr + "/get":   
-        MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + '}')
+        MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + ',"wlan_ip_address":"' + wlan_ip_address + '"}')
 
 
 """ ###################### """

@@ -219,10 +219,10 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                 
     except:
         
-        if ieeeAddr != "":  
+        if ieeeAddr != "":
             
             # save last values and last contact 
-            SET_DEVICE_LAST_VALUES(ieeeAddr, msg)
+            SAVE_DEVICE_LAST_VALUES(ieeeAddr, msg)
             
             # check battery
             if GET_DEVICE_BY_IEEEADDR(ieeeAddr).gateway == "zigbee2mqtt":
