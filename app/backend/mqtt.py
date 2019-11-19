@@ -8,37 +8,10 @@ import time
 from app import app
 from app.database.models import *
 from app.backend.file_management import *
-from app.backend.shared_resources import process_management_queue, mqtt_incoming_messages_list, mqtt_message_queue, SET_DEVICE_CONNECTION_MQTT, SET_DEVICE_CONNECTION_ZIGBEE2MQTT
+from app.backend.shared_resources import *
 from app.backend.email import SEND_EMAIL
 
 from ping3 import ping
-
-
-""" ################################ """
-""" ################################ """
-"""              mqtt main           """
-""" ################################ """
-""" ################################ """
-
-
-def GET_MQTT_INCOMING_MESSAGES(limit):
-
-    # get the time check value
-    time_check = datetime.datetime.now() - datetime.timedelta(seconds=limit)
-    time_check = time_check.strftime("%Y-%m-%d %H:%M:%S")   
-    
-    message_list = []
-    
-    for message in mqtt_incoming_messages_list:
-        
-        time_message = datetime.datetime.strptime(message[0],"%Y-%m-%d %H:%M:%S")   
-        time_limit   = datetime.datetime.strptime(time_check, "%Y-%m-%d %H:%M:%S")
-
-        # select messages in search_time 
-        if time_message > time_limit:
-            message_list.append(message)
-                
-    return message_list
 
 
 """ ###################### """
@@ -72,26 +45,31 @@ def MQTT_RECEIVE():
 
 
         # get ieeeAddr and device_type
-        incoming_topic = channel
-        incoming_topic = incoming_topic.split("/")
-        device_name    = incoming_topic[2]
-     
-        list_devices = GET_ALL_DEVICES("")
-     
-        try:
+        incoming_topic  = channel
+        incoming_topic  = incoming_topic.split("/")
+        device_identity = incoming_topic[2]
+        
+        if device_identity not in ["bridge", "devices", "test", "log", "get", "set", "config"]:
+        
+            list_devices = GET_ALL_DEVICES("")
+         
+            # zigbee2mqtt device
             for device in list_devices:
-                if device.name == device_name:             
+                if device.name == device_identity:             
                     ieeeAddr = device.ieeeAddr
-        except:
-            ieeeAddr = device_name
-
-        try:
-            for device in list_devices:
-                if device.name == device_name:             
-                    device_type = device.device_type            
-        except:
-            device_type = ""    
+                    break
             
+            # mqtt device or no zigbee2mqtt name choosed
+            if ieeeAddr == "": 
+                ieeeAddr = device_identity
+                
+            try:
+                for device in list_devices:
+                    if device.name == device_identity:             
+                        device_type = device.device_type            
+            except:
+                device_type = ""    
+                
             
         # message block ?
         if (device_type == "led_rgb" or device_type == "led_simple" or device_type == "power_switch" or device_type == "heater"):
@@ -174,25 +152,12 @@ def MQTT_RECEIVE():
 
 
 def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
-    
+  
     channel = channel.split("/")
-
+  
     # filter incoming messages
     try:
 
-        if channel[2] == "devices":
-            return
-        if channel[2] == "test":    
-            return
-        if channel[2] == "log": 
-            return          
-        if channel[3] == "get":
-            return
-        if channel[3] == "set":
-            return  
-        if channel[3] == "config":
-            return
-                    
         # zigbee2mqtt log messages
         if channel[3] == "log":
             
@@ -206,7 +171,8 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
     
             # remove devices
             if data["type"] == "device_removed":
-                WRITE_LOGFILE_SYSTEM("EVENT", "Device | Deleted - " + data["message"])      
+                WRITE_LOGFILE_SYSTEM("EVENT", "Device | Deleted - " + data["message"])
+
 
         # start function networkmap
         if channel[3] == "networkmap" and channel[4] == "graphviz":
@@ -215,47 +181,50 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             from graphviz import Source, render
 
             src = Source(msg)
-            src.render(filename = GET_PATH() + '/app/static/temp/zigbee_topology', format='png', cleanup=True) 
-                
-    except:
+            src.render(filename = GET_PATH() + '/app/static/temp/zigbee_topology', format='png', cleanup=True)
+            return
         
-        if ieeeAddr != "":
+    except:
+        pass
+         
+         
+    if ieeeAddr != "":
+        
+        # save last values and last contact 
+        SAVE_DEVICE_LAST_VALUES(ieeeAddr, msg)
+        
+        # check battery
+        if GET_DEVICE_BY_IEEEADDR(ieeeAddr).gateway == "zigbee2mqtt":
             
-            # save last values and last contact 
-            SAVE_DEVICE_LAST_VALUES(ieeeAddr, msg)
-            
-            # check battery
-            if GET_DEVICE_BY_IEEEADDR(ieeeAddr).gateway == "zigbee2mqtt":
+            try:
+                data = json.loads(msg)
                 
-                try:
-                    data = json.loads(msg)
-                    
-                    if int(data["battery"]) < 25:
-                        WRITE_LOGFILE_SYSTEM("WARNING", "Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")
-                        SEND_EMAIL("WARNING", "Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")                         
-                except:
-                    pass                
+                if int(data["battery"]) < 25:
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")
+                    SEND_EMAIL("WARNING", "Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")                         
+            except Exception as e:
+                print(e)                
 
 
-        if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "sensor_contact" or device_type == "watering_controller":
+    if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "sensor_contact" or device_type == "watering_controller":
+        
+        # save sensor data of passive devices
+        if FIND_SENSORDATA_JOB_INPUT(ieeeAddr) != "":
+            list_jobs = FIND_SENSORDATA_JOB_INPUT(ieeeAddr)
+
+            for job in list_jobs:   
+                SAVE_SENSORDATA(job) 
+
+        # start schedular job 
+        for task in GET_ALL_SCHEDULER_TASKS():
+            if task.option_sensors == "checked" and task.option_pause != "checked":
+                heapq.heappush(process_management_queue, (10, ("scheduler", "sensor", task.id, ieeeAddr)))
+
+
+    # start controller job  
+    if device_type == "controller":       
+        heapq.heappush(process_management_queue, (1, ("controller", ieeeAddr, msg)))
             
-            # save sensor data of passive devices
-            if FIND_SENSORDATA_JOB_INPUT(ieeeAddr) != "":
-                list_jobs = FIND_SENSORDATA_JOB_INPUT(ieeeAddr)
-
-                for job in list_jobs:   
-                    SAVE_SENSORDATA(job) 
-
-            # start schedular job 
-            for task in GET_ALL_SCHEDULER_TASKS():
-                if task.option_sensors == "checked" and task.option_pause != "checked":
-                    heapq.heappush(process_management_queue, (10, ("scheduler", "sensor", task.id, ieeeAddr)))
-
-
-        # start controller job  
-        if device_type == "controller":       
-            heapq.heappush(process_management_queue, (1, ("controller", ieeeAddr, msg)))
-
 
 """ ###################### """
 """  mqtt publish message  """

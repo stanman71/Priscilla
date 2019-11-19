@@ -492,3 +492,9 @@ Timestamp,Type,Description
 2019-11-19 07:30:10,SUCCESS,|Devices || MQTT || Update|
 2019-11-19 07:30:15,ERROR,|MQTT Publish || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2019-11-19 07:30:16,SUCCESS,|Devices || ZigBee2MQTT || Update|
+2019-11-19 09:49:35,DATABASE,|Host || Network settings changed || LAN -  : |
+2019-11-19 09:49:40,ERROR,|MQTT || Broker - localhost || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-19 09:49:47,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-19 09:49:49,SUCCESS,|Spotify || Token updated|
+2019-11-19 09:50:07,DATABASE,|Speechcontrol || Task - MUSIK || nächster Track || changed|
+2019-11-19 09:50:10,DATABASE,|Speechcontrol || Task - MUSIK || nächster Track || changed|

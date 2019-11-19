@@ -1,9 +1,9 @@
 general:
-  model: 
   current_interface: 
-  soundcard_number: 
   current_volume: 
   ieeeAddr: 
+  model: 
+  soundcard_number:   
 mqtt:
   broker: 
   password: 

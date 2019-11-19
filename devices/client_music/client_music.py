@@ -21,12 +21,24 @@ PATH = "/home/pi/python/"
 """ ############ """
 
 time.sleep(10)
+counter = 1
 
 try:
     wlan_ip_address = netifaces.ifaddresses('wlan0')[netifaces.AF_INET][0]["addr"]
 except:
     wlan_ip_address = ""
-    
+
+# repeat process
+while wlan_ip_address == "" or counter != 5:
+    time.sleep(5)
+    counter = counter + 1
+
+    try:
+        wlan_ip_address = netifaces.ifaddresses('wlan0')[netifaces.AF_INET][0]["addr"]
+        break
+    except:
+        wlan_ip_address = ""
+
 
 """ ############# """
 """  config file  """
@@ -53,7 +65,7 @@ if str(config['general']['ieeeAddr']) == "None":
         with open(PATH + "/config.yaml") as file_config:
             upload_config = yaml.load(file_config, Loader=yaml.SafeLoader)
                         
-        device_ieeeAddr = "0x" + str(random.randrange(10000, 99999))
+        device_ieeeAddr = "0x" + str(random.randrange(1000000, 9999999))
 
         upload_config['general']['ieeeAddr'] = device_ieeeAddr
 

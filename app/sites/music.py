@@ -6,7 +6,7 @@ from functools           import wraps
 from app                          import app
 from app.database.models          import *
 from app.backend.spotify          import *
-from app.backend.shared_resources import mqtt_message_queue
+from app.backend.shared_resources import mqtt_message_queue, GET_MQTT_INCOMING_MESSAGES
 from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS
 
 from app.common           import COMMON, STATUS
@@ -225,15 +225,17 @@ def music():
                             success_message_change_settings_client_music.append(device.name + " || Einstellungen gespeichert")
                             
                             # update last values for GUI
-                            last_values = GET_DEVICE_BY_ID(i).last_values
-                            
-                            data              = json.loads(last_values)
-                            data['interface'] = client_music_interface                 
-                            data['volume']    = int(client_music_volume)
-                            
-                            SAVE_DEVICE_LAST_VALUES(GET_DEVICE_BY_ID(i).ieeeAddr, str(data).replace(" ","").replace("'", '"'))
+                            try:
+                                for message in GET_MQTT_INCOMING_MESSAGES(5):              
                 
+                                    if message[1] == "miranda/mqtt/" + device.ieeeAddr:                
+                                        SAVE_DEVICE_LAST_VALUES(device.ieeeAddr, message[2])
+                                        break
 
+                            except:
+                                pass
+                
+                
                 # no valid last values existing                        
                 except:
 
@@ -245,15 +247,17 @@ def music():
                         error_message_change_settings_client_music.append(result)
                     else:
                         success_message_change_settings_client_music.append(device.name + " || Einstellungen gespeichert")
-               
-                        # update last values for GUI 
-                        last_values = GET_DEVICE_BY_ID(i).last_values
                         
-                        data              = json.loads(last_values)
-                        data['interface'] = client_music_interface                 
-                        data['volume']    = int(client_music_volume)
-                        
-                        SAVE_DEVICE_LAST_VALUES(GET_DEVICE_BY_ID(i).ieeeAddr, str(data).replace(" ","").replace("'", '"'))
+                        # update last values for GUI
+                        try:
+                            for message in GET_MQTT_INCOMING_MESSAGES(5):              
+            
+                                if message[1] == "miranda/mqtt/" + device.ieeeAddr:                
+                                    SAVE_DEVICE_LAST_VALUES(device.ieeeAddr, message[2])
+                                    break
+
+                        except:
+                            pass
 
 
     if request.form.get("restart_client_music_services") != None:

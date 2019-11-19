@@ -111,13 +111,33 @@ A raspberry pi controller to play music by using spotify and lms.
 
 ### 3 Client Music 
 
+- add hifiberry miniAMP, if necessary
+
+       >>> sudo nano /boot/config.txt    
+
+           # hifiberry miniAMP
+           dtoverlay=hifiberry-dac           
+
+       >>> sudo reboot
+
 - get audio card informations
 
        >>> cat /proc/asound/cards
 
-- update config settings 
+- update config settings (example)
 
        >>> sudo nano /home/pi/python/config.yaml
+
+           general:
+              current_interface: spotify
+              current_volume: 130
+              ieeeAddr: 
+              model: 
+              soundcard_number:  
+           mqtt:
+              broker: 
+              password: 
+              username: 
 
 </br>
 ------------
@@ -155,12 +175,15 @@ A raspberry pi controller to play music by using spotify and lms.
 
        >>> aplay -l
 
+           First number:  card
+           Second number: device
+
 - raspotify config (example)
 
        >>> sudo nano /etc/default/raspotify
 
-	       DEVICE_NAME=" ... " 
-	       OPTIONS="--username <USERNAME> --password <PASSWORD> --device hw:1,0"
+	    DEVICE_NAME=" ... " 
+	    OPTIONS="--username <USERNAME> --password <PASSWORD> --device hw:1,0"
 
 - restart the raspberry pi
 

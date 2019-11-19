@@ -159,14 +159,14 @@ https://buyzero.de/blogs/news/raspberry-pi-strom-sparen-tipps-tricks
            # Disable BLUETOOTH
            dtoverlay=pi3-disable-bt
 
-           # Disable the ACT LED.
+           # Disable the ACT LED
            dtparam=act_led_trigger=none
            dtparam=act_led_activelow=off
 
-           # Disable the PWR LED.
+           # Disable the PWR LED
            dtparam=pwr_led_trigger=none
            dtparam=pwr_led_activelow=off
-
+         
 - create the new folder "python" and copy all client_music files into it
 
        >>> mkdir python
@@ -238,10 +238,6 @@ https://packages.debian.org/sid/all/comitup/filelist
 
        >>> /usr/share/comitup
 
-- delete ssid-number
-
-       >>> sudo rm /var/lib/comitup/comitup.json
-
 </br>
 ------------
 </br>  
@@ -253,6 +249,15 @@ https://packages.debian.org/sid/all/comitup/filelist
 <a name="4.1 Configuration"></a>
 
 #### 4.1 Configuration
+
+- add hifiberry miniAMP, if necessary
+
+       >>> sudo nano /boot/config.txt    
+
+           # hifiberry miniAMP
+           dtoverlay=hifiberry-dac           
+
+       >>> sudo reboot
 
 - get audio card informations
 

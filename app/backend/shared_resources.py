@@ -53,6 +53,26 @@ def REFRESH_MQTT_INPUT_MESSAGES():
 		time.sleep(1)
 
 
+def GET_MQTT_INCOMING_MESSAGES(limit):
+
+    # get the time check value
+    time_check = datetime.datetime.now() - datetime.timedelta(seconds=limit)
+    time_check = time_check.strftime("%Y-%m-%d %H:%M:%S")   
+    
+    message_list = []
+    
+    for message in mqtt_incoming_messages_list:
+        
+        time_message = datetime.datetime.strptime(message[0],"%Y-%m-%d %H:%M:%S")   
+        time_limit   = datetime.datetime.strptime(time_check, "%Y-%m-%d %H:%M:%S")
+
+        # select messages in search_time 
+        if time_message > time_limit:
+            message_list.append(message)
+                
+    return message_list
+
+
 """ ################# """
 """  system messages  """
 """ ################# """
