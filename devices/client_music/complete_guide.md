@@ -37,6 +37,8 @@ A raspberry pi controller to play music by using spotify and lms.
 
 #### 1.1 Small Speaker (max 3W)
 
+- ! no direct sound control on the device !
+
 - Raspberry Pi Zero WH
 
        >>> https://www.berrybase.de/raspberry-pi-zero-wh
@@ -250,7 +252,7 @@ https://packages.debian.org/sid/all/comitup/filelist
 
 #### 4.1 Configuration
 
-- add hifiberry miniAMP, if necessary
+- add hifiberry miniAMP config, if necessary
 
        >>> sudo nano /boot/config.txt    
 
@@ -267,7 +269,11 @@ https://packages.debian.org/sid/all/comitup/filelist
 
        >>> sudo nano /home/pi/python/config.yaml
 
-- insert your soundcard number in config.yaml
+           insert your soundcard number 
+ 
+           model names:
+              - AMP2    > hifiberry_AMP2
+              - miniAMP > hifiberry_miniAMP
 
 </br>
 

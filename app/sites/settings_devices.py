@@ -572,31 +572,36 @@ def change_device_position(id, direction):
 @login_required
 @permission_required
 def remove_device(ieeeAddr):
-    device_name    = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
-    device_gateway = GET_DEVICE_BY_IEEEADDR(ieeeAddr).gateway
-    
-    result = DELETE_DEVICE(ieeeAddr)
-    
-    if result == True and device_gateway == "mqtt":
-        session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"
 
-    elif result == True and device_gateway == "zigbee2mqtt":
+    try:
+        device_name    = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
+        device_gateway = GET_DEVICE_BY_IEEEADDR(ieeeAddr).gateway
         
-        if device_gateway == "zigbee2mqtt":
-            channel  = "miranda/zigbee2mqtt/bridge/config/remove"
-            msg      = device_name
-
-            heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
-
-            if CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
-                session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"       
-            else:
-                session['delete_device_error'] = device_name + " || Löschung nicht bestätigt"         
+        result = DELETE_DEVICE(ieeeAddr)
         
-    else:
-        session['delete_device_error'] = device_name + " || " + str(result)
-             
-    return redirect(url_for('settings_devices'))
+        if result == True and device_gateway == "mqtt":
+            session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"
+
+        elif result == True and device_gateway == "zigbee2mqtt":
+            
+            if device_gateway == "zigbee2mqtt":
+                channel  = "miranda/zigbee2mqtt/bridge/config/remove"
+                msg      = device_name
+
+                heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
+
+                if CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
+                    session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"       
+                else:
+                    session['delete_device_error'] = device_name + " || Löschung nicht bestätigt"         
+            
+        else:
+            session['delete_device_error'] = device_name + " || " + str(result)
+                
+        return redirect(url_for('settings_devices'))
+
+    except:
+        pass
      
   
 # download network topology 

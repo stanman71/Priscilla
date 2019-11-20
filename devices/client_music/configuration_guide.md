@@ -24,6 +24,8 @@ A raspberry pi controller to play music by using spotify and lms.
 
 #### 1.1 Small Speaker (max 3W)
 
+- ! no direct sound control on the device !
+
 - Raspberry Pi Zero WH
 
        >>> https://www.berrybase.de/raspberry-pi-zero-wh
@@ -111,7 +113,7 @@ A raspberry pi controller to play music by using spotify and lms.
 
 ### 3 Client Music 
 
-- add hifiberry miniAMP, if necessary
+- add hifiberry miniAMP config, if necessary
 
        >>> sudo nano /boot/config.txt    
 
@@ -124,20 +126,15 @@ A raspberry pi controller to play music by using spotify and lms.
 
        >>> cat /proc/asound/cards
 
-- update config settings (example)
+- update config settings 
 
        >>> sudo nano /home/pi/python/config.yaml
 
-           general:
-              current_interface: spotify
-              current_volume: 130
-              ieeeAddr: 
-              model: 
-              soundcard_number:  
-           mqtt:
-              broker: 
-              password: 
-              username: 
+           insert your soundcard number 
+ 
+           model names:
+              - AMP2    > hifiberry_AMP2
+              - miniAMP > hifiberry_miniAMP
 
 </br>
 ------------

@@ -662,8 +662,8 @@ def CHECK_ZIGBEE2MQTT_PAIRING(pairing_setting):
 def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):                     
     counter = 1
 
-    while counter != 10:       
-        for message in GET_MQTT_INCOMING_MESSAGES(10):
+    while counter != 15:       
+        for message in GET_MQTT_INCOMING_MESSAGES(15):
             if message[1] == "miranda/zigbee2mqtt/bridge/log":
             
                 try:

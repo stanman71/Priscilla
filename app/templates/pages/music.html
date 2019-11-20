@@ -507,29 +507,35 @@
                                 </div>
 
                               {% endif %}
-                              
+
+                            </td>   
                             <td>
                             
-                              {% if entry.last_values != None %}
-                              
-                                <div class="slidecontainer"> 
-                                  <div class="col-md-10 text-center"> 
-                                    <input type="range" class="slider" name="set_client_music_volume_{{ entry.id }}" min="100" max="207" value="{{ entry.last_values.split(':')[2] | replace(',"wlan_ip_address"', '') }}" />
-                                  </div> 
-                                </div>
+                              {% if entry.model != "hifiberry_miniAMP" %}
 
-                              <!-- no values founded -->         
+                                {% if entry.last_values != None %}
+                                
+                                  <div class="slidecontainer"> 
+                                    <div class="col-md-10 text-center"> 
+                                      <input type="range" class="slider" name="set_client_music_volume_{{ entry.id }}" min="100" max="207" value="{{ entry.last_values.split(':')[2] | replace(',"wlan_ip_address"', '') }}" />
+                                    </div> 
+                                  </div>
 
-                              {% else %}
-                              
-                                <div class="slidecontainer"> 
-                                  <div class="col-md-10 text-center"> 
-                                    <input type="range" class="slider" name="set_client_music_volume_{{ entry.id }}" min="100" max="207" value="100" />
-                                  </div> 
-                                </div>
+                                <!-- no values founded -->         
 
-                              {% endif %}       
+                                {% else %}
+                                
+                                  <div class="slidecontainer"> 
+                                    <div class="col-md-10 text-center"> 
+                                      <input type="range" class="slider" name="set_client_music_volume_{{ entry.id }}" min="100" max="207" value="100" />
+                                    </div> 
+                                  </div>
 
+                                {% endif %}       
+
+                              {% endif %}  
+
+                            </td> 
                             <td></td> 
                             <td>{{ entry.last_values.split(':')[3] | replace('"', '') | replace('}', '') }}</td>
                             <td></td> 

@@ -84,7 +84,7 @@ def sensordata_statistics():
 
         else:
             df = df_1
-            if data_file_2 == data_file_3 and data_file_2 != "":
+            if data_file_2 == data_file_3 and data_file_2 != "" and data_file_2 != "None":
                 error_message_select_datafiles.append("Datei " + data_file_2 + " mehrmals ausgewählt")
             if data_file_1 == data_file_2 or data_file_1 == data_file_3:
                 error_message_select_datafiles.append("Datei " + data_file_1 + " mehrmals ausgewählt")  

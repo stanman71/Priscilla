@@ -208,7 +208,11 @@ def music():
                 client_music_interface = request.form.get("radio_client_music_interface_" + str(i))
                 client_music_volume    = request.form.get("set_client_music_volume_" + str(i))                
                 device                 = GET_DEVICE_BY_ID(i)
-                   
+
+                # devices without volume control support
+                if client_music_volume == None:
+                    client_music_volume = 0 
+
                 # last values founded
                 try:
                     data = json.loads(device.last_values)
