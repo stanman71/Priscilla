@@ -171,9 +171,7 @@ A raspberry pi controller to play music by using spotify and lms.
 - get audio device informations
 
        >>> aplay -l
-
-           First number:  card
-           Second number: device
+           (e.g "card 0, device 0" is "hw:0,0")
 
 - raspotify config (example)
 

@@ -1003,19 +1003,24 @@ def SET_DEVICE_LAST_CONTACT(ieeeAddr):
 
 
 def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
-    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
     
-    last_values_formated = last_values.replace("{","")
-    last_values_formated = last_values_formated.replace("}","")
-    last_values_formated = last_values_formated.replace('"',"")
-    last_values_formated = last_values_formated.replace(":",": ")
-    last_values_formated = last_values_formated.replace(",",", ")
+    try:
+        entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+        
+        last_values_formated = last_values.replace("{","")
+        last_values_formated = last_values_formated.replace("}","")
+        last_values_formated = last_values_formated.replace('"',"")
+        last_values_formated = last_values_formated.replace(":",": ")
+        last_values_formated = last_values_formated.replace(",",", ")
+        
+        timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        entry.last_values          = last_values
+        entry.last_values_formated = last_values_formated
+        entry.last_contact         = timestamp
+        db.session.commit()   
     
-    timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-    entry.last_values          = last_values
-    entry.last_values_formated = last_values_formated
-    entry.last_contact         = timestamp
-    db.session.commit()   
+    except:
+        pass
 
 
 def UPDATE_DEVICE(id, name, gateway, model, device_type = "", description = "", input_values = "", input_events = "", commands = ""):

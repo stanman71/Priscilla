@@ -111,4 +111,4 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
 - power connector
 
-       >>> https://www.ebay.de/itm/Einbau-DC-Stecker-Buchse-Hohlsteckerbuchse-5-5-2-5-mm-Kupplung-Einbaubuchse-BL/333031450694
+       >>> https://www.ebay.de/itm/1-5-10-DC-Buchse-Einbaubuchse-5-5mm-x-2-5mm-DC-Power-Jack-Frontmontage/123767614581

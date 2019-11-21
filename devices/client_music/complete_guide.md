@@ -129,10 +129,6 @@ https://buyzero.de/blogs/news/raspberry-pi-strom-sparen-tipps-tricks
        >>> sudo pip3 install paho-mqtt
        >>> sudo pip3 install netifaces
 
-- open hostname file and insert new name (equal to squeezelite name)
-
-       >>> sudo nano /etc/hostname
-
 - disable swap        
 
        >>> sudo /sbin/dphys-swapfile swapoff
@@ -224,7 +220,7 @@ https://packages.debian.org/sid/all/comitup/filelist
 
 - configuration
 
-       >>> /etc/comitup.conf
+       >>> sudo nano /etc/comitup.conf
 
            replace ap_name and insert default_music_client
 
@@ -465,7 +461,8 @@ https://dtcooper.github.io/raspotify/
 - get audio device informations
 
        >>> aplay -l
-
+           (e.g "card 0, device 0" is "hw:0,0")
+           
 - raspotify config (example)
 
        >>> sudo nano /etc/default/raspotify
