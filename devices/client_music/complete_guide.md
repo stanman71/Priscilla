@@ -108,12 +108,14 @@ https://buyzero.de/blogs/news/raspberry-pi-strom-sparen-tipps-tricks
        >>> sudo raspi-config
        >>> Interfacing Options > SSH > Yes
 
-       Putty Connection:
+- open a remote connection to your raspberry pi  
 
-       Login IP
-       Port 22
-       User: pi
-       Password: raspberry
+       >>> Putty:
+
+           Login IP
+           Port 22
+           User: pi
+           Password: raspberry
 
 - update raspian
 

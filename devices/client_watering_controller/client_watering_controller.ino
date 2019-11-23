@@ -469,7 +469,7 @@ void setup() {
     get_ieeeAddr();
     Serial.println(ieeeAddr);
     
-    client.setServer(mqtt_server, 1883);
+    client.setServer(mqtt_server, 1884);
     client.setCallback(callback); 
 }
 

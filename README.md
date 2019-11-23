@@ -9,9 +9,8 @@ This project creates a smarthome environment.
       * <a href="#2.3 Manually Control">2.3 Manually Control</a>
    * <a href="#3 Mosquitto">3 Mosquitto</a>
       * <a href="#3.1 Installation">3.1 Installation</a>   
-      * <a href="#3.2 Test Mosquitto">3.2 Test Mosquitto</a>    
-      * <a href="#3.3 Autostart">3.3 Autostart</a>   
-      * <a href="#3.4 Authentification">3.4 Authentification</a>          
+      * <a href="#3.2 Authentification">3.2 Authentification</a>         
+      * <a href="#3.3 Autostart">3.3 Autostart</a>        
    * <a href="#4 Zigbee2MQTT">4 Zigbee2MQTT</a>
       * <a href="#4.1 Installation">4.1 Installation</a>   
       * <a href="#4.2 Configuration">4.2 Configuration</a>   
@@ -22,6 +21,11 @@ This project creates a smarthome environment.
       * <a href="#5.1 Flashing E18-MS1PA1-PCB">5.1 Flashing E18-MS1PA1-PCB</a>
       * <a href="#5.2 Raspberry Pi Connection">5.2 Raspberry Pi Connection</a>
       * <a href="#5.3 Raspberry Pi Configuration">5.3 Raspberry Pi Configuration</a>
+   * <a href="#6 Snips.ai Base">6 Snips.ai Base</a>
+      * <a href="#6.1 Installation">6.1 Installation</a>   
+      * <a href="#6.2 Snips Assistent">6.2 Snips Assistent</a>            
+      * <a href="#6.3 Snips Bridge">6.3 Snips Bridge</a>
+
 
 ### Features
 
@@ -58,12 +62,14 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
        >>> sudo raspi-config
        >>> Interfacing Options > SSH > Yes
 
-       Putty Connection:
+- open a remote connection to your raspberry pi   
+   
+       >>> Putty:
 
-       Login IP
-       Port 22
-       User: pi
-       Password: raspberry
+           Raspberry Pi IP-Address
+           Port:     22
+           User:     pi
+           Password: raspberry
 
 - update raspian
 
@@ -77,9 +83,9 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
        >>> sudo raspi-config       
 
-       Navigate to Interfacing Options
-       Scroll down and select VNC 
-       Yes
+            Navigate to Interfacing Options
+            Scroll down and select VNC 
+            Yes
 
 - install xrdp:
 
@@ -92,7 +98,6 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 - open hostname file and insert new name
 
        >>> sudo nano /etc/hostname
-           miranda
 
 - disable swap        
 
@@ -107,7 +112,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 - remove bluetooth
 
        >>> sudo apt-get purge bluez -y
-           sudo apt-get autoremove -y
+       >>> sudo apt-get autoremove -y
 
 </br>
 ------------
@@ -121,18 +126,18 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 #### 2.1 Installation 
        
-- create the new folder "/home/pi/miranda" and copy all Miranda files into it
+- create the new folder "/home/pi/python" and copy all files into it
 
-       >>> mkdir miranda
+       >>> mkdir python
 
-       FileZilla
+           FileZilla:
 
-       Protocol:   SFTP
-       Server:     Raspberry PI IP-Address
-       Port:       ---
-       Connection: normal
-       user:       pi
-       password:   raspberry
+           Protocol:   SFTP
+           Server:     Raspberry PI IP-Address
+           Port:       ---
+           Connection: normal
+           user:       pi
+           password:   raspberry
 
 - install BLAS and LAPACK
 
@@ -158,7 +163,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 - change folder permissions
 
-       >>> sudo chmod -v -R 070 /home/pi/miranda
+       >>> sudo chmod -v -R 070 /home/pi/python
 
 - default_login
 
@@ -180,7 +185,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
            After=network.target
 
            [Service]
-           ExecStart=/home/pi/miranda/run.py
+           ExecStart=/home/pi/python/run.py
            WorkingDirectory=/home/pi
            Restart=always
 
@@ -213,7 +218,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 - start the program 
 
-       >>> sudo python3 /home/pi/miranda/run.py
+       >>> sudo python3 /home/pi/python/run.py
 
 - stop the program 
 
@@ -226,11 +231,13 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 <a name="3 Mosquitto"></a>
 
-### 3 Mosquitto (MQTT)
+### 3 Mosquitto (MQTT Broker)
 
 https://mosquitto.org/
 </br>
 https://github.com/eclipse/mosquitto
+</br>
+https://xperimentia.com/2015/08/20/installing-mosquitto-mqtt-broker-on-raspberry-pi-with-websockets/
 </br>
 </br>
 
@@ -238,21 +245,51 @@ https://github.com/eclipse/mosquitto
 
 #### 3.1 Installation
 
-       >>> sudo apt-get install mosquitto mosquitto-clients -y
+- install mosquitto
+
+       >>> wget http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key
+       >>> sudo apt-key add mosquitto-repo.gpg.key
+       >>> cd /etc/apt/sources.list.d/
+       >>> sudo wget http://repo.mosquitto.org/debian/mosquitto-stretch.list
+       >>> sudo apt-get update
+       >>> sudo apt-get install mosquitto
 
 </br>
 
-<a name="3.2 Test Mosquitto"></a>
+<a name="3.2 Authentification"></a>
 
-#### 3.2 Test Mosquitto
+#### 3.2 Authentification
 
-- subscribe a channel
+https://medium.com/@eranda/setting-up-authentication-on-mosquitto-mqtt-broker-de5df2e29afc
+</br>
+https://www.auxnet.de/verschluesseltes-mqtt-vom-und-zum-mosquitto-server/
+</br>
+</br>
 
-       >>> mosquitto_sub -d -h localhost -p 1883 -t "test_channel"
+- edit mosquitto config and write these lines
 
-- send a message (in an other console)
+       >>> sudo nano /etc/mosquitto/conf.d/default.conf
 
-       >>> mosquitto_pub -d -h localhost -p 1883 -t "test_channel" -m "Hello World"
+           per_listener_settings true
+
+           listener 1883 localhost
+
+           listener 1884
+           password_file /etc/mosquitto/passwd
+           allow_anonymous false
+
+- change file permissions
+
+       >>> sudo chmod -v -R 060 /etc/mosquitto/passwd
+
+- restart mosquitto
+
+       >>> sudo systemctl restart mosquitto
+
+- verify the authentication
+
+       >>> mosquitto_sub -h localhost -p 1883 -t "test_channel" 
+       >>> mosquitto_sub -h localhost -p 1884 -t "test_channel" -u <user_name> -P <password> 
 
 </br>
 
@@ -295,46 +332,6 @@ https://forum-raspberrypi.de/forum/thread/31959-mosquitto-autostart/
        >>> sudo cat /var/log/mosquitto/mosquitto.log
 
 </br>
-
-<a name="3.4 Authentification"></a>
-
-#### 3.4 Authentification
-
-https://medium.com/@eranda/setting-up-authentication-on-mosquitto-mqtt-broker-de5df2e29afc
-</br>
-https://www.auxnet.de/verschluesseltes-mqtt-vom-und-zum-mosquitto-server/
-</br>
-</br>
-
-- stop mosquitto
-
-       >>> sudo systemctl stop mosquitto
-
-- create a new user and password
-
-       >>> sudo mosquitto_passwd -c /etc/mosquitto/passwd <user_name>
-
-- change file permissions
-
-       >>> sudo chmod -v -R 060 /etc/mosquitto/passwd
-
-- edit mosquitto config and add these two lines
-
-       >>> sudo nano /etc/mosquitto/mosquitto.conf
-
-           password_file /etc/mosquitto/passwd
-           allow_anonymous false
-
-- restart mosquitto
-
-       >>> sudo systemctl restart mosquitto
-
-- verify the authentication
-
-       >>> mosquitto_sub -h localhost -p 1883 -t "test_channel" -u <user_name> -P <password>
-       >>> mosquitto_pub -h localhost -p 1883 -t "test_channel" -u <user_name> -P <password> -m "Hello World"
-
-</br>
 ------------
 </br>
 
@@ -365,7 +362,7 @@ https://github.com/Koenkk/zigbee2mqtt
 
 - clone zigbee2mqtt repository
 
-       >>> sudo unzip /home/pi/miranda/support/files/zigbee2mqtt_1.6.0.zip -d /opt/zigbee2mqtt
+       >>> sudo unzip /home/pi/python/support/files/zigbee2mqtt_1.6.0.zip -d /opt/zigbee2mqtt
        >>> sudo chown -R pi:pi /opt/zigbee2mqtt
 
 - install zigbee2mqtt 
@@ -373,7 +370,7 @@ https://github.com/Koenkk/zigbee2mqtt
        >>> cd /opt/zigbee2mqtt
        >>> npm install
 	   
-	   Note that the npm install produces some warning which can be ignored
+	    Note that the npm install produces some warning which can be ignored
 
 
 ##### ERROR: npm not founded
@@ -407,8 +404,8 @@ https://github.com/Koenkk/zigbee2mqtt
            # MQTT server URL
            server: 'mqtt://localhost'
            # MQTT server authentication, uncomment if required:
-           user: <my_user>
-           password: <my_password>
+           # user: <my_user>
+           # password: <my_password>
            
            advanced:
              network_key: <network_key>
@@ -610,3 +607,150 @@ https://www.zigbee2mqtt.io/information/connecting_cc2530.html
              rtscts: false
 
 - reboot your raspberry	
+
+</br>
+------------
+</br>
+
+<a name="6 Snips.ai Base"></a>
+
+### 6 Snips.ai Base
+
+https://console.snips.ai/login
+</br>
+https://smarthome-training.com/lokale-sprachsteuerung-mit-openhab-2-und-snips-ai/
+</br>
+https://docs.snips.ai/getting-started/quick-start-raspberry-pi
+</br>
+https://docs.snips.ai/articles/platform/satellites
+</br>
+https://docs.snips.ai/reference/sam#installing-actions-from-the-snips-console
+</br>
+</br>
+
+<a name="6.1 Installation"></a>
+
+#### 6.1 Installation
+
+- install NodeJs and NPM
+
+       >>> curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+       >>> sudo apt-get install -y nodejs
+       >>> node -v -
+       >>> npm -v
+
+- install Snipes with SAM
+
+       >>> sudo npm install -g snips-sam
+       >>> sam connect raspberrypi.local (raspberry pi name)
+       >>> sam init
+       >>> sam update
+
+- setup audio devices
+
+       >>> sam setup audio
+       >>> sam test speaker
+       >>> sam test microphone
+
+- enable or disable audio feedback
+	
+       >>> sam sound-feedback <on|off>
+
+- checking MQTT messages
+
+       >>> sam watch
+
+- checking the status of the device
+
+       >>> sam status
+
+- install the latest update
+
+       >>> sam update platform
+
+- edit settings
+ 
+       >>> sudo nano /etc/snips.toml
+
+- restart snipes
+
+       >>> sudo systemctl restart snips-*
+
+</br>
+
+<a name="6.2 Snips Assistent"></a>
+
+#### 6.2 Snips Assistent
+
+- create an account on the website, if nessesary
+
+       >>> https://console.snips.ai/signup
+
+           create new models on the website
+
+- login on the raspberry pi
+
+       >>> sam login
+
+- install the assistant
+
+       >>> sam install assistant
+
+- update the assistant
+
+       >>> sam update-assistant
+
+- installing actions from the Snips Console
+
+       >>> sam install actions
+
+</br>
+
+<a name="6.3 Snips Bridge"></a>
+
+#### 6.3 Snips Bridge
+
+- create an autostart-file
+
+       >>> sudo nano /etc/systemd/system/snips_bridge.service
+
+           [Unit]
+           Description=Snips Bridge
+           After=network.target
+
+           [Service]
+           ExecStart=/home/pi/python/snips_bridge.py
+           WorkingDirectory=/home/pi
+           Restart=always
+
+           [Install]
+           WantedBy=multi-user.target
+
+- enable autostart
+
+       >>> sudo systemctl enable snips_bridge.service
+
+- start / stop service
+
+       >>> sudo systemctl start snips_bridge
+       >>> sudo systemctl stop snips_bridge
+
+- show status / log
+
+       >>> systemctl status snips_bridge.service
+       >>> journalctl -u snips_bridge
+
+</br>
+
+##### ERROR: file not founded
+
+http://www.server-wissen.de/linux-debian/ctrl-m-aus-einer-linux-datei-entfernen-m-entfernen/
+</br>
+</br>
+
+- Open "client_speechcontrol.py" in vi
+
+       >>> vi /home/pi/python/client_speechcontrol.py
+
+- remove ^M at the end of the first line (#!/usr/bin/python3)
+- save changes (tipe :wq!)

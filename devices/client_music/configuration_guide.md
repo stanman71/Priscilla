@@ -98,12 +98,14 @@ A raspberry pi controller to play music by using spotify and lms.
 
 - select your wlan_ssid and insert your wlan_password
 
-- open a putty connection to your raspberry pi
+- open a remote connection to your raspberry pi  
 
-       Login IP
-       Port: 22
-       User: pi
-       Password: raspberry
+       >>> Putty:
+
+           Raspberry Pi IP-Address
+           Port:     22
+           User:     pi
+           Password: raspberry
 
 </br>
 ------------
