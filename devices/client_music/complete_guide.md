@@ -129,7 +129,6 @@ https://buyzero.de/blogs/news/raspberry-pi-strom-sparen-tipps-tricks
 
        >>> sudo pip3 install pyyaml
        >>> sudo pip3 install paho-mqtt
-       >>> sudo pip3 install netifaces
 
 - disable swap        
 
@@ -424,9 +423,13 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 
        >>> sudo systemctl disable squeezelite.service
 
-- stop squeezelite (program start choosed option)
+- stop squeezelite 
 
        >>> sudo systemctl stop squeezelite      
+
+- open hostname file and insert new name (equal to squeezelite name)
+
+       >>> sudo nano /etc/hostname
 
 </br>
     

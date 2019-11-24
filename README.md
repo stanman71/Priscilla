@@ -24,7 +24,6 @@ This project creates a smarthome environment.
    * <a href="#6 Snips.ai Base">6 Snips.ai Base</a>
       * <a href="#6.1 Installation">6.1 Installation</a>   
       * <a href="#6.2 Snips Assistent">6.2 Snips Assistent</a>            
-      * <a href="#6.3 Snips Bridge">6.3 Snips Bridge</a>
 
 
 ### Features
@@ -261,8 +260,6 @@ https://xperimentia.com/2015/08/20/installing-mosquitto-mqtt-broker-on-raspberry
 #### 3.2 Authentification
 
 https://medium.com/@eranda/setting-up-authentication-on-mosquitto-mqtt-broker-de5df2e29afc
-</br>
-https://www.auxnet.de/verschluesseltes-mqtt-vom-und-zum-mosquitto-server/
 </br>
 </br>
 
@@ -686,8 +683,6 @@ https://docs.snips.ai/reference/sam#installing-actions-from-the-snips-console
 
        >>> https://console.snips.ai/signup
 
-           create new models on the website
-
 - login on the raspberry pi
 
        >>> sam login
@@ -704,53 +699,12 @@ https://docs.snips.ai/reference/sam#installing-actions-from-the-snips-console
 
        >>> sam install actions
 
-</br>
+- delete skills
 
-<a name="6.3 Snips Bridge"></a>
+       >>> sudo rm -fr /var/lib/snips/skills/[skill_name]
 
-#### 6.3 Snips Bridge
+- installed skills
 
-- create an autostart-file
-
-       >>> sudo nano /etc/systemd/system/snips_bridge.service
-
-           [Unit]
-           Description=Snips Bridge
-           After=network.target
-
-           [Service]
-           ExecStart=/home/pi/python/snips_bridge.py
-           WorkingDirectory=/home/pi
-           Restart=always
-
-           [Install]
-           WantedBy=multi-user.target
-
-- enable autostart
-
-       >>> sudo systemctl enable snips_bridge.service
-
-- start / stop service
-
-       >>> sudo systemctl start snips_bridge
-       >>> sudo systemctl stop snips_bridge
-
-- show status / log
-
-       >>> systemctl status snips_bridge.service
-       >>> journalctl -u snips_bridge
-
-</br>
-
-##### ERROR: file not founded
-
-http://www.server-wissen.de/linux-debian/ctrl-m-aus-einer-linux-datei-entfernen-m-entfernen/
-</br>
-</br>
-
-- Open "client_speechcontrol.py" in vi
-
-       >>> vi /home/pi/python/client_speechcontrol.py
-
-- remove ^M at the end of the first line (#!/usr/bin/python3)
-- save changes (tipe :wq!)
+       >>> https://github.com/MrJohnZoidberg/Snips-Einkaufsliste
+       >>> https://github.com/MrJohnZoidberg/Snips-DatumUhrzeit
+       >>> https://github.com/michilehr/snips-my-weather

@@ -467,9 +467,7 @@
                         <th scope="col" style="width:20%" class="minwidth_200">Geräte Typ</th>                                  
                         <th scope="col" style="width:10%" class="minwidth_100">Interface</th>
                         <th scope="col" style="width:20%" class="minwidth_200">Lautstärke</th>
-                        <th scope="col" style="width:5%"></th>  
-                        <th scope="col" style="width:20%" class="minwidth_100">IP-Adresse</th>  
-                        <th scope="col" style="width:5%"></th>                            
+                        <th scope="col" style="width:30%"></th>                            
                       </thead>
                       <tbody> 
                         
@@ -517,7 +515,7 @@
                                 
                                   <div class="slidecontainer"> 
                                     <div class="col-md-10 text-center"> 
-                                      <input type="range" class="slider" name="set_client_music_volume_{{ entry.id }}" min="100" max="207" value="{{ entry.last_values.split(':')[2] | replace(',"wlan_ip_address"', '') }}" />
+                                      <input type="range" class="slider" name="set_client_music_volume_{{ entry.id }}" min="100" max="207" value="{{ entry.last_values.split(':')[2] | replace('}', '') }}" />
                                     </div> 
                                   </div>
 
@@ -536,8 +534,6 @@
                               {% endif %}  
 
                             </td> 
-                            <td></td> 
-                            <td>{{ entry.last_values.split(':')[3] | replace('"', '') | replace('}', '') }}</td>
                             <td></td> 
                           </tr>
                           
