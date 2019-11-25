@@ -56,12 +56,18 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 </br>
 </br>
 
-- activate ssh
+- snips supported Raspbian Stretch only !
+
+       >>> https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-04-09/
+
+- activate ssh on your raspberry pi
 
        >>> sudo raspi-config
        >>> Interfacing Options > SSH > Yes
 
-- open a remote connection to your raspberry pi   
+- establish a network connetion
+
+- open a remote connection 
    
        >>> Putty:
 
@@ -72,27 +78,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 - update raspian
 
-       >>> sudo apt-get update && sudo apt-get upgrade
-
-- install remote server
-
-       >>> sudo apt-get purge realvnc-vnc-server
-
-- enable VNC Server:
-
-       >>> sudo raspi-config       
-
-            Navigate to Interfacing Options
-            Scroll down and select VNC 
-            Yes
-
-- install xrdp:
-
-       >>> sudo apt-get install xrdp
-
-- upgrade pip
-
-       >>> pip install --upgrade pip
+       >>> sudo apt-get update && sudo apt-get upgrade -y
 
 - open hostname file and insert new name
 
@@ -112,6 +98,10 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
        >>> sudo apt-get purge bluez -y
        >>> sudo apt-get autoremove -y
+
+- set timezone
+
+       >>> sudo timedatectl set-timezone Europe/Berlin
 
 </br>
 ------------
@@ -138,18 +128,28 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
            user:       pi
            password:   raspberry
 
-- install BLAS and LAPACK
+- install dependencies
 
-       >>> sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran
+       >>> sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran -y
+       >>> sudo apt install libhdf5-100 -y
+       >>> sudo apt-get install libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev -y
+       >>> sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev -y
+       >>> sudo apt-get install libxvidcore-dev libx264-dev -y
+       >>> sudo apt-get install libgtk2.0-dev libgtk-3-dev -y
 
 - install graphviz
 
-       >>> sudo apt-get install graphviz libgraphviz-dev pkg-config
-       >>> sudo apt-get install python-pip python-virtualenv
+       >>> sudo apt-get install graphviz libgraphviz-dev pkg-config -y
+       >>> sudo apt-get install python-pip python-virtualenv -y
+
+- upgrade pip
+
+       >>> pip3 install --upgrade pip
 
 - install all nessessary python modules
 
-       >>> sudo pip3 install -r /home/pi/miranda/requirements.txt --upgrade
+       >>> sudo pip3 install scikit-learn
+       >>> sudo pip3 install -r /home/pi/python/requirements.txt --upgrade                                   
 
 - install openCV
 
@@ -158,7 +158,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 - replace wrong spotipy file
  
-       >>> sudo cp /home/pi/miranda/support/spotipy/client.py /usr/local/lib/python3.7/dist-packages/spotipy/client.py
+       >>> sudo cp /home/pi/python/support/spotipy/client.py /usr/local/lib/python3.7/dist-packages/spotipy/client.py
 
 - change folder permissions
 
@@ -184,7 +184,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
            After=network.target
 
            [Service]
-           ExecStart=/home/pi/python/run.py
+           ExecStart=/home/pi/python/app.py
            WorkingDirectory=/home/pi
            Restart=always
 
@@ -217,7 +217,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 - start the program 
 
-       >>> sudo python3 /home/pi/python/run.py
+       >>> sudo python3 /home/pi/python/app.py
 
 - stop the program 
 
@@ -357,9 +357,9 @@ https://github.com/Koenkk/zigbee2mqtt
        >>> node --version  # Should output v10.X
        >>> npm  --version  # Should output 6.X
 
-- clone zigbee2mqtt repository
+- unzip zigbee2mqtt repository
 
-       >>> sudo unzip /home/pi/python/support/files/zigbee2mqtt_1.6.0.zip -d /opt/zigbee2mqtt
+       >>> sudo unzip /home/pi/python/support/zigbee2mqtt_1.6.0.zip -d /opt/zigbee2mqtt
        >>> sudo chown -R pi:pi /opt/zigbee2mqtt
 
 - install zigbee2mqtt 
@@ -589,9 +589,8 @@ https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 
        >>> sudo nano /boot/cmdline.txt
 
-           console=serial0
-           115200 console=ttyAMA0
-           115200
+           console=serial0,115200 
+           console=ttyAMA0,115200
 
 - add the lines in zigbee2mqtt config
 
@@ -708,3 +707,4 @@ https://docs.snips.ai/reference/sam#installing-actions-from-the-snips-console
        >>> https://github.com/MrJohnZoidberg/Snips-Einkaufsliste
        >>> https://github.com/MrJohnZoidberg/Snips-DatumUhrzeit
        >>> https://github.com/michilehr/snips-my-weather
+       >>> 

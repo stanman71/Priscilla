@@ -32,17 +32,30 @@ def MQTT_RECEIVE_THREAD():
     
 def MQTT_RECEIVE():
 
-    def on_message(client, userdata, new_message): 
+    def on_connect(client, userdata, flags, rc):   
+        if rc != 0:
+            print("ERROR: MQTT | Returned Code = " + str(rc)) 
+            WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Returned Code = " + str(rc))         
         
+            SET_DEVICE_CONNECTION_MQTT(False)   
+        
+        else:
+            client.subscribe("#")
+  
+            print("MQTT | Connected") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "MQTT | Connected")
+            SET_DEVICE_CONNECTION_MQTT(True)
+
+
+    def on_message(client, userdata, message):     
         global mqtt_incoming_messages_list
       
-        channel = new_message.topic                 
-        msg     = str(new_message.payload.decode("utf-8"))        
-      
+        channel = message.topic                 
+        msg     = str(message.payload.decode("utf-8"))       
+
         new_message = True
         ieeeAddr    = ""
         device_type = ""
-
 
         # get ieeeAddr and device_type
         incoming_topic  = channel
@@ -93,7 +106,6 @@ def MQTT_RECEIVE():
                     except:
                         new_message = False                 
                     
-                    
         # message passing
         if new_message:
             
@@ -117,33 +129,16 @@ def MQTT_RECEIVE():
                     SEND_EMAIL("ERROR", "Thread | MQTT Message | " + str(e))                    
                     print(e)
 
-
-    def on_connect(client, userdata, flags, rc):   
-        if rc != 0:
-            print("ERROR: MQTT | Broker - " + GET_MQTT_BROKER() + " | Bad Connection | Returned Code = " + str(rc)) 
-            WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Broker - " + GET_MQTT_BROKER() + " | Bad Connection | Returned Code = " + str(rc))         
-        
-        else:
-            client.subscribe("miranda/#")
-  
-            print("MQTT | Broker - " + GET_MQTT_BROKER() + " | Connected") 
-            WRITE_LOGFILE_SYSTEM("EVENT", "MQTT | Broker - " + GET_MQTT_BROKER() + " | Connected")
-                
- 
-    client = mqtt.Client()
-    client.username_pw_set(username=GET_MQTT_BROKER_USERNAME(),password=GET_MQTT_BROKER_PASSWORD())
-    client.on_connect = on_connect
-    client.on_message = on_message
-     
     try:
-        client.connect(GET_MQTT_BROKER())
+        client = mqtt.Client()
+        client.on_connect = on_connect
+        client.on_message = on_message
+        client.connect("localhost", 1883, 60)
         client.loop_forever()
 
     except Exception as e:
-        print("ERROR: MQTT | Broker - " + GET_MQTT_BROKER() + " | " + str(e))
-        
-        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Broker - " + GET_MQTT_BROKER() + " | " + str(e))
-        SEND_EMAIL("ERROR", "MQTT | Broker - " + GET_MQTT_BROKER() + " | " + str(e))
+        print("ERROR: MQTT | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e))           
 
 
 """ ############## """
@@ -243,20 +238,31 @@ def MQTT_PUBLISH_THREAD():
 
 def MQTT_PUBLISH():
     
-    while True:
+    def on_connect(client, userdata, flags, rc):
+        if rc != 0:
+            print("ERROR: MQTT | Returned Code = " + str(rc)) 
+            WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Returned Code = " + str(rc))         
+            SET_DEVICE_CONNECTION_MQTT(False)   
         
+        else:
+            SET_DEVICE_CONNECTION_MQTT(True)
+
+    try:
+        client = mqtt.Client()
+        client.on_connect = on_connect
+        client.connect("localhost", 1883, 60)
+        client.loop_start()
+    
+    except Exception as e:
+        print("ERROR: MQTT | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e))           
+
+
+    while True:
         try:  
             mqtt_message = heapq.heappop(mqtt_message_queue)[1]
-            
-            def on_publish(client, userdata, mid):
-                print ('Message Published...')
-
-            client = mqtt.Client()
-            client.username_pw_set(username=GET_MQTT_BROKER_USERNAME(),password=GET_MQTT_BROKER_PASSWORD())          
-            client.on_publish = on_publish
-            client.connect(GET_MQTT_BROKER())      
+          
             client.publish(mqtt_message[0],mqtt_message[1])        
-            client.disconnect()
 
         except Exception as e:         
             try:   
@@ -266,7 +272,7 @@ def MQTT_PUBLISH():
                     print(str(e))
                     
             except:
-                pass
+                print("ERROR: MQTT")
                     
         time.sleep(0.5)
 
@@ -566,26 +572,25 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
 """ ################# """
  
 def CHECK_MQTT():
-    MQTT_TOPIC = "miranda/mqtt/test"
-    MQTT_MSG   = ""
-
+ 
+    def on_connect(client, userdata, flags, rc):   
+        if rc != 0:
+            print("ERROR: MQTT | Returned Code = " + str(rc)) 
+            WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Returned Code = " + str(rc))      
+            SET_DEVICE_CONNECTION_MQTT(False)   
+        
+        else:
+            SET_DEVICE_CONNECTION_MQTT(True)
+ 
     try:
-        def on_publish(client, userdata, mid):
-            print ('Message Published...')
-
-        client = mqtt.Client()
-        client.username_pw_set(username=GET_MQTT_BROKER_USERNAME(),password=GET_MQTT_BROKER_PASSWORD())          
-        client.on_publish = on_publish
-        client.connect(GET_MQTT_BROKER())      
-        client.publish(MQTT_TOPIC,MQTT_MSG)    
-        client.disconnect()
-
-        SET_DEVICE_CONNECTION_MQTT(True)
-        return True
+        test_client = mqtt.Client()
+        test_client.on_connect = on_connect
+        test_client.connect("localhost", 1883, 60)
+        test_client.disconnect()
 
     except Exception as e:
-        SET_DEVICE_CONNECTION_MQTT(False)
-        return ("MQTT | " + str(e))    
+        print("ERROR: MQTT | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e))              
 
 
 def CHECK_ZIGBEE2MQTT_AT_STARTUP():     

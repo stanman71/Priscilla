@@ -94,12 +94,14 @@ https://github.com/respeaker/seeed-voicecard
 
        >>> https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-04-09/
 
-- activate ssh
+- activate ssh on your raspberry pi
 
        >>> sudo raspi-config
        >>> Interfacing Options > SSH > Yes
 
-- open a remote connection to your raspberry pi  
+- establish a network connetion
+
+- open a remote connection
 
        >>> Putty:
 

@@ -51,13 +51,18 @@ A raspberry pi controller to play music by using spotify and lms.
 
        >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/erweiterungsboards/hifiberry/hifiberry-miniamp
 
+- USB cabel
+
+       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/kabel-adapter/usb-kabel-adapter/micro-usb-kabel-mit-offenem-kabelende-zur-stromversorgung
+
+- power connector
+
+       >>> https://www.berrybase.de/bauelemente/steckverbinder/stromversorgungs-steckverbinder/dc-stecker-hohlstecker/dc-einbaubuchse-f-252-r-hohlstecker-5-5x2-5mm-metallausf-252-hrung-l-246-tanschluss?c=115
+
 - Power Source
 
-       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/stromversorgung/netzteile-fuer-die-steckdose/micro-usb-netzteil-5v/3-1a-schwarz
+       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01I1JEWPU/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
 
-- Hifiberry Case
-
-       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi-zero/gehaeuse/geh-228-use-f-252-r-hifiberry-miniamp-und-raspberry-pi-zero-schwarz
 
 </br>
 
@@ -83,7 +88,8 @@ A raspberry pi controller to play music by using spotify and lms.
 
 - Hifiberry Case
 
-       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/gehaeuse/fuer-raspberry-pi-3-modell-b/highpi-case-f-252-r-hifiberry-dac-43-rca/digi-43/amp-43-und-raspberry-pi-3-2-modell-b/
+       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi-zero/gehaeuse/geh-228-use-f-252-r-hifiberry-miniamp-und-raspberry-pi-zero-schwarz
+
 
 </br>
 ------------
@@ -103,12 +109,14 @@ https://buyzero.de/blogs/news/raspberry-pi-strom-sparen-tipps-tricks
 </br>
 </br>
 
-- activate ssh
+- activate ssh on your raspberry pi
 
        >>> sudo raspi-config
        >>> Interfacing Options > SSH > Yes
 
-- open a remote connection to your raspberry pi  
+- establish a network connetion
+
+- open a remote connection 
 
        >>> Putty:
 

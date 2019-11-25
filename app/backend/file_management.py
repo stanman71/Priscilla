@@ -21,7 +21,7 @@ if os.name == "nt":
     PATH = os.path.abspath("") 
 # linux
 else:                               
-    PATH = "/home/pi/watering_control/"
+    PATH = "/home/pi/python/"
 
 
 def GET_PATH():

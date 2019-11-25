@@ -23,6 +23,10 @@ bool shouldSaveConfig = false;
 // RESET 
 int PIN_RESET_SETTING = 16;  // D0
 
+// LED
+int PIN_LED_GREEN = 14;      // D5
+int PIN_LED_RED   = 12;      // D6
+
 // FASTLED
 #define DATA_PIN 5           // D1
 #define TRANSISTOR_PIN 4     // D2
@@ -244,6 +248,8 @@ void reconnect() {
         clientId += String(random(0xffff), HEX);
 
         digitalWrite(BUILTIN_LED, HIGH);
+        digitalWrite(PIN_LED_RED, HIGH);
+        digitalWrite(PIN_LED_GREEN, LOW);      
 
         if (client.connect(clientId.c_str(), mqtt_username, mqtt_password)) { 
   
@@ -253,7 +259,9 @@ void reconnect() {
             Serial.println("MQTT Connected...");
 
             digitalWrite(BUILTIN_LED, LOW);       
-          
+            digitalWrite(PIN_LED_RED, LOW);
+            digitalWrite(PIN_LED_GREEN, HIGH);            
+
         } else {        
             Serial.print("failed, rc=");
             Serial.print(client.state());
@@ -426,12 +434,17 @@ void setup() {
     Serial.begin(115200);
     Serial.println();
         
-    pinMode(BUILTIN_LED, OUTPUT); 
     pinMode(TRANSISTOR_PIN, OUTPUT);     
+    pinMode(PIN_LED_RED,OUTPUT);
+    pinMode(PIN_LED_GREEN,OUTPUT);  
+    pinMode(BUILTIN_LED, OUTPUT);     
     pinMode(PIN_RESET_SETTING,INPUT);
 
     digitalWrite(BUILTIN_LED, HIGH); 
-    digitalWrite(TRANSISTOR_PIN, LOW);     
+    digitalWrite(TRANSISTOR_PIN, HIGH);     
+
+    digitalWrite(PIN_LED_RED, HIGH);
+    digitalWrite(PIN_LED_GREEN, LOW);
 
     Serial.println(digitalRead(PIN_RESET_SETTING));    
 

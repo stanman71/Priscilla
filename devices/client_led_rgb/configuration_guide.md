@@ -66,7 +66,7 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
 - voltage regulator L7805
 
-       >>> https://www.ebay.de/itm/Spannungsstabilisator-STM-L7805CV-5V-L7812CV-12V-L7815CV-15V-1-5A-TO220-THT/153206933713
+       >>> https://www.berrybase.de/bauelemente/aktive-bauelemente/ics/ics-l../l7805abv-spannungsregler-linear-5v-1a-to-220-3-pin
 
 - capacitor 2200µF
 
@@ -74,31 +74,35 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
 - resistor 10K
 
-       >>> https://www.ebay.de/itm/Kohleschicht-Widerstande-0-25W-5-Werte-und-Menge-WAHLBAR-5-10-50-100-Widerstand/221833069520
+       >>> https://www.berrybase.de/bauelemente/passive-bauelemente/widerstaende/metallschichtwiderstaende/0-6w-1/10k-953k-ohm/metallschichtwiderstand-10-0k-ohm-0-6w-177-1-0207-axial-durchsteckmontage?c=168
 
 - resistor 330
 
-       >>> https://www.ebay.de/itm/Kohleschicht-Widerstande-0-25W-5-Werte-und-Menge-WAHLBAR-5-10-50-100-Widerstand/221833069520
+       >>> https://www.berrybase.de/bauelemente/passive-bauelemente/widerstaende/metallschichtwiderstaende/0-6w-1/100-976-ohm/metallschichtwiderstand-330-0-ohm-0-6w-177-1-0207-axial-durchsteckmontage?c=168
 
 - LED diode red / green
 
-       >>> https://www.ebay.de/itm/25-HuiYuan-5019R1G6C-DHB-DUO-LEDs-5mm-klar-rot-grun-LED-BI-COLOR-858859/312135571388
+       >>> https://www.berrybase.de/bauelemente/aktive-bauelemente/leds/duo-blink-rgb-leds/kingbright-bi-color-indicator-led-5mm-rot/gr-252-n?c=139
 
 - micro taster 
 
-       >>> https://www.ebay.de/itm/Mikrotaster-Mikroschalter-Drucktaster-Micro-Taster-4-Pin-6x6x5mm-10-20-30-Stuck/183654164880
+       >>> https://www.berrybase.de/bauelemente/schalter-taster/mikroschalter-taster/kurzhubtaster-vertikale-printmontage-6x6mm-h-5-0mm?c=86
 
 - relais
 
-       >>> https://www.ebay.de/itm/1-Kanal-Relais-5V-230V-Raspberry-Pi-Modul-Channel-Relay-Arduino/252713915632
+       >>> https://www.berrybase.de/bauelemente/sensoren-module/relaiskarten/5v-1-kanal-relais-modul
 
 - internal cable connectors
 
        >>> https://www.ebay.de/itm/JST-XH-2-54-Stecker-inkl-15cm-Kabel-XH-Buchse-2-3-4-5-6-7-8-9-10-Pin-24AWG-RC/183748172867
 
+- socket strip (2 pin)
+
+       >>> https://www.berrybase.de/bauelemente/steckverbinder/stift-buchsenleisten-jumper/buchsenleiste-1x-2-polig-rm-2-54-h-8-4-gerade?c=114
+
 - socket strip (3 pin)
 
-       >>> https://www.ebay.de/itm/20x-Buchsenleiste-2-3-4-5-6-7-8-10-12-20-40-Pin-RM-2-54-mm/182572936179
+       >>> https://www.berrybase.de/bauelemente/steckverbinder/stift-buchsenleisten-jumper/buchsenleiste-1x-3-polig-rm-2-54-h-8-4-gerade?c=114
 
 - case (115 * 85 * 35)
 
@@ -111,4 +115,4 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
 - power connector
 
-       >>> https://www.ebay.de/itm/1-5-10-DC-Buchse-Einbaubuchse-5-5mm-x-2-5mm-DC-Power-Jack-Frontmontage/123767614581
+       >>> https://www.berrybase.de/bauelemente/steckverbinder/stromversorgungs-steckverbinder/dc-stecker-hohlstecker/dc-einbaubuchse-f-252-r-hohlstecker-5-5x2-5mm-metallausf-252-hrung-l-246-tanschluss?c=115

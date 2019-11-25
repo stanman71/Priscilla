@@ -335,16 +335,7 @@ def on_message(client, userdata, message):
 """ ###################### """
 
 def MQTT_PUBLISH(channel, msg):
-
-    def on_publish(client, userdata, mid):
-        print ('Message Published...')
-
-    client = mqtt.Client()
-    client.username_pw_set(username=GET_MQTT_BROKER_USERNAME(),password=GET_MQTT_BROKER_PASSWORD())          
-    client.on_publish = on_publish
-    client.connect(GET_MQTT_BROKER())      
     client.publish(channel,msg)        
-    client.disconnect()
 
 
 """ ################# """
@@ -364,10 +355,5 @@ client = mqtt.Client()
 client.username_pw_set(username=GET_MQTT_BROKER_USERNAME(),password=GET_MQTT_BROKER_PASSWORD())
 client.on_connect = on_connect
 client.on_message = on_message
-    
-try:
-    client.connect(GET_MQTT_BROKER(), 1883, 60)
-    client.loop_forever()
-    
-except Exception as e:
-    print("ERROR: MQTT | Broker - " + GET_MQTT_BROKER() + " | " + str(e))
+client.connect(GET_MQTT_BROKER(), 1884, 60)
+client.loop_forever()

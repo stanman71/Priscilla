@@ -229,9 +229,6 @@ void get_ieeeAddr() {
 void reconnect() {
     while (!client.connected()) {
 
-        digitalWrite(PIN_LED_RED, HIGH);
-        digitalWrite(PIN_LED_GREEN, LOW);      
-
         Serial.print("MQTT: ");       
         Serial.print("Connecting...");
 
@@ -239,6 +236,8 @@ void reconnect() {
         clientId += String(random(0xffff), HEX);
 
         digitalWrite(BUILTIN_LED, HIGH);
+        digitalWrite(PIN_LED_RED, HIGH);
+        digitalWrite(PIN_LED_GREEN, LOW);      
 
         if (client.connect(clientId.c_str(), mqtt_username, mqtt_password)) { 
   
@@ -443,11 +442,11 @@ void setup() {
     Serial.begin(115200);
     Serial.println();
         
-    pinMode(PIN_WATERTANK,INPUT);   
     pinMode(PIN_PUMP,OUTPUT);
     pinMode(PIN_LED_RED,OUTPUT);
     pinMode(PIN_LED_GREEN,OUTPUT);
     pinMode(BUILTIN_LED, OUTPUT); 
+    pinMode(PIN_WATERTANK,INPUT);       
     pinMode(PIN_RESET_SETTING,INPUT);
 
     digitalWrite(BUILTIN_LED, HIGH); 
