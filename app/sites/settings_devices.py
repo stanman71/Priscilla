@@ -5,7 +5,7 @@ from functools           import wraps
 
 from app                          import app
 from app.database.models          import *
-from app.backend.mqtt             import CHECK_MQTT, UPDATE_DEVICES, CHECK_ZIGBEE2MQTT_NAME_CHANGED, CHECK_ZIGBEE2MQTT_DEVICE_DELETED, CHECK_ZIGBEE2MQTT_PAIRING
+from app.backend.mqtt             import UPDATE_DEVICES, CHECK_ZIGBEE2MQTT_NAME_CHANGED, CHECK_ZIGBEE2MQTT_DEVICE_DELETED, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.file_management  import GET_PATH, RESET_LOGFILE, WRITE_LOGFILE_SYSTEM
 from app.backend.shared_resources import mqtt_message_queue, GET_DEVICE_CONNECTION_MQTT, GET_DEVICE_CONNECTION_ZIGBEE2MQTT
 from app.backend.checks           import CHECK_DEVICE_EXCEPTION_SETTINGS
@@ -101,10 +101,9 @@ def settings_devices():
                            
                             if gateway == "zigbee2mqtt":
 
-                                # check mqtt
-                                result = CHECK_MQTT()
-                                if result != True:
-                                    error_message_change_settings_devices.append(result)  
+                                # check mqtt status
+                                if GET_DEVICE_CONNECTION_MQTT() != True:
+                                    error_message_change_settings_devices.append("Keine MQTT-Verbindung")  
                                 
                                 else:
                                     channel  = "miranda/zigbee2mqtt/bridge/config/rename"
@@ -300,10 +299,9 @@ def settings_devices():
     # change pairing setting
     if request.form.get("save_zigbee_pairing") != None: 
 
-        # check mqtt
-        result = CHECK_MQTT()
-        if result != True:  
-            error_message_zigbee_pairing.append(result)  
+        # check mqtt status
+        if GET_DEVICE_CONNECTION_MQTT() != True:  
+            error_message_zigbee_pairing.append("Keine MQTT-Verbindung")  
 
         else:
             setting_pairing = str(request.form.get("radio_zigbee_pairing"))

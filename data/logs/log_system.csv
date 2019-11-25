@@ -498,3 +498,28 @@ Timestamp,Type,Description
 2019-11-19 09:49:49,SUCCESS,|Spotify || Token updated|
 2019-11-19 09:50:07,DATABASE,|Speechcontrol || Task - MUSIK || nächster Track || changed|
 2019-11-19 09:50:10,DATABASE,|Speechcontrol || Task - MUSIK || nächster Track || changed|
+2019-11-25 20:48:13,DATABASE,|Host || Network settings changed || LAN -  : |
+2019-11-25 20:48:32,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-25 20:48:32,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-25 20:48:35,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-25 20:48:36,SUCCESS,|Spotify || Token updated|
+2019-11-25 20:49:20,ERROR,|Device - qAcousticsONE || Setting not confirmed || interface: spotify, volume: 154|
+2019-11-25 20:49:40,ERROR,|Device - qAcousticsTWO || Setting not confirmed || interface: spotify, volume: 126|
+2019-11-25 20:53:36,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-25 20:53:36,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-25 20:53:39,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-25 20:53:39,SUCCESS,|Spotify || Token updated|
+2019-11-25 20:57:20,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-25 20:57:20,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-25 20:57:23,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-25 20:57:24,SUCCESS,|Spotify || Token updated|
+2019-11-25 20:57:27,DATABASE,|Plant - new_plant_1 || changed |||| Name - new_plant_1 || Device - 0x200235 || Group - 4 || Pump_Duration - 5|
+2019-11-25 20:59:27,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-25 20:59:27,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-25 20:59:30,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-25 20:59:31,SUCCESS,|Spotify || Token updated|
+2019-11-25 20:59:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-25 20:59:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-25 20:59:54,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-25 20:59:55,SUCCESS,|Spotify || Token updated|
+2019-11-25 21:00:02,DATABASE,|Plant - new_plant_1 || changed |||| Name - new_plant_1 || Device - 0x200235 || Group - 1 || Pump_Duration - 5|

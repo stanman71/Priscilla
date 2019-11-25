@@ -18,11 +18,10 @@ from ping3 import ping
 """  mqtt receive message  """
 """ ###################### """
     
-    
-def MQTT_RECEIVE_THREAD():
+def START_MQTT_RECEIVE_THREAD():
 
     try:
-        Thread = threading.Thread(target=MQTT_RECEIVE)
+        Thread = threading.Thread(target=MQTT_RECEIVE_THREAD)
         Thread.start()  
         
     except Exception as e:
@@ -30,7 +29,7 @@ def MQTT_RECEIVE_THREAD():
         SEND_EMAIL("ERROR", "Thread | MQTT Receive | " + str(e))    
 
     
-def MQTT_RECEIVE():
+def MQTT_RECEIVE_THREAD():
 
     def on_connect(client, userdata, flags, rc):   
         if rc != 0:
@@ -138,13 +137,13 @@ def MQTT_RECEIVE():
 
     except Exception as e:
         print("ERROR: MQTT | " + str(e)) 
-        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e))           
+        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e))        
+        SET_DEVICE_CONNECTION_MQTT(False)    
 
 
 """ ############## """
 """  mqtt message  """
 """ ############## """
-
 
 def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
   
@@ -225,10 +224,10 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 """  mqtt publish message  """
 """ ###################### """
 
-def MQTT_PUBLISH_THREAD():
+def START_MQTT_PUBLISH_THREAD():
 
     try:
-        Thread = threading.Thread(target=MQTT_PUBLISH)
+        Thread = threading.Thread(target=MQTT_PUBLISH_THREAD)
         Thread.start()  
         
     except Exception as e:
@@ -236,7 +235,7 @@ def MQTT_PUBLISH_THREAD():
         SEND_EMAIL("ERROR", "Thread | MQTT Publish | " + str(e))    
 
 
-def MQTT_PUBLISH():
+def MQTT_PUBLISH_THREAD():
     
     def on_connect(client, userdata, flags, rc):
         if rc != 0:
@@ -255,7 +254,8 @@ def MQTT_PUBLISH():
     
     except Exception as e:
         print("ERROR: MQTT | " + str(e)) 
-        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e))           
+        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e))    
+        SET_DEVICE_CONNECTION_MQTT(False)        
 
 
     while True:
@@ -277,12 +277,49 @@ def MQTT_PUBLISH():
         time.sleep(0.5)
 
 
+""" ##################### """
+"""  mqtt control thread  """
+""" ##################### """
+
+def START_MQTT_CONTROL_THREAD():
+
+    try:
+        Thread = threading.Thread(target=MQTT_CONTROL_THREAD)
+        Thread.start()  
+        
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "Thread | MQTT Publish | " + str(e))  
+        SEND_EMAIL("ERROR", "Thread | MQTT Publish | " + str(e))    
+
+
+def MQTT_CONTROL_THREAD():
+    
+    def on_connect(client, userdata, flags, rc):
+        if rc != 0:    
+            SET_DEVICE_CONNECTION_MQTT(False)   
+        
+        else:
+            SET_DEVICE_CONNECTION_MQTT(True)
+
+    while True:
+
+        try:
+            check_client = mqtt.Client()
+            check_client.on_connect = on_connect
+            check_client.connect("localhost", 1883, 60)
+            check_client.disconnect()
+    
+        except Exception as e:
+            SET_DEVICE_CONNECTION_MQTT(False)        
+                    
+        time.sleep(10)
+
+
 """ ################################ """
 """ ################################ """
 """           mqtt functions         """
 """ ################################ """
 """ ################################ """
-
 
 """ ################ """
 """  update devices  """
@@ -475,7 +512,6 @@ def UPDATE_DEVICES(gateway):
 """  check device setting  """
 """ ###################### """
  
- 
 def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, repeats = 10): 
     Thread = threading.Thread(target=CHECK_DEVICE_SETTING_PROCESS, args=(ieeeAddr, setting, repeats, ))
     Thread.start()   
@@ -571,28 +607,6 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
 """  check functions  """
 """ ################# """
  
-def CHECK_MQTT():
- 
-    def on_connect(client, userdata, flags, rc):   
-        if rc != 0:
-            print("ERROR: MQTT | Returned Code = " + str(rc)) 
-            WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Returned Code = " + str(rc))      
-            SET_DEVICE_CONNECTION_MQTT(False)   
-        
-        else:
-            SET_DEVICE_CONNECTION_MQTT(True)
- 
-    try:
-        test_client = mqtt.Client()
-        test_client.on_connect = on_connect
-        test_client.connect("localhost", 1883, 60)
-        test_client.disconnect()
-
-    except Exception as e:
-        print("ERROR: MQTT | " + str(e)) 
-        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e))              
-
-
 def CHECK_ZIGBEE2MQTT_AT_STARTUP():     
     counter = 1
 

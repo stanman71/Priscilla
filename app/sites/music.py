@@ -6,7 +6,7 @@ from functools           import wraps
 from app                          import app
 from app.database.models          import *
 from app.backend.spotify          import *
-from app.backend.shared_resources import mqtt_message_queue, GET_MQTT_INCOMING_MESSAGES
+from app.backend.shared_resources import mqtt_message_queue, GET_MQTT_INCOMING_MESSAGES, GET_DEVICE_CONNECTION_MQTT
 from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS
 
 from app.common           import COMMON, STATUS
@@ -199,25 +199,51 @@ def music():
     """  table clients music  """
     """ ##################### """   
 
-    if request.form.get("save_client_music_settings") != None:
+    if GET_DEVICE_CONNECTION_MQTT() == True:
+
+        if request.form.get("save_client_music_settings") != None:
+            
+            for i in range (1,26):
+
+                if request.form.get("radio_client_music_interface_" + str(i)) != None:
         
-        for i in range (1,26):
+                    client_music_interface = request.form.get("radio_client_music_interface_" + str(i))
+                    client_music_volume    = request.form.get("set_client_music_volume_" + str(i))                
+                    device                 = GET_DEVICE_BY_ID(i)
 
-            if request.form.get("radio_client_music_interface_" + str(i)) != None:
-     
-                client_music_interface = request.form.get("radio_client_music_interface_" + str(i))
-                client_music_volume    = request.form.get("set_client_music_volume_" + str(i))                
-                device                 = GET_DEVICE_BY_ID(i)
+                    # devices without volume control support
+                    if client_music_volume == None:
+                        client_music_volume = 0 
 
-                # devices without volume control support
-                if client_music_volume == None:
-                    client_music_volume = 0 
+                    # last values founded
+                    try:
+                        data = json.loads(device.last_values)
+                        
+                        if client_music_interface != data["interface"] or str(client_music_volume) != str(data["volume"]):
 
-                # last values founded
-                try:
-                    data = json.loads(device.last_values)
+                            heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')))     
+
+                            result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}', 20)
+                            
+                            if result != True:
+                                error_message_change_settings_client_music.append(result)
+                            else:
+                                success_message_change_settings_client_music.append(device.name + " || Einstellungen gespeichert")
+                                
+                                # update last values for GUI
+                                try:
+                                    for message in GET_MQTT_INCOMING_MESSAGES(5):              
                     
-                    if client_music_interface != data["interface"] or str(client_music_volume) != str(data["volume"]):
+                                        if message[1] == "miranda/mqtt/" + device.ieeeAddr:                
+                                            SAVE_DEVICE_LAST_VALUES(device.ieeeAddr, message[2])
+                                            break
+
+                                except:
+                                    pass
+                    
+                    
+                    # no valid last values existing                        
+                    except:
 
                         heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')))     
 
@@ -238,39 +264,17 @@ def music():
 
                             except:
                                 pass
-                
-                
-                # no valid last values existing                        
-                except:
-
-                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')))     
-
-                    result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}', 20)
-                    
-                    if result != True:
-                        error_message_change_settings_client_music.append(result)
-                    else:
-                        success_message_change_settings_client_music.append(device.name + " || Einstellungen gespeichert")
-                        
-                        # update last values for GUI
-                        try:
-                            for message in GET_MQTT_INCOMING_MESSAGES(5):              
-            
-                                if message[1] == "miranda/mqtt/" + device.ieeeAddr:                
-                                    SAVE_DEVICE_LAST_VALUES(device.ieeeAddr, message[2])
-                                    break
-
-                        except:
-                            pass
 
 
-    if request.form.get("restart_client_music_services") != None:
+        if request.form.get("restart_client_music_services") != None:
 
-        list_client_music = GET_ALL_DEVICES("client_music")
+            list_client_music = GET_ALL_DEVICES("client_music")
 
-        for client_music in list_client_music:
-            heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
+            for client_music in list_client_music:
+                heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
 
+    else:
+        error_message_change_settings_client_music.append("Keine MQTT-Verbindung")
 
     list_client_music = GET_ALL_DEVICES("client_music")
 

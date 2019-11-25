@@ -748,19 +748,6 @@ def START_SCHEDULER_TASK(task_object):
         WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))     
 
 
-    # ####################
-    # check mqtt connetion 
-    # ####################
-
-    try:  
-        if "check_mqtt_connetion" in task_object.task:
-            CHECK_MQTT() 
-
-    except Exception as e:
-        print(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))     
-
-
     # ##############
     # update devices
     # ##############

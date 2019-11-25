@@ -5,7 +5,7 @@ from functools           import wraps
 
 from app                          import app
 from app.database.models          import *
-from app.backend.shared_resources import mqtt_message_queue
+from app.backend.shared_resources import mqtt_message_queue, GET_DEVICE_CONNECTION_MQTT
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
@@ -42,9 +42,13 @@ def plants():
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
 
     # test message
-    if session.get('test_pump', None) != None:
-        success_message_change_settings.append(session.get('test_pump')) 
-        session['test_pump'] = None
+    if session.get('test_pump_success', None) != None:
+        success_message_change_settings.append(session.get('test_pump_success')) 
+        session['test_pump_success'] = None
+
+    if session.get('test_pump_error', None) != None:
+        error_message_change_settings.append(session.get('test_pump_error'))
+        session['test_pump_error'] = None       
 
     # delete message
     if session.get('delete_plant_success', None) != None:
@@ -202,12 +206,20 @@ def change_plants_position(id, direction):
 @login_required
 @permission_required
 def test_pump(id):
-    session['test_pump'] = GET_PLANT_BY_ID(id).name + " || Pumpe gestartet (5 Sekunden)" 
 
-    channel  =  "miranda/mqtt/" + GET_PLANT_BY_ID(id).device_ieeeAddr + "/set"
-    msg      = '{"pump":"ON","pump_time":5}'
+    if GET_DEVICE_CONNECTION_MQTT() == True:
 
-    heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
+        session['test_pump_success'] = GET_PLANT_BY_ID(id).name + " || Pumpe gestartet (5 Sekunden)" 
+
+        channel  =  "miranda/mqtt/" + GET_PLANT_BY_ID(id).device_ieeeAddr + "/set"
+        msg      = '{"pump":"ON","pump_time":5}'
+
+        heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
+        
+    else:
+        session['test_pump_error'] = "Keine MQTT-Verbindung" 
+    
+
     return redirect(url_for('plants'))
 
 
