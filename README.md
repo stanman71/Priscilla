@@ -17,10 +17,11 @@ This project creates a smarthome environment.
       * <a href="#4.3 Manually Control">4.3 Manually Control</a>   
       * <a href="#4.4 Pairing">4.4 Pairing</a>   
       * <a href="#4.5 Autostart">4.5 Autostart</a>   
-   * <a href="#5 Zigbee2MQTT Hardware">5 Zigbee2MQTT Hardware</a>
-      * <a href="#5.1 Flashing E18-MS1PA1-PCB">5.1 Flashing E18-MS1PA1-PCB</a>
-      * <a href="#5.2 Raspberry Pi Connection">5.2 Raspberry Pi Connection</a>
-      * <a href="#5.3 Raspberry Pi Configuration">5.3 Raspberry Pi Configuration</a>
+   * <a href="#5 Zigbee2MQTT Coordinator">5 Zigbee2MQTT Coordinator</a>
+      * <a href="#5.1 Hardware">5.1 Hardware</a>
+      * <a href="#5.2 Flashing">5.2 Flashing</a>
+      * <a href="#5.3 Raspberry Pi Connection">5.3 Raspberry Pi Connection</a>
+      * <a href="#5.4 Raspberry Pi Configuration">5.4 Raspberry Pi Configuration</a>
    * <a href="#6 Snips.ai Base">6 Snips.ai Base</a>
       * <a href="#6.1 Installation">6.1 Installation</a>   
       * <a href="#6.2 Snips Assistent">6.2 Snips Assistent</a>            
@@ -481,21 +482,37 @@ https://github.com/Koenkk/zigbee2mqtt
 ------------
 </br>
 
-<a name="5 Zigbee2MQTT Hardware"></a>
+<a name="5 Zigbee2MQTT Coordinator"></a>
 
-### 5 Zigbee2MQTT Hardware
+### 5 Zigbee2MQTT Coordinator
+
+<a name="5.1 Hardware"></a>
+
+#### 5.1 Hardware
+
+- E18-MS1PA1-PCB
+
+       >>> https://de.aliexpress.com/item/32803068018.html
+
+- socket strip (2x5)
+
+       >>> https://www.ebay.de/itm/Zuverlassige-10x-2x5-10Pin-2-54mm-zweireihige-Buchsenleiste-Pitch-Socket-Pin-Fw/254407218443
+
+- internal cables and connectors
+
+       >>> https://www.ebay.de/itm/JST-XH-2-54-Stecker-inkl-15cm-Kabel-XH-Buchse-2-3-4-5-6-7-8-9-10-Pin-24AWG-RC/183748172867
+
+</br>
+
+<a name="5.2 Flashing"></a>
 
 https://github.com/Koenkk/Z-Stack-firmware
 </br>
 https://github.com/Koenkk/zigbee2mqtt/issues/1437
 </br>
-https://de.aliexpress.com/item/32803068018.html
-</br>
 </br>
 
-<a name="5.1 Flashing E18-MS1PA1-PCB"></a>
-
-#### 5.1 Flashing E18-MS1PA1-PCB (Windows Environment)
+#### 5.2 Flashing (Windows Environment)
 
 - install SmartRF Flash programmer and CC debugger driver (admin rights necessary)
 
@@ -547,9 +564,9 @@ https://de.aliexpress.com/item/32803068018.html
 
 </br>
 
-<a name="5.2 Raspberry Pi Connection"></a>
+<a name="5.3 Raspberry Pi Connection"></a>
 
-#### 5.2 Raspberry Pi Connection 
+#### 5.3 Raspberry Pi Connection 
 
 https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 </br>
@@ -566,9 +583,9 @@ https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 
 </br>
 
-<a name="5.3 Raspberry Pi Configuration"></a>
+<a name="5.4 Raspberry Pi Configuration"></a>
 
-#### 5.3 Raspberry Pi Configuration 
+#### 5.4 Raspberry Pi Configuration 
 
 https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 </br>

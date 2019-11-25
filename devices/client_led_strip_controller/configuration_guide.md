@@ -1,4 +1,4 @@
-# Client LED_RGB
+# Client LED_STRIP_CONTROLLER
 
 This project controls customized led stripes.
 
@@ -68,9 +68,17 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
        >>> https://www.berrybase.de/bauelemente/aktive-bauelemente/ics/ics-l../l7805abv-spannungsregler-linear-5v-1a-to-220-3-pin
 
+- cooler TO-220
+
+       >>> https://www.ebay.de/itm/5x-10x-TO220-Aluminium-Kuhlkorper-15x20mm-fur-Transistor-TO-220-Kuhler-Set/122909711162
+
 - capacitor 2200µF
 
        >>> https://www.ebay.de/itm/Elko-Panasonic-FR-2200uF-35V-Kondensator-105-C-Low-ESR-same-as-FM-854439/312606746499
+
+- capacitor 100µF
+
+       >>> https://www.ebay.de/itm/10-Elko-Panasonic-FR-100uF-10V-Kondensator-105-C-Low-ESR-same-as-FM-856760/362414533288
 
 - resistor 10K
 
@@ -88,11 +96,11 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
        >>> https://www.berrybase.de/bauelemente/schalter-taster/mikroschalter-taster/kurzhubtaster-vertikale-printmontage-6x6mm-h-5-0mm?c=86
 
-- relais
+- relais modul
 
        >>> https://www.berrybase.de/bauelemente/sensoren-module/relaiskarten/5v-1-kanal-relais-modul
 
-- internal cable connectors
+- internal cables and connectors
 
        >>> https://www.ebay.de/itm/JST-XH-2-54-Stecker-inkl-15cm-Kabel-XH-Buchse-2-3-4-5-6-7-8-9-10-Pin-24AWG-RC/183748172867
 
