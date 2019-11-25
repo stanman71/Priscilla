@@ -7,7 +7,7 @@ This project creates a smarthome environment.
       * <a href="#2.1 Installation">2.1 Installation</a>
       * <a href="#2.2 Autostart">2.2 Autostart</a>      
       * <a href="#2.3 Manually Control">2.3 Manually Control</a>
-   * <a href="#3 Mosquitto">3 Mosquitto</a>
+   * <a href="#3 NQTT Broker Mosquitto">3 MQTT Broker Mosquitto</a>
       * <a href="#3.1 Installation">3.1 Installation</a>   
       * <a href="#3.2 Authentification">3.2 Authentification</a>         
       * <a href="#3.3 Autostart">3.3 Autostart</a>        
@@ -17,11 +17,10 @@ This project creates a smarthome environment.
       * <a href="#4.3 Manually Control">4.3 Manually Control</a>   
       * <a href="#4.4 Pairing">4.4 Pairing</a>   
       * <a href="#4.5 Autostart">4.5 Autostart</a>   
-   * <a href="#5 Zigbee2MQTT Coordinator">5 Zigbee2MQTT Coordinator</a>
+   * <a href="#5 Zigbee Coordinator / Router">5 Zigbee Coordinator / Router</a>
       * <a href="#5.1 Hardware">5.1 Hardware</a>
       * <a href="#5.2 Flashing">5.2 Flashing</a>
-      * <a href="#5.3 Raspberry Pi Connection">5.3 Raspberry Pi Connection</a>
-      * <a href="#5.4 Raspberry Pi Configuration">5.4 Raspberry Pi Configuration</a>
+      * <a href="#5.3 Raspberry Pi installation (coordinator only)">5.3 Raspberry Pi installation (coordinator only)</a>
    * <a href="#6 Snips.ai Base">6 Snips.ai Base</a>
       * <a href="#6.1 Installation">6.1 Installation</a>   
       * <a href="#6.2 Snips Assistent">6.2 Snips Assistent</a>            
@@ -229,9 +228,9 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 ------------
 </br>
 
-<a name="3 Mosquitto"></a>
+<a name="3 NQTT Broker Mosquitto"></a>
 
-### 3 Mosquitto (MQTT Broker)
+### 3 NQTT Broker Mosquitto
 
 https://mosquitto.org/
 </br>
@@ -482,9 +481,13 @@ https://github.com/Koenkk/zigbee2mqtt
 ------------
 </br>
 
-<a name="5 Zigbee2MQTT Coordinator"></a>
+<a name="5 Zigbee2MQTT Coordinator / Router"></a>
 
-### 5 Zigbee2MQTT Coordinator
+### 5 Zigbee2MQTT Coordinator / Router
+
+https://www.zigbee2mqtt.io/information/zigbee_network.html
+</br>
+</br>
 
 <a name="5.1 Hardware"></a>
 
@@ -502,6 +505,18 @@ https://github.com/Koenkk/zigbee2mqtt
 
        >>> https://www.ebay.de/itm/JST-XH-2-54-Stecker-inkl-15cm-Kabel-XH-Buchse-2-3-4-5-6-7-8-9-10-Pin-24AWG-RC/183748172867
 
+- voltage regulator 3.3V (router only)
+
+       >>> https://www.ebay.de/itm/Spannungsregler-Modul-AMS1117-3-3V-800mA-Arduino-Raspberry-Pi-Atmega/152386958012
+
+- power connector (router only)
+
+       >>> https://www.berrybase.de/bauelemente/steckverbinder/stromversorgungs-steckverbinder/dc-stecker-hohlstecker/dc-einbaubuchse-f-252-r-hohlstecker-5-5x2-5mm-metallausf-252-hrung-l-246-tanschluss?c=115
+
+- power source (router only)
+
+       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01I1JEWPU/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
+
 </br>
 
 <a name="5.2 Flashing"></a>
@@ -516,10 +531,10 @@ https://github.com/Koenkk/zigbee2mqtt/issues/1437
 
 - install SmartRF Flash programmer and CC debugger driver (admin rights necessary)
 
-       >>> /devices/E18-MS1PA1-PCB/Flashing/flash-programmer-1.12.8.zip
-       >>> /devices/E18-MS1PA1-PCB/Flashing/swrc212a.zip
+       >>> /devices/zigbee_coordinator_router/Flashing/flash-programmer-1.12.8.zip
+       >>> /devices/zigbee_coordinator_router/Flashing/swrc212a.zip
 
-- connect the debugger to the E18-MS1PA1-PCB 
+- connect the debugger to the E18-MS1PA1-PCB Board
 
        >>> CC debugger -> E18-MS1PA1-PCB
 
@@ -533,7 +548,7 @@ https://github.com/Koenkk/zigbee2mqtt/issues/1437
            connect pin 2 and 9
 
 <p align="center">
-  <img src="https://github.com/stanman71/Watering_Control/blob/master/devices/E18-MS1PA1-PCB/Flashing/Programmer%20connection%20to%20E18-MS1PA1-PCB.png">
+  <img src="https://github.com/stanman71/Watering_Control/blob/master/zigbee_coordinator/soldering/Flashing/Programmer%20connection%20to%20E18-MS1PA1-PCB.png">
 </p>
 
 </br>
@@ -551,11 +566,11 @@ https://github.com/Koenkk/zigbee2mqtt/issues/1437
 
 - unzip the firmware files
 
-       >>> /home/pi/miranda/devices/E18-MS1PA1-PCB/z-stack_firmware.zip
+       >>> /home/pi/python/devices/zigbee_coordinator_router/z-stack_firmware.zip
 
 - start SmartRF Flash Programmer
 
-       >>> select the new firmware (.hex file)
+       >>> select a coordinator / router firmware (.hex file)
        >>> don't keep the old ieeeAddr
 	>>> select "Erase, program and verify"
        >>> click “Perform actions” 
@@ -564,32 +579,24 @@ https://github.com/Koenkk/zigbee2mqtt/issues/1437
 
 </br>
 
-<a name="5.3 Raspberry Pi Connection"></a>
+<a name="5.3 Raspberry Pi installation (coordinator only)"></a>
 
-#### 5.3 Raspberry Pi Connection 
+#### 5.3 Raspberry Pi installation (coordinator only)
 
 https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 </br>
 </br>
 
-- Connect the E18-MS1PA1-PCB to the Raspberry
+- connect the coordinator to the Raspberry Pi
 
-       >>> E18-MS1PA1-PCB -> Raspberry
+       >>> coordinator -> Raspberry Pi
 	   
-           VCC -> 3,3V (Pin1)
-           GND -> GND  (Pin6)
-           P02 -> TXD  (Pin8  / BCM 14)
-           P03 -> RXD  (Pin10 / BCM 15)
+                   VCC -> 3,3V (Pin1)
+                   GND -> GND  (Pin6)
+                   P02 -> TXD  (Pin8  / BCM 14)
+                   P03 -> RXD  (Pin10 / BCM 15)
 
-</br>
-
-<a name="5.4 Raspberry Pi Configuration"></a>
-
-#### 5.4 Raspberry Pi Configuration 
-
-https://www.zigbee2mqtt.io/information/connecting_cc2530.html
-</br>
-</br>
+- start the Raspberry Pi
 
 - add following at the end of the config file
 
