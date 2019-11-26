@@ -52,81 +52,96 @@ def MQTT_RECEIVE_THREAD():
         channel = message.topic                 
         msg     = str(message.payload.decode("utf-8"))       
 
-        new_message = True
-        ieeeAddr    = ""
-        device_type = ""
+        # #############
+        # speechcontrol
+        # #############
 
-        # get ieeeAddr and device_type
-        incoming_topic  = channel
-        incoming_topic  = incoming_topic.split("/")
-        device_identity = incoming_topic[2]
-        
-        if device_identity not in ["bridge", "devices", "test", "log", "get", "set", "config"]:
-        
-            list_devices = GET_ALL_DEVICES("")
-         
-            # zigbee2mqtt device
-            for device in list_devices:
-                if device.name == device_identity:             
-                    ieeeAddr = device.ieeeAddr
-                    break
+        if "hermes" in channel:
+
+            if "hermes/intent/" in channel:
+                heapq.heappush(process_management_queue, (10, ("speechcontrol", msg)))
+
+
+        # ##############
+        # system message
+        # ##############
+
+        else:
+            new_message = True
+            ieeeAddr    = ""
+            device_type = ""
+
+            # get ieeeAddr and device_type
+            incoming_topic  = channel
+            incoming_topic  = incoming_topic.split("/")
+            device_identity = incoming_topic[2]
             
-            # mqtt device or no zigbee2mqtt name choosed
-            if ieeeAddr == "": 
-                ieeeAddr = device_identity
-                
-            try:
+            if device_identity not in ["bridge", "devices", "test", "log", "get", "set", "config"]:
+            
+                list_devices = GET_ALL_DEVICES("")
+            
+                # zigbee2mqtt device
                 for device in list_devices:
                     if device.name == device_identity:             
-                        device_type = device.device_type            
-            except:
-                device_type = ""    
+                        ieeeAddr = device.ieeeAddr
+                        break
                 
-            
-        # message block ?
-        if (device_type == "led_rgb" or device_type == "led_simple" or device_type == "power_switch" or device_type == "heater"):
-    
-            for existing_message in GET_MQTT_INCOMING_MESSAGES(3):              
-                
-                if existing_message[1] == channel:
+                # mqtt device or no zigbee2mqtt name choosed
+                if ieeeAddr == "": 
+                    ieeeAddr = device_identity
                     
-                    try:
-                        # devices changes state ?
-                        existing_data = json.loads(existing_message[2])
-                        new_data      = json.loads(msg)
-
-                        if existing_data["state"] != new_data["state"]:
-                            new_message = True
-                            break
-                            
-                        else:
-                            new_message = False
-                            
-                    except:
-                        new_message = False                 
+                try:
+                    for device in list_devices:
+                        if device.name == device_identity:             
+                            device_type = device.device_type            
+                except:
+                    device_type = ""    
                     
-        # message passing
-        if new_message:
-            
-            print("message topic: ", channel)       
-            print("message received: ", msg)    
-            
-            WRITE_LOGFILE_DEVICES(channel, msg)
-                  
-            # add message to the incoming message list
-            mqtt_incoming_messages_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), channel, msg))  
-            
-
-            # start message thread for additional processes
-            if channel != "" and channel != None:   
                 
-                try:    
-                    Thread = threading.Thread(target=MQTT_MESSAGE, args=(channel, msg, ieeeAddr, device_type,))
-                    Thread.start()   
-                except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Thread | MQTT Message | " + str(e)) 
-                    SEND_EMAIL("ERROR", "Thread | MQTT Message | " + str(e))                    
-                    print(e)
+            # message block ?
+            if (device_type == "led_rgb" or device_type == "led_simple" or device_type == "power_switch" or device_type == "heater"):
+        
+                for existing_message in GET_MQTT_INCOMING_MESSAGES(3):              
+                    
+                    if existing_message[1] == channel:
+                        
+                        try:
+                            # devices changes state ?
+                            existing_data = json.loads(existing_message[2])
+                            new_data      = json.loads(msg)
+
+                            if existing_data["state"] != new_data["state"]:
+                                new_message = True
+                                break
+                                
+                            else:
+                                new_message = False
+                                
+                        except:
+                            new_message = False                 
+                        
+            # message passing
+            if new_message:
+                
+                print("message topic: ", channel)       
+                print("message received: ", msg)    
+                
+                WRITE_LOGFILE_DEVICES(channel, msg)
+                    
+                # add message to the incoming message list
+                mqtt_incoming_messages_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), channel, msg))  
+                
+
+                # start message thread for additional processes
+                if channel != "" and channel != None:   
+                    
+                    try:    
+                        Thread = threading.Thread(target=MQTT_MESSAGE, args=(channel, msg, ieeeAddr, device_type,))
+                        Thread.start()   
+                    except Exception as e:
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Thread | MQTT Message | " + str(e)) 
+                        SEND_EMAIL("ERROR", "Thread | MQTT Message | " + str(e))                    
+                        print(e)
 
     try:
         client = mqtt.Client()
@@ -177,7 +192,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             src = Source(msg)
             src.render(filename = GET_PATH() + '/app/static/temp/zigbee_topology', format='png', cleanup=True)
             return
-        
+
     except:
         pass
          
@@ -260,9 +275,10 @@ def MQTT_PUBLISH_THREAD():
 
     while True:
         try:  
-            mqtt_message = heapq.heappop(mqtt_message_queue)[1]
-          
-            client.publish(mqtt_message[0],mqtt_message[1])        
+            # check mqtt connection
+            if GET_DEVICE_CONNECTION_MQTT() == True:              
+                mqtt_message = heapq.heappop(mqtt_message_queue)[1]      
+                client.publish(mqtt_message[0],mqtt_message[1])        
 
         except Exception as e:         
             try:   

@@ -4,12 +4,13 @@ import threading
 import time
 
 from app import app
-from app.database.models            import *
-from app.backend.file_management    import WRITE_LOGFILE_SYSTEM
-from app.backend.email              import SEND_EMAIL
-from app.backend.shared_resources   import process_management_queue
-from app.backend.process_controller import PROCESS_CONTROLLER
-from app.backend.process_scheduler  import SCHEDULER_TIME_PROCESS, SCHEDULER_SENSOR_PROCESS, SCHEDULER_PING_PROCESS
+from app.database.models               import *
+from app.backend.file_management       import WRITE_LOGFILE_SYSTEM
+from app.backend.email                 import SEND_EMAIL
+from app.backend.shared_resources      import process_management_queue
+from app.backend.process_controller    import PROCESS_CONTROLLER
+from app.backend.process_scheduler     import PROCESS_SCHEDULER_TIME, PROCESS_SCHEDULER_SENSOR, PROCESS_SCHEDULER_PING
+from app.backend.process_speechcontrol import SPEECHCONTROL_TASKS
 
 
 """ ########################## """
@@ -57,20 +58,28 @@ def PROCESS_MANAGEMENT():
                 if process[1] == "time":
                     task = GET_SCHEDULER_TASK_BY_ID(process[2])
                     
-                    SCHEDULER_TIME_PROCESS(task)
+                    PROCESS_SCHEDULER_TIME(task)
             
             
                 if process[1] == "ping":
                     task = GET_SCHEDULER_TASK_BY_ID(process[2])
                     
-                    SCHEDULER_PING_PROCESS(task)    
+                    PROCESS_SCHEDULER_PING(task)    
                         
                         
                 if process[1] == "sensor":
                     task     = GET_SCHEDULER_TASK_BY_ID(process[2])
                     ieeeAddr = process[3]
                     
-                    SCHEDULER_SENSOR_PROCESS(task, ieeeAddr)                 
+                    PROCESS_SCHEDULER_SENSOR(task, ieeeAddr)                 
+
+
+            # #############
+            # speechcontrol
+            # #############
+            
+            if process[0] == "speechcontrol":  
+                SPEECHCONTROL_TASKS(process[1])           
 
 
         except Exception as e:         

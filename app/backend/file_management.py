@@ -178,24 +178,6 @@ except Exception as e:
     WRITE_LOGFILE_SYSTEM("ERROR", "File | data/config.ymal | " + str(e) + " | !!! DEFAULT SETTINGS LOADED !!! ")
 
 
-def GET_MQTT_BROKER():
-    try:
-        return str(config['mqtt']['broker'])
-    except:
-        return "localhost"   
-
-def GET_MQTT_BROKER_USERNAME():
-    try:
-        return str(config['mqtt']['username'])
-    except:
-        return ""   
-
-def GET_MQTT_BROKER_PASSWORD():
-    try:
-        return str(config['mqtt']['password'])
-    except:
-        return ""   
-        
 def GET_SPOTIFY_CLIENT_ID():
     try:
         return str(config['spotify']['client_id'])

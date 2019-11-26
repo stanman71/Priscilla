@@ -523,3 +523,54 @@ Timestamp,Type,Description
 2019-11-25 20:59:54,ERROR,|ZigBee2MQTT || No Connection|
 2019-11-25 20:59:55,SUCCESS,|Spotify || Token updated|
 2019-11-25 21:00:02,DATABASE,|Plant - new_plant_1 || changed |||| Name - new_plant_1 || Device - 0x200235 || Group - 1 || Pump_Duration - 5|
+2019-11-25 21:29:05,DATABASE,|Host || Network settings changed || LAN -  : |
+2019-11-25 21:29:09,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-25 21:29:09,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-25 21:29:12,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-25 21:29:13,SUCCESS,|Spotify || Token updated|
+2019-11-25 21:30:10,SUCCESS,|Devices || MQTT || Update|
+2019-11-25 21:30:15,SUCCESS,|Devices || ZigBee2MQTT || Update|
+2019-11-26 12:35:57,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-26 12:35:57,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-26 12:36:00,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-26 12:36:01,SUCCESS,|Spotify || Token updated|
+2019-11-26 13:05:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-26 13:05:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-26 13:05:06,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-26 13:05:06,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:05:06,SUCCESS,|Spotify || Token updated|
+2019-11-26 13:05:07,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:05:08,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:06:00,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:06:01,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:06:02,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:07:00,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:07:01,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:07:02,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:08:00,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:08:01,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:08:02,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:09:00,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:09:01,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:09:02,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:10:00,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:10:01,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:10:02,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:11:00,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:11:01,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:11:02,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:12:00,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:12:01,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:12:02,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:13:00,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:13:01,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:13:02,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:14:00,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:14:01,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:14:02,ERROR,|Process Management || name 'SCHEDULER_TIME_PROCESS' is not defined|
+2019-11-26 13:17:19,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-26 13:17:19,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-26 13:17:22,ERROR,|ZigBee2MQTT || No Connection|
+2019-11-26 13:17:23,SUCCESS,|Spotify || Token updated|
+2019-11-26 13:19:27,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-11-26 13:19:27,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|

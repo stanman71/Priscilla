@@ -101,11 +101,9 @@ def settings_devices():
                            
                             if gateway == "zigbee2mqtt":
 
-                                # check mqtt status
-                                if GET_DEVICE_CONNECTION_MQTT() != True:
-                                    error_message_change_settings_devices.append("Keine MQTT-Verbindung")  
-                                
-                                else:
+                                # check mqtt connection
+                                if GET_DEVICE_CONNECTION_MQTT() == True:
+
                                     channel  = "miranda/zigbee2mqtt/bridge/config/rename"
                                     msg      = '{"old": "' + old_name + '", "new": "' + new_name + '"}'
 
@@ -127,18 +125,22 @@ def settings_devices():
 
     # update device list
     if request.form.get("update_devices") != None:     
-        result_mqtt        = UPDATE_DEVICES("mqtt")
-        result_zigbee2mqtt = UPDATE_DEVICES("zigbee2mqtt")
 
-        if result_mqtt == True and result_zigbee2mqtt == True:
-            success_message_change_settings_devices.append("Geräte || Erfolgreich aktualisiert")
-        elif result_mqtt != True and result_zigbee2mqtt == True:
-            error_message_change_settings_devices.append(result_mqtt)
-        elif result_mqtt == True and result_zigbee2mqtt != True:
-            error_message_change_settings_devices.append(result_zigbee2mqtt)
-        else:
-            error_message_change_settings_devices.append(result_mqtt)
-            error_message_change_settings_devices.append(result_zigbee2mqtt)
+        # check mqtt connection
+        if GET_DEVICE_CONNECTION_MQTT() == True:  
+
+            result_mqtt        = UPDATE_DEVICES("mqtt")
+            result_zigbee2mqtt = UPDATE_DEVICES("zigbee2mqtt")
+
+            if result_mqtt == True and result_zigbee2mqtt == True:
+                success_message_change_settings_devices.append("Geräte || Erfolgreich aktualisiert")
+            elif result_mqtt != True and result_zigbee2mqtt == True:
+                error_message_change_settings_devices.append(result_mqtt)
+            elif result_mqtt == True and result_zigbee2mqtt != True:
+                error_message_change_settings_devices.append(result_zigbee2mqtt)
+            else:
+                error_message_change_settings_devices.append(result_mqtt)
+                error_message_change_settings_devices.append(result_zigbee2mqtt)
 
 
     """ ################## """
@@ -278,28 +280,31 @@ def settings_devices():
     """  zigbee  """
     """ ######## """
 
-    def DISABLE_ZIGBEE_PAIRING():
+    def DISABLE_ZIGBEE_PAIRING_THREAD():
         
-        time.sleep(1800)
+        # check mqtt connection
+        if GET_DEVICE_CONNECTION_MQTT() == True:  
 
-        SET_ZIGBEE2MQTT_PAIRING("false")
+            time.sleep(1800)
 
-        channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
-        msg      = "false"
+            SET_ZIGBEE2MQTT_PAIRING("false")
 
-        heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
-        time.sleep(1)
+            channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
+            msg      = "false"
 
-        if CHECK_ZIGBEE2MQTT_PAIRING("false"):             
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "ZigBee2MQTT | Pairing disabled") 
-        else:             
-            WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
+            heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
+            time.sleep(1)
+
+            if CHECK_ZIGBEE2MQTT_PAIRING("false"):             
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "ZigBee2MQTT | Pairing disabled") 
+            else:             
+                WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
 
 
     # change pairing setting
     if request.form.get("save_zigbee_pairing") != None: 
 
-        # check mqtt status
+        # check mqtt connection
         if GET_DEVICE_CONNECTION_MQTT() != True:  
             error_message_zigbee_pairing.append("Keine MQTT-Verbindung")  
 
@@ -313,7 +318,7 @@ def settings_devices():
 
                 heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
 
-                Thread = threading.Thread(target=DISABLE_ZIGBEE_PAIRING)
+                Thread = threading.Thread(target=DISABLE_ZIGBEE_PAIRING_THREAD)
                 Thread.start()                      
                 time.sleep(1)
 
@@ -344,11 +349,15 @@ def settings_devices():
 
     # request zigbee topology
     if request.form.get("update_zigbee_topology") != None: 
-        channel  = "miranda/zigbee2mqtt/bridge/networkmap"
-        msg      = "graphviz"
 
-        heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
-        time.sleep(5)
+        # check mqtt connection
+        if GET_DEVICE_CONNECTION_MQTT() == True:  
+
+            channel  = "miranda/zigbee2mqtt/bridge/networkmap"
+            msg      = "graphviz"
+
+            heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
+            time.sleep(5)
 
 
     """ ############ """

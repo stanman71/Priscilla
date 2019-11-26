@@ -235,19 +235,16 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             except:
                 track_uri   = None
                 
-            try:
-                position    = sp.current_playback(market=None)['progress_ms']
-            except:
-                position    = None
-            
+
             if context_uri != None:
-                sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None, position_ms = None)  
-                
+                sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None, position_ms = None)              
+
             elif track_uri != None:
-                sp.start_playback(device_id=spotify_device_id, context_uri=None, uris=[track_uri], offset = None, position_ms = position)    
+                sp.start_playback(device_id=spotify_device_id, context_uri=None, uris=[track_uri], offset = None)    
                 
             else:
                 sp.start_playback(device_id=spotify_device_id, context_uri=None, uris=None, offset = None, position_ms = None)
+
 
         if command == "previous":    
             sp.volume(int(spotify_volume), device_id=spotify_device_id)   
