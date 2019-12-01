@@ -132,10 +132,16 @@ A raspberry pi controller for speech recognition based on snips.
        >>> sudo nano /etc/snips.toml
 
            [snips-common]
-           edit mqtt settings
+           edit mqtt 
+           edit mqtt_username             
+           edit mqtt_password  
 
            [snips-audio-server]
            edit bind (e.g [hostname].local@mqtt)
+           add portaudio_playback = "default" 
+
+           [snips-hotword]       
+           sensitivity = "0.25"
 
 - restart snipes
 

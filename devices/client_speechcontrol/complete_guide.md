@@ -10,7 +10,7 @@ A raspberry pi controller for speech recognition based on snips.
    * <a href="#2 Prepare Raspian">2 Prepare Raspian</a>
    * <a href="#3 Comitup">3 Comitup</a>   
    * <a href="#4 Snips.ai Satellites">4 Snips.ai Satellites</a>
-
+   * <a href="#5 Reduce Image size">5 Reduce Image size</a>   
 
 </br>
 ------------
@@ -64,7 +64,6 @@ A raspberry pi controller for speech recognition based on snips.
        >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/stromversorgung/netzteile-fuer-die-steckdose/micro-usb-netzteil-5v/3-1a-schwarz
 
 
-
 </br>
 ------------
 </br>
@@ -112,10 +111,6 @@ https://github.com/respeaker/seeed-voicecard
 - update raspian
 
        >>> sudo apt-get update && sudo apt-get upgrade -y
-
-- install pip
-
-       >>> sudo apt-get install python3-pip -y
 
 - disable swap        
 
@@ -170,7 +165,7 @@ https://github.com/respeaker/seeed-voicecard
 
        >>> sudo nano /etc/hostname
 
-- if your are using Respeaker 2MIC HAT install the driver
+- install respeaker driver
 
        >>> sudo apt-get install git -y
        >>> unzip /home/pi/smarthome/support/seeed-voicecard.zip
@@ -188,18 +183,16 @@ https://github.com/respeaker/seeed-voicecard
 
 https://davesteele.github.io/comitup/
 </br>
-https://packages.debian.org/sid/all/comitup/filelist
+https://github.com/davesteele/comitup/wiki/Installing-Comitup
+</br>
+https://davesteele.github.io/comitup/archive.html
 </br>
 </br>
 
 - installation steps:
 
-       >>> sudo apt-get install comitup -y
-
-       or
-       
-       >>> sudo apt install /home/pi/smarthome/support/comitup_0.7-1_all.deb -y
-
+       >>> sudo apt install /home/pi/smarthome/support/python3-networkmanager_2.0.1-4_all.deb
+       >>> sudo apt install /home/pi/smarthome/support/comitup_1.3.1-1_all.deb -y
        >>> sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
        >>> sudo systemctl disable systemd-resolved
        >>> sudo systemctl stop systemd-resolved
@@ -279,16 +272,37 @@ https://forum.snips.ai/t/audio-server-reported-an-error-on-site-default-an-error
        >>> sudo nano /etc/snips.toml
 
            [snips-common]
-           add mqtt settings
+           edit mqtt 
+           edit mqtt_username             
+           edit mqtt_password  
 
            [snips-audio-server]
            edit bind (e.g [hostname].local@mqtt)
-
            add portaudio_playback = "default" 
 
            [snips-hotword]       
            sensitivity = "0.25"
-
+           
 - restart raspberry pi
 
        >>> sudo reboot
+
+</br>
+------------
+</br>
+
+<a name="5 Reduce Image size"></a>
+
+- insert the cardreader with sd-card in a raspberry pi (raspian + gui)
+
+- open a remote connection
+
+- install GParted
+
+       >>> sudo apt-get install gparted
+
+- start GParted
+
+       >>> Systemwerkzeuge / GParted   
+
+- select the sd-card and reduce the size

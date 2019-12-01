@@ -19,11 +19,12 @@ A raspberry pi controller to play music by using spotify and lms.
       * <a href="#5.1 Raspian">5.1 Raspian</a>
       * <a href="#5.2 Windows 10">5.2 Windows 10</a>
    * <a href="#6 Raspotify">6 Raspotify</a>
-   * <a href="#7 piCorePlayer & LMS">7 piCorePlayer & LMS</a>
-      * <a href="#7.1 General Settings">7.1 General Settings</a>
-      * <a href="#7.2 Squeezelite">7.2 Squeezelite</a>
-      * <a href="#7.3 LMS">7.3 LMS</a>
-      * <a href="#7.4 LMS Configuration">7.4 LMS Configuration</a>
+   * <a href="#7 Reduce Image size">7 Reduce Image size</a>   
+   * <a href="#8 piCorePlayer & LMS">8 piCorePlayer & LMS</a>
+      * <a href="#8.1 General Settings">8.1 General Settings</a>
+      * <a href="#8.2 Squeezelite">8.2 Squeezelite</a>
+      * <a href="#8.3 LMS">8.3 LMS</a>
+      * <a href="#8.4 LMS Configuration">8.4 LMS Configuration</a>
 
 </br>
 ------------
@@ -201,18 +202,15 @@ https://buyzero.de/blogs/news/raspberry-pi-strom-sparen-tipps-tricks
 
 https://davesteele.github.io/comitup/
 </br>
-https://packages.debian.org/sid/all/comitup/filelist
+https://github.com/davesteele/comitup/wiki/Installing-Comitup
+</br>
+https://davesteele.github.io/comitup/archive.html
 </br>
 </br>
 
 - installation steps:
 
-       >>> sudo apt-get install comitup -y
-
-       or
-       
        >>> sudo apt install /home/pi/smarthome/support/comitup_1.3.1-1_all.deb -y
-
        >>> sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
        >>> sudo systemctl disable systemd-resolved
        >>> sudo systemctl stop systemd-resolved
@@ -493,7 +491,27 @@ https://dtcooper.github.io/raspotify/
 ------------
 </br>
 
-<a name="7 piCorePlayer & LMS"></a>
+<a name="7 Reduce Image size"></a>
+
+- insert the cardreader with sd-card in a raspberry pi (raspian + gui)
+
+- open a remote connection
+
+- install GParted
+
+       >>> sudo apt-get install gparted
+
+- start GParted
+
+       >>> Systemwerkzeuge / GParted   
+
+- select the sd-card and reduce the size
+
+</br>
+------------
+</br>
+
+<a name="8 piCorePlayer & LMS"></a>
 
 ### 7 piCorePlayer & LMS (Logitech Media Server)
 
@@ -503,9 +521,9 @@ https://www.basecube.de/2018/03/17/download/
 </br>
 </br>
 
-<a name="7.1 General Settings"></a>
+<a name="8.1 General Settings"></a>
 
-#### 7.1 General Settings
+#### 8.1 General Settings
 
 - change settings option to beta (options are at the bottom corner on the main site)
 
@@ -523,9 +541,9 @@ https://www.basecube.de/2018/03/17/download/
 
 </br>
 
-<a name="7.2 Squeezelite"></a>
+<a name="8.2 Squeezelite"></a>
 
-#### 7.2 Squeezelite 
+#### 8.2 Squeezelite 
 
 - create a multiroom group placeholder
 
@@ -539,9 +557,9 @@ https://www.basecube.de/2018/03/17/download/
 
 </br>
 
-<a name="7.3 LMS"></a>
+<a name="8.3 LMS"></a>
 
-#### 7.3 LMS 
+#### 8.3 LMS 
 
 - installation
 
@@ -554,9 +572,9 @@ https://www.basecube.de/2018/03/17/download/
 
 </br>
 
-<a name="7.4 LMS Configuration"></a>
+<a name="8.4 LMS Configuration"></a>
 
-#### 7.4 LMS Configuration (seperate WEB_GUI)
+#### 8.4 LMS Configuration (seperate WEB_GUI)
 
 - IP-address
 
@@ -582,3 +600,4 @@ https://www.basecube.de/2018/03/17/download/
        >>> set the player-groups on the main page in the upper-right corner 
            (Squeezelite must be installed and running on the clients)
        >>> synchronize all squeezelite clients with the multiroom group
+
