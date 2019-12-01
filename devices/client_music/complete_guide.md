@@ -174,9 +174,9 @@ https://buyzero.de/blogs/news/raspberry-pi-strom-sparen-tipps-tricks
            dtparam=pwr_led_trigger=none
            dtparam=pwr_led_activelow=off
          
-- create the new folder "python" and copy all client_music files into it
+- create the new folder "smarthome" and copy all client_music files into it
 
-       >>> mkdir python
+       >>> mkdir smarthome
 
            FileZilla
    
@@ -189,7 +189,7 @@ https://buyzero.de/blogs/news/raspberry-pi-strom-sparen-tipps-tricks
 
 - change folder permissions
 
-       >>> sudo chmod -v -R 770 /home/pi/python
+       >>> sudo chmod -v -R 770 /home/pi/smarthome
 
 </br>
 ------------
@@ -211,27 +211,21 @@ https://packages.debian.org/sid/all/comitup/filelist
 
        or
        
-       >>> sudo apt install /home/pi/python/support/comitup_1.3.1-1_all.deb -y
+       >>> sudo apt install /home/pi/smarthome/support/comitup_1.3.1-1_all.deb -y
 
        >>> sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
        >>> sudo systemctl disable systemd-resolved
        >>> sudo systemctl stop systemd-resolved
-       >>> sudo touch /boot/ssh
-       >>> sudo reboot
-
-- LAN connected      
-
-       >>> LAN-ADDRESS
-
-- LAN not conneted
-
-       >>> 10.42.0.1 
 
 - configuration
 
        >>> sudo nano /etc/comitup.conf
 
-           replace ap_name and insert default_music_client
+           replace ap_name and insert defaultclientmusic
+
+- hotspot IP-Address:
+
+       >>> 10.42.0.1 
 
 - remove ssid-number
 
@@ -239,7 +233,7 @@ https://packages.debian.org/sid/all/comitup/filelist
 
 - saved network connections  
 
-       >>> /etc/NetworkManager/system-connections
+       >>> cd /etc/NetworkManager/system-connections
 
 - install folder 
 
@@ -272,7 +266,7 @@ https://packages.debian.org/sid/all/comitup/filelist
 
 - update config settings 
 
-       >>> sudo nano /home/pi/python/config.yaml
+       >>> sudo nano /home/pi/smarthome/config.yaml
 
            insert your soundcard number 
  
@@ -335,7 +329,7 @@ https://blog.amnuts.com/2017/01/11/rotary-volume-control-for-the-raspberry-pi/
            After=network.target
 
            [Service]
-           ExecStart=/home/pi/python/client_music.py
+           ExecStart=/home/pi/smarthome/client_music.py
            WorkingDirectory=/home/pi
            Restart=always
 
@@ -366,7 +360,7 @@ http://www.server-wissen.de/linux-debian/ctrl-m-aus-einer-linux-datei-entfernen-
 
 - Open "client_music.py" in vi
 
-       >>> vi /home/pi/python/client_music.py
+       >>> vi /home/pi/smarthome/client_music.py
 
 - remove ^M at the end of the first line (#!/usr/bin/python3)
 - save changes (tipe :wq!)
@@ -383,7 +377,7 @@ http://www.server-wissen.de/linux-debian/ctrl-m-aus-einer-linux-datei-entfernen-
 
 - start the program manually
 
-       >>> sudo python3 /home/pi/python/client_music.py
+       >>> sudo python3 /home/pi/smarthome/client_music.py
 
 - stop the program manually
 
@@ -413,7 +407,7 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 
        or
 
-       >>> sudo apt install /home/pi/python/support/squeezelite_1.8-4.1+b1_armhf.deb -y
+       >>> sudo apt install /home/pi/smarthome/support/squeezelite_1.8-4.1+b1_armhf.deb -y
 
 - get sound device informations
 
@@ -435,7 +429,7 @@ http://www.winko-erades.nl/installing-squeezelite-player-on-a-raspberry-pi-runni
 
        >>> sudo systemctl stop squeezelite      
 
-- open hostname file and insert new name (equal to squeezelite name)
+- change hostname (equal to squeezelite name)
 
        >>> sudo nano /etc/hostname
 
@@ -469,7 +463,7 @@ https://dtcooper.github.io/raspotify/
 
        or
 
-       >>> sudo apt install /home/pi/python/support/raspotify-latest.deb
+       >>> sudo apt install /home/pi/smarthome/support/raspotify-latest.deb
 
 - get audio device informations
 

@@ -1,16 +1,14 @@
-# Client Music - Configuration Guide
+# Client Speechcontrol - Image Guide
 
-A raspberry pi controller to play music by using spotify and lms. 
+A raspberry pi controller for speech recognition based on snips.  
 
 ! This manuell discribes the IMAGE based installation only !
 
-   * <a href="#1 Hardware">1 Hardware</a>
-      * <a href="#1.1 Small Speaker (max 3W)">1.1 Small Speaker (max 3W)</a>
-      * <a href="#1.2 Big Speaker (max 30W)">1.2 Big Speaker (max 30W)</a>     
-   * <a href="#2 Installation">2 Installation</a>
-   * <a href="#3 Client Music">3 Client Music</a>
-   * <a href="#4 Squeezelite Client">4 Squeezelite Client</a>
-   * <a href="#5 Raspotify">5 Raspotify</a>
+   * <a href="#1 Hardware">1 Hardware</a>    
+      * <a href="#1.1 Small Solution (2 Mics)">1.1 Small Solution (2 Mics)</a>   
+      * <a href="#1.2 Big Solution (4 Mics)">1.2 Big Solution (4 Mics)</a>      
+   * <a href="#2 Installation">2 Installation</a>   
+   * <a href="#3 Snips.ai Satellites">3 Snips.ai Satellites</a>
 
 </br>
 ------------
@@ -80,21 +78,17 @@ A raspberry pi controller to play music by using spotify and lms.
 
 ### 2 Installation 
 
-- copy the image "client_music" on a sdcard
+- copy the image "client_speechcontrol" on a sdcard
 
        >>> Win32DiskImager
 
 - insert the card and start the raspberry pi
 
-- search on your smartphone for a [default_client_music_XX] network and connect
+- search on your smartphone for a [defaultclientspeechcontrol-XX] network and connect
 
-- open your browser and insert one of the following ip-addresses
+- open your browser and insert the following ip-address:
 
-       >>> if LAN is also connected      
-           LAN-IP_ADDRESS
-
-       >>> if LAN not conneted
-           10.42.0.1 
+       >>> 10.42.0.1 
 
 - select your wlan_ssid and insert your wlan_password
 
@@ -107,81 +101,42 @@ A raspberry pi controller to play music by using spotify and lms.
            User:     pi
            Password: raspberry
 
-</br>
-------------
-</br>
-
-<a name="3 Client Music"></a>
-
-### 3 Client Music 
-
-- add hifiberry miniAMP config, if necessary
-
-       >>> sudo nano /boot/config.txt    
-
-           # hifiberry miniAMP
-           dtoverlay=hifiberry-dac           
-
-       >>> sudo reboot
-
-- get audio card informations
-
-       >>> cat /proc/asound/cards
-
-- update config settings 
-
-       >>> sudo nano /home/pi/python/config.yaml
-
-           insert your soundcard number 
- 
-           model names:
-              - AMP2    > hifiberry_AMP2
-              - miniAMP > hifiberry_miniAMP
-
-</br>
-------------
-</br>
-
-<a name="4 Squeezelite Client"></a>
-
-### 4 Squeezelite Client
-
-- get sound device informations
-
-       >>> aplay -L
-
-- squeezelite config (example)
-
-       >>> sudo nano /etc/default/squeezelite
-
-           # ALSA output device:
-	       SL_SOUNDCARD="hw:CARD=sndrpihifiberry,DEV=0"
-	       SB_EXTRA_ARGS="-a 180"
-
-- open hostname file and insert new name (equal to squeezelite name)
+- change hostname 
 
        >>> sudo nano /etc/hostname
 
+- restart raspberry pi
+
+       >>> sudo reboot
+
 </br>
 ------------
 </br>
 
-<a name="5 Raspotify"></a>
+<a name="3 Snips.ai Satellites"></a>
 
-### 5 Raspotify (Spotify Connect Client for Raspian)
+### 3 Snips.ai Satellites
 
-- get audio device informations
+- connect to SAM (Snips Assistant Manager)
 
-       >>> aplay -l
-           (e.g "card 0, device 0" is "hw:0,0")
+       >>> sam connect [hostname].local 
 
-- raspotify config (example)
+- setup audio devices
 
-       >>> sudo nano /etc/default/raspotify
+       >>> sam setup audio
+       >>> sam test speaker
+       >>> sam test microphone
 
-	    DEVICE_NAME=" ... " 
-	    OPTIONS="--username <USERNAME> --password <PASSWORD> --device hw:1,0"
+- edit settings
+ 
+       >>> sudo nano /etc/snips.toml
 
-- restart the raspberry pi
+           [snips-common]
+           edit mqtt settings
 
-       >>> sudo reboot
+           [snips-audio-server]
+           edit bind (e.g [hostname].local@mqtt)
+
+- restart snipes
+
+       >>> sudo systemctl restart snips-*

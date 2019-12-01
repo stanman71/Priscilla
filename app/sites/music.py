@@ -195,9 +195,9 @@ def music():
         volume                 = 50        
 
 
-    """ ##################### """
-    """  table clients music  """
-    """ ##################### """   
+    """ #################### """
+    """  table client_music  """
+    """ #################### """   
 
     if GET_DEVICE_CONNECTION_MQTT() == True:
 

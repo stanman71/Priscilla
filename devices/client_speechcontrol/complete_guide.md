@@ -12,7 +12,6 @@ A raspberry pi controller for speech recognition based on snips.
    * <a href="#4 Snips.ai Satellites">4 Snips.ai Satellites</a>
 
 
-
 </br>
 ------------
 </br>
@@ -118,13 +117,6 @@ https://github.com/respeaker/seeed-voicecard
 
        >>> sudo apt-get install python3-pip -y
 
-- install python modules
-
-       >>> sudo pip3 install pyyaml 
-       >>> sudo pip3 install paho-mqtt 
-       >>> sudo pip3 install netifaces 
-       >>> sudo pip3 install snipskit[hermes,mqtt]
-
 - disable swap        
 
        >>> sudo /sbin/dphys-swapfile swapoff
@@ -161,9 +153,9 @@ https://github.com/respeaker/seeed-voicecard
            dtparam=pwr_led_trigger=none
            dtparam=pwr_led_activelow=off
          
-- create the new folder "python" and copy all client_speechcontrol files into it
+- create the new folder "smarthome" and copy all client_speechcontrol files into it
 
-       >>> mkdir python
+       >>> mkdir smarthome
 
            FileZilla
    
@@ -174,18 +166,14 @@ https://github.com/respeaker/seeed-voicecard
            user:       pi
            password:   raspberry
 
-- change folder permissions
-
-       >>> sudo chmod -v -R 770 /home/pi/python
-
-- open hostname file and insert new name 
+- change hostname 
 
        >>> sudo nano /etc/hostname
 
 - if your are using Respeaker 2MIC HAT install the driver
 
-       >>> sudo apt-get install git
-       >>> unzip /home/pi/python/support/seeed-voicecard.zip
+       >>> sudo apt-get install git -y
+       >>> unzip /home/pi/smarthome/support/seeed-voicecard.zip
        >>> cd seeed-voicecard
        >>> sudo ./install.sh
        >>> sudo reboot
@@ -210,27 +198,21 @@ https://packages.debian.org/sid/all/comitup/filelist
 
        or
        
-       >>> sudo apt install /home/pi/python/support/comitup_1.3.1-1_all.deb -y
+       >>> sudo apt install /home/pi/smarthome/support/comitup_0.7-1_all.deb -y
 
        >>> sudo rm /etc/wpa_supplicant/wpa_supplicant.conf
        >>> sudo systemctl disable systemd-resolved
        >>> sudo systemctl stop systemd-resolved
-       >>> sudo touch /boot/ssh
-       >>> sudo reboot
 
-- LAN connected      
-
-       >>> LAN-ADDRESS
-
-- LAN not conneted
+- hotspot IP-Address:
 
        >>> 10.42.0.1 
 
-- configuration
+- edit configuration
 
        >>> sudo nano /etc/comitup.conf
 
-           replace ap_name and insert default_music_client
+           base_name: defaultclientspeechcontrol 
 
 - remove ssid-number
 
@@ -238,7 +220,7 @@ https://packages.debian.org/sid/all/comitup/filelist
 
 - saved network connections  
 
-       >>> /etc/NetworkManager/system-connections
+       >>> cd /etc/NetworkManager/system-connections
 
 - install folder 
 
@@ -254,6 +236,59 @@ https://packages.debian.org/sid/all/comitup/filelist
 
 https://docs.snips.ai/articles/platform/satellites
 </br>
+https://forum.creationx.de/forum/index.php?thread/1991-spracherkennung-ohne-cloud-mit-snips-und-raspberry-pi-teil-3-mit-satelliten-arbe/
+</br>
+https://forum.snips.ai/t/audio-server-reported-an-error-on-site-default-an-error-happened-while-trying-to-play-some-audio/3741/36
+</br>
 </br>
 
+- update package informations
 
+       >>> sudo apt-get install -y dirmngr
+       >>> sudo bash -c 'echo "deb https://raspbian.snips.ai/$(lsb_release -cs) stable main" > /etc/apt/sources.list.d/snips.list'
+       >>> sudo apt-key adv --fetch-keys  https://raspbian.snips.ai/531DD1A7B702B14D.pub
+       >>> sudo apt-get update
+
+- install NodeJs and NPM 
+
+       >>> wget https://nodejs.org/dist/v10.17.0/node-v10.17.0-linux-armv6l.tar.gz
+       >>> tar -xvf node-v10.17.0-linux-armv6l.tar.gz
+       >>> cd node-v10.17.0-linux-armv6l
+       >>> sudo cp -R * /usr/local/
+       >>> node -v -
+       >>> npm -v
+
+- install satellite 
+
+       >>> sudo apt install snips-hotword-model-heysnipsv4 -y
+       >>> sudo apt install snips-satellite -y
+
+- install SAM (Snips Assistant Manager)
+
+       >>> sudo npm install -g snips-sam
+       >>> sam connect [hostname].local 
+
+- setup audio devices
+
+       >>> sam setup audio
+       >>> sam test speaker
+       >>> sam test microphone
+
+- edit settings
+ 
+       >>> sudo nano /etc/snips.toml
+
+           [snips-common]
+           add mqtt settings
+
+           [snips-audio-server]
+           edit bind (e.g [hostname].local@mqtt)
+
+           add portaudio_playback = "default" 
+
+           [snips-hotword]       
+           sensitivity = "0.25"
+
+- restart raspberry pi
+
+       >>> sudo reboot

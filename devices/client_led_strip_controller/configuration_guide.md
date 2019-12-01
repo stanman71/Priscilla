@@ -70,7 +70,7 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
 - cooler TO-220
 
-       >>> https://www.ebay.de/itm/5x-10x-TO220-Aluminium-Kuhlkorper-15x20mm-fur-Transistor-TO-220-Kuhler-Set/122909711162
+       >>> https://www.ebay.de/itm/10x-ALUMINIUMKUHLER-Kuhlkorper-Sets-fur-to-220-Transistor-20x15x10mm-APFBB-C-W/163945663799
 
 - capacitor 2200µF
 

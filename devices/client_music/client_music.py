@@ -12,7 +12,7 @@ import random
 """  path  """
 """ ###### """
                            
-PATH = "/home/pi/python/"
+PATH = "/home/pi/smarthome/"
 
 
 """ ############# """

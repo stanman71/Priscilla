@@ -477,18 +477,31 @@ def SPEECHCONTROL_TASKS(message):
         
         if spotify_token != "": 
 
-            sp             = spotipy.Spotify(auth=spotify_token)
-            sp.trace       = False      
-            spotify_volume = sp.current_playback(market=None)['device']['volume_percent']       
+            sp       = spotipy.Spotify(auth=spotify_token)
+            sp.trace = False      
+            
+            try: 
 
-            try:
-                SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)
-                                                                       
+                # start current playlist and device
+                spotify_device_id = sp.current_playback(market=None)['device']['id']
+                spotify_volume    = sp.current_playback(market=None)['device']['volume_percent']
+
+                SPOTIFY_CONTROL(spotify_token, "play", spotify_volume) 
+                sp.shuffle(True, device_id=spotify_device_id)
+
             except Exception as e:
-                print(e)
-                WRITE_LOGFILE_SYSTEM("ERROR", "Speechcontrol | Spotify Task | Play | " + str(e))   
-                return                          
 
+                # start default playlist and device
+                for device in sp.devices()["devices"]:  
+
+                    if "multiroom" in device["name"]:
+                        spotify_device_id = device["id"]
+               
+                        SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, "spotify:user:stanman71:playlist:4Qg6xrKdd3WJEEkvkEZrQd", "33")
+                        sp.shuffle(True, device_id=spotify_device_id)   
+                        break           
+
+      
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Speechcontrol | Spotify Task | Play | No Spotify Token founded")   
             return   
@@ -506,7 +519,7 @@ def SPEECHCONTROL_TASKS(message):
 
             sp             = spotipy.Spotify(auth=spotify_token)
             sp.trace       = False      
-            spotify_volume = sp.current_playback(market=None)['device']['volume_percent']       
+            spotify_volume = sp.current_playback(market=None)['device']['volume_percent']    
 
             try:
                 SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)

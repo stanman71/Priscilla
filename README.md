@@ -80,7 +80,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
        >>> sudo apt-get update && sudo apt-get upgrade -y
 
-- open hostname file and insert new name
+- change hostname 
 
        >>> sudo nano /etc/hostname
 
@@ -115,9 +115,9 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 #### 2.1 Installation 
        
-- create the new folder "/home/pi/python" and copy all files into it
+- create the new folder "/home/pi/smarthome" and copy all files into it
 
-       >>> mkdir python
+       >>> mkdir smarthome
 
            FileZilla:
 
@@ -149,7 +149,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 - install all nessessary python modules
 
        >>> sudo pip3 install scikit-learn
-       >>> sudo pip3 install -r /home/pi/python/requirements.txt --upgrade                                   
+       >>> sudo pip3 install -r /home/pi/smarthome/requirements.txt --upgrade                                   
 
 - install openCV
 
@@ -158,11 +158,11 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 - replace wrong spotipy file
  
-       >>> sudo cp /home/pi/python/support/spotipy/client.py /usr/local/lib/python3.7/dist-packages/spotipy/client.py
+       >>> sudo cp /home/pi/smarthome/support/spotipy/client.py /usr/local/lib/python3.7/dist-packages/spotipy/client.py
 
 - change folder permissions
 
-       >>> sudo chmod -v -R 070 /home/pi/python
+       >>> sudo chmod -v -R 070 /home/pi/smarthome
 
 - default_login
 
@@ -184,7 +184,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
            After=network.target
 
            [Service]
-           ExecStart=/home/pi/python/app.py
+           ExecStart=/home/pi/smarthome/app.py
            WorkingDirectory=/home/pi
            Restart=always
 
@@ -217,7 +217,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 - start the program 
 
-       >>> sudo python3 /home/pi/python/app.py
+       >>> sudo python3 /home/pi/smarthome/app.py
 
 - stop the program 
 
@@ -359,7 +359,7 @@ https://github.com/Koenkk/zigbee2mqtt
 
 - unzip zigbee2mqtt repository
 
-       >>> sudo unzip /home/pi/python/support/zigbee2mqtt_1.6.0.zip -d /opt/zigbee2mqtt
+       >>> sudo unzip /home/pi/smarthome/support/zigbee2mqtt_1.6.0.zip -d /opt/zigbee2mqtt
        >>> sudo chown -R pi:pi /opt/zigbee2mqtt
 
 - install zigbee2mqtt 
@@ -566,7 +566,7 @@ https://github.com/Koenkk/zigbee2mqtt/issues/1437
 
 - unzip the firmware files
 
-       >>> /home/pi/python/devices/zigbee_coordinator_router/z-stack_firmware.zip
+       >>> /home/pi/smarthome/devices/zigbee_coordinator_router/z-stack_firmware.zip
 
 - start SmartRF Flash Programmer
 
@@ -659,7 +659,7 @@ https://docs.snips.ai/reference/sam#installing-actions-from-the-snips-console
        >>> node -v -
        >>> npm -v
 
-- install Snipes with SAM
+- install Snipes with SAM (Snips Assistant Manager)
 
        >>> sudo npm install -g snips-sam
        >>> sam connect raspberrypi.local (raspberry pi name)
@@ -691,6 +691,9 @@ https://docs.snips.ai/reference/sam#installing-actions-from-the-snips-console
 - edit settings
  
        >>> sudo nano /etc/snips.toml
+
+           [snips-audio-server]
+           edit bind (e.g [hostname].local@mqtt)           
 
 - restart snipes
 
@@ -728,7 +731,5 @@ https://docs.snips.ai/reference/sam#installing-actions-from-the-snips-console
 
 - installed skills
 
-       >>> https://github.com/MrJohnZoidberg/Snips-Einkaufsliste
        >>> https://github.com/MrJohnZoidberg/Snips-DatumUhrzeit
        >>> https://github.com/michilehr/snips-my-weather
-       >>> 
