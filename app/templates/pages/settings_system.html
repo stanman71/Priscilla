@@ -8,8 +8,7 @@
                 <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
                   <a href="/settings/system" class="btn btn-primary btn-lg" role="button" aria-pressed="true">System</a>
                   <a href="/settings/devices" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Geräte</a>                  
-                  <a href="/settings/controller" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Controller</a>
-                  <a href="/settings/speechcontrol" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Sprachsteuerung</a>                                       
+                  <a href="/settings/controller" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Controller</a>                                   
                   <a href="/settings/users" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Benutzer</a>                  
                   <a href="/settings/system_log" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Ereignisse</a>
   
@@ -75,8 +74,102 @@
               </div>  
             </div>
 
+<!------------------------>
+<!-- SETTINGS SERVICES  -->
+<!------------------------>
+
+<section id="services"></section>  
+
+<!-- success message change settings services -->
+
+{% if success_message_change_settings_services == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Einstellungen erfolgreich geändert</span>
+  </div>
+{% endif %}  
+
+<!-- error message change settings services -->
+
+{% if error_message_change_settings_services != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_change_settings_services %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+            <div class="card"> 
+              <div class="card-header">
+                <h5 class="title">Dienste</h5>
+              </div>                 
+              <form method="POST">
+                <div class="card-body">        
+                  <div class="row"> 
+                    <div class="col-md-4">
+                      <label>ZigBee</label>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="radio_zigbee2mqtt_active_true" {% if system_services.zigbee2mqtt_active == "True" %} checked="on" {% endif %} value="True" name="radio_zigbee2mqtt_active">
+                        <label class="custom-control-label" for="radio_zigbee2mqtt_active_true">Aktiviert</label>
+                      </div>                      
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="radio_zigbee2mqtt_active_false" {% if system_services.zigbee2mqtt_active == "False" %} checked="on" {% endif %} value="False" name="radio_zigbee2mqtt_active">
+                        <label class="custom-control-label" for="radio_zigbee2mqtt_active_false">Deaktiviert</label>
+                      </div>      
+                      <br>
+                      <br>
+                    </div>        
+                  </div>   
+                  <div class="row"> 
+                    <div class="col-md-4">
+                      <label>Logitech Media Server</label>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="radio_lms_active_true" {% if system_services.lms_active == "True" %} checked="on" {% endif %} value="True" name="radio_lms_active">
+                        <label class="custom-control-label" for="radio_lms_active_true">Aktiviert</label>
+                      </div>                      
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="radio_lms_active_false" {% if system_services.lms_active == "False" %} checked="on" {% endif %} value="False" name="radio_lms_active">
+                        <label class="custom-control-label" for="radio_lms_active_false">Deaktiviert</label>
+                      </div>      
+                      <br>
+                      <br>
+                    </div>        
+                  </div>   
+                  <div class="row"> 
+                    <div class="col-md-4">
+                      <label>Squeezelite Player</label>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="radio_squeezelite_active_true" {% if system_services.squeezelite_active == "True" %} checked="on" {% endif %} value="True" name="radio_squeezelite_active">
+                        <label class="custom-control-label" for="radio_squeezelite_active_true">Aktiviert</label>
+                      </div>                      
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="radio_squeezelite_active_false" {% if system_services.squeezelite_active == "False" %} checked="on" {% endif %} value="False" name="radio_squeezelite_active">
+                        <label class="custom-control-label" for="radio_squeezelite_active_false">Deaktiviert</label>
+                      </div>      
+                      <br>
+                      <br>
+                    </div>        
+                  </div>   
+                </div>
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/settings/system#services'" name="update_settings_services" class="btn btn-fill btn-primary">SAVE</button>
+                </div>
+              </form>
+            </div>
+
 <!---------------------->
-<!-- NETWORK SETTINGS -->
+<!-- SETTINGS NETWORK -->
 <!---------------------->
 
 <section id="network"></section>  
@@ -149,14 +242,14 @@
                   </div>                  
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/settings/system#network'" name="set_lan_settings" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/settings/system#network'" name="set_settings_network" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>
 
 
 <!-------------------->
-<!-- EMAIL SETTINGS -->
+<!-- SETTINGS EMAIL -->
 <!-------------------->
 
 <section id="email"></section>  
@@ -253,8 +346,8 @@
                   </div>                                
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/settings/system#email'" name="update_email_settings" class="btn btn-fill btn-primary">SAVE</button>
-                  <button type="submit" onclick="window.location.href='/settings/system#email'" name="test_email_settings" class="btn btn-fill btn-info pull-right">TEST</button>
+                  <button type="submit" onclick="window.location.href='/settings/system#email'" name="update_settings_email" class="btn btn-fill btn-primary">SAVE</button>
+                  <button type="submit" onclick="window.location.href='/settings/system#email'" name="test_settings_email" class="btn btn-fill btn-info pull-right">TEST</button>
                 </div>
               </form>
             </div>
@@ -290,7 +383,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Backups</h5>
+                <h5 class="title">Backup</h5>
               </div>            
               <form method="POST">          
                 <div class="card-body"> 

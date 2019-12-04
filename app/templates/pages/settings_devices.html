@@ -110,8 +110,7 @@
                 <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
                   <a href="/settings/system" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">System</a>
                   <a href="/settings/devices" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Geräte</a>                  
-                  <a href="/settings/controller" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Controller</a>
-                  <a href="/settings/speechcontrol" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Sprachsteuerung</a>                                       
+                  <a href="/settings/controller" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Controller</a>                                      
                   <a href="/settings/users" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Benutzer</a>                  
                   <a href="/settings/system_log" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Ereignisse</a>
   
@@ -447,67 +446,70 @@
 <!--  ZIGBEE  -->
 <!-------------->
 
-<section id="zigbee"></section>    
+{% if system_services.zigbee2mqtt_active == "True" %}
 
-<!-- success message zigbee pairing -->
+  <section id="zigbee"></section>    
 
-{% if success_message_zigbee_pairing != [] %}
-  <div class="alert alert-success">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    {% for success in success_message_zigbee_pairing %}
-      <span data-notify="message">{{ success }}</span>
-    {% endfor %}
-  </div>
-{% endif %}  
+  <!-- success message zigbee pairing -->
 
-<!-- error message zigbee pairing --> 
+  {% if success_message_zigbee_pairing != [] %}
+    <div class="alert alert-success">
+      <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="tim-icons icon-simple-remove"></i>
+      </button>
+      {% for success in success_message_zigbee_pairing %}
+        <span data-notify="message">{{ success }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}  
 
-{% if error_message_zigbee_pairing != [] %}
-  <div class="alert alert-danger">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    {% for error in error_message_zigbee_pairing %}
-      <span data-notify="message">{{ error }}</span>
-    {% endfor %}
-  </div>
-{% endif %}   
+  <!-- error message zigbee pairing --> 
 
-            <div class="card">
-              <div class="card-header">
-                <h5 class="title">ZigBee Pairing</h5>
-              </div>            
-              <form method="POST"> 
-                <div class="card-body">        
-                  <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id="radio_zigbee_pairing_true" {% if zigbee_pairing == "True" %} checked="on" {% endif %} value="True" name="radio_zigbee_pairing">
-                    <label class="custom-control-label" for="radio_zigbee_pairing_true">Pairing aktiviert</label>
-                  </div>     
-                  <br>  
-                  <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" class="custom-control-input" id="radio_zigbee_pairing_false" {% if zigbee_pairing == "False" %} checked="on" {% endif %} value="False" name="radio_zigbee_pairing">
-                    <label class="custom-control-label" for="radio_zigbee_pairing_false">Pairing deaktiviert</label>
-                  </div> 
-                </div>   
-                <div class="card-footer">                  
-                  <button type="submit" onclick="window.location.href='/settings/devices#zigbee'" name="save_zigbee_pairing" class="btn btn-fill btn-primary">SAVE</button>
-                </div>                
-              </form>
-            </div>
+  {% if error_message_zigbee_pairing != [] %}
+    <div class="alert alert-danger">
+      <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="tim-icons icon-simple-remove"></i>
+      </button>
+      {% for error in error_message_zigbee_pairing %}
+        <span data-notify="message">{{ error }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}   
 
-            <div class="card">       
-              <form method="POST"> 
-                <div class="card-body">                                
-                  <a href="/settings/devices/topology/zigbee_topology.png?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD ZIGBEE TOPOLOGY</b></font></a>
-                </div>
-                <div class="card-footer">                  
-                  <button type="submit" onclick="window.location.href='/settings/devices#zigbee'" name="update_zigbee_topology" class="btn btn-fill btn-info">UPDATE ZIGBEE TOPOLOGY</button>
-                </div>                
-              </form>
-            </div>                
-             
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="title">ZigBee Pairing</h5>
+                </div>            
+                <form method="POST"> 
+                  <div class="card-body">        
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" class="custom-control-input" id="radio_zigbee2mqtt_pairing_true" {% if zigbee2mqtt_pairing == "True" %} checked="on" {% endif %} value="True" name="radio_zigbee2mqtt_pairing">
+                      <label class="custom-control-label" for="radio_zigbee2mqtt_pairing_true">Pairing aktiviert</label>
+                    </div>     
+                    <br>  
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" class="custom-control-input" id="radio_zigbee2mqtt_pairing_false" {% if zigbee2mqtt_pairing == "False" %} checked="on" {% endif %} value="False" name="radio_zigbee2mqtt_pairing">
+                      <label class="custom-control-label" for="radio_zigbee2mqtt_pairing_false">Pairing deaktiviert</label>
+                    </div> 
+                  </div>   
+                  <div class="card-footer">                  
+                    <button type="submit" onclick="window.location.href='/settings/devices#zigbee'" name="save_zigbee_pairing" class="btn btn-fill btn-primary">SAVE</button>
+                  </div>                
+                </form>
+              </div>
+
+              <div class="card">       
+                <form method="POST"> 
+                  <div class="card-body">                                
+                    <a href="/settings/devices/topology/zigbee_topology.png?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD ZIGBEE TOPOLOGY</b></font></a>
+                  </div>
+                  <div class="card-footer">                  
+                    <button type="submit" onclick="window.location.href='/settings/devices#zigbee'" name="update_zigbee_topology" class="btn btn-fill btn-info">UPDATE ZIGBEE TOPOLOGY</button>
+                  </div>                
+                </form>
+              </div>                
+              
+{% endif %} 
 
 <!---------------------->
 <!-- DEVICES LOGFILE  -->

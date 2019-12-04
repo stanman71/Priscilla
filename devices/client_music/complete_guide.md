@@ -20,11 +20,7 @@ A raspberry pi controller to play music by using spotify and lms.
       * <a href="#5.2 Windows 10">5.2 Windows 10</a>
    * <a href="#6 Raspotify">6 Raspotify</a>
    * <a href="#7 Reduce Image size">7 Reduce Image size</a>   
-   * <a href="#8 piCorePlayer & LMS">8 piCorePlayer & LMS</a>
-      * <a href="#8.1 General Settings">8.1 General Settings</a>
-      * <a href="#8.2 Squeezelite">8.2 Squeezelite</a>
-      * <a href="#8.3 LMS">8.3 LMS</a>
-      * <a href="#8.4 LMS Configuration">8.4 LMS Configuration</a>
+
 
 </br>
 ------------
@@ -283,7 +279,7 @@ https://davesteele.github.io/comitup/archive.html
        >>> alsamixer
 
            press "F6" and setect sound-device
-           use arrow keys and change "Digital" 
+           use arrow keys and change to "Digital" 
 
 </br>
 
@@ -505,99 +501,4 @@ https://dtcooper.github.io/raspotify/
 
        >>> Systemwerkzeuge / GParted   
 
-- select the sd-card and reduce the size
-
-</br>
-------------
-</br>
-
-<a name="8 piCorePlayer & LMS"></a>
-
-### 7 piCorePlayer & LMS (Logitech Media Server)
-
-https://www.picoreplayer.org/
-</br>
-https://www.basecube.de/2018/03/17/download/
-</br>
-</br>
-
-<a name="8.1 General Settings"></a>
-
-#### 8.1 General Settings
-
-- change settings option to beta (options are at the bottom corner on the main site)
-
-</br>
-
-- wifi settings
-
-       >>> activate wlan
-       >>> insert wlan connetion data (ssid + password)
-
-- main page
-
-       >>> resize filesystem to 200mb
-       >>> set a static ip-address
-
-</br>
-
-<a name="8.2 Squeezelite"></a>
-
-#### 8.2 Squeezelite 
-
-- create a multiroom group placeholder
-
-       >>> activate squeezelite client on the server as multiroom group base
-       >>> keep default settings (analog output)       
-       >>> choose the player name "multiroom" (multiroom group name)       
-
-- tweaks
-
-       >>> activate squeezelite autostart
-
-</br>
-
-<a name="8.3 LMS"></a>
-
-#### 8.3 LMS 
-
-- installation
-
-       >>> install LMS
-       >>> start LMS  
-
-- lms
-
-       >>> activate lms autostart
-
-</br>
-
-<a name="8.4 LMS Configuration"></a>
-
-#### 8.4 LMS Configuration (seperate WEB_GUI)
-
-- IP-address
-
-       >>> same as piCorePlayer, defaultport = 9000
-
-- Logitech Account
-
-       >>> not necessary, just skip it
-
-- settings
-
-       >>> plugins >>> install Spotty  
-
-- config spotty
-
-       >>> add premium account 
-       >>> activate piCorePlayer "multiroom" at spotify connect only
-       >>> activate option "Überwache die Verbindung der Spotty Connect Helferanwendung"       
-       >>> multiroom group is now selectable in spotify
-
-- synchronize players
-
-       >>> set the player-groups on the main page in the upper-right corner 
-           (Squeezelite must be installed and running on the clients)
-       >>> synchronize all squeezelite clients with the multiroom group
-
+- select the sd-card and reduce the partition size

@@ -1,0 +1,13 @@
+https://gadget-freakz.com/diy-zigbee-gateway/
+
+- Install SmartRF Flash programmer
+- Install the CC debugger driver
+
+  >>> When I used the setup the installation was not correct, and manually pointing to the drivers was needed
+
+- Connect the debugger with the Downloader cable to the cc2531 USB Sniffer
+- Connect both USB (from debugger and Sniffer) the same time
+- If the light on the CC debugger is RED, press set reset button on the CC debugger
+  The light on the CC debugger should now turn GREEN
+
+- Start SmartRF Flash Programmer, setup as shown below and click “Perform actions” 

@@ -10,7 +10,6 @@ from app.backend.email                 import SEND_EMAIL
 from app.backend.shared_resources      import process_management_queue
 from app.backend.process_controller    import PROCESS_CONTROLLER
 from app.backend.process_scheduler     import PROCESS_SCHEDULER_TIME, PROCESS_SCHEDULER_SENSOR, PROCESS_SCHEDULER_PING
-from app.backend.process_speechcontrol import SPEECHCONTROL_TASKS
 
 
 """ ########################## """
@@ -72,14 +71,6 @@ def PROCESS_MANAGEMENT():
                     ieeeAddr = process[3]
                     
                     PROCESS_SCHEDULER_SENSOR(task, ieeeAddr)                 
-
-
-            # #############
-            # speechcontrol
-            # #############
-            
-            if process[0] == "speechcontrol":  
-                SPEECHCONTROL_TASKS(process[1])           
 
 
         except Exception as e:         

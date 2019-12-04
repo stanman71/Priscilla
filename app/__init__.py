@@ -52,7 +52,7 @@ except:
 UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway)
 
 
-from app.sites                      import index, dashboard, scheduler, programs, plants, led_scenes, led_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_devices, settings_controller, settings_speechcontrol, settings_users, settings_system_log, errors
+from app.sites                      import index, dashboard, scheduler, programs, plants, led_scenes, led_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_devices, settings_controller, settings_users, settings_system_log, errors
 from app.backend.shared_resources   import process_management_queue
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
 from app.backend.shared_resources   import REFRESH_MQTT_INPUT_MESSAGES_THREAD
@@ -121,34 +121,63 @@ except Exception as e:
     WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e)) 
 
 
-""" ###### """
-""" zigbee """
-""" ###### """
+""" ######## """
+""" services """
+""" ######## """
  
-if CHECK_ZIGBEE2MQTT_AT_STARTUP():  
-    print("ZigBee2MQTT | Connected") 
-    
-    WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Connected")
+if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
 
-    # deactivate pairing at startup
-    SET_ZIGBEE2MQTT_PAIRING("False")
-    
-    channel = "miranda/zigbee2mqtt/bridge/config/permit_join"
-    msg     = "false"
-
-    heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
-    time.sleep(1)
-
-    if CHECK_ZIGBEE2MQTT_PAIRING("false"):                        
-        WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Pairing disabled") 
-    else:             
-        WRITE_LOGFILE_SYSTEM("WARNING", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")    
+    if CHECK_ZIGBEE2MQTT_AT_STARTUP():  
+        print("ZigBee2MQTT | Connected") 
         
+        WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Connected")
+
+        # deactivate pairing at startup
+        SET_ZIGBEE2MQTT_PAIRING("False")
+        
+        channel = "miranda/zigbee2mqtt/bridge/config/permit_join"
+        msg     = "false"
+
+        heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
+        time.sleep(1)
+
+        if CHECK_ZIGBEE2MQTT_PAIRING("false"):                        
+            WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Pairing disabled") 
+        else:             
+            WRITE_LOGFILE_SYSTEM("WARNING", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")    
+            
+    else:
+        print("ERROR: ZigBee2MQTT | No connection") 
+        
+        WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | No Connection")        
+        SEND_EMAIL("ERROR", "ZigBee2MQTT | No Connection")          
+
 else:
-    print("ERROR: ZigBee2MQTT | No connection") 
-    
-    WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | No Connection")        
-    SEND_EMAIL("ERROR", "ZigBee2MQTT | No Connection")          
+    os.system("sudo systemctl stop zigbee2mqtt")
+    WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Disabled")
+    print("ZigBee2MQTT | Disabled") 
+
+
+if GET_SYSTEM_SERVICES().lms_active != "True":
+    try:
+        os.system("sudo systemctl stop logitechmediaserver")
+        WRITE_LOGFILE_SYSTEM("EVENT", "Logitech Media Server | Disabled")
+        print("Logitech Media Server | Disabled") 
+        time.sleep(1)
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "Logitech Media Server | " + str(e)) 
+        print("ERROR: Logitech Media Server | " + str(e)) 
+
+
+if GET_SYSTEM_SERVICES().squeezelite_active != "True":
+    try:
+        os.system("sudo systemctl stop squeezelite")
+        WRITE_LOGFILE_SYSTEM("EVENT", "Squeezelie Player | Disabled")
+        print("Squeezelie Player | Disabled") 
+        time.sleep(1)
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "Squeezelie Player | " + str(e)) 
+        print("ERROR: Squeezelie Player | " + str(e)) 
 
 
 """ #################### """

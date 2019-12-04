@@ -54,8 +54,9 @@ def settings_devices():
     if GET_DEVICE_CONNECTION_MQTT() == False:
         error_message_mqtt_connection = True
 
-    if GET_DEVICE_CONNECTION_ZIGBEE2MQTT() == False:
-        error_message_zigbee2mqtt_connection = True
+    if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
+        if GET_DEVICE_CONNECTION_ZIGBEE2MQTT() == False:
+            error_message_zigbee2mqtt_connection = True
 
     # delete message
     if session.get('delete_device_success', None) != None:
@@ -104,16 +105,21 @@ def settings_devices():
                                 # check mqtt connection
                                 if GET_DEVICE_CONNECTION_MQTT() == True:
 
-                                    channel  = "miranda/zigbee2mqtt/bridge/config/rename"
-                                    msg      = '{"old": "' + old_name + '", "new": "' + new_name + '"}'
+                                    # check zigbee service
+                                    if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":                                     
+                                        channel  = "miranda/zigbee2mqtt/bridge/config/rename"
+                                        msg      = '{"old": "' + old_name + '", "new": "' + new_name + '"}'
 
-                                    heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
+                                        heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
 
-                                    if CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
-                                        SET_DEVICE_NAME(ieeeAddr, new_name)  
-                                        success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert")       
+                                        if CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
+                                            SET_DEVICE_NAME(ieeeAddr, new_name)  
+                                            success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert")       
+                                        else:
+                                            error_message_change_settings_devices.append(old_name + " || Name konnte nicht verändert werden")       
+
                                     else:
-                                        error_message_change_settings_devices.append(old_name + " || Name konnte nicht verändert werden")       
+                                        error_message_change_settings_devices.append(old_name + " || Zigbee ist deaktiviert")    
                         
                         else: 
                             error_message_change_settings_devices.append(old_name + " || Ungültige Eingabe || Name bereits vergeben")  
@@ -302,17 +308,20 @@ def settings_devices():
 
 
     # change pairing setting
-    if request.form.get("save_zigbee_pairing") != None: 
+    if request.form.get("save_zigbee2mqtt_pairing") != None: 
 
         # check mqtt connection
         if GET_DEVICE_CONNECTION_MQTT() != True:  
             error_message_zigbee_pairing.append("Keine MQTT-Verbindung")  
 
+        # check zigbee service
+        elif GET_SYSTEM_SERVICES().zigbee2mqtt_active != "True":  
+            error_message_zigbee_pairing.append("Zigbee ist deaktiviert")              
+
         else:
-            setting_pairing = str(request.form.get("radio_zigbee_pairing"))
+            setting_pairing = str(request.form.get("radio_zigbee2mqtt_pairing"))
             
-            if setting_pairing == "True":
-                    
+            if setting_pairing == "True":               
                 channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
                 msg      = "true"
 
@@ -322,7 +331,7 @@ def settings_devices():
                 Thread.start()                      
                 time.sleep(1)
 
-                if CHECK_ZIGBEE2MQTT_PAIRING("true"):             
+                if CHECK_ZIGBEE2MQTT_PAIRING("True"):             
                     WRITE_LOGFILE_SYSTEM("WARNING", "ZigBee2MQTT | Pairing enabled") 
                     SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
                     success_message_zigbee_pairing.append("Einstellung erfolgreich übernommen") 
@@ -330,15 +339,14 @@ def settings_devices():
                     WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing enabled | Setting not confirmed")   
                     error_message_zigbee_pairing.append("Einstellung nicht bestätigt") 
                                             
-            else:
-                
+            else:         
                 channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
                 msg      = "false"
 
                 heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
                 time.sleep(1)
 
-                if CHECK_ZIGBEE2MQTT_PAIRING("false"):                 
+                if CHECK_ZIGBEE2MQTT_PAIRING("False"):                 
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "ZigBee2MQTT | Pairing disabled") 
                     SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
                     success_message_zigbee_pairing.append("Einstellung erfolgreich übernommen") 
@@ -351,7 +359,7 @@ def settings_devices():
     if request.form.get("update_zigbee_topology") != None: 
 
         # check mqtt connection
-        if GET_DEVICE_CONNECTION_MQTT() == True:  
+        if GET_DEVICE_CONNECTION_MQTT() == True and GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
 
             channel  = "miranda/zigbee2mqtt/bridge/networkmap"
             msg      = "graphviz"
@@ -380,8 +388,9 @@ def settings_devices():
     dropdown_list_exception_options = ["IP-Address"] 
     dropdown_list_operators         = ["=", ">", "<"]
     
-    list_devices   = GET_ALL_DEVICES("")
-    zigbee_pairing = GET_ZIGBEE2MQTT_PAIRING()
+    list_devices        = GET_ALL_DEVICES("")
+    zigbee2mqtt_pairing = GET_ZIGBEE2MQTT_PAIRING()
+    system_services     = GET_SYSTEM_SERVICES()  
 
     data = {'navigation': 'settings'}
 
@@ -528,13 +537,14 @@ def settings_devices():
                                                     success_message_zigbee_pairing=success_message_zigbee_pairing,
                                                     error_message_zigbee_pairing=error_message_zigbee_pairing,
                                                     success_message_logfile=success_message_logfile,     
-                                                    error_message_logfile=error_message_logfile,                                                  
+                                                    error_message_logfile=error_message_logfile,      
+                                                    system_services=system_services,                                            
                                                     list_devices=list_devices,
                                                     list_exception_devices=list_exception_devices,
                                                     list_exception_sensors=list_exception_sensors,
                                                     dropdown_list_exception_options=dropdown_list_exception_options,
                                                     dropdown_list_operators=dropdown_list_operators,
-                                                    zigbee_pairing=zigbee_pairing,
+                                                    zigbee2mqtt_pairing=zigbee2mqtt_pairing,
                                                     timestamp=timestamp,      
                                                     device_1_input_values=device_1_input_values,
                                                     device_2_input_values=device_2_input_values,
@@ -591,16 +601,22 @@ def remove_device(ieeeAddr):
 
         elif result == True and device_gateway == "zigbee2mqtt":
             
-            if device_gateway == "zigbee2mqtt":
-                channel  = "miranda/zigbee2mqtt/bridge/config/remove"
-                msg      = device_name
+            # check zigbee service
+            if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":            
 
-                heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
+                if device_gateway == "zigbee2mqtt":
+                    channel  = "miranda/zigbee2mqtt/bridge/config/remove"
+                    msg      = device_name
 
-                if CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
-                    session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"       
-                else:
-                    session['delete_device_error'] = device_name + " || Löschung nicht bestätigt"         
+                    heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
+
+                    if CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
+                        session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"       
+                    else:
+                        session['delete_device_error'] = device_name + " || Löschung nicht bestätigt"         
+
+            else:
+                session['delete_device_error'] = device_name + " || Zigbee ist deaktiviert"      
             
         else:
             session['delete_device_error'] = device_name + " || " + str(result)

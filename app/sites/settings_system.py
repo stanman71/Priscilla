@@ -84,12 +84,14 @@ def HOST_SHUTDOWN():
 @login_required
 @permission_required
 def settings_system():
-    success_message_change_settings_network = False
-    error_message_change_settings_network   = []
-    success_message_change_settings_email   = False       
-    error_message_change_settings_email     = [] 
-    success_message_backup_database         = ""    
-    error_message_backup_database           = ""
+    success_message_change_settings_services = False    
+    error_message_change_settings_services   = [] 
+    success_message_change_settings_network  = False
+    error_message_change_settings_network    = []
+    success_message_change_settings_email    = False       
+    error_message_change_settings_email      = [] 
+    success_message_backup_database          = ""    
+    error_message_backup_database            = ""
 
     message_system              = "" 
     message_ip_config_change    = False
@@ -135,11 +137,109 @@ def settings_system():
         message_system = "System wird in 10 Sekunden heruntergefahren"
 
 
-    """ ############## """
-    """  lan settings  """
-    """ ############## """    
+    """ ################### """
+    """  settings services  """
+    """ ################### """    
+
+    if request.form.get("update_settings_services") != None:
+
+        error_founded = False
+
+        if request.form.get("radio_zigbee2mqtt_active") != None:
+            zigbee2mqtt_active = request.form.get("radio_zigbee2mqtt_active")
+        else:
+            error_message_change_settings_services.append("Ungültige Eingabe Zigbee || Keinen Wert angegeben") 
+            error_founded = True           
+
+        if request.form.get("radio_lms_active") != None:
+            lms_active = request.form.get("radio_lms_active")
+        else:
+            error_message_change_settings_services.append("Ungültige Eingabe Logitech Media Server || Keinen Wert angegeben") 
+            error_founded = True      
+
+        if request.form.get("radio_squeezelite_active") != None:
+            squeezelite_active = request.form.get("radio_squeezelite_active")
+        else:
+            error_message_change_settings_services.append("Ungültige Eingabe Squeezelite Player || Keinen Wert angegeben") 
+            error_founded = True          
+
+        if error_founded == False:
+
+            if SET_SYSTEM_SERVICES(zigbee2mqtt_active, lms_active, squeezelite_active):
+                success_message_change_settings_services = True
+
+                # zigbee
+
+                if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
+                    try:
+                        os.system("sudo systemctl start zigbee2mqtt")
+                        WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Activated")
+                        print("ZigBee2MQTT | Activated") 
+                        time.sleep(1)
+                    except Exception as e:
+                        WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | " + str(e)) 
+                        print("ERROR: ZigBee2MQTT | " + str(e))      
+
+                else:
+                    try:
+                        os.system("sudo systemctl stop zigbee2mqtt")
+                        WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Disabled")
+                        print("ZigBee2MQTT | Disabled") 
+                        time.sleep(1)
+                    except Exception as e:
+                        WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | " + str(e)) 
+                        print("ERROR: ZigBee2MQTT | " + str(e)) 
+           
+                # logitech media server
+
+                if GET_SYSTEM_SERVICES().lms_active == "True":
+                    try:
+                        os.system("sudo systemctl start logitechmediaserver")
+                        WRITE_LOGFILE_SYSTEM("EVENT", "Logitech Media Server | Activated")
+                        print("Logitech Media Server | Activated") 
+                        time.sleep(1)
+                    except Exception as e:
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Logitech Media Server | " + str(e)) 
+                        print("ERROR: Logitech Media Server | " + str(e))       
+ 
+                else: 
+                    try:
+                        os.system("sudo systemctl stop logitechmediaserver")
+                        WRITE_LOGFILE_SYSTEM("EVENT", "Logitech Media Server | Disabled")
+                        print("Logitech Media Server | Disabled") 
+                        time.sleep(1)
+                    except Exception as e:
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Logitech Media Server | " + str(e)) 
+                        print("ERROR: Logitech Media Server | " + str(e)) 
+
+                # squeezelite player
+
+                if GET_SYSTEM_SERVICES().squeezelite_active == "True":
+                    try:
+                        os.system("sudo systemctl start squeezelite")
+                        WRITE_LOGFILE_SYSTEM("EVENT", "Squeezelie Player | Activated")
+                        print("Squeezelie Player | Activated") 
+                        time.sleep(1)
+                    except Exception as e:
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Squeezelie Player | " + str(e)) 
+                        print("ERROR: Squeezelie Player | " + str(e))     
+
+                else:
+                    try:
+                        os.system("sudo systemctl stop squeezelite")
+                        WRITE_LOGFILE_SYSTEM("EVENT", "Squeezelie Player | Disabled")
+                        print("Squeezelie Player | Disabled") 
+                        time.sleep(1)
+                    except Exception as e:
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Squeezelie Player | " + str(e)) 
+                        print("ERROR: Squeezelie Player | " + str(e)) 
+
+
+    """ ################# """
+    """  settings network """
+    """ ################# """    
                 
-    if request.form.get("set_lan_settings") != None:
+    if request.form.get("set_settings_network") != None:
         
         if request.form.get("checkbox_lan_dhcp"):
             lan_dhcp = "True" 
@@ -211,12 +311,12 @@ def settings_system():
                 success_message_change_settings_network = True  
 
 
-    """ ####### """
-    """  email  """
-    """ ####### """    
+    """ ################ """
+    """  settings email  """
+    """ ################ """    
     
     # update email settings
-    if request.form.get("update_email_settings") != None:  
+    if request.form.get("update_settings_email") != None:  
 
         error_founded = False
 
@@ -264,7 +364,7 @@ def settings_system():
 
 
     # test email settings
-    if request.form.get("test_email_settings") != None:  
+    if request.form.get("test_settings_email") != None:  
         message_test_settings_email = SEND_EMAIL("TEST", "TEST")
 
 
@@ -284,7 +384,8 @@ def settings_system():
     lan_dhcp          = GET_HOST_NETWORK().lan_dhcp
     lan_ip_address    = GET_HOST_NETWORK().lan_ip_address
     lan_gateway       = GET_HOST_NETWORK().lan_gateway
-     
+
+    system_services   = GET_SYSTEM_SERVICES()     
     email_settings    = GET_EMAIL_SETTINGS()
     list_backup_files = GET_BACKUP_FILES()
 
@@ -293,6 +394,8 @@ def settings_system():
     return render_template('layouts/default.html',
                             data=data,    
                             content=render_template( 'pages/settings_system.html',   
+                                                    success_message_change_settings_services=success_message_change_settings_services,
+                                                    error_message_change_settings_services=error_message_change_settings_services,
                                                     success_message_change_settings_network=success_message_change_settings_network,                             
                                                     error_message_change_settings_network=error_message_change_settings_network, 
                                                     success_message_change_settings_email=success_message_change_settings_email,                                                       
@@ -304,6 +407,7 @@ def settings_system():
                                                     lan_dhcp=lan_dhcp,
                                                     lan_ip_address=lan_ip_address,
                                                     lan_gateway=lan_gateway,  
+                                                    system_services=system_services,
                                                     email_settings=email_settings,                                            
                                                     list_backup_files=list_backup_files,                    
                                                     ) 

@@ -1,9 +1,9 @@
-# Miranda
+# Smarthome
 
 This project creates a smarthome environment.
 
    * <a href="#1 Prepare Raspian">1 Prepare Raspian</a>
-   * <a href="#2 Miranda">2 Miranda</a>
+   * <a href="#2 Smarthome">2 Smarthome</a>
       * <a href="#2.1 Installation">2.1 Installation</a>
       * <a href="#2.2 Autostart">2.2 Autostart</a>      
       * <a href="#2.3 Manually Control">2.3 Manually Control</a>
@@ -20,10 +20,11 @@ This project creates a smarthome environment.
    * <a href="#5 Zigbee Coordinator / Router">5 Zigbee Coordinator / Router</a>
       * <a href="#5.1 Hardware">5.1 Hardware</a>
       * <a href="#5.2 Flashing">5.2 Flashing</a>
-      * <a href="#5.3 Raspberry Pi installation (coordinator only)">5.3 Raspberry Pi installation (coordinator only)</a>
-   * <a href="#6 Snips.ai Base">6 Snips.ai Base</a>
-      * <a href="#6.1 Installation">6.1 Installation</a>   
-      * <a href="#6.2 Snips Assistent">6.2 Snips Assistent</a>            
+      * <a href="#5.3 Raspberry Pi installation (coordinator only)">5.3 Raspberry Pi installation (coordinator only)</a>   
+   * <a href="#6 Logitech Media Server (LMS)">7 Logitech Media Server (LMS)</a>
+      * <a href="#6.1 Installation">6.1 Installation</a>
+      * <a href="#6.2 Squeezelite Player">6.2 Squeezelite Player</a>
+      * <a href="#6.3 LMS Configuration">6.3 LMS Configuration</a>     
 
 
 ### Features
@@ -55,10 +56,6 @@ https://www.antary.de/2018/12/28/raspberry-pi-ein-blick-auf-den-stromverbrauch/
 https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 </br>
 </br>
-
-- snips supported Raspbian Stretch only !
-
-       >>> https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-04-09/
 
 - activate ssh on your raspberry pi
 
@@ -107,9 +104,9 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 ------------
 </br>
 
-<a name="2 Miranda"></a>
+<a name="2 Smarthome"></a>
 
-### 2 Miranda
+### 2 Smarthome
 
 <a name="2.1 Installation"></a>
 
@@ -177,10 +174,10 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 - create an autostart-file
 
-       >>> sudo nano /etc/systemd/system/miranda.service
+       >>> sudo nano /etc/systemd/system/smarthome.service
 
            [Unit]
-           Description=Miranda
+           Description=Smarthome
            After=network.target
 
            [Service]
@@ -193,17 +190,17 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 - enable autostart
 
-       >>> sudo systemctl enable miranda.service
+       >>> sudo systemctl enable smarthome.service
 
 - start / stop service
 
-       >>> sudo systemctl start miranda
-       >>> sudo systemctl stop miranda
+       >>> sudo systemctl start smarthome
+       >>> sudo systemctl stop smarthome
 
 - show status / log
 
-       >>> systemctl status miranda.service
-       >>> journalctl -u miranda
+       >>> systemctl status smarthome.service
+       >>> journalctl -u smarthome
 
 </br>
 
@@ -211,9 +208,9 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 #### 2.3 Manually Control 
 
-- deactivate the miranda service
+- deactivate the smarthome service
 
-       >>> sudo systemctl stop miranda
+       >>> sudo systemctl stop smarthome
 
 - start the program 
 
@@ -359,7 +356,7 @@ https://github.com/Koenkk/zigbee2mqtt
 
 - unzip zigbee2mqtt repository
 
-       >>> sudo unzip /home/pi/smarthome/support/zigbee2mqtt_1.6.0.zip -d /opt/zigbee2mqtt
+       >>> sudo unzip /home/pi/smarthome/support/zigbee2mqtt_1.7.1.zip -d /opt/zigbee2mqtt
        >>> sudo chown -R pi:pi /opt/zigbee2mqtt
 
 - install zigbee2mqtt 
@@ -632,19 +629,13 @@ https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 ------------
 </br>
 
-<a name="6 Snips.ai Base"></a>
+<a name="6 Logitech Media Server (LMS)"></a>
 
-### 6 Snips.ai Base
+### 6 Logitech Media Server (LMS)
 
-https://console.snips.ai/login
+https://www.hagensieker.com/wordpress/2018/06/12/302/
 </br>
-https://smarthome-training.com/lokale-sprachsteuerung-mit-openhab-2-und-snips-ai/
-</br>
-https://docs.snips.ai/getting-started/quick-start-raspberry-pi
-</br>
-https://docs.snips.ai/articles/platform/satellites
-</br>
-https://docs.snips.ai/reference/sam#installing-actions-from-the-snips-console
+http://downloads.slimdevices.com/nightly/7.9/sc/
 </br>
 </br>
 
@@ -652,84 +643,74 @@ https://docs.snips.ai/reference/sam#installing-actions-from-the-snips-console
 
 #### 6.1 Installation
 
-- install NodeJs and NPM
+- install dependencies 
 
-       >>> curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-       >>> sudo apt-get install -y nodejs
-       >>> node -v -
-       >>> npm -v
+       >>> sudo apt-get install libio-socket-ssl-perl libnet-libidn-perl libnet-ssleay-perl perl-openssl-defaults
 
-- install Snipes with SAM (Snips Assistant Manager)
+- install LMS
 
-       >>> sudo npm install -g snips-sam
-       >>> sam connect raspberrypi.local (raspberry pi name)
-       >>> sam init
-       >>> sam update
-
-- setup audio devices
-
-       >>> sam setup audio
-       >>> sam test speaker
-       >>> sam test microphone
-
-- enable or disable audio feedback
-	
-       >>> sam sound-feedback <on|off>
-
-- checking MQTT messages
-
-       >>> sam watch
-
-- checking the status of the device
-
-       >>> sam status
-
-- install the latest update
-
-       >>> sam update platform
-
-- edit settings
- 
-       >>> sudo nano /etc/snips.toml
-
-           [snips-audio-server]
-           edit bind (e.g [hostname].local@mqtt)           
-
-- restart snipes
-
-       >>> sudo systemctl restart snips-*
+       >>> sudo dpkg -i /home/pi/python/support/logitechmediaserver_7.9.2~1574959426_arm.deb
 
 </br>
 
-<a name="6.2 Snips Assistent"></a>
+<a name="6.2 Squeezelite Player"></a>
 
-#### 6.2 Snips Assistent
+#### 6.2 Squeezelite Player
 
-- create an account on the website, if nessesary
+- create a multiroom group placeholder
 
-       >>> https://console.snips.ai/signup
+- install dependencies
 
-- login on the raspberry pi
+       >>> sudo apt-get install libasound2-dev libflac-dev libmad0-dev libvorbis-dev libfaad-dev libmpg123-dev liblircclient-dev libncurses5-dev
 
-       >>> sam login
+- install squeezelite
 
-- install the assistant
+       >>> sudo apt-get install squeezelite 
 
-       >>> sam install assistant
+       or
 
-- update the assistant
+       >>> sudo apt install /home/pi/python/support/squeezelite_1.8-4.1+b1_armhf.deb -y
 
-       >>> sam update-assistant
+- squeezelite config 
 
-- installing actions from the Snips Console
+       >>> sudo nano /etc/default/squeezelite 
 
-       >>> sam install actions
+           SL_NAME="multiroom"
 
-- delete skills
+           # ALSA output device:
+	    SL_SOUNDCARD="hw:CARD=ALSA,DEV=0"
 
-       >>> sudo rm -fr /var/lib/snips/skills/[skill_name]
+- restart squeezelite
+          
+       >>> sudo systemctl restart squeezelite
 
-- installed skills
+</br>
 
-       >>> https://github.com/MrJohnZoidberg/Snips-DatumUhrzeit
-       >>> https://github.com/michilehr/snips-my-weather
+<a name="6.3 LMS Configuration"></a>
+
+#### 6.3 LMS Configuration 
+
+- open LMS web-gui
+
+       IP-address:  raspberry pi address
+       defaultport: 9000
+
+- skip logitech account creation
+
+- install spotty plugin
+
+       >>> settings / plugins / Spotty  
+
+- config spotty
+
+       >>> add premium account 
+       >>> activate local placeholder player "multiroom" at spotify connect only
+       >>> activate option "Überwache die Verbindung der Spotty Connect Helferanwendung"    
+          
+       >>> multiroom group is now selectable in spotify
+
+- synchronize players
+
+       >>> set the player-groups on the main page in the upper-right corner 
+           (Squeezelite must be installed and running on the clients)
+       >>> synchronize all squeezelite clients with the multiroom group

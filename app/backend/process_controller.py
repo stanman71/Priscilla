@@ -701,9 +701,27 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
             except:
                 spotify_volume = 50
             
-
             if task[1] == "play":
-                SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
+
+                try: 
+                    # start current playlist and device
+                    spotify_device_id = sp.current_playback(market=None)['device']['id']
+
+                    SPOTIFY_CONTROL(spotify_token, "play", spotify_volume) 
+                    sp.shuffle(True, device_id=spotify_device_id)
+
+                except Exception as e:
+                    # start default playlist and device
+                    for device in sp.devices()["devices"]:  
+
+                        if "multiroom" in device["name"]:
+                            spotify_device_id = device["id"]
+                
+                            SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, "spotify:user:stanman71:playlist:4Qg6xrKdd3WJEEkvkEZrQd", "33")
+                            sp.shuffle(True, device_id=spotify_device_id)   
+                            break           
+
+
 
             if task[1] == "previous": 
                 SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
@@ -714,11 +732,21 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
             if task[1] == "stop": 
                 SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)      
 
+
+
             if task[1] == "turn_up":   
-                SPOTIFY_CONTROL(spotify_token, "turn_up", spotify_volume)
+                device_name = sp.current_playback(market=None)['device']['name']
+
+                if "multiroom" not in device_name:
+                    SPOTIFY_CONTROL(spotify_token, "turn_up", spotify_volume)
 
             if task[1] == "turn_down":   
-                SPOTIFY_CONTROL(spotify_token, "turn_down", spotify_volume)                 
+                device_name = sp.current_playback(market=None)['device']['name']
+
+                if "multiroom" not in device_name:
+                    SPOTIFY_CONTROL(spotify_token, "turn_down", spotify_volume)                 
+
+
 
             if task[1].lower() == "volume":
                 spotify_volume = int(task[2])
