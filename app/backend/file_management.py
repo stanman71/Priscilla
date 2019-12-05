@@ -21,7 +21,7 @@ if os.name == "nt":
     PATH = os.path.abspath("") 
 # linux
 else:                               
-    PATH = "/home/pi/python/"
+    PATH = "/home/pi/smarthome/"
 
 
 def GET_PATH():

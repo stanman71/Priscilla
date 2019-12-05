@@ -175,9 +175,9 @@ def PROGRAM_THREAD(program_id):
                                     if new_setting == True: 
 
                                         if device.gateway == "mqtt":
-                                            channel = "miranda/mqtt/" + device.ieeeAddr + "/set"  
+                                            channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
                                         if device.gateway == "zigbee2mqtt":   
-                                            channel = "miranda/zigbee2mqtt/" + device.name + "/set"          
+                                            channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
                                         msg = program_setting
 

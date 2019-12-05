@@ -345,13 +345,13 @@ def UPDATE_DEVICES(gateway):
    
     if gateway == "mqtt":
         
-        heapq.heappush(mqtt_message_queue, (20, ("miranda/mqtt/devices", "")))
+        heapq.heappush(mqtt_message_queue, (20, ("smarthome/mqtt/devices", "")))
         time.sleep(10)
 
         try:
             for message in GET_MQTT_INCOMING_MESSAGES(15):
                 
-                if message[1] == "miranda/mqtt/log":
+                if message[1] == "smarthome/mqtt/log":
 
                     message = str(message[2])
                    
@@ -412,7 +412,7 @@ def UPDATE_DEVICES(gateway):
                       
                     # update input values
                     
-                    heapq.heappush(mqtt_message_queue, (20, ("miranda/mqtt/" + ieeeAddr + "/get", "")))
+                    heapq.heappush(mqtt_message_queue, (20, ("smarthome/mqtt/" + ieeeAddr + "/get", "")))
                     time.sleep(1)
 
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | MQTT | Update")
@@ -432,14 +432,14 @@ def UPDATE_DEVICES(gateway):
         
             error = ""
         
-            heapq.heappush(mqtt_message_queue, (20, ("miranda/zigbee2mqtt/bridge/config/devices", "")))        
+            heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/devices", "")))        
             time.sleep(5)
         
             try:
 
                 for message in GET_MQTT_INCOMING_MESSAGES(10):
                         
-                    if message[1] == "miranda/zigbee2mqtt/bridge/log":
+                    if message[1] == "smarthome/zigbee2mqtt/bridge/log":
 
                         message = str(message[2])
                         message = message.replace("'","")
@@ -574,7 +574,7 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting):
     for message in GET_MQTT_INCOMING_MESSAGES(10):
         
         # search for fitting message in incoming_messages_list
-        if message[1] == "miranda/mqtt/" + ieeeAddr:  
+        if message[1] == "smarthome/mqtt/" + ieeeAddr:  
             
             setting = setting[1:-1]
             
@@ -604,7 +604,7 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
         for message in GET_MQTT_INCOMING_MESSAGES(10):
 
             # search for fitting message in incoming_messages_list
-            if message[1] == "miranda/zigbee2mqtt/" + device_name:   
+            if message[1] == "smarthome/zigbee2mqtt/" + device_name:   
         
                 setting = setting[1:-1]
 
@@ -639,7 +639,7 @@ def CHECK_ZIGBEE2MQTT_AT_STARTUP():
 
     while counter != 5:      
         for message in GET_MQTT_INCOMING_MESSAGES(10):          
-            if message[1] == "miranda/zigbee2mqtt/bridge/state":
+            if message[1] == "smarthome/zigbee2mqtt/bridge/state":
             
                 try:
                     if message[2] == "online":
@@ -661,7 +661,7 @@ def CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
 
     while counter != 10:      
         for message in GET_MQTT_INCOMING_MESSAGES(10):      
-            if message[1] == "miranda/zigbee2mqtt/bridge/log":
+            if message[1] == "smarthome/zigbee2mqtt/bridge/log":
             
                 try:
                     data = json.loads(message[2])
@@ -683,7 +683,7 @@ def CHECK_ZIGBEE2MQTT_PAIRING(pairing_setting):
 
     while counter != 5:       
         for message in GET_MQTT_INCOMING_MESSAGES(10):
-            if message[1] == "miranda/zigbee2mqtt/bridge/config":
+            if message[1] == "smarthome/zigbee2mqtt/bridge/config":
             
                 try:
                     data = json.loads(message[2])
@@ -710,7 +710,7 @@ def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
 
     while counter != 15:       
         for message in GET_MQTT_INCOMING_MESSAGES(15):
-            if message[1] == "miranda/zigbee2mqtt/bridge/log":
+            if message[1] == "smarthome/zigbee2mqtt/bridge/log":
             
                 try:
                     data = json.loads(message[2])
@@ -823,14 +823,14 @@ def REQUEST_SENSORDATA(job_name):
     sensor_key = sensordata_job.sensor_key
     sensor_key = sensor_key.replace(" ", "")
  
-    channel = "miranda/" + device_gateway + "/" + device_ieeeAddr + "/get"
+    channel = "smarthome/" + device_gateway + "/" + device_ieeeAddr + "/get"
  
     heapq.heappush(mqtt_message_queue, (20, (channel, "")))        
     time.sleep(2) 
   
     for message in GET_MQTT_INCOMING_MESSAGES(5):
         
-        if message[1] == "miranda/" + device_gateway + "/" + device_ieeeAddr:
+        if message[1] == "smarthome/" + device_gateway + "/" + device_ieeeAddr:
                 
             try:
 
@@ -858,7 +858,7 @@ def SAVE_SENSORDATA(job_id):
     
     for message in GET_MQTT_INCOMING_MESSAGES(10):
         
-        if (message[1] == "miranda/" + device_gateway + "/" + device_ieeeAddr):
+        if (message[1] == "smarthome/" + device_gateway + "/" + device_ieeeAddr):
                                 
             try:
                 data     = json.loads(message[2])

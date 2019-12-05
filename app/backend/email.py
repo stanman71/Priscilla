@@ -48,7 +48,7 @@ def SEND_EMAIL(subject, message):
 
         try:
             with app.app_context():
-                msg = Message(subject    = "MIRANDA | " + subject + " | " + message,
+                msg = Message(subject    = "SMARTHOME | " + subject + " | " + message,
                               sender     = app.config.get("MAIL_USERNAME"),
                               recipients = recipients,
                               body       = "")

@@ -631,9 +631,9 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                 if new_setting == True:    
 
                     if device.gateway == "mqtt":
-                        channel = "miranda/mqtt/" + device.ieeeAddr + "/set"  
+                        channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
                     if device.gateway == "zigbee2mqtt":   
-                        channel = "miranda/zigbee2mqtt/" + device.name + "/set"          
+                        channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
                     msg = controller_setting
 
@@ -779,7 +779,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                 if spotify_device_id == 0:
                     device = GET_DEVICE_BY_NAME(device_name)
 
-                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
+                    heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
                     time.sleep(5)
 
                     for device in list_spotify_devices:
@@ -835,7 +835,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                 if spotify_device_id == 0:
                     device = GET_DEVICE_BY_NAME(device_name)
 
-                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
+                    heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
                     time.sleep(5)
 
                     for device in list_spotify_devices:
@@ -886,7 +886,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                 if spotify_device_id == 0:
                     device = GET_DEVICE_BY_NAME(device_name)
 
-                    heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
+                    heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
                     time.sleep(5)
 
                     for device in list_spotify_devices:

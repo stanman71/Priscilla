@@ -221,7 +221,7 @@ def music():
                         
                         if client_music_interface != data["interface"] or str(client_music_volume) != str(data["volume"]):
 
-                            heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')))     
+                            heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')))     
 
                             result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}', 20)
                             
@@ -234,7 +234,7 @@ def music():
                                 try:
                                     for message in GET_MQTT_INCOMING_MESSAGES(5):              
                     
-                                        if message[1] == "miranda/mqtt/" + device.ieeeAddr:                
+                                        if message[1] == "smarthome/mqtt/" + device.ieeeAddr:                
                                             SAVE_DEVICE_LAST_VALUES(device.ieeeAddr, message[2])
                                             break
 
@@ -245,7 +245,7 @@ def music():
                     # no valid last values existing                        
                     except:
 
-                        heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + device.ieeeAddr + "/set", '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')))     
+                        heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')))     
 
                         result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}', 20)
                         
@@ -258,7 +258,7 @@ def music():
                             try:
                                 for message in GET_MQTT_INCOMING_MESSAGES(5):              
                 
-                                    if message[1] == "miranda/mqtt/" + device.ieeeAddr:                
+                                    if message[1] == "smarthome/mqtt/" + device.ieeeAddr:                
                                         SAVE_DEVICE_LAST_VALUES(device.ieeeAddr, message[2])
                                         break
 
@@ -271,7 +271,7 @@ def music():
             list_client_music = GET_ALL_DEVICES("client_music")
 
             for client_music in list_client_music:
-                heapq.heappush(mqtt_message_queue, (10, ("miranda/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
+                heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
 
     else:
         error_message_change_settings_client_music.append("Keine MQTT-Verbindung")

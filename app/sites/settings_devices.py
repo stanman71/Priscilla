@@ -107,7 +107,7 @@ def settings_devices():
 
                                     # check zigbee service
                                     if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":                                     
-                                        channel  = "miranda/zigbee2mqtt/bridge/config/rename"
+                                        channel  = "smarthome/zigbee2mqtt/bridge/config/rename"
                                         msg      = '{"old": "' + old_name + '", "new": "' + new_name + '"}'
 
                                         heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
@@ -295,7 +295,7 @@ def settings_devices():
 
             SET_ZIGBEE2MQTT_PAIRING("false")
 
-            channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
+            channel  = "smarthome/zigbee2mqtt/bridge/config/permit_join"
             msg      = "false"
 
             heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
@@ -322,7 +322,7 @@ def settings_devices():
             setting_pairing = str(request.form.get("radio_zigbee2mqtt_pairing"))
             
             if setting_pairing == "True":               
-                channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
+                channel  = "smarthome/zigbee2mqtt/bridge/config/permit_join"
                 msg      = "true"
 
                 heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
@@ -340,7 +340,7 @@ def settings_devices():
                     error_message_zigbee_pairing.append("Einstellung nicht bestätigt") 
                                             
             else:         
-                channel  = "miranda/zigbee2mqtt/bridge/config/permit_join"
+                channel  = "smarthome/zigbee2mqtt/bridge/config/permit_join"
                 msg      = "false"
 
                 heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
@@ -361,7 +361,7 @@ def settings_devices():
         # check mqtt connection
         if GET_DEVICE_CONNECTION_MQTT() == True and GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
 
-            channel  = "miranda/zigbee2mqtt/bridge/networkmap"
+            channel  = "smarthome/zigbee2mqtt/bridge/networkmap"
             msg      = "graphviz"
 
             heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
@@ -605,7 +605,7 @@ def remove_device(ieeeAddr):
             if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":            
 
                 if device_gateway == "zigbee2mqtt":
-                    channel  = "miranda/zigbee2mqtt/bridge/config/remove"
+                    channel  = "smarthome/zigbee2mqtt/bridge/config/remove"
                     msg      = device_name
 
                     heapq.heappush(mqtt_message_queue, (20, (channel, msg)))

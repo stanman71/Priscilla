@@ -211,7 +211,7 @@ def test_pump(id):
 
         session['test_pump_success'] = GET_PLANT_BY_ID(id).name + " || Pumpe gestartet (5 Sekunden)" 
 
-        channel  =  "miranda/mqtt/" + GET_PLANT_BY_ID(id).device_ieeeAddr + "/set"
+        channel  =  "smarthome/mqtt/" + GET_PLANT_BY_ID(id).device_ieeeAddr + "/set"
         msg      = '{"pump":"ON","pump_time":5}'
 
         heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   

@@ -112,11 +112,6 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
        >>> https://www.berrybase.de/bauelemente/steckverbinder/stift-buchsenleisten-jumper/buchsenleiste-1x-3-polig-rm-2-54-h-8-4-gerade?c=114
 
-- case (115 * 85 * 35)
-
-       >>> https://www.ebay.de/itm/Kunststoff-Gehause-Box-IP65-Modulgehause-Kunststoff-fur-elektronische-Bauteile/123699322855 
-           https://www.ebay.de/itm/Kunststoff-Gehause-Box-Platinen-Verteilerkasten-Elektronik-Netzteil-Montage-Neu/132994940466
-
 - LED strip connector
 
        >>> https://www.ebay.de/itm/2-6-polig-M13-Steckverbinder-Paare-Kupplungen-Einbaustecker-5A-Metall/323694504483?hash=item4b5db22a23:m:m2bkEBP3zzAsnkZ22qxPWCw
@@ -124,3 +119,8 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 - power connector
 
        >>> https://www.berrybase.de/bauelemente/steckverbinder/stromversorgungs-steckverbinder/dc-stecker-hohlstecker/dc-einbaubuchse-f-252-r-hohlstecker-5-5x2-5mm-metallausf-252-hrung-l-246-tanschluss?c=115
+
+- case
+
+       >>> https://www.tme.eu/de/details/km-31no_j/universal-gehause/maszczyk/km-31no-gy/
+       >>> https://www.tme.eu/de/details/km-31no_b/universal-gehause/maszczyk/km-31no-bk/

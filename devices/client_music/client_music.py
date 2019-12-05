@@ -82,7 +82,7 @@ if current_interface == "spotify":
 
     except Exception as e:
         print("Raspotify | Error | " + str(e))        
-        MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
+        MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, str(e))
 
 if current_interface == "multiroom":
     try:
@@ -92,7 +92,7 @@ if current_interface == "multiroom":
 
     except Exception as e:
         print("Squeezelite | Error | " + str(e))             
-        MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
+        MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, str(e))
 
 if current_volume != "":
     try:
@@ -102,7 +102,7 @@ if current_volume != "":
 
     except Exception as e:
         print("AlsaMixer | Error | " + str(e))             
-        MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
+        MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, str(e))
 
 
 def UPDATE_CURRENT_INTERFACE(interface):
@@ -182,8 +182,8 @@ def on_message(client, userdata, message):
     # devices
     # #######
 
-    if channel == "miranda/mqtt/devices":
-        channel = "miranda/mqtt/log"
+    if channel == "smarthome/mqtt/devices":
+        channel = "smarthome/mqtt/log"
         msg     = '{"ieeeAddr":"' + device_ieeeAddr + '","model":"' + GET_MODEL() + '","device_type":"client_music","description":"MQTT Client Music","input_values":[],"input_events":[],"commands":[]}'
 
         MQTT_PUBLISH(channel, msg)
@@ -193,7 +193,7 @@ def on_message(client, userdata, message):
     # set
     # ###
 
-    if channel == "miranda/mqtt/" + device_ieeeAddr + "/set":
+    if channel == "smarthome/mqtt/" + device_ieeeAddr + "/set":
 
         data = json.loads(msg)   
 
@@ -220,18 +220,18 @@ def on_message(client, userdata, message):
 
                         except Exception as e:
                             print("AlsaMixer | Error | " + str(e))                     
-                            MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
+                            MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, str(e))
 
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + '}')
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + '}')
 
                 except:
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + '}')
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + '}')
 
                 UPDATE_CURRENT_INTERFACE("spotify")
 
             except Exception as e:
                 print("Raspotify | Error | " + str(e))                   
-                MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
+                MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, str(e))
 
 
         # interface multiroom
@@ -257,18 +257,18 @@ def on_message(client, userdata, message):
 
                         except Exception as e:
                             print("AlsaMixer | Error | " + str(e))                     
-                            MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
+                            MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, str(e))
 
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + '}')
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + '}')
 
                 except:
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + '}')    
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + '}')    
                     
                 UPDATE_CURRENT_INTERFACE("multiroom")
 
             except Exception as e:
                 print("Squeezelite | Error | " + str(e))                     
-                MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
+                MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, str(e))
 
 
         # reset interface
@@ -293,11 +293,11 @@ def on_message(client, userdata, message):
                         print("Squeezelite | Started")                    
                         time.sleep(2)
 
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + '}')
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + '}')
 
                 except Exception as e:
                     print("Reset | Error | " + str(e))                     
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, str(e))
         
         except:
             pass     
@@ -311,12 +311,12 @@ def on_message(client, userdata, message):
                     os.system("amixer -c " + GET_SOUNDCARD_NUMBER() + " cset numid=1 " + str(data["volume"]))
                     print("AlsaMixer | Volume adjusted")                    
                     time.sleep(2)
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + data["interface"] + '","volume":' + str(data["volume"]) + '}')
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"' + data["interface"] + '","volume":' + str(data["volume"]) + '}')
                     UPDATE_CURRENT_VOLUME(str(data["volume"]))
 
                 except Exception as e:
                     print("AlsaMixer | Error | " + str(e))                     
-                    MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, str(e))
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, str(e))
         
         except:
             pass   
@@ -326,8 +326,8 @@ def on_message(client, userdata, message):
     # get
     # ###
 
-    if channel == "miranda/mqtt/" + device_ieeeAddr + "/get":   
-        MQTT_PUBLISH("miranda/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + '}')
+    if channel == "smarthome/mqtt/" + device_ieeeAddr + "/get":   
+        MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + '}')
 
 
 """ ###################### """
@@ -347,7 +347,7 @@ def on_connect(client, userdata, flags, rc):
         print("ERROR: MQTT | Broker - " + GET_MQTT_BROKER() + " | Bad Connection | Returned Code = " + str(rc)) 
 
     else:
-        client.subscribe("miranda/#")
+        client.subscribe("smarthome/#")
         print("MQTT | Broker - " + GET_MQTT_BROKER() + " | Connected") 
 
 

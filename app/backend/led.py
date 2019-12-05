@@ -15,11 +15,11 @@ def SET_LED_RGB(led_ieeeAddr, red, green, blue, brightness):
     device = GET_DEVICE_BY_IEEEADDR(led_ieeeAddr)
     
     if device.gateway == "mqtt":
-        channel = "miranda/mqtt/" + device.ieeeAddr + "/set"
+        channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"
         msg     = '{"state":"ON","brightness":' + str(brightness) + ',"color": { "r":' + str(red) + ',"g":' + str(green)  + ',"b":' + str(blue) + '}}'
     
     if device.gateway == "zigbee2mqtt":
-        channel = "miranda/zigbee2mqtt/" + device.name + "/set"
+        channel = "smarthome/zigbee2mqtt/" + device.name + "/set"
         msg     = '{"state":"ON","brightness":' + str(brightness) + ',"color": { "r":' + str(red) + ',"g":' + str(green)  + ',"b":' + str(blue) + '}}'    
     
     heapq.heappush(mqtt_message_queue, (5, (channel, msg)))  
@@ -30,11 +30,11 @@ def SET_LED_SIMPLE(led_ieeeAddr, brightness):
     device = GET_DEVICE_BY_IEEEADDR(led_ieeeAddr)
 
     if device.gateway == "mqtt":
-        channel = "miranda/mqtt/" + device.ieeeAddr + "/set"
+        channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"
         msg     = '{"state": "ON","brightness":"' + str(brightness) + '"}'
         
     if device.gateway == "zigbee2mqtt":
-        channel = "miranda/zigbee2mqtt/" + device.name + "/set"
+        channel = "smarthome/zigbee2mqtt/" + device.name + "/set"
         msg     = '{"state": "ON","brightness":"' + str(brightness) + '"}'
     
     heapq.heappush(mqtt_message_queue, (5, (channel, msg))) 
@@ -45,11 +45,11 @@ def SET_LED_BRIGHTNESS(led_ieeeAddr, brightness):
     device = GET_DEVICE_BY_IEEEADDR(led_ieeeAddr)
 
     if device.gateway == "mqtt":
-        channel = "miranda/mqtt/" + device.ieeeAddr + "/set"
+        channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"
         msg     = '{"state": "ON","brightness":"' + str(brightness) + '"}'
 
     if device.gateway == "zigbee2mqtt":
-        channel = "miranda/zigbee2mqtt/" + device.name + "/set"    
+        channel = "smarthome/zigbee2mqtt/" + device.name + "/set"    
         msg     = '{"state": "ON","brightness":"' + str(brightness) + '"}'
     
     heapq.heappush(mqtt_message_queue, (5, (channel, msg))) 
@@ -60,11 +60,11 @@ def SET_LED_TURN_OFF(led_ieeeAddr):
     device = GET_DEVICE_BY_IEEEADDR(led_ieeeAddr)
 
     if device.gateway == "mqtt":
-        channel = "miranda/mqtt/" + device.ieeeAddr + "/set"
+        channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"
         msg = '{"state": "OFF","brightness":0}'
 
     if device.gateway == "zigbee2mqtt":
-        channel = "miranda/zigbee2mqtt/" + device.name + "/set"     
+        channel = "smarthome/zigbee2mqtt/" + device.name + "/set"     
         msg = '{"state": "OFF","brightness":0}'
     
     heapq.heappush(mqtt_message_queue, (5, (channel, msg))) 

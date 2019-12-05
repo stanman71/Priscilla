@@ -9,8 +9,8 @@ This project creates a smarthome environment.
       * <a href="#2.3 Manually Control">2.3 Manually Control</a>
    * <a href="#3 NQTT Broker Mosquitto">3 MQTT Broker Mosquitto</a>
       * <a href="#3.1 Installation">3.1 Installation</a>   
-      * <a href="#3.2 Authentification">3.2 Authentification</a>         
-      * <a href="#3.3 Autostart">3.3 Autostart</a>        
+      * <a href="#3.2 Autostart">3.2 Autostart</a>           
+      * <a href="#3.3 Authentification">3.3 Authentification</a>            
    * <a href="#4 Zigbee2MQTT">4 Zigbee2MQTT</a>
       * <a href="#4.1 Installation">4.1 Installation</a>   
       * <a href="#4.2 Configuration">4.2 Configuration</a>   
@@ -128,7 +128,6 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 - install dependencies
 
        >>> sudo apt-get install libblas-dev liblapack-dev libatlas-base-dev gfortran -y
-       >>> sudo apt install libhdf5-100 -y
        >>> sudo apt-get install libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev -y
        >>> sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev -y
        >>> sudo apt-get install libxvidcore-dev libx264-dev -y
@@ -141,7 +140,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 - upgrade pip
 
-       >>> pip3 install --upgrade pip
+       >>> sudo apt install python3-pip -y
 
 - install all nessessary python modules
 
@@ -150,7 +149,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 - install openCV
 
-       >>> sudo apt install python3-opencv
+       >>> sudo apt install python3-opencv -y
            (https://raspberrypi.stackexchange.com/questions/100253/how-can-i-install-opencv-on-raspberry-pi-4-raspbian-buster)
 
 - replace wrong spotipy file
@@ -246,50 +245,17 @@ https://xperimentia.com/2015/08/20/installing-mosquitto-mqtt-broker-on-raspberry
        >>> wget http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key
        >>> sudo apt-key add mosquitto-repo.gpg.key
        >>> cd /etc/apt/sources.list.d/
-       >>> sudo wget http://repo.mosquitto.org/debian/mosquitto-stretch.list
+       >>> sudo wget http://repo.mosquitto.org/debian/mosquitto-buster.list
        >>> sudo apt-get update
-       >>> sudo apt-get install mosquitto
+       >>> sudo apt-get install mosquitto -y
+       >>> sudo apt-get install mosquitto-clients -y
+
 
 </br>
 
-<a name="3.2 Authentification"></a>
+<a name="3.2 Autostart"></a>
 
-#### 3.2 Authentification
-
-https://medium.com/@eranda/setting-up-authentication-on-mosquitto-mqtt-broker-de5df2e29afc
-</br>
-</br>
-
-- edit mosquitto config and write these lines
-
-       >>> sudo nano /etc/mosquitto/conf.d/default.conf
-
-           per_listener_settings true
-
-           listener 1883 localhost
-
-           listener 1884
-           password_file /etc/mosquitto/passwd
-           allow_anonymous false
-
-- change file permissions
-
-       >>> sudo chmod -v -R 060 /etc/mosquitto/passwd
-
-- restart mosquitto
-
-       >>> sudo systemctl restart mosquitto
-
-- verify the authentication
-
-       >>> mosquitto_sub -h localhost -p 1883 -t "test_channel" 
-       >>> mosquitto_sub -h localhost -p 1884 -t "test_channel" -u <user_name> -P <password> 
-
-</br>
-
-<a name="3.3 Autostart"></a>
-
-#### 3.3 Autostart
+#### 3.2 Autostart
 
 https://forum-raspberrypi.de/forum/thread/31959-mosquitto-autostart/
 </br>
@@ -326,6 +292,41 @@ https://forum-raspberrypi.de/forum/thread/31959-mosquitto-autostart/
        >>> sudo cat /var/log/mosquitto/mosquitto.log
 
 </br>
+
+<a name="3.3 Authentification"></a>
+
+#### 3.3 Authentification
+
+https://medium.com/@eranda/setting-up-authentication-on-mosquitto-mqtt-broker-de5df2e29afc
+</br>
+</br>
+
+- create an user
+
+       >>> sudo mosquitto_passwd -c /etc/mosquitto/passwd [username]
+
+- edit mosquitto config and write these lines
+
+       >>> sudo nano /etc/mosquitto/conf.d/default.conf
+
+           per_listener_settings true
+
+           listener 1883 localhost
+
+           listener 1884
+           password_file /etc/mosquitto/passwd
+           allow_anonymous false
+
+- restart mosquitto
+
+       >>> sudo systemctl restart mosquitto
+
+- test mosquitto authentification
+
+       >>> mosquitto_sub -h localhost -p 1883 -t "test_channel" 
+       >>> mosquitto_sub -h localhost -p 1884 -t "test_channel" -u <user_name> -P <password> 
+
+</br>
 ------------
 </br>
 
@@ -354,9 +355,9 @@ https://github.com/Koenkk/zigbee2mqtt
        >>> node --version  # Should output v10.X
        >>> npm  --version  # Should output 6.X
 
-- unzip zigbee2mqtt repository
+- clone zigbee2mqtt repository
 
-       >>> sudo unzip /home/pi/smarthome/support/zigbee2mqtt_1.7.1.zip -d /opt/zigbee2mqtt
+       >>> sudo git clone https://github.com/Koenkk/zigbee2mqtt.git /opt/zigbee2mqtt
        >>> sudo chown -R pi:pi /opt/zigbee2mqtt
 
 - install zigbee2mqtt 
@@ -394,7 +395,7 @@ https://github.com/Koenkk/zigbee2mqtt
            # MQTT settings
            mqtt:
            # MQTT base topic for zigbee2mqtt MQTT messages
-           base_topic: miranda/zigbee2mqtt
+           base_topic: smarthome/zigbee2mqtt
            # MQTT server URL
            server: 'mqtt://localhost'
            # MQTT server authentication, uncomment if required:
@@ -402,7 +403,7 @@ https://github.com/Koenkk/zigbee2mqtt
            # password: <my_password>
            
            advanced:
-             network_key: <network_key>
+             network_key: [network_key]
 
 </br>
 
@@ -513,6 +514,11 @@ https://www.zigbee2mqtt.io/information/zigbee_network.html
 - power source (router only)
 
        >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01I1JEWPU/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
+
+- case
+
+       >>> https://www.tme.eu/de/details/abs-54p/universal-gehause/maszczyk/km-54p-gy/
+       >>> https://www.tme.eu/de/details/km-54p/universal-gehause/maszczyk/km-54p-bk/
 
 </br>
 
@@ -649,7 +655,11 @@ http://downloads.slimdevices.com/nightly/7.9/sc/
 
 - install LMS
 
-       >>> sudo dpkg -i /home/pi/python/support/logitechmediaserver_7.9.2~1574959426_arm.deb
+       >>> sudo dpkg -i /home/pi/smarthome/support/logitechmediaserver_7.9.2~1574959426_arm.deb
+
+- enable autostart
+
+       >>> sudo systemctl enable logitechmediaserver
 
 </br>
 
@@ -661,15 +671,11 @@ http://downloads.slimdevices.com/nightly/7.9/sc/
 
 - install dependencies
 
-       >>> sudo apt-get install libasound2-dev libflac-dev libmad0-dev libvorbis-dev libfaad-dev libmpg123-dev liblircclient-dev libncurses5-dev
+       >>> sudo apt-get install libasound2-dev libflac-dev libmad0-dev libvorbis-dev libfaad-dev libmpg123-dev liblircclient-dev libncurses5-dev -y
 
 - install squeezelite
 
-       >>> sudo apt-get install squeezelite 
-
-       or
-
-       >>> sudo apt install /home/pi/python/support/squeezelite_1.8-4.1+b1_armhf.deb -y
+       >>> sudo apt install /home/pi/smarthome/support/squeezelite_1.8-4.1+b1_armhf.deb -y
 
 - squeezelite config 
 
@@ -680,9 +686,9 @@ http://downloads.slimdevices.com/nightly/7.9/sc/
            # ALSA output device:
 	    SL_SOUNDCARD="hw:CARD=ALSA,DEV=0"
 
-- restart squeezelite
-          
-       >>> sudo systemctl restart squeezelite
+- enable autostart
+
+       >>> sudo systemctl enable squeezelite
 
 </br>
 

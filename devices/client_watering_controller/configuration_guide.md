@@ -89,11 +89,11 @@ This project controls the watering system.
 
        >>> https://www.berrybase.de/bauelemente/steckverbinder/stift-buchsenleisten-jumper/buchsenleiste-1x-3-polig-rm-2-54-h-8-4-gerade?c=114
 
-- case (115 * 85 * 35)
-
-       >>> https://www.ebay.de/itm/Kunststoff-Gehause-Box-IP65-Modulgehause-Kunststoff-fur-elektronische-Bauteile/123699322855 
-           https://www.ebay.de/itm/Kunststoff-Gehause-Box-Platinen-Verteilerkasten-Elektronik-Netzteil-Montage-Neu/132994940466
-
 - power connector
 
        >>> https://www.berrybase.de/bauelemente/steckverbinder/stromversorgungs-steckverbinder/dc-stecker-hohlstecker/dc-einbaubuchse-f-252-r-hohlstecker-5-5x2-5mm-metallausf-252-hrung-l-246-tanschluss?c=115
+
+- case
+
+       >>> https://www.tme.eu/de/details/abs-78z/universal-gehause/maszczyk/km-78-gy/      
+       >>> https://www.tme.eu/de/details/abs-78z_bk/universal-gehause/maszczyk/km-78z-bk/
