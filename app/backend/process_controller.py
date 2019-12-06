@@ -421,7 +421,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
     if "scene" in task:
 
         task = task.lower()
-        task = task.split(" /// ")
+        task = task.split(" # ")
         
         group = GET_LED_GROUP_BY_NAME(task[1])
         scene = GET_LED_SCENE_BY_NAME(task[2])
@@ -462,7 +462,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
     if "brightness" in task:
         
         task = task.lower()
-        task = task.split(" /// ")
+        task = task.split(" # ")
         
         group   = GET_LED_GROUP_BY_NAME(task[1])
         command = task[2]
@@ -525,7 +525,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
     if "led_off" in task:
         
         task = task.lower()
-        task = task.split(" /// ")
+        task = task.split(" # ")
 
         if task[1] == "group":
 
@@ -581,7 +581,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
     # ######
 
     if "device" in task:
-        task = task.split(" /// ")
+        task = task.split(" # ")
         device = GET_DEVICE_BY_NAME(task[1].lower())
         
         # device founded ?
@@ -657,7 +657,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
     if "program" in task:
         
         task = task.lower()
-        task = task.split(" /// ")
+        task = task.split(" # ")
         
         program = GET_PROGRAM_BY_NAME(task[1].lower())
 
@@ -691,7 +691,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
         if spotify_token != "":
             
             task = task.lower()         
-            task = task.split(" /// ")
+            task = task.split(" # ")
             
             sp       = spotipy.Spotify(auth=spotify_token)
             sp.trace = False
@@ -740,18 +740,46 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                 if "multiroom" not in device_name:
                     SPOTIFY_CONTROL(spotify_token, "turn_up", spotify_volume)
 
+                else:
+                    from lms import find_server
+                    server  = find_server()
+                    players = server.players
+
+                    for player in players:
+                        player.volume_up()
+                        player.volume_up()
+
             if task[1] == "turn_down":   
                 device_name = sp.current_playback(market=None)['device']['name']
 
                 if "multiroom" not in device_name:
                     SPOTIFY_CONTROL(spotify_token, "turn_down", spotify_volume)                 
 
+                else:
+                    from lms import find_server
+                    server  = find_server()
+                    players = server.players
 
+                    for player in players:
+                        player.volume_up()
+                        player.volume_up()
 
-            if task[1].lower() == "volume":
+            if task[1].lower() == "volume":            
                 spotify_volume = int(task[2])
-                SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)  
-                    
+                device_name    = sp.current_playback(market=None)['device']['name']
+
+                if "multiroom" not in device_name:
+                    SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
+
+                else:
+                    from lms import find_server
+                    server  = find_server()
+                    players = server.players
+
+                    for player in players:
+                        player.set_volume(spotify_volume)
+
+
 
             # start playlist
                     

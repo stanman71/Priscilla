@@ -8,9 +8,11 @@ from app.database.models           import *
 from app.backend.file_management   import GET_ALL_LOCATIONS, GET_LOCATION_COORDINATES
 from app.backend.checks            import CHECK_TASKS, CHECK_SCHEDULER_TASKS_SETTINGS
 from app.backend.process_scheduler import GET_SUNRISE_TIME, GET_SUNSET_TIME
+from app.backend.spotify           import GET_SPOTIFY_TOKEN
 from app.common                    import COMMON, STATUS
 from app.assets                    import *
 
+import spotipy
 
 # access rights
 def permission_required(f):
@@ -353,6 +355,31 @@ def scheduler():
                 error_message_change_settings.append(scene + " || " + str(result))
 
 
+    """ ######################## """
+    """  scheduler task options  """
+    """ ######################## """   
+
+    # list device command option    
+    list_device_command_options = []
+    
+    for device in GET_ALL_DEVICES("devices"):
+        list_device_command_options.append((device.name, device.commands))
+         
+    # list spotify devices / playlists
+    spotify_token = GET_SPOTIFY_TOKEN()    
+    
+    try:
+        sp       = spotipy.Spotify(auth=spotify_token)
+        sp.trace = False
+        
+        spotify_devices   = sp.devices()["devices"]        
+        spotify_playlists = sp.current_user_playlists(limit=20)["items"]   
+        
+    except:
+        spotify_devices   = ""       
+        spotify_playlists = ""      
+
+
     error_message_scheduler_tasks_settings = CHECK_SCHEDULER_TASKS_SETTINGS(GET_ALL_SCHEDULER_TASKS())
     error_message_scheduler_tasks          = CHECK_TASKS(GET_ALL_SCHEDULER_TASKS(), "scheduler")
 
@@ -507,6 +534,9 @@ def scheduler():
                                                     error_message_scheduler_tasks_settings=error_message_scheduler_tasks_settings,
                                                     error_message_scheduler_tasks=error_message_scheduler_tasks,
                                                     success_message_change_settings_scheduler_task=success_message_change_settings_scheduler_task,
+                                                    list_device_command_options=list_device_command_options,
+                                                    spotify_devices=spotify_devices,     
+                                                    spotify_playlists=spotify_playlists,                                                         
                                                     device_1_input_values=device_1_input_values,
                                                     device_2_input_values=device_2_input_values,
                                                     device_3_input_values=device_3_input_values,

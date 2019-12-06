@@ -7,9 +7,11 @@ from app                         import app
 from app.database.models         import *
 from app.backend.process_program import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD
 from app.backend.checks          import CHECK_PROGRAM_TASKS
+from app.backend.spotify         import GET_SPOTIFY_TOKEN
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
+import spotipy
 
 # access rights
 def permission_required(f):
@@ -186,6 +188,31 @@ def programs():
                 error_message_change_settings.append(program + " || " + str(result))
 
 
+    """ ##################### """
+    """  program task options """
+    """ ##################### """   
+
+    # list device command option    
+    list_device_command_options = []
+    
+    for device in GET_ALL_DEVICES("devices"):
+        list_device_command_options.append((device.name, device.commands))
+         
+    # list spotify devices / playlists
+    spotify_token = GET_SPOTIFY_TOKEN()    
+    
+    try:
+        sp       = spotipy.Spotify(auth=spotify_token)
+        sp.trace = False
+        
+        spotify_devices   = sp.devices()["devices"]        
+        spotify_playlists = sp.current_user_playlists(limit=20)["items"]   
+        
+    except:
+        spotify_devices   = ""       
+        spotify_playlists = ""      
+
+
     dropdown_list_programs = GET_ALL_PROGRAMS()
 
     if selected_program != "":
@@ -208,6 +235,9 @@ def programs():
                                                     error_message_program_tasks=error_message_program_tasks,
                                                     dropdown_list_programs=dropdown_list_programs,
                                                     selected_program=selected_program,
+                                                    list_device_command_options=list_device_command_options,
+                                                    spotify_devices=spotify_devices,     
+                                                    spotify_playlists=spotify_playlists,                                                         
                                                     ) 
                            )
 

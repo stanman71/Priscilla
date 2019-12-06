@@ -122,9 +122,9 @@ def PROGRAM_THREAD(program_id):
                         # break
                         # #####
                                 
-                        if "pause" in line[1]:
+                        if "break" in line[1]:
                                 
-                            line_content = line[1].split(" /// ")
+                            line_content = line[1].split(" # ")
                             time.sleep(int(line_content[1]))          
                             
                         # ######    
@@ -133,7 +133,7 @@ def PROGRAM_THREAD(program_id):
 
                         if "device" in line[1]:
                                 
-                            line_content = line[1].split(" /// ")
+                            line_content = line[1].split(" # ")
 
                             try:
                                       
@@ -199,7 +199,7 @@ def PROGRAM_THREAD(program_id):
                                  
                         if "scene" in line[1]:
                                 
-                            line_content = line[1].split(" /// ")
+                            line_content = line[1].split(" # ")
                             
                             try:
                                 group_name = line_content[1]    
@@ -232,7 +232,7 @@ def PROGRAM_THREAD(program_id):
 
                         if "spotify" in line[1]:
                                 
-                            line_content = line[1].split(" /// ")
+                            line_content = line[1].split(" # ")
 
                             if GET_SPOTIFY_TOKEN() == "" and GET_SPOTIFY_REFRESH_TOKEN() != "":
                                 REFRESH_SPOTIFY_TOKEN()
@@ -267,10 +267,21 @@ def PROGRAM_THREAD(program_id):
                                         if line_content[1].lower() == "stop": 
                                             SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)   
 
-                                        if line_content[1].lower() == "volume":
+                                        if line_content[1].lower() == "volume":          
                                             spotify_volume = int(line_content[2])
-                                            SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)       
-                                            
+                                            device_name    = sp.current_playback(market=None)['device']['name']
+
+                                            if "multiroom" not in device_name:
+                                                SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
+
+                                            else:
+                                                from lms import find_server
+                                                server  = find_server()
+                                                players = server.players
+
+                                                for player in players:
+                                                    player.set_volume(spotify_volume)
+
                                     except:
                                         pass
                                         

@@ -685,7 +685,7 @@ def SCHEDULER_TASK(task_object):
     try:
         if "scene" in task_object.task:
 
-            task = task_object.task.split(" /// ")
+            task = task_object.task.split(" # ")
             
             group = GET_LED_GROUP_BY_NAME(task[1])
             scene = GET_LED_SCENE_BY_NAME(task[2])
@@ -729,7 +729,7 @@ def SCHEDULER_TASK(task_object):
     try:
         if "led_off" in task_object.task:
             
-            task = task_object.task.split(" /// ")
+            task = task_object.task.split(" # ")
 
             if task[1] == "group":
 
@@ -790,7 +790,7 @@ def SCHEDULER_TASK(task_object):
     try:
         if "device" in task_object.task and "update" not in task_object.task:
             
-            task = task_object.task.split(" /// ")
+            task = task_object.task.split(" # ")
 
             device = GET_DEVICE_BY_NAME(task[1].lower())
 
@@ -861,7 +861,7 @@ def SCHEDULER_TASK(task_object):
     try:
         if "program" in task_object.task:
             
-            task    = task_object.task.split(" /// ")
+            task    = task_object.task.split(" # ")
             program = GET_PROGRAM_BY_NAME(task[1].lower())
 
             if program != None:
@@ -894,7 +894,7 @@ def SCHEDULER_TASK(task_object):
 
     try:
         if "watering_plants" in task_object.task:
-            task = task_object.task.split(" /// ")
+            task = task_object.task.split(" # ")
             group_number = task[1]
             START_WATERING_THREAD(group_number)
 
@@ -939,7 +939,7 @@ def SCHEDULER_TASK(task_object):
 
     try:
         if "request_sensordata" in task_object.task:
-            task = task_object.task.split(" /// ")
+            task = task_object.task.split(" # ")
             REQUEST_SENSORDATA(task[1])  
 
 
@@ -954,7 +954,7 @@ def SCHEDULER_TASK(task_object):
 
     try:
         if "spotify" in task_object.task:
-            task = task_object.task.split(" /// ")
+            task = task_object.task.split(" # ")
 
             spotify_token = GET_SPOTIFY_TOKEN()
 

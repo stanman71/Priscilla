@@ -114,10 +114,10 @@ def CHECK_PROGRAM_TASKS(program_id):
              
              # break
                      
-             if "pause" in line[1]:     
+             if "break" in line[1]:     
                       
                 try: 
-                   line_content = line[1].split(" /// ")
+                   line_content = line[1].split(" # ")
                     
                    # check delay value            
                    if line_content[1].isdigit():
@@ -133,7 +133,7 @@ def CHECK_PROGRAM_TASKS(program_id):
              elif "device" in line[1]:
 
                 try:
-                   line_content = line[1].split(" /// ")
+                   line_content = line[1].split(" # ")
 
                    device_name = line_content[1]    
                    device      = ""
@@ -177,7 +177,7 @@ def CHECK_PROGRAM_TASKS(program_id):
              elif "scene" in line[1]:
                 
                 try:        
-                   line_content = line[1].split(" /// ")
+                   line_content = line[1].split(" # ")
 
                    try:
                       # check led name
@@ -219,7 +219,7 @@ def CHECK_PROGRAM_TASKS(program_id):
              elif "spotify" in line[1]:
                 
                 try:        
-                   line_content = line[1].split(" /// ")       
+                   line_content = line[1].split(" # ")       
                    
                    if (line_content[1].lower() != "play" and
                        line_content[1].lower() != "previous" and
@@ -634,8 +634,8 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       # ###########
       
       if "scene" in task:
-         if " /// " in task:
-            task = task.split(" /// ") 
+         if " | " in task:
+            task = task.split(" # ") 
 
             # check group setting 
             try:
@@ -742,8 +742,8 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
       
       if "brightness" in task and task_type == "controller":
-         if " /// " in task:
-            task = task.split(" /// ") 
+         if " | " in task:
+            task = task.split(" # ") 
 
             # check group setting
             try:
@@ -780,8 +780,8 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
       
       if "led_off" in task:
-         if " /// " in task:
-            task = task.split(" /// ")
+         if " | " in task:
+            task = task.split(" # ")
             
             # check group setting
             if "group" in task[1]:
@@ -869,8 +869,8 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
       
       if "device" in task and "update" not in task:
-         if " /// " in task:
-            task = task.split(" /// ") 
+         if " | " in task:
+            task = task.split(" # ") 
 
             try:
                device  = GET_DEVICE_BY_NAME(task[1].lower())
@@ -923,8 +923,8 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
       
       if "program" in task:
-         if " /// " in task:
-            task = task.split(" /// ") 
+         if " | " in task:
+            task = task.split(" # ") 
 
             try:
                program = GET_PROGRAM_BY_NAME(task[1].lower())
@@ -969,8 +969,8 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
       
       if "watering_plants" in task and task_type == "scheduler":
-         if " /// " in task:
-            task = task.split(" /// ") 
+         if " | " in task:
+            task = task.split(" # ") 
             
             try:
                if task[1] not in ["1", "2", "3", "4", "5"] and task[1] != "all" and task[1] != "ALL":
@@ -1016,8 +1016,8 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
       
       if "request_sensordata" in task and task_type == "scheduler":
-         if " /// " in task:
-            task = task.split(" /// ")
+         if " | " in task:
+            task = task.split(" # ")
 
             # check job name setting
             try:          
@@ -1043,8 +1043,8 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
          
       if "spotify" in task:
-         if " /// " in task:
-            task = task.split(" /// ")
+         if " | " in task:
+            task = task.split(" # ")
 
             # check settings
             try:   

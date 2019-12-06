@@ -612,6 +612,256 @@
 
 {% endif %}
 
+<!---------------------------->
+<!-- PROGRAM TASKS OPTIONS  -->
+<!---------------------------->   
+
+            <div class="card">
+              <div class="card-header">
+                <a data-toggle="collapse" href="#collapse_info"><font color="white"><b><i class='uil uil-arrow-down'> Befehle </i></b></font></a>
+                <br>
+                <br>
+              </div>                 
+              <div id="collapse_info" class="collapse">      
+                <div class="card-body"> 
+                  <div class="table-responsive">
+                    <table class="table tablesorter">
+                      <thead>
+                        <tr><td></td><td></td></tr>
+                        <tr>
+                          <th>Aufgabe</th>
+                          <th>Erklärung</th>
+                        </tr>
+                      </thead>
+                      <tbody>                      
+                        <tr>
+                          <td>break # 10</td>   
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                10 Sekunden Pause
+                              </div>
+                            </div>                                   
+                          </td>
+                        </tr>  
+                        <tr>
+                          <td></td>
+                          <td></td>
+                        </tr>                                
+                        <tr>
+                          <td>scene # wohnzimmer # relax # 100</td>
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                Starte LEDs der Gruppe "wohnzimmer" mit Szene "relax" 
+                              </div>
+                            </div>  
+                            <br>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                Optional
+                              </div>
+                              <div class="col-sm-8"> 
+                                > globale Helligkeit 100 % 
+                              </div>                        
+                            </div>                                            
+                        </tr>
+                        <tr>
+                          <td>brightness # schlafzimmer # TURN_UP</td>
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                Erhöhe Helligkeit der LEDs Gruppe "schlafzimmer" um 20% 
+                              </div>
+                            </div>  
+                            <br>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                TURN_UP
+                              </div>
+                              <div class="col-sm-8"> 
+                                > 20 % heller 
+                              </div>                        
+                            </div>                                            
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                TURN_DOWN 
+                              </div>
+                              <div class="col-sm-8"> 
+                                > 20 % dunkler 
+                              </div>                        
+                            </div>
+                          </td>
+                        </tr>                                   
+                        <tr>
+                          <td>led_off # group # flur, bad</td>
+                          <td>LEDs der Gruppe "flur" und "bad" ausschalten</td>
+                        </tr>               
+                        <tr>
+                          <td>led_off # ALL</td>
+                          <td>alle LEDs ausschalten</td>
+                        </tr> 
+                        <tr>
+                          <td></td>
+                          <td></td>
+                        </tr>                   
+                        <tr>
+                          <td>device # Steckdose_TV # state:OFF</td>   
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                Gerät "Steckdose_TV" ausschalten
+                              </div>
+                            </div>  
+                            <br>
+                            {% for device in list_device_command_options %}
+                              <div class="row justify-content-md-center">
+                                <div class="col-sm-4">
+                                  {{ device[0] }}
+                                </div>
+                                <div class="col-sm-8">          
+                                  > {{ device[1] | replace(' ', ' | ') | replace('{', '') | replace('}', '') | replace(',', ', ') | replace('"', '') }} 
+                                </div>
+                              </div> 
+                            {% endfor %}                                            
+                          </td>
+                        </tr>  
+                        <tr>
+                          <td></td>
+                          <td></td>
+                        </tr>                   
+                        <tr>
+                          <td>program # SUNRISE # START</td>
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                Programm "SUNRISE" starten 
+                              </div>
+                            </div>  
+                            <br>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                START 
+                              </div>
+                              <div class="col-sm-8"> 
+                                > starten 
+                              </div>                        
+                            </div>                                            
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                STOP 
+                              </div>
+                              <div class="col-sm-8"> 
+                                > beenden 
+                              </div>                        
+                            </div>                                        
+                          </td>                    
+                        </tr>     
+                        <tr>
+                          <td></td>
+                          <td></td>
+                        </tr>   
+                        <tr>
+                          <td>spotify # playlist # PC # Gemischt # 50</td>
+                          <td>Playlist "Gemischt" auf Gerät "PC" mit Lautstärke 50 % starten</td>
+                        </tr>     
+                        <tr>
+                          <td>spotify # track # PC # Go Time # Young Mozart # 25</td>
+                          <td>Track "Go Time" von "Young Mozart" auf Gerät "PC" mit Lautstärke 25 % starten</td>
+                        </tr>     
+                        <tr>
+                          <td>spotify # album # PC # Hold On # Nano # 60</td>
+                          <td>Album "Hold On" von "Nano" auf Gerät "PC" mit Lautstärke 60 % starten</td>
+                        </tr>                                    
+                        <tr>
+                          <td>spotify # PLAY</td>
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                letztes Lied / Album / Playlist auf aktiven Spotify-Gerät starten 
+                              </div>
+                            </div>  
+                            <br>                          
+                            <br>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                PLAY 
+                              </div>
+                              <div class="col-sm-8"> 
+                                > abspielen starten
+                              </div>                        
+                            </div>                                            
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                PREVIOUS 
+                              </div>
+                              <div class="col-sm-8"> 
+                                > vorheriger Track 
+                              </div>                        
+                            </div>    
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                NEXT 
+                              </div>
+                              <div class="col-sm-8"> 
+                                > nächster Track 
+                              </div>                        
+                            </div>                        
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                STOP 
+                              </div>
+                              <div class="col-sm-8"> 
+                                > abspielen stoppen
+                              </div>                        
+                            </div>                        
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                VOLUME # 70 
+                              </div>
+                              <div class="col-sm-8"> 
+                                > Lautstärke auf 70%
+                              </div>
+                            </div>                        
+                            <br>        
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                Spotify - Geräte:
+                              </div>
+                              <div class="col-sm-8">   
+                                > {% for device in spotify_devices %}
+                                    {% if device['type'] != "Smartphone" %}
+                                      {% if "multiroom" in device['name'] %}
+                                        multiroom |
+                                      {% else %}
+                                        {{ device['name'] }} |
+                                      {% endif %}                                          
+                                    {% endif %}
+                                  {% endfor %}
+                              </div>
+                            </div>                     
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                Spotify - Playlists:
+                              </div>
+                              <div class="col-sm-8">   
+                                > {% for playlist in spotify_playlists %}
+                                    {% if playlist['name'] != "Discover Weekly" %}
+                                      {{ playlist['name'] }} |
+                                    {% endif %}
+                                  {% endfor %}    
+                              </div>
+                            </div>                                                                                    
+                          </td>                    
+                        </tr>                                                                               
+                      </tbody>
+                    </table>                
+                  </div>                 
+                </div>            
+              </div>
+            </div>
+
+
           </div>
         </div>
       </div>          

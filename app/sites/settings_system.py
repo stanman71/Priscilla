@@ -72,11 +72,13 @@ def PING_IP_ADDRESS(ip_address):
 
 def HOST_REBOOT():
     time.sleep(10)
+    WRITE_LOGFILE_SYSTEM("EVENT", "Host | Reboot") 
     os.system("sudo reboot")
 
 
 def HOST_SHUTDOWN():
     time.sleep(10)
+    WRITE_LOGFILE_SYSTEM("EVENT", "Host | Shutdown")     
     os.system("sudo shutdown")
 
 
