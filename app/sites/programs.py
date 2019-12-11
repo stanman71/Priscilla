@@ -87,6 +87,8 @@ def programs():
 
             if request.form.get("set_name_" + str(i)) != None:
 
+                error_founded = False   
+
                 # ############
                 # name setting
                 # ############
@@ -94,8 +96,13 @@ def programs():
                 selected_program = GET_PROGRAM_BY_ID(i)
                 input_name       = request.form.get("set_name_" + str(i))                    
 
+                # check spaces at the end
+                if input_name != input_name.strip():
+                    error_message_change_settings_program.append(selected_program.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
+                    error_founded = True       
+
                 # add new name
-                if ((input_name != "") and (GET_PROGRAM_BY_NAME(input_name) == None)):
+                elif ((input_name != "") and (GET_PROGRAM_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 
@@ -104,7 +111,7 @@ def programs():
                     
                 # name already exist
                 elif ((GET_PROGRAM_BY_NAME(input_name) != None) and (selected_program.name != input_name)):
-                    error_message_change_settings_program.append(selected_program.name + " || Name bereits vergeben")  
+                    error_message_change_settings_program.append(selected_program.name + " || Name - " + input_name + " - bereits vergeben")  
                     name = selected_program.name
 
                 # no input commited
@@ -133,13 +140,15 @@ def programs():
                 line_content_18 = request.form.get("set_line_content_18_" + str(i))                                                     
                 line_content_19 = request.form.get("set_line_content_19_" + str(i))                
                 line_content_20 = request.form.get("set_line_content_20_" + str(i))                  
-                
-                if SET_PROGRAM_SETTINGS(i, name, line_content_1,line_content_2, line_content_3, line_content_4, line_content_5, 
-                                                line_content_6, line_content_7, line_content_8, line_content_9, line_content_10,
-                                                line_content_11, line_content_12, line_content_13, line_content_14, line_content_15, 
-                                                line_content_16, line_content_17, line_content_18, line_content_19, line_content_20):
 
-                    success_message_change_settings_program.append("Einstellungen erfolgreich geändert")           
+                if error_founded == False:           
+
+                    if SET_PROGRAM_SETTINGS(i, name, line_content_1,line_content_2, line_content_3, line_content_4, line_content_5, 
+                                                    line_content_6, line_content_7, line_content_8, line_content_9, line_content_10,
+                                                    line_content_11, line_content_12, line_content_13, line_content_14, line_content_15, 
+                                                    line_content_16, line_content_17, line_content_18, line_content_19, line_content_20):
+
+                        success_message_change_settings_program.append("Einstellungen erfolgreich geändert")           
 
 
     """ ############### """

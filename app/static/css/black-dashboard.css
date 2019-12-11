@@ -17788,11 +17788,11 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card-tasks {
-  height: 473px;
+  height: 330px;
 }
 
 .card-tasks .table-full-width {
-  max-height: 410px;
+  max-height: 300px;
   position: relative;
 }
 

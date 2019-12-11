@@ -140,7 +140,7 @@ def cameras():
                     
                 # name already exist
                 elif ((GET_CAMERA_BY_NAME(input_name) != None) and (camera.name != input_name)):
-                    error_message_change_settings.append(camera.name + " || Name bereits vergeben")  
+                    error_message_change_settings.append(camera.name + " || Name - " + input_name + " - bereits vergeben")  
                     error_founded = True
                     name = camera.name
 
@@ -263,7 +263,7 @@ def delete_camera(id):
     camera  = GET_CAMERA_BY_ID(id).name  
     result  = DELETE_CAMERA(id)
 
-    if result:
+    if result == True:
         session['delete_camera_success'] = camera + " || Erfolgreich gelöscht"
     else:
         session['delete_camera_error'] = camera + " || " + str(result)

@@ -86,19 +86,24 @@ def settings_devices():
                 # rename devices   
                 if request.form.get("set_name_" + str(i)) != "":
                                       
-                    new_name = request.form.get("set_name_" + str(i))
-                    old_name = GET_DEVICE_BY_ID(i).name
-                    
-                    if new_name != old_name:  
+                    device     = GET_DEVICE_BY_ID(i)
+                    input_name = request.form.get("set_name_" + str(i))
+
+                    # check spaces at the end
+                    if input_name != input_name.strip():
+                        success_message_change_settings_devices.append(device.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
+                        error_founded = True                      
+
+                    elif input_name != device.name:  
 
                         # name already exist ?         
-                        if not GET_DEVICE_BY_NAME(new_name):  
-                            ieeeAddr = GET_DEVICE_BY_ID(i).ieeeAddr   
-                            gateway  = GET_DEVICE_BY_ID(i).gateway
+                        if not GET_DEVICE_BY_NAME(input_name):  
+                            ieeeAddr = device.ieeeAddr   
+                            gateway  = device.gateway
 
                             if gateway == "mqtt":
-                                SET_DEVICE_NAME(ieeeAddr, new_name)   
-                                success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert")  
+                                SET_DEVICE_NAME(ieeeAddr, input_name)   
+                                success_message_change_settings_devices.append(input_name + " || Einstellungen gespeichert")  
                            
                             if gateway == "zigbee2mqtt":
 
@@ -108,24 +113,28 @@ def settings_devices():
                                     # check zigbee service
                                     if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":                                     
                                         channel  = "smarthome/zigbee2mqtt/bridge/config/rename"
-                                        msg      = '{"old": "' + old_name + '", "new": "' + new_name + '"}'
+                                        msg      = '{"old": "' + device.name + '", "new": "' + input_name + '"}'
 
                                         heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
 
-                                        if CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
-                                            SET_DEVICE_NAME(ieeeAddr, new_name)  
-                                            success_message_change_settings_devices.append(new_name + " || Einstellungen gespeichert")       
+                                        if CHECK_ZIGBEE2MQTT_NAME_CHANGED(device.name, input_name):
+                                            SET_DEVICE_NAME(ieeeAddr, input_name)  
+                                            success_message_change_settings_devices.append(input_name + " || Einstellungen gespeichert")       
                                         else:
-                                            error_message_change_settings_devices.append(old_name + " || Name konnte nicht verändert werden")       
+                                            error_message_change_settings_devices.append(device.name + " || Name konnte nicht verändert werden")       
 
                                     else:
-                                        error_message_change_settings_devices.append(old_name + " || Zigbee ist deaktiviert")    
+                                        error_message_change_settings_devices.append(device.name + " || Zigbee ist deaktiviert")    
                         
                         else: 
-                            error_message_change_settings_devices.append(old_name + " || Ungültige Eingabe || Name bereits vergeben")  
+                            error_message_change_settings_devices.append(device.name + " || Ungültige Eingabe || Name - " + input_name + " - bereits vergeben") 
+
+                    else: 
+                        error_message_change_settings_devices.append(device.name + " || Ungültige Eingabe") 
+
 
                 else:
-                    name = GET_DEVICE_BY_ID(i).name
+                    name = device.name
                     error_message_change_settings_devices.append(name + " || Ungültige Eingabe || Keinen Namen angegeben")    
 
 
@@ -593,18 +602,23 @@ def remove_device(ieeeAddr):
     try:
         device_name    = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
         device_gateway = GET_DEVICE_BY_IEEEADDR(ieeeAddr).gateway
-        
-        result = DELETE_DEVICE(ieeeAddr)
-        
-        if result == True and device_gateway == "mqtt":
-            session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"
 
-        elif result == True and device_gateway == "zigbee2mqtt":
+        if device_gateway == "mqtt":
+            result = DELETE_DEVICE(ieeeAddr)
+        
+            if result == True:
+                session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"
+            else:
+                session['delete_device_error'] = device_name + " || " + str(result)
+
+        if device_gateway == "zigbee2mqtt":
             
             # check zigbee service
-            if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":            
+            if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":     
 
-                if device_gateway == "zigbee2mqtt":
+                result = DELETE_DEVICE(ieeeAddr)
+
+                if result == True:
                     channel  = "smarthome/zigbee2mqtt/bridge/config/remove"
                     msg      = device_name
 
@@ -613,14 +627,15 @@ def remove_device(ieeeAddr):
                     if CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
                         session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"       
                     else:
-                        session['delete_device_error'] = device_name + " || Löschung nicht bestätigt"         
+                        session['delete_device_error'] = device_name + " || Löschung nicht bestätigt"      
+
+                else:
+                    session['delete_device_error'] = device_name + " || " + str(result)                   
 
             else:
                 session['delete_device_error'] = device_name + " || Zigbee ist deaktiviert"      
             
-        else:
-            session['delete_device_error'] = device_name + " || " + str(result)
-                
+            
         return redirect(url_for('settings_devices'))
 
     except:
@@ -634,7 +649,7 @@ def remove_device(ieeeAddr):
 def download_devices_topology(filepath): 
     path = GET_PATH() + "/app/static/temp/"
     
-    if os.path.isfile(path + filepath) is False:
+    if os.path.isfile(path + filepath) == False:
         return redirect(url_for('settings_devices'))
     
     else:
@@ -649,7 +664,7 @@ def download_devices_logfile(filepath):
     path = GET_PATH() + "/data/logs/"  
 
     try:
-        if os.path.isfile(path + filepath) is False:
+        if os.path.isfile(path + filepath) == False:
             RESET_LOGFILE("log_devices")  
         WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/logs/" + filepath + " | downloaded") 
 

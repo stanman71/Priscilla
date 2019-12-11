@@ -88,8 +88,13 @@ def sensordata_jobs():
                 sensordata_job = GET_SENSORDATA_JOB_BY_ID(i)
                 input_name     = request.form.get("set_name_" + str(i))                    
 
+                # check spaces at the end
+                if input_name != input_name.strip():
+                    error_message_change_settings.append(sensordata_job.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
+                    error_founded = True       
+
                 # add new name
-                if ((input_name != "") and (GET_SENSORDATA_JOB_BY_NAME(input_name) == None)):
+                elif ((input_name != "") and (GET_SENSORDATA_JOB_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 
@@ -98,7 +103,7 @@ def sensordata_jobs():
                     
                 # name already exist
                 elif ((GET_SENSORDATA_JOB_BY_NAME(input_name) != None) and (sensordata_job.name != input_name)):
-                    error_message_change_settings.append(sensordata_job.name + " || Name bereits vergeben")  
+                    error_message_change_settings.append(sensordata_job.name + " || Name - " + input_name + " - bereits vergeben")  
                     error_founded = True
                     name = sensordata_job.name
 
@@ -114,7 +119,16 @@ def sensordata_jobs():
                 # ################
 
                 if request.form.get("set_filename_" + str(i)) != "":
-                    filename = request.form.get("set_filename_" + str(i)) 
+
+                    input_filename = request.form.get("set_filename_" + str(i)) 
+
+                    # check spaces at the end
+                    if input_filename != input_filename.strip():
+                        error_message_change_settings.append(sensordata_job.name + " || Dateiname - " + input_filename + " - hat ungültige Leerzeichen") 
+                        error_founded = True       
+
+                    else:
+                        filename = input_filename
                 
                 else:
                     filename = GET_SENSORDATA_JOB_BY_ID(i).filename 
@@ -368,7 +382,7 @@ def delete_sensordata_jobs(id):
     job    = GET_SENSORDATA_JOB_BY_ID(id).name  
     result = DELETE_SENSORDATA_JOB(id)
 
-    if result:
+    if result == True:
         session['delete_job_success'] = job + " || Erfolgreich gelöscht"
     else:
         session['delete_job_error'] = job + " || " + str(result)

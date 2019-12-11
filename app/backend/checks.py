@@ -634,7 +634,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       # ###########
       
       if "scene" in task:
-         if " | " in task:
+         if " # " in task:
             task = task.split(" # ") 
 
             # check group setting 
@@ -742,7 +742,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
       
       if "brightness" in task and task_type == "controller":
-         if " | " in task:
+         if " # " in task:
             task = task.split(" # ") 
 
             # check group setting
@@ -780,7 +780,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
       
       if "led_off" in task:
-         if " | " in task:
+         if " # " in task:
             task = task.split(" # ")
             
             # check group setting
@@ -869,7 +869,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
       
       if "device" in task and "update" not in task:
-         if " | " in task:
+         if " # " in task:
             task = task.split(" # ") 
 
             try:
@@ -923,7 +923,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
       
       if "program" in task:
-         if " | " in task:
+         if " # " in task:
             task = task.split(" # ") 
 
             try:
@@ -969,7 +969,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
       
       if "watering_plants" in task and task_type == "scheduler":
-         if " | " in task:
+         if " # " in task:
             task = task.split(" # ") 
             
             try:
@@ -1016,7 +1016,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
       
       if "request_sensordata" in task and task_type == "scheduler":
-         if " | " in task:
+         if " # " in task:
             task = task.split(" # ")
 
             # check job name setting
@@ -1043,7 +1043,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command = ""):
       
          
       if "spotify" in task:
-         if " | " in task:
+         if " # " in task:
             task = task.split(" # ")
 
             # check settings

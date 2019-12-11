@@ -3011,14 +3011,19 @@ def CHANGE_USER_PASSWORD(id, hashed_password):
 def DELETE_USER(user_id):
     entry = GET_USER_BY_ID(user_id)
 
-    try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + entry.name + " | deleted")    
-        User.query.filter_by(id=user_id).delete()
-        db.session.commit()    
-        return True
+    if entry.name != "admin":
 
-    except Exception as e:
-        return(e)
+        try:
+            WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + entry.name + " | deleted")    
+            User.query.filter_by(id=user_id).delete()
+            db.session.commit()    
+            return True
+
+        except Exception as e:
+                return(e)
+
+    else:
+        return "Benutzer kann nicht gelöscht werden"
 
 
 """ ################### """

@@ -421,7 +421,8 @@ def settings_system():
 @permission_required
 def restore_database_backup(filename):
     result = RESTORE_DATABASE(filename)
-    if result:
+
+    if result == True:
         session['restore_database_success'] = filename + " || Erfolgreich wiederhergestellt"
     else:
         session['restore_database_error'] = filename + " || " + result
@@ -435,7 +436,8 @@ def restore_database_backup(filename):
 @permission_required
 def delete_database_backup(filename):
     result = DELETE_DATABASE_BACKUP(filename)
-    if result:
+
+    if result == True:
         session['delete_database_success'] = filename + " || Erfolgreich gelöscht"
     else:
         session['delete_database_error'] = filename + " || " + result

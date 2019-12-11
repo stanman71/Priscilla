@@ -116,11 +116,25 @@
                         {% for entry in list_users %}
                           <tr>           
                             <td>
-                              <div class="row justify-content-md-left">
-                                <div class="col-sm-10">                                    
-                                  <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />   
-                                </div>
-                              </div>          
+
+                              {% if entry.name != "admin" %}
+
+                                <div class="row justify-content-md-left">
+                                  <div class="col-sm-10">                                    
+                                    <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />   
+                                  </div>
+                                </div>        
+
+                              {% else %}       
+
+                                <div class="row justify-content-md-left">
+                                  <div class="col-sm-10">                                    
+                                    {{ entry.name }} 
+                                  </div>
+                                </div>       
+
+                              {% endif %}                              
+
                             </td> 
                             <td>
                               <div class="row justify-content-md-left">
@@ -141,16 +155,22 @@
                               </div>
                             </td> 
                             <td>
-                              <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="radio_role_dashboard_only_{{ entry.id }}" {% if entry.role == "dashboard_only" %} checked="on" {% endif %} value="dashboard_only" name="radio_role_{{ entry.id }}">
-                                <label class="custom-control-label" for="radio_role_dashboard_only_{{ entry.id }}">Dashboard-Only</label>
-                              </div>     
-                              <br>  
-                              <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="radio_role_user_{{ entry.id }}" {% if entry.role == "user" %} checked="on" {% endif %} value="user" name="radio_role_{{ entry.id }}">
-                                <label class="custom-control-label" for="radio_role_user_{{ entry.id }}">User</label>
-                              </div> 
-                              <br>       
+
+                              {% if entry.name != "admin" %}
+
+                                <div class="custom-control custom-radio custom-control-inline">
+                                  <input type="radio" class="custom-control-input" id="radio_role_dashboard_only_{{ entry.id }}" {% if entry.role == "dashboard_only" %} checked="on" {% endif %} value="dashboard_only" name="radio_role_{{ entry.id }}">
+                                  <label class="custom-control-label" for="radio_role_dashboard_only_{{ entry.id }}">Dashboard-Only</label>
+                                </div>     
+                                <br>  
+                                <div class="custom-control custom-radio custom-control-inline">
+                                  <input type="radio" class="custom-control-input" id="radio_role_user_{{ entry.id }}" {% if entry.role == "user" %} checked="on" {% endif %} value="user" name="radio_role_{{ entry.id }}">
+                                  <label class="custom-control-label" for="radio_role_user_{{ entry.id }}">User</label>
+                                </div> 
+                                <br>       
+
+                              {% endif %}
+
                               <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="radio_role_administrator_{{ entry.id }}" {% if entry.role == "administrator" %} checked="on" {% endif %} value="administrator" name="radio_role_{{ entry.id }}">
                                 <label class="custom-control-label" for="radio_role_administrator_{{ entry.id }}">Administrator</label>
@@ -163,22 +183,28 @@
                               </div>
                             </td>
                             <td>
-                              <!-- Button trigger modal -->
-                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>
-                              <!-- Modal -->
-                              <div class="modal fade" id="delete_dialog_{{entry.id}}">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title">Delete {{entry.name}} ?</h5>
-                                    </div>          
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                      <a class="btn btn-danger" href="/settings/users/delete/{{ entry.id }}#table" role="button">DELETE</a>
+
+                              {% if entry.name != "admin" %}
+
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="delete_dialog_{{entry.id}}">
+                                  <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title">Delete {{entry.name}} ?</h5>
+                                      </div>          
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                        <a class="btn btn-danger" href="/settings/users/delete/{{ entry.id }}#table" role="button">DELETE</a>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              </div>                                 
+                                </div>          
+
+                              {% endif %}
+
                             </td>   
                           </tr>
                         {% endfor %}

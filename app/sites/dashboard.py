@@ -3,13 +3,13 @@ from flask_login         import current_user, login_required
 from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
-from app                 import app
+from app                 import app, socketio
 from app.database.models import *
 from app.common          import COMMON, STATUS
 from app.assets          import *
 
 import os, shutil, re, cgi
-        
+
 
 # access rights
 def permission_required(f):
@@ -27,22 +27,25 @@ def permission_required(f):
     return wrap
 
 
-# Used only for static export
 @app.route('/dashboard')
 @login_required
 @permission_required
 def dashboard():
 
     # custommize your page title / description here
-    page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
+    page_title       = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
+
+    dropdown_list_led_scenes = GET_ALL_LED_SCENES()
+    list_led_groups          = GET_ALL_LED_GROUPS()
 
     data = {'navigation': 'dashboard'}
 
-    # try to match the pages defined in -> pages/
     return render_template('layouts/default.html',
+                            async_mode=socketio.async_mode,
                             data=data,
-                            content=render_template( 'pages/dashboard.html',
+                            content=render_template( 'pages/dashboard.html', 
+                                                    list_led_groups=list_led_groups,
+                                                    dropdown_list_led_scenes=dropdown_list_led_scenes,                       
                                                     ) 
-                            )
-
+                           )      

@@ -732,3 +732,807 @@ Timestamp,Type,Description
 2019-12-06 14:01:39,EVENT,|Logitech Media Server || Activated|
 2019-12-06 14:01:40,EVENT,|Squeezelie Player || Activated|
 2019-12-06 14:02:08,DATABASE,|Host || Network settings changed || DHCP LAN - True|
+2019-12-07 10:50:07,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 10:50:07,SUCCESS,|Spotify || Token updated|
+2019-12-07 10:50:08,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 10:50:08,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 10:52:53,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 10:52:53,SUCCESS,|Spotify || Token updated|
+2019-12-07 10:52:54,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 10:52:54,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 10:55:29,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 10:55:29,SUCCESS,|Spotify || Token updated|
+2019-12-07 10:55:30,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 10:55:30,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 10:56:31,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 10:56:31,SUCCESS,|Spotify || Token updated|
+2019-12-07 10:56:32,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 10:56:32,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 10:58:01,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 10:58:01,SUCCESS,|Spotify || Token updated|
+2019-12-07 10:58:02,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 10:58:02,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 11:04:30,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 11:04:30,SUCCESS,|Spotify || Token updated|
+2019-12-07 11:04:31,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 11:04:31,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 11:15:30,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 11:15:30,SUCCESS,|Spotify || Token updated|
+2019-12-07 11:15:31,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 11:15:31,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 11:16:12,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 11:16:12,SUCCESS,|Spotify || Token updated|
+2019-12-07 11:16:13,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 11:16:13,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 11:29:14,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 11:29:14,SUCCESS,|Spotify || Token updated|
+2019-12-07 11:29:15,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 11:29:15,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 11:29:44,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 11:29:44,SUCCESS,|Spotify || Token updated|
+2019-12-07 11:29:45,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 11:29:45,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 11:30:10,SUCCESS,|Devices || MQTT || Update|
+2019-12-07 11:31:28,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 11:31:29,SUCCESS,|Spotify || Token updated|
+2019-12-07 11:31:29,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 11:31:29,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 11:31:48,DATABASE,|User - new_user_2 || changed |||| name - new_user || eMail - stanlay@gmx.neti || Role - user || eMail-Notification - False|
+2019-12-07 14:37:28,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 14:37:28,SUCCESS,|Spotify || Token updated|
+2019-12-07 14:37:29,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:37:29,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:38:11,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 14:38:11,SUCCESS,|Spotify || Token updated|
+2019-12-07 14:38:12,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:38:12,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:38:44,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 14:38:44,SUCCESS,|Spotify || Token updated|
+2019-12-07 14:38:45,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:38:45,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:42:40,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 14:42:40,SUCCESS,|Spotify || Token updated|
+2019-12-07 14:42:41,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:42:41,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:44:04,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 14:44:04,SUCCESS,|Spotify || Token updated|
+2019-12-07 14:44:05,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:44:05,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:48:52,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 14:48:53,SUCCESS,|Spotify || Token updated|
+2019-12-07 14:48:53,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:48:53,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:51:05,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 14:51:05,SUCCESS,|Spotify || Token updated|
+2019-12-07 14:51:06,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:51:06,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:58:06,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 14:58:06,SUCCESS,|Spotify || Token updated|
+2019-12-07 14:58:07,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 14:58:07,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:34:41,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:34:42,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:34:42,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:34:42,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:36:02,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:36:02,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:36:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:36:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:37:16,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:37:16,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:37:17,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:37:17,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:39:16,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:39:17,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:39:17,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:39:17,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:45:46,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:45:46,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:45:47,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:45:47,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:48:12,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:48:12,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:48:13,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:48:13,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:48:49,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:48:49,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:48:50,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:48:50,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:49:46,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:49:46,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:49:47,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:49:47,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:50:32,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:50:32,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:50:33,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:50:33,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:51:33,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:51:33,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:51:34,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:51:34,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:52:46,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:52:46,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:52:47,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:52:47,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:53:48,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:53:49,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:53:49,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:53:49,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:54:31,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:54:31,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:54:32,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:54:32,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:56:05,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:56:05,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:56:06,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:56:06,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:57:15,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:57:15,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:57:16,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:57:16,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:59:26,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 15:59:26,SUCCESS,|Spotify || Token updated|
+2019-12-07 15:59:27,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:59:27,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 15:59:44,DATABASE,|Sensordata Job - new_job_2 || deleted|
+2019-12-07 15:59:49,DATABASE,|Sensordata Job - new_job_2 || added|
+2019-12-07 15:59:51,DATABASE,|Sensordata Job - new_job_2 || deleted|
+2019-12-07 16:00:21,DATABASE,|LED || Scene - test_1 || Settings changed|
+2019-12-07 16:13:13,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 16:13:13,SUCCESS,|Spotify || Token updated|
+2019-12-07 16:13:14,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:13:14,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:16:06,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 16:16:06,SUCCESS,|Spotify || Token updated|
+2019-12-07 16:16:07,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:16:07,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:19:21,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 16:19:21,SUCCESS,|Spotify || Token updated|
+2019-12-07 16:19:22,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:19:22,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:20:43,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 16:20:43,SUCCESS,|Spotify || Token updated|
+2019-12-07 16:20:44,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:20:44,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:21:36,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 16:21:36,SUCCESS,|Spotify || Token updated|
+2019-12-07 16:21:37,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:21:37,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:24:36,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 16:24:37,SUCCESS,|Spotify || Token updated|
+2019-12-07 16:24:37,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:24:37,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:25:01,DATABASE,|Scheduler || Task - Start_Server || changed|
+2019-12-07 16:25:40,DATABASE,|Scheduler || Task - Start_Server || changed|
+2019-12-07 16:28:00,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 16:28:00,SUCCESS,|Spotify || Token updated|
+2019-12-07 16:28:01,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:28:01,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:28:39,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 16:28:39,SUCCESS,|Spotify || Token updated|
+2019-12-07 16:28:40,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:28:40,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:30:10,SUCCESS,|Devices || MQTT || Update|
+2019-12-07 16:30:32,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 16:30:32,SUCCESS,|Spotify || Token updated|
+2019-12-07 16:30:33,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:30:33,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:31:42,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 16:31:42,SUCCESS,|Spotify || Token updated|
+2019-12-07 16:31:43,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:31:43,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:32:36,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 16:32:37,SUCCESS,|Spotify || Token updated|
+2019-12-07 16:32:37,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 16:32:37,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 20:15:47,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 20:15:47,SUCCESS,|Spotify || Token updated|
+2019-12-07 20:15:48,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 20:15:48,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 20:16:27,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 20:16:27,SUCCESS,|Spotify || Token updated|
+2019-12-07 20:16:28,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 20:16:28,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 20:17:02,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-07 20:17:02,SUCCESS,|Spotify || Token updated|
+2019-12-07 20:17:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-07 20:17:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 01:09:25,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-08 01:09:25,SUCCESS,|Spotify || Token updated|
+2019-12-08 01:09:26,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 01:09:26,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 11:21:20,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 11:21:20,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 11:21:21,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-08 11:21:21,SUCCESS,|Spotify || Token updated|
+2019-12-08 12:37:46,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-08 12:37:46,SUCCESS,|Spotify || Token updated|
+2019-12-08 12:37:47,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 12:37:47,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 12:39:39,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-08 12:39:39,SUCCESS,|Spotify || Token updated|
+2019-12-08 12:39:40,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 12:39:40,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 12:42:49,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-08 12:42:49,SUCCESS,|Spotify || Token updated|
+2019-12-08 12:42:50,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 12:42:50,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 14:57:50,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-08 14:57:50,SUCCESS,|Spotify || Token updated|
+2019-12-08 14:57:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 14:57:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 14:58:33,DATABASE,|LED || Scene - test_1 || Settings changed|
+2019-12-08 14:58:54,DATABASE,|Plant - new_plant_1 || deleted|
+2019-12-08 15:00:17,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-08 15:00:17,SUCCESS,|Spotify || Token updated|
+2019-12-08 15:00:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 15:00:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 15:00:37,DATABASE,|Plant - new_plant_1 || added|
+2019-12-08 15:01:26,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-08 15:01:26,SUCCESS,|Spotify || Token updated|
+2019-12-08 15:01:27,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 15:01:27,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-08 15:01:43,DATABASE,|Plant - new_plant_1 || deleted|
+2019-12-10 14:11:45,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:11:46,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:11:46,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:11:46,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:19:05,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:19:06,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:19:06,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:19:06,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:20:28,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:20:28,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:20:29,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:20:29,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:21:38,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:21:38,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:21:39,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:21:39,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:24:14,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:24:15,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:24:16,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:24:16,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:30:10,SUCCESS,|Devices || MQTT || Update|
+2019-12-10 14:32:02,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:32:02,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:32:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:32:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:33:14,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:33:15,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:33:15,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:33:15,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:36:34,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:36:35,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:36:35,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:36:35,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:37:47,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:37:47,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:37:48,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:37:48,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:39:10,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:39:10,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:39:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:39:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:39:57,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:39:58,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:39:58,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:39:58,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:44:23,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:44:23,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:44:24,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:44:24,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:45:10,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:45:10,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:45:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:45:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:48:12,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:48:12,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:48:13,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:48:13,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:48:57,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:48:58,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:48:58,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:48:58,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:50:39,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:50:39,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:50:40,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:50:40,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:53:03,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:53:03,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:53:04,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:53:04,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:54:19,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:54:19,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:54:20,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:54:20,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:55:38,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:55:38,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:55:39,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:55:39,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:57:23,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:57:23,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:57:24,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:57:24,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:58:50,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 14:58:50,SUCCESS,|Spotify || Token updated|
+2019-12-10 14:58:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 14:58:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 15:00:30,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 15:00:30,SUCCESS,|Spotify || Token updated|
+2019-12-10 15:00:31,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 15:00:31,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 15:04:48,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 15:04:48,SUCCESS,|Spotify || Token updated|
+2019-12-10 15:04:49,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 15:04:49,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 15:06:34,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 15:06:34,SUCCESS,|Spotify || Token updated|
+2019-12-10 15:06:35,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 15:06:35,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 15:09:01,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 15:09:01,SUCCESS,|Spotify || Token updated|
+2019-12-10 15:09:02,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 15:09:02,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 15:12:16,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 15:12:17,SUCCESS,|Spotify || Token updated|
+2019-12-10 15:12:17,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 15:12:17,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 15:15:34,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 15:15:34,SUCCESS,|Spotify || Token updated|
+2019-12-10 15:15:35,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 15:15:35,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 23:14:35,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 23:14:35,SUCCESS,|Spotify || Token updated|
+2019-12-10 23:14:36,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 23:14:36,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 23:16:05,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 23:16:06,SUCCESS,|Spotify || Token updated|
+2019-12-10 23:16:06,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 23:16:06,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 23:17:24,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 23:17:24,SUCCESS,|Spotify || Token updated|
+2019-12-10 23:17:25,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 23:17:25,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 23:18:16,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 23:18:16,SUCCESS,|Spotify || Token updated|
+2019-12-10 23:18:17,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 23:18:17,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 23:19:17,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-10 23:19:17,SUCCESS,|Spotify || Token updated|
+2019-12-10 23:19:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-10 23:19:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:16:56,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:16:56,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:16:57,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:16:57,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:21:37,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:21:37,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:21:38,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:21:38,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:27:47,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:27:47,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:27:48,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:27:48,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:28:50,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:28:50,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:28:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:28:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:30:10,SUCCESS,|Devices || MQTT || Update|
+2019-12-11 07:32:54,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:32:55,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:32:55,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:32:56,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:35:12,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:35:12,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:35:13,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:35:13,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:37:01,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:37:01,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:37:02,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:37:02,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:37:31,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:37:31,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:37:32,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:37:32,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:41:24,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:41:24,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:41:25,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:41:25,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:42:31,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:42:32,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:42:32,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:42:32,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:43:35,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:43:35,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:43:36,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:43:36,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:44:31,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:44:31,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:44:32,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:44:32,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:46:05,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:46:05,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:46:06,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:46:06,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:51:05,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:51:05,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:51:06,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:51:06,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:52:10,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:52:10,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:52:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:52:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:55:04,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:55:04,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:55:05,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:55:05,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:55:47,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:55:47,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:55:48,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:55:48,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:57:11,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:57:11,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:57:12,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:57:12,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:58:02,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:58:02,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:58:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:58:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:59:44,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 07:59:44,SUCCESS,|Spotify || Token updated|
+2019-12-11 07:59:45,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 07:59:45,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:00:53,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:00:53,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:00:54,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:00:54,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:02:56,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:02:56,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:02:57,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:02:57,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:04:26,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:04:26,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:04:27,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:04:27,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:06:20,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:06:21,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:06:21,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:06:21,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:08:04,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:08:04,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:08:05,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:08:05,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:08:48,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:08:48,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:08:49,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:08:49,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:09:12,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:09:12,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:09:13,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:09:13,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:14:49,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:14:49,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:14:50,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:14:50,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:17:48,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:17:48,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:17:49,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:17:49,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:19:29,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:19:29,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:19:30,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:19:30,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:20:08,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:20:08,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:20:09,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:20:09,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:22:42,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:22:42,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:22:43,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:22:43,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:24:47,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:24:47,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:24:48,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:24:48,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:25:52,DATABASE,|User - admin || deleted|
+2019-12-11 08:26:33,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:26:33,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:26:34,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:26:34,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:29:54,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:29:54,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:29:55,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:29:55,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:30:10,SUCCESS,|Devices || MQTT || Update|
+2019-12-11 08:31:47,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:31:47,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:31:48,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:31:48,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:32:23,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:32:24,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:32:24,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:32:24,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:33:02,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:33:02,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:33:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:33:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:37:42,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:37:42,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:37:43,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:37:43,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:39:10,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:39:10,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:39:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:39:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:39:41,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:39:41,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:39:42,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:39:42,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:43:17,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:43:17,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:43:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:43:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:43:26,DATABASE,|User - new_user || changed |||| name - new_userjhg || eMail - stanlay@gmx.neti || Role - user || eMail-Notification - False|
+2019-12-11 08:55:36,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 08:55:37,SUCCESS,|Spotify || Token updated|
+2019-12-11 08:55:37,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:55:37,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 08:55:40,DATABASE,|User - new_userjhg || changed |||| name - admin  || eMail - stanlay@gmx.neti || Role - user || eMail-Notification - False|
+2019-12-11 08:55:58,DATABASE,|User - admin  || changed |||| name - tretre || eMail - stanlay@gmx.neti || Role - user || eMail-Notification - False|
+2019-12-11 08:56:14,DATABASE,|Scheduler || Task - new_scheduler_task_5 || added|
+2019-12-11 08:56:22,DATABASE,|Scheduler || Task - new_scheduler_task_5 || changed|
+2019-12-11 08:56:58,DATABASE,|Program || new_program_1 || added|
+2019-12-11 08:57:12,DATABASE,|Program || new_program_1 || changed|
+2019-12-11 09:01:01,DATABASE,|User - tretre || changed |||| name - admin  || eMail - stanlay@gmx.neti || Role - user || eMail-Notification - False|
+2019-12-11 09:01:11,DATABASE,|User - admin  || changed |||| name - jhgff || eMail - stanlay@gmx.neti || Role - user || eMail-Notification - False|
+2019-12-11 09:02:03,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 09:02:03,SUCCESS,|Spotify || Token updated|
+2019-12-11 09:02:04,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:02:04,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:03:17,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 09:03:17,SUCCESS,|Spotify || Token updated|
+2019-12-11 09:03:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:03:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:03:56,DATABASE,|User - jhgff || changed |||| name - admin  hh || eMail - stanlay@gmx.neti || Role - user || eMail-Notification - False|
+2019-12-11 09:04:08,DATABASE,|User - admin  hh || changed |||| name - gjgjhg || eMail - stanlay@gmx.neti || Role - user || eMail-Notification - False|
+2019-12-11 09:04:25,DATABASE,|User - gjgjhg || changed |||| name - gjgjhg  fgjh || eMail - stanlay@gmx.neti || Role - user || eMail-Notification - False|
+2019-12-11 09:04:27,DATABASE,|User - gjgjhg  fgjh || changed |||| name - gjgjhg  fgjh    || eMail - stanlay@gmx.neti || Role - user || eMail-Notification - False|
+2019-12-11 09:08:44,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 09:08:45,SUCCESS,|Spotify || Token updated|
+2019-12-11 09:08:45,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:08:45,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:08:51,DATABASE,|User - gjgjhg  fgjh    || changed |||| name - gjgjhg  fgjh || eMail - stanlay@gmx.neti || Role - user || eMail-Notification - False|
+2019-12-11 09:29:14,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 09:29:15,SUCCESS,|Spotify || Token updated|
+2019-12-11 09:29:15,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:29:15,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:29:50,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 09:29:50,SUCCESS,|Spotify || Token updated|
+2019-12-11 09:29:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:29:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:30:10,SUCCESS,|Devices || MQTT || Update|
+2019-12-11 09:32:10,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 09:32:10,SUCCESS,|Spotify || Token updated|
+2019-12-11 09:32:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:32:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:35:02,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 09:35:02,SUCCESS,|Spotify || Token updated|
+2019-12-11 09:35:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:35:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:36:11,DATABASE,|Scheduler || Task - new_scheduler_task_5 || changed|
+2019-12-11 09:37:17,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 09:37:17,SUCCESS,|Spotify || Token updated|
+2019-12-11 09:37:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:37:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 09:37:28,DATABASE,|Scheduler || Task - new_scheduler_task_5 || deleted|
+2019-12-11 10:23:20,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:23:20,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:23:21,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:23:21,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:24:35,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:24:35,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:24:36,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:24:36,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:26:09,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:26:09,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:26:10,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:26:10,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:27:14,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:27:14,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:27:15,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:27:15,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:28:17,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:28:17,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:28:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:28:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:30:11,SUCCESS,|Devices || MQTT || Update|
+2019-12-11 10:30:44,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:30:44,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:30:45,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:30:45,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:32:02,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:32:02,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:32:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:32:03,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:32:34,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:32:35,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:32:35,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:32:35,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:33:27,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:33:27,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:33:28,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:33:28,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:34:03,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:34:03,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:34:04,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:34:04,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:34:54,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:34:54,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:34:55,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:34:55,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:35:37,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:35:37,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:35:38,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:35:38,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:35:46,DATABASE,|LED || Group - new_group_1 || added|
+2019-12-11 10:35:47,DATABASE,|LED || Group - new_group_2 || added|
+2019-12-11 10:35:49,DATABASE,|LED || Group - new_group_3 || added|
+2019-12-11 10:39:06,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:39:06,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:39:07,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:39:07,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:39:39,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:39:39,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:39:40,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:39:40,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:41:17,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:41:18,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:41:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:41:18,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:41:58,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:41:58,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:41:59,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:41:59,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:44:39,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:44:40,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:44:40,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:44:40,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:45:50,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:45:50,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:45:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:45:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:46:54,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:46:54,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:46:55,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:46:55,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:47:48,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:47:48,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:47:49,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:47:49,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:54:04,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:54:04,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:54:05,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:54:05,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:55:07,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:55:07,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:55:08,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:55:08,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:55:52,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 10:55:52,SUCCESS,|Spotify || Token updated|
+2019-12-11 10:55:53,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:55:53,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 10:56:01,DATABASE,|LED || Group - new_group_4 || added|
+2019-12-11 10:56:03,DATABASE,|LED || Group - new_group_5 || added|
+2019-12-11 10:56:03,DATABASE,|LED || Group - new_group_6 || added|
+2019-12-11 10:56:04,DATABASE,|LED || Group - new_group_7 || added|
+2019-12-11 10:56:04,DATABASE,|LED || Group - new_group_8 || added|
+2019-12-11 10:56:07,DATABASE,|LED || Group - new_group_9 || added|
+2019-12-11 10:56:08,DATABASE,|LED || Group - new_group_10 || added|
+2019-12-11 10:56:09,DATABASE,|LED || Group - new_group_11 || added|
+2019-12-11 11:17:33,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 11:17:33,SUCCESS,|Spotify || Token updated|
+2019-12-11 11:17:34,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:17:34,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:18:57,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 11:18:57,SUCCESS,|Spotify || Token updated|
+2019-12-11 11:18:58,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:18:58,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:21:51,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 11:21:51,SUCCESS,|Spotify || Token updated|
+2019-12-11 11:21:52,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:21:52,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:23:29,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 11:23:29,SUCCESS,|Spotify || Token updated|
+2019-12-11 11:23:30,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:23:30,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:24:04,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 11:24:05,SUCCESS,|Spotify || Token updated|
+2019-12-11 11:24:05,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:24:05,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:24:24,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 11:24:24,SUCCESS,|Spotify || Token updated|
+2019-12-11 11:24:25,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:24:25,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:24:53,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 11:24:53,SUCCESS,|Spotify || Token updated|
+2019-12-11 11:24:54,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:24:54,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:25:24,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 11:25:24,SUCCESS,|Spotify || Token updated|
+2019-12-11 11:25:25,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:25:25,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:25:59,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 11:25:59,SUCCESS,|Spotify || Token updated|
+2019-12-11 11:26:00,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:26:00,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:27:55,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 11:27:55,SUCCESS,|Spotify || Token updated|
+2019-12-11 11:27:56,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 11:27:56,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:34:16,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 14:34:16,SUCCESS,|Spotify || Token updated|
+2019-12-11 14:34:17,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:34:17,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:35:12,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 14:35:12,SUCCESS,|Spotify || Token updated|
+2019-12-11 14:35:13,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:35:13,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:35:56,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 14:35:56,SUCCESS,|Spotify || Token updated|
+2019-12-11 14:35:57,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:35:57,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:40:56,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 14:40:56,SUCCESS,|Spotify || Token updated|
+2019-12-11 14:40:57,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:40:57,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:41:40,EVENT,|Program - new_program_1 || started|
+2019-12-11 14:41:51,SUCCESS,|Program - new_program_1 || finished|
+2019-12-11 14:43:10,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 14:43:10,SUCCESS,|Spotify || Token updated|
+2019-12-11 14:43:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:43:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:45:42,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 14:45:43,SUCCESS,|Spotify || Token updated|
+2019-12-11 14:45:43,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:45:43,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:46:30,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 14:46:30,SUCCESS,|Spotify || Token updated|
+2019-12-11 14:46:31,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:46:31,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:48:13,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 14:48:13,SUCCESS,|Spotify || Token updated|
+2019-12-11 14:48:14,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:48:14,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:49:50,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 14:49:50,SUCCESS,|Spotify || Token updated|
+2019-12-11 14:49:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:49:51,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:52:59,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 14:52:59,SUCCESS,|Spotify || Token updated|
+2019-12-11 14:53:00,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:53:00,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:59:10,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 14:59:10,SUCCESS,|Spotify || Token updated|
+2019-12-11 14:59:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 14:59:11,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 15:03:53,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 15:03:53,SUCCESS,|Spotify || Token updated|
+2019-12-11 15:03:54,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 15:03:54,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 15:06:13,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 15:06:13,SUCCESS,|Spotify || Token updated|
+2019-12-11 15:06:14,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 15:06:14,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 15:08:27,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 15:08:27,SUCCESS,|Spotify || Token updated|
+2019-12-11 15:08:28,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 15:08:28,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 15:08:48,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 15:08:48,SUCCESS,|Spotify || Token updated|
+2019-12-11 15:08:49,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 15:08:49,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 15:09:32,EVENT,|ZigBee2MQTT || Disabled|
+2019-12-11 15:09:32,SUCCESS,|Spotify || Token updated|
+2019-12-11 15:09:33,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2019-12-11 15:09:33,ERROR,|MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|

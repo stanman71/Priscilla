@@ -12,7 +12,6 @@ from app.assets          import *
 import datetime
 
 
-
 # access rights
 def permission_required(f):
     @wraps(f)
@@ -79,139 +78,122 @@ def settings_users():
             
             if request.form.get("set_name_" + str(i)) != None:
                 
-                administrator_exist = False
                 error_founded       = False
                 hashed_password     = None
 
-                # current user has administrator rights ?
-                if request.form.get("radio_role_" + str(i)) == "administrator":
-                    administrator_exist = True
+
+                # ############
+                # name setting
+                # ############
+
+                user       = GET_USER_BY_ID(i)
+                input_name = request.form.get("set_name_" + str(i))    
+
+                # check spaces at the end
+                if input_name != input_name.strip():
+                    error_message_change_settings.append(user.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
+                    error_founded = True                      
+
+                # add new name
+                elif ((input_name != "") and (GET_USER_BY_NAME(input_name) == None)):
+                    name = request.form.get("set_name_" + str(i)) 
                     
-                else:
+                # nothing changed 
+                elif input_name == user.name:
+                    name = user.name                        
                     
-                    # another user has administrator rights ?
-                    for j in range (1,26): 
-                        
-                        try:
-                            if (i != j) and GET_USER_BY_ID(j).role == "administrator":      
-                                administrator_exist = True
-                                continue      
-                                
-                        except:
-                            pass
+                # name already exist
+                elif ((GET_USER_BY_NAME(input_name) != None) and (user.name != input_name)):
+                    error_message_change_settings.append(user.name + " || Name - " + input_name + " - bereits vergeben")  
+                    error_founded = True
+                    name = user.name
+
+                # no input commited
+                else:                          
+                    name = GET_USER_BY_ID(i).name
+                    error_message_change_settings.append(user.name + " || Keinen Namen angegeben") 
+                    error_founded = True  
 
 
-                # one user has administrator rights
-                if administrator_exist == True: 
+                # #############
+                # email setting
+                # #############
+
+                input_email = request.form.get("set_email_" + str(i))                    
+
+                # check spaces at the end
+                if input_email != input_email.strip():
+                    error_message_change_settings.append(user.name + " || eMail-Adresse - " + input_email + " - hat ungültige Leerzeichen") 
+                    error_founded = True          
+
+                # add new name
+                elif ((input_email != "") and (GET_USER_BY_EMAIL(input_email) == None)):
+                    email = request.form.get("set_email_" + str(i)) 
                     
-
-                    # ############
-                    # name setting
-                    # ############
-
-                    user       = GET_USER_BY_ID(i)
-                    input_name = request.form.get("set_name_" + str(i))                    
-
-                    # add new name
-                    if ((input_name != "") and (GET_USER_BY_NAME(input_name) == None)):
-                        name = request.form.get("set_name_" + str(i)) 
-                        
-                    # nothing changed 
-                    elif input_name == user.name:
-                        name = user.name                        
-                        
-                    # name already exist
-                    elif ((GET_USER_BY_NAME(input_name) != None) and (user.name != input_name)):
-                        error_message_change_settings.append(user.name + " || Name bereits vergeben")  
-                        error_founded = True
-                        name = user.name
-
-                    # no input commited
-                    else:                          
-                        name = GET_USER_BY_ID(i).name
-                        error_message_change_settings.append(user.name + " || Keinen Namen angegeben") 
-                        error_founded = True  
-
-
-                    # #############
-                    # email setting
-                    # #############
-
-                    input_email = request.form.get("set_email_" + str(i))                    
-
-                    # add new name
-                    if ((input_email != "") and (GET_USER_BY_EMAIL(input_email) == None)):
-                        email = request.form.get("set_email_" + str(i)) 
-                        
-                    # nothing changed 
-                    elif input_email == user.email:
-                        email = user.email                        
-                        
-                    # email already exist
-                    elif ((GET_USER_BY_EMAIL(input_email) != None) and (user.email != input_email)):
-                        error_message_change_settings.append(user.name + " || eMail-Adresse bereits vergeben")  
-                        error_founded = True
-                        email = user.email 
-
-                    # no input commited
-                    else:                          
-                        email = GET_USER_BY_ID(i).email
-                        error_message_change_settings.append(user.name + " || Keine eMail-Adresse angegeben") 
-                        error_founded = True  
-
-
-                    # ################
-                    # password setting
-                    # ################
+                # nothing changed 
+                elif input_email == user.email:
+                    email = user.email                        
                     
-                    if request.form.get("set_password_" + str(i)) != "":                        
-                        password = request.form.get("set_password_" + str(i))
-                        
-                        try:              
-                            if 8 <= len(password) <= 20:
-                                
-                                if str(password) == str(request.form.get("set_password_repeat_" + str(i))):
-                                    hashed_password = generate_password_hash(password, method='sha256')
-                                       
-                                else:
-                                    error_message_change_settings.append(user.name + " || Eingegebene Passwörter sind nicht identisch")
-                                
-                            else:    
-                                error_message_change_settings.append(user.name + " || Passwort muss zwischen 8 und 20 Zeichen haben")
-                                
-                        except:
+                # email already exist
+                elif ((GET_USER_BY_EMAIL(input_email) != None) and (user.email != input_email)):
+                    error_message_change_settings.append(user.name + " || eMail-Adresse - " + input_email + " - bereits vergeben") 
+                    error_founded = True
+                    email = user.email 
+
+                # no input commited
+                else:                          
+                    email = GET_USER_BY_ID(i).email
+                    error_message_change_settings.append(user.name + " || Keine eMail-Adresse angegeben") 
+                    error_founded = True  
+
+
+                # ################
+                # password setting
+                # ################
+                
+                if request.form.get("set_password_" + str(i)) != "":                        
+                    password = request.form.get("set_password_" + str(i))
+                    
+                    try:              
+                        if 8 <= len(password) <= 20:
+                            
+                            if str(password) == str(request.form.get("set_password_repeat_" + str(i))):
+                                hashed_password = generate_password_hash(password, method='sha256')
+                                    
+                            else:
+                                error_message_change_settings.append(user.name + " || Eingegebene Passwörter sind nicht identisch")
+                            
+                        else:    
                             error_message_change_settings.append(user.name + " || Passwort muss zwischen 8 und 20 Zeichen haben")
+                            
+                    except:
+                        error_message_change_settings.append(user.name + " || Passwort muss zwischen 8 und 20 Zeichen haben")
 
 
-                    # role
-                    role = request.form.get("radio_role_" + str(i))
+                # role
+                role = request.form.get("radio_role_" + str(i))
 
-                    # notification
-                    if request.form.get("checkbox_email_notification_" + str(i)) != None:
-                        email_notification = "True"
-                    else:
-                        email_notification = "False"
+                # notification
+                if request.form.get("checkbox_email_notification_" + str(i)) != None:
+                    email_notification = "True"
+                else:
+                    email_notification = "False"
 
 
-                    # save settings
-                    if error_founded == False: 
+                # save settings
+                if error_founded == False: 
 
-                        changes_saved = False
+                    changes_saved = False
 
-                        if UPDATE_USER_SETTINGS(i, name, email, role, email_notification):   
+                    if UPDATE_USER_SETTINGS(i, name, email, role, email_notification):   
+                        changes_saved = True
+
+                    if hashed_password != None:                             
+                        if CHANGE_USER_PASSWORD(i, hashed_password):
                             changes_saved = True
 
-                        if hashed_password != None:                             
-                            if CHANGE_USER_PASSWORD(i, hashed_password):
-                                changes_saved = True
-
-                        if changes_saved == True:
-                            success_message_change_settings.append(name + " || Einstellungen erfolgreich gespeichert") 
-
-                                        
-                # no user has administrator rights
-                else:    
-                    error_message_change_settings.append("Mindestens ein Benutzer muss Administrator sein")  
+                    if changes_saved == True:
+                        success_message_change_settings.append(name + " || Einstellungen erfolgreich gespeichert") 
 
 
     user_list = GET_ALL_USERS()
@@ -244,10 +226,10 @@ def settings_users():
 @login_required
 @permission_required
 def delete_user(id):
-    name = GET_USER_BY_ID(id).name
-    result   = DELETE_USER(id)
+    name   = GET_USER_BY_ID(id).name
+    result = DELETE_USER(id)
 
-    if result:
+    if result == True:
         session['delete_user_success'] = name + " || Erfolgreich gelöscht"
     else:
         session['delete_user_error'] = name + " || " + str(result)

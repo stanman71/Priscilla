@@ -82,6 +82,11 @@ def led_groups():
                 led_group  = GET_LED_GROUP_BY_ID(i)
                 input_name = request.form.get("set_name_" + str(i))                    
 
+                # check spaces at the end
+                if input_name != input_name.strip():
+                    error_message_change_settings_led_group.append(led_group.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
+                    error_founded = True      
+
                 # add new name
                 if ((input_name != "") and (GET_LED_GROUP_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
@@ -93,7 +98,7 @@ def led_groups():
                 # name already exist
                 elif ((GET_LED_GROUP_BY_NAME(input_name) != None) and (led_group.name != input_name)):
                     name = led_group.name 
-                    error_message_change_settings_led_group = {"group_number": i,"message": "Name schon vergeben"}
+                    error_message_change_settings_led_group = {"group_number": i,"message": "Name - " + input_name + " - bereits vergeben"}
 
                 # no input commited
                 else:                          

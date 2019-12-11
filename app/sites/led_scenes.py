@@ -87,8 +87,13 @@ def led_scenes():
                 led_scene  = GET_LED_SCENE_BY_ID(i)
                 input_name = request.form.get("set_name_" + str(i))                    
 
+                # check spaces at the end
+                if input_name != input_name.strip():
+                    error_message_change_settings_led_scene.append(led_scene.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
+                    error_founded = True      
+
                 # add new name
-                if ((input_name != "") and (GET_LED_SCENE_BY_NAME(input_name) == None)):
+                elif ((input_name != "") and (GET_LED_SCENE_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 
@@ -98,7 +103,7 @@ def led_scenes():
                 # name already exist
                 elif ((GET_LED_SCENE_BY_NAME(input_name) != None) and (led_scene.name != input_name)):
                     name = led_scene.name 
-                    error_message_change_settings_led_scene = {"scene_number": i,"message": "Name schon vergeben"}
+                    error_message_change_settings_led_scene = {"scene_number": i,"message": "Name - " + input_name + " - bereits vergeben"}
 
                 # no input commited
                 else:                          

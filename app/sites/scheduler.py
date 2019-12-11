@@ -18,14 +18,14 @@ import spotipy
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        try:
-            if current_user.role == "user" or current_user.role == "administrator":
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('logout'))
-        except Exception as e:
-            print(e)
+        #try:
+        if current_user.role == "user" or current_user.role == "administrator":
+            return f(*args, **kwargs)
+        else:
             return redirect(url_for('logout'))
+        #except Exception as e:
+        #    print(e)
+        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -83,8 +83,13 @@ def scheduler():
                 scheduler_task = GET_SCHEDULER_TASK_BY_ID(i)
                 input_name     = request.form.get("set_name_" + str(i))                    
 
+                # check spaces at the end
+                if input_name != input_name.strip():
+                    error_message_change_settings.append(scheduler_task.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
+                    error_founded = True       
+
                 # add new name
-                if ((input_name != "") and (GET_SCHEDULER_TASK_BY_NAME(input_name) == None)):
+                elif ((input_name != "") and (GET_SCHEDULER_TASK_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 
@@ -93,7 +98,7 @@ def scheduler():
                     
                 # name already exist
                 elif ((GET_SCHEDULER_TASK_BY_NAME(input_name) != None) and (scheduler_task.name != input_name)):
-                    error_message_change_settings.append(scheduler_task.name + " || Name bereits vergeben")  
+                    error_message_change_settings.append(scheduler_task.name + " || Name - " + input_name + " - bereits vergeben")  
                     error_founded = True
                     name = scheduler_task.name
 
@@ -109,10 +114,20 @@ def scheduler():
                 # ############
 
                 if request.form.get("set_task_" + str(i)) != "":
-                    task = request.form.get("set_task_" + str(i))
+                    
+                    input_task = request.form.get("set_task_" + str(i))
+
+                    # check spaces at the end
+                    if input_task != input_task.strip():
+                        error_message_change_settings.append(scheduler_task.name + " || Aufgabe - " + input_task + " - hat ungültige Leerzeichen") 
+                        error_founded = True     
+
+                    else:
+                        task = input_task
+
                 else:
                     task = GET_SCHEDULER_TASK_BY_ID(i).task
-                    error_message_change_settings = "Keine Aufgabe angegeben"
+                    error_message_change_settings.append("Keine Aufgabe angegeben")
 
 
                 # #################
@@ -161,20 +176,47 @@ def scheduler():
                 # #############
 
                 # set day
-                if request.form.get("set_day_" + str(i)) != "":
-                    day = request.form.get("set_day_" + str(i))
+                if request.form.get("set_day_" + str(i)) != "" and request.form.get("set_day_" + str(i)) != None:
+                    input_day = request.form.get("set_day_" + str(i))
+
+                    # check spaces at the end
+                    if input_day != input_day.strip():
+                        error_message_change_settings.append(scheduler_task.name + " || Tage - " + input_day + " - hat ungültige Leerzeichen") 
+                        error_founded = True       
+
+                    else:
+                        day = input_day
+
                 else:
                     day = GET_SCHEDULER_TASK_BY_ID(i).day
 
                 # set hour
-                if request.form.get("set_hour_" + str(i)) != "":
-                    hour = request.form.get("set_hour_" + str(i))
+                if request.form.get("set_hour_" + str(i)) != "" and request.form.get("set_hour_" + str(i)) != None:
+                    input_hour = request.form.get("set_hour_" + str(i))
+
+                    # check spaces at the end
+                    if input_hour != input_hour.strip():
+                        error_message_change_settings.append(scheduler_task.name + " || Stunden - " + input_hour + " - hat ungültige Leerzeichen") 
+                        error_founded = True       
+
+                    else:
+                        hour = input_hour
+
                 else:
                     hour = GET_SCHEDULER_TASK_BY_ID(i).hour
 
                 # set minute
-                if request.form.get("set_minute_" + str(i)) != "":
-                    minute = request.form.get("set_minute_" + str(i))
+                if request.form.get("set_minute_" + str(i)) != "" and request.form.get("set_minute_" + str(i)) != None:
+                    input_minute = request.form.get("set_minute_" + str(i))
+
+                    # check spaces at the end
+                    if input_minute != input_minute.strip():
+                        error_message_change_settings.append(scheduler_task.name + " || Minuten - " + input_minute + " - hat ungültige Leerzeichen") 
+                        error_founded = True       
+
+                    else:
+                        minute = input_minute
+
                 else:
                     minute = GET_SCHEDULER_TASK_BY_ID(i).minute 
 
@@ -320,23 +362,33 @@ def scheduler():
                     option_away = "None"  
 
                 # set ip_addresses
-                if request.form.get("set_ip_addresses_" + str(i)) != "":
-                    ip_addresses = request.form.get("set_ip_addresses_" + str(i))
+                if request.form.get("set_ip_addresses_" + str(i)) != "" and request.form.get("set_ip_addresses_" + str(i)) != None:
+                    input_ip_addresses = request.form.get("set_ip_addresses_" + str(i))
+
+                    # check spaces at the end
+                    if input_ip_addresses != input_ip_addresses.strip():
+                        error_message_change_settings.append(scheduler_task.name + " || IP-Adressen - " + input_ip_addresses + " - hat ungültige Leerzeichen") 
+                        error_founded = True       
+
+                    else:
+                        ip_addresses = input_ip_addresses
+
                 else:
                     ip_addresses = "None"
-                    
 
-                if SET_SCHEDULER_TASK(i, name, task, 
-                                         option_time, option_sun, option_sensors, option_position, option_repeat, option_pause,
-                                         day, hour, minute,
-                                         option_sunrise, option_sunset, location,
-                                         device_ieeeAddr_1, device_name_1, device_input_values_1, 
-                                         sensor_key_1, operator_1, value_1, main_operator_second_sensor,
-                                         device_ieeeAddr_2, device_name_2, device_input_values_2, 
-                                         sensor_key_2, operator_2, value_2, 
-                                         option_home, option_away, ip_addresses):
+                if error_founded == False: 
 
-                    success_message_change_settings_scheduler_task = i
+                    if SET_SCHEDULER_TASK(i, name, task, 
+                                            option_time, option_sun, option_sensors, option_position, option_repeat, option_pause,
+                                            day, hour, minute,
+                                            option_sunrise, option_sunset, location,
+                                            device_ieeeAddr_1, device_name_1, device_input_values_1, 
+                                            sensor_key_1, operator_1, value_1, main_operator_second_sensor,
+                                            device_ieeeAddr_2, device_name_2, device_input_values_2, 
+                                            sensor_key_2, operator_2, value_2, 
+                                            option_home, option_away, ip_addresses):
+
+                        success_message_change_settings_scheduler_task = i
 
 
     """ ####################### """

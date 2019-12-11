@@ -92,17 +92,22 @@ def plants():
                 plant      = GET_PLANT_BY_ID(i)
                 input_name = request.form.get("set_name_" + str(i))                    
 
+                # check spaces at the end
+                if input_name != input_name.strip():
+                    error_message_change_settings.append(plant.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
+                    error_founded = True           
+    
                 # add new name
-                if ((input_name != "") and (GET_PLANT_BY_NAME(input_name) == None)):
+                elif ((input_name != "") and (GET_PLANT_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
-                    
+
                 # nothing changed 
                 elif input_name == plant.name:
                     name = plant.name                        
                     
                 # name already exist
                 elif ((GET_PLANT_BY_NAME(input_name) != None) and (plant.name != input_name)):
-                    error_message_change_settings.append(plant.name + " || Name bereits vergeben")  
+                    error_message_change_settings.append(plant.name + " || Name - " + input_name + " - bereits vergeben")   
                     name = plant.name
                     error_founded = True  
 
@@ -125,7 +130,7 @@ def plants():
                 elif (GET_PLANT_BY_IEEEADDR(request.form.get("set_watering_controller_ieeeAddr")) and 
                     request.form.get("set_watering_controller_ieeeAddr") != GET_PLANT_BY_ID(i).device_ieeeAddr):
                     
-                    error_message_change_settings.append("Gerät mehrmals vergeben")    
+                    error_message_change_settings.append("Gerät - " + GET_PLANT_BY_ID(i).device_ieeeAddr + " - bereits vergeben")    
                     error_founded = True  
 
                 # add new device
@@ -231,7 +236,7 @@ def delete_plant(id):
     plant  = GET_PLANT_BY_ID(id).name  
     result = DELETE_PLANT(id)
 
-    if result:
+    if result == True:
         session['delete_plant_success'] = plant + " || Erfolgreich gelöscht"
     else:
         session['delete_plant_error'] = plant + " || " + str(result)
