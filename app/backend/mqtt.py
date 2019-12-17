@@ -159,22 +159,22 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         
         # new device conneted
         if data["type"] == "pairing" and data["message"] == "interview_started":
-            SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | New Device founded - " + data["meta"]["friendly_name"])   
+            SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device founded - " + data["meta"]["friendly_name"])   
 
         # device successful added
         if data["type"] == "pairing" and data["message"] == "interview_successful":
             time.sleep(5)
             UPDATE_DEVICES("zigbee2mqtt")
             WRITE_LOGFILE_SYSTEM("NETWORK", "Device | Added - " + data["meta"]["friendly_name"])   
-            SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | New Device added - " + data["meta"]["friendly_name"])   
+            SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device added - " + data["meta"]["friendly_name"])   
             time.sleep(10)      
-            SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Searching for new Devices...") 
+            SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
 
         # device connection failed
         if data["type"] == "pairing" and data["message"] == "interview_failed":
-            SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Device adding failed - " + data["meta"]["friendly_name"])   
+            SET_ZIGBEE2MQTT_PAIRING_STATUS("Device adding failed - " + data["meta"]["friendly_name"])   
             time.sleep(10)
-            SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Searching for new Devices...") 
+            SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
       
         # remove devices
         if data["type"] == "device_removed":

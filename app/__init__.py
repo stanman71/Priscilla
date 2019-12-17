@@ -236,14 +236,14 @@ if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
                     
                     if data["permit_join"] == True:
                         WRITE_LOGFILE_SYSTEM("NETWORK", "Network | ZigBee2MQTT | Pairing disabled") 
-                        SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Disabled")
+                        SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")
                     else:             
                         WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
-                        SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Setting not confirmed") 
+                        SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed") 
 
                 except:
                     WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed") 
-                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Setting not confirmed")
+                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
             
     else:
         print("ERROR: Network | ZigBee2MQTT | No connection") 

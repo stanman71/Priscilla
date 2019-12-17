@@ -130,7 +130,7 @@ def CHECK_LED_GROUP_SETTING_PROCESS(group_id, scene_id, scene, brightness, delay
     return result     
                                                              
     
-def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
+def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting_json, limit):
     
     error_list = []
 
@@ -145,7 +145,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             # led 1
             led_1 = GET_DEVICE_BY_IEEEADDR(group.led_ieeeAddr_1)
 
-            if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_1, setting, 10) == False:
+            if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_1, setting_json, 10) == False:
                 error_list.append(led_1.name + " >>> Setting not confirmed")
 
             # led 2
@@ -154,7 +154,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             if group.active_led_2 == "True": 
 
                 if scene.active_led_2 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_2, setting, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_2, setting_json, 10) == False:
                         error_list.append(led_2.name + " >>> Setting not confirmed")
                                 
                 else:
@@ -167,7 +167,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             if group.active_led_3 == "True": 
 
                 if scene.active_led_3 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_3, setting, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_3, setting_json, 10) == False:
                         error_list.append(led_3.name + " >>> Setting not confirmed")
                                 
                 else:
@@ -180,7 +180,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             if group.active_led_4 == "True": 
 
                 if scene.active_led_4 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_4, setting, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_4, setting_json, 10) == False:
                         error_list.append(led_4.name + " >>> Setting not confirmed")
                                 
                 else:
@@ -193,7 +193,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             if group.active_led_5 == "True": 
 
                 if scene.active_led_5 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_5, setting, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_5, setting_json, 10) == False:
                         error_list.append(led_5.name + " >>> Setting not confirmed")
                                 
                 else:
@@ -206,7 +206,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             if group.active_led_6 == "True": 
 
                 if scene.active_led_6 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_6, setting, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_6, setting_json, 10) == False:
                         error_list.append(led_6.name + " >>> Setting not confirmed")
                                 
                 else:
@@ -219,7 +219,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             if group.active_led_7 == "True": 
 
                 if scene.active_led_7 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_7, setting, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_7, setting_json, 10) == False:
                         error_list.append(led_7.name + " >>> Setting not confirmed")
                                 
                 else:
@@ -232,7 +232,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             if group.active_led_8 == "True": 
 
                 if scene.active_led_8 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_8, setting, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_8, setting_json, 10) == False:
                         error_list.append(led_8.name + " >>> Setting not confirmed")
                                 
                 else:
@@ -245,7 +245,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
             if group.active_led_9 == "True": 
 
                 if scene.active_led_9 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_9, setting, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.led_ieeeAddr_9, setting_json, 10) == False:
                         error_list.append(led_9.name + " >>> Setting not confirmed")
                                 
                 else:
@@ -257,8 +257,8 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
     
     except Exception as e:
         print(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "LED | Start Scene | " + setting + " | " + str(e))
-        SEND_EMAIL("ERROR", "LED | Start Scene | " + setting + " | " + str(e))            
+        WRITE_LOGFILE_SYSTEM("ERROR", "LED | Start Scene | " + str(e))
+        SEND_EMAIL("ERROR", "LED | Start Scene | " + str(e))            
         return [str(e)]
     
         
@@ -273,7 +273,7 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting, limit):
 
 
 def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
-    
+
     try:      
         group = GET_LED_GROUP_BY_ID(group_id)
         scene = GET_LED_SCENE_BY_ID(scene_id)

@@ -22,14 +22,14 @@ import threading
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -317,10 +317,10 @@ def settings_devices():
 
             if CHECK_ZIGBEE2MQTT_PAIRING("false"):             
                 WRITE_LOGFILE_SYSTEM("NETWORK", "ZigBee2MQTT | Pairing disabled") 
-                SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Disabled") 
+                SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled") 
             else:             
                 WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
-                SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Setting not confirmed")
+                SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
 
 
     # change pairing setting
@@ -351,11 +351,11 @@ def settings_devices():
                     WRITE_LOGFILE_SYSTEM("NETWORK", "ZigBee2MQTT | Pairing enabled") 
                     SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
                     success_message_zigbee_pairing.append("Einstellung erfolgreich übernommen") 
-                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Searching for new Devices...") 
+                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
                 else:             
                     WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing enabled | Setting not confirmed")   
                     error_message_zigbee_pairing.append("Einstellung nicht bestätigt") 
-                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Setting not confirmed")
+                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
                                             
             else:         
                 channel  = "smarthome/zigbee2mqtt/bridge/config/permit_join"
@@ -368,11 +368,11 @@ def settings_devices():
                     WRITE_LOGFILE_SYSTEM("NETWORK", "ZigBee2MQTT | Pairing disabled") 
                     SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
                     success_message_zigbee_pairing.append("Einstellung erfolgreich übernommen") 
-                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Disabled")
+                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")
                 else:             
                     WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
                     error_message_zigbee_pairing.append("Einstellung nicht bestätigt") 
-                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Setting not confirmed")
+                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
 
 
     # request zigbee topology

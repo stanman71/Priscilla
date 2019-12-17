@@ -21,14 +21,14 @@ import os, shutil, re, cgi
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "dashboard_only" or current_user.role == "user" or current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "dashboard_only" or current_user.role == "user" or current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -47,83 +47,101 @@ def dashboard():
     """  led / devices  """
     """ ############### """   
 
-    if "apply_changes_led_devices" != None: 
+    if request.form.get("apply_changes_led_devices") != None: 
 
-        for i in range (1,26):
+        for i in range (1,21):
             
+            # ###
             # led 
+            # ###
 
             try:
-
                 group      = GET_LED_GROUP_BY_ID(i)
-                scene      = GET_LED_SCENE_BY_ID(request.form.get("set_led_scene_" + str(i)))
-                brightness = request.form.get("set_brightness_" + str(i))
+                scene_name = str(request.form.get("set_led_scene_" + str(i)))
 
-                # new led setting ?
-                if group.current_setting != scene.name or int(group.current_brightness) != brightness:
-                    
-                    SET_LED_GROUP_SCENE(group.id, scene.id, brightness)
-                    CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+                if scene_name == "OFF":
+
+                    # new led setting ?
+                    if group.current_setting != "OFF":
+                        SET_LED_GROUP_TURN_OFF(group.id)
+                        CHECK_LED_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 2, 10)
+
+
+                else:
+                    scene      = GET_LED_SCENE_BY_NAME(scene_name)
+                    brightness = request.form.get("set_led_brightness_" + str(i))
+
+                    # new led setting ?
+                    if group.current_setting != scene.name or int(group.current_brightness) != int(brightness):
+                        SET_LED_GROUP_SCENE(group.id, scene.id, int(brightness))
+                        CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, int(brightness), 2, 10)
 
             except:
                 pass
-            
+
+
+            # #######
             # devices
+            # #######
 
             try:    
 
                 device              = GET_DEVICE_BY_ID(i)
                 device_setting_json = request.form.get("set_command_" + str(i))
 
-                # convert json-format to string
-                device_setting_string = device_setting_json.replace('"', '')
-                device_setting_string = device_setting_string.replace('{', '')
-                device_setting_string = device_setting_string.replace('}', '')
-                
-                check_result = CHECK_DEVICE_EXCEPTIONS(i, device_setting_string)    
+                if device_setting_json != None and device_setting_json != "None":
+
+                    # convert json-format to string
+                    device_setting_string = device_setting_json.replace('"', '')
+                    device_setting_string = device_setting_string.replace('{', '')
+                    device_setting_string = device_setting_string.replace('}', '')
+                    
+                    check_result = CHECK_DEVICE_EXCEPTIONS(i, device_setting_string)    
 
 
-                # check device exception
-                check_result = CHECK_DEVICE_EXCEPTIONS(device.id, device_setting_string)
-                    
-                if check_result == True:               
-            
-                    new_setting = False
-                    
-                    # new device setting ?  
-                    if device.last_values_json != None:
+                    # check device exception
+                    check_result = CHECK_DEVICE_EXCEPTIONS(device.id, device_setting_string)
                         
-                        # one setting value
-                        if not "," in device_setting_json:
-                            if not device_setting_json[1:-1] in device.last_values_json:
-                                new_setting = True
-                                                                
-                        # more then one setting value
-                        else:
-                            device_setting_temp  = device_setting_json[1:-1]
-                            list_device_settings = device_setting_temp.split(",")
+                    if check_result == True:               
+                
+                        new_setting = False
+                        
+                        # new device setting ?  
+                        if device.last_values_json != None:
                             
-                            for setting in list_device_settings:
+                            # one setting value
+                            if not "," in device_setting_json:
+                                if not device_setting_json[1:-1] in device.last_values_json:
+                                    new_setting = True
+                                                                    
+                            # more then one setting value
+                            else:
+                                device_setting_temp  = device_setting_json[1:-1]
+                                list_device_settings = device_setting_temp.split(",")
                                 
-                                if not setting in device.last_values_json:
-                                    new_setting = True                      
+                                for setting in list_device_settings:
+                                    
+                                    if not setting in device.last_values_json:
+                                        new_setting = True                      
 
-                    else:
-                        new_setting = True
-                                
-                                
-                    if new_setting == True:    
+                        else:
+                            new_setting = True
+                                    
+                                    
+                        if new_setting == True:    
 
-                        if device.gateway == "mqtt":
-                            channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
-                        if device.gateway == "zigbee2mqtt":   
-                            channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
+                            if device.gateway == "mqtt":
+                                channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+                            if device.gateway == "zigbee2mqtt":   
+                                channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                        heapq.heappush(mqtt_message_queue, (1, (channel, device_setting_json)))            
-                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting_json, 20)            
+                            heapq.heappush(mqtt_message_queue, (1, (channel, device_setting_json)))            
+                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting_json, 20)            
 
             except:
                 pass        
+
+        time.sleep(5)
 
 
     """ ########## """

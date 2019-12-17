@@ -17,6 +17,7 @@ This project creates a smarthome environment.
       * <a href="#4.3 Manually Control">4.3 Manually Control</a>   
       * <a href="#4.4 Pairing">4.4 Pairing</a>   
       * <a href="#4.5 Autostart">4.5 Autostart</a>   
+      * <a href="#4.6 Update">4.6 Update</a>   
    * <a href="#5 Zigbee Coordinator / Router">5 Zigbee Coordinator / Router</a>
       * <a href="#5.1 Hardware">5.1 Hardware</a>
       * <a href="#5.2 Flashing">5.2 Flashing</a>
@@ -340,6 +341,7 @@ https://www.zigbee2mqtt.io/
 </br>
 https://github.com/Koenkk/zigbee2mqtt
 </br>
+</br>
 
 <a name="4.1 Installation"></a>
 
@@ -474,6 +476,29 @@ https://github.com/Koenkk/zigbee2mqtt
 
        >>> systemctl status zigbee2mqtt.service
        >>> journalctl -u zigbee2mqtt
+
+</br>
+
+<a name="4.6 Update"></a>
+
+#### 4.6 Update
+
+https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
+</br>
+</br>
+
+- run the follwing commands to install the latest zigbee2mqtt version
+
+       >>> sudo systemctl stop zigbee2mqtt
+       >>> cd /opt/zigbee2mqtt
+       >>> sudo cp -R data data-backup
+       >>> git checkout HEAD -- npm-shrinkwrap.json
+       >>> git pull
+       >>> rm -rf node_modules
+       >>> npm install
+       >>> sudo cp -R data-backup/* data
+       >>> sudo rm -rf data-backup
+       >>> sudo systemctl start zigbee2mqtt
 
 </br>
 ------------
