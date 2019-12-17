@@ -3,7 +3,7 @@
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
 
-    namespace  = '/socketIO/system_log';
+    namespace  = '/socketIO';
     var socket = io(namespace);
 
     socket.on('system_log', function(msg) {
@@ -31,82 +31,313 @@
   });
 </script>
 
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
 
-<!-- led table -->
+    namespace  = '/socketIO';
+    var socket = io(namespace);
+
+    socket.on('music', function(msg) {
+        $('#current_device').text(msg.current_device);   
+        $('#current_state').text(msg.current_state);   
+        $('#current_track').text(msg.current_track);                                 
+        $('#current_artists').text(msg.current_artists);   
+        $('#current_progress').text(msg.current_progress);    
+        $('#current_playlist').text(msg.current_playlist);                          
+    });
+  });
+</script>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+
+    namespace  = '/socketIO';
+    var socket = io(namespace);
+
+    socket.on('program', function(msg) {
+        $('#program_status').text(msg.program_status);                        
+    });
+  });
+</script>
+
+
 
       <div class="content">
         <div class="row">
           <div class="col-lg-6">
-            <div class="card card-tasks">
+            <div class="card card-tasks card-tasks-table">
               <div class="card-body ">
-                <div class="table-full-width table-responsive">
-                  <table class="table">
-                    <tbody> 
-                      {% for entry in list_led_groups %}
-                      <tr>                
-                        <td style="width:30%" class="minwidth_150">
-                          <div class="row justify-content-md-left">
-                            <div class="col-sm-10">                                    
-                              {{ entry.name }} 
-                            </div>
-                          </div>
-                        </td> 
-                        <td style="width:35%" class="minwidth_150">
-                          <select class="form-control" data-size="5" name="set_led_scene_{{entry.id}}" style="background-color:#27293D"> 
-                            <option value = "{{ entry.current_setting }}" > {{ entry.current_setting }} </option>          
-                            <option disabled>------------------</option>        
-                            {% for each in dropdown_list_led_scenes %}
-                              <option value="{{each.name }}"> {{ each.name }} </option>
-                            {% endfor %}     
-                            <option disabled>------------------</option>   
-                            <option value="OFF"> OFF </option> 
-                          </select>                            
-                        </td>   
-                        <td style="width:5%"></td>
-                        <td style="width:30%" class="minwidth_150">
-                          <input id="brightness_slider_led_dashboard_{{entry.id}}" data-slider-id="brightness_slider_led_dashboard_{{entry.id}}" name="set_brightness_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.current_brightness}}"/> 
-                        </td>                                                                                 
-                      </tr>
-                      <tr> 
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>                                                                        
-                      </tr>
-                      {% endfor %}
-                    </tbody>
-                  </table>
-                </div>
+                <form method="POST">
+
+  <!-- led table -->
+
+                  <div class="table-full-width table-responsive">
+                    <table class="table">
+                      <tbody> 
+
+                        {% for entry in list_led_groups %}
+                          <tr>                
+                            <td style="width:30%" class="minwidth_150">
+                              <div class="row justify-content-md-left">
+                                <div class="col-sm-10">                                    
+                                  {{ entry.name }} 
+                                </div>
+                              </div>
+                            </td> 
+                            <td style="width:35%" class="minwidth_150">
+                              <select class="form-control" data-size="5" name="set_led_scene_{{entry.id}}" style="background-color:#27293D"> 
+                                <option value = "{{ entry.current_setting }}" > {{ entry.current_setting }} </option>          
+                                <option disabled>------------------</option>        
+                                {% for each in dropdown_list_led_scenes %}
+                                  <option value="{{each.id }}"> {{ each.name }} </option>
+                                {% endfor %}     
+                                <option disabled>------------------</option>   
+                                <option value="OFF"> OFF </option> 
+                              </select>                            
+                            </td>   
+                            <td style="width:5%"></td>
+                            <td style="width:30%" class="minwidth_150">
+                              <input id="brightness_slider_led_dashboard_{{entry.id}}" data-slider-id="brightness_slider_led_dashboard_{{entry.id}}"
+                                name="set_brightness_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.current_brightness}}"/> 
+                            </td>                                                                                 
+                          </tr>
+                        {% endfor %}
+
+                      </tbody>
+                    </table>
+                  </div>
+
+  <!-- save button -->
+
+                  <div class="border-top my-2"></div>
+                  <div class="text-center">
+                    <button type="submit" onclick="window.location.href='/dashboard#'" name="apply_changes_led_devices" class="btn btn-fill btn-primary">APPLY</button>
+                  </div>
+                  <div class="border-top my-2"></div>
+
+  <!-- devices table -->
+
+                  <div class="table-full-width table-responsive">
+                    <table class="table">
+                      <tbody> 
+
+                        {% for entry in list_devices %}
+                          <tr>                
+                            <td style="width:30%" class="minwidth_150">
+                              <div class="row justify-content-md-left">
+                                <div class="col-sm-10">                                    
+                                  {{ entry.name }} 
+                                </div>
+                              </div>
+                            </td> 
+                            <td style="width:35%" class="minwidth_150">
+                              <select class="form-control" data-size="5" name="set_command_{{entry.id}}" style="background-color:#27293D"> 
+                                <option value = "None" > None </option>          
+                                <option disabled>------------------</option>        
+                                {% if entry.commands != None %}  
+                                  {% for each in entry.commands.split(' ') %}
+                                    <option value= "{{ each | replace(':', ': ') | replace(',', ', ') }}" > 
+                                      {{ each | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} </option>
+                                  {% endfor %}     
+                                {% endif %}  
+                              </select>                            
+                            </td>   
+                            <td style="width:5%"></td>
+                            <td style="width:30%" class="minwidth_150">
+                              {{ entry.last_values_string }}
+                            </td>                                                                                 
+                          </tr>
+                        {% endfor %}
+
+                      </tbody>
+                    </table>
+                  </div>
+                </form>
               </div>
+            </div>
+
+
+<!-- programs -->
+
+            <div class="card card-tasks-programs">
+              <div class="card-body ">
+                <form method="POST">
+                  <div class="row justify-content-md-left">
+                    <div class="col-sm-5">          
+                      <div class="vertical_center">             
+                        <select class="form-control" data-size="5" name="select_program" style="background-color:#27293D"> 
+                          {% for each in dropdown_list_programs %}
+                            {% if each != None %}
+                            <option value="{{each.id}}">{{each.name}}</option>
+                            {% endif %}
+                          {% endfor %}       
+                        </select>     
+                      </div>   
+                    </div>
+                    <div class="col-sm-7">  
+                      <div class="text-right">
+                        <button type="submit" onclick="window.location.href='/dashboard#'" name="start_program" class="btn btn-fill btn-info">START</button>                      
+                        <button type="submit" onclick="window.location.href='/dashboard#'" name="stop_program" class="btn btn-fill btn-info">STOP</button>
+                      </div> 
+                    </div> 
+                  </div>  
+                  <div class="row justify-content-md-center">     
+                    <div class="col-sm-9">   
+                      <div class="vertical_center">  
+                        <h5><div id="program_status"></div></h5>
+                      </div>
+                    </div>                                                              
+                    <div class="col-sm-3">        
+                      <div class="vertical_center">  
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="checkbox_program_repeat_setting" {% if program_repeat == "True" %} checked="on" {% endif %} name="checkbox_program_repeat">
+                          <label class="custom-control-label" for="checkbox_program_repeat_setting">Repeat</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>   
             </div>
           </div>
 
-<!-- programs / music -->
+
+<!-- music -->
 
           <div class="col-lg-6">
-          </div> 
-        </div> 
+            <div class="card card-tasks-music">
+              <div class="card-body">
+                <form method="POST"> 
+                  <div class="row justify-content-md-center">                                                 
+                    <div class="col-sm-9">      
+                      <div class="vertical_center">  
+                        <div class="row justify-content-md-center">                                                 
+                          <div class="col-sm-6">                         
+                            <select class="form-control" data-size="5" name="set_spotify_device_id" style="background-color:#27293D"> 
+                              {% if spotify_devices != "" %}
+                                {% for device in spotify_devices %}                   
+                                  {% if device['type'] != "Smartphone" %}
+                                    <option value="{{ device['id'] }}" > {{ device['name'] }} </option>
+                                  {% endif %}
+                                {% endfor %}
+                              {% else %}
+                              <option value= "" > Keine Geräte gefunden </option>
+                              {% endif %}  
+                            </select>        
+                          </div>   
+                          <div class="col-sm-6">   
+                            <select class="form-control" data-size="5" name="set_spotify_playlist" style="background-color:#27293D"> 
+                              {% if spotify_playlists != "" %}
+                                {% for playlist in spotify_playlists %}
+                                  {% if playlist['name'] != "Discover Weekly" %}
+                                    <option value="{{ playlist['uri'] }}" > {{ playlist['name'] }} </option>
+                                  {% endif %}
+                                {% endfor %}
+                              {% else %}
+                              <option value= "" > Keine Playlist gefunden </option>
+                              {% endif %}  
+                            </select>                                 
+                          </div> 
+                        </div>       
+                      </div>   
+                    </div> 
+                    <div class="col-sm-3">   
+                      <div class="text-center">   
+                        <button type="submit" onclick="window.location.href='/dashboard#'" class="btn btn-default" name="spotify_start_playlist" >
+                          <i class='uil uil-play'></i>
+                        </button>                                                             
+                      </div>                          
+                    </div> 
+                  </div>    
 
-<!-- save button -->
+                  <div class="border-top my-2"></div>
 
-        <div class="row">
-          <div class="col-lg-12 text-center"> 
-            <button type="submit" onclick="window.location.href='/dashboard#'" name="save_settings" class="btn btn-fill btn-primary">SAVE</button>
-            <br>
-            <br>
-          </div> 
-        </div> 
+                  <div class="row justify-content-md-center">                                                 
+                    <div class="col-sm-12">                 
+                      <button type="submit" onclick="window.location.href='/dashboard#'" class="btn btn-default" name="set_spotify_play">
+                        <i class='uil uil-play'></i>
+                      </button>                               
+                      <button type="submit" onclick="window.location.href='/dashboard#'" class="btn btn-default" name="set_spotify_previous">
+                        <i class='uil uil-backward'></i>
+                      </button>
+                      <button type="submit" onclick="window.location.href='/dashboard#'" class="btn btn-default" name="set_spotify_next">
+                        <i class='uil uil-forward'></i>
+                      </button>
+                      <button type="submit" onclick="window.location.href='/dashboard#'" class="btn btn-default" name="set_spotify_stop">
+                        <i class='uil uil-pause'></i>
+                      </button>
+                    </div>
+                    <br>
+                    <div class="col-sm-5">
+                      <div class="row justify-content-md-center">                                                 
+                        <div class="col-sm-6">        
+                          <button type="submit" onclick="window.location.href='/dashboard#'" class="btn btn-default" name="set_spotify_volume">
+                            <i class='uil uil-volume'></i>
+                          </button>
+                        </div>
+                        <div class="col-sm-6">        
+                          <div class="vertical_center">  
+                            <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="checkbox_shuffle_setting" {% if spotify_shuffle == "True" %} checked="on" {% endif %} name="checkbox_shuffle">
+                              <label class="custom-control-label" for="checkbox_shuffle_setting">Shuffle</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-7">
+                      <div class="vertical_center">                    
+                        <input id="volume_slider_dashboard_music" data-slider-id="volume_slider_dashboard_music" name="slider_spotify_volume" 
+                          type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>                  
+                      </div>
+                    </div> 
+                  </div> 
 
-<!-- device table -->
+                  <div class="border-top my-2"></div>
 
-        <div class="row">
-          <div class="col-lg-6">
-          </div> 
+                  <div class="row justify-content-md-center">                                                 
+                    <div class="col-sm-3">    
+                      <p><span>Geräte: </span></p> 
+                    </div>                        
+                    <div class="col-sm-9">                           
+                      <div id="current_device"></div> 
+                    </div> 
+                  </div>                       
+
+                  <div class="row justify-content-md-center">                                                 
+                    <div class="col-sm-3">  
+                      <p><span>Playing: </span></p>  
+                    </div>                        
+                    <div class="col-sm-9">                           
+                      <div id="current_state"></div> 
+                    </div> 
+                  </div>    
+
+                  <div class="row justify-content-md-center">                                                 
+                    <div class="col-sm-3">   
+                      <p><span>Track: </span></p>                         
+                    </div>                        
+                    <div class="col-sm-9">                           
+                      <div id="current_track"></div> 
+                    </div> 
+                  </div>    
+
+                  <div class="row justify-content-md-center">                                                 
+                    <div class="col-sm-3">    
+                      <p><span>Artists: </span></p>                        
+                    </div>
+                    <div class="col-sm-9">                           
+                      <div id="current_artists"></div> 
+                    </div> 
+                  </div>                                            
+                </div>
+              </form>                
+            </div>
+
 
 <!-- issues table -->
 
-          <div class="col-lg-6">
-            <div class="card card-tasks">
+            <div class="card card-tasks card-tasks-issues">
               <div class="card-body ">
                 <div class="table-full-width table-responsive">
                   <table class="table">
@@ -177,7 +408,6 @@
               </div>
             </div>
           </div>
-
 
         </div>
       </div>

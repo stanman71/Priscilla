@@ -73,13 +73,13 @@ This project controls the watering system.
 
        >>> https://www.berrybase.de/bauelemente/schalter-taster/mikroschalter-taster/kurzhubtaster-vertikale-printmontage-6x6mm-h-5-0mm?c=86
 
-- transistor TIP120
+- transistor TIP122
 
-       >>> https://www.ebay.de/itm/10-pcs-TIP120-STM-ON-Fairchild-NPN-Darlington-60V-5A-TO220-NEW-BP/231964622092?hash=item36022b3d0c:g:K~wAAOSwnDxUd6h8
+       >>> https://www.berrybase.de/bauelemente/aktive-bauelemente/transistoren/transistoren-tip../tip122-npn-darlington-transistor-100v-8a-to-220
 
 - internal cables and connectors
 
-       >>> https://www.ebay.de/itm/JST-XH-2-54-Stecker-inkl-15cm-Kabel-XH-Buchse-2-3-4-5-6-7-8-9-10-Pin-24AWG-RC/183748172867
+       >>> https://www.berrybase.de/bauelemente/steckverbinder/rastersteckverbinder-2-50mm/kabel-mit-jst-xh-2.54mm-steckverbinder-awg26-20cm
 
 - socket strip (2 pin)
 

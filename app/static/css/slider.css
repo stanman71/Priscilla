@@ -1,3 +1,10 @@
+#volume_slider_dashboard_music {
+	width: 150px;
+}
+#volume_slider_dashboard_music .slider-handle {
+	background: black;
+}
+
 #brightness_slider_led_dashboard_1 {
 	width: 150px;
 }
@@ -693,5 +700,19 @@
 	width: 180px;
 }
 #brightness_slider_led_scenes_9_10 .slider-handle {
+	background: black;
+}
+
+
+#volume_slider_music_player {
+	width: 200px;
+}
+#volume_slider_music_player .slider-handle {
+	background: black;
+}
+#volume_slider_music_playlist {
+	width: 200px;
+}
+#volume_slider_music_playlist .slider-handle {
 	background: black;
 }

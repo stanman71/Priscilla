@@ -6,63 +6,57 @@ import spotipy
 from app                          import app
 from app.database.models          import *
 from app.backend.file_management  import *
-from app.backend.shared_resources import mqtt_message_queue
+from app.backend.shared_resources import mqtt_message_queue, SET_PROGRAM_STATUS, GET_PROGRAM_STATUS
 from app.backend.mqtt             import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD
 from app.backend.led              import SET_LED_GROUP_SCENE, SET_LED_GROUP_TURN_OFF, CHECK_LED_GROUP_SETTING_THREAD
 from app.backend.spotify          import *
 
-
-program_running = None
 stop_program    = False
 repeat_program  = False
 
 
 def START_PROGRAM_THREAD(program_id):
-    global program_running
 
-    try:
-        Thread = threading.Thread(target=PROGRAM_THREAD, args=(program_id, ))
-        Thread.start()    
+    if GET_PROGRAM_STATUS() == "None":
+
+        try:
+            Thread = threading.Thread(target=PROGRAM_THREAD, args=(program_id, ))
+            Thread.start()    
+            
+            program_name = GET_PROGRAM_BY_ID(program_id).name
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            return True
         
-        program_name = GET_PROGRAM_BY_ID(program_id).name
-        WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
-        program_running = program_name
-        return True
-    
-    except Exception as e:
-        return e
-    
+        except Exception as e:
+            return e
+
+    else:
+        return("Other Program running")
+
     
 def STOP_PROGRAM_THREAD():
-
     try:
-        global stop_program, program_running, repeat_program
-        stop_program    = True
-        program_running = None
-        repeat_program  = False
+        global stop_program, repeat_program
+        stop_program   = True
+        repeat_program = False
         return True
 
     except Exception as e:
         return e   
     
    
-def REPEAT_PROGRAM_THREAD():
+def SET_REPEAT_PROGRAM(setting):
     global repeat_program
-    repeat_program = True
+    repeat_program = setting
 
     
 def GET_REPEAT_PROGRAM():
     global repeat_program
     return repeat_program       
 
-    
-def GET_PROGRAM_RUNNING():
-    global program_running
-    return program_running   
-   
 
 def PROGRAM_THREAD(program_id):
-    global stop_program, repeat_program, program_running
+    global stop_program, repeat_program
 
     try:
 
@@ -88,11 +82,17 @@ def PROGRAM_THREAD(program_id):
                  [GET_PROGRAM_BY_ID(program_id).line_active_20, GET_PROGRAM_BY_ID(program_id).line_content_20]]                  
             
         program_name = GET_PROGRAM_BY_ID(program_id).name
-        
-        lines_total  = len(lines)
         repeat       = True
 
         while repeat == True:
+
+            # get total lines
+            lines_total = 0
+
+            for line in lines:
+                if line[0] == "True":
+                    lines_total = lines_total + 1
+
 
             line_number = 1
 
@@ -102,19 +102,17 @@ def PROGRAM_THREAD(program_id):
                 if stop_program == True:
                     stop_program = False  # reset variable
                     
+                    SET_PROGRAM_STATUS("None")
+
                     WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
                     break
-       
-       
+
+                # program running
                 else:
                     
                     # update program info
-                    if repeat_program == True:
-                        program_running = program_name + " ( " + str(line_number) + " | " + str(lines_total) + " | repeat )"
-                    else:
-                        program_running = program_name + " ( " + str(line_number) + " | " + str(lines_total) + " )"
-                    
-                    
+                    SET_PROGRAM_STATUS(program_name + " ( " + str(line_number) + " | " + str(lines_total) + " || " + str(line[1]) + " )")
+                       
                     # line active ?
                     if line[0] == "True":
                             
@@ -159,7 +157,7 @@ def PROGRAM_THREAD(program_id):
                                     new_setting = False
 
                                     if not "," in program_setting:
-                                        if not program_setting[1:-1] in device.last_values:
+                                        if not program_setting[1:-1] in device.last_values_json:
                                             new_setting = True
 
                                     # more then one setting value:
@@ -169,7 +167,7 @@ def PROGRAM_THREAD(program_id):
 
                                         for setting in list_program_setting:
 
-                                            if not setting in device.last_values:
+                                            if not setting in device.last_values_json:
                                                 new_setting = True  
 
                                     if new_setting == True: 
@@ -379,7 +377,7 @@ def PROGRAM_THREAD(program_id):
                 repeat = False
                 
         
-        program_running = None    
+        SET_PROGRAM_STATUS("None")    
         time.sleep(10)
         WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")
                 
@@ -387,4 +385,3 @@ def PROGRAM_THREAD(program_id):
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "Programm - " + GET_PROGRAM_BY_ID(program_id).name + " | " + str(e))
         return str(e)
-    

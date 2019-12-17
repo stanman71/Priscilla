@@ -299,7 +299,7 @@ def BACKUP_DATABASE():
                         PATH + '/data/backup/' + str(datetime.datetime.now().date()) + '_database.db')
                 
         # if more then 10 backups saved, delete oldest backup file
-        list_of_files = os.listdir(PATH + '/backup/')    
+        list_of_files = os.listdir(PATH + '/data/backup/')    
         full_path     = [PATH + '/data/backup/' + '{0}'.format(x) for x in list_of_files]
 
         if len([name for name in list_of_files]) > 7:

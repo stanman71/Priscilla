@@ -497,7 +497,7 @@ https://www.zigbee2mqtt.io/information/zigbee_network.html
 
 - socket strip (2x5)
 
-       >>> https://www.ebay.de/itm/Zuverlassige-10x-2x5-10Pin-2-54mm-zweireihige-Buchsenleiste-Pitch-Socket-Pin-Fw/254407218443
+       >>> https://www.ebay.de/itm/273382759328?ViewItem=&item=273382759328
 
 - internal cables and connectors
 
@@ -605,6 +605,7 @@ https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 
        >>> sudo nano /boot/config.txt 
 	   
+           [zigbee]
            enable_uart=1
            dtoverlay=pi3-disable-bt
 
@@ -621,7 +622,7 @@ https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 
 - add the lines in zigbee2mqtt config
 
-       >>> sudo nano data/configuration.yaml
+       >>> sudo nano /opt/zigbee2mqtt/data/configuration.yaml
 	   
            serial:
              port: /dev/ttyAMA0

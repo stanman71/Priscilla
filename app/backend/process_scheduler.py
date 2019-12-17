@@ -13,7 +13,7 @@ from app.backend.led              import *
 from app.backend.mqtt             import *
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM, GET_LOCATION_COORDINATES, BACKUP_DATABASE
 from app.backend.shared_resources import process_management_queue, mqtt_message_queue
-from app.backend.process_program  import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD, GET_PROGRAM_RUNNING
+from app.backend.process_program  import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD
 from app.backend.plants_watering  import START_WATERING_THREAD
 from app.backend.spotify          import *
 from app.backend.email            import SEND_EMAIL
@@ -298,7 +298,7 @@ def CHECK_SCHEDULER_SENSORS(task):
       # get sensordata 1
       ##################     
 
-      data_1 = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1).last_values)
+      data_1 = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1).last_values_json)
    
       sensor_key_1   = sensor_key_1.replace(" ","")          
       sensor_value_1 = data_1[sensor_key_1].lower()
@@ -365,7 +365,7 @@ def CHECK_SCHEDULER_SENSORS(task):
       # get sensordata 1
       ##################     
 
-      data_1 = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1).last_values)
+      data_1 = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1).last_values_json)
    
       sensor_key_1   = sensor_key_1.replace(" ","")          
       sensor_value_1 = data_1[sensor_key_1]
@@ -379,7 +379,7 @@ def CHECK_SCHEDULER_SENSORS(task):
       # get sensordata 2
       ##################     
 
-      data_2 = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_2).last_values)
+      data_2 = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_2).last_values_json)
    
       sensor_key_2   = sensor_key_2.replace(" ","")          
       sensor_value_2 = data_2[sensor_key_2]
@@ -678,491 +678,515 @@ def GET_SUNSET_TIME(lat, long):
 
 def SCHEDULER_TASK(task_object):
 
-    # ###########
-    # start scene
-    # ###########
+   # ###########
+   # start scene
+   # ###########
 
-    try:
-        if "scene" in task_object.task:
+   try:
+      if "scene" in task_object.task:
 
-            task = task_object.task.split(" # ")
-            
-            group = GET_LED_GROUP_BY_NAME(task[1])
-            scene = GET_LED_SCENE_BY_NAME(task[2])
+         task = task_object.task.split(" # ")
+         
+         group = GET_LED_GROUP_BY_NAME(task[1])
+         scene = GET_LED_SCENE_BY_NAME(task[2])
 
-            # group existing ?
-            if group != None:
+         # group existing ?
+         if group != None:
 
-                # scene existing ?
-                if scene != None:
+               # scene existing ?
+               if scene != None:
 
-                    try:
-                        brightness = int(task[3])
-                    except:
-                        brightness = 100
+                  try:
+                     brightness = int(task[3])
+                  except:
+                     brightness = 100
 
-                    # new led setting ?
-                    if group.current_setting != scene.name or int(group.current_brightness) != brightness:
+                  # new led setting ?
+                  if group.current_setting != scene.name or int(group.current_brightness) != brightness:
+                     
+                     WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                      
+                     
+                     SET_LED_GROUP_SCENE(group.id, scene.id, brightness)
+                     CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+
+
+               else:
+                  WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Scene - " + task[2] + " | not founded")
+
+         else:
+               WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Group - " + task[1] + " | not founded")
+
+
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))
+
+
+   # #######
+   # led off
+   # #######
+
+   try:
+      if "led_off" in task_object.task:
+         
+         task = task_object.task.split(" # ")
+
+         if task[1] == "group":
+
+               # get input group names and lower the letters
+               try:
+                  list_groups = task[2].split(",")
+               except:
+                  list_groups = [task[2]]
+
+               for input_group_name in list_groups: 
+                  input_group_name = input_group_name.replace(" ", "")
+
+                  group_founded = False
+
+                  # get exist group names 
+                  for group in GET_ALL_LED_GROUPS():
+
+                     if input_group_name.lower() == group.name.lower():
+                           group_founded = True   
+
+                           # new led setting ?
+                           if group.current_setting != "OFF":
+                              
+                              WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                              
+                              
+                              SET_LED_GROUP_TURN_OFF(group.id)
+                              CHECK_LED_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
+
+
+                  if group_founded == False:
+                     WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Group - " + input_group_name + " | not founded")     
+
+
+         if task[1] == "all" or task[1] == "ALL":
+
+               for group in GET_ALL_LED_GROUPS():
+
+                  # new led setting ?
+                  if group.current_setting != "OFF":
+                     scene_name = group.current_setting
+                     scene      = GET_LED_SCENE_BY_NAME(scene_name)
+
+                     WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')
+
+                     SET_LED_GROUP_TURN_OFF(group.id)
+                     CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 5, 20)    
                         
-                        WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                      
-                        
-                        SET_LED_GROUP_SCENE(group.id, scene.id, brightness)
-                        CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
 
 
-                else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Scene - " + task[2] + " | not founded")
+   # ######
+   # device
+   # ######
 
-            else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Group - " + task[1] + " | not founded")
+   try:
+      if "device" in task_object.task and "update" not in task_object.task:
+         
+         task = task_object.task.split(" # ")
 
-
-    except Exception as e:
-        print(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))
-
-
-    # #######
-    # led off
-    # #######
-
-    try:
-        if "led_off" in task_object.task:
-            
-            task = task_object.task.split(" # ")
-
-            if task[1] == "group":
-
-                # get input group names and lower the letters
-                try:
-                    list_groups = task[2].split(",")
-                except:
-                    list_groups = [task[2]]
-
-                for input_group_name in list_groups: 
-                    input_group_name = input_group_name.replace(" ", "")
-
-                    group_founded = False
-
-                    # get exist group names 
-                    for group in GET_ALL_LED_GROUPS():
-
-                        if input_group_name.lower() == group.name.lower():
-                            group_founded = True   
-
-                            # new led setting ?
-                            if group.current_setting != "OFF":
-                                
-                                WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                              
-                                
-                                SET_LED_GROUP_TURN_OFF(group.id)
-                                CHECK_LED_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
+         # get input group names and lower the letters
+         try:
+            list_devices = task[1].split(",")
+         except:
+            list_devices = [task[1]]
 
 
-                    if group_founded == False:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Group - " + input_group_name + " | not founded")     
+         for input_device_name in list_devices: 
+            input_device_name = input_device_name.replace(" ", "")
 
-
-            if task[1] == "all" or task[1] == "ALL":
-
-                for group in GET_ALL_LED_GROUPS():
-
-                    # new led setting ?
-                    if group.current_setting != "OFF":
-                        scene_name = group.current_setting
-                        scene      = GET_LED_SCENE_BY_NAME(scene_name)
-
-                        WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')
-
-                        SET_LED_GROUP_TURN_OFF(group.id)
-                        CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 5, 20)    
-                           
-
-    except Exception as e:
-        print(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
-
-
-    # ######
-    # device
-    # ######
-
-    try:
-        if "device" in task_object.task and "update" not in task_object.task:
-            
-            task = task_object.task.split(" # ")
-
-            device = GET_DEVICE_BY_NAME(task[1].lower())
+            device = GET_DEVICE_BY_NAME(input_device_name.lower())
 
             # device founded ?
             if device != None:
-                scheduler_setting_formated = task[2]
-                
-                # check device exception
-                check_result = CHECK_DEVICE_EXCEPTIONS(device.id, scheduler_setting_formated)
-                
+                  scheduler_setting_string = task[2]
+                  
+                  # check device exception
+                  check_result = CHECK_DEVICE_EXCEPTIONS(device.id, scheduler_setting_string)
+                  
                
-                if check_result == True:                         
-                
-                    # convert string to json-format
-                    scheduler_setting = scheduler_setting_formated.replace(' ', '')
-                    scheduler_setting = scheduler_setting.replace(':', '":"')
-                    scheduler_setting = scheduler_setting.replace(',', '","')
-                    scheduler_setting = '{"' + str(scheduler_setting) + '"}'                
+                  if check_result == True:                         
+                  
+                     # convert string to json-format
+                     scheduler_setting_json = scheduler_setting_string.replace(' ', '')
+                     scheduler_setting_json = scheduler_setting_json.replace(':', '":"')
+                     scheduler_setting_json = scheduler_setting_json.replace(',', '","')
+                     scheduler_setting_json = '{"' + str(scheduler_setting_json) + '"}'                
 
-                    # new device setting ?  
-                    new_setting = False
-                    
-                    if not "," in scheduler_setting:
-                        if not scheduler_setting[1:-1] in device.last_values:
-                            new_setting = True
-                                                                    
-                    # more then one setting value:
-                    else:   
-                        scheduler_setting_temp = scheduler_setting[1:-1]
-                        list_scheduler_setting = scheduler_setting_temp.split(",")
+                     # new device setting ?  
+                     new_setting = False
+                     
+                     # one settings value only
+                     if not "," in scheduler_setting_json:
+                        if not scheduler_setting_json[1:-1] in device.last_values_json:
+                              new_setting = True
+                                                                  
+                     # more then one setting value:
+                     else:   
+                        scheduler_setting_temp  = scheduler_setting_json[1:-1]
+                        list_scheduler_settings = scheduler_setting_temp.split(",")
                         
-                        for setting in list_scheduler_setting:
-                            
-                            if not setting in device.last_values:
-                                new_setting = True  
+                        for setting in list_scheduler_settings:
+                              
+                              if not setting in device.last_values_json:
+                                 new_setting = True  
 
-                    
-                    if new_setting == True:
+                     
+                     if new_setting == True:
 
                         WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                              
 
                         if device.gateway == "mqtt":
-                            channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+                              channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
                         if device.gateway == "zigbee2mqtt":   
-                            channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
+                              channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                        msg = scheduler_setting
+                        msg = scheduler_setting_json
 
                         heapq.heappush(mqtt_message_queue, (5, (channel, msg)))            
-                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting, 20)  
-                            
-                else:
-                    WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | " + check_result)
+                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting_json, 20)  
+                              
+                  else:
+                     WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | " + check_result)
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Device - " + task[1] + " | not founded")                  
+                  WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Device - " + input_device_name + " | not founded")                  
 
 
-    except Exception as e:
-        print(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))     
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))     
 
 
-    # ########
-    # programs
-    # ########
+   # ########
+   # programs
+   # ########
 
-    try:
-        if "program" in task_object.task:
-            
-            task    = task_object.task.split(" # ")
-            program = GET_PROGRAM_BY_NAME(task[1].lower())
+   try:
+      if "program" in task_object.task:
+         
+         task    = task_object.task.split(" # ")
+         program = GET_PROGRAM_BY_NAME(task[1].lower())
 
-            if program != None:
-                program_running = GET_PROGRAM_RUNNING() 
+         if program != None:
 
-                if task[2] == "start" and program_running == None:
-                    START_PROGRAM_THREAD(program.id)
-                    
-                elif task[2] == "start" and program_running != None:
-                    WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | Other Program running")  
-                    
-                elif task[2] == "stop":
-                    STOP_PROGRAM_THREAD() 
-                    
-                else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Command not valid")
+               if task[2] == "start" and GET_PROGRAM_STATUS() == None:
+                  START_PROGRAM_THREAD(program.id)
+                  
+               elif task[2] == "start" and GET_PROGRAM_STATUS() != None:
+                  WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | Other Program running")  
+                  
+               elif task[2] == "stop":
+                  STOP_PROGRAM_THREAD() 
+                  
+               else:
+                  WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Command not valid")
 
-            else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Program not founded")           
-
-
-    except Exception as e:
-        print(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
+         else:
+               WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Program not founded")           
 
 
-    # ###############
-    # watering plants
-    # ###############
-
-    try:
-        if "watering_plants" in task_object.task:
-            task = task_object.task.split(" # ")
-            group_number = task[1]
-            START_WATERING_THREAD(group_number)
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
 
 
-    except Exception as e:
-        print(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
+   # ###############
+   # watering plants
+   # ###############
+
+   try:
+      if "watering_plants" in task_object.task:
+         task = task_object.task.split(" # ")
+         group_number = task[1]
+         START_WATERING_THREAD(group_number)
 
 
-    # ###############
-    # backup database 
-    # ###############
-
-    try:  
-        if "backup_database" in task_object.task:
-            BACKUP_DATABASE() 
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
 
 
-    except Exception as e:
-        print(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))     
+   # ###############
+   # backup database 
+   # ###############
+
+   try:  
+      if "backup_database" in task_object.task:
+         BACKUP_DATABASE() 
 
 
-    # ##############
-    # update devices
-    # ##############
-
-    try:
-        if "update_devices" in task_object.task:
-            UPDATE_DEVICES("mqtt")
-            UPDATE_DEVICES("zigbee2mqtt")
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))     
 
 
-    except Exception as e:
-        print(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
+   # ##############
+   # update devices
+   # ##############
+
+   try:
+      if "update_devices" in task_object.task:
+         UPDATE_DEVICES("mqtt")
+         UPDATE_DEVICES("zigbee2mqtt")
 
 
-    # ##################
-    # request sensordata
-    # ##################
-
-    try:
-        if "request_sensordata" in task_object.task:
-            task = task_object.task.split(" # ")
-            REQUEST_SENSORDATA(task[1])  
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
 
 
-    except Exception as e:
-        print(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))              
+   # ##################
+   # request sensordata
+   # ##################
+
+   try:
+      if "request_sensordata" in task_object.task:
+         task = task_object.task.split(" # ")
+         REQUEST_SENSORDATA(task[1])  
 
 
-    # #######
-    # spotify
-    # #######
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))              
 
-    try:
-        if "spotify" in task_object.task:
-            task = task_object.task.split(" # ")
 
-            spotify_token = GET_SPOTIFY_TOKEN()
+   # #######
+   # spotify
+   # #######
 
-            # check spotify login 
-            if spotify_token != "":
-                
-                sp       = spotipy.Spotify(auth=spotify_token)
-                sp.trace = False
-                
-                
-                # basic control
-                
-                try:
-                
-                    spotify_device_id = sp.current_playback(market=None)['device']['id']
-                    spotify_volume    = sp.current_playback(market=None)['device']['volume_percent']
+   try:
 
-                    if task[1].lower() == "play":
-                        SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
-            
-                    if task[1].lower() == "previous":
-                        SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
+      if "spotify" in task_object.task:
+         task = task_object.task.split(" # ")
 
-                    if task[1].lower() == "next":
-                        SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
+         spotify_token = GET_SPOTIFY_TOKEN()
 
-                    if task[1].lower() == "stop": 
-                        SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)   
+         # check spotify login 
+         if spotify_token != "":
+               
+               sp       = spotipy.Spotify(auth=spotify_token)
+               sp.trace = False
+               
+               
+               # basic control
+               
+               try:
+               
+                  spotify_device_id = sp.current_playback(market=None)['device']['id']
+                  spotify_volume    = sp.current_playback(market=None)['device']['volume_percent']
 
-                    if task[1].lower() == "volume":
-                        spotify_volume = int(task[2])
-                        SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)       
+                  if task[1].lower() == "play":
+                     SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
+         
+                  if task[1].lower() == "previous":
+                     SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
+
+                  if task[1].lower() == "next":
+                     SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
+
+                  if task[1].lower() == "stop": 
+                     SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)   
+
+                  if task[1].lower() == "volume":            
+                     spotify_volume = int(task[2])
+                     device_name    = sp.current_playback(market=None)['device']['name']
+
+                     if "multiroom" not in device_name:
+                        SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
+
+                     else:
+                        SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)  
+
+                        from lms import find_server
+                        server  = find_server()
+                        players = server.players
+
+                        for player in players:
+                              player.set_volume(spotify_volume)
+
+               except:
+                  pass
+                  
+                  
+               # start playlist
+                     
+               if task[1].lower() == "playlist": 
+
+                  # get spotify_device_id
+                  device_name          = task[2]                                    
+                  list_spotify_devices = sp.devices()["devices"]  
+                  spotify_device_id    = 0
+                  
+                  for device in list_spotify_devices:
+
+                     # spotify client
+                     if device['name'].lower() == device_name.lower():
+                           spotify_device_id = device['id']  
+                           continue      
+
+                     # multiroom
+                     if device_name.lower() == "multiroom":
+                           if "multiroom" in device['name'].lower():
+                              spotify_device_id = device['id'] 
+                              continue    
+
+                  # if device not founded, reset raspotify on client music               
+                  if spotify_device_id == 0:
+                     device = GET_DEVICE_BY_NAME(device_name)
+
+                     heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
+                     time.sleep(5)
+
+                     for device in list_spotify_devices:
+
+                           # spotify client
+                           if device['name'].lower() == device_name.lower():
+                              spotify_device_id = device['id']  
+                              continue      
+
+                           # multiroom
+                           if device_name.lower() == "multiroom":
+                              if "multiroom" in device['name'].lower():
+                                 spotify_device_id = device['id'] 
+                                 continue                               
+                  
+                  # get playlist_uri
+                  playlist_name          = task[3]
+                  list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]
+                  
+                  for playlist in list_spotify_playlists:
+                     if playlist['name'].lower() == playlist_name.lower():
+                           playlist_uri = playlist['uri']
+                           continue
                         
-                except:
-                    pass
-                    
-                    
-                # start playlist
+                  # get volume
+                  playlist_volume = int(task[4])
+                  
+                  SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume)
+         
+         
+               # start track
+                     
+               if task[1].lower() == "track": 
+
+                  # get spotify_device_id
+                  device_name          = task[2]                                    
+                  list_spotify_devices = sp.devices()["devices"]  
+                  spotify_device_id    = 0
+                  
+                  for device in list_spotify_devices:
+
+                     # spotify client
+                     if device['name'].lower() == device_name.lower():
+                           spotify_device_id = device['id']  
+                           continue      
+
+                     # multiroom
+                     if device_name.lower() == "multiroom":
+                           if "multiroom" in device['name'].lower():
+                              spotify_device_id = device['id'] 
+                              continue    
+
+                  # if device not founded, reset raspotify on client music               
+                  if spotify_device_id == 0:
+                     device = GET_DEVICE_BY_NAME(device_name)
+
+                     heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
+                     time.sleep(5)
+
+                     for device in list_spotify_devices:
+
+                           # spotify client
+                           if device['name'].lower() == device_name.lower():
+                              spotify_device_id = device['id']  
+                              continue      
+
+                           # multiroom
+                           if device_name.lower() == "multiroom":
+                              if "multiroom" in device['name'].lower():
+                                 spotify_device_id = device['id'] 
+                                 continue                                 
+                  
+                  # get playlist_uri
+                  track_uri = SPOTIFY_SEARCH_TRACK(spotify_token, task[3], task[4], 1) [0][2]
                         
-                if task[1].lower() == "playlist": 
+                  # get volume
+                  track_volume = int(task[5])
+                  
+                  SPOTIFY_START_TRACK(spotify_token, spotify_device_id, track_uri, track_volume)
 
-                    # get spotify_device_id
-                    device_name          = task[2]                                    
-                    list_spotify_devices = sp.devices()["devices"]  
-                    spotify_device_id    = 0
-                    
-                    for device in list_spotify_devices:
 
-                        # spotify client
-                        if device['name'].lower() == device_name.lower():
-                            spotify_device_id = device['id']  
-                            continue      
+               # start album
+                     
+               if task[1].lower() == "album": 
 
-                        # multiroom
-                        if device_name.lower() == "multiroom":
-                            if "multiroom" in device['name'].lower():
-                                spotify_device_id = device['id'] 
-                                continue    
+                  # get spotify_device_id
+                  device_name          = task[2]                                    
+                  list_spotify_devices = sp.devices()["devices"]  
+                  spotify_device_id    = 0
+                  
+                  for device in list_spotify_devices:
 
-                    # if device not founded, reset raspotify on client music               
-                    if spotify_device_id == 0:
-                        device = GET_DEVICE_BY_NAME(device_name)
+                     # spotify client
+                     if device['name'].lower() == device_name.lower():
+                           spotify_device_id = device['id']  
+                           continue      
 
-                        heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
-                        time.sleep(5)
+                     # multiroom
+                     if device_name.lower() == "multiroom":
+                           if "multiroom" in device['name'].lower():
+                              spotify_device_id = device['id'] 
+                              continue    
 
-                        for device in list_spotify_devices:
+                  # if device not founded, reset raspotify on client music               
+                  if spotify_device_id == 0:
+                     device = GET_DEVICE_BY_NAME(device_name)
 
-                            # spotify client
-                            if device['name'].lower() == device_name.lower():
-                                spotify_device_id = device['id']  
-                                continue      
+                     heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
+                     time.sleep(5)
 
-                            # multiroom
-                            if device_name.lower() == "multiroom":
-                                if "multiroom" in device['name'].lower():
-                                    spotify_device_id = device['id'] 
-                                    continue                               
-                    
-                    # get playlist_uri
-                    playlist_name          = task[3]
-                    list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]
-                    
-                    for playlist in list_spotify_playlists:
-                        if playlist['name'].lower() == playlist_name.lower():
-                            playlist_uri = playlist['uri']
-                            continue
-                          
-                    # get volume
-                    playlist_volume = int(task[4])
-                    
-                    SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume)
-            
-            
-                # start track
+                     for device in list_spotify_devices:
+
+                           # spotify client
+                           if device['name'].lower() == device_name.lower():
+                              spotify_device_id = device['id']  
+                              continue      
+
+                           # multiroom
+                           if device_name.lower() == "multiroom":
+                              if "multiroom" in device['name'].lower():
+                                 spotify_device_id = device['id'] 
+                                 continue                                   
+                  
+                  # get album_uri
+                  album_uri = SPOTIFY_SEARCH_ALBUM(spotify_token, task[3], task[4], 1) [0][2]
                         
-                if task[1].lower() == "track": 
+                  # get volume
+                  album_volume = int(task[5])
+                  
+                  SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
 
-                    # get spotify_device_id
-                    device_name          = task[2]                                    
-                    list_spotify_devices = sp.devices()["devices"]  
-                    spotify_device_id    = 0
-                    
-                    for device in list_spotify_devices:
-
-                        # spotify client
-                        if device['name'].lower() == device_name.lower():
-                            spotify_device_id = device['id']  
-                            continue      
-
-                        # multiroom
-                        if device_name.lower() == "multiroom":
-                            if "multiroom" in device['name'].lower():
-                                spotify_device_id = device['id'] 
-                                continue    
-
-                    # if device not founded, reset raspotify on client music               
-                    if spotify_device_id == 0:
-                        device = GET_DEVICE_BY_NAME(device_name)
-
-                        heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
-                        time.sleep(5)
-
-                        for device in list_spotify_devices:
-
-                            # spotify client
-                            if device['name'].lower() == device_name.lower():
-                                spotify_device_id = device['id']  
-                                continue      
-
-                            # multiroom
-                            if device_name.lower() == "multiroom":
-                                if "multiroom" in device['name'].lower():
-                                    spotify_device_id = device['id'] 
-                                    continue                                 
-                    
-                    # get playlist_uri
-                    track_uri = SPOTIFY_SEARCH_TRACK(spotify_token, task[3], task[4], 1) [0][2]
-                          
-                    # get volume
-                    track_volume = int(task[5])
-                    
-                    SPOTIFY_START_TRACK(spotify_token, spotify_device_id, track_uri, track_volume)
+      
+         else:
+               WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | No Spotify Token founded")   
 
 
-                # start album
-                        
-                if task[1].lower() == "album": 
-
-                    # get spotify_device_id
-                    device_name          = task[2]                                    
-                    list_spotify_devices = sp.devices()["devices"]  
-                    spotify_device_id    = 0
-                    
-                    for device in list_spotify_devices:
-
-                        # spotify client
-                        if device['name'].lower() == device_name.lower():
-                            spotify_device_id = device['id']  
-                            continue      
-
-                        # multiroom
-                        if device_name.lower() == "multiroom":
-                            if "multiroom" in device['name'].lower():
-                                spotify_device_id = device['id'] 
-                                continue    
-
-                    # if device not founded, reset raspotify on client music               
-                    if spotify_device_id == 0:
-                        device = GET_DEVICE_BY_NAME(device_name)
-
-                        heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"restart"}')))
-                        time.sleep(5)
-
-                        for device in list_spotify_devices:
-
-                            # spotify client
-                            if device['name'].lower() == device_name.lower():
-                                spotify_device_id = device['id']  
-                                continue      
-
-                            # multiroom
-                            if device_name.lower() == "multiroom":
-                                if "multiroom" in device['name'].lower():
-                                    spotify_device_id = device['id'] 
-                                    continue                                   
-                    
-                    # get album_uri
-                    album_uri = SPOTIFY_SEARCH_ALBUM(spotify_token, task[3], task[4], 1) [0][2]
-                          
-                    # get volume
-                    album_volume = int(task[5])
-                    
-                    SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
-
-        
-            else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | No Spotify Token founded")   
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))    
 
 
-    except Exception as e:
-        print(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))    
+   # ####################################
+   # remove scheduler task without repeat
+   # ####################################
 
-
-    # ####################################
-    # remove scheduler task without repeat
-    # ####################################
-
-    if task_object.option_repeat != "True":
-        DELETE_SCHEDULER_TASK(task_object.id)
+   if task_object.option_repeat != "True":
+      DELETE_SCHEDULER_TASK(task_object.id)

@@ -85,7 +85,7 @@ def WATERING_THREAD(group_number):
             # check watertank sensor
             if plant.control_sensor_watertank == "checked":
                 
-                sensor_values      = plant.mqtt_device.last_values
+                sensor_values      = plant.mqtt_device.last_values_json
                 sensor_values_json = json.loads(sensor_values)              
                 current_watertank  = sensor_values_json["sensor_watertank"] 
                 

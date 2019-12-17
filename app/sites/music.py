@@ -9,6 +9,8 @@ from app.backend.spotify          import *
 from app.backend.shared_resources import mqtt_message_queue, GET_MQTT_INCOMING_MESSAGES, GET_DEVICE_CONNECTION_MQTT
 from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS
 
+from lms import find_server
+
 from app.common           import COMMON, STATUS
 from app.assets           import *
 
@@ -59,6 +61,8 @@ def music():
     album_name   = "" 
     album_artist = ""  
 
+    show_player = False
+    
     collapse_search_track_open = ""   
     collapse_search_album_open = ""        
     
@@ -70,38 +74,97 @@ def music():
     """ ################# """   
 
     if spotify_token != "":
-        
-        try:
-        
-            sp       = spotipy.Spotify(auth=spotify_token)
-            sp.trace = False
-            
-            spotify_current_volume = request.form.get("set_spotify_current_volume")
-        
-            if "set_spotify_play" in request.form:  
-                SPOTIFY_CONTROL(spotify_token, "play", spotify_current_volume)       
-    
-            if "set_spotify_previous" in request.form: 
-                SPOTIFY_CONTROL(spotify_token, "previous", spotify_current_volume)   
 
+        try:
+
+            sp            = spotipy.Spotify(auth=spotify_token)
+            sp.trace      = False     
+            player_volume = request.form.get("set_spotify_player_volume") 
+
+            if "set_spotify_play" in request.form:  
+                SPOTIFY_CONTROL(spotify_token, "play", player_volume)       
+
+                device_name = sp.current_playback(market=None)['device']['name']
+
+                if "multiroom" in device_name:
+                    server = find_server()
+
+                    for player in server.players:
+                            player.set_volume(player_volume)       
+
+                if request.form.get("checkbox_shuffle") == "on":
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
+                else:
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)                         
+
+
+            if "set_spotify_previous" in request.form: 
+                SPOTIFY_CONTROL(spotify_token, "previous", player_volume)   
+
+                if request.form.get("checkbox_shuffle") == "on":
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
+                else:
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)       
+
+      
             if "set_spotify_next" in request.form:
-                SPOTIFY_CONTROL(spotify_token, "next", spotify_current_volume)     
+                SPOTIFY_CONTROL(spotify_token, "next", player_volume)     
+
+                if request.form.get("checkbox_shuffle") == "on":
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
+                else:
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)       
+
 
             if "set_spotify_stop" in request.form:  
-                SPOTIFY_CONTROL(spotify_token, "stop", spotify_current_volume)   
+                SPOTIFY_CONTROL(spotify_token, "stop", player_volume)   
 
-            if "set_spotify_shuffle" in request.form:  
-                SPOTIFY_CONTROL(spotify_token, "shuffle", spotify_current_volume)   
+                if request.form.get("checkbox_shuffle") == "on":
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
+                else:
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)       
+
 
             if "set_spotify_volume" in request.form: 
-                SPOTIFY_CONTROL(spotify_token, "volume", spotify_current_volume)          
-                        
+                device_name = sp.current_playback(market=None)['device']['name']
+
+                if "multiroom" not in device_name:
+                    SPOTIFY_CONTROL(spotify_token, "volume", player_volume)                  
+
+                else:
+                    SPOTIFY_CONTROL(spotify_token, "volume", player_volume)  
+
+                    server  = find_server()
+
+                    for player in server.players:
+                            player.set_volume(player_volume)
+            
+                if request.form.get("checkbox_shuffle") == "on":
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
+                else:
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)       
+
+
+            # ##############
+            # start playlist
+            # ##############
+
             if "spotify_start_playlist" in request.form:    
-                spotify_device_id = request.form.get("spotify_start_playlist")
-                playlist_uri      = request.form.get("set_spotify_playlist:" + spotify_device_id)
-                playlist_volume   = request.form.get("set_spotify_playlist_volume:" + spotify_device_id)
+                spotify_device_id = request.form.get("set_spotify_device_id")
+                playlist_uri      = request.form.get("set_spotify_playlist")
+                playlist_volume   = request.form.get("set_spotify_playlist_volume")
                 
                 SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume)
+
+                time.sleep(1)
+
+                device_name = sp.current_playback(market=None)['device']['name']
+
+                if "multiroom" in device_name:
+                    server  = find_server()
+
+                    for player in server.players:
+                            player.set_volume(playlist_volume)          
 
 
             # ############
@@ -114,8 +177,9 @@ def music():
                 track_name   = request.form.get("set_spotify_search_track")
                 track_artist = request.form.get("set_spotify_search_track_artist")
                 
-                list_search_track_results = SPOTIFY_SEARCH_TRACK(spotify_token, track_name, track_artist, 5)
+                list_search_track_results = SPOTIFY_SEARCH_TRACK(spotify_token, track_name, track_artist, 10)
             
+                # check results founded ?
                 if isinstance(list_search_track_results, str):
                     error_message_search_track = list_search_track_results
                     list_search_track_results  = []  
@@ -129,7 +193,17 @@ def music():
                 
                 SPOTIFY_START_TRACK(spotify_token, spotify_device_id, track_uri, track_volume)
 
-                                 
+                time.sleep(1)
+
+                device_name = sp.current_playback(market=None)['device']['name']
+
+                if "multiroom" in device_name:
+                    server  = find_server()
+
+                    for player in server.players:
+                            player.set_volume(track_volume)      
+
+
             # ############
             # search album
             # ############
@@ -142,6 +216,7 @@ def music():
 
                 list_search_album_results = SPOTIFY_SEARCH_ALBUM(spotify_token, album_name, album_artist, 5)  
     
+                # check results founded ?
                 if isinstance(list_search_album_results, str):
                     error_message_search_album = list_search_album_results 
                     list_search_album_results  = []  
@@ -155,44 +230,59 @@ def music():
                 
                 SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
     
-            
+                time.sleep(1)
+
+                device_name = sp.current_playback(market=None)['device']['name']
+
+                if "multiroom" in device_name:
+                    server  = find_server()
+
+                    for player in server.players:
+                            player.set_volume(album_volume)          
+
+
             # ############
             # account data
             # ############
                      
-            spotify_user           = sp.current_user()["display_name"]   
-            spotify_devices        = sp.devices()["devices"]        
-            spotify_playlists      = sp.current_user_playlists(limit=20)["items"]                                 
-            tupel_current_playback = GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token) 
+            spotify_user      = sp.current_user()["display_name"]   
+            spotify_devices   = sp.devices()["devices"]        
+            spotify_playlists = sp.current_user_playlists(limit=20)["items"]    
+
+
+            # player show ?
+            if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token) != ('', '', '', '', '', [], '', '', ''):
+                show_player = True                             
 
             # get volume
-            try:
-                spotify_current_playback_volume = sp.current_playback(market=None)['device']['volume_percent']
-                volume = spotify_current_playback_volume    
-                
-            except:
-                volume = 50
-    
-    
-        # login problems
+            volume = str(GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[3])
+
+            # get shuffle            
+            if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[8] == True:
+                shuffle = "True"
+            else:
+                shuffle = "False"         
+
+
+        # login failed
         except Exception as e:
             WRITE_LOGFILE_SYSTEM("ERROR", "Spotify | " + str(e)) 
             SEND_EMAIL("ERROR", "Spotify | " + str(e)) 
             
-            tupel_current_playback = ""
             spotify_user = ""
             spotify_playlists = ""
             spotify_devices = ""
             volume = 50         
+            shuffle = "False"
 
 
     # not logged in
     else:     
-        tupel_current_playback = ""
-        spotify_user           = ""
-        spotify_playlists      = ""
-        spotify_devices        = ""
-        volume                 = 50        
+        spotify_user      = ""
+        spotify_playlists = ""
+        spotify_devices   = ""
+        volume            = 50     
+        shuffle           = "False"
 
 
     """ #################### """
@@ -217,7 +307,7 @@ def music():
 
                     # last values founded
                     try:
-                        data = json.loads(device.last_values)
+                        data = json.loads(device.last_values_json)
                         
                         if client_music_interface != data["interface"] or str(client_music_volume) != str(data["volume"]):
 
@@ -280,6 +370,7 @@ def music():
 
     data = {'navigation': 'music'}    
 
+
     return render_template('layouts/default.html',
                             data=data,    
                             content=render_template( 'pages/music.html',
@@ -289,16 +380,17 @@ def music():
                                                     success_message_change_settings_client_music=success_message_change_settings_client_music,
                                                     error_message_change_settings_client_music=error_message_change_settings_client_music, 
                                                     spotify_user=spotify_user,  
-                                                    tupel_current_playback=tupel_current_playback,
                                                     spotify_playlists=spotify_playlists,
                                                     spotify_devices=spotify_devices, 
                                                     list_search_track_results=list_search_track_results, 
                                                     list_search_album_results=list_search_album_results,     
+                                                    show_player=show_player,
                                                     track_name=track_name,
                                                     track_artist=track_artist,     
                                                     album_name=album_name,
                                                     album_artist=album_artist,   
                                                     volume=volume, 
+                                                    shuffle=shuffle,
                                                     list_client_music=list_client_music,
                                                     collapse_search_track_open=collapse_search_track_open,   
                                                     collapse_search_album_open=collapse_search_album_open,     

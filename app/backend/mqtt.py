@@ -33,115 +33,105 @@ def MQTT_RECEIVE_THREAD():
 
     def on_connect(client, userdata, flags, rc):   
         if rc != 0:
-            print("ERROR: MQTT | Returned Code = " + str(rc)) 
-            WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Returned Code = " + str(rc))         
+            print("ERROR: Network | MQTT | Returned Code = " + str(rc)) 
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | Returned Code = " + str(rc))         
         
             SET_DEVICE_CONNECTION_MQTT(False)   
         
         else:
-            client.subscribe("#")
+            client.subscribe("smarthome/#")
   
             print("MQTT | Connected") 
-            WRITE_LOGFILE_SYSTEM("EVENT", "MQTT | Connected")
+            WRITE_LOGFILE_SYSTEM("NETWORK", "MQTT | Connected")
             SET_DEVICE_CONNECTION_MQTT(True)
 
 
     def on_message(client, userdata, message):     
         global mqtt_incoming_messages_list
-      
-        channel = message.topic                 
-        msg     = str(message.payload.decode("utf-8"))       
 
-        # #############
-        # speechcontrol
-        # #############
+        new_message = True
+        ieeeAddr    = ""
+        device_type = ""  
 
-        if "hermes" in channel:
-
-            if "hermes/intent/" in channel:
-                heapq.heappush(process_management_queue, (10, ("speechcontrol", msg)))
+        channel     = message.topic                 
+        msg         = str(message.payload.decode("utf-8"))       
 
 
-        # ##############
-        # system message
-        # ##############
-
-        else:
-            new_message = True
-            ieeeAddr    = ""
-            device_type = ""
-
-            # get ieeeAddr and device_type
-            incoming_topic  = channel
-            incoming_topic  = incoming_topic.split("/")
-            device_identity = incoming_topic[2]
+        # get ieeeAddr and device_type
+        device_identity = channel.split("/")[2]
+        
+        if device_identity not in ["bridge", "devices", "test", "log", "get", "set", "config"]:
+        
+            list_devices = GET_ALL_DEVICES("")
+        
+            # zigbee2mqtt device
+            for device in list_devices:
+                if device.name == device_identity:             
+                    ieeeAddr = device.ieeeAddr
+                    break
             
-            if device_identity not in ["bridge", "devices", "test", "log", "get", "set", "config"]:
-            
-                list_devices = GET_ALL_DEVICES("")
-            
-                # zigbee2mqtt device
+            # mqtt device or no zigbee2mqtt friendly_name exist
+            if ieeeAddr == "": 
+                ieeeAddr = device_identity
+                
+            try:
                 for device in list_devices:
                     if device.name == device_identity:             
-                        ieeeAddr = device.ieeeAddr
-                        break
+                        device_type = device.device_type            
+            except:
+                device_type = ""    
                 
-                # mqtt device or no zigbee2mqtt name choosed
-                if ieeeAddr == "": 
-                    ieeeAddr = device_identity
-                    
-                try:
-                    for device in list_devices:
-                        if device.name == device_identity:             
-                            device_type = device.device_type            
-                except:
-                    device_type = ""    
-                    
+            
+        # message block ?
+        if (device_type == "led_rgb" or 
+            device_type == "led_simple" or 
+            device_type == "power_switch" or          
+            device_type == "sensor_passiv"):
+    
+            for existing_message in GET_MQTT_INCOMING_MESSAGES(3):              
                 
-            # message block ?
-            if (device_type == "led_rgb" or device_type == "led_simple" or device_type == "power_switch" or device_type == "heater"):
-        
-                for existing_message in GET_MQTT_INCOMING_MESSAGES(3):              
+                # search for other messages from the same device
+                if existing_message[1] == channel:
                     
-                    if existing_message[1] == channel:
-                        
-                        try:
-                            # devices changes state ?
-                            existing_data = json.loads(existing_message[2])
-                            new_data      = json.loads(msg)
+                    try:
+                        # device sends new data ?
+                        existing_data = json.loads(existing_message[2])
+                        new_data      = json.loads(msg)
 
-                            if existing_data["state"] != new_data["state"]:
-                                new_message = True
-                                break
-                                
-                            else:
-                                new_message = False
-                                
-                        except:
-                            new_message = False                 
-                        
-            # message passing
-            if new_message:
-                
-                print("message topic: ", channel)       
-                print("message received: ", msg)    
-                
-                WRITE_LOGFILE_DEVICES(channel, msg)
-                    
-                # add message to the incoming message list
-                mqtt_incoming_messages_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), channel, msg))  
-                
+                        if existing_data["state"] != new_data["state"]:
+                            new_message = True
+                            break
+                            
+                        else:
+                            new_message = False
+                            
+                    except:
+                        new_message = False                 
 
-                # start message thread for additional processes
-                if channel != "" and channel != None:   
-                    
-                    try:    
-                        Thread = threading.Thread(target=MQTT_MESSAGE, args=(channel, msg, ieeeAddr, device_type,))
-                        Thread.start()   
-                    except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Thread | MQTT Message | " + str(e)) 
-                        SEND_EMAIL("ERROR", "Thread | MQTT Message | " + str(e))                    
-                        print(e)
+
+        # message passing
+        if new_message:
+            
+            print("message topic: ", channel)       
+            print("message received: ", msg)    
+            
+            WRITE_LOGFILE_DEVICES(channel, msg)
+                
+            # add message to the incoming message list
+            mqtt_incoming_messages_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), channel, msg))  
+            
+
+            # start message thread for additional processes
+            if channel != "" and channel != None:   
+                
+                try:    
+                    Thread = threading.Thread(target=MQTT_MESSAGE, args=(channel, msg, ieeeAddr, device_type,))
+                    Thread.start()   
+                except Exception as e:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Thread | MQTT Message | " + str(e)) 
+                    SEND_EMAIL("ERROR", "Thread | MQTT Message | " + str(e))                    
+                    print(e)
+
 
     try:
         client = mqtt.Client()
@@ -162,60 +152,66 @@ def MQTT_RECEIVE_THREAD():
 
 def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
   
-    channel = channel.split("/")
-  
-    # filter incoming messages
-    try:
+    # zigbee2mqtt log messages
+    if channel == "smarthome/zigbee2mqtt/bridge/log":
+        
+        data = json.loads(msg)
+        
+        # new device conneted
+        if data["type"] == "pairing" and data["message"] == "interview_started":
+            SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | New Device founded - " + data["meta"]["friendly_name"])   
 
-        # zigbee2mqtt log messages
-        if channel[3] == "log":
-            
-            data = json.loads(msg)
-            
-            # add devices
-            if data["type"] == "device_connected":
-                time.sleep(5)
-                UPDATE_DEVICES("zigbee2mqtt")
-                WRITE_LOGFILE_SYSTEM("EVENT", "Device | Added - " + data["message"])    
-    
-            # remove devices
-            if data["type"] == "device_removed":
-                WRITE_LOGFILE_SYSTEM("EVENT", "Device | Deleted - " + data["message"])
+        # device successful added
+        if data["type"] == "pairing" and data["message"] == "interview_successful":
+            time.sleep(5)
+            UPDATE_DEVICES("zigbee2mqtt")
+            WRITE_LOGFILE_SYSTEM("NETWORK", "Device | Added - " + data["meta"]["friendly_name"])   
+            SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | New Device added - " + data["meta"]["friendly_name"])   
+            time.sleep(10)      
+            SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Searching for new Devices...") 
+
+        # device connection failed
+        if data["type"] == "pairing" and data["message"] == "interview_failed":
+            SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Device adding failed - " + data["meta"]["friendly_name"])   
+            time.sleep(10)
+            SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Searching for new Devices...") 
+      
+        # remove devices
+        if data["type"] == "device_removed":
+            WRITE_LOGFILE_SYSTEM("NETWORK", "Device | Deleted - " + data["meta"]["friendly_name"])
+
+        if data["type"] == "device_force_removed":
+            WRITE_LOGFILE_SYSTEM("NETWORK", "Device | Deleted (force) - " + data["message"])
 
 
-        # start function networkmap
-        if channel[3] == "networkmap" and channel[4] == "graphviz":
+    # start function networkmap
+    if channel == "smarthome/zigbee2mqtt/bridge/networkmap/graphviz":
 
-            # generate graphviz diagram
-            from graphviz import Source, render
+        # generate graphviz diagram
+        from graphviz import Source, render
 
-            src = Source(msg)
-            src.render(filename = GET_PATH() + '/app/static/temp/zigbee_topology', format='png', cleanup=True)
-            return
+        src = Source(msg)
+        src.render(filename = GET_PATH() + '/app/static/temp/zigbee_topology', format='png', cleanup=True)
+        return
 
-    except:
-        pass
-         
-         
+
     if ieeeAddr != "":
         
         # save last values and last contact 
         SAVE_DEVICE_LAST_VALUES(ieeeAddr, msg)
         
         # check battery
-        if GET_DEVICE_BY_IEEEADDR(ieeeAddr).gateway == "zigbee2mqtt":
+        try:
+            data = json.loads(msg)
             
-            try:
-                data = json.loads(msg)
-                
-                if int(data["battery"]) < 25:
-                    WRITE_LOGFILE_SYSTEM("WARNING", "Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")
-                    SEND_EMAIL("WARNING", "Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")                         
-            except Exception as e:
-                print(e)                
+            if int(data["battery"]) < 25:
+                WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")
+                SEND_EMAIL("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")                         
+        except Exception as e:
+            print(e)                
 
 
-    if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "sensor_contact" or device_type == "watering_controller":
+    if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "watering_controller":
         
         # save sensor data of passive devices
         if FIND_SENSORDATA_JOB_INPUT(ieeeAddr) != "":
@@ -254,8 +250,8 @@ def MQTT_PUBLISH_THREAD():
     
     def on_connect(client, userdata, flags, rc):
         if rc != 0:
-            print("ERROR: MQTT | Returned Code = " + str(rc)) 
-            WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | Returned Code = " + str(rc))         
+            print("ERROR: Network | MQTT | Returned Code = " + str(rc)) 
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | Returned Code = " + str(rc))         
             SET_DEVICE_CONNECTION_MQTT(False)   
         
         else:
@@ -283,8 +279,8 @@ def MQTT_PUBLISH_THREAD():
         except Exception as e:         
             try:   
                 if "index out of range" not in str(e):
-                    WRITE_LOGFILE_SYSTEM("ERROR", "MQTT Publish | " + str(e))  
-                    SEND_EMAIL("ERROR", "MQTT Publish | " + str(e))               
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT Publish | " + str(e))  
+                    SEND_EMAIL("ERROR", "Network | MQTT Publish | " + str(e))               
                     print(str(e))
                     
             except:
@@ -336,6 +332,7 @@ def MQTT_CONTROL_THREAD():
 """           mqtt functions         """
 """ ################################ """
 """ ################################ """
+
 
 """ ################ """
 """  update devices  """
@@ -415,15 +412,15 @@ def UPDATE_DEVICES(gateway):
                     heapq.heappush(mqtt_message_queue, (20, ("smarthome/mqtt/" + ieeeAddr + "/get", "")))
                     time.sleep(1)
 
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | MQTT | Update")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | MQTT | Update")
             return True
 
 
         except Exception as e:
             if str(e) == "string index out of range":
-                WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | No Connection") 
-                SEND_EMAIL("ERROR", "MQTT | No Connection")                 
-                return ("Devices | Update | " + str(error))     
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | Update") 
+                SEND_EMAIL("ERROR", "Network | MQTT | Update")                 
+                return ("Network | MQTT | Update | " + str(error))     
 
 
     if gateway == "zigbee2mqtt":
@@ -512,18 +509,18 @@ def UPDATE_DEVICES(gateway):
 
         
                 if error != "":
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Devices | ZigBee2MQTT | Update | " + str(error))
-                    SEND_EMAIL("ERROR", "Devices | ZigBee2MQTT | Update | " + str(error))                 
-                    return ("Devices | ZigBee2MQTT | Update | " + str(error)) 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Update | " + str(error))
+                    SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | Update | " + str(error))                 
+                    return ("Network | ZigBee2MQTT | Update | " + str(error)) 
                 else:
-                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | ZigBee2MQTT | Update")
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Update")
                     return True
                                     
                 
             except Exception as e:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Devices | ZigBee2MQTT | Update | " + str(e))  
-                SEND_EMAIL("ERROR", "Devices | ZigBee2MQTT | Update | " + str(e))             
-                return ("Devices | ZigBee2MQTT | Update " + str(e))
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Update | " + str(e))  
+                SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | Update | " + str(e))             
+                return ("Network | ZigBee2MQTT | Update " + str(e))
 
         else:
             return True
@@ -538,55 +535,56 @@ def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, repeats = 10):
     Thread.start()   
 
  
-def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):                
+def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting_json, repeats):                
     device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
     counter = 1
-                    
-    # format for gui
-    setting_formated = setting.replace('"', '')
-    setting_formated = setting_formated.replace('{', '')
-    setting_formated = setting_formated.replace('}', '')    
-    setting_formated = setting_formated.replace(':', ': ')
-    setting_formated = setting_formated.replace(',', ', ')      
+           
+    # format string for gui
+    setting_string = setting_json.replace('"', '')
+    setting_string = setting_string.replace('{', '')
+    setting_string = setting_string.replace('}', '')    
+    setting_string = setting_string.replace(':', ': ')
+    setting_string = setting_string.replace(',', ', ')      
 
     while counter != repeats:  
         
         if device.gateway == "mqtt":
-            result = CHECK_MQTT_SETTING(device.ieeeAddr, setting)
+            result = CHECK_MQTT_SETTING(device.ieeeAddr, setting_json)
         if device.gateway == "zigbee2mqtt":
-            result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting)    
+            result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting_json)    
     
         # set previous setting
         if result == True:
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Device - " + device.name + " | Setting changed | " + setting_formated)  
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | Setting changed | " + setting_string)  
             return True
 
         counter = counter + 1
         time.sleep(1)       
 
     # error message
-    WRITE_LOGFILE_SYSTEM("ERROR", "Device - " + device.name + " | Setting not confirmed | " + setting_formated)  
-    SEND_EMAIL("ERROR", "Device - " + device.name + " | Setting not confirmed | " + setting_formated)                
-    return ("Device - " + device.name + " | Setting not confirmed - " + setting_formated) 
+    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting_string)  
+    SEND_EMAIL("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting_string)                
+    return ("Device - " + device.name + " | Setting not confirmed - " + setting_string) 
                          
 
-def CHECK_MQTT_SETTING(ieeeAddr, setting):        
+def CHECK_MQTT_SETTING(ieeeAddr, setting_json):        
     for message in GET_MQTT_INCOMING_MESSAGES(10):
         
         # search for fitting message in incoming_messages_list
         if message[1] == "smarthome/mqtt/" + ieeeAddr:  
             
-            setting = setting[1:-1]
+            setting_json = setting_json[1:-1]
+            setting_json = setting_json.replace(" ", "")
             
             # only one setting value
-            if not "," in setting:    
-                if setting in message[2]:
+            if not "," in setting_json:    
+                if setting_json in message[2]:
                     return True
                                                     
             # more then one setting value:
             else:
                 
-                list_settings = setting.split(",")
+                list_settings = setting_json.split(",")
                 
                 for setting in list_settings:           
                     if not setting in message[2]:
@@ -597,7 +595,7 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting):
     return False
    
 
-def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
+def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting_json):
 
     if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
 
@@ -606,17 +604,18 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
             # search for fitting message in incoming_messages_list
             if message[1] == "smarthome/zigbee2mqtt/" + device_name:   
         
-                setting = setting[1:-1]
+                setting_json = setting_json[1:-1]
+                setting_json = setting_json.replace(" ", "")
 
                 # only one setting value
-                if not "," in setting:       
-                    if setting in message[2]:
+                if not "," in setting_json:       
+                    if setting_json in message[2]:
                         return True
                                     
                 # more then one setting value:
                 else:
                     
-                    list_settings = setting.split(",")
+                    list_settings = setting_json.split(",")
                     
                     for setting in list_settings:        
                         if not setting in message[2]:
@@ -718,6 +717,9 @@ def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
                     if data["type"] == "device_removed" and data["message"] == device_name:
                         return True
 
+                    if data["type"] == "device_force_removed" and data["message"] == device_name:
+                        return True
+
                 except:
                     pass
 
@@ -732,7 +734,7 @@ def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
 """ ######################### """
 
 
-def CHECK_DEVICE_EXCEPTIONS(id, setting):
+def CHECK_DEVICE_EXCEPTIONS(id, setting_string):
     device = GET_DEVICE_BY_ID(id)
 
     try:
@@ -741,10 +743,10 @@ def CHECK_DEVICE_EXCEPTIONS(id, setting):
         # exception ip_address 
         # ####################
         
-        setting           = setting.replace(" ", "")
-        exception_setting = device.exception_setting.replace(" ", "")
-        
-        if device.exception_option == "IP-Address" and exception_setting == setting:
+        setting_string           = setting_string.replace(" ", "")
+        exception_setting_string = device.exception_setting_string.replace(" ", "")
+
+        if device.exception_option == "IP-Address" and exception_setting_string == setting_string:
 
             if ping(device.exception_value_1, timeout=1) != None:    
                 return (device.name + " | Device running")
@@ -757,7 +759,7 @@ def CHECK_DEVICE_EXCEPTIONS(id, setting):
         # exception sensor
         # ################
         
-        if device.exception_sensor_ieeeAddr != "None" and exception_setting == setting:
+        if device.exception_sensor_ieeeAddr != "None" and exception_setting_string == setting_string:
             
             sensor_ieeeAddr = device.exception_sensor_ieeeAddr
             sensor_key      = device.exception_value_1   
@@ -771,7 +773,7 @@ def CHECK_DEVICE_EXCEPTIONS(id, setting):
                     
             
             # get sensordata 
-            data         = json.loads(GET_DEVICE_BY_IEEEADDR(device.exception_sensor_ieeeAddr).last_values)
+            data         = json.loads(GET_DEVICE_BY_IEEEADDR(device.exception_sensor_ieeeAddr).last_values_json)
             sensor_value = data[sensor_key]
             
             try:
@@ -838,14 +840,14 @@ def REQUEST_SENSORDATA(job_name):
                 filename = sensordata_job.filename
     
                 WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | Sensor Data saved")  
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Devices | Sensor Data saved")  
                 return True
                 
             except:
                 pass
 
-    WRITE_LOGFILE_SYSTEM("ERROR", "Devices | Request Sensordata | Message not founded") 
-    SEND_EMAIL("ERROR", "Devices | Request Sensordata | Message not founded")       
+    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Devices | Request Sensordata | Message not founded") 
+    SEND_EMAIL("ERROR", "Network | Devices | Request Sensordata | Message not founded")       
 
    
 def SAVE_SENSORDATA(job_id):

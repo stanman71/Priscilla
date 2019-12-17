@@ -3,7 +3,6 @@ from flask_bootstrap   import Bootstrap
 from flask_mail        import Mail
 from flask_apscheduler import APScheduler
 
-
 from threading import Lock
 from flask import Flask, render_template, session, request, copy_current_request_context
 from flask_socketio import SocketIO, emit
@@ -26,7 +25,10 @@ app.config['SECRET_KEY']                     = "random"        #os.urandom(20).h
 app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///' + os.path.join(basedir, 'database/database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-from app.database.models import *
+from app.database.models          import *
+from app.backend.spotify          import *
+from app.backend.shared_resources import *
+
 
 # Expose globals to Jinja2 templates
 app.add_template_global(assets     , 'assets')
@@ -42,10 +44,12 @@ socketio    = SocketIO(app, async_mode=async_mode)
 thread      = None
 thread_lock = Lock()
 
-def background_thread_system_log():
-
+def background_thread():
+    
     while True:
-        socketio.sleep(5)
+        socketio.sleep(0.5)
+
+        # system_log
 
         selected_log_types = ["WARNING", "ERROR"]
         log_search         = ""
@@ -66,26 +70,45 @@ def background_thread_system_log():
                        'data_6_title': data_log_system[6][1] + " ||| " + data_log_system[6][0], 'data_6_content': data_log_system[6][2], 
                        'data_7_title': data_log_system[7][1] + " ||| " + data_log_system[7][0], 'data_7_content': data_log_system[7][2], 
                        'data_8_title': data_log_system[8][1] + " ||| " + data_log_system[8][0], 'data_8_content': data_log_system[8][2], 
-                       'data_9_title': data_log_system[9][1] + " ||| " + data_log_system[9][0], 'data_9_content': data_log_system[9][2],                                           
-                      },
-                      namespace='/socketIO/system_log')
+                       'data_9_title': data_log_system[9][1] + " ||| " + data_log_system[9][0], 'data_9_content': data_log_system[9][2]},                                                    
+                       namespace='/socketIO')
 
-# system_log
-@socketio.on('connect', namespace='/socketIO/system_log')
+        # music
+
+        spotify_token          = GET_SPOTIFY_TOKEN()
+        tupel_current_playback = GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)
+
+        current_device   = tupel_current_playback[0]
+        current_state    = tupel_current_playback[2]
+        current_track    = tupel_current_playback[4]
+        current_artists  = tupel_current_playback[5]
+        current_progress = tupel_current_playback[6]
+        current_playlist = tupel_current_playback[7]
+
+        socketio.emit('music',
+                      {'current_device': current_device, 'current_state': current_state, 'current_track': current_track, 
+                      'current_artists': current_artists, 'current_progress': current_progress, 'current_playlist': current_playlist},                                                               
+                       namespace='/socketIO')
+
+        # program
+
+        socketio.emit('program',
+                      {'program_status': GET_PROGRAM_STATUS()},                                                               
+                       namespace='/socketIO')
+
+        # zigbee2mqtt pairing
+
+        socketio.emit('zigbee2mqtt_pairing',
+                      {'zigbee2mqtt_pairing_status': GET_ZIGBEE2MQTT_PAIRING_STATUS()},                                                               
+                       namespace='/socketIO')
+
+
+@socketio.on('connect', namespace='/socketIO')
 def connect_system_log():
     global thread
     with thread_lock:
         if thread is None:
-            thread = socketio.start_background_task(background_thread_system_log)
-
-
-
-
-@socketio.on('my_event', namespace='/test')
-def test_message(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my_response',
-         {'data': message['data'], 'count': session['receive_count']})
+            thread = socketio.start_background_task(background_thread)
 
 
 """ ################## """
@@ -119,7 +142,6 @@ UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway)
 from app.sites                      import index, dashboard, scheduler, programs, plants, led_scenes, led_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_devices, settings_controller, settings_users, settings_system_log, errors
 from app.backend.shared_resources   import process_management_queue
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
-from app.backend.shared_resources   import REFRESH_MQTT_INPUT_MESSAGES_THREAD
 from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_AT_STARTUP, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.email              import SEND_EMAIL
 from app.backend.file_management    import GET_LOCATION_COORDINATES
@@ -181,8 +203,8 @@ try:
     time.sleep(3)    
 
 except Exception as e:
-    print("ERROR: MQTT | " + str(e))
-    WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e)) 
+    print("ERROR: Network | MQTT | " + str(e))
+    WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | " + str(e)) 
 
 
 """ ######## """
@@ -192,9 +214,9 @@ except Exception as e:
 if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
 
     if CHECK_ZIGBEE2MQTT_AT_STARTUP():  
-        print("ZigBee2MQTT | Connected") 
+        print("Network | ZigBee2MQTT | Connected") 
         
-        WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Connected")
+        WRITE_LOGFILE_SYSTEM("NETWORK", "ZigBee2MQTT | Connected")
 
         # deactivate pairing at startup
         SET_ZIGBEE2MQTT_PAIRING("False")
@@ -203,23 +225,37 @@ if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
         msg     = "false"
 
         heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
-        time.sleep(1)
+        time.sleep(5)
 
-        if CHECK_ZIGBEE2MQTT_PAIRING("false"):                        
-            WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Pairing disabled") 
-        else:             
-            WRITE_LOGFILE_SYSTEM("WARNING", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")    
+        # check pairing setting
+        for message in GET_MQTT_INCOMING_MESSAGES(10):
+            if message[1] == "smarthome/zigbee2mqtt/bridge/config":
+            
+                try:
+                    data = json.loads(message[2])
+                    
+                    if data["permit_join"] == True:
+                        WRITE_LOGFILE_SYSTEM("NETWORK", "Network | ZigBee2MQTT | Pairing disabled") 
+                        SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Disabled")
+                    else:             
+                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
+                        SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Setting not confirmed") 
+
+                except:
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed") 
+                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Pairing | Setting not confirmed")
             
     else:
-        print("ERROR: ZigBee2MQTT | No connection") 
+        print("ERROR: Network | ZigBee2MQTT | No connection") 
         
-        WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | No Connection")        
-        SEND_EMAIL("ERROR", "ZigBee2MQTT | No Connection")          
+        WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")        
+        SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | No Connection")  
+        SET_ZIGBEE2MQTT_PAIRING_STATUS("ZigBee2MQTT | No Connection")        
 
 else:
     os.system("sudo systemctl stop zigbee2mqtt")
-    WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Disabled")
-    print("ZigBee2MQTT | Disabled") 
+    WRITE_LOGFILE_SYSTEM("NETWORK", "Network | ZigBee2MQTT | Disabled")
+    print("Network | ZigBee2MQTT | Disabled") 
 
 
 if GET_SYSTEM_SERVICES().lms_active != "True":

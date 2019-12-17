@@ -1,3 +1,18 @@
+<script src="/static/js/core/jquery-1.12.4.min.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+
+    namespace  = '/socketIO';
+    var socket = io(namespace);
+
+    socket.on('program', function(msg) {
+        $('#program_status').text(msg.program_status);                        
+    });
+  });
+</script>
+
+
       <div class="content">
         <div class="row">
           <div class="col-md-12">
@@ -583,34 +598,53 @@
                   {% endif %} 
 
                 </div>            
-                <div class="card-footer">                   
-                  <button type="submit" onclick="window.location.href='/programs#selected_program'" name="save_program_settings" class="btn btn-fill btn-primary">SAVE</button>
-
-                  <button type="submit" onclick="window.location.href='/programs#selected_program'" name="start_program_{{ selected_program.id }}" class="btn btn-fill btn-info">START PROGRAM</button>
-                  <button type="submit" onclick="window.location.href='/programs#selected_program'" name="stop_program_{{ selected_program.id }}" class="btn btn-fill btn-info">STOP PROGRAM</button>
-            
-                  <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{selected_program.id}}">DELETE</button>
-                  <!-- Modal -->
-                  <div class="modal fade" id="delete_dialog_{{selected_program.id}}">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">Delete {{selected_program.name}} ?</h5>
-                        </div>          
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                          <button type="submit" onclick="window.location.href='/programs#'" name="delete_program_{{selected_program.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
+                <div class="card-footer">       
+                  <div class="row justify-content-md-left">                                                 
+                    <div class="col-sm-2">    
+                      <button type="submit" onclick="window.location.href='/programs#selected_program'" name="save_program_settings" class="btn btn-fill btn-primary">SAVE</button>
+                    </div>                        
+                    <div class="col-sm-4">    
+                       <div class="vertical_center">                     
+                        <button type="submit" onclick="window.location.href='/programs#selected_program'" name="start_program_{{ selected_program.id }}" class="btn btn-fill btn-info">START</button>
+                        <button type="submit" onclick="window.location.href='/programs#selected_program'" name="stop_program_{{ selected_program.id }}" class="btn btn-fill btn-info">STOP</button>
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="checkbox_program_repeat_setting" {% if program_repeat == "True" %} checked="on" {% endif %} name="checkbox_program_repeat">
+                          <label class="custom-control-label" for="checkbox_program_repeat_setting">Repeat</label>
                         </div>
                       </div>
                     </div>
-                  </div>                          
+                    <div class="col-sm-4">  
+                      <div class="vertical_center"> 
+                        <h5><div id="program_status"></div></h5>
+                      </div> 
+                    </div>                        
+                    <div class="col-sm-2">  
+
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{selected_program.id}}">DELETE</button>
+                      <!-- Modal -->
+                      <div class="modal fade" id="delete_dialog_{{selected_program.id}}">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Delete {{selected_program.name}} ?</h5>
+                            </div>          
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                              <button type="submit" onclick="window.location.href='/programs#'" name="delete_program_{{selected_program.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>                          
+                    </div>
+                  </div>   
 
                 </div>
               </form>
             </div>
 
 {% endif %}
+
 
 <!---------------------------->
 <!-- PROGRAM TASKS OPTIONS  -->

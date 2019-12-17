@@ -1,3 +1,22 @@
+<script src="/static/js/core/jquery-1.12.4.min.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+
+    namespace  = '/socketIO';
+    var socket = io(namespace);
+
+    socket.on('music', function(msg) {
+        $('#current_device').text(msg.current_device);   
+        $('#current_state').text(msg.current_state);   
+        $('#current_track').text(msg.current_track);                                 
+        $('#current_artists').text(msg.current_artists);   
+        $('#current_progress').text(msg.current_progress);    
+        $('#current_playlist').text(msg.current_playlist);                          
+    });
+  });
+</script>
+
       <div class="content">
         <div class="row">
           <div class="col-md-12">
@@ -45,7 +64,7 @@
   {% endif %}   
 
 
-  {% if tupel_current_playback != ('', '', '', '', '', [], '', '', '') and tupel_current_playback != '' %} 
+  {% if show_player != False %}
 
             <div class="card">
               <form method="POST">          
@@ -56,61 +75,78 @@
                         <th scope="col" style="width:15%" class="minwidth_150">Geräte</th>   
                         <th scope="col" style="width:10%" class="minwidth_100">Playing</th>                                                      
                         <th scope="col" style="width:20%" class="minwidth_200">Track</th>                                     
-                        <th scope="col" style="width:25%" class="minwidth_200">Interpreten</th>                     
+                        <th scope="col" style="width:20%" class="minwidth_200">Interpreten</th>      
+                        <th scope="col" style="width:10%" class="minwidth_100">Progress</th>                                          
                         <th scope="col" style="width:20%" class="minwidth_200">Playlist</th> 
-                        <th scope="col" style="width:10%" class="minwidth_100">Shuffle</th> 
                       </thead>                                             
                       <tbody> 
                         <tr>
                           <td>
-                            {% if "multiroom" in tupel_current_playback[0] %}
-                              multiroom
-                            {% else %}
-                              {{ tupel_current_playback[0] }}
-                            {% endif %}    
+                            <div id="current_device"></div> 
                           </td>   
                           <td>
-                            {{ tupel_current_playback[2] }}
+                            <div id="current_state"></div> 
                           </td>   
                           <td>
-                            {{ tupel_current_playback[4] }} 
+                            <div id="current_track"></div> 
                           </td>                          
                           <td>
-                            {% for artist in tupel_current_playback[5] %}
-                              {{ artist }}
-                            {% endfor %} 
-                          </td>                         
+                            <div id="current_artists"></div> 
+                          </td>          
                           <td>
-                            {{ tupel_current_playback[7] }}
-                          </td>   
+                            <div id="current_progress"></div> 
+                          </td>                                             
                           <td>
-                            {{ tupel_current_playback[8] }}
-                          </td>                                                                                                                           
+                            <div id="current_playlist"></div> 
+                          </td>                                                                                                                          
                         </tr>             
                       </tbody>
                     </table>
                   </div>
-                  <button type="submit" onclick="window.location.href='/music#'" class="btn btn-default" name="set_spotify_play">
-                    <i class='uil uil-play'></i>
-                  </button>                               
-                  <button type="submit" onclick="window.location.href='/music#'" class="btn btn-default" name="set_spotify_previous">
-                    <i class='uil uil-backward'></i>
-                  </button>
-                  <button type="submit" onclick="window.location.href='/music#'" class="btn btn-default" name="set_spotify_next">
-                    <i class='uil uil-forward'></i>
-                  </button>
-                  <button type="submit" onclick="window.location.href='/music#'" class="btn btn-default" name="set_spotify_stop">
-                    <i class='uil uil-pause'></i>
-                  </button>
-                  <button type="submit" onclick="window.location.href='/music#'" class="btn btn-default" name="set_spotify_volume">
-                    <i class='uil uil-volume'></i>
-                  </button>
-                  <input type="range" class="slider" name="set_spotify_current_volume" min="0" max="100" value="{{ volume }}" />     
+
+                  <div class="row justify-content-md-center">                                                 
+                    <div class="col-sm-6">                 
+                      <button type="submit" onclick="window.location.href='/music#'" class="btn btn-default" name="set_spotify_play">
+                        <i class='uil uil-play'></i>
+                      </button>                               
+                      <button type="submit" onclick="window.location.href='/music#'" class="btn btn-default" name="set_spotify_previous">
+                        <i class='uil uil-backward'></i>
+                      </button>
+                      <button type="submit" onclick="window.location.href='/music#'" class="btn btn-default" name="set_spotify_next">
+                        <i class='uil uil-forward'></i>
+                      </button>
+                      <button type="submit" onclick="window.location.href='/music#'" class="btn btn-default" name="set_spotify_stop">
+                        <i class='uil uil-pause'></i>
+                      </button>
+                      <button type="submit" onclick="window.location.href='/music#'" class="btn btn-default" name="set_spotify_volume">
+                        <i class='uil uil-volume'></i>
+                      </button>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="vertical_center">  
+                        <div class="row justify-content-md-center">                                                 
+                          <div class="col-sm-4">           
+                            <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="checkbox_shuffle_setting" {% if shuffle == "True" %} checked="on" {% endif %} name="checkbox_shuffle">
+                              <label class="custom-control-label" for="checkbox_shuffle_setting">Shuffle</label>                
+                            </div>
+                          </div>   
+                          <div class="col-sm-1"></div>                          
+                          <div class="col-sm-6">                   
+                            <input id="volume_slider_music_player" data-slider-id="volume_slider_music_player" name="set_spotify_player_volume" 
+                              type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}"/>                                                  
+                          </div>
+                          <div class="col-sm-1"></div>
+                        </div>     
+                      </div>         
+                    </div>
+                    <div class="col-sm-2"></div>
+                  </div>
                 </div>
               </form>
             </div>
 
-  {% endif %} 
+  {% endif %}   
 
   <!-------------------->
   <!-- PLAYLIST TABLE -->
@@ -123,70 +159,54 @@
                 <div class="card-body"> 
                   <div class="table-responsive">
                     <table class="table tablesorter">
-
                       <thead>
-                        <th scope="col" style="width:25%" class="minwidth_200">Geräte</th>   
-                        <th scope="col" style="width:15%" class="minwidth_150">Geräte Typ</th>                                  
-                        <th scope="col" style="width:30%" class="minwidth_200">Playlist</th>
+                        <th scope="col" style="width:30%" class="minwidth_300">Geräte</th>                               
+                        <th scope="col" style="width:30%" class="minwidth_300">Playlist</th>
+                        <th scope="col" style="width:5%"></th>   
                         <th scope="col" style="width:20%" class="minwidth_100">Lautstärke</th>  
-                        <th scope="col" style="width:10%" class="minwidth_100"><div class="text-center">Abspielen</div></th>                                   
+                        <th scope="col" style="width:15%" class="minwidth_100"></th>                                   
                       </thead>
                       <tbody> 
-                        
-                        {% for device in spotify_devices %}
-                        
-                          <tr>
-                            
-                            {% if device['type'] != "Smartphone" %}
-
-                              <td>
-                                {% if "multiroom" in device['name'] %}
-                                  multiroom
-                                {% else %}
-                                  {{ device['name'] }}
-                                {% endif %}      
-                              </td>                     
-                              <td>
-                                {% if "multiroom" in device['name'] %}
-                                  Multiroom Group
-                                {% else %}
-                                  {{ device['type'] }}
-                                {% endif %}      
-                              </td>     
-                              <td>    
-                                <select class="form-control" data-size="5" name="set_spotify_playlist:{{ device['id'] }}" style="background-color:#27293D"> 
-                                  {% if spotify_playlists != "" %}
-                                    {% for playlist in spotify_playlists %}
-                                      {% if playlist['name'] != "Discover Weekly" %}
-                                        <option value="{{ playlist['uri'] }}" > {{ playlist['name'] }} </option>
-                                      {% endif %}
-                                    {% endfor %}
-                                  {% else %}
-                                  <option value= "" > Keine Playlist gefunden </option>
-                                  {% endif %}  
-                                </select>    
-                              </td>   
-                              <td>
-                                <div class="slidecontainer"> 
-                                  <div class="col-12">                             
-                                    <input type="range" class="slider" name="set_spotify_playlist_volume:{{ device['id'] }}" min="0" max="100" value="{{ volume }}" />
-                                  </div> 
-                                </div> 
-                              </td>
-                              <td>   
-                                <div class="text-center">   
-                                  <button type="submit" onclick="window.location.href='/music#'" class="btn btn-default" name="spotify_start_playlist" value="{{ device['id'] }}">
-                                    <i class='uil uil-play'></i>
-                                  </button>                                                             
-                                </div>                          
-                              </td>  
-                              
-                            {% endif %}   
-                              
-                          </tr>
-                          
-                        {% endfor %}    
-                                  
+                        <tr>                   
+                          <td>
+                            <select class="form-control" data-size="5" name="set_spotify_device_id" style="background-color:#27293D"> 
+                              {% if spotify_devices != "" %}
+                                {% for device in spotify_devices %}                   
+                                  {% if device['type'] != "Smartphone" %}
+                                    <option value="{{ device['id'] }}" > {{ device['name'] }} </option>
+                                  {% endif %}
+                                {% endfor %}
+                              {% else %}
+                              <option value= "" > Keine Geräte gefunden </option>
+                              {% endif %}  
+                            </select>                                    
+                          </td>     
+                          <td>    
+                            <select class="form-control" data-size="5" name="set_spotify_playlist" style="background-color:#27293D"> 
+                              {% if spotify_playlists != "" %}
+                                {% for playlist in spotify_playlists %}
+                                  {% if playlist['name'] != "Discover Weekly" %}
+                                    <option value="{{ playlist['uri'] }}" > {{ playlist['name'] }} </option>
+                                  {% endif %}
+                                {% endfor %}
+                              {% else %}
+                              <option value= "" > Keine Playlist gefunden </option>
+                              {% endif %}  
+                            </select>    
+                          </td>   
+                          <td></td>  
+                          <td>
+                            <input id="volume_slider_music_playlist" data-slider-id="volume_slider_music_playlist" name="set_spotify_playlist_volume" 
+                              type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}"/>   
+                          </td>
+                          <td>   
+                            <div class="text-center">   
+                              <button type="submit" onclick="window.location.href='/music#'" class="btn btn-default" name="spotify_start_playlist" >
+                                <i class='uil uil-play'></i>
+                              </button>                                                             
+                            </div>                          
+                          </td>  
+                        </tr>      
                       </tbody>
                     </table>
                   </div>      
@@ -478,15 +498,15 @@
                             <td>{{ entry.model }}</td> 
                             <td>
                                 
-                              {% if entry.last_values_formated != None %} 
+                              {% if entry.last_values_string != None %} 
                                 
                                 <div class="custom-control custom-radio custom-control-inline">
-                                  <input type="radio" class="custom-control-input" id="radio_spotify_{{ entry.id }}" {% if "spotify" in entry.last_values_formated %} checked="on" {% endif %} value="spotify" name="radio_client_music_interface_{{ entry.id }}">
+                                  <input type="radio" class="custom-control-input" id="radio_spotify_{{ entry.id }}" {% if "spotify" in entry.last_values_string %} checked="on" {% endif %} value="spotify" name="radio_client_music_interface_{{ entry.id }}">
                                   <label class="custom-control-label" for="radio_spotify_{{ entry.id }}">Spotify</label>
                                 </div> 
                                 <br>       
                                 <div class="custom-control custom-radio custom-control-inline">
-                                  <input type="radio" class="custom-control-input" id="radio_multiroom_{{ entry.id }}" {% if "multiroom" in entry.last_values_formated %} checked="on" {% endif %} value="multiroom" name="radio_client_music_interface_{{ entry.id }}">
+                                  <input type="radio" class="custom-control-input" id="radio_multiroom_{{ entry.id }}" {% if "multiroom" in entry.last_values_string %} checked="on" {% endif %} value="multiroom" name="radio_client_music_interface_{{ entry.id }}">
                                   <label class="custom-control-label" for="radio_multiroom_{{ entry.id }}">Multiroom</label>
                                 </div>
                                 
@@ -511,11 +531,11 @@
                             
                               {% if entry.model != "hifiberry_miniAMP" %}
 
-                                {% if entry.last_values != None %}
+                                {% if entry.last_values_json != None %}
                                 
                                   <div class="slidecontainer"> 
                                     <div class="col-md-10 text-center"> 
-                                      <input type="range" class="slider" name="set_client_music_volume_{{ entry.id }}" min="100" max="207" value="{{ entry.last_values.split(':')[2] | replace('}', '') }}" />
+                                      <input type="range" class="slider" name="set_client_music_volume_{{ entry.id }}" min="100" max="207" value="{{ entry.last_values_json.split(':')[2] | replace('}', '') }}" />
                                     </div> 
                                   </div>
 

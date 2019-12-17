@@ -57,10 +57,10 @@ class Devices(db.Model):
     input_events                  = db.Column(db.String(200))
     commands                      = db.Column(db.String(200))    
     last_contact                  = db.Column(db.String(50))
-    last_values                   = db.Column(db.String(200))  
-    last_values_formated          = db.Column(db.String(200)) 
+    last_values_json              = db.Column(db.String(200))  
+    last_values_string            = db.Column(db.String(200)) 
     exception_option              = db.Column(db.String(50)) 
-    exception_setting             = db.Column(db.String(50))     
+    exception_setting_string      = db.Column(db.String(50))     
     exception_sensor_ieeeAddr     = db.Column(db.String(50))   
     exception_sensor_input_values = db.Column(db.String(50))     
     exception_value_1             = db.Column(db.String(50))
@@ -381,18 +381,7 @@ if backup_database_founded == False:
     )
     db.session.add(scheduler_task_backup_database)
     db.session.commit()
-
-# ######################
-# speechcontrol settings
-# ######################
-
-if Speechcontrol_Settings.query.filter_by().first() == None:
-    speechcontrol_settings = Speechcontrol_Settings(
-        id = 1,
-    )
-    db.session.add(speechcontrol_settings)
-    db.session.commit()
-
+    
 # ###############
 # system services
 # ###############
@@ -771,15 +760,10 @@ def GET_ALL_DEVICES(selector):
  
     if selector == "devices":
         for device in devices:
-            if (device.device_type == "power_switch"):
+            if (device.device_type == "power_switch" or
+                device.device_type == "heater"):
                 
                 device_list.append(device)      
-  
-    if selector == "heaters":
-        for device in devices:
-            if device.device_type == "heater":
-                
-                device_list.append(device)          
 
     if selector == "led":
         for device in devices:
@@ -799,7 +783,6 @@ def GET_ALL_DEVICES(selector):
             
             if (device.device_type == "sensor_passiv" or 
                 device.device_type == "sensor_active" or 
-                device.device_type == "sensor_contact" or
                 device.device_type == "watering_controller"):
                 
                 device_list.append(device)   
@@ -879,16 +862,16 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
     try:
         entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
         
-        last_values_formated = last_values.replace("{","")
-        last_values_formated = last_values_formated.replace("}","")
-        last_values_formated = last_values_formated.replace('"',"")
-        last_values_formated = last_values_formated.replace(":",": ")
-        last_values_formated = last_values_formated.replace(",",", ")
+        last_values_string = last_values.replace("{","")
+        last_values_string = last_values_string.replace("}","")
+        last_values_string = last_values_string.replace('"',"")
+        last_values_string = last_values_string.replace(":",": ")
+        last_values_string = last_values_string.replace(",",", ")
         
         timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-        entry.last_values          = last_values
-        entry.last_values_formated = last_values_formated
-        entry.last_contact         = timestamp
+        entry.last_values_json   = last_values
+        entry.last_values_string = last_values_string
+        entry.last_contact       = timestamp
         db.session.commit()   
     
     except:
@@ -941,20 +924,20 @@ def UPDATE_DEVICE_EXCEPTION_SENSOR_NAMES():
         pass
 
 
-def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting, exception_sensor_ieeeAddr, 
+def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting_string, exception_sensor_ieeeAddr, 
                          exception_sensor_input_values, exception_value_1, exception_value_2, exception_value_3):
               
     entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
              
     # values changed ?
-    if (entry.exception_option != exception_option or entry.exception_setting != exception_setting or
+    if (entry.exception_option != exception_option or entry.exception_setting_string != exception_setting_string or
         entry.exception_sensor_ieeeAddr != exception_sensor_ieeeAddr or 
         entry.exception_sensor_input_values != exception_sensor_input_values or 
         entry.exception_value_1 != exception_value_1 or entry.exception_value_2 != exception_value_2 or 
         entry.exception_value_3 != exception_value_3):              
                                          
         entry.exception_option              = exception_option
-        entry.exception_setting             = exception_setting          
+        entry.exception_setting_string      = exception_setting_string          
         entry.exception_sensor_ieeeAddr     = exception_sensor_ieeeAddr
         entry.exception_sensor_input_values = exception_sensor_input_values
         entry.exception_value_1             = exception_value_1
@@ -965,7 +948,7 @@ def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting, exceptio
         
         WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + entry.name + " | Exception Settings changed" +
                              " || Exception - " + entry.exception_option +
-                             " | Exception Setting - " + entry.exception_setting +                          
+                             " | Exception Setting - " + entry.exception_setting_string +                          
                              " | Exception ieeeAddr - " + entry.exception_sensor_ieeeAddr +
                              " | Exception Value 1 - " + entry.exception_value_1 +
                              " | Exception Value 2 - " + entry.exception_value_2 +      
@@ -1042,15 +1025,6 @@ def DELETE_DEVICE(ieeeAddr):
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
             error_list = error_list + "," + device.name + " eingetragen in Sensordaten / Jobs"
 
-
-    """      
-    # check speechcontrol
-    entries = GET_ALL_SPEECHCONTROL_DEVICE_TASKS()
-    for entry in entries:
-        if entry.device_ieeeAddr == ieeeAddr:
-            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in System / Sprachsteuerung"            
-    """
 
     # check led groups
     entries = GET_ALL_LED_GROUPS()

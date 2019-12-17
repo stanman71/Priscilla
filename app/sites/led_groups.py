@@ -88,7 +88,7 @@ def led_groups():
                     error_founded = True      
 
                 # add new name
-                if ((input_name != "") and (GET_LED_GROUP_BY_NAME(input_name) == None)):
+                elif ((input_name != "") and (GET_LED_GROUP_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 

@@ -99,6 +99,19 @@
   } 
 </script>
 
+<script src="/static/js/core/jquery-1.12.4.min.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+
+    namespace  = '/socketIO';
+    var socket = io(namespace);
+
+    socket.on('zigbee2mqtt_pairing', function(msg) {
+        $('#zigbee2mqtt_pairing_status').text(msg.zigbee2mqtt_pairing_status);   
+    });
+  });
+</script>
 
 
       <div class="content">
@@ -284,7 +297,7 @@
 {% endif %}
 
 
-            <div class="card ">
+            <div class="card">
               <div class="card-header">
                 <h5 class="title">Ausnahmen</h5>
               </div>            
@@ -375,9 +388,9 @@
                               <!-- exception option command --> 
                               <div class="row justify-content-md-center">
                                 <div class="col-sm-6"> 
-                                  <select class="form-control" name="set_exception_setting_{{ entry.id }}" style="background-color:#27293D"> 
-                                    {% if entry.exception_setting != "None" %}
-                                      <option value = "{{ entry.exception_setting }}" > {{ entry.exception_setting }} </option>
+                                  <select class="form-control" name="set_exception_setting_string_{{ entry.id }}" style="background-color:#27293D"> 
+                                    {% if entry.exception_setting_string != "None" %}
+                                      <option value = "{{ entry.exception_setting_string }}" > {{ entry.exception_setting_string }} </option>
                                     {% else %}   
                                       <option value = "None" > Befehl </option> 
                                     {% endif %}                           
@@ -491,9 +504,12 @@
                       <input type="radio" class="custom-control-input" id="radio_zigbee2mqtt_pairing_false" {% if zigbee2mqtt_pairing == "False" %} checked="on" {% endif %} value="False" name="radio_zigbee2mqtt_pairing">
                       <label class="custom-control-label" for="radio_zigbee2mqtt_pairing_false">Pairing deaktiviert</label>
                     </div> 
+                    <br>
+                    <br>
+                    <div id="zigbee2mqtt_pairing_status"></div>                     
                   </div>   
                   <div class="card-footer">                  
-                    <button type="submit" onclick="window.location.href='/settings/devices#zigbee'" name="save_zigbee_pairing" class="btn btn-fill btn-primary">SAVE</button>
+                    <button type="submit" onclick="window.location.href='/settings/devices#zigbee'" name="set_zigbee_pairing" class="btn btn-fill btn-primary">SAVE</button>
                   </div>                
                 </form>
               </div>

@@ -102,7 +102,7 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
 - internal cables and connectors
 
-       >>> https://www.ebay.de/itm/JST-XH-2-54-Stecker-inkl-15cm-Kabel-XH-Buchse-2-3-4-5-6-7-8-9-10-Pin-24AWG-RC/183748172867
+       >>> https://www.berrybase.de/bauelemente/steckverbinder/rastersteckverbinder-2-50mm/kabel-mit-jst-xh-2.54mm-steckverbinder-awg26-20cm
 
 - socket strip (2 pin)
 

@@ -8,9 +8,9 @@ from app.database.models          import *
 from app.backend.led              import *
 from app.backend.mqtt             import *
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
-from app.backend.process_program  import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD, GET_PROGRAM_RUNNING
+from app.backend.process_program  import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD
 from app.backend.spotify          import *
-from app.backend.shared_resources import mqtt_message_queue
+from app.backend.shared_resources import mqtt_message_queue, GET_PROGRAM_STATUS
 
 from difflib import SequenceMatcher
 
@@ -587,41 +587,40 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
         # device founded ?
         if device != None:
             
-            controller_setting_formated = str(task[2:])
-            controller_setting_formated = controller_setting_formated.replace("[", "")
-            controller_setting_formated = controller_setting_formated.replace("]", "")
-            controller_setting_formated = controller_setting_formated.replace("'", "")
+            controller_setting_string = str(task[2:])
+            controller_setting_string = controller_setting_string.replace("[", "")
+            controller_setting_string = controller_setting_string.replace("]", "")
+            controller_setting_string = controller_setting_string.replace("'", "")
             
             # check device exception
-            check_result = CHECK_DEVICE_EXCEPTIONS(device.id, controller_setting_formated)
+            check_result = CHECK_DEVICE_EXCEPTIONS(device.id, controller_setting_string)
                  
             if check_result == True:               
               
                 # convert string to json-format
-                controller_setting = controller_setting_formated.replace(' ', '')
-                controller_setting = controller_setting.replace(':', '":"')
-                controller_setting = controller_setting.replace(',', '","')
-                controller_setting = '{"' + str(controller_setting) + '"}'
+                controller_setting_json = controller_setting_string.replace(' ', '')
+                controller_setting_json = controller_setting_json.replace(':', '":"')
+                controller_setting_json = controller_setting_json.replace(',', '","')
+                controller_setting_json = '{"' + str(controller_setting_json) + '"}'
 
                 new_setting = False
                 
                 # new device setting ?  
-                if device.last_values != None:
+                if device.last_values_json != None:
                     
                     # one setting value
-                    if not "," in controller_setting:
-                        if not controller_setting[1:-1] in device.last_values:
+                    if not "," in controller_setting_json:
+                        if not controller_setting_json[1:-1] in device.last_values_json:
                             new_setting = True
                                                                
                     # more then one setting value
                     else:
-
-                        controller_setting_temp = controller_setting[1:-1]
-                        list_controller_setting = controller_setting_temp.split(",")
+                        controller_setting_temp = controller_setting_json[1:-1]
+                        list_controller_settings = controller_setting_temp.split(",")
                         
-                        for setting in list_controller_setting:
+                        for setting in list_controller_settings:
                             
-                            if not setting in device.last_values:
+                            if not setting in device.last_values_json:
                                 new_setting = True
                                 
                 else:
@@ -635,13 +634,11 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                     if device.gateway == "zigbee2mqtt":   
                         channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                    msg = controller_setting
-
-                    heapq.heappush(mqtt_message_queue, (1, (channel, msg)))            
-                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 20)
+                    heapq.heappush(mqtt_message_queue, (1, (channel, controller_setting_json)))            
+                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting_json, 20)
                              
                 else:
-                    WRITE_LOGFILE_SYSTEM("STATUS", "Devices | Device - " + device.name + " | " + controller_setting_formated) 
+                    WRITE_LOGFILE_SYSTEM("STATUS", "Devices | Device - " + device.name + " | " + controller_setting_string) 
                                                                    
             else:
                 WRITE_LOGFILE_SYSTEM("WARNING", "Controller - " + controller_name + " | " + check_result)
@@ -662,12 +659,11 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
         program = GET_PROGRAM_BY_NAME(task[1].lower())
 
         if program != None:
-            program_running = GET_PROGRAM_RUNNING()
 
-            if task[2] == "start" and program_running == None:
+            if task[2] == "start" and GET_PROGRAM_STATUS() == None:
                 START_PROGRAM_THREAD(program.id)
                 
-            elif task[2] == "start" and program_running != None:
+            elif task[2] == "start" and GET_PROGRAM_STATUS() != None:
                 WRITE_LOGFILE_SYSTEM("WARNING", "Controller - " + controller_name + " | Command - " + controller_command + " | Other Program running")
                                      
             elif task[2] == "stop":
@@ -756,6 +752,8 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                     SPOTIFY_CONTROL(spotify_token, "turn_down", spotify_volume)                 
 
                 else:
+                    SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)  
+
                     from lms import find_server
                     server  = find_server()
                     players = server.players

@@ -214,7 +214,7 @@ def REFRESH_SPOTIFY_TOKEN(first_delay):
 
 
 def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
-
+    
     sp       = spotipy.Spotify(auth=spotify_token)
     sp.trace = False     
 
@@ -234,14 +234,15 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 track_uri   = sp.current_playback(market=None)['item']['uri']
             except:
                 track_uri   = None
-                
 
             if context_uri != None:
-                sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None, position_ms = None)              
+                sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)      
+                sp.volume(int(spotify_volume), device_id=spotify_device_id)  
+                sp.next_track(device_id=spotify_device_id) 
 
             elif track_uri != None:
                 sp.start_playback(device_id=spotify_device_id, context_uri=None, uris=[track_uri], offset = None)    
-                
+
             else:
                 sp.start_playback(device_id=spotify_device_id, context_uri=None, uris=None, offset = None, position_ms = None)
 
@@ -257,8 +258,11 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
         if command == "stop":     
             sp.pause_playback(device_id=spotify_device_id)  
 
-        if command == "shuffle":     
+        if command == "shuffle_true":     
             sp.shuffle(True, device_id=spotify_device_id) 
+
+        if command == "shuffle_false":     
+            sp.shuffle(False, device_id=spotify_device_id) 
 
         if command == "volume":        
             sp.volume(int(spotify_volume), device_id=spotify_device_id)      
@@ -328,11 +332,10 @@ def GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token):
 
     spotify_current_playback = sp.current_playback(market=None)
 
-
     try:
         # get device name
         spotify_current_playback_device_name = spotify_current_playback['device']['name']
-        
+
     except:
         spotify_current_playback_device_name = ""
  
@@ -347,7 +350,7 @@ def GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token):
 
     try:
         # get playback state
-        spotify_current_playback_state = spotify_current_playback['is_playing'] 
+        spotify_current_playback_state = str(spotify_current_playback['is_playing']).upper()
         
     except:
         spotify_current_playback_state = ""
@@ -371,10 +374,12 @@ def GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token):
  
     try:
         # get playback track artists
-        spotify_current_playback_artists = []
+        spotify_current_playback_artists = ""
         
         for i in range(len(spotify_current_playback["item"]["artists"])):
-            spotify_current_playback_artists.append(spotify_current_playback["item"]["artists"][i]["name"])  
+            spotify_current_playback_artists = spotify_current_playback_artists + ", " + spotify_current_playback["item"]["artists"][i]["name"]  
+
+        spotify_current_playback_artists = spotify_current_playback_artists[1:]        
             
     except:
         spotify_current_playback_artists = []     
@@ -412,7 +417,7 @@ def GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token):
             
     try:
         # get playback shuffle state
-        spotify_current_playback_shuffle_state = spotify_current_playback['shuffle_state']   
+        spotify_current_playback_shuffle_state = spotify_current_playback['shuffle_state']
         
     except:
         spotify_current_playback_shuffle_state = ""  

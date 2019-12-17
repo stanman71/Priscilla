@@ -73,6 +73,36 @@ def GET_MQTT_INCOMING_MESSAGES(limit):
     return message_list
 
 
+""" ################ """
+"""  program status  """
+""" ################ """
+
+program_status = "None"
+
+def SET_PROGRAM_STATUS(value):
+	global program_status
+	program_status = value
+
+def GET_PROGRAM_STATUS():
+    global program_status
+    return program_status 
+
+
+""" ############################ """
+"""  zigbee2mqtt pairing status  """
+""" ############################ """
+
+zigbee2mqtt_pairing_status = "None"
+
+def SET_ZIGBEE2MQTT_PAIRING_STATUS(value):
+	global zigbee2mqtt_pairing_status
+	zigbee2mqtt_pairing_status = value
+
+def GET_ZIGBEE2MQTT_PAIRING_STATUS():
+    global zigbee2mqtt_pairing_status
+    return zigbee2mqtt_pairing_status 
+
+
 """ ################# """
 """  system messages  """
 """ ################# """
@@ -95,3 +125,4 @@ def SET_DEVICE_CONNECTION_ZIGBEE2MQTT(value):
 def GET_DEVICE_CONNECTION_ZIGBEE2MQTT():
     global device_connetion_zigbee2mqtt
     return device_connetion_zigbee2mqtt	
+

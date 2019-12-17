@@ -243,7 +243,7 @@ void reconnect() {
   
             send_default_mqtt_message(0);
 
-            client.subscribe("miranda/mqtt/#");
+            client.subscribe("smarthome/mqtt/#");
             Serial.println("MQTT Connected...");
 
             digitalWrite(BUILTIN_LED, LOW);       
@@ -273,7 +273,7 @@ void callback (char* topic, byte* payload, unsigned int length) {
     if (check_ieeeAddr == "devices"){
 
         // create path   
-        String payload_path = "miranda/mqtt/log";
+        String payload_path = "smarthome/mqtt/log";
         char attributes_path[100];
         payload_path.toCharArray( path, 100 );    
 
@@ -395,7 +395,7 @@ void callback (char* topic, byte* payload, unsigned int length) {
 void send_default_mqtt_message(int pump_duration_value) {
 
     // create channel  
-    String payload_path = "miranda/mqtt/" + String(ieeeAddr);      
+    String payload_path = "smarthome/mqtt/" + String(ieeeAddr);      
     char attributes[100];
     payload_path.toCharArray( path, 100 );    
  

@@ -17788,11 +17788,28 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card-tasks {
-  height: 330px;
+  height: 508px;
+}
+
+.card-tasks-programs {
+  min-height: 100px;
+}
+
+.card-tasks-music {
+  min-height: 330px;
+}
+
+.card-tasks-issues {
+  height: 290px;
 }
 
 .card-tasks .table-full-width {
-  max-height: 300px;
+  max-height: 270px;
+  position: relative;
+}
+
+.card-tasks-table .table-full-width {
+  max-height: 200px;
   position: relative;
 }
 
@@ -17833,3 +17850,9 @@ Copyright (c) 2015 Daniel Eden
 }
 
 /*# sourceMappingURL=dashboard-free.css.map */
+
+.vertical_center {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}

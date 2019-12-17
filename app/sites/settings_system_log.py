@@ -37,6 +37,7 @@ def settings_system_log():
     
     selected_type_event    = "selected"
     selected_type_status   = "selected"
+    selected_type_network  = "selected"    
     selected_type_database = "selected"    
     selected_type_success  = "selected"   
     selected_type_warning  = "selected"                                                      
@@ -49,13 +50,14 @@ def settings_system_log():
         session['error_download_log'] = None
 
     # create log types list
-    selected_log_types = ["EVENT", "STATUS", "DATABASE", "SUCCESS", "WARNING", "ERROR"]     
+    selected_log_types = ["EVENT", "STATUS", "NETWORK", "DATABASE", "SUCCESS", "WARNING", "ERROR"]     
    
     # change log selection 
     if request.form.get("get_log_output") != None:   
    
         selected_type_event    = ""
         selected_type_status   = ""
+        selected_type_network  = ""        
         selected_type_database = ""        
         selected_type_success  = ""   
         selected_type_warning  = ""                                                     
@@ -73,6 +75,9 @@ def settings_system_log():
             if element == "STATUS":
                 selected_type_status = "selected"
                 selected_log_types.append("STATUS")    
+            if element == "NETWORK":
+                selected_type_network = "selected"
+                selected_log_types.append("NETWORK")                    
             if element == "DATABASE":
                 selected_type_database = "selected"
                 selected_log_types.append("DATABASE")                               
@@ -120,6 +125,7 @@ def settings_system_log():
                                                     timestamp=timestamp,
                                                     selected_type_event=selected_type_event,
                                                     selected_type_status=selected_type_status,
+                                                    selected_type_network=selected_type_network,                                                    
                                                     selected_type_database=selected_type_database,                            
                                                     selected_type_success=selected_type_success,    
                                                     selected_type_warning=selected_type_warning,                                                      

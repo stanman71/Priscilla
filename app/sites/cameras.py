@@ -57,21 +57,23 @@ except:
     camera_6_url = None
     
 
+
 # generate frame by frame from camera
 def GENERATE_FRAME(camera_url):
     
-    try:
+    while True:
         # Capture frame-by-frame
-        success, frame = cv2.VideoCapture(camera_url).read()  
+        success, frame = cv2.VideoCapture(camera_url).read()       
 
-        ret, buffer = cv2.imencode('.jpg', frame)
-        frame = buffer.tobytes()
+        if not success:
+            break
+        else:
+            ret, buffer = cv2.imencode('.jpg', frame)
+            frame = buffer.tobytes()
+            yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
-    except:
-        pass
 
 
 @app.route('/cameras', methods=['GET', 'POST'])
