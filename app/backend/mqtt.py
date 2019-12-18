@@ -748,9 +748,11 @@ def CHECK_DEVICE_EXCEPTIONS(id, setting_string):
 
         if device.exception_option == "IP-Address" and exception_setting_string == setting_string:
 
-            if ping(device.exception_value_1, timeout=1) != None:    
-                return (device.name + " | Device running")
-            
+            for x in range(3):
+                if ping(device.exception_value_1, timeout=1) != None:    
+                    return (device.name + " | Device running")
+                    break
+    
             else:
                 return True
 

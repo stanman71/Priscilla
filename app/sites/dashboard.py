@@ -12,8 +12,6 @@ from app.backend.process_program import *
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
-from lms import find_server
-
 import os, shutil, re, cgi
 
 
@@ -178,14 +176,6 @@ def dashboard():
             if "set_spotify_play" in request.form:  
                 SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
 
-                device_name = sp.current_playback(market=None)['device']['name']
-
-                if "multiroom" in device_name:
-                    server = find_server()
-
-                    for player in server.players:
-                            player.set_volume(spotify_volume)       
-
                 if request.form.get("checkbox_shuffle") == "on":
                     SPOTIFY_CONTROL(spotify_token, "shuffle_true", spotify_volume)
                 else:
@@ -221,17 +211,7 @@ def dashboard():
 
             if "set_spotify_volume" in request.form: 
                 device_name = sp.current_playback(market=None)['device']['name']
-
-                if "multiroom" not in device_name:
-                    SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
-
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)  
-
-                    server  = find_server()
-
-                    for player in server.players:
-                            player.set_volume(spotify_volume)
+                SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
             
                 if request.form.get("checkbox_shuffle") == "on":
                     SPOTIFY_CONTROL(spotify_token, "shuffle_true", spotify_volume)
@@ -248,16 +228,6 @@ def dashboard():
                 playlist_uri      = request.form.get("set_spotify_playlist")
                 
                 SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, spotify_volume)
-
-                time.sleep(1)
-
-                device_name = sp.current_playback(market=None)['device']['name']
-
-                if "multiroom" in device_name:
-                    server  = find_server()
-
-                    for player in server.players:
-                            player.set_volume(spotify_volume)          
 
 
             # ############

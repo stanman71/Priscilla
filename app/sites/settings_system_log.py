@@ -137,7 +137,7 @@ def settings_system_log():
 
 
 # download system logfile
-@app.route('/settings/system_log/download/<path:filepath>')
+@app.route('/settings/system_log/download/system_log/<path:filepath>')
 @login_required
 @permission_required
 def download_system_log(filepath): 
@@ -146,6 +146,7 @@ def download_system_log(filepath):
     try:
         if os.path.isfile(path + filepath) is False:
             RESET_LOGFILE("log_system")  
+            
         WRITE_LOGFILE_SYSTEM("EVENT", "File | /logs/" + filepath + " | downloaded") 
 
     except Exception as e:

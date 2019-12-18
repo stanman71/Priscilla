@@ -698,26 +698,9 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                 spotify_volume = 50
             
             if task[1] == "play":
-
-                try: 
-                    # start current playlist and device
-                    spotify_device_id = sp.current_playback(market=None)['device']['id']
-
-                    SPOTIFY_CONTROL(spotify_token, "play", spotify_volume) 
-                    sp.shuffle(True, device_id=spotify_device_id)
-
-                except Exception as e:
-                    # start default playlist and device
-                    for device in sp.devices()["devices"]:  
-
-                        if "multiroom" in device["name"]:
-                            spotify_device_id = device["id"]
-                
-                            SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, "spotify:user:stanman71:playlist:4Qg6xrKdd3WJEEkvkEZrQd", "33")
-                            sp.shuffle(True, device_id=spotify_device_id)   
-                            break           
-
-
+                spotify_device_id = sp.current_playback(market=None)['device']['id']
+                sp.shuffle(True, device_id=spotify_device_id)
+                SPOTIFY_CONTROL(spotify_token, "play", spotify_volume) 
 
             if task[1] == "previous": 
                 SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
@@ -728,55 +711,17 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
             if task[1] == "stop": 
                 SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)      
 
-
-
             if task[1] == "turn_up":   
                 device_name = sp.current_playback(market=None)['device']['name']
-
-                if "multiroom" not in device_name:
-                    SPOTIFY_CONTROL(spotify_token, "turn_up", spotify_volume)
-
-                else:
-                    from lms import find_server
-                    server  = find_server()
-                    players = server.players
-
-                    for player in players:
-                        player.volume_up()
-                        player.volume_up()
+                SPOTIFY_CONTROL(spotify_token, "turn_up", spotify_volume)
 
             if task[1] == "turn_down":   
                 device_name = sp.current_playback(market=None)['device']['name']
-
-                if "multiroom" not in device_name:
-                    SPOTIFY_CONTROL(spotify_token, "turn_down", spotify_volume)                 
-
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)  
-
-                    from lms import find_server
-                    server  = find_server()
-                    players = server.players
-
-                    for player in players:
-                        player.volume_up()
-                        player.volume_up()
+                SPOTIFY_CONTROL(spotify_token, "turn_down", spotify_volume)                 
 
             if task[1].lower() == "volume":            
                 spotify_volume = int(task[2])
-                device_name    = sp.current_playback(market=None)['device']['name']
-
-                if "multiroom" not in device_name:
-                    SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
-
-                else:
-                    from lms import find_server
-                    server  = find_server()
-                    players = server.players
-
-                    for player in players:
-                        player.set_volume(spotify_volume)
-
+                SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
 
 
             # start playlist
@@ -795,7 +740,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                         spotify_device_id = device['id']  
                         continue      
 
-                    # multiroom
+                    # select multiroom group
                     if device_name.lower() == "multiroom":
                         if "multiroom" in device['name'].lower():
                             spotify_device_id = device['id'] 
@@ -815,7 +760,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                             spotify_device_id = device['id']  
                             continue      
 
-                        # multiroom
+                        # select multiroom group
                         if device_name.lower() == "multiroom":
                             if "multiroom" in device['name'].lower():
                                 spotify_device_id = device['id'] 
@@ -851,7 +796,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                         spotify_device_id = device['id']  
                         continue      
 
-                    # multiroom
+                    # select multiroom group
                     if device_name.lower() == "multiroom":
                         if "multiroom" in device['name'].lower():
                             spotify_device_id = device['id'] 
@@ -871,7 +816,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                             spotify_device_id = device['id']  
                             continue      
 
-                        # multiroom
+                        # select multiroom group
                         if device_name.lower() == "multiroom":
                             if "multiroom" in device['name'].lower():
                                 spotify_device_id = device['id'] 
@@ -902,7 +847,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                         spotify_device_id = device['id']  
                         continue      
 
-                    # multiroom
+                    # select multiroom group
                     if device_name.lower() == "multiroom":
                         if "multiroom" in device['name'].lower():
                             spotify_device_id = device['id'] 
@@ -922,7 +867,7 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                             spotify_device_id = device['id']  
                             continue      
 
-                        # multiroom
+                        # select multiroom group
                         if device_name.lower() == "multiroom":
                             if "multiroom" in device['name'].lower():
                                 spotify_device_id = device['id'] 

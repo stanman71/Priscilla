@@ -516,14 +516,16 @@
 
               <div class="card">       
                 <form method="POST"> 
-                  <div class="card-body">                                
-                    <a href="/settings/devices/topology/zigbee_topology.png?time={{ timestamp }}"><font color="lightblue"><b>DOWNLOAD ZIGBEE TOPOLOGY</b></font></a>
+                  <div class="card-body">    
+                    <a href="/settings/devices/download/zigbee2mqtt_log/log.txt?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE LOG</b></font></a> 
+                    <br>
+                    <a href="/settings/devices/download/zigbee2mqtt_topology/zigbee_topology.png?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE TOPOLOGY</b></font></a>   
                   </div>
                   <div class="card-footer">                  
                     <button type="submit" onclick="window.location.href='/settings/devices#zigbee'" name="update_zigbee_topology" class="btn btn-fill btn-info">UPDATE ZIGBEE TOPOLOGY</button>
                   </div>                
                 </form>
-              </div>                
+              </div>             
               
 {% endif %} 
 
@@ -558,7 +560,10 @@
             <div class="card">
               <div class="card-body">
                 <form method="POST"> 
-                  <a class="btn btn-default pull-left" href="/settings/devices/download/log_devices.csv?time={{ timestamp }}" role="button">DOWNLOAD DEVICE LOG</a>                
+                  <a class="btn btn-default" href="/settings/devices/download/mosquitto_log/mosquitto.log?time={{ timestamp }}" role="button">DOWNLOAD MQTT LOG</a>  
+                  <br>
+                  <br>
+                  <a class="btn btn-default" href="/settings/devices/download/devices_log/log_devices.csv?time={{ timestamp }}" role="button">DOWNLOAD DEVICE LOG</a>                
 
                   <!-- Button trigger modal -->
                   <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#reset_dialog">RESET DEVICE LOG</button>

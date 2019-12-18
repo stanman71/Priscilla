@@ -385,7 +385,7 @@ https://github.com/Koenkk/zigbee2mqtt
 - change file permissions
 
        >>> sudo chmod -v -R 070 /opt/zigbee2mqtt/data/configuration.yaml
-
+home
 - generate a network key
 
        >>> dd if=/dev/urandom bs=1 count=16 2>/dev/null | od -A n -t x1 | awk '{printf "["} {for(i = 1; i< NF; i++) {printf "0x%s, ", $i}} {printf "0x%s]\n", $NF}'
@@ -406,6 +406,7 @@ https://github.com/Koenkk/zigbee2mqtt
            
            advanced:
              network_key: [network_key]
+             log_directory: /home/pi/smarthome/data/logs/zigbee2mqtt/
 
 </br>
 

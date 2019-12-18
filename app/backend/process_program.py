@@ -115,7 +115,8 @@ def PROGRAM_THREAD(program_id):
                        
                     # line active ?
                     if line[0] == "True":
-                            
+
+
                         # #####
                         # break
                         # #####
@@ -124,7 +125,8 @@ def PROGRAM_THREAD(program_id):
                                 
                             line_content = line[1].split(" # ")
                             time.sleep(int(line_content[1]))          
-                            
+
+
                         # ######    
                         # device
                         # ######
@@ -190,7 +192,8 @@ def PROGRAM_THREAD(program_id):
                                 
                             except Exception as e:
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
-                           
+
+
                         # ###
                         # led 
                         # ###
@@ -223,7 +226,8 @@ def PROGRAM_THREAD(program_id):
 
                             except Exception as e:
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
-                                
+
+
                         # #######
                         # spotify
                         # #######
@@ -244,8 +248,8 @@ def PROGRAM_THREAD(program_id):
                                     
                                     sp       = spotipy.Spotify(auth=spotify_token)
                                     sp.trace = False
-                                    
-                                    
+
+
                                     # basic control
                                     
                                     try:
@@ -267,23 +271,12 @@ def PROGRAM_THREAD(program_id):
 
                                         if line_content[1].lower() == "volume":          
                                             spotify_volume = int(line_content[2])
-                                            device_name    = sp.current_playback(market=None)['device']['name']
-
-                                            if "multiroom" not in device_name:
-                                                SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
-
-                                            else:
-                                                from lms import find_server
-                                                server  = find_server()
-                                                players = server.players
-
-                                                for player in players:
-                                                    player.set_volume(spotify_volume)
+                                            SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
 
                                     except:
                                         pass
-                                        
-                                        
+                                                                         
+                                  
                                     # start playlist
                                             
                                     if line_content[1].lower() == "playlist": 
@@ -311,7 +304,7 @@ def PROGRAM_THREAD(program_id):
                                         
                                         SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume)
                                 
-                                
+                         
                                     # start track
                                             
                                     if line_content[1].lower() == "track": 
@@ -366,6 +359,7 @@ def PROGRAM_THREAD(program_id):
                             
                         line_number = line_number + 1
                         time.sleep(1)
+               
                     
             # ################     
             # repeat program ?

@@ -90,6 +90,8 @@ def settings_system():
     error_message_change_settings_services   = [] 
     success_message_change_settings_network  = False
     error_message_change_settings_network    = []
+    success_message_change_settings_spotify  = False       
+    error_message_change_settings_spotify    = []     
     success_message_change_settings_email    = False       
     error_message_change_settings_email      = [] 
     success_message_backup_database          = ""    
@@ -313,6 +315,20 @@ def settings_system():
                 success_message_change_settings_network = True  
 
 
+    """ ################## """
+    """  settings spotify  """
+    """ ################## """    
+    
+    # update email settings
+    if request.form.get("update_settings_spotify") != None:  
+
+        client_id = request.form.get("set_client_id")
+        client_secret = request.form.get("set_client_secret")
+
+        if SET_SPOTIFY_SETTINGS(client_id, client_secret):
+            success_message_change_settings_spotify = True
+
+
     """ ################ """
     """  settings email  """
     """ ################ """    
@@ -320,49 +336,14 @@ def settings_system():
     # update email settings
     if request.form.get("update_settings_email") != None:  
 
-        error_founded = False
+        server_address = request.form.get("set_server_address")      
+        server_port = request.form.get("set_server_port")
+        encoding = request.form.get("radio_encoding")
+        username = request.form.get("set_username")
+        password = request.form.get("set_password")
 
-        if request.form.get("set_server_address") != "":
-            server_address = request.form.get("set_server_address")
-        else:
-            error_message_change_settings_email.append("Ungültige Eingabe Server-Adresse || Keinen Wert angegeben") 
-            error_founded = True                  
-
-        if request.form.get("set_server_port") != "":
-
-            try:
-                if int(request.form.get("set_server_port")) in [25, 110, 143, 465, 587, 993, 995]:
-                    server_port = request.form.get("set_server_port")
-            except:
-                error_message_change_settings_email.append("Ungültige Eingabe Server-Port || Falscher Port")
-                error_founded = True     
-
-        else:
-            error_message_change_settings_email.append("Ungültige Eingabe Server-Port || Keinen Wert angegeben") 
-            error_founded = True       
-
-        if request.form.get("radio_encoding") != None:
-            encoding = request.form.get("radio_encoding")
-        else:
-            error_message_change_settings_email.append("Ungültige Eingabe Verschlüsselung || Keinen Wert angegeben") 
-            error_founded = True     
-
-        if request.form.get("set_username") != "":
-            username = request.form.get("set_username")
-        else:
-            error_message_change_settings_email.append("Ungültige Eingabe Benutzername || Keinen Wert angegeben") 
-            error_founded = True     
-
-        if request.form.get("set_password") != "":
-            password = request.form.get("set_password")
-        else:
-            error_message_change_settings_email.append("Ungültige Eingabe Passwort || Keinen Wert angegeben") 
-            error_founded = True                 
-
-        if error_founded == False:
-
-            if SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password):
-                success_message_change_settings_email = True
+        if SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password):
+            success_message_change_settings_email = True
 
 
     # test email settings
@@ -388,6 +369,7 @@ def settings_system():
     lan_gateway       = GET_HOST_NETWORK().lan_gateway
 
     system_services   = GET_SYSTEM_SERVICES()     
+    spotify_settings  = GET_SPOTIFY_SETTINGS()
     email_settings    = GET_EMAIL_SETTINGS()
     list_backup_files = GET_BACKUP_FILES()
 
@@ -400,6 +382,8 @@ def settings_system():
                                                     error_message_change_settings_services=error_message_change_settings_services,
                                                     success_message_change_settings_network=success_message_change_settings_network,                             
                                                     error_message_change_settings_network=error_message_change_settings_network, 
+                                                    success_message_change_settings_spotify=success_message_change_settings_spotify,       
+                                                    error_message_change_settings_spotify=error_message_change_settings_spotify,
                                                     success_message_change_settings_email=success_message_change_settings_email,                                                       
                                                     error_message_change_settings_email=error_message_change_settings_email,
                                                     message_test_settings_email=message_test_settings_email, 
@@ -410,6 +394,7 @@ def settings_system():
                                                     lan_ip_address=lan_ip_address,
                                                     lan_gateway=lan_gateway,  
                                                     system_services=system_services,
+                                                    spotify_settings=spotify_settings,
                                                     email_settings=email_settings,                                            
                                                     list_backup_files=list_backup_files,                    
                                                     ) 

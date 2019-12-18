@@ -280,12 +280,17 @@ class Sensordata_Jobs(db.Model):
     sensor_key      = db.Column(db.String(50)) 
     always_active   = db.Column(db.String(50))
 
-class Speechcontrol_Settings(db.Model):
-    __tablename__ = 'speechcontrol_settings'
-    id               = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    option_pause     = db.Column(db.String(50), server_default=("False"))       
-    default_playlist = db.Column(db.String(50))   
-    default_player   = db.Column(db.String(50))   
+class Spotify_Settings(db.Model):
+    __tablename__ = 'spotify_settings'
+    id                    = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    client_id             = db.Column(db.String(50))
+    client_secret         = db.Column(db.String(50))   
+    refresh_token         = db.Column(db.String(50))   
+    default_device_id     = db.Column(db.String(50))   
+    default_device_name   = db.Column(db.String(50))       
+    default_playlist_uri  = db.Column(db.String(50))   
+    default_playlist_name = db.Column(db.String(50))   
+    default_volume        = db.Column(db.Integer, server_default=("0"))
 
 class System_Services(db.Model):
     __tablename__ = 'system_services'
@@ -382,6 +387,17 @@ if backup_database_founded == False:
     db.session.add(scheduler_task_backup_database)
     db.session.commit()
     
+# #######
+# spotify
+# #######
+
+if Spotify_Settings.query.filter_by().first() == None:
+    spotify_settings = Spotify_Settings(
+        id = 1,
+    )
+    db.session.add(spotify_settings)
+    db.session.commit()
+
 # ###############
 # system services
 # ###############
@@ -1093,7 +1109,7 @@ def GET_EMAIL_SETTINGS():
 def GET_EMAIL_ADDRESSES(address_type): 
     if address_type == "TEST":
         mail_list = []
-        mail_list.append(eMail.query.filter_by().first().name)
+        mail_list.append(eMail.query.filter_by().first().username)
         return mail_list
 
     if address_type == "NOTIFICATION":
@@ -2852,31 +2868,66 @@ def DELETE_SENSORDATA_JOB(id):
     return True
 
 
-""" ################## """
-""" ################## """
-"""    speechcontrol   """
-""" ################## """
-""" ################## """
+""" ################### """
+""" ################### """
+"""       spotitfy      """
+""" ################### """
+""" ################### """
 
-def GET_SPEECHCONTROL_SETTINGS():
-    return Speechcontrol_Settings.query.first()    
+    
+def GET_SPOTIFY_SETTINGS():
+    return Spotify_Settings.query.filter_by().first()
 
 
-def SET_SPEECHCONTROL_SETTINGS(option_pause, default_playlist, default_player):
-                             
-    entry = Speechcontrol_Settings.query.filter_by().first()
+def SET_SPOTIFY_SETTINGS(client_id, client_secret):
+    entry = Spotify_Settings.query.filter_by().first()
 
     # values changed ?
-    if (entry.option_pause != option_pause or entry.default_playlist != default_playlist or entry.default_player != default_player):
+    if (entry.client_id != client_id or entry.client_secret != client_secret):    
 
-        entry.option_pause     = option_pause    
-        entry.default_playlist = default_playlist  
-        entry.default_player   = default_player          
-        db.session.commit()   
+        entry.client_id     = client_id
+        entry.client_secret = client_secret   
+        db.session.commit()
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Speechcontrol | Settings changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Spotify | Settings changed") 
         return True
- 
+
+
+def GET_SPOTIFY_REFRESH_TOKEN():
+    return Spotify_Settings.query.filter_by().first().refresh_token
+
+
+def SET_SPOTIFY_REFRESH_TOKEN(refresh_token):
+    entry = Spotify_Settings.query.filter_by().first()
+
+    # values changed ?
+    if (entry.refresh_token != refresh_token):    
+
+        entry.refresh_token = refresh_token
+        db.session.commit()
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Spotify | Token changed") 
+        return True
+
+
+def SET_SPOTIFY_DEFAULT_SETTINGS(default_device_id, default_device_name, default_playlist_uri, default_playlist_name, default_volume):
+    entry = Spotify_Settings.query.filter_by().first()
+
+    # values changed ?
+    if (entry.default_device_id != default_device_id or entry.default_device_name != default_device_name or
+        entry.default_playlist_uri != default_playlist_uri or entry.default_playlist_name != default_playlist_name or
+        entry.default_volume != default_volume):    
+
+        entry.default_device_id     = default_device_id
+        entry.default_device_name   = default_device_name
+        entry.default_playlist_uri  = default_playlist_uri
+        entry.default_playlist_name = default_playlist_name
+        entry.default_volume        = default_volume        
+        db.session.commit()
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Spotify | Default Settings changed") 
+        return True
+
 
 """ ################## """
 """ ################## """

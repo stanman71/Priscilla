@@ -997,20 +997,7 @@ def SCHEDULER_TASK(task_object):
 
                   if task[1].lower() == "volume":            
                      spotify_volume = int(task[2])
-                     device_name    = sp.current_playback(market=None)['device']['name']
-
-                     if "multiroom" not in device_name:
-                        SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
-
-                     else:
-                        SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)  
-
-                        from lms import find_server
-                        server  = find_server()
-                        players = server.players
-
-                        for player in players:
-                              player.set_volume(spotify_volume)
+                     SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
 
                except:
                   pass
@@ -1029,14 +1016,14 @@ def SCHEDULER_TASK(task_object):
 
                      # spotify client
                      if device['name'].lower() == device_name.lower():
-                           spotify_device_id = device['id']  
-                           continue      
+                        spotify_device_id = device['id']  
+                        continue      
 
-                     # multiroom
+                     # select multiroom group
                      if device_name.lower() == "multiroom":
-                           if "multiroom" in device['name'].lower():
-                              spotify_device_id = device['id'] 
-                              continue    
+                        if "multiroom" in device['name'].lower():
+                           spotify_device_id = device['id'] 
+                           continue    
 
                   # if device not founded, reset raspotify on client music               
                   if spotify_device_id == 0:
@@ -1052,7 +1039,7 @@ def SCHEDULER_TASK(task_object):
                               spotify_device_id = device['id']  
                               continue      
 
-                           # multiroom
+                           # select multiroom group
                            if device_name.lower() == "multiroom":
                               if "multiroom" in device['name'].lower():
                                  spotify_device_id = device['id'] 
@@ -1089,7 +1076,7 @@ def SCHEDULER_TASK(task_object):
                            spotify_device_id = device['id']  
                            continue      
 
-                     # multiroom
+                     # select multiroom group
                      if device_name.lower() == "multiroom":
                            if "multiroom" in device['name'].lower():
                               spotify_device_id = device['id'] 
@@ -1109,7 +1096,7 @@ def SCHEDULER_TASK(task_object):
                               spotify_device_id = device['id']  
                               continue      
 
-                           # multiroom
+                           # select multiroom group
                            if device_name.lower() == "multiroom":
                               if "multiroom" in device['name'].lower():
                                  spotify_device_id = device['id'] 
@@ -1140,7 +1127,7 @@ def SCHEDULER_TASK(task_object):
                            spotify_device_id = device['id']  
                            continue      
 
-                     # multiroom
+                     # select multiroom group
                      if device_name.lower() == "multiroom":
                            if "multiroom" in device['name'].lower():
                               spotify_device_id = device['id'] 
@@ -1160,7 +1147,7 @@ def SCHEDULER_TASK(task_object):
                               spotify_device_id = device['id']  
                               continue      
 
-                           # multiroom
+                           # select multiroom group
                            if device_name.lower() == "multiroom":
                               if "multiroom" in device['name'].lower():
                                  spotify_device_id = device['id'] 
@@ -1174,7 +1161,6 @@ def SCHEDULER_TASK(task_object):
                   
                   SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
 
-      
          else:
                WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | No Spotify Token founded")   
 

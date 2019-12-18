@@ -662,13 +662,27 @@ def remove_device(ieeeAddr):
     except Exception as e:
         session['delete_device_error'] = device_name + " || Error | + " + str(e)            
         return redirect(url_for('settings_devices'))        
-     
-  
-# download network topology 
-@app.route('/settings/devices/topology/<path:filepath>')
+
+
+ # download zigbee2mqtt log
+@app.route('/settings/devices/download/zigbee2mqtt_log/<path:filepath>')
 @login_required
 @permission_required
-def download_devices_topology(filepath): 
+def download_zigbee2mqtt_log(filepath): 
+    path = GET_PATH() + "/data/logs/zigbee2mqtt/"
+    
+    if os.path.isfile(path + filepath) == False:
+        return redirect(url_for('settings_devices'))
+    
+    else:
+        return send_from_directory(path, filepath)
+
+
+# download zigbee2mqtt topology 
+@app.route('/settings/devices/download/zigbee2mqtt_topology/<path:filepath>')
+@login_required
+@permission_required
+def download_zigbee2mqtt_topology(filepath): 
     path = GET_PATH() + "/app/static/temp/"
     
     if os.path.isfile(path + filepath) == False:
@@ -678,8 +692,22 @@ def download_devices_topology(filepath):
         return send_from_directory(path, filepath)
 
   
+# download mosquitto log
+@app.route('/settings/devices/download/mosquitto_log/<path:filepath>')
+@login_required
+@permission_required
+def download_mosquitto_log(filepath): 
+    path = "/var/log/mosquitto/"
+    
+    if os.path.isfile(path + filepath) == False:
+        return redirect(url_for('settings_devices'))
+    
+    else:
+        return send_from_directory(path, filepath)
+
+
 # download devices logfile
-@app.route('/settings/devices/download/<path:filepath>')
+@app.route('/settings/devices/download/devices_log/<path:filepath>')
 @login_required
 @permission_required
 def download_devices_logfile(filepath): 

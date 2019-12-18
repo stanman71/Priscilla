@@ -710,6 +710,12 @@
 #volume_slider_music_player .slider-handle {
 	background: black;
 }
+#volume_slider_music_default {
+	width: 200px;
+}
+#volume_slider_music_default .slider-handle {
+	background: black;
+}
 #volume_slider_music_playlist {
 	width: 200px;
 }

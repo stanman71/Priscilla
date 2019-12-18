@@ -36,8 +36,6 @@ def permission_required(f):
     return wrap
 
 
-forwarding_site_global = ""
-
 list_search_track_results = ""
 list_search_album_results = ""
 
@@ -55,6 +53,7 @@ def music():
     error_message_spotify                        = ""
     success_message_change_settings_client_music = []
     error_message_change_settings_client_music   = [] 
+    success_message_change_default_settings      = False
 
     track_name   = ""
     track_artist = ""
@@ -83,14 +82,6 @@ def music():
 
             if "set_spotify_play" in request.form:  
                 SPOTIFY_CONTROL(spotify_token, "play", player_volume)       
-
-                device_name = sp.current_playback(market=None)['device']['name']
-
-                if "multiroom" in device_name:
-                    server = find_server()
-
-                    for player in server.players:
-                            player.set_volume(player_volume)       
 
                 if request.form.get("checkbox_shuffle") == "on":
                     SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
@@ -127,18 +118,8 @@ def music():
 
             if "set_spotify_volume" in request.form: 
                 device_name = sp.current_playback(market=None)['device']['name']
-
-                if "multiroom" not in device_name:
-                    SPOTIFY_CONTROL(spotify_token, "volume", player_volume)                  
-
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "volume", player_volume)  
-
-                    server  = find_server()
-
-                    for player in server.players:
-                            player.set_volume(player_volume)
-            
+                SPOTIFY_CONTROL(spotify_token, "volume", player_volume)                  
+      
                 if request.form.get("checkbox_shuffle") == "on":
                     SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
                 else:
@@ -155,16 +136,6 @@ def music():
                 playlist_volume   = request.form.get("set_spotify_playlist_volume")
                 
                 SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume)
-
-                time.sleep(1)
-
-                device_name = sp.current_playback(market=None)['device']['name']
-
-                if "multiroom" in device_name:
-                    server  = find_server()
-
-                    for player in server.players:
-                            player.set_volume(playlist_volume)          
 
 
             # ############
@@ -193,16 +164,6 @@ def music():
                 
                 SPOTIFY_START_TRACK(spotify_token, spotify_device_id, track_uri, track_volume)
 
-                time.sleep(1)
-
-                device_name = sp.current_playback(market=None)['device']['name']
-
-                if "multiroom" in device_name:
-                    server  = find_server()
-
-                    for player in server.players:
-                            player.set_volume(track_volume)      
-
 
             # ############
             # search album
@@ -230,24 +191,14 @@ def music():
                 
                 SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
     
-                time.sleep(1)
-
-                device_name = sp.current_playback(market=None)['device']['name']
-
-                if "multiroom" in device_name:
-                    server  = find_server()
-
-                    for player in server.players:
-                            player.set_volume(album_volume)          
-
-
+ 
             # ############
             # account data
             # ############
                      
-            spotify_user      = sp.current_user()["display_name"]   
-            spotify_devices   = sp.devices()["devices"]        
-            spotify_playlists = sp.current_user_playlists(limit=20)["items"]    
+            spotify_user           = sp.current_user()["display_name"]   
+            list_spotify_devices   = sp.devices()["devices"]        
+            list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]    
 
 
             # player show ?
@@ -270,19 +221,51 @@ def music():
             SEND_EMAIL("ERROR", "Spotify | " + str(e)) 
             
             spotify_user = ""
-            spotify_playlists = ""
-            spotify_devices = ""
+            list_spotify_playlists = ""
+            list_spotify_devices = ""
             volume = 50         
             shuffle = "False"
 
 
     # not logged in
     else:     
-        spotify_user      = ""
-        spotify_playlists = ""
-        spotify_devices   = ""
-        volume            = 50     
-        shuffle           = "False"
+        spotify_user           = ""
+        list_spotify_playlists = ""
+        list_spotify_devices   = ""
+        volume                 = 50     
+        shuffle                = "False"
+
+
+    """ ################## """
+    """  default settings  """
+    """ ################## """   
+
+    if request.form.get("save_default_settings") != None:
+
+        spotify_default_device_id   = request.form.get("set_spotify_default_device_id") 
+        spotify_default_device_name = ""
+
+        for device in list_spotify_devices:    
+            if device['id'] == spotify_default_device_id:
+                spotify_default_device_name = device['name']
+
+
+        spotify_default_playlist_uri  = request.form.get("set_spotify_default_playlist_uri") 
+        spotify_default_playlist_name = ""
+
+        for playlist in list_spotify_playlists:    
+            if playlist['uri'] == spotify_default_playlist_uri:
+                spotify_default_playlist_name = playlist['name']      
+
+        spotify_default_volume = request.form.get("set_spotify_default_volume") 
+
+        if SET_SPOTIFY_DEFAULT_SETTINGS(spotify_default_device_id, 
+                                        spotify_default_device_name, 
+                                        spotify_default_playlist_uri, 
+                                        spotify_default_playlist_name, 
+                                        spotify_default_volume):
+
+            success_message_change_default_settings = True  
 
 
     """ #################### """
@@ -367,9 +350,9 @@ def music():
         error_message_change_settings_client_music.append("Keine MQTT-Verbindung")
 
     list_client_music = GET_ALL_DEVICES("client_music")
+    default_settings  = GET_SPOTIFY_SETTINGS()
 
     data = {'navigation': 'music'}    
-
 
     return render_template('layouts/default.html',
                             data=data,    
@@ -379,9 +362,10 @@ def music():
                                                     error_message_spotify=error_message_spotify,
                                                     success_message_change_settings_client_music=success_message_change_settings_client_music,
                                                     error_message_change_settings_client_music=error_message_change_settings_client_music, 
+                                                    success_message_change_default_settings=success_message_change_default_settings,
                                                     spotify_user=spotify_user,  
-                                                    spotify_playlists=spotify_playlists,
-                                                    spotify_devices=spotify_devices, 
+                                                    list_spotify_playlists=list_spotify_playlists,
+                                                    list_spotify_devices=list_spotify_devices, 
                                                     list_search_track_results=list_search_track_results, 
                                                     list_search_album_results=list_search_album_results,     
                                                     show_player=show_player,
@@ -391,6 +375,7 @@ def music():
                                                     album_artist=album_artist,   
                                                     volume=volume, 
                                                     shuffle=shuffle,
+                                                    default_settings=default_settings,
                                                     list_client_music=list_client_music,
                                                     collapse_search_track_open=collapse_search_track_open,   
                                                     collapse_search_album_open=collapse_search_album_open,     
@@ -398,42 +383,25 @@ def music():
                            )
 
 
-@app.route("/music/login/url_target/<string:forwarding_site>")
+@app.route("/music/spotify/login")
 @login_required
 @permission_required
-def spotify_login(forwarding_site):
-    global forwarding_site_global
-    
-    forwarding_site_global = forwarding_site
-    
-    return redirect(GET_SPOTIFY_AUTHORIZATION())  
+def spotify_login():
+    return redirect(GET_SPOTIFY_AUTHORIZATION()) 
  
  
 @app.route("/music/spotify/token")
 @login_required
 @permission_required
 def spotify_token():
-    global forwarding_site_global    
-    
     GENERATE_SPOTIFY_TOKEN(request.args['code'])
-    
-    if forwarding_site_global == "dashboard":
-        return redirect("http://" + GET_HOST_NETWORK().lan_ip_address + ":80" + "/dashboard#spotify")
-        
-    if forwarding_site_global == "spotify":
-        return redirect(url_for('music'))
+    return redirect(url_for('music'))
       
 
-@app.route("/music/logout/url_target/<string:forwarding_site>")
+@app.route("/music/spotify/logout")
 @login_required
 @permission_required
-def spotify_logout(forwarding_site):
-
+def spotify_logout():
     DELETE_SPOTIFY_TOKEN()
     WRITE_LOGFILE_SYSTEM("SUCCESS", "Spotify | Logout") 
-        
-    if forwarding_site == "dashboard":
-        return redirect("http://" + GET_HOST_NETWORK().lan_ip_address + ":80" + "/dashboard#spotify")
-        
-    if forwarding_site == "spotify":
-        return redirect(url_for('music'))      
+    return redirect(url_for('music'))      

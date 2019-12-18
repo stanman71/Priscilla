@@ -248,6 +248,64 @@
             </div>
 
 
+<!---------------------->
+<!-- SETTINGS SPOTIFY -->
+<!---------------------->
+
+<section id="spotify"></section>  
+
+<!-- success message change settings spotify -->
+
+{% if success_message_change_settings_spotify == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Einstellungen erfolgreich geändert</span>
+  </div>
+{% endif %}  
+
+<!-- error message change settings spotify -->
+
+{% if error_message_change_settings_spotify != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_change_settings_spotify %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="title">Spotify</h5>
+              </div>            
+              <form method="POST">          
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Client ID</label>
+                        <input type="text" class="form-control" name="set_client_id" value="{% if spotify_settings.client_id != None %}{{ spotify_settings.client_id }}{% endif %}" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Client Secret</label>
+                        <input type="password" class="form-control" name="set_client_secret" value="{% if spotify_settings.client_secret != None %}{{ spotify_settings.client_secret }}{% endif %}" />
+                      </div>
+                    </div>
+                  </div>                                
+                </div>
+                <div class="card-footer">
+                  <button type="submit" onclick="window.location.href='/settings/system#spotify'" name="update_settings_spotify" class="btn btn-fill btn-primary">SAVE</button>
+                </div>
+              </form>
+            </div>
+
+
 <!-------------------->
 <!-- SETTINGS EMAIL -->
 <!-------------------->
