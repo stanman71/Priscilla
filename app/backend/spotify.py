@@ -203,8 +203,7 @@ def REFRESH_SPOTIFY_TOKEN(first_delay):
                 pass
                 
             current_timer = 0
-            
-                
+                       
         else:
             current_timer = current_timer + 1
             time.sleep(1)

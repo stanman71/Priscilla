@@ -92,12 +92,15 @@ def cameras():
     success_message_add_camera      = False       
     error_message_add_camera        = []
 
+    selected_camera = ""
+
     # default camera selection
-    for camera in GET_ALL_CAMERAS():
-        selected_camera = "camera_" + str(camera.id)
-        break
-
-
+    if GET_ALL_CAMERAS() != None:
+        for camera in GET_ALL_CAMERAS():
+            selected_camera = "camera_" + str(camera.id)
+            break
+    
+    
     page_title       = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
 

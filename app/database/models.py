@@ -355,15 +355,14 @@ if Host.query.filter_by().first() == None:
 # scheduler tasks
 # ###############
 
-update_devices_founded       = False
-backup_database_founded      = False
+update_devices_founded  = False
+backup_database_founded = False
 
 for task in Scheduler_Tasks.query.all():
     if task.name.lower() == "update_devices":
         update_devices_founded = True
     if task.name.lower() == "backup_database":
         backup_database_founded = True
-
 
 if update_devices_founded == False:
     scheduler_task_update_devices = Scheduler_Tasks(
