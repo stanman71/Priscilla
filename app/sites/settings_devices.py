@@ -87,14 +87,9 @@ def settings_devices():
                 if request.form.get("set_name_" + str(i)) != "":
                                       
                     device     = GET_DEVICE_BY_ID(i)
-                    input_name = request.form.get("set_name_" + str(i))
+                    input_name = request.form.get("set_name_" + str(i)).strip()  
 
-                    # check spaces at the end
-                    if input_name != input_name.strip():
-                        error_message_change_settings_devices.append(device.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
-                        error_founded = True                      
-
-                    elif input_name != device.name:  
+                    if input_name != device.name:  
 
                         # name already exist ?         
                         if not GET_DEVICE_BY_NAME(input_name):  
@@ -250,9 +245,9 @@ def settings_devices():
                     elif exception_option == "IP-Address":
                         
                         # set device exception value 1
-                        exception_value_1 = request.form.get("set_exception_value_1_" + str(i))
-                        
-                        if exception_value_1 == "" or exception_value_1 == None:
+                        try:
+                            exception_value_1 = request.form.get("set_exception_value_1_" + str(i)).strip()  
+                        except:
                             exception_value_1 = "None" 
                                 
                         exception_sensor_ieeeAddr     = "None"

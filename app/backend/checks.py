@@ -111,223 +111,266 @@ def CHECK_PROGRAM_TASKS(program_id):
 
          # line active ?
          if line[0] == "True":
-             
-             # break
+         
+            
+            # #####
+            # break
+            # #####
+                  
+            if "break" in line[1]:     
                      
-             if "break" in line[1]:     
-                      
-                try: 
-                   line_content = line[1].split(" # ")
-                    
-                   # check delay value            
-                   if line_content[1].isdigit():
-                       continue
-                   else:
-                      list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> fehlende Einstellung >>> Sekunden")
-                      
-                except:
-                   list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
+               try: 
+                  line_content = line[1].split(" # ")
+                  
+                  # check delay value            
+                  if line_content[1].isdigit():
+                     continue
+                  else:
+                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> fehlende Einstellung >>> Sekunden")
+                     
+               except:
+                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
 
-             #  device
 
-             elif "device" in line[1]:
-
-                try:
-                   line_content = line[1].split(" # ")
-
-                   device_name = line_content[1]    
-                   device      = ""
-                   device      = GET_DEVICE_BY_NAME(device_name)
-                         
-                   # check device
-                   if device != None:
-                      
-                      if not "led" in device.device_type:
-           
-                         program_setting_string = line_content[2]
-                         program_setting_string = program_setting_string.replace(" ", "")
-
-                         # convert string to json-format
-                         program_setting_json = program_setting_string.replace(':', '":"')
-                         program_setting_json = program_setting_json.replace(',', '","')
-                         program_setting_json = '{"' + str(program_setting_json) + '"}'    
-
-                         setting_valid = False
-
-                         # check device command 
-                         for command in device.commands.split(" "):   
-                            if command == program_setting_json:
-                               setting_valid = True
-
-                         if setting_valid == False:
-                            list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Befehl ungültig >>> " + program_setting_string)
-
-                      else:        
-                         list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Gerät ist eine LED")
-
-                   else:
-                      list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Gerät nicht gefunden >>> " + device_name)
-                      
-                except:
-                   list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
-
- 
-             #  led         
+            # ###
+            # led     
+            # ###    
+            
+            elif "scene" in line[1]:
                
-             elif "scene" in line[1]:
-                
-                try:        
-                   line_content = line[1].split(" # ")
+               try:        
+                  line_content = line[1].split(" # ")
 
-                   try:
-                      # check led name
-                      group_name = line_content[1]    
-                      
-                      if GET_LED_GROUP_BY_NAME(group_name) != None:
-                         
-                         try:
-                         
-                             if line_content[2] != "off" and line_content[2] != "OFF":
-                                
-                                 if GET_LED_SCENE_BY_NAME(line_content[2]) == None: 
-                                    list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Szene nicht gefunden >>> " + line_content[2])
-
-                                 if not line_content[3].isdigit() or not (0 <= int(line_content[3]) <= 100):
-                                    list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Helligkeitswert")
-                                    
-                             elif line_content[2] == "off" or line_content[2] == "OFF":
-                                 pass
-                                
-                             else:
-                                 list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")                            
-        
-                         except:
-                            list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
-                          
-                      else:        
-                         list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> LED Gruppe nicht gefunden >>> " + group_name)
-
-                   except:
-                      list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> LED Gruppe nicht gefunden >>> " + group_name)
-                      
-                except:
-                   list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
-
-
-             #  spotify 
-             
-             elif "spotify" in line[1]:
-                
-                try:        
-                   line_content = line[1].split(" # ")       
-                   
-                   if (line_content[1].lower() != "play" and
-                       line_content[1].lower() != "previous" and
-                       line_content[1].lower() != "next" and
-                       line_content[1].lower() != "stop" and
-                       line_content[1].lower() != "volume" and
-                       line_content[1].lower() != "playlist" and
-                       line_content[1].lower() != "track" and
-                       line_content[1].lower() != "album"):
-
-                       list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Befehl")
-
-                   # volume
-
-                   if line_content[1].lower() == "volume":
-                      
-                      try:
-                         if not line_content[2].isdigit():
-                            list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+                  try:
+                     # check led name
+                     group_name = line_content[1]    
+                     
+                     if GET_LED_GROUP_BY_NAME(group_name) != None:
                         
-                         else:
-                            if not 0 <= int(line_content[2]) <= 100:
-                               list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
-                               
-                      except:
-                         list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+                        try:
+                        
+                           if line_content[2] != "off" and line_content[2] != "OFF":
+                              
+                              if GET_LED_SCENE_BY_NAME(line_content[2]) == None: 
+                                 list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Szene nicht gefunden >>> " + line_content[2])
 
-                   # playlist
-       
-                   if line_content[1].lower() == "playlist": 
-                      
-                      try:
-                         device_name   = line_content[2]                                    
-                         playlist_name = line_content[3]
-                         
-                         try:
-                            if not line_content[4].isdigit():
-                               list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
-                            
-                            else:
-                               if not 0 <= int(line_content[4]) <= 100:
-                                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
+                              if not line_content[3].isdigit() or not (0 <= int(line_content[3]) <= 100):
+                                 list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Helligkeitswert")
+                                 
+                           elif line_content[2] == "off" or line_content[2] == "OFF":
+                              pass
+                              
+                           else:
+                              list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")                            
+      
+                        except:
+                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
+                        
+                     else:        
+                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> LED Gruppe nicht gefunden >>> " + group_name)
 
-                         except:
-                            list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
-
-                      except:
-                         list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Unvollständige Angaben")
-
-                   # track
-                         
-                   if line_content[1].lower() == "track": 
-                      
-                      try:
-                         device_name  = line_content[2]                                    
-                         track_title  = line_content[3]
-                         track_artist = line_content[4]
-                         
-                         try:
-                            if not line_content[5].isdigit():
-                               list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
-
-                            else:
-                               if not 0 <= int(line_content[5]) <= 100:
-                                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
-
-                         except:
-                            list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
-
-                      except:
-                         list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Unvollständige Angaben")
-
-                   # album
-
-                   if line_content[1].lower() == "album": 
-                      
-                      try:
-                         device_name  = line_content[2]                                    
-                         album_title  = line_content[3]
-                         album_artist = line_content[4]
-                         
-                         try:
-                            if not line_content[5].isdigit():
-                               list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
-
-                            else:
-                               if not 0 <= int(line_content[5]) <= 100:
-                                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
-
-                         except:
-                            list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
-
-                      except:
-                         list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Unvollständige Angaben")
-
-                except:
-                   list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
+                  except:
+                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> LED Gruppe nicht gefunden >>> " + group_name)
+                     
+               except:
+                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
 
 
-            # None
+            # ######
+            # device
+            # ######
 
-             elif line[1] == "None":
-                 pass
+            elif "device" in line[1]:
 
-             #  other
+               try:
+                  line_content = line[1].split(" # ")
 
-             elif line[1] != "":
-                list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Eingabetyp nicht gefunden")
+                  device_name = line_content[1]    
+                  device      = ""
+                  device      = GET_DEVICE_BY_NAME(device_name)
+                        
+                  # check device
+                  if device != None:
+                     
+                     if not "led" in device.device_type:
+         
+                        program_setting_string = line_content[2]
+                        program_setting_string = program_setting_string.replace(" ", "")
+
+                        # convert string to json-format
+                        program_setting_json = program_setting_string.replace(':', '":"')
+                        program_setting_json = program_setting_json.replace(',', '","')
+                        program_setting_json = '{"' + str(program_setting_json) + '"}'    
+
+                        setting_valid = False
+
+                        # check device command 
+                        for command in device.commands.split(" "):   
+                           if command == program_setting_json:
+                              setting_valid = True
+
+                        if setting_valid == False:
+                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Befehl ungültig >>> " + program_setting_string)
+
+                     else:        
+                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Gerät ist eine LED")
+
+                  else:
+                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Gerät nicht gefunden >>> " + device_name)
+                     
+               except:
+                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
+
+
+            # ###############
+            # watering_plants 
+            # ###############
+            
+            elif "watering_plants" in line[1]:
+
+               try:        
+                  line_content = line[1].split(" # ")     
+                  
+                  if line_content[1] not in ["1", "2", "3", "4", "5"] and line_content[1] != "all" and line_content[1] != "ALL":
+                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> keine gültige Gruppe angegeben")
+
+               except:        
+                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
+
+
+            # ##################
+            # request_sensordata
+            # ##################
+            
+            elif "request_sensordata" in line[1]:
+
+               try:        
+                  line_content = line[1].split(" # ")     
+
+                  if not GET_SENSORDATA_JOB_BY_NAME(line_content[1]):
+                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Job nicht vorhanden")
+
+               except:        
+                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
+
+
+            # #######
+            # spotify 
+            # #######
+            
+            elif "spotify" in line[1]:
+               
+               try:        
+                  line_content = line[1].split(" # ")       
+                  
+                  if (line_content[1].lower() != "play" and
+                     line_content[1].lower() != "previous" and
+                     line_content[1].lower() != "next" and
+                     line_content[1].lower() != "stop" and
+                     line_content[1].lower() != "volume" and
+                     line_content[1].lower() != "playlist" and
+                     line_content[1].lower() != "track" and
+                     line_content[1].lower() != "album"):
+
+                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Befehl")
+
+                  # volume
+
+                  if line_content[1].lower() == "volume":
+                     
+                     try:
+                        if not line_content[2].isdigit():
+                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+                     
+                        else:
+                           if not 0 <= int(line_content[2]) <= 100:
+                              list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
+                              
+                     except:
+                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+
+                  # playlist
+      
+                  if line_content[1].lower() == "playlist": 
+                     
+                     try:
+                        device_name   = line_content[2]                                    
+                        playlist_name = line_content[3]
+                        
+                        try:
+                           if not line_content[4].isdigit():
+                              list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+                           
+                           else:
+                              if not 0 <= int(line_content[4]) <= 100:
+                                 list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
+
+                        except:
+                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+
+                     except:
+                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Unvollständige Angaben")
+
+                  # track
+                        
+                  if line_content[1].lower() == "track": 
+                     
+                     try:
+                        device_name  = line_content[2]                                    
+                        track_title  = line_content[3]
+                        track_artist = line_content[4]
+                        
+                        try:
+                           if not line_content[5].isdigit():
+                              list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+
+                           else:
+                              if not 0 <= int(line_content[5]) <= 100:
+                                 list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
+
+                        except:
+                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+
+                     except:
+                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Unvollständige Angaben")
+
+                  # album
+
+                  if line_content[1].lower() == "album": 
+                     
+                     try:
+                        device_name  = line_content[2]                                    
+                        album_title  = line_content[3]
+                        album_artist = line_content[4]
+                        
+                        try:
+                           if not line_content[5].isdigit():
+                              list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+
+                           else:
+                              if not 0 <= int(line_content[5]) <= 100:
+                                 list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
+
+                        except:
+                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+
+                     except:
+                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Unvollständige Angaben")
+
+               except:
+                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
+
+         # ####
+         # None
+         # ####
+
+            elif line[1] == "None":
+               pass
+
+            #  other
+
+            elif line[1] != "":
+               list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Eingabetyp nicht gefunden")
              
    except:
       pass
@@ -529,6 +572,7 @@ def CHECK_TASKS(tasks, task_type):
    list_task_errors = []
 
    # controller
+   
    if task_type == "controller": 
 
       for controller in tasks:
@@ -608,6 +652,7 @@ def CHECK_TASKS(tasks, task_type):
                   list_task_errors.append(error)            
 
    # scheduler
+
    if task_type == "scheduler":
 
       for element in tasks:
@@ -629,6 +674,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
    try:
       
+
       # ###########
       # start_scene
       # ###########
@@ -740,7 +786,6 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # brightness dimmer
       # #################
       
-      
       if "brightness" in task and task_type == "controller":
          if " # " in task:
             task = task.split(" # ") 
@@ -777,7 +822,6 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # #######
       # led_off
       # #######
-      
       
       if "led_off" in task:
          if " # " in task:
@@ -867,7 +911,6 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # device
       # ######
       
-      
       if "device" in task and "update" not in task:
          if " # " in task:
             task = task.split(" # ") 
@@ -921,7 +964,6 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # program
       # #######
       
-      
       if "program" in task:
          if " # " in task:
             task = task.split(" # ") 
@@ -967,27 +1009,38 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # watering_plants
       # ###############
       
-      
-      if "watering_plants" in task and task_type == "scheduler":
+      if "watering_plants" in task:
          if " # " in task:
             task = task.split(" # ") 
             
             try:
                if task[1] not in ["1", "2", "3", "4", "5"] and task[1] != "all" and task[1] != "ALL":
-                  list_task_errors.append(name + " >>> keine gültige Gruppe angegeben")
+
+                  if task_type == "controller":
+                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> keine gültige Gruppe angegeben")
+                  else:
+                     list_task_errors.append(name + " >>> keine gültige Gruppe angegeben")
+                 
             except:
-               list_task_errors.append(name + " >>> keine gültige Gruppe angegeben")
+                  if task_type == "controller":
+                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Formatierung")
+                  else:
+                     list_task_errors.append(name + " >>> Ungültige Formatierung")
             
-         else:                
-            list_task_errors.append(name + " >>> Ungültige Formatierung")
+         else:        
+
+            if task_type == "controller":
+               list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Formatierung")
+            else:
+               list_task_errors.append(name + " >>> Ungültige Formatierung")
+        
          return list_task_errors
-         
+
 
       # ###############
       # backup_database  
       # ###############  
-      
-           
+       
       if task == "backup_database" and task_type == "scheduler":
          return list_task_errors
 
@@ -995,7 +1048,6 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # ##############
       # update_devices
       # ##############
-   
    
       if task == "update_devices" and task_type == "scheduler":
          return list_task_errors
@@ -1005,7 +1057,6 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # check_mqtt_connetion
       # ####################
       
-      
       if task == "check_mqtt_connetion" and task_type == "scheduler":
          return list_task_errors
 
@@ -1013,35 +1064,48 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # ##################
       # request_sensordata
       # ##################
-      
-      
-      if "request_sensordata" in task and task_type == "scheduler":
+        
+      if "request_sensordata" in task:
          if " # " in task:
             task = task.split(" # ")
 
             # check job name setting
-            try:          
+            try:     
+
                if GET_SENSORDATA_JOB_BY_NAME(task[1]):
                   return list_task_errors
 
                else:
-                  list_task_errors.append(name + " >>> Job nicht vorhanden >>> " + task[1])
+                  if task_type == "controller":
+                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> Job nicht vorhanden >>> " + task[1])
+                  else:
+                     list_task_errors.append(name + " >>> Job nicht vorhanden >>> " + task[1])
+
                   return list_task_errors   
 
             except:
-               list_task_errors.append(name + " >>> fehlende Einstellung >>> Job-Name") 
-               return list_task_errors
+
+                  if task_type == "controller":
+                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> Job-Name")
+                  else:
+                     list_task_errors.append(name + " >>> fehlende Einstellung >>> Job-Name") 
+
+                  return list_task_errors
 
          else:
-            list_task_errors.append(name + " >>> Ungültige Formatierung")
+
+            if task_type == "controller":
+               list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> Job-Name")
+            else:
+               list_task_errors.append(name + " >>> fehlende Einstellung >>> Job-Name") 
+
             return list_task_errors
 
 
       # #######
       # spotify     
       # #######
-      
-         
+        
       if "spotify" in task:
          if " # " in task:
             task = task.split(" # ")

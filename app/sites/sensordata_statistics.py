@@ -166,8 +166,8 @@ def sensordata_statistics():
 
 
         try:
-            devices    = request.form.get("set_devices")
-            sensors    = request.form.get("set_sensors")
+            devices    = request.form.get("set_devices").strip()  
+            sensors    = request.form.get("set_sensors").strip()  
             date_start = request.form.get("set_date_start")
             date_stop  = request.form.get("set_date_stop") 
 

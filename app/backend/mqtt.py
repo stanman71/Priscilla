@@ -408,7 +408,7 @@ def UPDATE_DEVICES(gateway):
                         SET_DEVICE_LAST_CONTACT(ieeeAddr)
                       
                     # update input values
-                    
+    
                     heapq.heappush(mqtt_message_queue, (20, ("smarthome/mqtt/" + ieeeAddr + "/get", "")))
                     time.sleep(1)
 
@@ -420,7 +420,7 @@ def UPDATE_DEVICES(gateway):
             if str(e) == "string index out of range":
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | Update") 
                 SEND_EMAIL("ERROR", "Network | MQTT | Update")                 
-                return ("Network | MQTT | Update | " + str(error))     
+                return ("Network | MQTT | Update | " + str(e))     
 
 
     if gateway == "zigbee2mqtt":

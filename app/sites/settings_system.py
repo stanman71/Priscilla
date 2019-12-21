@@ -259,7 +259,7 @@ def settings_system():
                 save_settings_lan = True
                         
                 if request.form.get("set_lan_ip_address") != "":
-                    new_lan_ip_address = request.form.get("set_lan_ip_address")
+                    new_lan_ip_address = request.form.get("set_lan_ip_address").strip()  
 
                     if new_lan_ip_address != lan_ip_address:
 
@@ -278,7 +278,7 @@ def settings_system():
                     error_message_change_settings_network.append("Netzwerk || Keine IP-Adresse angegeben") 
                     
                 if request.form.get("set_lan_gateway") != "":
-                    lan_gateway = request.form.get("set_lan_gateway")            
+                    lan_gateway = request.form.get("set_lan_gateway").strip()              
 
                     if CHECK_IP_ADDRESS(lan_gateway) == False:
                         error_message_change_settings_network.append("Netzwerk || Ungültiges Gateway angegeben")
@@ -322,8 +322,8 @@ def settings_system():
     # update email settings
     if request.form.get("update_settings_spotify") != None:  
 
-        client_id = request.form.get("set_client_id")
-        client_secret = request.form.get("set_client_secret")
+        client_id = request.form.get("set_client_id").strip()  
+        client_secret = request.form.get("set_client_secret").strip()  
 
         if SET_SPOTIFY_SETTINGS(client_id, client_secret):
             success_message_change_settings_spotify = True
@@ -336,11 +336,11 @@ def settings_system():
     # update email settings
     if request.form.get("update_settings_email") != None:  
 
-        server_address = request.form.get("set_server_address")      
-        server_port = request.form.get("set_server_port")
+        server_address = request.form.get("set_server_address").strip()        
+        server_port = request.form.get("set_server_port").strip()  
         encoding = request.form.get("radio_encoding")
-        username = request.form.get("set_username")
-        password = request.form.get("set_password")
+        username = request.form.get("set_username").strip()  
+        password = request.form.get("set_password").strip()  
 
         if SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password):
             success_message_change_settings_email = True

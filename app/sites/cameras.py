@@ -8,20 +8,23 @@ from app.database.models import *
 from app.common          import COMMON, STATUS
 from app.assets          import *
 
+from ping3 import ping
+
 import cv2
+
 
 # access rights
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        try:
-            if current_user.role == "user" or current_user.role == "administrator":
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('logout'))
-        except Exception as e:
-            print(e)
+        #try:
+        if current_user.role == "user" or current_user.role == "administrator":
+            return f(*args, **kwargs)
+        else:
             return redirect(url_for('logout'))
+        #except Exception as e:
+        #    print(e)
+        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -57,23 +60,27 @@ except:
     camera_6_url = None
     
 
-
 # generate frame by frame from camera
 def GENERATE_FRAME(camera_url):
-    
-    while True:
-        # Capture frame-by-frame
-        success, frame = cv2.VideoCapture(camera_url).read()       
+    try:   
+        camera_ip = camera_url.split("@")[1]
+        camera_ip = camera_ip.split(":")[0]
+    except:
+        camera_ip = ""
 
-        if not success:
-            break
-        else:
-            ret, buffer = cv2.imencode('.jpg', frame)
-            frame = buffer.tobytes()
-            yield (b'--frame\r\n'
-                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+    if ping(camera_ip, timeout=1) != None:  
 
+        while True:
+            # Capture frame-by-frame
+            success, frame = cv2.VideoCapture(camera_url).read()       
 
+            if not success:
+                break
+            else:
+                ret, buffer = cv2.imencode('.jpg', frame)
+                frame = buffer.tobytes()
+                yield (b'--frame\r\n'
+                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
 
 
 @app.route('/cameras', methods=['GET', 'POST'])
@@ -84,6 +91,11 @@ def cameras():
     error_message_change_settings   = []    
     success_message_add_camera      = False       
     error_message_add_camera        = []
+
+    # default camera selection
+    for camera in GET_ALL_CAMERAS():
+        selected_camera = "camera_" + str(camera.id)
+        break
 
 
     page_title       = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
@@ -100,6 +112,29 @@ def cameras():
         session['delete_camera_error'] = None       
 
 
+    """ ################## """
+    """  camera selection  """
+    """ ################## """   
+
+    if request.form.get("select_camera_1") != None: 
+        selected_camera = "camera_1"  
+
+    if request.form.get("select_camera_2") != None: 
+        selected_camera = "camera_2"  
+
+    if request.form.get("select_camera_3") != None: 
+        selected_camera = "camera_3"  
+
+    if request.form.get("select_camera_4") != None: 
+        selected_camera = "camera_4"   
+
+    if request.form.get("select_camera_5") != None: 
+        selected_camera = "camera_5"  
+
+    if request.form.get("select_camera_6") != None: 
+        selected_camera = "camera_6"  
+
+
     """ ############ """
     """  add camera  """
     """ ############ """   
@@ -108,7 +143,6 @@ def cameras():
         result = ADD_CAMERA()   
         if result != True: 
             error_message_add_camera.append(result)         
-
         else:       
             success_message_add_camera = True
 
@@ -130,7 +164,7 @@ def cameras():
                 # ############
 
                 camera    = GET_CAMERA_BY_ID(i)
-                input_name = request.form.get("set_name_" + str(i))                    
+                input_name = request.form.get("set_name_" + str(i)).strip()                    
 
                 # add new name
                 if ((input_name != "") and (GET_CAMERA_BY_NAME(input_name) == None)):
@@ -157,7 +191,7 @@ def cameras():
                 # url setting
                 # ###########
 
-                input_url = request.form.get("set_url_" + str(i))                    
+                input_url = request.form.get("set_url_" + str(i)).strip()                      
 
                 # add new url
                 if ((input_url != "") and (GET_CAMERA_BY_URL(input_url) == None)):
@@ -184,14 +218,14 @@ def cameras():
                 # credential setting
                 # ##################
 
-                user     = request.form.get("set_user_" + str(i))
-                password = request.form.get("set_password_" + str(i))
+                user     = request.form.get("set_user_" + str(i)).strip()  
+                password = request.form.get("set_password_" + str(i)).strip()  
 
 
                 # save settings
                 if error_founded == False: 
                     if SET_CAMERA_SETTINGS(i, name, url, user, password):
-                        success_message_change_settings.append(name + " || Einstellungen gespeichert") 
+                        success_message_change_settings.append(name + " || Einstellungen gespeichert || System muss neugestartet werden") 
 
 
     """ ############# """
@@ -238,6 +272,7 @@ def cameras():
                                                     success_message_add_camera=success_message_add_camera,                            
                                                     error_message_add_camera=error_message_add_camera,     
                                                     list_cameras=list_cameras,  
+                                                    selected_camera=selected_camera,
                                                     camera_1=camera_1,    
                                                     camera_2=camera_2, 
                                                     camera_3=camera_3,

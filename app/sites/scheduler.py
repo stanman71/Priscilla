@@ -18,14 +18,14 @@ import spotipy
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "user" or current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "user" or current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -81,15 +81,10 @@ def scheduler():
                 # ############
 
                 scheduler_task = GET_SCHEDULER_TASK_BY_ID(i)
-                input_name     = request.form.get("set_name_" + str(i))                    
-
-                # check spaces at the end
-                if input_name != input_name.strip():
-                    error_message_change_settings.append(scheduler_task.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
-                    error_founded = True       
+                input_name     = request.form.get("set_name_" + str(i)).strip()                    
 
                 # add new name
-                elif ((input_name != "") and (GET_SCHEDULER_TASK_BY_NAME(input_name) == None)):
+                if ((input_name != "") and (GET_SCHEDULER_TASK_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 
@@ -113,18 +108,8 @@ def scheduler():
                 # task setting
                 # ############
 
-                if request.form.get("set_task_" + str(i)) != "":
-                    
-                    input_task = request.form.get("set_task_" + str(i))
-
-                    # check spaces at the end
-                    if input_task != input_task.strip():
-                        error_message_change_settings.append(scheduler_task.name + " || Aufgabe - " + input_task + " - hat ungültige Leerzeichen") 
-                        error_founded = True     
-
-                    else:
-                        task = input_task
-
+                if request.form.get("set_task_" + str(i)) != "":                   
+                    task = request.form.get("set_task_" + str(i)).strip()
                 else:
                     task = GET_SCHEDULER_TASK_BY_ID(i).task
                     error_message_change_settings.append("Keine Aufgabe angegeben")
@@ -177,46 +162,19 @@ def scheduler():
 
                 # set day
                 if request.form.get("set_day_" + str(i)) != "" and request.form.get("set_day_" + str(i)) != None:
-                    input_day = request.form.get("set_day_" + str(i))
-
-                    # check spaces at the end
-                    if input_day != input_day.strip():
-                        error_message_change_settings.append(scheduler_task.name + " || Tage - " + input_day + " - hat ungültige Leerzeichen") 
-                        error_founded = True       
-
-                    else:
-                        day = input_day
-
+                    day = request.form.get("set_day_" + str(i)).strip()
                 else:
                     day = GET_SCHEDULER_TASK_BY_ID(i).day
 
                 # set hour
                 if request.form.get("set_hour_" + str(i)) != "" and request.form.get("set_hour_" + str(i)) != None:
-                    input_hour = request.form.get("set_hour_" + str(i))
-
-                    # check spaces at the end
-                    if input_hour != input_hour.strip():
-                        error_message_change_settings.append(scheduler_task.name + " || Stunden - " + input_hour + " - hat ungültige Leerzeichen") 
-                        error_founded = True       
-
-                    else:
-                        hour = input_hour
-
+                    hour = request.form.get("set_hour_" + str(i)).strip()
                 else:
                     hour = GET_SCHEDULER_TASK_BY_ID(i).hour
 
                 # set minute
                 if request.form.get("set_minute_" + str(i)) != "" and request.form.get("set_minute_" + str(i)) != None:
-                    input_minute = request.form.get("set_minute_" + str(i))
-
-                    # check spaces at the end
-                    if input_minute != input_minute.strip():
-                        error_message_change_settings.append(scheduler_task.name + " || Minuten - " + input_minute + " - hat ungültige Leerzeichen") 
-                        error_founded = True       
-
-                    else:
-                        minute = input_minute
-
+                    minute = request.form.get("set_minute_" + str(i)).strip()
                 else:
                     minute = GET_SCHEDULER_TASK_BY_ID(i).minute 
 
@@ -283,22 +241,25 @@ def scheduler():
                                                 
                 operator_1                  = request.form.get("set_operator_1_" + str(i))
                 operator_2                  = request.form.get("set_operator_2_" + str(i))  
-                value_1                     = request.form.get("set_value_1_" + str(i))
-                value_2                     = request.form.get("set_value_2_" + str(i))                                 
                 main_operator_second_sensor = request.form.get("set_main_operator_second_sensor_" + str(i))
-
 
                 if operator_1 == None:
                     operator_1 = "None"
                 if operator_2 == None:
-                    operator_2 = "None"    
-                if value_1 == None or value_1 == "":
-                    value_1 = "None"
-                if value_2 == None or value_2 == "":
-                    value_2 = "None"            
+                    operator_2 = "None"         
                 if main_operator_second_sensor == None:
                     main_operator_second_sensor = "None"
-               
+
+                try: 
+                    value_1 = request.form.get("set_value_1_" + str(i)).strip()
+                except:
+                    value_1 = "None"
+
+                try: 
+                    value_2 = request.form.get("set_value_2_" + str(i)).strip()
+                except:
+                    value_2 = "None" 
+
                 # get device 1
                 try:
                     device_name_1         = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1).name
@@ -363,18 +324,10 @@ def scheduler():
 
                 # set ip_addresses
                 if request.form.get("set_ip_addresses_" + str(i)) != "" and request.form.get("set_ip_addresses_" + str(i)) != None:
-                    input_ip_addresses = request.form.get("set_ip_addresses_" + str(i))
-
-                    # check spaces at the end
-                    if input_ip_addresses != input_ip_addresses.strip():
-                        error_message_change_settings.append(scheduler_task.name + " || IP-Adressen - " + input_ip_addresses + " - hat ungültige Leerzeichen") 
-                        error_founded = True       
-
-                    else:
-                        ip_addresses = input_ip_addresses
-
+                    ip_addresses = request.form.get("set_ip_addresses_" + str(i)).strip()
                 else:
                     ip_addresses = "None"
+
 
                 if error_founded == False: 
 
@@ -411,7 +364,31 @@ def scheduler():
     """  scheduler task options  """
     """ ######################## """   
 
-    # list device command option    
+    # list led group options    
+    list_led_group_options = []
+
+    for group in GET_ALL_LED_GROUPS():
+        list_led_group_options.append(group.name)
+
+    # list led scene options    
+    list_led_scene_options = []
+
+    for scene in GET_ALL_LED_SCENES():
+        list_led_scene_options.append(scene.name)
+
+    # list sensordata job options    
+    list_sensordata_job_options = []
+
+    for job in GET_ALL_SENSORDATA_JOBS():
+        list_sensordata_job_options.append(job.name)
+
+    # list program options    
+    list_program_options = []
+
+    for program in GET_ALL_PROGRAMS():
+        list_program_options.append(program.name)
+
+    # list device command options    
     list_device_command_options = []
     
     for device in GET_ALL_DEVICES("devices"):
@@ -424,12 +401,12 @@ def scheduler():
         sp       = spotipy.Spotify(auth=spotify_token)
         sp.trace = False
         
-        spotify_devices   = sp.devices()["devices"]        
-        spotify_playlists = sp.current_user_playlists(limit=20)["items"]   
+        list_spotify_devices   = sp.devices()["devices"]        
+        list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]   
         
     except:
-        spotify_devices   = ""       
-        spotify_playlists = ""      
+        list_spotify_devices   = ""       
+        list_spotify_playlists = ""      
 
 
     error_message_scheduler_tasks_settings = CHECK_SCHEDULER_TASKS_SETTINGS(GET_ALL_SCHEDULER_TASKS())
@@ -586,9 +563,13 @@ def scheduler():
                                                     error_message_scheduler_tasks_settings=error_message_scheduler_tasks_settings,
                                                     error_message_scheduler_tasks=error_message_scheduler_tasks,
                                                     success_message_change_settings_scheduler_task=success_message_change_settings_scheduler_task,
+                                                    list_led_group_options=list_led_group_options,
+                                                    list_led_scene_options=list_led_scene_options,
+                                                    list_sensordata_job_options=list_sensordata_job_options,   
+                                                    list_program_options=list_program_options,                                                 
                                                     list_device_command_options=list_device_command_options,
-                                                    spotify_devices=spotify_devices,     
-                                                    spotify_playlists=spotify_playlists,                                                         
+                                                    list_spotify_devices=list_spotify_devices,     
+                                                    list_spotify_playlists=list_spotify_playlists,                                                         
                                                     device_1_input_values=device_1_input_values,
                                                     device_2_input_values=device_2_input_values,
                                                     device_3_input_values=device_3_input_values,

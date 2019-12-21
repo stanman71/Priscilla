@@ -75,32 +75,40 @@ def background_thread():
 
         # music
 
-        spotify_token          = GET_SPOTIFY_TOKEN()
-        tupel_current_playback = GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)
+        spotify_token = GET_SPOTIFY_TOKEN()
 
-        current_device   = tupel_current_playback[0]
-        current_state    = tupel_current_playback[2]
-        current_track    = tupel_current_playback[4]
-        current_artists  = tupel_current_playback[5]
-        current_progress = tupel_current_playback[6]
-        current_playlist = tupel_current_playback[7]
+        if spotify_token != "":
 
-        socketio.emit('music',
-                      {'current_device': current_device, 'current_state': current_state, 'current_track': current_track, 
-                      'current_artists': current_artists, 'current_progress': current_progress, 'current_playlist': current_playlist},                                                               
-                       namespace='/socketIO')
+            tupel_current_playback = GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)
+
+            current_device   = tupel_current_playback[0]
+            current_state    = tupel_current_playback[2]
+            current_track    = tupel_current_playback[4]
+            current_artists  = tupel_current_playback[5]
+            current_progress = tupel_current_playback[6]
+            current_playlist = tupel_current_playback[7]
+
+            socketio.emit('music',
+                          {'current_device': current_device, 'current_state': current_state, 'current_track': current_track, 
+                          'current_artists': current_artists, 'current_progress': current_progress, 'current_playlist': current_playlist},                                                               
+                          namespace='/socketIO')
+
+        else:
+            socketio.emit('music',
+                          {'current_device': "", 'current_state': "", 'current_track': "", 'current_artists': "", 'current_progress': "", 'current_playlist': ""},                                                               
+                          namespace='/socketIO')            
 
         # program
 
         socketio.emit('program',
                       {'program_status': GET_PROGRAM_STATUS()},                                                               
-                       namespace='/socketIO')
+                      namespace='/socketIO')
 
         # zigbee2mqtt pairing
 
         socketio.emit('zigbee2mqtt_pairing',
                       {'zigbee2mqtt_pairing_status': GET_ZIGBEE2MQTT_PAIRING_STATUS()},                                                               
-                       namespace='/socketIO')
+                      namespace='/socketIO')
 
 
 @socketio.on('connect', namespace='/socketIO')

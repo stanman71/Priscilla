@@ -87,15 +87,10 @@ def settings_users():
                 # ############
 
                 user       = GET_USER_BY_ID(i)
-                input_name = request.form.get("set_name_" + str(i))    
-
-                # check spaces at the end
-                if input_name != input_name.strip():
-                    error_message_change_settings.append(user.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
-                    error_founded = True                      
-
+                input_name = request.form.get("set_name_" + str(i)).strip()    
+            
                 # add new name
-                elif ((input_name != "") and (GET_USER_BY_NAME(input_name) == None)):
+                if ((input_name != "") and (GET_USER_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 
@@ -119,15 +114,10 @@ def settings_users():
                 # email setting
                 # #############
 
-                input_email = request.form.get("set_email_" + str(i))                    
-
-                # check spaces at the end
-                if input_email != input_email.strip():
-                    error_message_change_settings.append(user.name + " || eMail-Adresse - " + input_email + " - hat ungültige Leerzeichen") 
-                    error_founded = True          
+                input_email = request.form.get("set_email_" + str(i)).strip()                    
 
                 # add new name
-                elif ((input_email != "") and (GET_USER_BY_EMAIL(input_email) == None)):
+                if ((input_email != "") and (GET_USER_BY_EMAIL(input_email) == None)):
                     email = request.form.get("set_email_" + str(i)) 
                     
                 # nothing changed 
@@ -152,12 +142,12 @@ def settings_users():
                 # ################
                 
                 if request.form.get("set_password_" + str(i)) != "":                        
-                    password = request.form.get("set_password_" + str(i))
+                    password = request.form.get("set_password_" + str(i)).strip()
                     
                     try:              
                         if 8 <= len(password) <= 20:
                             
-                            if str(password) == str(request.form.get("set_password_repeat_" + str(i))):
+                            if str(password) == str(request.form.get("set_password_repeat_" + str(i)).strip()):
                                 hashed_password = generate_password_hash(password, method='sha256')
                                     
                             else:

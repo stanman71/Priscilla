@@ -64,6 +64,7 @@ if GET_HOST_NETWORK().lan_ip_address == "":
 else:
     REDIRECT_URI = "http://" + GET_HOST_NETWORK().lan_ip_address + ":80/music/spotify/token"
 
+
 SCOPE                 = "playlist-read-private user-read-recently-played user-read-currently-playing user-read-playback-state streaming"
 STATE                 = ""
 SHOW_DIALOG_bool      = True

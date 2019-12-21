@@ -660,13 +660,6 @@
                 <div class="card-body"> 
                   <div class="table-responsive">
                     <table class="table tablesorter">
-                      <thead>
-                        <tr><td></td><td></td></tr>
-                        <tr>
-                          <th>Aufgabe</th>
-                          <th>Erklärung</th>
-                        </tr>
-                      </thead>
                       <tbody>                      
                         <tr>
                           <td>break # 10</td>   
@@ -681,7 +674,11 @@
                         <tr>
                           <td></td>
                           <td></td>
-                        </tr>                                
+                        </tr>         
+                        <tr>
+                          <td><h4><p class="text-muted">Beleuchtung</p></h4></td>
+                          <td></td>
+                        </tr>                                                                       
                         <tr>
                           <td>scene # wohnzimmer # relax # 100</td>
                           <td>
@@ -692,13 +689,35 @@
                             </div>  
                             <br>
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                Optional
+                              <div class="col-sm-3"> 
+                                Optional >> 
                               </div>
-                              <div class="col-sm-8"> 
-                                > globale Helligkeit 100 % 
+                              <div class="col-sm-9"> 
+                                globale Helligkeit 100 % 
                               </div>                        
-                            </div>                                            
+                            </div>     
+                            <br>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-3"> 
+                                LED - Gruppen >>
+                              </div>
+                              <div class="col-sm-9">   
+                                {% for group in list_led_group_options %}
+                                  {{ group }} |
+                                {% endfor %}    
+                              </div>  
+                            </div>  
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-3"> 
+                                LED - Szenen >>
+                              </div>
+                              <div class="col-sm-9">   
+                                {% for scene in list_led_scene_options %}
+                                  {{ scene }} |
+                                {% endfor %}    
+                              </div>  
+                            </div>                              
+                          </td>                                
                         </tr>
                         <tr>
                           <td>brightness # schlafzimmer # TURN_UP</td>
@@ -710,19 +729,19 @@
                             </div>  
                             <br>
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                TURN_UP
+                              <div class="col-sm-3"> 
+                                TURN_UP >>
                               </div>
-                              <div class="col-sm-8"> 
-                                > 20 % heller 
+                              <div class="col-sm-9"> 
+                                20 % heller 
                               </div>                        
                             </div>                                            
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                TURN_DOWN 
+                              <div class="col-sm-3"> 
+                                TURN_DOWN >> 
                               </div>
-                              <div class="col-sm-8"> 
-                                > 20 % dunkler 
+                              <div class="col-sm-9"> 
+                                20 % dunkler 
                               </div>                        
                             </div>
                           </td>
@@ -738,7 +757,11 @@
                         <tr>
                           <td></td>
                           <td></td>
-                        </tr>                   
+                        </tr>       
+                        <tr>
+                          <td><h4><p class="text-muted">Geräte</p></h4></td>
+                          <td></td>
+                        </tr>                                         
                         <tr>
                           <td>device # Steckdose_TV # state:OFF</td>   
                           <td>
@@ -750,11 +773,11 @@
                             <br>
                             {% for device in list_device_command_options %}
                               <div class="row justify-content-md-center">
-                                <div class="col-sm-4">
-                                  {{ device[0] }}
+                                <div class="col-sm-3">
+                                  {{ device[0] }} >>
                                 </div>
-                                <div class="col-sm-8">          
-                                  > {{ device[1] | replace(' ', ' | ') | replace('{', '') | replace('}', '') | replace(',', ', ') | replace('"', '') }} 
+                                <div class="col-sm-9">          
+                                  {{ device[1] | replace(' ', ' | ') | replace('{', '') | replace('}', '') | replace(',', ', ') | replace('"', '') }} 
                                 </div>
                               </div> 
                             {% endfor %}                                            
@@ -763,38 +786,155 @@
                         <tr>
                           <td></td>
                           <td></td>
-                        </tr>                   
+                        </tr>     
                         <tr>
-                          <td>program # SUNRISE # START</td>
+                          <td><h4><p class="text-muted">Sensordaten</p></h4></td>
+                          <td></td>
+                        </tr>                           
+                        <tr>
+                          <td>request_sensordata # sensor_1 </td>
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                Programm "SUNRISE" starten 
+                                Sensordaten von "sensor_1" abfragen und speichern
                               </div>
-                            </div>  
+                            </div>        
                             <br>
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                START 
+                              <div class="col-sm-3"> 
+                                Sensordaten Jobs >>
                               </div>
-                              <div class="col-sm-8"> 
-                                > starten 
-                              </div>                        
-                            </div>                                            
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                STOP 
-                              </div>
-                              <div class="col-sm-8"> 
-                                > beenden 
-                              </div>                        
-                            </div>                                        
+                              <div class="col-sm-9">   
+                                {% for job in list_sensordata_job_options %}
+                                  {{ job }} |
+                                {% endfor %}    
+                              </div>  
+                            </div>                                                              
                           </td>                    
-                        </tr>     
+                        </tr>    
                         <tr>
                           <td></td>
                           <td></td>
-                        </tr>   
+                        </tr>     
+                        <tr>
+                          <td><h4><p class="text-muted">Pflanzen</p></h4></td>
+                          <td></td>
+                        </tr>                           
+                        <tr>
+                          <td>watering_plants # ALL </td>
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                Pflanzen gießen
+                              </div>
+                            </div>                                  
+                            <br>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-3"> 
+                                ALL >> 
+                              </div>
+                              <div class="col-sm-9"> 
+                                alle Gruppen gießen 
+                              </div>                        
+                            </div>                                            
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-3"> 
+                                1 - 5 >> 
+                              </div>
+                              <div class="col-sm-9"> 
+                                nur Gruppe 1 - 5 gießen 
+                              </div>                        
+                            </div>                                        
+                          </td>       
+                        <tr>                            
+                          <td></td>
+                          <td></td>
+                        </tr>                                          
+                        <tr>
+                          <td><h4><p class="text-muted">Musik</p></h4></td>
+                          <td></td>
+                        </tr>                           
+                        <tr>
+                          <td>spotify # PLAY</td>
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                letztes Lied / Album / Playlist auf "aktiven" Spotify-Gerät starten oder DEFAULT_SETTINGS
+                              </div>
+                            </div>  
+                            <br>                          
+                            <br>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-3"> 
+                                PLAY >> 
+                              </div>
+                              <div class="col-sm-9"> 
+                                abspielen starten
+                              </div>                        
+                            </div>                                            
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-3"> 
+                                PREVIOUS >> 
+                              </div>
+                              <div class="col-sm-9"> 
+                                vorheriger Track 
+                              </div>                        
+                            </div>    
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-3"> 
+                                NEXT >> 
+                              </div>
+                              <div class="col-sm-9"> 
+                                nächster Track 
+                              </div>                        
+                            </div>                        
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-3"> 
+                                STOP >> 
+                              </div>
+                              <div class="col-sm-9"> 
+                                abspielen stoppen
+                              </div>                        
+                            </div>                        
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-3"> 
+                                VOLUME # 70 >> 
+                              </div>
+                              <div class="col-sm-9"> 
+                                Lautstärke auf 70%
+                              </div>
+                            </div>                        
+                            <br>        
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-3"> 
+                                Spotify - Geräte >>
+                              </div>
+                              <div class="col-sm-9">   
+                                {% for device in list_spotify_devices %}
+                                  {% if device['type'] != "Smartphone" %}
+                                    {% if "multiroom" in device['name'] %}
+                                      multiroom |
+                                    {% else %}
+                                      {{ device['name'] }} |
+                                    {% endif %}                                          
+                                  {% endif %}
+                                {% endfor %}
+                              </div>
+                            </div>                     
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-3"> 
+                                Spotify - Playlists >>
+                              </div>
+                              <div class="col-sm-9">   
+                                {% for playlist in list_spotify_playlists %}
+                                  {% if playlist['name'] != "Discover Weekly" %}
+                                    {{ playlist['name'] }} |
+                                  {% endif %}
+                                {% endfor %}    
+                              </div>
+                            </div>                                                                                    
+                          </td>                    
+                        </tr>                                                    
                         <tr>
                           <td>spotify # playlist # PC # Gemischt # 50</td>
                           <td>Playlist "Gemischt" auf Gerät "PC" mit Lautstärke 50 % starten</td>
@@ -806,96 +946,14 @@
                         <tr>
                           <td>spotify # album # PC # Hold On # Nano # 60</td>
                           <td>Album "Hold On" von "Nano" auf Gerät "PC" mit Lautstärke 60 % starten</td>
-                        </tr>                                    
-                        <tr>
-                          <td>spotify # PLAY</td>
-                          <td>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-12"> 
-                                letztes Lied / Album / Playlist auf aktiven Spotify-Gerät starten 
-                              </div>
-                            </div>  
-                            <br>                          
-                            <br>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                PLAY 
-                              </div>
-                              <div class="col-sm-8"> 
-                                > abspielen starten
-                              </div>                        
-                            </div>                                            
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                PREVIOUS 
-                              </div>
-                              <div class="col-sm-8"> 
-                                > vorheriger Track 
-                              </div>                        
-                            </div>    
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                NEXT 
-                              </div>
-                              <div class="col-sm-8"> 
-                                > nächster Track 
-                              </div>                        
-                            </div>                        
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                STOP 
-                              </div>
-                              <div class="col-sm-8"> 
-                                > abspielen stoppen
-                              </div>                        
-                            </div>                        
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                VOLUME # 70 
-                              </div>
-                              <div class="col-sm-8"> 
-                                > Lautstärke auf 70%
-                              </div>
-                            </div>                        
-                            <br>        
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                Spotify - Geräte:
-                              </div>
-                              <div class="col-sm-8">   
-                                > {% for device in spotify_devices %}
-                                    {% if device['type'] != "Smartphone" %}
-                                      {% if "multiroom" in device['name'] %}
-                                        multiroom |
-                                      {% else %}
-                                        {{ device['name'] }} |
-                                      {% endif %}                                          
-                                    {% endif %}
-                                  {% endfor %}
-                              </div>
-                            </div>                     
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                Spotify - Playlists:
-                              </div>
-                              <div class="col-sm-8">   
-                                > {% for playlist in spotify_playlists %}
-                                    {% if playlist['name'] != "Discover Weekly" %}
-                                      {{ playlist['name'] }} |
-                                    {% endif %}
-                                  {% endfor %}    
-                              </div>
-                            </div>                                                                                    
-                          </td>                    
-                        </tr>                                                                               
+                        </tr>                                                                                       
                       </tbody>
                     </table>                
                   </div>                 
                 </div>            
               </div>
             </div>
-
-
+            
           </div>
         </div>
       </div>          

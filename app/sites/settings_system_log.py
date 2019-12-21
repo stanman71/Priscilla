@@ -91,7 +91,7 @@ def settings_system_log():
                 selected_type_error = "selected"
                 selected_log_types.append("ERROR")     
 
-        log_search = request.form.get('set_log_search')
+        log_search = request.form.get('set_log_search').strip()
        
    
     # reset logfile

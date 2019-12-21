@@ -76,9 +76,9 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
        >>> https://www.ebay.de/itm/Elko-Panasonic-FR-2200uF-35V-Kondensator-105-C-Low-ESR-same-as-FM-854439/312606746499
 
-- capacitor 100µF
+- capacitor 10µF
 
-       >>> https://www.ebay.de/itm/10-Elko-Panasonic-FR-100uF-10V-Kondensator-105-C-Low-ESR-same-as-FM-856760/362414533288
+       >>> https://www.ebay.de/itm/10-f-50-V-105-Elektrolytkondenstoren-10-Stuck-Elko-10uf/254357533995?hash=item3b38e3f52b:g:H4QAAOSwNRdX85if
 
 - resistor 10K
 

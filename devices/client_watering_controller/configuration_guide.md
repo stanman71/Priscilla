@@ -17,13 +17,16 @@ This project controls the watering system.
 
 <a name="1.1 Pump"></a>
 
-
-
 #### 1.1 Pump
 
 - specifications
 
        >>> 5V
+       >>> USB-A connector
+
+- example
+
+       >>> https://www.ebay.de/itm/Ultra-quiet-Mini-DC5V-120L-H-Kuhl-Burstenlos-Motor-Wasserpumpe-Tauchpumpe-Billig/273837357212?hash=item3fc1fa789c:g:Z1wAAOSw6jJcHJ8I
 
 </br>
 
@@ -31,9 +34,14 @@ This project controls the watering system.
 
 #### 1.2 Power Source
 
-- 5V
+- specifications
 
-       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01I1JEWPU/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
+       >>> 12V
+       >>> 5,5x2,5 connector
+
+- example
+
+       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01I4YDJZG/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
 
 </br>
 
@@ -49,9 +57,9 @@ This project controls the watering system.
 
        >>> https://www.berrybase.de/bauelemente/aktive-bauelemente/ics/ics-l../l7805abv-spannungsregler-linear-5v-1a-to-220-3-pin
 
-- capacitor 100µF
+- capacitor 10µF
 
-       >>> https://www.ebay.de/itm/10-Elko-Panasonic-FR-100uF-10V-Kondensator-105-C-Low-ESR-same-as-FM-856760/362414533288
+       >>> https://www.ebay.de/itm/10-f-50-V-105-Elektrolytkondenstoren-10-Stuck-Elko-10uf/254357533995?hash=item3b38e3f52b:g:H4QAAOSwNRdX85if
 
 - resistor 10K
 

@@ -2,12 +2,42 @@
       <div class="content">
         <div class="row">
           <div class="col-md-12">
-
             <div class="card ">
               <div class="card-header">
                 <h4 class="card-title"><b>Kameras</b></h4>
               </div>
             </div>
+
+
+<!---------------------->
+<!-- CAMERA SELECTION -->
+<!---------------------->
+
+            <div class="card">        
+              <div class="card-body">
+                <form method="POST"> 
+                  {% if camera_1 != None %}
+                    <button onclick="window.location.href='/cameras#'" name="select_camera_1" class="btn btn-default" type="submit">{{camera_1.name}}</button>    
+                  {% endif %}   
+                  {% if camera_2 != None %}
+                    <button onclick="window.location.href='/cameras#'" name="select_camera_2" class="btn btn-default" type="submit">{{camera_2.name}}</button>    
+                  {% endif %}       
+                  {% if camera_3 != None %}
+                    <button onclick="window.location.href='/cameras#'" name="select_camera_3" class="btn btn-default" type="submit">{{camera_3.name}}</button>    
+                  {% endif %}        
+                  {% if camera_4 != None %}
+                    <button onclick="window.location.href='/cameras#'" name="select_camera_4" class="btn btn-default" type="submit">{{camera_4.name}}</button>    
+                  {% endif %}                      
+                  {% if camera_5 != None %}
+                    <button onclick="window.location.href='/cameras#'" name="select_camera_5" class="btn btn-default" type="submit">{{camera_5.name}}</button>    
+                  {% endif %}    
+                  {% if camera_6 != None %}
+                    <button onclick="window.location.href='/cameras#'" name="select_camera_6" class="btn btn-default" type="submit">{{camera_6.name}}</button>    
+                  {% endif %}                      
+                </form>
+              </div>
+            </div>
+
 
 <!------------------>
 <!-- CAMERA BOARD -->
@@ -15,112 +45,107 @@
 
             <div class="card">        
               <div class="card-body">
+                <div class="row justify-content-md-center">
+                  <div class="col-sm-10">                    
 
-                {% if camera_1 != None or camera_2 != None %}
+                    {% if selected_camera == "camera_1" and camera_1 != None %}
+                      {% if camera_1.url != "" and camera_1.url != None and camera_1.url != "None" %}
+                        <div class="img-container-video">
+                          <div class="img">
+                            <a href= "http://{{ camera_1.url.split(":")[0] }}" target="_blank">                   
+                              <img src="{{ url_for('data_video_feed_1') }}" width="100%">
+                            </a>              
+                          </div>
+                        </div> 
+                      {% else %}    
+                        <div class="text-center"> 
+                          CAMERA RTSP STREAM NOT FOUNDED
+                        </div>
+                      {% endif %}    
+                    {% endif %} 
 
-                  <div class="row justify-content-md-center">
-                    <div class="col-sm-6">           
-                      {% if camera_1 != None %}
-                        {% if camera_1.url != None and camera_1.url != "" %} 
-                          <b> {{ camera_1.name }} </b>
-                          <div class="img-container-video">
-                            <div class="img">
-                              <a href= "http://{{ camera_1.url.split(":")[0] }}" target="_blank">                   
-                                <img src="{{ url_for('data_video_feed_1') }}" width="100%">
-                              </a>              
-                            </div>
-                          </div>  
-                        {% endif %}  
-                      {% endif %} 
-                    </div>    
-                    <div class="col-sm-6"> 
-                      {% if camera_2 != None %}      
-                        {% if camera_2.url != None and camera_2.url != "" %} 
-                          <b> {{ camera_2.name }} </b>  
-                          <div class="img-container-video">
-                            <div class="img">
-                              <a href= "http://{{ camera_2.url.split(":")[0] }}" target="_blank">                   
-                                <img src="{{ url_for('data_video_feed_2') }}" width="100%">
-                              </a>            
-                            </div>
-                          </div>   
-                        {% endif %} 
-                      {% endif %}     
-                    </div>
-                  </div> 
+                    {% if selected_camera == "camera_2" and camera_2 != None %}
+                      {% if camera_2.url != "" and camera_2.url != None and camera_2.url != "None" %}
+                        <div class="img-container-video">
+                          <div class="img">
+                            <a href= "http://{{ camera_2.url.split(":")[0] }}" target="_blank">                   
+                              <img src="{{ url_for('data_video_feed_2') }}" width="100%">
+                            </a>              
+                          </div>
+                        </div>  
+                      {% else %}    
+                        <div class="text-center"> 
+                          CAMERA RTSP STREAM NOT FOUNDED
+                        </div>
+                      {% endif %}       
+                    {% endif %} 
 
-                {% endif %}  
+                    {% if selected_camera == "camera_3" and camera_3 != None %}
+                      {% if camera_3.url != "" and camera_3.url != None and camera_3.url != "None" %}
+                        <div class="img-container-video">
+                          <div class="img">
+                            <a href= "http://{{ camera_3.url.split(":")[0] }}" target="_blank">                   
+                              <img src="{{ url_for('data_video_feed_3') }}" width="100%">
+                            </a>              
+                          </div>
+                        </div>  
+                      {% else %}    
+                        <div class="text-center"> 
+                          CAMERA RTSP STREAM NOT FOUNDED
+                        </div>
+                      {% endif %}      
+                    {% endif %} 
 
-                {% if camera_3 != None or camera_4 != None %}
+                    {% if selected_camera == "camera_4" and camera_4 != None %}
+                      {% if camera_4.url != "" and camera_4.url != None and camera_4.url != "None" %}
+                        <div class="img-container-video">
+                          <div class="img">
+                            <a href= "http://{{ camera_4.url.split(":")[0] }}" target="_blank">                   
+                              <img src="{{ url_for('data_video_feed_4') }}" width="100%">
+                            </a>              
+                          </div>
+                        </div>  
+                      {% else %}    
+                        <div class="text-center"> 
+                          CAMERA RTSP STREAM NOT FOUNDED
+                        </div>
+                      {% endif %}       
+                    {% endif %} 
 
-                  <div class="row justify-content-md-center">
-                    <div class="col-sm-6">           
-                      {% if camera_3 != None %}
-                        {% if camera_3.url != None and camera_3.url != "" %}  
-                          <b> {{ camera_3.name }} </b>
-                          <div class="img-container-video">
-                            <div class="img">
-                              <a href= "http://{{ camera_3.url.split(":")[0] }}" target="_blank">                   
-                                <img src="{{ url_for('data_video_feed_3') }}" width="100%">
-                              </a>
-                            </div>
-                          </div>   
-                        {% endif %} 
-                      {% endif %} 
-                    </div>    
-                    <div class="col-sm-6"> 
-                      {% if camera_4 != None %}     
-                        {% if camera_4.url != None and camera_4.url != "" %} 
-                          <b> {{ camera_4.name }} </b>  
-                          <div class="img-container-video">
-                            <div class="img">
-                              <a href= "http://{{ camera_4.url.split(":")[0] }}" target="_blank">                   
-                                <img src="{{ url_for('data_video_feed_4') }}" width="100%">
-                              </a>                   
-                            </div>
-                          </div>   
-                        {% endif %} 
-                      {% endif %}     
-                    </div>
-                  </div> 
+                    {% if selected_camera == "camera_5" and camera_5 != None %}
+                      {% if camera_5.url != "" and camera_5.url != None and camera_5.url != "None" %}
+                        <div class="img-container-video">
+                          <div class="img">
+                            <a href= "http://{{ camera_5.url.split(":")[0] }}" target="_blank">                   
+                              <img src="{{ url_for('data_video_feed_5') }}" width="100%">
+                            </a>              
+                          </div>
+                        </div>  
+                      {% else %}    
+                        <div class="text-center"> 
+                          CAMERA RTSP STREAM NOT FOUNDED
+                        </div>
+                      {% endif %}       
+                    {% endif %} 
 
-                {% endif %}  
+                    {% if selected_camera == "camera_6" and camera_6 != None %}
+                      {% if camera_6.url != "" and camera_6.url != None and camera_6.url != "None" %}
+                        <div class="img-container-video">
+                          <div class="img">
+                            <a href= "http://{{ camera_6.url.split(":")[0] }}" target="_blank">                   
+                              <img src="{{ url_for('data_video_feed_6') }}" width="100%">
+                            </a>              
+                          </div>
+                        </div>  
+                      {% else %}    
+                        <div class="text-center"> 
+                          CAMERA RTSP STREAM NOT FOUNDED
+                        </div>
+                      {% endif %}       
+                    {% endif %}                     
 
-                {% if camera_5 != None or camera_6 != None %}
-
-                  <div class="row justify-content-md-center">
-                    <div class="col-sm-6">           
-                      {% if camera_5 != None %}
-                        {% if camera_5.url != None and camera_5.url != "" %}   
-                          <b> {{ camera_5.name }} </b>
-                          <div class="img-container-video">
-                            <div class="img">
-                              <a href= "http://{{ camera_5.url.split(":")[0] }}" target="_blank">                   
-                                <img src="{{ url_for('data_video_feed_5') }}" width="100%">
-                              </a>
-                            </div>
-                          </div>   
-                        {% endif %} 
-                      {% endif %} 
-                    </div>    
-                    <div class="col-sm-6"> 
-                      {% if camera_6 != None %}     
-                        {% if camera_6.url != None and camera_6.url != "" %}   
-                          <b> {{ camera_6.name }} </b>  
-                          <div class="img-container-video">
-                            <div class="img">
-                              <a href= "http://{{ camera_6.url.split(":")[0] }}" target="_blank">                   
-                                <img src="{{ url_for('data_video_feed_6') }}" width="100%">
-                              </a>
-                            </div>
-                          </div>   
-                        {% endif %} 
-                      {% endif %}     
-                    </div>
-                  </div> 
-
-                {% endif %}   
-
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -203,7 +228,7 @@
                       <thead>
                         <th scope="col" style="width:3%"></th> 
                         <th scope="col" style="width:20%" class="minwidth_200">Kamera</th>   
-                        <th scope="col" style="width:30%" class="minwidth_200">URL</th>     
+                        <th scope="col" style="width:30%" class="minwidth_200">URL (RTSP Stream)</th>     
                         <th scope="col" style="width:20%" class="minwidth_200">Benutzername</th>                                          
                         <th scope="col" style="width:20%" class="minwidth_200">Passwort</th>   
                         <th scope="col" style="width:5%"></th>                                                    

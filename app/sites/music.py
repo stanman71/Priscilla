@@ -145,8 +145,8 @@ def music():
             if "spotify_search_track" in request.form:     
                 collapse_search_track_open = "True"   
 
-                track_name   = request.form.get("set_spotify_search_track")
-                track_artist = request.form.get("set_spotify_search_track_artist")
+                track_name   = request.form.get("set_spotify_search_track").strip()  
+                track_artist = request.form.get("set_spotify_search_track_artist").strip()  
                 
                 list_search_track_results = SPOTIFY_SEARCH_TRACK(spotify_token, track_name, track_artist, 10)
             
@@ -172,8 +172,8 @@ def music():
             if "spotify_search_album" in request.form:     
                 collapse_search_album_open = "True"  
 
-                album_name   = request.form.get("set_spotify_search_album")
-                album_artist = request.form.get("set_spotify_search_album_artist")
+                album_name   = request.form.get("set_spotify_search_album").strip()  
+                album_artist = request.form.get("set_spotify_search_album_artist").strip()  
 
                 list_search_album_results = SPOTIFY_SEARCH_ALBUM(spotify_token, album_name, album_artist, 5)  
     

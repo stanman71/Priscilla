@@ -94,9 +94,6 @@ def dashboard():
                     device_setting_string = device_setting_string.replace('{', '')
                     device_setting_string = device_setting_string.replace('}', '')
                     
-                    check_result = CHECK_DEVICE_EXCEPTIONS(i, device_setting_string)    
-
-
                     # check device exception
                     check_result = CHECK_DEVICE_EXCEPTIONS(device.id, device_setting_string)
                         
@@ -134,7 +131,10 @@ def dashboard():
                                 channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
                             heapq.heappush(mqtt_message_queue, (1, (channel, device_setting_json)))            
-                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting_json, 20)            
+                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting_json, 20)      
+
+                    else:
+                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | " + check_result)       
 
             except:
                 pass        
@@ -234,8 +234,8 @@ def dashboard():
             # account data
             # ############
 
-            spotify_devices   = sp.devices()["devices"]        
-            spotify_playlists = sp.current_user_playlists(limit=20)["items"]                        
+            list_spotify_devices   = sp.devices()["devices"]        
+            list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]                        
 
             # get volume
             spotify_volume = str(GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[3])
@@ -252,18 +252,18 @@ def dashboard():
             WRITE_LOGFILE_SYSTEM("ERROR", "Spotify | " + str(e)) 
             SEND_EMAIL("ERROR", "Spotify | " + str(e)) 
             
-            spotify_playlists = ""
-            spotify_devices   = ""
-            spotify_volume    = 50         
-            spotify_shuffle   = "False"
+            list_spotify_playlists = ""
+            list_spotify_devices   = ""
+            spotify_volume         = 50         
+            spotify_shuffle        = "False"
 
 
     # not logged in
     else:     
-        spotify_playlists = ""
-        spotify_devices   = ""
-        spotify_volume    = 50     
-        spotify_shuffle   = "False"
+        list_spotify_playlists = ""
+        list_spotify_devices   = ""
+        spotify_volume         = 50     
+        spotify_shuffle        = "False"
 
 
     dropdown_list_led_scenes = GET_ALL_LED_SCENES()
@@ -280,9 +280,10 @@ def dashboard():
                             data=data,
                             content=render_template( 'pages/dashboard.html', 
                                                     list_led_groups=list_led_groups,
-                                                    dropdown_list_led_scenes=dropdown_list_led_scenes,      
-                                                    spotify_playlists=spotify_playlists,
-                                                    spotify_devices=spotify_devices, 
+                                                    dropdown_list_led_scenes=dropdown_list_led_scenes,
+                                                    spotify_token=spotify_token,      
+                                                    list_spotify_playlists=list_spotify_playlists,
+                                                    list_spotify_devices=list_spotify_devices, 
                                                     spotify_volume=spotify_volume, 
                                                     spotify_shuffle=spotify_shuffle,
                                                     list_devices=list_devices,    

@@ -90,15 +90,10 @@ def plants():
                 # ############
 
                 plant      = GET_PLANT_BY_ID(i)
-                input_name = request.form.get("set_name_" + str(i))                    
-
-                # check spaces at the end
-                if input_name != input_name.strip():
-                    error_message_change_settings.append(plant.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
-                    error_founded = True           
+                input_name = request.form.get("set_name_" + str(i)).strip()                 
     
                 # add new name
-                elif ((input_name != "") and (GET_PLANT_BY_NAME(input_name) == None)):
+                if ((input_name != "") and (GET_PLANT_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
 
                 # nothing changed 
@@ -142,7 +137,7 @@ def plants():
                 # #############
 
                 if request.form.get("set_group_" + str(i)) != "":
-                    group = request.form.get("set_group_" + str(i))
+                    group = request.form.get("set_group_" + str(i)).strip()  
 
                 else:
                     group = 1
@@ -152,7 +147,7 @@ def plants():
                 # #####################
 
                 if request.form.get("set_pump_duration_" + str(i)) != "":
-                    pump_duration = request.form.get("set_pump_duration_" + str(i))
+                    pump_duration = request.form.get("set_pump_duration_" + str(i)).strip()  
 
                     try: 
                         if not 5 <= int(pump_duration) <= 200:

@@ -156,7 +156,6 @@
               </div>
             </div>
 
-
 <!-- programs -->
 
             <div class="card card-tasks-programs">
@@ -201,10 +200,12 @@
             </div>
           </div>
 
+          <div class="col-lg-6">
 
 <!-- music -->
 
-          <div class="col-lg-6">
+{% if spotify_token != "" %}  
+
             <div class="card card-tasks-music">
               <div class="card-body">
                 <form method="POST"> 
@@ -215,7 +216,7 @@
                           <div class="col-sm-6">                         
                             <select class="form-control" data-size="5" name="set_spotify_device_id" style="background-color:#27293D"> 
                               {% if spotify_devices != "" %}
-                                {% for device in spotify_devices %}                   
+                                {% for device in list_spotify_devices %}                   
                                   {% if device['type'] != "Smartphone" %}
                                     <option value="{{ device['id'] }}" > {{ device['name'] }} </option>
                                   {% endif %}
@@ -228,7 +229,7 @@
                           <div class="col-sm-6">   
                             <select class="form-control" data-size="5" name="set_spotify_playlist" style="background-color:#27293D"> 
                               {% if spotify_playlists != "" %}
-                                {% for playlist in spotify_playlists %}
+                                {% for playlist in list_spotify_playlists %}
                                   {% if playlist['name'] != "Discover Weekly" %}
                                     <option value="{{ playlist['uri'] }}" > {{ playlist['name'] }} </option>
                                   {% endif %}
@@ -334,6 +335,7 @@
               </form>                
             </div>
 
+{% endif %}
 
 <!-- issues table -->
 
@@ -411,5 +413,3 @@
 
         </div>
       </div>
-
-

@@ -86,15 +86,10 @@ def sensordata_jobs():
                 # ############
 
                 sensordata_job = GET_SENSORDATA_JOB_BY_ID(i)
-                input_name     = request.form.get("set_name_" + str(i))                    
-
-                # check spaces at the end
-                if input_name != input_name.strip():
-                    error_message_change_settings.append(sensordata_job.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
-                    error_founded = True       
+                input_name     = request.form.get("set_name_" + str(i)).strip()                      
 
                 # add new name
-                elif ((input_name != "") and (GET_SENSORDATA_JOB_BY_NAME(input_name) == None)):
+                if ((input_name != "") and (GET_SENSORDATA_JOB_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 
@@ -119,17 +114,7 @@ def sensordata_jobs():
                 # ################
 
                 if request.form.get("set_filename_" + str(i)) != "":
-
-                    input_filename = request.form.get("set_filename_" + str(i)) 
-
-                    # check spaces at the end
-                    if input_filename != input_filename.strip():
-                        error_message_change_settings.append(sensordata_job.name + " || Dateiname - " + input_filename + " - hat ungültige Leerzeichen") 
-                        error_founded = True       
-
-                    else:
-                        filename = input_filename
-                
+                    filename = request.form.get("set_filename_" + str(i)).strip()   
                 else:
                     filename = GET_SENSORDATA_JOB_BY_ID(i).filename 
                     error_message_change_settings.append(sensordata_job.name + " >>> Keine Datei angegeben")  

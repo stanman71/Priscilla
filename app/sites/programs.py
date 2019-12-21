@@ -94,15 +94,10 @@ def programs():
                 # ############
 
                 selected_program = GET_PROGRAM_BY_ID(i)
-                input_name       = request.form.get("set_name_" + str(i))                    
-
-                # check spaces at the end
-                if input_name != input_name.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Name - " + input_name + " - hat ungültige Leerzeichen") 
-                    error_founded = True       
+                input_name       = request.form.get("set_name_" + str(i)).strip()                    
 
                 # add new name
-                elif ((input_name != "") and (GET_PROGRAM_BY_NAME(input_name) == None)):
+                if ((input_name != "") and (GET_PROGRAM_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 
@@ -113,160 +108,120 @@ def programs():
                 elif ((GET_PROGRAM_BY_NAME(input_name) != None) and (selected_program.name != input_name)):
                     error_message_change_settings_program.append(selected_program.name + " || Name - " + input_name + " - bereits vergeben")  
                     name = selected_program.name
+                    error_founded = True  
 
                 # no input commited
                 else:                          
                     name = GET_PROGRAM_BY_ID(i).name
                     error_message_change_settings_program.append(selected_program.name + " || Keinen Namen angegeben") 
+                    error_founded = True  
 
+                try:
+                    line_content_1  = request.form.get("set_line_content_1_"  + str(i)).strip()
+                except:
+                    line_content_1 = "None"
 
-                line_content_1  = request.form.get("set_line_content_1_" + str(i))
+                try:
+                    line_content_2  = request.form.get("set_line_content_2_"  + str(i)).strip()
+                except:
+                    line_content_2 = "None"                
 
-                # check spaces at the end
-                if line_content_1 != None and line_content_1 != line_content_1.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 1 - " + line_content_1 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
+                try:                
+                    line_content_3  = request.form.get("set_line_content_3_"  + str(i)).strip()       
+                except:
+                    line_content_3 = "None"   
 
-                line_content_2  = request.form.get("set_line_content_2_" + str(i))
+                try:                                  
+                    line_content_4  = request.form.get("set_line_content_4_"  + str(i)).strip()    
+                except:
+                    line_content_4 = "None"  
 
-                # check spaces at the end
-                if line_content_2 != None and line_content_2 != line_content_2.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 2 - " + line_content_2 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
+                try:                                  
+                    line_content_5  = request.form.get("set_line_content_5_"  + str(i)).strip() 
+                except:
+                    line_content_5 = "None"   
 
-                line_content_3  = request.form.get("set_line_content_3_" + str(i))        
+                try:                                     
+                    line_content_6  = request.form.get("set_line_content_6_"  + str(i)).strip()  
+                except:
+                    line_content_6 = "None"
 
-                # check spaces at the end
-                if line_content_3 != None and line_content_3 != line_content_3.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 3 - " + line_content_3 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
+                try:                    
+                    line_content_7  = request.form.get("set_line_content_7_"  + str(i)).strip()  
+                except:
+                    line_content_7 = "None"
 
-                line_content_4  = request.form.get("set_line_content_4_" + str(i))   
+                try:                    
+                    line_content_8  = request.form.get("set_line_content_8_"  + str(i)).strip()  
+                except:
+                    line_content_8 = "None"
 
-                # check spaces at the end
-                if line_content_4 != None and line_content_4 != line_content_4.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 4 - " + line_content_4 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
+                try:                    
+                    line_content_9  = request.form.get("set_line_content_9_"  + str(i)).strip()  
+                except:
+                    line_content_9 = "None"
 
-                line_content_5  = request.form.get("set_line_content_5_" + str(i))
+                try:                    
+                    line_content_10 = request.form.get("set_line_content_10_" + str(i)).strip() 
+                except:
+                    line_content_10 = "None"
 
-                # check spaces at the end
-                if line_content_5 != None and line_content_5 != line_content_5.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 5 - " + line_content_5 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
+                try:                    
+                    line_content_11 = request.form.get("set_line_content_11_" + str(i)).strip()  
+                except:
+                    line_content_11 = "None"
 
-                line_content_6  = request.form.get("set_line_content_6_" + str(i)) 
+                try:                    
+                    line_content_12 = request.form.get("set_line_content_12_" + str(i)).strip()  
+                except:
+                    line_content_12 = "None"
 
-                # check spaces at the end
-                if line_content_6 != None and line_content_6 != line_content_6.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 6 - " + line_content_6 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
+                try:                    
+                    line_content_13 = request.form.get("set_line_content_13_" + str(i)).strip()  
+                except:
+                    line_content_13 = "None"
 
-                line_content_7  = request.form.get("set_line_content_7_" + str(i))   
+                try:                    
+                    line_content_14 = request.form.get("set_line_content_14_" + str(i)).strip() 
+                except:
+                    line_content_14 = "None"
 
-                # check spaces at the end
-                if line_content_7 != None and line_content_7 != line_content_7.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 7 - " + line_content_7 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
+                try:                    
+                    line_content_15 = request.form.get("set_line_content_15_" + str(i)).strip()  
+                except:
+                    line_content_15 = "None"
 
-                line_content_8  = request.form.get("set_line_content_8_" + str(i))  
+                try:                    
+                    line_content_16 = request.form.get("set_line_content_16_" + str(i)).strip()  
+                except:
+                    line_content_16 = "None"
 
-                # check spaces at the end
-                if line_content_8 != None and line_content_8 != line_content_8.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 8 - " + line_content_8 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
+                try:                    
+                    line_content_17 = request.form.get("set_line_content_17_" + str(i)).strip()  
+                except:
+                    line_content_17 = "None"
 
-                line_content_9  = request.form.get("set_line_content_9_" + str(i))     
+                try:                    
+                    line_content_18 = request.form.get("set_line_content_18_" + str(i)).strip() 
+                except:
+                    line_content_18 = "None"
 
-                # check spaces at the end
-                if line_content_9 != None and line_content_9 != line_content_9.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 9 - " + line_content_9 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
+                try:                    
+                    line_content_19 = request.form.get("set_line_content_19_" + str(i)).strip()  
+                except:
+                    line_content_19 = "None"
 
-                line_content_10 = request.form.get("set_line_content_10_" + str(i))
-
-                # check spaces at the end
-                if line_content_10 != None and line_content_10 != line_content_10.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 10 - " + line_content_10 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
-
-                line_content_11 = request.form.get("set_line_content_11_" + str(i))  
-
-                # check spaces at the end
-                if line_content_11 != None and line_content_11 != line_content_11.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 11 - " + line_content_11 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
-
-                line_content_12 = request.form.get("set_line_content_12_" + str(i))  
-
-                # check spaces at the end
-                if line_content_12 != None and line_content_12 != line_content_12.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 12 - " + line_content_12 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
-
-                line_content_13 = request.form.get("set_line_content_13_" + str(i))   
-
-                # check spaces at the end
-                if line_content_13 != None and line_content_13 != line_content_13.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 13 - " + line_content_13 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
-
-                line_content_14 = request.form.get("set_line_content_14_" + str(i))
-
-                # check spaces at the end
-                if line_content_14 != None and line_content_14 != line_content_14.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 14 - " + line_content_14 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
-
-                line_content_15 = request.form.get("set_line_content_15_" + str(i))
-
-                # check spaces at the end
-                if line_content_15 != None and line_content_15 != line_content_15.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 15 - " + line_content_15 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
-
-                line_content_16 = request.form.get("set_line_content_16_" + str(i))   
-
-                # check spaces at the end
-                if line_content_16 != None and line_content_16 != line_content_16.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 16 - " + line_content_16 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
-
-                line_content_17 = request.form.get("set_line_content_17_" + str(i))  
-
-                # check spaces at the end
-                if line_content_17 != None and line_content_17 != line_content_17.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 17 - " + line_content_17 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
-
-                line_content_18 = request.form.get("set_line_content_18_" + str(i))   
-
-                # check spaces at the end
-                if line_content_18 != None and line_content_18 != line_content_18.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 18 - " + line_content_18 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
-
-                line_content_19 = request.form.get("set_line_content_19_" + str(i))   
-
-                # check spaces at the end
-                if line_content_19 != None and line_content_19 != line_content_19.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 19 - " + line_content_19 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
-
-                line_content_20 = request.form.get("set_line_content_20_" + str(i))    
-
-                # check spaces at the end
-                if line_content_20 != None and line_content_20 != line_content_20.strip():
-                    error_message_change_settings_program.append(selected_program.name + " || Zeile 20 - " + line_content_20 + " - hat ungültige Leerzeichen") 
-                    error_founded = True        
-
+                try:                    
+                    line_content_20 = request.form.get("set_line_content_20_" + str(i)).strip()     
+                except:
+                    line_content_20 = "None"
 
                 if error_founded == False:           
 
                     if SET_PROGRAM_SETTINGS(i, name, line_content_1,line_content_2, line_content_3, line_content_4, line_content_5, 
-                                                    line_content_6, line_content_7, line_content_8, line_content_9, line_content_10,
-                                                    line_content_11, line_content_12, line_content_13, line_content_14, line_content_15, 
-                                                    line_content_16, line_content_17, line_content_18, line_content_19, line_content_20):
+                                                     line_content_6, line_content_7, line_content_8, line_content_9, line_content_10,
+                                                     line_content_11, line_content_12, line_content_13, line_content_14, line_content_15, 
+                                                     line_content_16, line_content_17, line_content_18, line_content_19, line_content_20):
 
                         success_message_change_settings_program.append("Einstellungen erfolgreich geändert")           
 
@@ -327,7 +282,25 @@ def programs():
     """  program task options """
     """ ##################### """   
 
-    # list device command option    
+    # list led group options    
+    list_led_group_options = []
+
+    for group in GET_ALL_LED_GROUPS():
+        list_led_group_options.append(group.name)
+
+    # list led scene options    
+    list_led_scene_options = []
+
+    for scene in GET_ALL_LED_SCENES():
+        list_led_scene_options.append(scene.name)
+
+    # list sensordata job options    
+    list_sensordata_job_options = []
+
+    for job in GET_ALL_SENSORDATA_JOBS():
+        list_sensordata_job_options.append(job.name)
+
+    # list device command options    
     list_device_command_options = []
     
     for device in GET_ALL_DEVICES("devices"):
@@ -340,12 +313,12 @@ def programs():
         sp       = spotipy.Spotify(auth=spotify_token)
         sp.trace = False
         
-        spotify_devices   = sp.devices()["devices"]        
-        spotify_playlists = sp.current_user_playlists(limit=20)["items"]   
+        list_spotify_devices   = sp.devices()["devices"]        
+        list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]   
         
     except:
-        spotify_devices   = ""       
-        spotify_playlists = ""      
+        list_spotify_devices   = ""       
+        list_spotify_playlists = ""      
 
 
     dropdown_list_programs = GET_ALL_PROGRAMS()
@@ -370,9 +343,12 @@ def programs():
                                                     error_message_program_tasks=error_message_program_tasks,
                                                     dropdown_list_programs=dropdown_list_programs,
                                                     selected_program=selected_program,
+                                                    list_led_group_options=list_led_group_options,
+                                                    list_led_scene_options=list_led_scene_options,
+                                                    list_sensordata_job_options=list_sensordata_job_options,                                                    
                                                     list_device_command_options=list_device_command_options,
-                                                    spotify_devices=spotify_devices,     
-                                                    spotify_playlists=spotify_playlists,  
+                                                    list_spotify_devices=list_spotify_devices,     
+                                                    list_spotify_playlists=list_spotify_playlists,    
                                                     program_repeat=program_repeat,                                                                                                     
                                                     ) 
                            )

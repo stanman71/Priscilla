@@ -42,6 +42,12 @@ class Controller(db.Model):
     task_8          = db.Column(db.String(50))
     command_9       = db.Column(db.String(50))
     task_9          = db.Column(db.String(50))   
+    command_10      = db.Column(db.String(50))
+    task_10         = db.Column(db.String(50))   
+    command_11      = db.Column(db.String(50))
+    task_11         = db.Column(db.String(50))   
+    command_12      = db.Column(db.String(50))
+    task_12         = db.Column(db.String(50))       
     collapse        = db.Column(db.String(50))        
 
 class Devices(db.Model):
@@ -460,7 +466,7 @@ def GET_ALL_CAMERAS():
         
 
 def ADD_CAMERA():
-    for i in range(1,10):
+    for i in range(1,7):
         if Camera.query.filter_by(id=i).first():
             pass
         else:
@@ -475,7 +481,7 @@ def ADD_CAMERA():
             WRITE_LOGFILE_SYSTEM("DATABASE", "Camera - " + "new_camera_" + str(i) + " | added")               
             return True
             
-    return "Kameralimit erreicht (9)"
+    return "Kameralimit erreicht (6)"
 
 
 def SET_CAMERA_SETTINGS(id, name, url, user, password):         
@@ -642,6 +648,21 @@ def UPDATE_CONTROLLER_EVENTS():
             controller.command_9 = device_events
         except:
             controller.command_9 = "None"      
+        try:
+            device_events         = device_input_events[9].replace(" ","")
+            controller.command_10 = device_events
+        except:
+            controller.command_10 = "None"      
+        try:
+            device_events         = device_input_events[10].replace(" ","")
+            controller.command_11 = device_events
+        except:
+            controller.command_11 = "None"      
+        try:
+            device_events         = device_input_events[11].replace(" ","")
+            controller.command_12 = device_events
+        except:
+            controller.command_12 = "None"      
 
         db.session.commit()
 
@@ -667,23 +688,26 @@ def RESET_CONTROLLER_COLLAPSE():
         db.session.commit()   
 
 
-def SET_CONTROLLER_TASKS(id, task_1 = "", task_2 = "", task_3 = "", task_4 = "", task_5 = "",
-                             task_6 = "", task_7 = "", task_8 = "", task_9 = ""):  
+def SET_CONTROLLER_TASKS(id, task_1 = "", task_2 = "", task_3 = "", task_4  = "", task_5  = "", task_6  = "", 
+                             task_7 = "", task_8 = "", task_9 = "", task_10 = "", task_11 = "", task_12 = ""):  
 
     entry = Controller.query.filter_by(id=id).first()
 
-    if (entry.task_1 != task_1 or entry.task_2 != task_2 or entry.task_3 != task_3 or entry.task_4 != task_4 or entry.task_5 != task_5 or 
-        entry.task_6 != task_6 or entry.task_7 != task_7 or entry.task_8 != task_8 or entry.task_9 != task_9):
+    if (entry.task_1 != task_1 or entry.task_2 != task_2 or entry.task_3 != task_3 or entry.task_4  != task_4  or entry.task_5  != task_5  or entry.task_6  != task_6 or 
+        entry.task_7 != task_7 or entry.task_8 != task_8 or entry.task_9 != task_9 or entry.task_10 != task_10 or entry.task_11 != task_11 or entry.task_12 != task_12):
 
-        entry.task_1 = task_1
-        entry.task_2 = task_2
-        entry.task_3 = task_3   
-        entry.task_4 = task_4
-        entry.task_5 = task_5
-        entry.task_6 = task_6     
-        entry.task_7 = task_7
-        entry.task_8 = task_8
-        entry.task_9 = task_9               
+        entry.task_1  = task_1
+        entry.task_2  = task_2
+        entry.task_3  = task_3   
+        entry.task_4  = task_4
+        entry.task_5  = task_5
+        entry.task_6  = task_6     
+        entry.task_7  = task_7
+        entry.task_8  = task_8
+        entry.task_9  = task_9    
+        entry.task_10 = task_10              
+        entry.task_11 = task_11      
+        entry.task_12 = task_12              
         db.session.commit() 
 
         controller_name = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr).name
@@ -1995,15 +2019,12 @@ def DELETE_PLANT(id):
     
     try:
         WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + plant_name + " | deleted")   
-        Plants.query.filter_by(id=id).delete()
-        db.session.commit()
+    except:
+        pass
 
-        # delete data_file
-        DELETE_PLANTS_DATAFILE(plant_name)
-        return True
-
-    except Exception as e:
-        return(e)
+    Plants.query.filter_by(id=id).delete()
+    db.session.commit()
+    return True
 
 
 """ ################### """
