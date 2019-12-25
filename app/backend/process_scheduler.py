@@ -14,7 +14,6 @@ from app.backend.mqtt             import *
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM, GET_LOCATION_COORDINATES, BACKUP_DATABASE
 from app.backend.shared_resources import process_management_queue, mqtt_message_queue
 from app.backend.process_program  import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD
-from app.backend.plants_watering  import START_WATERING_THREAD
 from app.backend.spotify          import *
 from app.backend.email            import SEND_EMAIL
 
@@ -24,74 +23,63 @@ from difflib import SequenceMatcher
 
 """ ################################ """
 """ ################################ """
-"""      scheduler process time      """
+"""        scheduler process         """
 """ ################################ """
 """ ################################ """
 
 
-def PROCESS_SCHEDULER_TIME(task):
+def PROCESS_SCHEDULER(task, ieeeAddr):
    
-   # ####
-   # time
-   # ####
-   
+   # check time   
    if task.option_time == "True":
       if not CHECK_SCHEDULER_TIME(task):
          return
-         
-      print("Start Scheduler Time")
+        
+   # check sensors
+   if task.option_sensors == "True":
 
-      # check sensors
-      if task.option_sensors == "True":
+      # find sensor jobs with fitting ieeeAddr only
+      if (task.device_ieeeAddr_1 == ieeeAddr or task.device_ieeeAddr_2 == ieeeAddr):
          if not CHECK_SCHEDULER_SENSORS(task):
             return
+
+   # check sun
+   if task.option_sunrise == "True":
+      if not CHECK_SCHEDULER_SUNRISE(task):
+         return   
+   if task.option_sunset == "True":
+      if not CHECK_SCHEDULER_SUNSET(task):
+         return     
+
+   # check position
+   if task.option_home == "True" or task.option_away == "True":
+
+      ping_result = CHECK_SCHEDULER_PING(task)
+
+      # update last ping, if nessanrry     
+      if task.option_home == "True" and ping_result == "False":
+         SET_SCHEDULER_LAST_PING_RESULT(task.id, "False")
+         return
          
-      # check position
-      if task.option_position == "True":
-         
-         if task.option_home == "True":
-            if CHECK_SCHEDULER_PING(task) == "False":
-               return               
-         
-         if task.option_away == "True":
-            if CHECK_SCHEDULER_PING(task) == "True":
-               return         
-   
-      SCHEDULER_TASK(task)
+      if task.option_away == "True" and ping_result == "True":
+         SET_SCHEDULER_LAST_PING_RESULT(task.id, "True")
+         return
+
+      # start job, if ping result changed first
+      if GET_SCHEDULER_LAST_PING_RESULT(task.id) == ping_result:
+         return
+      else:
+         SET_SCHEDULER_LAST_PING_RESULT(task.id, ping_result)
 
 
-   # ################
-   # sunrise / sunset
-   # ################
-   
-   if task.option_sun == "True":
-       
-      print("Start Scheduler Sun")
+   START_SCHEDULER_TASK(task)
 
-      # check sensors
-      if task.option_sensors == "True":
-         if not CHECK_SCHEDULER_SENSORS(task):
-            return
-         
-      # check position 
-      if task.option_position == "True":
 
-         if task.option_home == "True":
-            if CHECK_SCHEDULER_PING(task) == "False":
-               return               
-         
-         if task.option_away == "True":
-            if CHECK_SCHEDULER_PING(task) == "True":
-               return         
-
-      # check sun
-      if task.option_sunrise == "True":
-         if CHECK_SCHEDULER_SUNRISE(task):
-            SCHEDULER_TASK(task) 
-         
-      if task.option_sunset == "True":
-         if CHECK_SCHEDULER_SUNSET(task):
-            SCHEDULER_TASK(task)       
+""" ################################ """
+""" ################################ """
+"""         scheduler checks         """
+""" ################################ """
+""" ################################ """
 
 
 def CHECK_SCHEDULER_TIME(task):
@@ -215,62 +203,6 @@ def CHECK_SCHEDULER_SUNSET(task):
          
    except:
       return False
-
-
-""" ################################ """
-""" ################################ """
-"""     scheduler process sensor     """
-""" ################################ """
-""" ################################ """
-
-
-def PROCESS_SCHEDULER_SENSOR(task, ieeeAddr):
-   
-   try:
-      
-      # find sensor jobs with fitting ieeeAddr only
-      if (task.device_ieeeAddr_1 == ieeeAddr or
-          task.device_ieeeAddr_2 == ieeeAddr or
-          task.device_ieeeAddr_3 == ieeeAddr):
-             
-         print("Start Scheduler Sensor")
-         
-         # check time
-         if task.option_time == "True":
-            if not CHECK_SCHEDULER_TIME(task):
-               return
-
-         # check sensors
-         if task.option_sensors == "True":
-            if not CHECK_SCHEDULER_SENSORS(task):
-               return
-           
-         # check position 
-         if task.option_position == "True":
-
-            if task.option_home == "True":
-               if CHECK_SCHEDULER_PING(task) == "False":
-                  return               
-            
-            if task.option_away == "True":
-               if CHECK_SCHEDULER_PING(task) == "True":
-                  return         
-
-         # check sun
-         if task.option_sun == "True":
-            
-            if task.option_sunrise == "True":
-               if CHECK_SCHEDULER_SUNRISE(task):
-                  SCHEDULER_TASK(task) 
-               
-            if task.option_sunset == "True":
-               if CHECK_SCHEDULER_SUNSET(task):
-                  SCHEDULER_TASK(task) 
-
-         SCHEDULER_TASK(task)          
-
-   except:
-      pass
 
 
 def CHECK_SCHEDULER_SENSORS(task):
@@ -512,9 +444,6 @@ def CHECK_SCHEDULER_SENSORS(task):
             pass                    
                
                
-         print("Passing_2:" + str(passing_2))
-         
-               
          # get result
          
          if task.main_operator_second_sensor == "and":
@@ -533,72 +462,17 @@ def CHECK_SCHEDULER_SENSORS(task):
    return passing
 
 
-""" ################################ """
-""" ################################ """
-"""      scheduler process ping      """
-""" ################################ """
-""" ################################ """
-
-
-def PROCESS_SCHEDULER_PING(task):
-   
-   # find ping jobs only (home / away)
-   if task.option_home == "True" or task.option_away == "True":
-
-      ping_result = CHECK_SCHEDULER_PING(task)
-      
-      # update last ping, if nessanrry     
-      if task.option_home == "True" and ping_result == "False":
-         SET_SCHEDULER_LAST_PING_RESULT(task.id, "False")
-         return
-         
-      if task.option_away == "True" and ping_result == "True":
-         SET_SCHEDULER_LAST_PING_RESULT(task.id, "True")
-         return
-
-      # start job, if ping result changed first
-      if GET_SCHEDULER_LAST_PING_RESULT(task.id) != ping_result:
-
-         print("Start Scheduler Ping")
-         
-         # check time
-         if task.option_time == "True":
-            if not CHECK_SCHEDULER_TIME(task):
-               return
-
-         # check sensors
-         if task.option_sensors == "True":
-            if not CHECK_SCHEDULER_SENSORS(task):
-               return
-           
-         # check sun options
-         if task.option_sun == "True":
-            
-            if task.option_sunrise == "True":
-               if CHECK_SCHEDULER_SUNRISE(task):
-                  SCHEDULER_TASK(task)
-               
-            if task.option_sunset == "True":
-               if CHECK_SCHEDULER_SUNSET(task):
-                  SCHEDULER_TASK(task)
-
-         SCHEDULER_TASK(task)     
-         SET_SCHEDULER_LAST_PING_RESULT(task.id, ping_result)
-
-
 def CHECK_SCHEDULER_PING(task):
 
    ip_addresses = task.ip_addresses.split(",")
 
    for ip_address in ip_addresses:
-      
-      if ping(ip_address, timeout=1) != None:
-          return "True"
-      if ping(ip_address, timeout=1) != None:
-          return "True"
-      if ping(ip_address, timeout=1) != None:
-          return "True"                
-   
+
+      for x in range(3):
+         if ping(ip_address, timeout=1) != None:    
+            return "True"
+            break  
+     
    return "False"
 
 
@@ -676,7 +550,7 @@ def GET_SUNSET_TIME(lat, long):
 """ ################################ """
 
 
-def SCHEDULER_TASK(task_object):
+def START_SCHEDULER_TASK(task_object):
 
    # ###########
    # start scene
@@ -899,22 +773,6 @@ def SCHEDULER_TASK(task_object):
 
 
    # ###############
-   # watering plants
-   # ###############
-
-   try:
-      if "watering_plants" in task_object.task:
-         task = task_object.task.split(" # ")
-         group_number = task[1]
-         START_WATERING_THREAD(group_number)
-
-
-   except Exception as e:
-      print(e)
-      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
-
-
-   # ###############
    # backup database 
    # ###############
 
@@ -937,6 +795,22 @@ def SCHEDULER_TASK(task_object):
          UPDATE_DEVICES("mqtt")
          UPDATE_DEVICES("zigbee2mqtt")
 
+
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
+
+
+   # #####################
+   # restart music clients
+   # #####################
+
+   try:
+      if "restart_music_clients" in task_object.task:  
+         list_client_music = GET_ALL_DEVICES("client_music")
+
+         for client_music in list_client_music:
+               heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
 
    except Exception as e:
       print(e)

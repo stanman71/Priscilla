@@ -182,16 +182,6 @@ class LED_Scenes(db.Model):
     brightness_9          = db.Column(db.Integer) 
     collapse              = db.Column(db.String(50))        
 
-class Plants(db.Model):
-    __tablename__  = 'plants'
-    id               = db.Column(db.Integer, primary_key=True, autoincrement = True)   
-    name             = db.Column(db.String(50), unique=True)
-    device_ieeeAddr  = db.Column(db.String(50), db.ForeignKey('devices.ieeeAddr'))   
-    device           = db.relationship('Devices')  
-    group            = db.Column(db.Integer)        
-    pump_duration    = db.Column(db.Integer)             
-    sensor_watertank = db.Column(db.Integer) 
-
 class Programs(db.Model):
     __tablename__ = 'programs'
     id                = db.Column(db.Integer, primary_key=True, autoincrement = True)
@@ -355,14 +345,18 @@ if Host.query.filter_by().first() == None:
 # scheduler tasks
 # ###############
 
-update_devices_founded  = False
-backup_database_founded = False
+update_devices_founded        = False
+backup_database_founded       = False
+restart_music_clients_founded = False
 
 for task in Scheduler_Tasks.query.all():
     if task.name.lower() == "update_devices":
         update_devices_founded = True
     if task.name.lower() == "backup_database":
         backup_database_founded = True
+    if task.name.lower() == "restart_music_clients":
+        restart_music_clients_founded = True
+
 
 if update_devices_founded == False:
     scheduler_task_update_devices = Scheduler_Tasks(
@@ -392,6 +386,21 @@ if backup_database_founded == False:
     db.session.add(scheduler_task_backup_database)
     db.session.commit()
     
+if restart_music_clients_founded == False:
+    scheduler_task_restart_music_clients = Scheduler_Tasks(
+        name          = "restart_music_clients",
+        task          = "restart_music_clients",
+        visible       = "False",        
+        option_time   = "True",
+        option_repeat = "True",
+        day           = "*",        
+        hour          = "00",
+        minute        = "05",        
+    )
+    db.session.add(scheduler_task_restart_music_clients)
+    db.session.commit()
+
+
 # #######
 # spotify
 # #######
@@ -821,17 +830,10 @@ def GET_ALL_DEVICES(selector):
         for device in devices:
             
             if (device.device_type == "sensor_passiv" or 
-                device.device_type == "sensor_active" or 
-                device.device_type == "watering_controller"):
+                device.device_type == "sensor_active"):
                 
                 device_list.append(device)   
-   
-    if selector == "watering_controller":
-        for device in devices:
-            if device.device_type == "watering_controller":
-                
-                device_list.append(device)       
-    
+ 
     return device_list    
         
 
@@ -1043,13 +1045,6 @@ def CHANGE_DEVICE_POSITION(id, direction):
 def DELETE_DEVICE(ieeeAddr):
     error_list = ""
 
-    # check plants
-    entries = GET_ALL_PLANTS()
-    for entry in entries:
-        if entry.device_ieeeAddr == ieeeAddr:
-            device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in Bewässung"
-    
     # check scheduler sensor
     entries = GET_ALL_SCHEDULER_TASKS()
     for entry in entries:
@@ -1063,7 +1058,6 @@ def DELETE_DEVICE(ieeeAddr):
         if entry.device_ieeeAddr == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
             error_list = error_list + "," + device.name + " eingetragen in Sensordaten / Jobs"
-
 
     # check led groups
     entries = GET_ALL_LED_GROUPS()
@@ -1893,136 +1887,6 @@ def DELETE_LED_SCENE(id):
 
     LED_Scenes.query.filter_by(id=id).delete()
     db.session.commit() 
-    return True
-
-
-""" ################### """
-""" ################### """
-"""       plants        """
-""" ################### """
-""" ################### """
-
-
-def GET_PLANT_BY_ID(id):
-    return Plants.query.filter_by(id=id).first()
-
-
-def GET_PLANT_BY_NAME(name):
-    for plant in Plants.query.all():
-        
-        if plant.name.lower() == name.lower():
-            return plant    
-    
-
-def GET_PLANT_BY_IEEEADDR(device_ieeeAddr):
-    return Plants.query.filter_by(device_ieeeAddr=device_ieeeAddr).first()
-
-
-def GET_ALL_PLANTS():
-    return Plants.query.all()
-
-
-def ADD_PLANT():
-    # find a unused id
-    for i in range(1,26):
-        if Plants.query.filter_by(id=i).first():
-            pass
-        else:
-            # add the new plant
-            plant = Plants(
-                    id            = i,
-                    name          = "new_plant_" + str(i),  
-                    group         = 1,
-                    pump_duration = 30,                                          
-                )
-            db.session.add(plant)
-            db.session.commit()
-
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + "new_plant_" + str(i) + " | added")  
-            return True
-                  
-    return "Pflanzenlimit erreicht (25)"
-
-
-def SET_PLANT_SETTINGS(id, name, device_ieeeAddr, group, pump_duration):         
-    entry = Plants.query.filter_by(id=id).first()
-    old_name = entry.name
-
-    # values changed ?
-    if (entry.name != name or entry.device_ieeeAddr != device_ieeeAddr or entry.group != int(group) or entry.pump_duration != int(pump_duration)):
-
-        entry.name            = name
-        entry.device_ieeeAddr = device_ieeeAddr
-        entry.group           = group        
-        entry.pump_duration   = pump_duration    
-
-        db.session.commit()  
-
-        try:
-            device_name = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
-        except:
-            device_name = "None"
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + old_name + 
-                             " | changed || Name - " + entry.name + 
-                             " | Device - " + device_name + 
-                             " | Group - " + str(entry.group) + 
-                             " | Pump_Duration - " + str(entry.pump_duration))                           
-        
-        return True
-
-
-def CHANGE_PLANTS_POSITION(id, direction):
-    if direction == "up":
-        plants_list = GET_ALL_PLANTS()
-        plants_list = plants_list[::-1]
-        
-        for plant in plants_list:
-            
-            if plant.id < id:     
-                new_id = plant.id
-                
-                # change ids
-                plant_1 = GET_PLANT_BY_ID(id)
-                plant_2 = GET_PLANT_BY_ID(new_id)
-                
-                plant_1.id = 99
-                db.session.commit()
-                
-                plant_2.id = id
-                plant_1.id = new_id
-                db.session.commit()        
-                return 
-
-    if direction == "down":
-        for plant in GET_ALL_PLANTS():
-            if plant.id > id:       
-                new_id = plant.id
-                
-                # change ids
-                plant_1 = GET_PLANT_BY_ID(id)
-                plant_2 = GET_PLANT_BY_ID(new_id)
-                
-                plant_1.id = 99
-                db.session.commit()
-                
-                plant_2.id = id
-                plant_1.id = new_id
-                db.session.commit()     
-                return 
-
-
-def DELETE_PLANT(id):
-    entry = GET_PLANT_BY_ID(id)
-    plant_name = entry.name
-    
-    try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Plant - " + plant_name + " | deleted")   
-    except:
-        pass
-
-    Plants.query.filter_by(id=id).delete()
-    db.session.commit()
     return True
 
 

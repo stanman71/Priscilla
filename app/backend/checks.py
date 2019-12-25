@@ -222,22 +222,6 @@ def CHECK_PROGRAM_TASKS(program_id):
                   list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
 
 
-            # ###############
-            # watering_plants 
-            # ###############
-            
-            elif "watering_plants" in line[1]:
-
-               try:        
-                  line_content = line[1].split(" # ")     
-                  
-                  if line_content[1] not in ["1", "2", "3", "4", "5"] and line_content[1] != "all" and line_content[1] != "ALL":
-                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> keine gültige Gruppe angegeben")
-
-               except:        
-                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
-
-
             # ##################
             # request_sensordata
             # ##################
@@ -1006,38 +990,6 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
          
 
       # ###############
-      # watering_plants
-      # ###############
-      
-      if "watering_plants" in task:
-         if " # " in task:
-            task = task.split(" # ") 
-            
-            try:
-               if task[1] not in ["1", "2", "3", "4", "5"] and task[1] != "all" and task[1] != "ALL":
-
-                  if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> keine gültige Gruppe angegeben")
-                  else:
-                     list_task_errors.append(name + " >>> keine gültige Gruppe angegeben")
-                 
-            except:
-                  if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Formatierung")
-                  else:
-                     list_task_errors.append(name + " >>> Ungültige Formatierung")
-            
-         else:        
-
-            if task_type == "controller":
-               list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Formatierung")
-            else:
-               list_task_errors.append(name + " >>> Ungültige Formatierung")
-        
-         return list_task_errors
-
-
-      # ###############
       # backup_database  
       # ###############  
        
@@ -1051,7 +1003,15 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
    
       if task == "update_devices" and task_type == "scheduler":
          return list_task_errors
-         
+
+
+      # ####################
+      # restart_client_music
+      # ####################
+   
+      if task == "restart_client_music" and task_type == "scheduler":
+         return list_task_errors
+
 
       # ####################
       # check_mqtt_connetion

@@ -10,7 +10,6 @@ from app.backend.shared_resources import mqtt_message_queue, SET_PROGRAM_STATUS,
 from app.backend.mqtt             import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD, REQUEST_SENSORDATA
 from app.backend.led              import SET_LED_GROUP_SCENE, SET_LED_GROUP_TURN_OFF, CHECK_LED_GROUP_SETTING_THREAD
 from app.backend.spotify          import *
-from app.backend.plants_watering  import START_WATERING_THREAD
 
 stop_program    = False
 repeat_program  = False
@@ -224,22 +223,6 @@ def PROGRAM_THREAD(program_id):
                                 else:
                                     WRITE_LOGFILE_SYSTEM("WARNING", "Program - " + program_name + " | " + check_result)
                                 
-                            except Exception as e:
-                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
-
-
-                        # ########
-                        # watering
-                        # ########
-                                 
-                        if "watering_plants" in line[1]:
-                                
-                            line_content = line[1].split(" # ")
-                            
-                            try:
-                                group_number = line_content[1]    
-                                START_WATERING_THREAD(group_number)             
-
                             except Exception as e:
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
 

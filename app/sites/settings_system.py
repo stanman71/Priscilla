@@ -347,8 +347,20 @@ def settings_system():
 
 
     # test email settings
-    if request.form.get("test_settings_email") != None:  
-        message_test_settings_email = SEND_EMAIL("TEST", "TEST")
+    if request.form.get("test_settings_email") != None: 
+
+        # check email settings complete
+        settings = GET_EMAIL_SETTINGS()
+
+        if (settings.server_address == "" or 
+            settings.server_port == "" or   
+            settings.username == "" or 
+            settings.password == ""):
+
+            message_test_settings_email = "eMail-Einstellungen sind unvollständig"    
+
+        else:   
+            message_test_settings_email = SEND_EMAIL("TEST", "TEST")
 
 
     """ ################ """

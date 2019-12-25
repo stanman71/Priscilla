@@ -48,6 +48,9 @@ def settings_devices():
     success_message_logfile                     = False
     error_message_logfile                       = ""
 
+    exceptions_collapse_open = False
+
+
     page_title       = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
     page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
 
@@ -163,9 +166,11 @@ def settings_devices():
     """ ################## """
 
     if request.form.get("save_device_exceptions") != None:  
+
+        exceptions_collapse_open = True
                 
         for i in range (1,21):
-            
+
             try:     
                 device = GET_DEVICE_BY_ID(i)
                 
@@ -560,7 +565,8 @@ def settings_devices():
                                                     dropdown_list_exception_options=dropdown_list_exception_options,
                                                     dropdown_list_operators=dropdown_list_operators,
                                                     zigbee2mqtt_pairing=zigbee2mqtt_pairing,
-                                                    timestamp=timestamp,      
+                                                    timestamp=timestamp,    
+                                                    exceptions_collapse_open=exceptions_collapse_open,  
                                                     device_1_input_values=device_1_input_values,
                                                     device_2_input_values=device_2_input_values,
                                                     device_3_input_values=device_3_input_values,
@@ -679,20 +685,6 @@ def download_zigbee2mqtt_log(filepath):
 @permission_required
 def download_zigbee2mqtt_topology(filepath): 
     path = GET_PATH() + "/app/static/temp/"
-    
-    if os.path.isfile(path + filepath) == False:
-        return redirect(url_for('settings_devices'))
-    
-    else:
-        return send_from_directory(path, filepath)
-
-  
-# download mosquitto log
-@app.route('/settings/devices/download/mosquitto_log/<path:filepath>')
-@login_required
-@permission_required
-def download_mosquitto_log(filepath): 
-    path = "/var/log/mosquitto/"
     
     if os.path.isfile(path + filepath) == False:
         return redirect(url_for('settings_devices'))

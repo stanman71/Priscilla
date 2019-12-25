@@ -22,10 +22,13 @@ This project creates a smarthome environment.
       * <a href="#5.1 Hardware">5.1 Hardware</a>
       * <a href="#5.2 Flashing">5.2 Flashing</a>
       * <a href="#5.3 Raspberry Pi installation (coordinator only)">5.3 Raspberry Pi installation (coordinator only)</a>   
-   * <a href="#6 Logitech Media Server (LMS)">7 Logitech Media Server (LMS)</a>
-      * <a href="#6.1 Installation">6.1 Installation</a>
-      * <a href="#6.2 Squeezelite Player">6.2 Squeezelite Player</a>
-      * <a href="#6.3 LMS Configuration">6.3 LMS Configuration</a>     
+   * <a href="#6 Zigbee Devices">6 Zigbee Devices</a>   
+      * <a href="#6.1 Supported">6.1 Supported</a>
+      * <a href="#6.2 Add new Devices">6.2 Add new Devices</a>        
+   * <a href="#7 Logitech Media Server (LMS)">7 Logitech Media Server (LMS)</a>
+      * <a href="#7.1 Installation">7.1 Installation</a>
+      * <a href="#7.2 Squeezelite Player">7.2 Squeezelite Player</a>
+      * <a href="#7.3 LMS Configuration">7.3 LMS Configuration</a>     
 
 
 ### Features
@@ -37,7 +40,6 @@ This project creates a smarthome environment.
 - read sensors
 - share data with ESP8266 moduls by using MQTT
 - taskmanagement to automate processes
-- watering plants
 - SQL-lite database 
 - user management and user rights
 - smartphone view
@@ -662,9 +664,50 @@ https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 ------------
 </br>
 
-<a name="6 Logitech Media Server (LMS)"></a>
+<a name="6 Zigbee Devices"></a>
 
-### 6 Logitech Media Server (LMS)
+### 6 Zigbee Devices
+
+<a name="6.1 Supported"></a>
+
+#### 6.1 Supported
+
+- AQARA Contact Sensor (MCCGQ11LM)
+- AQARA Environment Sensor (WSDCGQ11LM)
+- AQARA Human Detector Sensor (RTCGQ11LM)
+- AQARA Wireless Switch (WXKG11LM)
+- Eurotronic Heater Thermostat (SPZB0001)
+- IKEA TRADFRI LED bulb E12/E14/E17 400 lumen (LED1649C5)
+- LEDVANCE Smart+ Plug (AC10691)
+- PHILIPS HUE LightStrip (915005106701)
+- Philips Hue White & Color Ambiance E14/E27 (9290012573A)
+- OSRAM Smart+ Human Detector Sensor (AC01353010G)
+- OSRAM Smart+ Plug (AB3257001NJ)
+
+</br>
+
+<a name="6.2 Add new Devices"></a>
+
+#### 6.2 Add new Devices
+
+- go the to overview of all possible devices
+
+       >>> https://www.zigbee2mqtt.io/information/supported_devices.html
+
+- get the model number and basic informations (input_values, input_events, commands)
+
+- add the new device in the config file
+
+       >>> /home/pi/smarthome/data/zigbee_device_informations.json
+
+
+</br>
+------------
+</br>
+
+<a name="7 Logitech Media Server (LMS)"></a>
+
+### 7 Logitech Media Server (LMS)
 
 https://www.hagensieker.com/wordpress/2018/06/12/302/
 </br>
@@ -672,9 +715,9 @@ http://downloads.slimdevices.com/nightly/7.9/sc/
 </br>
 </br>
 
-<a name="6.1 Installation"></a>
+<a name="7.1 Installation"></a>
 
-#### 6.1 Installation
+#### 7.1 Installation
 
 - install dependencies 
 
@@ -690,9 +733,9 @@ http://downloads.slimdevices.com/nightly/7.9/sc/
 
 </br>
 
-<a name="6.2 Squeezelite Player"></a>
+<a name="7.2 Squeezelite Player"></a>
 
-#### 6.2 Squeezelite Player
+#### 7.2 Squeezelite Player
 
 - create a multiroom group placeholder
 
@@ -719,9 +762,9 @@ http://downloads.slimdevices.com/nightly/7.9/sc/
 
 </br>
 
-<a name="6.3 LMS Configuration"></a>
+<a name="7.3 LMS Configuration"></a>
 
-#### 6.3 LMS Configuration 
+#### 7.3 LMS Configuration 
 
 - open LMS web-gui
 

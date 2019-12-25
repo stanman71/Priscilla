@@ -9,7 +9,7 @@ from app.backend.file_management       import WRITE_LOGFILE_SYSTEM
 from app.backend.email                 import SEND_EMAIL
 from app.backend.shared_resources      import process_management_queue
 from app.backend.process_controller    import PROCESS_CONTROLLER
-from app.backend.process_scheduler     import PROCESS_SCHEDULER_TIME, PROCESS_SCHEDULER_SENSOR, PROCESS_SCHEDULER_PING
+from app.backend.process_scheduler     import PROCESS_SCHEDULER
 
 
 """ ########################## """
@@ -53,26 +53,12 @@ def PROCESS_MANAGEMENT():
                                     
             if process[0] == "scheduler":
                 
+                task     = GET_SCHEDULER_TASK_BY_ID(process[1])
+                ieeeAddr = process[2]
                 
-                if process[1] == "time":
-                    task = GET_SCHEDULER_TASK_BY_ID(process[2])
-                    
-                    PROCESS_SCHEDULER_TIME(task)
+                PROCESS_SCHEDULER(task, ieeeAddr)
             
-            
-                if process[1] == "ping":
-                    task = GET_SCHEDULER_TASK_BY_ID(process[2])
-                    
-                    PROCESS_SCHEDULER_PING(task)    
-                        
-                        
-                if process[1] == "sensor":
-                    task     = GET_SCHEDULER_TASK_BY_ID(process[2])
-                    ieeeAddr = process[3]
-                    
-                    PROCESS_SCHEDULER_SENSOR(task, ieeeAddr)                 
-
-
+  
         except Exception as e:         
             try:   
                 if "index out of range" not in str(e):

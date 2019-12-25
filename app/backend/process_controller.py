@@ -11,19 +11,8 @@ from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
 from app.backend.process_program  import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD
 from app.backend.spotify          import *
 from app.backend.shared_resources import mqtt_message_queue, GET_PROGRAM_STATUS
-from app.backend.plants_watering  import START_WATERING_THREAD
 
 from difflib import SequenceMatcher
-
-
-input_block = False
-
-def WAITER_THREAD():
-    global input_block
-    
-    input_block = True
-    time.sleep(2)
-    input_block = False
 
 
 """ ################################ """
@@ -34,48 +23,21 @@ def WAITER_THREAD():
 
 
 def PROCESS_CONTROLLER(ieeeAddr, msg):
-    
-    global input_block
-    
+
     for controller in GET_ALL_CONTROLLER():
         
         if controller.device_ieeeAddr == ieeeAddr:
             
-            json_data_event = json.loads(msg)
-            
+
             # #########
             # command_1
             # #########
             
             try:
-                
-                if input_block == False:
-                
-                    # special case aqara cube
-                    json_data_command_1 = json.loads(controller.command_1)
-                    
-                    if "side" in controller.command_1:
-                        
-                        try:
-                            
-                            command_1_value = json_data_command_1["side"]
-                            
-                            if (str(json_data_event["to_side"]) == str(command_1_value) or str(json_data_event["from_side"]) == str(command_1_value) and
-                                str(json_data_event["action"]) == "flip90"): 
-                                
-                                CONTROLLER_TASKS(controller.task_1, controller.device.name, controller.command_1) 
-                                Thread = threading.Thread(target=WAITER_THREAD)
-                                Thread.start()                          
-                                return      
-                                
-                        except:
-                            pass                                                        
-                                                                                    
-                    if str(controller.command_1)[1:-1] in str(msg):
-                        CONTROLLER_TASKS(controller.task_1, controller.device.name, controller.command_1)
-                        Thread = threading.Thread(target=WAITER_THREAD)
-                        Thread.start()                          
-                        return
+                                                                                                
+                if str(controller.command_1)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_1, controller.device.name, controller.command_1)                      
+                    return
                             
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -89,33 +51,9 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if input_block == False:
-                
-                    # special case aqara cube
-                    json_data_command_2 = json.loads(controller.command_2)
-                    
-                    if "side" in controller.command_2:
-                        
-                        try:
-                        
-                            command_2_value = json_data_command_2["side"]
-                            
-                            if (str(json_data_event["to_side"]) == str(command_2_value) or str(json_data_event["from_side"]) == str(command_2_value) and
-                                str(json_data_event["action"]) == "flip90"):
-                                
-                                CONTROLLER_TASKS(controller.task_2, controller.device.name, controller.command_2) 
-                                Thread = threading.Thread(target=WAITER_THREAD)
-                                Thread.start()                          
-                                return      
-                                
-                        except:
-                            pass                    
-                                                    
-                    if str(controller.command_2)[1:-1] in str(msg):
-                        CONTROLLER_TASKS(controller.task_2, controller.device.name, controller.command_2)
-                        Thread = threading.Thread(target=WAITER_THREAD)
-                        Thread.start()                          
-                        return
+                if str(controller.command_2)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_2, controller.device.name, controller.command_2)                
+                    return
                           
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -129,33 +67,9 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
             try:
 
-                if input_block == False:
-                
-                    # special case aqara cube
-                    json_data_command_3 = json.loads(controller.command_3)
-                    
-                    if "side" in controller.command_3:
-                        
-                        try:
-                            
-                            command_3_value = json_data_command_3["side"]
-                            
-                            if (str(json_data_event["to_side"]) == str(command_3_value) or str(json_data_event["from_side"]) == str(command_3_value) and
-                                str(json_data_event["action"]) == "flip90"):
-                                
-                                CONTROLLER_TASKS(controller.task_3, controller.device.name, controller.command_3) 
-                                Thread = threading.Thread(target=WAITER_THREAD)
-                                Thread.start()                          
-                                return  
-                                
-                        except:
-                            pass                                                            
-    
-                    if str(controller.command_3)[1:-1] in str(msg):
-                        CONTROLLER_TASKS(controller.task_3, controller.device.name, controller.command_3)
-                        Thread = threading.Thread(target=WAITER_THREAD)
-                        Thread.start()                          
-                        return                      
+                if str(controller.command_3)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_3, controller.device.name, controller.command_3)               
+                    return                      
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -169,33 +83,9 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if input_block == False:
-                
-                    # special case aqara cube
-                    json_data_command_4 = json.loads(controller.command_4)
-                    
-                    if "side" in controller.command_4:
-                        
-                        try:
-                            
-                            command_4_value = json_data_command_4["side"]
-                            
-                            if (str(json_data_event["to_side"]) == str(command_4_value) or str(json_data_event["from_side"]) == str(command_4_value) and
-                                str(json_data_event["action"]) == "flip90"):
-                                
-                                CONTROLLER_TASKS(controller.task_4, controller.device.name, controller.command_4) 
-                                Thread = threading.Thread(target=WAITER_THREAD)
-                                Thread.start()                          
-                                return              
-                                
-                        except:
-                            pass                                                
-                                                
-                    if str(controller.command_4)[1:-1] in str(msg):
-                        CONTROLLER_TASKS(controller.task_4, controller.device.name, controller.command_4)
-                        Thread = threading.Thread(target=WAITER_THREAD)
-                        Thread.start()                          
-                        return
+                if str(controller.command_4)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_4, controller.device.name, controller.command_4)                 
+                    return
                             
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -209,33 +99,9 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if input_block == False:
-                
-                    # special case aqara cube
-                    json_data_command_5 = json.loads(controller.command_5)
-                    
-                    if "side" in controller.command_5:
-                        
-                        try:
-                            
-                            command_5_value = json_data_command_5["side"]
-                            
-                            if (str(json_data_event["to_side"]) == str(command_5_value) or str(json_data_event["from_side"]) == str(command_5_value) and
-                                str(json_data_event["action"]) == "flip90"):
-                                
-                                CONTROLLER_TASKS(controller.task_5, controller.device.name, controller.command_5) 
-                                Thread = threading.Thread(target=WAITER_THREAD)
-                                Thread.start()                          
-                                return                          
-                                            
-                        except:
-                            pass                                                
-                                                    
-                    if str(controller.command_5)[1:-1] in str(msg):
-                        CONTROLLER_TASKS(controller.task_5, controller.device.name, controller.command_5)
-                        Thread = threading.Thread(target=WAITER_THREAD)
-                        Thread.start()                          
-                        return
+                if str(controller.command_5)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_5, controller.device.name, controller.command_5)                    
+                    return
                             
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -249,33 +115,9 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if input_block == False:
-                
-                    # special case aqara cube
-                    json_data_command_6 = json.loads(controller.command_6)
-                    
-                    if "side" in controller.command_6:
-                        
-                        try:
-                            
-                            command_6_value = json_data_command_6["side"]
-                            
-                            if (str(json_data_event["to_side"]) == str(command_6_value) or str(json_data_event["from_side"]) == str(command_6_value) and
-                                str(json_data_event["action"]) == "flip90"):
-                                
-                                CONTROLLER_TASKS(controller.task_6, controller.device.name, controller.command_6) 
-                                Thread = threading.Thread(target=WAITER_THREAD)
-                                Thread.start()                          
-                                return      
-                                
-                        except:
-                            pass                                                        
-    
-                    if str(controller.command_6)[1:-1] in str(msg):
-                        CONTROLLER_TASKS(controller.task_6, controller.device.name, controller.command_6)
-                        Thread = threading.Thread(target=WAITER_THREAD)
-                        Thread.start()                          
-                        return
+                if str(controller.command_6)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_6, controller.device.name, controller.command_6)                    
+                    return
                                
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -288,34 +130,10 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             # #########
             
             try:
-
-                if input_block == False:
-                
-                    # special case aqara cube
-                    json_data_command_7 = json.loads(controller.command_7)
-                    
-                    if "side" in controller.command_7:
-                        
-                        try:
-                            
-                            command_7_value = json_data_command_7["side"]
-                            
-                            if (str(json_data_event["to_side"]) == str(command_7_value) or str(json_data_event["from_side"]) == str(command_7_value) and
-                                str(json_data_event["action"]) == "flip90"):
-                                
-                                CONTROLLER_TASKS(controller.task_7, controller.device.name, controller.command_7) 
-                                Thread = threading.Thread(target=WAITER_THREAD)
-                                Thread.start()                          
-                                return                          
-                                                
-                        except:
-                            pass                                                    
-                                                    
-                    if str(controller.command_7)[1:-1] in str(msg):
-                        CONTROLLER_TASKS(controller.task_7, controller.device.name, controller.command_7)
-                        Thread = threading.Thread(target=WAITER_THREAD)
-                        Thread.start()                          
-                        return                      
+           
+                if str(controller.command_7)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_7, controller.device.name, controller.command_7)                   
+                    return                      
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -327,35 +145,11 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             # command_8
             # #########
             
-            try:
-
-                if input_block == False:
-                
-                    # special case aqara cube
-                    json_data_command_8 = json.loads(controller.command_8)
-                    
-                    if "side" in controller.command_8:
-                        
-                        try:
-                            
-                            command_8_value = json_data_command_8["side"]
-                            
-                            if (str(json_data_event["to_side"]) == str(command_8_value) or str(json_data_event["from_side"]) == str(command_8_value) and
-                                str(json_data_event["action"]) == "flip90"):
-                                
-                                CONTROLLER_TASKS(controller.task_8, controller.device.name, controller.command_8) 
-                                Thread = threading.Thread(target=WAITER_THREAD)
-                                Thread.start()                          
-                                return      
-                                
-                        except:
-                            pass                                                        
+            try:                                            
                                                 
-                    if str(controller.command_8)[1:-1] in str(msg):
-                        CONTROLLER_TASKS(controller.task_8, controller.device.name, controller.command_8)
-                        Thread = threading.Thread(target=WAITER_THREAD)
-                        Thread.start()                          
-                        return
+                if str(controller.command_8)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_8, controller.device.name, controller.command_8)                   
+                    return
                             
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -369,33 +163,9 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if input_block == False:
-                
-                    # special case aqara cube
-                    json_data_command_9 = json.loads(controller.command_9)
-                    
-                    if "side" in controller.command_9:
-                        
-                        try:
-                            
-                            command_9_value = json_data_command_9["side"]
-                            
-                            if (str(json_data_event["to_side"]) == str(command_9_value) or str(json_data_event["from_side"]) == str(command_9_value) and
-                                str(json_data_event["action"]) == "flip90"):
-                                
-                                CONTROLLER_TASKS(controller.task_9, controller.device.name, controller.command_9) 
-                                Thread = threading.Thread(target=WAITER_THREAD)
-                                Thread.start()                          
-                                return      
-                                
-                        except:
-                            pass                                                        
-                                            
-                    if str(controller.command_9)[1:-1] in str(msg):
-                        CONTROLLER_TASKS(controller.task_9, controller.device.name, controller.command_9)
-                        Thread = threading.Thread(target=WAITER_THREAD)
-                        Thread.start()                          
-                        return
+                if str(controller.command_9)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_9, controller.device.name, controller.command_9)                    
+                    return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -407,76 +177,27 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             # command_10
             # ##########
             
-            try:
-
-                if input_block == False:
-                
-                    # special case aqara cube
-                    json_data_command_10 = json.loads(controller.command_10)
-                    
-                    if "side" in controller.command_10:
-                        
-                        try:
-                            
-                            command_10_value = json_data_command_10["side"]
-                            
-                            if (str(json_data_event["to_side"]) == str(command_10_value) or str(json_data_event["from_side"]) == str(command_10_value) and
-                                str(json_data_event["action"]) == "flip90"):
-                                
-                                CONTROLLER_TASKS(controller.task_10, controller.device.name, controller.command_10) 
-                                Thread = threading.Thread(target=WAITER_THREAD)
-                                Thread.start()                          
-                                return      
-                                
-                        except:
-                            pass                                                        
+            try:                                              
                                             
-                    if str(controller.command_10)[1:-1] in str(msg):
-                        CONTROLLER_TASKS(controller.task_10, controller.device.name, controller.command_10)
-                        Thread = threading.Thread(target=WAITER_THREAD)
-                        Thread.start()                          
-                        return
-           
+                if str(controller.command_10)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_10, controller.device.name, controller.command_10)                 
+                    return
+        
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_10[1:-1].replace('"','') + " | " + str(e))    
 
-
             # ##########
             # command_11
             # ##########
             
             try:
-
-                if input_block == False:
-                
-                    # special case aqara cube
-                    json_data_command_11 = json.loads(controller.command_11)
-                    
-                    if "side" in controller.command_11:
-                        
-                        try:
-                            
-                            command_11_value = json_data_command_11["side"]
-                            
-                            if (str(json_data_event["to_side"]) == str(command_11_value) or str(json_data_event["from_side"]) == str(command_11_value) and
-                                str(json_data_event["action"]) == "flip90"):
-                                
-                                CONTROLLER_TASKS(controller.task_11, controller.device.name, controller.command_11) 
-                                Thread = threading.Thread(target=WAITER_THREAD)
-                                Thread.start()                          
-                                return      
-                                
-                        except:
-                            pass                                                        
-                                            
-                    if str(controller.command_11)[1:-1] in str(msg):
-                        CONTROLLER_TASKS(controller.task_11, controller.device.name, controller.command_11)
-                        Thread = threading.Thread(target=WAITER_THREAD)
-                        Thread.start()                          
-                        return
+                                                                       
+                if str(controller.command_11)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_11, controller.device.name, controller.command_11)               
+                    return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -484,47 +205,21 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                     WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_11[1:-1].replace('"','') + " | " + str(e))    
 
-
             # ##########
             # command_12
             # ##########
             
             try:
 
-                if input_block == False:
-                
-                    # special case aqara cube
-                    json_data_command_12 = json.loads(controller.command_12)
-                    
-                    if "side" in controller.command_12:
-                        
-                        try:
-                            
-                            command_12_value = json_data_command_12["side"]
-                            
-                            if (str(json_data_event["to_side"]) == str(command_12_value) or str(json_data_event["from_side"]) == str(command_12_value) and
-                                str(json_data_event["action"]) == "flip90"):
-                                
-                                CONTROLLER_TASKS(controller.task_12, controller.device.name, controller.command_12) 
-                                Thread = threading.Thread(target=WAITER_THREAD)
-                                Thread.start()                          
-                                return      
-                                
-                        except:
-                            pass                                                        
-                                            
-                    if str(controller.command_12)[1:-1] in str(msg):
-                        CONTROLLER_TASKS(controller.task_12, controller.device.name, controller.command_12)
-                        Thread = threading.Thread(target=WAITER_THREAD)
-                        Thread.start()                          
-                        return
+                if str(controller.command_12)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_12, controller.device.name, controller.command_12)            
+                    return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_12[1:-1].replace('"','') + " | " + str(e))    
-
 
 
 """ ################################ """
@@ -534,7 +229,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 """ ################################ """
 
 
-def CONTROLLER_TASKS(task, controller_name, controller_command):
+def START_CONTROLLER_TASK(task, controller_name, controller_command):
     
     controller_command = controller_command[1:-1].replace('"','')
 
@@ -769,19 +464,6 @@ def CONTROLLER_TASKS(task, controller_name, controller_command):
                                 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller_name + " | Command - " + controller_command + " | Gerät - " + task[1] + " | not founded")
-
-
-    # ########
-    # watering
-    # ########
-                
-    if "watering_plants" in task:
-            
-        task = task.lower()
-        task = task.split(" # ")
-        
-        group_number = task[1]    
-        START_WATERING_THREAD(group_number)             
 
 
     # ##################

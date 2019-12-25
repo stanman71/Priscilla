@@ -44,9 +44,9 @@ def sensordata_statistics():
 
     devices       = ""
     sensors       = ""
-    data_file_1   = ""
-    data_file_2   = ""
-    data_file_3   = ""
+    data_file_1   = "None"
+    data_file_2   = "None"
+    data_file_3   = "None"
     
     dropdown_list_dates = []
     date_start          = ""
@@ -64,67 +64,72 @@ def sensordata_statistics():
         data_file_2 = request.form.get("get_file_2")
         data_file_3 = request.form.get("get_file_3")
 
-        df_1 = READ_SENSORDATA_FILE(data_file_1)     
+        if data_file_1 != "None" or data_file_2 != "None" or data_file_3 != "None":
 
-        # merge data sources
-        if data_file_1 != data_file_2 and data_file_1 != data_file_3 and data_file_2 != data_file_3:
+            df_1 = READ_SENSORDATA_FILE(data_file_1)     
 
+            # merge data sources
+            if data_file_1 != data_file_2 and data_file_1 != data_file_3 and data_file_2 != data_file_3:
+
+                try:
+                    df_2 = READ_SENSORDATA_FILE(data_file_2)
+                    df_1 = pd.concat([df_1, df_2], ignore_index=True)
+                except:
+                    pass           
+                try:
+                    df_3 = READ_SENSORDATA_FILE(data_file_3)
+                    df_1 = pd.concat([df_1, df_3], ignore_index=True)
+                except:
+                    pass
+
+                df = df_1
+
+            else:
+                df = df_1
+                if data_file_2 == data_file_3 and data_file_2 != "" and data_file_2 != "None":
+                    error_message_select_datafiles.append("Datei " + data_file_2 + " mehrmals ausgewählt")
+                if data_file_1 == data_file_2 or data_file_1 == data_file_3:
+                    error_message_select_datafiles.append("Datei " + data_file_1 + " mehrmals ausgewählt")  
+
+            import datetime as dt
+
+            # format data
             try:
-                df_2 = READ_SENSORDATA_FILE(data_file_2)
-                df_1 = pd.concat([df_1, df_2], ignore_index=True)
-            except:
-                pass           
-            try:
-                df_3 = READ_SENSORDATA_FILE(data_file_3)
-                df_1 = pd.concat([df_1, df_3], ignore_index=True)
-            except:
-                pass
-
-            df = df_1
+                devices  = df.Device.unique().tolist()
+                devices  = str(devices)
+                devices  = devices[1:]
+                devices  = devices[:-1]
+                devices  = devices.replace("'", "") 
+                sensors  = df.Sensor.unique().tolist()
+                sensors  = str(sensors)                
+                sensors  = sensors[1:]
+                sensors  = sensors[:-1]
+                sensors  = sensors.replace("'", "")
+                
+                for date in pd.to_datetime(df['Timestamp']).dt.date.unique().tolist():
+                    
+                    date_temp = ""
+                    date_temp = date_temp + str(date.year) + "-" 
+                    
+                    if len(str(date.month)) == 1:
+                        date_temp = date_temp + "0" + str(date.month) + "-" 
+                    else:
+                        date_temp = date_temp + str(date.month) + "-" 
+                    
+                    if len(str(date.day)) == 1:
+                        date_temp = date_temp + "0" + str(date.day)
+                    else:
+                        date_temp = date_temp + str(date.day)
+                            
+                    dropdown_list_dates.append(date_temp)        
+                
+            except Exception as e:
+                error_message_select_datafiles.append("Fehler beim Öffnen der Datein || " + str(e))
 
         else:
-            df = df_1
-            if data_file_2 == data_file_3 and data_file_2 != "" and data_file_2 != "None":
-                error_message_select_datafiles.append("Datei " + data_file_2 + " mehrmals ausgewählt")
-            if data_file_1 == data_file_2 or data_file_1 == data_file_3:
-                error_message_select_datafiles.append("Datei " + data_file_1 + " mehrmals ausgewählt")  
-
-        import datetime as dt
-
-        # format data
-        try:
-            devices  = df.Device.unique().tolist()
-            devices  = str(devices)
-            devices  = devices[1:]
-            devices  = devices[:-1]
-            devices  = devices.replace("'", "") 
-            sensors  = df.Sensor.unique().tolist()
-            sensors  = str(sensors)                
-            sensors  = sensors[1:]
-            sensors  = sensors[:-1]
-            sensors  = sensors.replace("'", "")
-            
-            for date in pd.to_datetime(df['Timestamp']).dt.date.unique().tolist():
-                
-                date_temp = ""
-                date_temp = date_temp + str(date.year) + "-" 
-                
-                if len(str(date.month)) == 1:
-                    date_temp = date_temp + "0" + str(date.month) + "-" 
-                else:
-                    date_temp = date_temp + str(date.month) + "-" 
-                
-                if len(str(date.day)) == 1:
-                    date_temp = date_temp + "0" + str(date.day)
-                else:
-                    date_temp = date_temp + str(date.day)
-                        
-                dropdown_list_dates.append(date_temp)        
-            
-        except Exception as e:
-            error_message_select_datafiles.append("Fehler beim Öffnen der Datein || " + str(e))
-    
-    
+            error_message_select_datafiles.append("Keine Datei ausgewählt")
+        
+        
     # update dropdown_list_dates_temp or get former dropdown_list_dates
     if dropdown_list_dates != []:
         dropdown_list_dates_temp = dropdown_list_dates             
@@ -175,7 +180,7 @@ def sensordata_statistics():
             selected_devices = selected_devices.split(",")
             selected_sensors = sensors.replace(" ", "")
             selected_sensors = selected_sensors.split(",")
-        
+
             # complete list
             df_devices = df.loc[df['Device'].isin(selected_devices)]
 
@@ -191,7 +196,6 @@ def sensordata_statistics():
                 df_sensors_filtered_max = df_sensors[df_sensors['Timestamp']<=maximum_from_gui]
 
                 df_sensors = pd.merge(df_sensors_filtered_min, df_sensors_filtered_max, how='inner')
-
 
                 # set datetime as index and remove former row datetime
                 df_sensors['date'] = pd.to_datetime(df_sensors['Timestamp'], format='%Y-%m-%d %H:%M:%S', utc=True).values
@@ -211,7 +215,6 @@ def sensordata_statistics():
 
         except Exception as e:
             error_message_create_graph.append("Daten konnten nicht verarbeitet werden || " + str(e))
-
 
     dropdown_list_sensordata_files = GET_SENSORDATA_FILES() 
 

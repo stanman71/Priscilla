@@ -297,161 +297,165 @@
 {% endif %}
 
 
-            <div class="card">
+            <div class="card ">
               <div class="card-header">
-                <h5 class="title">Ausnahmen</h5>
+                <a data-toggle="collapse" href="#collapse_exceptions"><font color="white"><b><i class='uil uil-arrow-down'> Exceptions </i></b></font></a>
+                <br>
+                <br>
               </div>            
-              <form method="POST">
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table tablesorter">
-                      <tbody> 
-                                
-                        {% for entry in list_exception_devices %}
-                        
-                          <tr style="border-style:hidden;">
-                            <td style="width:20%" class="minwidth_200"> {{entry.name}} </td>  
-                            <td style="width:70%" class="minwidth_200">      
-                              <div class="row justify-content-md-center">
-                                <div class="col-sm-6">   
-                                  <select id="device_{{ entry.id }}" class="form-control" onchange="Choose_Sensor('{{ entry.id }}')" name="set_exception_option_{{ entry.id }}" style="background-color:#27293D"> 
-                                    {% if entry.exception_option != "None" %}
-                                      <option value = "{{ entry.exception_option }}" > {{ entry.exception_option }} </option>
-                                    {% else %}   
-                                      <option value = "None" > Option </option> 
-                                    {% endif %}    
-                                    <option disabled>------------------</option>
-                                      {% for each in dropdown_list_exception_options %}
-                                        <option value = {{each}} > {{each}} </option>
-                                      {% endfor %}                                                        
-                                      {% for each in list_exception_sensors %}
-                                        <option value = {{ each.id }} > {{ each.name }} </option>
-                                      {% endfor %}    
-                                    <option disabled>------------------</option>
-                                    <option value= "None" > None </option> 
-                                  </select>
-                                </div>         
-                                                
-                                {% if entry.exception_option != "None" %} 
-
-                                  <!-- exception option ip_address -->         
-                                  {% if entry.exception_option == "IP-Address" %}         
-                                    <div class="col-sm-6"> 
-                                      <input type="text" class="form-control" name="set_exception_value_1_{{ entry.id }}"
-                                        value = {% if entry.exception_value_1 != None and entry.exception_value_1 != "None" %}"{{ entry.exception_value_1 }}"{% else %}""{% endif %} />
-                                    </div> 
-                                  {% endif %}      
-                              
-                                  <!-- exception option sensor --> 
-                                  {% if entry.exception_sensor_ieeeAddr != "None" %}                                  
-                                    <div class="col-sm-6"> 
-                                      <select id="selected_sensor_{{ entry.id }}" class="form-control" name="set_exception_value_1_{{ entry.id }}" style="background-color:#27293D"> 
-                                        {% if entry.exception_value_1 != "None" %}
-                                          <option value = "{{ entry.exception_value_1 }}" > {{ entry.exception_value_1 }} </option>
-                                        {% else %}   
-                                          <option value = "None" > Sensor </option>   
-                                        {% endif %}                 
-                                        <option disabled>------------------</option>
-
-                                        <!-- values from former device --> 
-                                        {% if entry.exception_sensor_input_values != None %}
-                                          {% for each in entry.exception_sensor_input_values.split(',') %}
-                                            <option value= "{{ each }}" > {{ each }} </option>
-                                          {% endfor %}     
-                                        {% endif %} 
-
-                                        <!-- values from javascript --> 
-                                        {% if entry.input_values != "None" %}
-                                          {% for each in entry.input_values.split(',') %}
-                                            <option value= "{{ each }}" > {{ each }} </option>
-                                          {% endfor %}   
-                                        {% endif %}       
-                                      </select>
-                                    </div>        
-                                  {% endif %} 
-
-                                {% else %}  
-                                  <div class="col-sm-6"></div>                                    
-                                {% endif %} 
-     
-                            </td>  
-                            <td style="width:10%"></td>  
-                          </tr>
-                        
-                          <!-- second row --> 
+              <form method="POST">      
+                <div id="collapse_exceptions" class="collapse{% if exceptions_collapse_open == True %}.show{% endif %}">    
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table tablesorter">
+                        <tbody> 
+                                  
+                          {% for entry in list_exception_devices %}
                           
-                          {% if entry.exception_option != "None" %}      
-                            <tr style="border-style:hidden;">                  
-                              <td></td>
-                              <td>
-                              
-                              <!-- exception option command --> 
-                              <div class="row justify-content-md-center">
-                                <div class="col-sm-6"> 
-                                  <select class="form-control" name="set_exception_setting_string_{{ entry.id }}" style="background-color:#27293D"> 
-                                    {% if entry.exception_setting_string != "None" %}
-                                      <option value = "{{ entry.exception_setting_string }}" > {{ entry.exception_setting_string }} </option>
-                                    {% else %}   
-                                      <option value = "None" > Befehl </option> 
-                                    {% endif %}                           
-                                    <option disabled>------------------</option>
-                                    {% if entry.commands != None %}  
-                                      {% for each in entry.commands.split(' ') %}
-                                        <option value= "{{ each | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }}" > {{ each | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} </option>
-                                      {% endfor %}  
-                                    {% endif %}          
-                                  </select>
-                                </div> 
-
-                                <!-- exception option operator --> 
-                                {% if entry.exception_sensor_ieeeAddr != "None" %} 
-                                  <div class="col-sm-3"> 
-                                    <select class="form-control" name="set_exception_value_2_{{ entry.id }}" style="background-color:#27293D"> 
-                                      {% if entry.exception_value_2 != "None" %}
-                                        <option value = "{{ entry.exception_value_2 }}" > {{ entry.exception_value_2 }} </option>
+                            <tr style="border-style:hidden;">
+                              <td style="width:20%" class="minwidth_200"> {{entry.name}} </td>  
+                              <td style="width:70%" class="minwidth_200">      
+                                <div class="row justify-content-md-center">
+                                  <div class="col-sm-6">   
+                                    <select id="device_{{ entry.id }}" class="form-control" onchange="Choose_Sensor('{{ entry.id }}')" name="set_exception_option_{{ entry.id }}" style="background-color:#27293D"> 
+                                      {% if entry.exception_option != "None" %}
+                                        <option value = "{{ entry.exception_option }}" > {{ entry.exception_option }} </option>
                                       {% else %}   
-                                        <option value = "None" > Operator </option>   
-                                      {% endif %}                       
-                                      <option disabled>---------</option>
-                                      {% for each in dropdown_list_operators %}
-                                        <option value= "{{ each }}" > {{ each }} </option>
-                                      {% endfor %}          
+                                        <option value = "None" > Option </option> 
+                                      {% endif %}    
+                                      <option disabled>------------------</option>
+                                        {% for each in dropdown_list_exception_options %}
+                                          <option value = {{each}} > {{each}} </option>
+                                        {% endfor %}                                                        
+                                        {% for each in list_exception_sensors %}
+                                          <option value = {{ each.id }} > {{ each.name }} </option>
+                                        {% endfor %}    
+                                      <option disabled>------------------</option>
+                                      <option value= "None" > None </option> 
                                     </select>
-                                  </div>                   
-                                  <div class="col-sm-3"> 
-                                    <input type="text" class="form-control" name="set_exception_value_3_{{ entry.id }}"
-                                    value = {% if entry.exception_value_3 != None and entry.exception_value_3 != "None" %}"{{ entry.exception_value_3 }}"{% else %}""{% endif %} />
-                                  </div>  
+                                  </div>         
+                                                  
+                                  {% if entry.exception_option != "None" %} 
 
-                                {% else %}  
-                                  <div class="col-sm-6"></div>  
-                                {% endif %}   
-                              </div>
-                              <td></td>
-                            </tr>    
-
-                          {% endif %}  
-
-                          <tr>
-                            <td></td>
-                            <td></td> 
-                            <td></td>                        
-                          </tr>
-                           <tr>
-                            <td></td>
-                            <td></td> 
-                            <td></td>                        
-                          </tr>
-
-                        {% endfor %}  
+                                    <!-- exception option ip_address -->         
+                                    {% if entry.exception_option == "IP-Address" %}         
+                                      <div class="col-sm-6"> 
+                                        <input type="text" class="form-control" name="set_exception_value_1_{{ entry.id }}"
+                                          value = {% if entry.exception_value_1 != None and entry.exception_value_1 != "None" %}"{{ entry.exception_value_1 }}"{% else %}""{% endif %} />
+                                      </div> 
+                                    {% endif %}      
                                 
-                      </tbody>
-                    </table> 
+                                    <!-- exception option sensor --> 
+                                    {% if entry.exception_sensor_ieeeAddr != "None" %}                                  
+                                      <div class="col-sm-6"> 
+                                        <select id="selected_sensor_{{ entry.id }}" class="form-control" name="set_exception_value_1_{{ entry.id }}" style="background-color:#27293D"> 
+                                          {% if entry.exception_value_1 != "None" %}
+                                            <option value = "{{ entry.exception_value_1 }}" > {{ entry.exception_value_1 }} </option>
+                                          {% else %}   
+                                            <option value = "None" > Sensor </option>   
+                                          {% endif %}                 
+                                          <option disabled>------------------</option>
+
+                                          <!-- values from former device --> 
+                                          {% if entry.exception_sensor_input_values != None %}
+                                            {% for each in entry.exception_sensor_input_values.split(',') %}
+                                              <option value= "{{ each }}" > {{ each }} </option>
+                                            {% endfor %}     
+                                          {% endif %} 
+
+                                          <!-- values from javascript --> 
+                                          {% if entry.input_values != "None" %}
+                                            {% for each in entry.input_values.split(',') %}
+                                              <option value= "{{ each }}" > {{ each }} </option>
+                                            {% endfor %}   
+                                          {% endif %}       
+                                        </select>
+                                      </div>        
+                                    {% endif %} 
+
+                                  {% else %}  
+                                    <div class="col-sm-6"></div>                                    
+                                  {% endif %} 
+      
+                              </td>  
+                              <td style="width:10%"></td>  
+                            </tr>
+                          
+                            <!-- second row --> 
+                            
+                            {% if entry.exception_option != "None" %}      
+                              <tr style="border-style:hidden;">                  
+                                <td></td>
+                                <td>
+                                
+                                <!-- exception option command --> 
+                                <div class="row justify-content-md-center">
+                                  <div class="col-sm-6"> 
+                                    <select class="form-control" name="set_exception_setting_string_{{ entry.id }}" style="background-color:#27293D"> 
+                                      {% if entry.exception_setting_string != "None" %}
+                                        <option value = "{{ entry.exception_setting_string }}" > {{ entry.exception_setting_string }} </option>
+                                      {% else %}   
+                                        <option value = "None" > Befehl </option> 
+                                      {% endif %}                           
+                                      <option disabled>------------------</option>
+                                      {% if entry.commands != None %}  
+                                        {% for each in entry.commands.split(' ') %}
+                                          <option value= "{{ each | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }}" > {{ each | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} </option>
+                                        {% endfor %}  
+                                      {% endif %}          
+                                    </select>
+                                  </div> 
+
+                                  <!-- exception option operator --> 
+                                  {% if entry.exception_sensor_ieeeAddr != "None" %} 
+                                    <div class="col-sm-3"> 
+                                      <select class="form-control" name="set_exception_value_2_{{ entry.id }}" style="background-color:#27293D"> 
+                                        {% if entry.exception_value_2 != "None" %}
+                                          <option value = "{{ entry.exception_value_2 }}" > {{ entry.exception_value_2 }} </option>
+                                        {% else %}   
+                                          <option value = "None" > Operator </option>   
+                                        {% endif %}                       
+                                        <option disabled>---------</option>
+                                        {% for each in dropdown_list_operators %}
+                                          <option value= "{{ each }}" > {{ each }} </option>
+                                        {% endfor %}          
+                                      </select>
+                                    </div>                   
+                                    <div class="col-sm-3"> 
+                                      <input type="text" class="form-control" name="set_exception_value_3_{{ entry.id }}"
+                                      value = {% if entry.exception_value_3 != None and entry.exception_value_3 != "None" %}"{{ entry.exception_value_3 }}"{% else %}""{% endif %} />
+                                    </div>  
+
+                                  {% else %}  
+                                    <div class="col-sm-6"></div>  
+                                  {% endif %}   
+                                </div>
+                                <td></td>
+                              </tr>    
+
+                            {% endif %}  
+
+                            <tr>
+                              <td></td>
+                              <td></td> 
+                              <td></td>                        
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td></td> 
+                              <td></td>                        
+                            </tr>
+
+                          {% endfor %}  
+                                  
+                        </tbody>
+                      </table> 
+                    </div>
+                  </div>            
+                  <div class="card-footer">                  
+                    <button type="submit" onclick="window.location.href='/settings/devices#table_exceptions'" name="save_device_exceptions" class="btn btn-fill btn-primary">SAVE</button>
                   </div>
-                </div>            
-                <div class="card-footer">                  
-                  <button type="submit" onclick="window.location.href='/settings/devices#table_exceptions'" name="save_device_exceptions" class="btn btn-fill btn-primary">SAVE</button>
-                </div>
+                </div>  
               </form>
             </div>
 
@@ -560,9 +564,6 @@
             <div class="card">
               <div class="card-body">
                 <form method="POST"> 
-                  <a class="btn btn-default" href="/settings/devices/download/mosquitto_log/mosquitto.log?time={{ timestamp }}" role="button">DOWNLOAD MQTT LOG</a>  
-                  <br>
-                  <br>
                   <a class="btn btn-default" href="/settings/devices/download/devices_log/log_devices.csv?time={{ timestamp }}" role="button">DOWNLOAD DEVICE LOG</a>                
 
                   <!-- Button trigger modal -->

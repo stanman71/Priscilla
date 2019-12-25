@@ -24,6 +24,7 @@ app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY']                     = "random"        #os.urandom(20).hex()
 app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///' + os.path.join(basedir, 'database/database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SEND_FILE_MAX_AGE_DEFAULT']      = 1
 
 from app.database.models          import *
 from app.backend.spotify          import *
@@ -51,7 +52,7 @@ def background_thread():
 
         # system_log
 
-        selected_log_types = ["WARNING", "ERROR"]
+        selected_log_types = ["EVENT", "STATUS", "NETWORK", "DATABASE", "SUCCESS", "WARNING", "ERROR"]
         log_search         = ""
 
         # get log entries
@@ -147,7 +148,7 @@ UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway)
 """ imports """
 """ ####### """
 
-from app.sites                      import index, dashboard, scheduler, programs, plants, led_scenes, led_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_devices, settings_controller, settings_users, settings_system_log, errors
+from app.sites                      import index, dashboard, scheduler, programs, led_scenes, led_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_devices, settings_controller, settings_users, settings_system_log, errors
 from app.backend.shared_resources   import process_management_queue
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
 from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_AT_STARTUP, CHECK_ZIGBEE2MQTT_PAIRING
@@ -187,14 +188,14 @@ def update_sunrise_sunset():
 def scheduler_time():
     for task in GET_ALL_SCHEDULER_TASKS():
         if (task.option_time == "True" or task.option_sun == "True") and task.option_pause != "True":
-            heapq.heappush(process_management_queue, (20, ("scheduler", "time", task.id)))         
+            heapq.heappush(process_management_queue, (20, ("scheduler", task.id, "")))         
     
 
 @scheduler.task('cron', id='scheduler_ping', second='0, 10, 20, 30, 40, 50')
 def scheduler_ping(): 
     for task in GET_ALL_SCHEDULER_TASKS():
         if task.option_position == "True" and task.option_pause != "True":
-            heapq.heappush(process_management_queue, (20, ("scheduler", "ping", task.id)))
+            heapq.heappush(process_management_queue, (20, ("scheduler", task.id, "")))
 
 
 """ #### """
@@ -258,7 +259,7 @@ if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
         
         WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")        
         SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | No Connection")  
-        SET_ZIGBEE2MQTT_PAIRING_STATUS("ZigBee2MQTT | No Connection")        
+        SET_ZIGBEE2MQTT_PAIRING_STATUS("No Connection")        
 
 else:
     os.system("sudo systemctl stop zigbee2mqtt")
