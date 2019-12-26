@@ -191,7 +191,7 @@ def scheduler_time():
             heapq.heappush(process_management_queue, (20, ("scheduler", task.id, "")))         
     
 
-@scheduler.task('cron', id='scheduler_ping', second='0, 10, 20, 30, 40, 50')
+@scheduler.task('cron', id='scheduler_ping', second='0, 15, 30, 45')
 def scheduler_ping(): 
     for task in GET_ALL_SCHEDULER_TASKS():
         if task.option_position == "True" and task.option_pause != "True":
@@ -234,10 +234,10 @@ if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
         msg     = "false"
 
         heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
-        time.sleep(5)
+        time.sleep(10)
 
         # check pairing setting
-        for message in GET_MQTT_INCOMING_MESSAGES(10):
+        for message in GET_MQTT_INCOMING_MESSAGES(15):
             if message[1] == "smarthome/zigbee2mqtt/bridge/config":
             
                 try:
@@ -255,7 +255,7 @@ if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
             
     else:
-        print("ERROR: Network | ZigBee2MQTT | No connection") 
+        print("ERROR: Network | ZigBee2MQTT | No Connection") 
         
         WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")        
         SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | No Connection")  

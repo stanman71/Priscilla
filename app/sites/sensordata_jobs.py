@@ -160,11 +160,8 @@ def sensordata_jobs():
                             sensor_key  = sensor_list[int(sensor_key)-2]
 
 
-                # check checkbox
-                if request.form.get("checkbox_always_active_" + str(i)):
-                    always_active = "True"
-                else:
-                    always_active = ""  
+                # input setting
+                always_active = request.form.get("radio_input_setting_" + str(i))
 
                 # save settings
                 if error_founded == False: 
@@ -176,6 +173,7 @@ def sensordata_jobs():
     list_sensordata_jobs  = GET_ALL_SENSORDATA_JOBS()
     dropdown_list_devices = GET_ALL_DEVICES("sensors") 
     list_sensordata_files = GET_SENSORDATA_FILES()
+    list_sensors          = GET_ALL_DEVICES("sensors") 
 
     data = {'navigation': 'sensordata'}
 
@@ -320,6 +318,7 @@ def sensordata_jobs():
                                                     list_sensordata_jobs=list_sensordata_jobs,  
                                                     dropdown_list_devices=dropdown_list_devices,
                                                     list_sensordata_files=list_sensordata_files,
+                                                    list_sensors=list_sensors,
                                                     device_1_input_values=device_1_input_values,
                                                     device_2_input_values=device_2_input_values,
                                                     device_3_input_values=device_3_input_values,

@@ -190,13 +190,13 @@
 
                       <thead>
                         <th scope="col" style="width:3%"></th>  
-                        <th scope="col" style="width:20%" class="minwidth_200">Job</th>  
-                        <th scope="col" style="width:20%" class="minwidth_200">Datei</th>   
+                        <th scope="col" style="width:18%" class="minwidth_200">Job</th>  
+                        <th scope="col" style="width:18%" class="minwidth_200">Datei</th>   
                         <th scope="col" style="width:18%" class="minwidth_200">Gerät</th>
                         <th scope="col" style="width:18%" class="minwidth_200">Sensor</th>
                         <th></th> 
-                        <th scope="col" style="width:16%" class="minwidth_100"></th>
-                        <th scope="col" style="width:5%"></th>
+                        <th scope="col" style="width:15%" class="minwidth_100"></th>
+                        <th scope="col" style="width:10%"></th>
                       </thead>
                       <tbody> 
                         {% for entry in list_sensordata_jobs %}
@@ -242,10 +242,15 @@
                           </td> 
                           <td></td>
                           <td>
-                            <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="checkbox_always_active_{{ entry.id }}" {% if entry.always_active == "True" %} checked="on" {% endif %} name="checkbox_always_active_{{ entry.id }}">
-                              <label class="custom-control-label" for="checkbox_always_active_{{ entry.id }}">Alles speichern</label>
-                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" class="custom-control-input" id="radio_always_active_{{ entry.id }}" {% if entry.always_active == "True" %} checked="on" {% endif %} value="True" name="radio_input_setting_{{ entry.id }}">
+                              <label class="custom-control-label" for="radio_always_active_{{ entry.id }}">alles speichern</label>
+                            </div> 
+                            <br>       
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" class="custom-control-input" id="radio_request_only_{{ entry.id }}" {% if entry.always_active == "False" %} checked="on" {% endif %} value="False" name="radio_input_setting_{{ entry.id }}">
+                              <label class="custom-control-label" for="radio_request_only_{{ entry.id }}">nur Abfragen speichern</label>
+                            </div> 
                           </td>     
                           <td>   
                             <!-- Button trigger modal -->
@@ -277,6 +282,43 @@
               </form>
             </div>
 
+
+<!------------------------>
+<!-- LAST VALUES TABLE  -->
+<!------------------------>
+
+            <div class="card ">      
+              <div class="card-body"> 
+                <div class="table-responsive">
+                  <table class="table tablesorter">
+                    <thead>
+                      <th scope="col" style="width:3%"></th>  
+                      <th scope="col" style="width:18%" class="minwidth_200">Gerät</th>
+                      <th scope="col" style="width:54%" class="minwidth_300">Letzte Werte</th>
+                      <th scope="col" style="width:25%" class="minwidth_200">Zeitpunkt</th>
+                    </thead>
+                    <tbody> 
+                      {% for entry in list_sensors %}
+                      <tr>         
+                        <td></td>                                
+                        <td>
+                          {{ entry.name }}                  
+                        </td> 
+                        <td>
+                          {{ entry.last_values_string }}
+                        </td> 
+                        <td>
+                          {{ entry.last_contact }}                  
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>         
+                </div>
+              </div>            
+            </div>
+
+
 <!---------------->
 <!--  DATAFILES -->
 <!---------------->   
@@ -294,10 +336,7 @@
   </div>
 {% endif %}  
 
-            <div class="card ">
-              <div class="card-header">
-                <h5 class="title">Sensordaten</h5>
-              </div>         
+            <div class="card ">   
               <div class="card-body"> 
                 {% if list_plants_datafiles != "No Files founded" %}
                   <div class="table-responsive">
@@ -305,7 +344,8 @@
                       <tbody> 
                         {% for entry in list_sensordata_files %}
                         <tr>
-                          <td style="width:80%">{{ entry }}</td> 
+                          <td style="width:3%"></td>                           
+                          <td style="width:77%">{{ entry }}</td> 
                           <td style="width:10%">
                             <a class="btn btn-default pull-left" href="/sensordata/download/file/{{ entry }}?time={{ timestamp }}" role="button">DOWNLOAD</a>
                           </td>  

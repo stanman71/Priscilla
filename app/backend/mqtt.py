@@ -207,8 +207,8 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             if int(data["battery"]) < 25:
                 WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")
                 SEND_EMAIL("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")                         
-        except Exception as e:
-            print(e)                
+        except:
+            pass               
 
 
     if device_type == "sensor_passiv" or device_type == "sensor_active":
@@ -222,7 +222,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
         # start schedular job 
         for task in GET_ALL_SCHEDULER_TASKS():
-            if task.option_sensors == "checked" and task.option_pause != "checked":
+            if task.option_sensors == "True" and task.option_pause != "True":
                 heapq.heappush(process_management_queue, (10, ("scheduler", task.id, ieeeAddr)))
 
 

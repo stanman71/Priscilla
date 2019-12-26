@@ -28,13 +28,11 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
         
         if controller.device_ieeeAddr == ieeeAddr:
             
-
             # #########
             # command_1
             # #########
             
-            try:
-                                                                                                
+            try:                                                                                    
                 if str(controller.command_1)[1:-1] in str(msg):
                     START_CONTROLLER_TASK(controller.task_1, controller.device.name, controller.command_1)                      
                     return
@@ -230,7 +228,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
 
 def START_CONTROLLER_TASK(task, controller_name, controller_command):
-    
+
     controller_command = controller_command[1:-1].replace('"','')
 
     # ###########

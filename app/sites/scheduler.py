@@ -185,13 +185,13 @@ def scheduler():
 
                 # set option sunrise
                 if request.form.get("checkbox_option_sunrise_" + str(i)):
-                    option_sunrise = "checked"
+                    option_sunrise = "True"
                 else:
                     option_sunrise = "None"  
 
                 # set option sunset
                 if request.form.get("checkbox_option_sunset_" + str(i)):
-                    option_sunset = "checked"
+                    option_sunset = "True"
                 else:              
                     option_sunset = "None"  
 
@@ -312,13 +312,13 @@ def scheduler():
 
                 # set option home
                 if request.form.get("checkbox_option_home_" + str(i)):
-                    option_home = "checked"
+                    option_home = "True"
                 else:
                     option_home = "None"  
 
                 # set option away
                 if request.form.get("checkbox_option_away_" + str(i)):
-                    option_away = "checked"
+                    option_away = "True"
                 else:
                     option_away = "None"  
 

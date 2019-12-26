@@ -64,7 +64,7 @@ def PROCESS_MANAGEMENT():
                 if "index out of range" not in str(e):
                     WRITE_LOGFILE_SYSTEM("ERROR", "Process Management | " + str(e))  
                     SEND_EMAIL("ERROR", "Process Management | " + str(e))               
-                    print(str(e))
+                    print("ERROR: Process Management | " + str(e))
                     
             except:
                 pass

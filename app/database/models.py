@@ -263,7 +263,6 @@ class Scheduler_Tasks(db.Model):
     option_home                 = db.Column(db.String(50))
     option_away                 = db.Column(db.String(50))
     ip_addresses                = db.Column(db.String(50))
-    last_ping_result            = db.Column(db.String(50))
     collapse                    = db.Column(db.String(50))
 
 class Sensordata_Jobs(db.Model):
@@ -345,17 +344,17 @@ if Host.query.filter_by().first() == None:
 # scheduler tasks
 # ###############
 
-update_devices_founded        = False
-backup_database_founded       = False
-restart_music_clients_founded = False
+update_devices_founded       = False
+backup_database_founded      = False
+restart_client_music_founded = False
 
 for task in Scheduler_Tasks.query.all():
     if task.name.lower() == "update_devices":
         update_devices_founded = True
     if task.name.lower() == "backup_database":
         backup_database_founded = True
-    if task.name.lower() == "restart_music_clients":
-        restart_music_clients_founded = True
+    if task.name.lower() == "restart_client_music":
+        restart_client_music_founded = True
 
 
 if update_devices_founded == False:
@@ -386,10 +385,10 @@ if backup_database_founded == False:
     db.session.add(scheduler_task_backup_database)
     db.session.commit()
     
-if restart_music_clients_founded == False:
-    scheduler_task_restart_music_clients = Scheduler_Tasks(
-        name          = "restart_music_clients",
-        task          = "restart_music_clients",
+if restart_client_music_founded == False:
+    scheduler_task_restart_client_music = Scheduler_Tasks(
+        name          = "restart_client_music",
+        task          = "restart_client_music",
         visible       = "False",        
         option_time   = "True",
         option_repeat = "True",
@@ -397,7 +396,7 @@ if restart_music_clients_founded == False:
         hour          = "00",
         minute        = "05",        
     )
-    db.session.add(scheduler_task_restart_music_clients)
+    db.session.add(scheduler_task_restart_client_music)
     db.session.commit()
 
 
@@ -502,8 +501,7 @@ def SET_CAMERA_SETTINGS(id, name, url, user, password):
         entry.name     = name
         entry.url      = url
         entry.user     = user     
-        entry.password = password                  
-        
+        entry.password = password                       
         db.session.commit()  
         
         WRITE_LOGFILE_SYSTEM("DATABASE", "Camera - " + old_name + " | changed")
@@ -926,25 +924,16 @@ def UPDATE_DEVICE(id, name, gateway, model, device_type = "", description = "", 
     if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.description != description 
         or entry.input_values != input_values or entry.input_events != input_events or entry.commands != commands):
         
+        entry.name            = name
         entry.model           = model
         entry.device_type     = device_type
         entry.description     = description
         entry.input_values    = str(input_values)
         entry.input_events    = str(input_events)
         entry.commands        = str(commands)        
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + entry.name + " | changed" + 
-                             " || Name - " + name + 
-                             " | ieeeAddr - " + entry.ieeeAddr + 
-                             " | Model - " + entry.model +
-                             " | device_type - " + entry.device_type +
-                             " | description - " + entry.description +
-                             " | Input_values - " + str(input_values) + 
-                             " | Input_events - " + str(input_events) + 
-                             " | Commands - " + str(commands))
-
-        entry.name = name
         db.session.commit()    
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + entry.name + " | changed")
    
         if device_type == "controller":
             ADD_CONTROLLER(GET_DEVICE_BY_ID(id).ieeeAddr)
@@ -983,17 +972,10 @@ def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting_string, e
         entry.exception_sensor_input_values = exception_sensor_input_values
         entry.exception_value_1             = exception_value_1
         entry.exception_value_2             = exception_value_2 
-        entry.exception_value_3             = exception_value_3         
-        
+        entry.exception_value_3             = exception_value_3            
         db.session.commit()  
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + entry.name + " | Exception Settings changed" +
-                             " || Exception - " + entry.exception_option +
-                             " | Exception Setting - " + entry.exception_setting_string +                          
-                             " | Exception ieeeAddr - " + entry.exception_sensor_ieeeAddr +
-                             " | Exception Value 1 - " + entry.exception_value_1 +
-                             " | Exception Value 2 - " + entry.exception_value_2 +      
-                             " | Exception Value 3 - " + entry.exception_value_3) 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + entry.name + " | Exception Settings | changed") 
 
         return True
 
@@ -1174,8 +1156,7 @@ def UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
         entry.lan_dhcp        = lan_dhcp    
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed " +
-                             "| DHCP LAN - " +  str(lan_dhcp))    
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network Settings | changed")    
 
         return True 
 
@@ -1190,8 +1171,7 @@ def UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway):
         entry.lan_gateway     = lan_gateway  
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network settings changed " +
-                             "| LAN - " + str(lan_ip_address) + " : " + str(lan_gateway)) 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network Settings | changed") 
 
         return True
 
@@ -1301,7 +1281,7 @@ def SET_LED_GROUP(id, name, led_ieeeAddr_1, led_name_1, led_device_type_1,
         
         db.session.commit()  
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Group - " + name + " | Settings changed")  
+        WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Group - " + name + " | Settings | changed")  
         return True 
 
 
@@ -1660,7 +1640,7 @@ def SET_LED_SCENE(id, name, red_1, green_1, blue_1, brightness_1, red_2, green_2
         entry.brightness_9 = brightness_9                       
         db.session.commit()  
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + name + " | Settings changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + name + " | Settings | changed") 
         return True
 
 
@@ -2520,17 +2500,6 @@ def SET_SCHEDULER_TASK_SUNSET(id, sunset):
     db.session.commit()   
 
 
-def GET_SCHEDULER_LAST_PING_RESULT(id):    
-    return (Scheduler_Tasks.query.filter_by(id=id).first().last_ping_result)
-
-
-def SET_SCHEDULER_LAST_PING_RESULT(id, result):    
-    entry = Scheduler_Tasks.query.filter_by(id=id).first()
-
-    entry.last_ping_result = result
-    db.session.commit()   
-
-
 def ADD_SCHEDULER_TASK_SECOND_SENSOR(id):
     entry = Scheduler_Tasks.query.filter_by(id=id).first()
 
@@ -2669,7 +2638,8 @@ def ADD_SENSORDATA_JOB():
             # add the new job
             sensordata_job = Sensordata_Jobs(
                     id             = i,
-                    name           = "new_job_" + str(i),           
+                    name           = "new_job_" + str(i), 
+                    always_active  = "True",           
                 )
             db.session.add(sensordata_job)
             db.session.commit()
@@ -2773,7 +2743,7 @@ def SET_SPOTIFY_SETTINGS(client_id, client_secret):
         entry.client_secret = client_secret   
         db.session.commit()
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Spotify | Settings changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Spotify | Settings | changed") 
         return True
 
 
@@ -2790,7 +2760,7 @@ def SET_SPOTIFY_REFRESH_TOKEN(refresh_token):
         entry.refresh_token = refresh_token
         db.session.commit()
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Spotify | Token changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Spotify | Token | changed") 
         return True
 
 
@@ -2809,7 +2779,7 @@ def SET_SPOTIFY_DEFAULT_SETTINGS(default_device_id, default_device_name, default
         entry.default_volume        = default_volume        
         db.session.commit()
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Spotify | Default Settings changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Spotify | Default Settings | changed") 
         return True
 
 
@@ -2835,7 +2805,7 @@ def SET_SYSTEM_SERVICES(zigbee2mqtt_active, lms_active, squeezelite_active):
         entry.squeezelite_active   = squeezelite_active               
         db.session.commit()   
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "System | Services | Settings changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | Services | Settings | changed") 
         return True
 
 

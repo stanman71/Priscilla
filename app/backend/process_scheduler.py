@@ -30,11 +30,15 @@ from difflib import SequenceMatcher
 
 def PROCESS_SCHEDULER(task, ieeeAddr):
    
+   start_task = False
+
    # check time   
    if task.option_time == "True":
       if not CHECK_SCHEDULER_TIME(task):
          return
-        
+      else:
+         start_task = True
+
    # check sensors
    if task.option_sensors == "True":
 
@@ -42,37 +46,38 @@ def PROCESS_SCHEDULER(task, ieeeAddr):
       if (task.device_ieeeAddr_1 == ieeeAddr or task.device_ieeeAddr_2 == ieeeAddr):
          if not CHECK_SCHEDULER_SENSORS(task):
             return
+         else:
+            start_task = True
 
    # check sun
    if task.option_sunrise == "True":
       if not CHECK_SCHEDULER_SUNRISE(task):
          return   
+      else:
+         start_task = True
+
    if task.option_sunset == "True":
       if not CHECK_SCHEDULER_SUNSET(task):
          return     
+      else:
+         start_task = True
 
    # check position
-   if task.option_home == "True" or task.option_away == "True":
-
-      ping_result = CHECK_SCHEDULER_PING(task)
-
-      # update last ping, if nessanrry     
-      if task.option_home == "True" and ping_result == "False":
-         SET_SCHEDULER_LAST_PING_RESULT(task.id, "False")
-         return
-         
-      if task.option_away == "True" and ping_result == "True":
-         SET_SCHEDULER_LAST_PING_RESULT(task.id, "True")
-         return
-
-      # start job, if ping result changed first
-      if GET_SCHEDULER_LAST_PING_RESULT(task.id) == ping_result:
-         return
-      else:
-         SET_SCHEDULER_LAST_PING_RESULT(task.id, ping_result)
+   if task.option_position == "True": 
+   
+      if task.option_home == "True" or task.option_away == "True":
+         ping_result = CHECK_SCHEDULER_PING(task)
+  
+         if task.option_home == "True" and ping_result == "False": 
+            return          
+         elif task.option_away == "True" and ping_result == "True":
+            return
+         else:
+            start_task = True
 
 
-   START_SCHEDULER_TASK(task)
+   if start_task == True:
+      START_SCHEDULER_TASK(task)
 
 
 """ ################################ """
@@ -107,6 +112,7 @@ def CHECK_SCHEDULER_TIME(task):
       if task.day.lower() == current_day.lower() or task.day == "*":
          passing = True
 
+
    # check minute
    if passing == True:
 
@@ -117,7 +123,7 @@ def CHECK_SCHEDULER_TIME(task):
          
          for element in hours:
              
-            if element == current_hour:
+            if str(element) == str(current_hour):
                passing = True
                break
             
@@ -125,11 +131,12 @@ def CHECK_SCHEDULER_TIME(task):
                passing = False
       else:
           
-         if task.hour == current_hour or task.hour == "*":
+         if str(task.hour) == str(current_hour) or str(task.hour) == "*":
             passing = True
             
          else:
             passing = False              
+
 
    # check minute
    if passing == True:
@@ -141,7 +148,7 @@ def CHECK_SCHEDULER_TIME(task):
          
          for element in minutes:
              
-            if element == current_minute:
+            if str(element) == str(current_minute):
                passing = True
                break
             
@@ -150,7 +157,7 @@ def CHECK_SCHEDULER_TIME(task):
                
       else:
           
-         if task.minute == current_minute or task.minute == "*":
+         if str(task.minute) == str(current_minute) or str(task.minute) == "*":
             passing = True
             
          else:
@@ -209,47 +216,32 @@ def CHECK_SCHEDULER_SENSORS(task):
    
    passing = False   
 
-   
+
    # #######
    # one row
    # #######
    
    if task.main_operator_second_sensor == "None" or task.main_operator_second_sensor == None:
 
-      device_ieeeAddr_1  = task.device_ieeeAddr_1
-      sensor_key_1       = task.sensor_key_1
-      value_1            = task.value_1.lower()
 
-      try:
-         value_1 = str(value_1).lower()
-      except:
-         pass
-      
-    
       ##################
       # get sensordata 1
       ##################     
 
-      data_1 = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1).last_values_json)
-   
-      sensor_key_1   = sensor_key_1.replace(" ","")          
-      sensor_value_1 = data_1[sensor_key_1].lower()
+      device_ieeeAddr_1  = task.device_ieeeAddr_1
+      sensor_key_1       = task.sensor_key_1.replace(" ","")    
+      data_1             = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1).last_values_json)
+      sensor_value_1     = data_1[sensor_key_1]
 
-      try:
-         sensor_value_1 = str(sensor_value_1).lower()
-      except:
-         pass
-      
-      
+
       ####################
       # compare conditions
       ####################
       
       passing_1 = False
 
-
       if task.operator_1 == "=" and not task.value_1.isdigit():
-         if str(sensor_value_1) == str(task.value_1):
+         if str(sensor_value_1).lower() == str(task.value_1).lower():
             passing = True
          else:
             passing = False
@@ -276,50 +268,25 @@ def CHECK_SCHEDULER_SENSORS(task):
    
    if task.main_operator_second_sensor != "None" and task.main_operator_second_sensor != None:
              
-      device_ieeeAddr_1 = task.device_ieeeAddr_1
-      device_ieeeAddr_2 = task.device_ieeeAddr_2
-      sensor_key_1      = task.sensor_key_1
-      sensor_key_2      = task.sensor_key_2
-      value_1           = task.value_1
-      value_2           = task.value_2
-      
-      try:
-         value_1 = str(value_1).lower()
-      except:
-         pass
-         
-      try:
-         value_2 = str(value_2).lower()
-      except:
-         pass     
-      
+     
       ##################
       # get sensordata 1
       ##################     
 
-      data_1 = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1).last_values_json)
-   
-      sensor_key_1   = sensor_key_1.replace(" ","")          
-      sensor_value_1 = data_1[sensor_key_1]
-      
-      try:
-         sensor_value_1 = str(sensor_value_1).lower()
-      except:
-         pass
+      device_ieeeAddr_1  = task.device_ieeeAddr_1
+      sensor_key_1       = task.sensor_key_1.replace(" ","")    
+      data_1             = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1).last_values_json)
+      sensor_value_1     = data_1[sensor_key_1]
+
 
       ##################
       # get sensordata 2
       ##################     
 
-      data_2 = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_2).last_values_json)
-   
-      sensor_key_2   = sensor_key_2.replace(" ","")          
-      sensor_value_2 = data_2[sensor_key_2]
-
-      try:
-         sensor_value_2 = str(sensor_value_2).lower()
-      except:
-         pass
+      device_ieeeAddr_2  = task.device_ieeeAddr_2
+      sensor_key_2       = task.sensor_key_2.replace(" ","")    
+      data_2             = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_2).last_values_json)
+      sensor_value_2     = data_2[sensor_key_2]
          
 
       ####################
@@ -341,7 +308,7 @@ def CHECK_SCHEDULER_SENSORS(task):
                else:
                   passing = False
             except:
-               if str(sensor_value_1) == str(sensor_value_2):
+               if str(sensor_value_1).lower() == str(sensor_value_2).lower():
                   passing = True    
                else:
                   passing = False           
@@ -368,7 +335,7 @@ def CHECK_SCHEDULER_SENSORS(task):
          
          try:
             if task.operator_1 == "=" and not task.value_1.isdigit() and sensor_value_1 != "Message nicht gefunden":
-               if str(sensor_value_1) == str(task.value_1):
+               if str(sensor_value_1).lower() == str(task.value_1).lower():
                   passing_1 = True
                else:
                   passing_1 = False
@@ -409,7 +376,7 @@ def CHECK_SCHEDULER_SENSORS(task):
             
          try:             
             if task.operator_2 == "=" and not task.value_2.isdigit() and sensor_value_1 != "Message nicht gefunden":
-               if str(sensor_value_2) == str(task.value_2):
+               if str(sensor_value_2).lower() == str(task.value_2).lower():
                   passing_2 = True
                else:
                   passing_2 = False
