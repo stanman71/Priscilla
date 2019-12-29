@@ -174,37 +174,33 @@ def PROGRAM_THREAD(program_id):
                                 device      = ""
                                 device      = GET_DEVICE_BY_NAME(device_name)
                                 
-                                program_setting_formated = line_content[2]
+                                program_setting = line_content[2]
                                  
                                 # check device exception
-                                check_result = CHECK_DEVICE_EXCEPTIONS(device.id, program_setting_formated)
+                                check_result = CHECK_DEVICE_EXCEPTIONS(device.id, program_setting)
                                 
                                
                                 if check_result == True:      
-
-                                    # convert string to json-format
-                                    program_setting = program_setting_formated.replace(" ", "")
-                                    program_setting = program_setting.replace(':', '":"')
-                                    program_setting = program_setting.replace(',', '","')
-                                    program_setting = '{"' + str(program_setting) + '"}'                        
-                                                                 
+               
                                     # new device setting ?  
                                     new_setting = False
 
                                     if not "," in program_setting:
-                                        if not program_setting[1:-1] in device.last_values_json:
+                                        if not program_setting in device.last_values_json:
                                             new_setting = True
 
                                     # more then one setting value:
                                     else:   
-                                        program_setting_temp = program_setting[1:-1]
+                                        program_setting_temp = program_setting
                                         list_program_setting = program_setting_temp.split(",")
 
                                         for setting in list_program_setting:
 
                                             if not setting in device.last_values_json:
                                                 new_setting = True  
-
+                        
+                        
+                                    # setting changed  
                                     if new_setting == True: 
 
                                         if device.gateway == "mqtt":
@@ -212,11 +208,13 @@ def PROGRAM_THREAD(program_id):
                                         if device.gateway == "zigbee2mqtt":   
                                             channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                                        msg = program_setting
-
-                                        heapq.heappush(mqtt_message_queue, (10, (channel, msg)))    
-                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_setting, 20)     
-                                                         
+                                        # get the json command statement and start process
+                                        for command_json in device.commands_json.split(","):        
+                                            if program_setting in command_json:
+                                                heapq.heappush(mqtt_message_queue, (10, (channel, command_json)))            
+                                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_setting, 20)      
+                                                break
+       
                                     else:
                                         WRITE_LOGFILE_SYSTEM("STATUS", "Devices | Device - " + device.name + " | " + program_setting)                                
 

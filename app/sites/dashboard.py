@@ -84,18 +84,13 @@ def dashboard():
 
             try:    
 
-                device              = GET_DEVICE_BY_ID(i)
-                device_setting_json = request.form.get("set_command_" + str(i))
+                device         = GET_DEVICE_BY_ID(i)
+                device_setting = request.form.get("set_command_" + str(i))
 
-                if device_setting_json != None and device_setting_json != "None":
+                if device_setting != None and device_setting != "None":
 
-                    # convert json-format to string
-                    device_setting_string = device_setting_json.replace('"', '')
-                    device_setting_string = device_setting_string.replace('{', '')
-                    device_setting_string = device_setting_string.replace('}', '')
-                    
                     # check device exception
-                    check_result = CHECK_DEVICE_EXCEPTIONS(device.id, device_setting_string)
+                    check_result = CHECK_DEVICE_EXCEPTIONS(device.id, device_setting)
                         
                     if check_result == True:               
                 
@@ -105,13 +100,13 @@ def dashboard():
                         if device.last_values_json != None:
                             
                             # one setting value
-                            if not "," in device_setting_json:
-                                if not device_setting_json[1:-1] in device.last_values_json:
+                            if not "," in device_setting:
+                                if not device_setting in device.last_values_json:
                                     new_setting = True
                                                                     
                             # more then one setting value
                             else:
-                                device_setting_temp  = device_setting_json[1:-1]
+                                device_setting_temp  = device_setting
                                 list_device_settings = device_setting_temp.split(",")
                                 
                                 for setting in list_device_settings:
@@ -121,8 +116,9 @@ def dashboard():
 
                         else:
                             new_setting = True
-                                    
-                                    
+
+
+                        # setting changed           
                         if new_setting == True:    
 
                             if device.gateway == "mqtt":
@@ -130,8 +126,12 @@ def dashboard():
                             if device.gateway == "zigbee2mqtt":   
                                 channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                            heapq.heappush(mqtt_message_queue, (1, (channel, device_setting_json)))            
-                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting_json, 20)      
+                            # get the json command statement and start process
+                            for command_json in device.commands_json.split(","):        
+                                if device_setting in command_json:
+                                    heapq.heappush(mqtt_message_queue, (1, (channel, command_json)))            
+                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting, 20)      
+                                    break
 
                     else:
                         WRITE_LOGFILE_SYSTEM("WARNING", "Network | " + check_result)       

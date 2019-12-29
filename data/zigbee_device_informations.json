@@ -5,31 +5,35 @@
 				"description"     : "AQARA Contact Sensor",
 				"input_values"    : ["contact"],
 				"input_events"    : [],
-				"commands"        : []
+				"commands"        : [],
+				"commands_json"   : []			
 			},				
 			{
 				"model"           : "WSDCGQ11LM",
 				"device_type"     : "sensor_passiv",
 				"description"     : "AQARA Environment Sensor",
-				"input_values"    : ["temperature", "humidity", "pressure", "battery"],
+				"input_values"    : ["temperature","humidity","pressure","battery"],
 				"input_events"    : [],
-				"commands"        : []
+				"commands"        : [],
+				"commands_json"   : []
 			},	
 			{
 				"model"           : "RTCGQ11LM",
 				"device_type"     : "sensor_passiv",
 				"description"     : "AQARA Human Detector Sensor",
-				"input_values"    : ["illuminance", "occupancy", "battery"],
+				"input_values"    : ["illuminance","occupancy","battery"],
 				"input_events"    : [],
-				"commands"        : []
+				"commands"        : [],
+				"commands_json"   : []
 			},				
 			{
 				"model"           : "WXKG11LM",
 				"device_type"     : "controller",
 				"description"     : "AQARA Wireless Switch",
 				"input_values"    : [],
-				"input_events"    : ["{'click':'single'}", "{'click':'double'}"],
-				"commands"        : []
+				"input_events"    : ["{'click':'single'}","{'click':'double'}"],
+				"commands"        : [],
+				"commands_json"   : []
 			},	
 			{
 				"model"           : "CC2530.ROUTER",
@@ -37,18 +41,20 @@
 				"description"     : "CUSTOM CC2530 + CC2592 Router",
 				"input_values"    : [],
 				"input_events"    : [],
-				"commands"        : []
+				"commands"        : [],
+				"commands_json"   : []
 			},				
 			{
 				"model"           : "SPZB0001",
 				"device_type"     : "heater",
 				"description"     : "Eurotronic Heater Thermostat",
-				"input_values"    : ["current_heating_setpoint", "eurotronic_system_mode", "eurotronic_error_status"],
+				"input_values"    : ["current_heating_setpoint","system_mode","local_temperature","eurotronic_error_status","battery"],
 				"input_events"    : [],
-				"commands"        : ["{'current_heating_setpoint':16}", "{'current_heating_setpoint':17}", "{'current_heating_setpoint':18}",
-                                                     "{'current_heating_setpoint':19}", "{'current_heating_setpoint':20}", "{'current_heating_setpoint':21}",
-                                                     "{'current_heating_setpoint':22}", "{'current_heating_setpoint':23}", "{'current_heating_setpoint':24}",
-                                                     "{'current_heating_setpoint':25}", "{'eurotronic_system_mode': 32}", "{'eurotronic_system_mode': 16}" ]
+				"commands"        : ["16","18","20","21","22","23","24","25","BREAK","HEAT"],				
+				"commands_json"   : ["{'current_heating_setpoint':16}","{'current_heating_setpoint':18}","{'current_heating_setpoint':20}",
+				                     "{'current_heating_setpoint':21}","{'current_heating_setpoint':22}","{'current_heating_setpoint':23}",
+									 "{'current_heating_setpoint':24}","{'current_heating_setpoint':25}",
+									 "{'eurotronic_system_mode':32}","{'eurotronic_system_mode':16}"]
 			},			
 			{
 				"model"           : "LED1649C5",
@@ -56,7 +62,8 @@
 				"description"     : "IKEA TRADFRI LED bulb E12/E14/E17 400 lumen",
 				"input_values"    : [],
 				"input_events"    : [],
-				"commands"        : []
+				"commands"        : [],
+				"commands_json"   : []
 			},				
 			{
 				"model"           : "AC10691",
@@ -64,7 +71,8 @@
 				"description"     : "LEDVANCE Smart+ Plug",
 				"input_values"    : [],
 				"input_events"    : [],
-				"commands"        : ["{'state':'ON'}", "{'state':'OFF'}"]
+				"commands"        : ["ON","OFF"],				
+				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]
 			},	
 			{
 				"model"           : "915005106701",
@@ -72,7 +80,8 @@
 				"description"     : "PHILIPS HUE LightStrip",
 				"input_values"    : [],
 				"input_events"    : [],
-				"commands"        : []
+				"commands"        : [],
+				"commands_json"   : []
 			},			
 			{
 				"model"           : "9290012573A",
@@ -80,15 +89,26 @@
 				"description"     : "Philips Hue White & Color Ambiance E14/E27",
 				"input_values"    : [],
 				"input_events"    : [],
-				"commands"        : []
-			},			
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "929001953101",
+				"device_type"     : "led_rgb",
+				"description"     : "PHILIPS HUE White & Color Ambiance GU10",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},						
 			{
 				"model"           : "AC01353010G",
 				"device_type"     : "sensor_passiv",
 				"description"     : "OSRAM Smart+ Human Detector Sensor",
-				"input_values"    : ["tamper", "occupancy", "battery_low"],
+				"input_values"    : ["temperature","occupancy","battery_low"],
 				"input_events"    : [],
-				"commands"        : []
+				"commands"        : [],
+				"commands_json"   : []
 			},	
 			{
 				"model"           : "AB3257001NJ",
@@ -96,7 +116,8 @@
 				"description"     : "OSRAM Smart+ Plug",
 				"input_values"    : [],
 				"input_events"    : [],
-				"commands"        : ["{'state':'ON'}", "{'state':'OFF'}"]
+				"commands"        : ["ON","OFF"],				
+				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]
 			}						
 		]
 }

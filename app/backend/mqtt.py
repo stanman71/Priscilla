@@ -41,8 +41,8 @@ def MQTT_RECEIVE_THREAD():
         else:
             client.subscribe("smarthome/#")
   
-            print("MQTT | Connected") 
-            WRITE_LOGFILE_SYSTEM("NETWORK", "MQTT | Connected")
+            print("Network | MQTT | Connected") 
+            WRITE_LOGFILE_SYSTEM("NETWORK", "Network | MQTT | Connected")
             SET_DEVICE_CONNECTION_MQTT(True)
 
 
@@ -165,7 +165,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         if data["type"] == "pairing" and data["message"] == "interview_successful":
             time.sleep(5)
             UPDATE_DEVICES("zigbee2mqtt")
-            WRITE_LOGFILE_SYSTEM("NETWORK", "Device | Added - " + data["meta"]["friendly_name"])   
+            WRITE_LOGFILE_SYSTEM("NETWORK", "Devices | Device - " + data["meta"]["friendly_name"] + " | added")   
             SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device added - " + data["meta"]["friendly_name"])   
             time.sleep(10)      
             SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
@@ -178,10 +178,10 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
       
         # remove devices
         if data["type"] == "device_removed":
-            WRITE_LOGFILE_SYSTEM("NETWORK", "Device | Deleted - " + data["meta"]["friendly_name"])
+            WRITE_LOGFILE_SYSTEM("NETWORK", "Devices | Device - " + data["meta"]["friendly_name"] + " | deleted")
 
         if data["type"] == "device_force_removed":
-            WRITE_LOGFILE_SYSTEM("NETWORK", "Device | Deleted (force) - " + data["message"])
+            WRITE_LOGFILE_SYSTEM("NETWORK", "Devices | Device - " + data["message"] + " | deleted (force)")
 
 
     # start function networkmap
@@ -205,8 +205,8 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             data = json.loads(msg)
             
             if int(data["battery"]) < 25:
-                WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")
-                SEND_EMAIL("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")                         
+                WRITE_LOGFILE_SYSTEM("WARNING", "Devices | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")
+                SEND_EMAIL("WARNING", "Devices | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")                         
         except:
             pass               
 
@@ -396,7 +396,7 @@ def UPDATE_DEVICES(gateway):
                     # add new device
 
                     if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):
-                        ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, description, input_values, input_events, commands)
+                        ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, description, input_values, input_events, commands, "")
                       
                     # update existing device
 
@@ -404,7 +404,7 @@ def UPDATE_DEVICES(gateway):
                         id   = GET_DEVICE_BY_IEEEADDR(ieeeAddr).id
                         name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
                                         
-                        UPDATE_DEVICE(id, name, gateway, model, device_type, description, input_values, input_events, commands)
+                        UPDATE_DEVICE(id, name, gateway, model, device_type, description, input_values, input_events, commands, "")
                         SET_DEVICE_LAST_CONTACT(ieeeAddr)
                       
                     # update input values
@@ -465,15 +465,16 @@ def UPDATE_DEVICES(gateway):
                                             new_device = GET_DEVICE_INFORMATIONS(new_model)
                                         except:
                                             new_model  = ""
-                                            new_device = ["", "", "", "", ""]
+                                            new_device = ["", "", "", "", "", ""]
                                             
-                                        device_type  = new_device[0]
-                                        description  = new_device[1]
-                                        input_values = new_device[2]
-                                        input_events = new_device[3]  
-                                        commands     = new_device[4]                                
+                                        device_type   = new_device[0]
+                                        description   = new_device[1]
+                                        input_values  = new_device[2]
+                                        input_events  = new_device[3]  
+                                        commands      = new_device[4]                                
+                                        commands_json = new_device[5] 
 
-                                        ADD_DEVICE(name, gateway, ieeeAddr, new_model, device_type, description, input_values, input_events, commands)
+                                        ADD_DEVICE(name, gateway, ieeeAddr, new_model, device_type, description, input_values, input_events, commands, commands_json)
 
                                     # update device informations
                                 
@@ -481,31 +482,32 @@ def UPDATE_DEVICES(gateway):
                                 
                                         device_data = GET_DEVICE_BY_IEEEADDR(device['ieeeAddr'])
 
-                                        id       = device_data.id         
-                                        name     = device['friendly_name']
-                                        gateway  = "zigbee2mqtt"
+                                        id             = device_data.id         
+                                        name           = device['friendly_name']
+                                        existing_model = device['model']  
+                                        gateway        = "zigbee2mqtt"
 
-                                        try:          
-                                            model = device['model'] 
-                                                    
-                                            existing_device = GET_DEVICE_INFORMATIONS(model)
+                                        try:                           
+                                            existing_device = GET_DEVICE_INFORMATIONS(existing_model)
                                             
-                                            device_type  = existing_device[0]
-                                            description  = existing_device[1]
-                                            input_values = existing_device[2]
-                                            input_events = existing_device[3]  
-                                            commands     = existing_device[4]  
+                                            device_type   = existing_device[0]
+                                            description   = existing_device[1]
+                                            input_values  = existing_device[2]
+                                            input_events  = existing_device[3]  
+                                            commands      = existing_device[4]  
+                                            commands_json = existing_device[5] 
 
                                         except Exception as e:
-                                            device_type  = device_data.device_type
-                                            description  = device_data.description 
-                                            input_values = device_data.input_values
-                                            input_events = device_data.input_events
-                                            commands     = device_data.commands 
+                                            device_type   = device_data.device_type
+                                            description   = device_data.description 
+                                            input_values  = device_data.input_values
+                                            input_events  = device_data.input_events
+                                            commands      = device_data.commands 
+                                            commands_json = device_data.commands_json 
                                     
-                                            error = "Error | " + str(model) + " not founded | " + str(e)
+                                            error = "Error | " + str(existing_model) + " not founded | " + str(e)
                                                                     
-                                        UPDATE_DEVICE(id, name, gateway, model, device_type, description, input_values, input_events, commands)
+                                        UPDATE_DEVICE(id, name, gateway, existing_model, device_type, description, input_values, input_events, commands, commands_json)
 
         
                 if error != "":
@@ -535,56 +537,46 @@ def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, repeats = 10):
     Thread.start()   
 
  
-def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting_json, repeats):                
+def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):                
     device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
     counter = 1
-           
-    # format string for gui
-    setting_string = setting_json.replace('"', '')
-    setting_string = setting_string.replace('{', '')
-    setting_string = setting_string.replace('}', '')    
-    setting_string = setting_string.replace(':', ': ')
-    setting_string = setting_string.replace(',', ', ')      
-
+        
     while counter != repeats:  
         
         if device.gateway == "mqtt":
-            result = CHECK_MQTT_SETTING(device.ieeeAddr, setting_json)
+            result = CHECK_MQTT_SETTING(device.ieeeAddr, setting)
         if device.gateway == "zigbee2mqtt":
-            result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting_json)    
+            result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting)    
     
         # set previous setting
         if result == True:
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | Setting changed | " + setting_string)  
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | Device - " + device.name + " | Setting changed | " + setting)  
             return True
 
         counter = counter + 1
         time.sleep(1)       
 
     # error message
-    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting_string)  
-    SEND_EMAIL("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting_string)                
-    return ("Device - " + device.name + " | Setting not confirmed - " + setting_string) 
+    WRITE_LOGFILE_SYSTEM("ERROR", "Devices | Device - " + device.name + " | Setting not confirmed | " + setting)  
+    SEND_EMAIL("ERROR", "Devices | Device - " + device.name + " | Setting not confirmed | " + setting)                
+    return ("Device - " + device.name + " | Setting not confirmed - " + setting) 
                          
 
-def CHECK_MQTT_SETTING(ieeeAddr, setting_json):        
+def CHECK_MQTT_SETTING(ieeeAddr, setting):        
     for message in GET_MQTT_INCOMING_MESSAGES(10):
         
         # search for fitting message in incoming_messages_list
         if message[1] == "smarthome/mqtt/" + ieeeAddr:  
-            
-            setting_json = setting_json[1:-1]
-            setting_json = setting_json.replace(" ", "")
-            
+                       
             # only one setting value
-            if not "," in setting_json:    
-                if setting_json in message[2]:
+            if not "," in setting:    
+                if setting in message[2]:
                     return True
                                                     
             # more then one setting value:
             else:
                 
-                list_settings = setting_json.split(",")
+                list_settings = setting.split(",")
                 
                 for setting in list_settings:           
                     if not setting in message[2]:
@@ -595,7 +587,7 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting_json):
     return False
    
 
-def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting_json):
+def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
 
     if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
 
@@ -603,19 +595,16 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting_json):
 
             # search for fitting message in incoming_messages_list
             if message[1] == "smarthome/zigbee2mqtt/" + device_name:   
-        
-                setting_json = setting_json[1:-1]
-                setting_json = setting_json.replace(" ", "")
 
                 # only one setting value
-                if not "," in setting_json:       
-                    if setting_json in message[2]:
+                if not "," in setting:       
+                    if setting in message[2]:
                         return True
                                     
                 # more then one setting value:
                 else:
                     
-                    list_settings = setting_json.split(",")
+                    list_settings = setting.split(",")
                     
                     for setting in list_settings:        
                         if not setting in message[2]:
@@ -734,7 +723,7 @@ def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
 """ ######################### """
 
 
-def CHECK_DEVICE_EXCEPTIONS(id, setting_string):
+def CHECK_DEVICE_EXCEPTIONS(id, setting):
     device = GET_DEVICE_BY_ID(id)
 
     try:
@@ -743,10 +732,9 @@ def CHECK_DEVICE_EXCEPTIONS(id, setting_string):
         # exception ip_address 
         # ####################
         
-        setting_string           = setting_string.replace(" ", "")
-        exception_setting_string = device.exception_setting_string.replace(" ", "")
+        exception_setting = device.exception_setting.replace(" ", "")
 
-        if device.exception_option == "IP-Address" and exception_setting_string == setting_string:
+        if device.exception_option == "IP-Address" and exception_setting == setting:
 
             for x in range(3):
                 if ping(device.exception_value_1, timeout=1) != None:    
@@ -761,7 +749,7 @@ def CHECK_DEVICE_EXCEPTIONS(id, setting_string):
         # exception sensor
         # ################
         
-        if device.exception_sensor_ieeeAddr != "None" and exception_setting_string == setting_string:
+        if device.exception_sensor_ieeeAddr != "None" and exception_setting == setting:
             
             sensor_ieeeAddr = device.exception_sensor_ieeeAddr
             sensor_key      = device.exception_value_1   
@@ -842,14 +830,14 @@ def REQUEST_SENSORDATA(job_name):
                 filename = sensordata_job.filename
     
                 WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Devices | Sensor Data saved")  
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Devices | Sensordata | saved")  
                 return True
                 
             except:
                 pass
 
-    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Devices | Request Sensordata | Message not founded") 
-    SEND_EMAIL("ERROR", "Network | Devices | Request Sensordata | Message not founded")       
+    WRITE_LOGFILE_SYSTEM("ERROR", "Devices | Request Sensordata | Message not founded") 
+    SEND_EMAIL("ERROR", "Devices | Request Sensordata | Message not founded")       
 
    
 def SAVE_SENSORDATA(job_id):

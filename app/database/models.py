@@ -62,11 +62,12 @@ class Devices(db.Model):
     input_values                  = db.Column(db.String(200))
     input_events                  = db.Column(db.String(200))
     commands                      = db.Column(db.String(200))    
+    commands_json                 = db.Column(db.String(200))     
     last_contact                  = db.Column(db.String(50))
     last_values_json              = db.Column(db.String(200))  
     last_values_string            = db.Column(db.String(200)) 
     exception_option              = db.Column(db.String(50)) 
-    exception_setting_string      = db.Column(db.String(50))     
+    exception_setting             = db.Column(db.String(50))     
     exception_sensor_ieeeAddr     = db.Column(db.String(50))   
     exception_sensor_input_values = db.Column(db.String(50))     
     exception_value_1             = db.Column(db.String(50))
@@ -353,9 +354,6 @@ for task in Scheduler_Tasks.query.all():
         update_devices_founded = True
     if task.name.lower() == "backup_database":
         backup_database_founded = True
-    if task.name.lower() == "restart_client_music":
-        restart_client_music_founded = True
-
 
 if update_devices_founded == False:
     scheduler_task_update_devices = Scheduler_Tasks(
@@ -385,21 +383,6 @@ if backup_database_founded == False:
     db.session.add(scheduler_task_backup_database)
     db.session.commit()
     
-if restart_client_music_founded == False:
-    scheduler_task_restart_client_music = Scheduler_Tasks(
-        name          = "restart_client_music",
-        task          = "restart_client_music",
-        visible       = "False",        
-        option_time   = "True",
-        option_repeat = "True",
-        day           = "*",        
-        hour          = "00",
-        minute        = "05",        
-    )
-    db.session.add(scheduler_task_restart_client_music)
-    db.session.commit()
-
-
 # #######
 # spotify
 # #######
@@ -607,66 +590,54 @@ def UPDATE_CONTROLLER_EVENTS():
     for controller in GET_ALL_CONTROLLER():
     
         device_input_events = GET_DEVICE_BY_IEEEADDR(controller.device_ieeeAddr).input_events
-        device_input_events = device_input_events.split(" ")
+        device_input_events = device_input_events.split(",")
 
         try:
-            device_events        = device_input_events[0].replace(" ","")
-            controller.command_1 = device_events
+            controller.command_1 = device_input_events[0]
         except:
             controller.command_1 = "None"
         try:
-            device_events        = device_input_events[1].replace(" ","")
-            controller.command_2 = device_events
+            controller.command_2 = device_input_events[1]
         except:
             controller.command_2 = "None"
         try:
-            device_events        = device_input_events[2].replace(" ","")
-            controller.command_3 = device_events
+            controller.command_3 = device_input_events[2]
         except:
             controller.command_3 = "None"
         try:
-            device_events        = device_input_events[3].replace(" ","")
-            controller.command_4 = device_events
+            controller.command_4 = device_input_events[3]
         except:
             controller.command_4 = "None"
         try:
-            device_events        = device_input_events[4].replace(" ","")
-            controller.command_5 = device_events
+            controller.command_5 = device_input_events[4]
         except:
             controller.command_5 = "None"
         try:
-            device_events        = device_input_events[5].replace(" ","")
-            controller.command_6 = device_events
+            controller.command_6 = device_input_events[5]
         except:
             controller.command_6 = "None"            
         try:
-            device_events        = device_input_events[6].replace(" ","")
-            controller.command_7 = device_events
+            controller.command_7 = device_input_events[6]
         except:
             controller.command_7 = "None"
         try:
-            device_events        = device_input_events[7].replace(" ","")
-            controller.command_8 = device_events
+            controller.command_8 = device_input_events[7]
         except:
             controller.command_8 = "None"
         try:
-            device_events        = device_input_events[8].replace(" ","")
-            controller.command_9 = device_events
+            controller.command_9 = device_input_events[8]
         except:
             controller.command_9 = "None"      
         try:
-            device_events         = device_input_events[9].replace(" ","")
-            controller.command_10 = device_events
+            controller.command_10 = device_input_events[9]
         except:
             controller.command_10 = "None"      
         try:
-            device_events         = device_input_events[10].replace(" ","")
-            controller.command_11 = device_events
+            controller.command_11 = device_input_events[10]
         except:
             controller.command_11 = "None"      
         try:
-            device_events         = device_input_events[11].replace(" ","")
-            controller.command_12 = device_events
+            controller.command_12 = device_input_events[11]
         except:
             controller.command_12 = "None"      
 
@@ -835,8 +806,8 @@ def GET_ALL_DEVICES(selector):
     return device_list    
         
 
-def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", description = "", 
-               input_values = "", input_events = "", commands = "", last_contact = ""):
+def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", description = "", input_values = "", 
+               input_events = "", commands = "", commands_json = "", last_contact = ""):
         
     # path exist ?
     if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):   
@@ -859,7 +830,8 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", descriptio
                         description      = description,
                         input_values     = str(input_values),
                         input_events     = str(input_events),
-                        commands         = str(commands),                    
+                        commands         = str(commands),   
+                        commands_json    = str(commands_json),                                           
                         last_contact     = last_contact,
                         exception_option = "None"
                         )
@@ -917,20 +889,21 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
         pass
 
 
-def UPDATE_DEVICE(id, name, gateway, model, device_type = "", description = "", input_values = "", input_events = "", commands = ""):
+def UPDATE_DEVICE(id, name, gateway, model, device_type = "", description = "", input_values = "", input_events = "", commands = "", commands_json = ""):
     entry = Devices.query.filter_by(id=id).first()
-    
+
     # values changed ?
-    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.description != description 
-        or entry.input_values != input_values or entry.input_events != input_events or entry.commands != commands):
+    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.description != description or entry.input_values != input_values or 
+        entry.input_events != input_events or entry.commands != commands or entry.commands_json != commands_json):
         
-        entry.name            = name
-        entry.model           = model
-        entry.device_type     = device_type
-        entry.description     = description
-        entry.input_values    = str(input_values)
-        entry.input_events    = str(input_events)
-        entry.commands        = str(commands)        
+        entry.name          = name
+        entry.model         = model
+        entry.device_type   = device_type
+        entry.description   = description
+        entry.input_values  = str(input_values)
+        entry.input_events  = str(input_events)
+        entry.commands      = str(commands)   
+        entry.commands_json = str(commands_json)               
         db.session.commit()    
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + entry.name + " | changed")
@@ -954,20 +927,20 @@ def UPDATE_DEVICE_EXCEPTION_SENSOR_NAMES():
         pass
 
 
-def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting_string, exception_sensor_ieeeAddr, 
+def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting, exception_sensor_ieeeAddr, 
                          exception_sensor_input_values, exception_value_1, exception_value_2, exception_value_3):
               
     entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
              
     # values changed ?
-    if (entry.exception_option != exception_option or entry.exception_setting_string != exception_setting_string or
+    if (entry.exception_option != exception_option or entry.exception_setting != exception_setting or
         entry.exception_sensor_ieeeAddr != exception_sensor_ieeeAddr or 
         entry.exception_sensor_input_values != exception_sensor_input_values or 
         entry.exception_value_1 != exception_value_1 or entry.exception_value_2 != exception_value_2 or 
         entry.exception_value_3 != exception_value_3):              
                                          
         entry.exception_option              = exception_option
-        entry.exception_setting_string      = exception_setting_string          
+        entry.exception_setting             = exception_setting          
         entry.exception_sensor_ieeeAddr     = exception_sensor_ieeeAddr
         entry.exception_sensor_input_values = exception_sensor_input_values
         entry.exception_value_1             = exception_value_1

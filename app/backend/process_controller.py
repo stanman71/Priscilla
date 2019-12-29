@@ -231,6 +231,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
     controller_command = controller_command[1:-1].replace('"','')
 
+
     # ###########
     # start scene
     # ###########
@@ -398,41 +399,32 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
     # ######
 
     if "device" in task:
-        task = task.split(" # ")
+        task   = task.split(" # ")
         device = GET_DEVICE_BY_NAME(task[1].lower())
         
         # device founded ?
         if device != None:
             
-            controller_setting_string = str(task[2:])
-            controller_setting_string = controller_setting_string.replace("[", "")
-            controller_setting_string = controller_setting_string.replace("]", "")
-            controller_setting_string = controller_setting_string.replace("'", "")
-            
+            controller_setting = task[2]
+
             # check device exception
-            check_result = CHECK_DEVICE_EXCEPTIONS(device.id, controller_setting_string)
+            check_result = CHECK_DEVICE_EXCEPTIONS(device.id, controller_setting)
                  
             if check_result == True:               
               
-                # convert string to json-format
-                controller_setting_json = controller_setting_string.replace(' ', '')
-                controller_setting_json = controller_setting_json.replace(':', '":"')
-                controller_setting_json = controller_setting_json.replace(',', '","')
-                controller_setting_json = '{"' + str(controller_setting_json) + '"}'
-
                 new_setting = False
                 
                 # new device setting ?  
                 if device.last_values_json != None:
                     
                     # one setting value
-                    if not "," in controller_setting_json:
-                        if not controller_setting_json[1:-1] in device.last_values_json:
+                    if not "," in controller_setting:
+                        if not controller_setting in device.last_values_json:
                             new_setting = True
                                                                
                     # more then one setting value
                     else:
-                        controller_setting_temp = controller_setting_json[1:-1]
+                        controller_setting_temp = controller_setting
                         list_controller_settings = controller_setting_temp.split(",")
                         
                         for setting in list_controller_settings:
@@ -442,8 +434,8 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                                 
                 else:
                     new_setting = True
-                            
-                            
+
+                # setting changed                      
                 if new_setting == True:    
 
                     if device.gateway == "mqtt":
@@ -451,11 +443,15 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                     if device.gateway == "zigbee2mqtt":   
                         channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                    heapq.heappush(mqtt_message_queue, (1, (channel, controller_setting_json)))            
-                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting_json, 20)
-                             
+                    # get the json command statement and start process
+                    for command_json in device.commands_json.split(","):        
+                        if controller_setting in command_json:
+                            heapq.heappush(mqtt_message_queue, (1, (channel, command_json)))            
+                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 20)      
+                            break
+
                 else:
-                    WRITE_LOGFILE_SYSTEM("STATUS", "Devices | Device - " + device.name + " | " + controller_setting_string) 
+                    WRITE_LOGFILE_SYSTEM("STATUS", "Devices | Device - " + device.name + " | " + controller_setting) 
                                                                    
             else:
                 WRITE_LOGFILE_SYSTEM("WARNING", "Controller - " + controller_name + " | " + check_result)

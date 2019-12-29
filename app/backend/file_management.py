@@ -376,41 +376,47 @@ def GET_DEVICE_INFORMATIONS(model):
             if str(device["model"]) == str(model):
 
                 try:
-                    device_type  = device['device_type']
+                    device_type   = device['device_type']
                 except:
-                    device_type  = ""                 
+                    device_type   = ""                 
                   
                 try:
-                    description  = device['description']
+                    description   = device['description']
                 except:
-                    description  = ""
+                    description   = ""
 
                 try:
-                    input_values = device['input_values']
-                    input_values = ','.join(input_values)   
-                    input_values = input_values.replace("'", '"')
+                    input_values  = device['input_values']
+                    input_values  = ','.join(input_values)   
+                    input_values  = input_values.replace("'", '"')
                 except:
-                    input_values = ""
+                    input_values  = ""
                   
                 try:
-                    input_events = device['input_events']
-                    input_events = ','.join(input_events)
-                    input_events = input_events.replace("'", '"')
-                    input_events = input_events.replace("},{", '} {')     
+                    input_events  = device['input_events']
+                    input_events  = ','.join(input_events)
+                    input_events  = input_events.replace("'", '"')     
                 except:
-                    input_events = ""
+                    input_events  = ""
                     
                 try:
-                    commands     = device['commands']   
-                    commands     = ','.join(commands)
-                    commands     = commands.replace("'", '"')  
-                    commands     = commands.replace("},{", '} {')                               
+                    commands      = device['commands']   
+                    commands      = ','.join(commands)
+                    commands      = commands.replace("'", '"')                              
                 except:
-                    commands     = ""
+                    commands      = ""
+
+                try:
+                    commands_json = device['commands_json']   
+                    commands_json = ','.join(commands_json)
+                    commands_json = commands_json.replace("'", '"')                             
+                except:
+                    commands_json = "" 
+
+
+                return (device_type, description, input_values, input_events, commands, commands_json)
                 
-                return (device_type, description, input_values, input_events, commands)
-                
-        return ("", "", "", "", "")   
+        return ("", "", "", "", "", "")   
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/zigbee_device_informations.json | " + str(e))   

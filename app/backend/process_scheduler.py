@@ -647,31 +647,24 @@ def START_SCHEDULER_TASK(task_object):
 
             # device founded ?
             if device != None:
-                  scheduler_setting_string = task[2]
+                  scheduler_setting = task[2]
                   
                   # check device exception
-                  check_result = CHECK_DEVICE_EXCEPTIONS(device.id, scheduler_setting_string)
-                  
-               
+                  check_result = CHECK_DEVICE_EXCEPTIONS(device.id, scheduler_setting)
+                            
                   if check_result == True:                         
                   
-                     # convert string to json-format
-                     scheduler_setting_json = scheduler_setting_string.replace(' ', '')
-                     scheduler_setting_json = scheduler_setting_json.replace(':', '":"')
-                     scheduler_setting_json = scheduler_setting_json.replace(',', '","')
-                     scheduler_setting_json = '{"' + str(scheduler_setting_json) + '"}'                
-
                      # new device setting ?  
                      new_setting = False
                      
                      # one settings value only
-                     if not "," in scheduler_setting_json:
-                        if not scheduler_setting_json[1:-1] in device.last_values_json:
+                     if not "," in scheduler_setting:
+                        if not scheduler_setting in device.last_values_json:
                               new_setting = True
                                                                   
                      # more then one setting value:
                      else:   
-                        scheduler_setting_temp  = scheduler_setting_json[1:-1]
+                        scheduler_setting_temp  = scheduler_setting
                         list_scheduler_settings = scheduler_setting_temp.split(",")
                         
                         for setting in list_scheduler_settings:
@@ -679,7 +672,8 @@ def START_SCHEDULER_TASK(task_object):
                               if not setting in device.last_values_json:
                                  new_setting = True  
 
-                     
+
+                     # setting changed
                      if new_setting == True:
 
                         WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                              
@@ -689,11 +683,13 @@ def START_SCHEDULER_TASK(task_object):
                         if device.gateway == "zigbee2mqtt":   
                               channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                        msg = scheduler_setting_json
+                        # get the json command statement and start process
+                        for command_json in device.commands_json.split(","):        
+                           if scheduler_setting in command_json:
+                              heapq.heappush(mqtt_message_queue, (1, (channel, command_json)))            
+                              CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting, 20)      
+                              break
 
-                        heapq.heappush(mqtt_message_queue, (5, (channel, msg)))            
-                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting_json, 20)  
-                              
                   else:
                      WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | " + check_result)
 
@@ -762,22 +758,6 @@ def START_SCHEDULER_TASK(task_object):
          UPDATE_DEVICES("mqtt")
          UPDATE_DEVICES("zigbee2mqtt")
 
-
-   except Exception as e:
-      print(e)
-      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
-
-
-   # #####################
-   # restart music clients
-   # #####################
-
-   try:
-      if "restart_music_clients" in task_object.task:  
-         list_client_music = GET_ALL_DEVICES("client_music")
-
-         for client_music in list_client_music:
-               heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
 
    except Exception as e:
       print(e)

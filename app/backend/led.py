@@ -86,9 +86,9 @@ def CHECK_LED_GROUP_SETTING_THREAD(group_id, scene_id, scene, brightness, delay,
 def CHECK_LED_GROUP_SETTING_PROCESS(group_id, scene_id, scene, brightness, delay, limit): 
                
     if scene == "OFF":
-        setting = '{"state":"OFF"}'
+        setting = "OFF"
     else:
-        setting = '{"state":"ON"}'
+        setting = "ON"
                     
     # check setting 1 try
     time.sleep(delay)                             

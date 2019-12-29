@@ -76,28 +76,34 @@ def background_thread():
 
         # music
 
-        spotify_token = GET_SPOTIFY_TOKEN()
+        try:
+            spotify_token = GET_SPOTIFY_TOKEN()
 
-        if spotify_token != "":
+            if spotify_token != "":
 
-            tupel_current_playback = GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)
+                tupel_current_playback = GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)
 
-            current_device   = tupel_current_playback[0]
-            current_state    = tupel_current_playback[2]
-            current_track    = tupel_current_playback[4]
-            current_artists  = tupel_current_playback[5]
-            current_progress = tupel_current_playback[6]
-            current_playlist = tupel_current_playback[7]
+                current_device   = tupel_current_playback[0]
+                current_state    = tupel_current_playback[2]
+                current_track    = tupel_current_playback[4]
+                current_artists  = tupel_current_playback[5]
+                current_progress = tupel_current_playback[6]
+                current_playlist = tupel_current_playback[7]
 
+                socketio.emit('music',
+                             {'current_device': current_device, 'current_state': current_state, 'current_track': current_track, 
+                             'current_artists': current_artists, 'current_progress': current_progress, 'current_playlist': current_playlist},                                                               
+                             namespace='/socketIO')
+
+            else:
+                socketio.emit('music',
+                             {'current_device': "", 'current_state': "", 'current_track': "", 'current_artists': "", 'current_progress': "", 'current_playlist': ""},                                                               
+                             namespace='/socketIO')          
+
+        except:
             socketio.emit('music',
-                          {'current_device': current_device, 'current_state': current_state, 'current_track': current_track, 
-                          'current_artists': current_artists, 'current_progress': current_progress, 'current_playlist': current_playlist},                                                               
-                          namespace='/socketIO')
-
-        else:
-            socketio.emit('music',
-                          {'current_device': "", 'current_state': "", 'current_track': "", 'current_artists': "", 'current_progress': "", 'current_playlist': ""},                                                               
-                          namespace='/socketIO')            
+                         {'current_device': "", 'current_state': "", 'current_track': "", 'current_artists': "", 'current_progress': "", 'current_playlist': ""},                                                               
+                         namespace='/socketIO')                 
 
         # program
 
@@ -149,13 +155,13 @@ UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway)
 """ ####### """
 
 from app.sites                      import index, dashboard, scheduler, programs, led_scenes, led_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_devices, settings_controller, settings_users, settings_system_log, errors
-from app.backend.shared_resources   import process_management_queue
+from app.backend.shared_resources   import process_management_queue, START_REFRESH_MQTT_INPUT_MESSAGES_THREAD
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
 from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_AT_STARTUP, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.email              import SEND_EMAIL
 from app.backend.file_management    import GET_LOCATION_COORDINATES
 from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
-from app.backend.spotify            import REFRESH_SPOTIFY_TOKEN_THREAD
+from app.backend.spotify            import START_REFRESH_SPOTIFY_TOKEN_THREAD
 
 
 """ ######### """
@@ -207,7 +213,7 @@ try:
     START_MQTT_RECEIVE_THREAD()
     START_MQTT_PUBLISH_THREAD()
     START_MQTT_CONTROL_THREAD()    
-    REFRESH_MQTT_INPUT_MESSAGES_THREAD()
+    START_REFRESH_MQTT_INPUT_MESSAGES_THREAD()
 
     time.sleep(3)    
 
@@ -294,6 +300,6 @@ if GET_SYSTEM_SERVICES().squeezelite_active != "True":
 """ #################### """
 
 PROCESS_MANAGEMENT_THREAD()
-REFRESH_SPOTIFY_TOKEN_THREAD(3000)
+START_REFRESH_SPOTIFY_TOKEN_THREAD(3000)
 
 socketio.run(app, host = GET_HOST_NETWORK().lan_ip_address, port = 80, debug=False)

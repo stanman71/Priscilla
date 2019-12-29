@@ -15,7 +15,7 @@ def CHECK_DEVICE_EXCEPTION_SETTINGS(devices):
 
       if device.exception_option != "None":
 
-         if device.exception_setting_string == "None" or device.exception_setting_string == None:
+         if device.exception_setting == "None" or device.exception_setting == None:
             error_message_settings.append(device.name + " || Keine Aufgabe ausgewählt")         
 
          # exception setting ip_address
@@ -194,23 +194,18 @@ def CHECK_PROGRAM_TASKS(program_id):
                      
                      if not "led" in device.device_type:
          
-                        program_setting_string = line_content[2]
-                        program_setting_string = program_setting_string.replace(" ", "")
-
-                        # convert string to json-format
-                        program_setting_json = program_setting_string.replace(':', '":"')
-                        program_setting_json = program_setting_json.replace(',', '","')
-                        program_setting_json = '{"' + str(program_setting_json) + '"}'    
+                        program_setting = line_content[2]
+                        program_setting = program_setting.replace(" ", "")
 
                         setting_valid = False
 
                         # check device command 
-                        for command in device.commands.split(" "):   
-                           if command == program_setting_json:
+                        for command in device.commands.split(","):   
+                           if command == program_setting:
                               setting_valid = True
 
                         if setting_valid == False:
-                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Befehl ungültig >>> " + program_setting_string)
+                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Befehl ungültig >>> " + program_setting)
 
                      else:        
                         list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Gerät ist eine LED")
@@ -900,20 +895,13 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             task = task.split(" # ") 
 
             try:
-               device  = GET_DEVICE_BY_NAME(task[1].lower())
-               
-               setting_string = task[2]
-               setting_string = setting_string.replace(" ", "")
-
-               # convert string to json-format
-               setting = setting_string.replace(':', '":"')
-               setting = setting.replace(',', '","')
-               setting = '{"' + str(setting) + '"}'    
+               device  = GET_DEVICE_BY_NAME(task[1].lower())        
+               setting = task[2]
 
                setting_valid = False
 
                # check device command 
-               for command in device.commands.split(" "):   
+               for command in device.commands.split(","):   
                   if command == setting:
                      setting_valid = True
                      break
@@ -1002,14 +990,6 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # ##############
    
       if task == "update_devices" and task_type == "scheduler":
-         return list_task_errors
-
-
-      # ####################
-      # restart_client_music
-      # ####################
-   
-      if task == "restart_client_music" and task_type == "scheduler":
          return list_task_errors
 
 
@@ -1201,11 +1181,11 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             return list_task_errors
             
 
-      # ######################
-      # task "None" controller
-      # ######################
+      # #####################
+      # empty task controller
+      # #####################
       
-      if "None" in task and task_type == "controller": 
+      if (None in task or "None" in task or "" in task) and task_type == "controller": 
          return list_task_errors
 
 

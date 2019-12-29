@@ -27,9 +27,11 @@ int PIN_RESET_SETTING = 16;  // D0
 int PIN_LED_GREEN = 14;      // D5
 int PIN_LED_RED   = 12;      // D6
 
+// TRANSISTOR
+int TRANSISTOR_PIN = 4;      // D2
+
 // FASTLED
 #define DATA_PIN 5           // D1
-#define TRANSISTOR_PIN 4     // D2
 #define NUM_LEDS 300
 
 CRGB leds[NUM_LEDS];
@@ -441,7 +443,7 @@ void setup() {
     pinMode(PIN_RESET_SETTING,INPUT);
 
     digitalWrite(BUILTIN_LED, HIGH); 
-    digitalWrite(TRANSISTOR_PIN, HIGH);     
+    digitalWrite(TRANSISTOR_PIN, LOW);     
 
     digitalWrite(PIN_LED_RED, HIGH);
     digitalWrite(PIN_LED_GREEN, LOW);
@@ -479,7 +481,7 @@ void loop() {
     if (state_changed == true){   
 
         if (brightness != 0){   
-            digitalWrite(TRANSISTOR_PIN, LOW); 
+            digitalWrite(TRANSISTOR_PIN, HIGH); 
 
             delay(250);
           
@@ -489,7 +491,7 @@ void loop() {
             FastLED.show();
 
         } else {
-            digitalWrite(TRANSISTOR_PIN, HIGH);  
+            digitalWrite(TRANSISTOR_PIN, LOW);  
         }
     }
 

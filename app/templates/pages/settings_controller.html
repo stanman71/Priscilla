@@ -306,7 +306,7 @@
                           <td></td>
                         </tr>                                         
                         <tr>
-                          <td>device # Steckdose_TV # state:OFF</td>   
+                          <td>device # Steckdose_TV # OFF</td>   
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
@@ -320,7 +320,7 @@
                                   {{ device[0] }} >>
                                 </div>
                                 <div class="col-sm-9">          
-                                  {{ device[1] | replace(' ', ' | ') | replace('{', '') | replace('}', '') | replace(',', ', ') | replace('"', '') }} 
+                                  {{ device[1] | replace(',', ' | ') }} 
                                 </div>
                               </div> 
                             {% endfor %}                                            

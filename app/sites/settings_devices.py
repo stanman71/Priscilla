@@ -22,14 +22,14 @@ import threading
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        try:
-            if current_user.role == "administrator":
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('logout'))
-        except Exception as e:
-            print(e)
+        #try:
+        if current_user.role == "administrator":
+            return f(*args, **kwargs)
+        else:
             return redirect(url_for('logout'))
+        # except Exception as e:
+        #    print(e)
+        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -181,12 +181,12 @@ def settings_devices():
                     #   Exception Options
                     # ####################
 
-                    exception_option         = request.form.get("set_exception_option_" + str(i))
-                    exception_option         = exception_option.replace(" ","")
-                    exception_setting_string = request.form.get("set_exception_setting_string_" + str(i))
+                    exception_option  = request.form.get("set_exception_option_" + str(i))
+                    exception_option  = exception_option.replace(" ","")
+                    exception_setting = request.form.get("set_exception_setting_" + str(i))
                                             
-                    if exception_setting_string == "" or exception_setting_string == None:
-                        exception_setting_string = "None"  
+                    if exception_setting == "" or exception_setting == None:
+                        exception_setting = "None"  
         
                     # ######
                     # Sensor
@@ -270,7 +270,7 @@ def settings_devices():
                         exception_sensor_ieeeAddr     = "None"
                         exception_sensor_input_values = "None"                                                            
 
-                    if SET_DEVICE_EXCEPTION(device.ieeeAddr, exception_option, exception_setting_string,
+                    if SET_DEVICE_EXCEPTION(device.ieeeAddr, exception_option, exception_setting,
                                             exception_sensor_ieeeAddr, exception_sensor_input_values,
                                             exception_value_1, exception_value_2, exception_value_3):
                         
@@ -281,14 +281,14 @@ def settings_devices():
                     
                     if exception_option == "None":
                     
-                        exception_setting_string      = "None" 
+                        exception_setting             = "None" 
                         exception_value_1             = "None" 
                         exception_value_2             = "None"  
                         exception_value_3             = "None"  
                         exception_sensor_ieeeAddr     = "None"
                         exception_sensor_input_values = "None"                                                            
 
-                        SET_DEVICE_EXCEPTION(device.ieeeAddr, exception_option, exception_setting_string, exception_sensor_ieeeAddr,
+                        SET_DEVICE_EXCEPTION(device.ieeeAddr, exception_option, exception_setting, exception_sensor_ieeeAddr,
                                              exception_sensor_input_values, exception_value_1, exception_value_2, exception_value_3)                   
             
             except Exception as e:

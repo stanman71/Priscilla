@@ -134,10 +134,9 @@
                               <select class="form-control" data-size="5" name="set_command_{{entry.id}}" style="background-color:#27293D"> 
                                 <option value = "None" > None </option>          
                                 <option disabled>------------------</option>        
-                                {% if entry.commands != None %}  
-                                  {% for each in entry.commands.split(' ') %}
-                                    <option value= "{{ each | replace(':', ': ') | replace(',', ', ') }}" > 
-                                      {{ each | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} </option>
+                                {% if entry.commands != None %}
+                                  {% for each in entry.commands.split(',') %}
+                                    <option value= "{{ each }}" > {{ each }} </option>
                                   {% endfor %}     
                                 {% endif %}  
                               </select>                            

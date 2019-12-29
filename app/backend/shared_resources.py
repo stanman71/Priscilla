@@ -17,10 +17,10 @@ mqtt_message_queue          = []
 mqtt_incoming_messages_list = []
 
 
-def REFRESH_MQTT_INPUT_MESSAGES_THREAD():
+def START_REFRESH_MQTT_INPUT_MESSAGES_THREAD():
 
 	try:
-		Thread = threading.Thread(target=REFRESH_MQTT_INPUT_MESSAGES)
+		Thread = threading.Thread(target=REFRESH_MQTT_INPUT_MESSAGES_THREAD)
 		Thread.start()  
 		
 	except Exception as e:
@@ -28,7 +28,7 @@ def REFRESH_MQTT_INPUT_MESSAGES_THREAD():
 		SEND_EMAIL("ERROR", "Thread | Refresh MQTT Messages | " + str(e)) 
 
 
-def REFRESH_MQTT_INPUT_MESSAGES():   
+def REFRESH_MQTT_INPUT_MESSAGES_THREAD():   
 	
 	while True:
 	

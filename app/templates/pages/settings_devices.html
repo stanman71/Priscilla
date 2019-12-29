@@ -362,13 +362,7 @@
                                               <option value= "{{ each }}" > {{ each }} </option>
                                             {% endfor %}     
                                           {% endif %} 
-
-                                          <!-- values from javascript --> 
-                                          {% if entry.input_values != "None" %}
-                                            {% for each in entry.input_values.split(',') %}
-                                              <option value= "{{ each }}" > {{ each }} </option>
-                                            {% endfor %}   
-                                          {% endif %}       
+  
                                         </select>
                                       </div>        
                                     {% endif %} 
@@ -391,18 +385,18 @@
                                 <!-- exception option command --> 
                                 <div class="row justify-content-md-center">
                                   <div class="col-sm-6"> 
-                                    <select class="form-control" name="set_exception_setting_string_{{ entry.id }}" style="background-color:#27293D"> 
-                                      {% if entry.exception_setting_string != "None" %}
-                                        <option value = "{{ entry.exception_setting_string }}" > {{ entry.exception_setting_string }} </option>
+                                    <select class="form-control" name="set_exception_setting_{{ entry.id }}" style="background-color:#27293D"> 
+                                      {% if entry.exception_setting != "None" %}
+                                        <option value = "{{ entry.exception_setting }}" > {{ entry.exception_setting }} </option>
                                       {% else %}   
                                         <option value = "None" > Befehl </option> 
                                       {% endif %}                           
                                       <option disabled>------------------</option>
-                                      {% if entry.commands != None %}  
-                                        {% for each in entry.commands.split(' ') %}
-                                          <option value= "{{ each | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }}" > {{ each | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} </option>
-                                        {% endfor %}  
-                                      {% endif %}          
+                                      {% if entry.commands != None %}
+                                        {% for each in entry.commands.split(',') %}
+                                          <option value= "{{ each }}" > {{ each }} </option>
+                                        {% endfor %}     
+                                      {% endif %}   
                                     </select>
                                   </div> 
 

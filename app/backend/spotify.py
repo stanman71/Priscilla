@@ -26,10 +26,11 @@ https://stackoverflow.com/questions/47028093/attributeerror-spotify-object-has-n
 
 """
 
-from app                         import app
-from app.database.models         import *
-from app.backend.file_management import *
-from app.backend.email           import SEND_EMAIL
+from app                          import app
+from app.database.models          import *
+from app.backend.file_management  import *
+from app.backend.email            import SEND_EMAIL
+from app.backend.shared_resources import mqtt_message_queue
 
 import requests
 import json
@@ -38,6 +39,7 @@ import socket
 import time
 import base64
 import threading
+import heapq
 
 from urllib.parse import quote
 
@@ -148,10 +150,10 @@ def DELETE_SPOTIFY_TOKEN():
 """ ###################### """
 
 
-def REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
+def START_REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
     
     try:
-        Thread = threading.Thread(target=REFRESH_SPOTIFY_TOKEN, args=(first_delay, ))
+        Thread = threading.Thread(target=REFRESH_SPOTIFY_TOKEN_THREAD, args=(first_delay, ))
         Thread.start()  
         
     except Exception as e:
@@ -159,7 +161,7 @@ def REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
         SEND_EMAIL("ERROR", "Thread | Refresh Spotify Token | " + str(e)) 
 
 
-def REFRESH_SPOTIFY_TOKEN(first_delay):   
+def REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):   
     
     current_timer = first_delay
     
@@ -169,6 +171,8 @@ def REFRESH_SPOTIFY_TOKEN(first_delay):
     while SPOTIFY_REFRESH_TOKEN != "":
         
         if current_timer == 3000:
+
+            # get a new token
         
             body = {
                 "grant_type" : "refresh_token",
@@ -202,8 +206,31 @@ def REFRESH_SPOTIFY_TOKEN(first_delay):
             except:
                 pass
                 
+            # restart music clients
+
+            try:
+                sp                  = spotipy.Spotify(auth=SPOTIFY_TOKEN)
+                sp.trace            = False     
+                spotify_device_name = sp.current_playback(market=None)['device']['name']
+            except:
+                spotify_device_name = ""
+
+            for client_music in GET_ALL_DEVICES("client_music"):
+
+                if client_music.name.lower() not in spotify_device_name.lower():
+
+                    try:
+                        heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
+
+                    except Exception as e:
+                        print(e)
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Devices | Device - " + client_music.name + " | " + str(e))      
+
+            # restart timer
+
             current_timer = 0
-                       
+
+
         else:
             current_timer = current_timer + 1
             time.sleep(1)
