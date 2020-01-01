@@ -5,7 +5,6 @@ from functools           import wraps
 
 from app                         import app
 from app.database.models         import *
-from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 from app.backend.checks          import CHECK_TASKS
 from app.common                  import COMMON, STATUS
 from app.assets                  import *

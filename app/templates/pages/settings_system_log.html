@@ -29,8 +29,7 @@
                         <label>Auswahl</label>                               
                         <select class="selectpicker" multiple data-actions-box="true" data-width="100%" name="set_log_types[]">
                           <option {{ selected_type_event }}> EVENT </option>
-                          <option {{ selected_type_status }}> STATUS </option>
-                          <option {{ selected_type_network }}> NETWORK </option>                          
+                          <option {{ selected_type_status }}> STATUS </option>                       
                           <option {{ selected_type_database }}> DATABASE </option>                        
                           <option {{ selected_type_success }}> SUCCESS </option>   
                           <option {{ selected_type_warning }}> WARNING </option>
@@ -78,8 +77,7 @@
                             <td>{{ entry[0] }}</td> 
                             <td>
                               {% if entry[1] == "EVENT" %} <font color="white">{{ entry[1] }} </font> {% endif %}
-                              {% if entry[1] == "STATUS" %} <font color="darkKhaki">{{ entry[1] }} </font> {% endif %}
-                              {% if entry[1] == "NETWORK" %} <font color="lightSeaGreen">{{ entry[1] }} </font> {% endif %}                              
+                              {% if entry[1] == "STATUS" %} <font color="darkKhaki">{{ entry[1] }} </font> {% endif %}                         
                               {% if entry[1] == "DATABASE" %} <font color="lightblue">{{ entry[1] }} </font> {% endif %}
                               {% if entry[1] == "SUCCESS" %} <font color="green">{{ entry[1] }} </font> {% endif %}
                               {% if entry[1] == "WARNING" %} <font color="orange">{{ entry[1] }} </font> {% endif %}

@@ -110,22 +110,22 @@ def GENERATE_SPOTIFY_TOKEN(auth_token):
     
     try:
         SPOTIFY_TOKEN = answer["access_token"]
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Spotify | Login")
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Spotify | Token received")
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Login | successful")
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Token | received")
         
     except:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Spotify | Login failed")
-        WRITE_LOGFILE_SYSTEM("ERROR", "Spotify | Token not received | " + str(answer))
-        SEND_EMAIL("ERROR", "Spotify | Token not received | " + str(answer))
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Login | failed")
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Token | not received | " + str(answer))
+        SEND_EMAIL("ERROR", "Music | Spotify Token | not received | " + str(answer))
 
     try:
         SET_SPOTIFY_REFRESH_TOKEN(answer["refresh_token"])
         SPOTIFY_REFRESH_TOKEN = answer["refresh_token"]        
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Spotify | Refresh Token received") 
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Refresh Token | received") 
         
     except:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Spotify | Refresh Token not received | " + str(answer))
-        SEND_EMAIL("ERROR", "Spotify | Refresh Token not received | " + str(answer))           
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Refresh Token | not received | " + str(answer))
+        SEND_EMAIL("ERROR", "Music | Spotify Refresh Token | not received | " + str(answer))           
  
     REFRESH_SPOTIFY_TOKEN_THREAD(0)
 
@@ -157,8 +157,8 @@ def START_REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
         Thread.start()  
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Thread | Refresh Spotify Token | " + str(e)) 
-        SEND_EMAIL("ERROR", "Thread | Refresh Spotify Token | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | Refresh Spotify Token | " + str(e)) 
+        SEND_EMAIL("ERROR", "Host | Thread | Refresh Spotify Token | " + str(e)) 
 
 
 def REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):   
@@ -192,16 +192,16 @@ def REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
 
             try:
                 SPOTIFY_TOKEN = answer["access_token"]
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Spotify | Token updated") 
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Token | updated") 
                 
             except Exception as e:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Spotify | Token not updated | " + str(e)) 
-                SEND_EMAIL("ERROR", "Spotify | Token not updated | " + str(e)) 
+                WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Token | not updated | " + str(e)) 
+                SEND_EMAIL("ERROR", "Music | Spotify Token | not updated | " + str(e)) 
 
             try:
                 SET_SPOTIFY_REFRESH_TOKEN(answer["refresh_token"])
                 SPOTIFY_REFRESH_TOKEN = answer["refresh_token"]        
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Spotify | Refresh Token updated")  
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Refresh Token | updated")  
                 
             except:
                 pass
@@ -223,7 +223,7 @@ def REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
                         heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
 
                     except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Devices | Device - " + client_music.name + " | " + str(e))      
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + client_music.name + " | " + str(e))      
                         print(e)
 
             # restart timer
@@ -434,7 +434,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
         if str(e) == "'NoneType' object is not subscriptable":
             pass                
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Spotify | " + str(e)) 
+            WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
 
 
 def SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume):
@@ -629,7 +629,7 @@ def SPOTIFY_SEARCH_TRACK(spotify_token, track_name, track_artist, number_results
             return ("Keinen Track Namen angegeben")
                               
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Spotify | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
         return ("ERROR: " + str(e))  
                         
 
@@ -681,6 +681,6 @@ def SPOTIFY_SEARCH_ALBUM(spotify_token, album_name, album_artist, number_results
 
                               
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Spotify | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
         return ("ERROR: " + str(e))  
 

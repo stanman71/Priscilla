@@ -5,7 +5,8 @@ from functools           import wraps
 
 from app                          import app
 from app.database.models          import *
-from app.backend.file_management  import GET_PATH, GET_SENSORDATA_FILES
+from app.backend.file_management  import GET_PATH, GET_SENSORDATA_FILES, WRITE_LOGFILE_SYSTEM
+
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
@@ -381,11 +382,11 @@ def delete_sensordata_jobs(id):
 def download_sensordata_file(filepath):
     try:
         path = GET_PATH() + "/data/csv/"     
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/csv/" + filepath + " | downloaded")
+        WRITE_LOGFILE_SYSTEM("EVENT", "Host | File | /data/csv/" + filepath + " | downloaded")
         return send_from_directory(path, filepath)
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/csv/" + filepath + " | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /data/csv/" + filepath + " | " + str(e)) 
         session['error_download_datafile'] = "Download Datafile || " + str(e)
 
 

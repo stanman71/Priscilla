@@ -468,7 +468,7 @@ def ADD_CAMERA():
             db.session.add(camera)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Camera - " + "new_camera_" + str(i) + " | added")               
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera - " + "new_camera_" + str(i) + " | added")               
             return True
             
     return "Kameralimit erreicht (6)"
@@ -487,7 +487,7 @@ def SET_CAMERA_SETTINGS(id, name, url, user, password):
         entry.password = password                       
         db.session.commit()  
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Camera - " + old_name + " | changed")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera - " + old_name + " | changed")
 
         return True
 
@@ -538,7 +538,7 @@ def DELETE_CAMERA(id):
     Camera.query.filter_by(id=id).delete()
     db.session.commit() 
     
-    WRITE_LOGFILE_SYSTEM("DATABASE", "Camera - " + camera_name + " | deleted")   
+    WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera - " + camera_name + " | deleted")   
     return True
 
 
@@ -582,7 +582,7 @@ def ADD_CONTROLLER(device_ieeeAddr):
                 
                 controller_name = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
 
-                WRITE_LOGFILE_SYSTEM("DATABASE", "Controller - " + controller_name + " | Added")  
+                WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Controller - " + controller_name + " | Added")  
                 return True
 
 
@@ -689,7 +689,7 @@ def SET_CONTROLLER_TASKS(id, task_1 = "", task_2 = "", task_3 = "", task_4  = ""
 
         controller_name = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr).name
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Controller - " + controller_name + " | Changed")  
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Controller - " + controller_name + " | Changed")  
         return True
 
 
@@ -1127,7 +1127,7 @@ def SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password
         entry.password       = password
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "eMail | Server Settings | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | eMail Settings | changed") 
         return True
 
 
@@ -1216,7 +1216,7 @@ def ADD_LED_GROUP():
             db.session.add(group)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Group - " + "new_group_" + str(i) + " | added")  
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Light | Group - " + "new_group_" + str(i) + " | added")  
             return True
 
     return "Gruppenlimit erreicht (20)"
@@ -1276,7 +1276,7 @@ def SET_LED_GROUP(id, name, led_ieeeAddr_1, led_name_1, led_device_type_1,
         
         db.session.commit()  
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Group - " + name + " | Settings | changed")  
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Light | Group - " + name + " | Settings | changed")  
         return True 
 
 
@@ -1525,7 +1525,7 @@ def DELETE_LED_GROUP(id):
     name = GET_LED_GROUP_BY_ID(id).name
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Group - " + name + " | deleted")   
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Light | Group - " + name + " | deleted")   
     except:
         pass     
     
@@ -1573,7 +1573,7 @@ def ADD_LED_SCENE():
             db.session.add(scene)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + "new_scene_" + str(i) + " | added")  
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Light | Scene - " + "new_scene_" + str(i) + " | added")  
             return True
 
     return "Szenenlimit erreicht (10)"
@@ -1635,7 +1635,7 @@ def SET_LED_SCENE(id, name, red_1, green_1, blue_1, brightness_1, red_2, green_2
         entry.brightness_9 = brightness_9                       
         db.session.commit()  
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + name + " | Settings | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Light | Scene - " + name + " | Settings | changed") 
         return True
 
 
@@ -1856,7 +1856,7 @@ def DELETE_LED_SCENE(id):
     name = GET_LED_SCENE_BY_ID(id).name
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "LED | Scene - " + name + " | deleted") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Light | Scene - " + name + " | deleted") 
     except:
         pass 
 
@@ -2738,7 +2738,7 @@ def SET_SPOTIFY_SETTINGS(client_id, client_secret):
         entry.client_secret = client_secret   
         db.session.commit()
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Spotify | Settings | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify Settings | changed") 
         return True
 
 
@@ -2755,7 +2755,7 @@ def SET_SPOTIFY_REFRESH_TOKEN(refresh_token):
         entry.refresh_token = refresh_token
         db.session.commit()
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Spotify | Token | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify Token | changed") 
         return True
 
 
@@ -2774,7 +2774,7 @@ def SET_SPOTIFY_DEFAULT_SETTINGS(default_device_id, default_device_name, default
         entry.default_volume        = default_volume        
         db.session.commit()
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Spotify | Default Settings | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify Default Settings | changed") 
         return True
 
 
@@ -2800,7 +2800,7 @@ def SET_SYSTEM_SERVICES(zigbee2mqtt_active, lms_active, squeezelite_active):
         entry.squeezelite_active   = squeezelite_active               
         db.session.commit()   
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "System | Services | Settings | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Services | Settings changed") 
         return True
 
 
@@ -2845,7 +2845,7 @@ def ADD_USER():
             db.session.add(new_user)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + "new_user_" + str(i) + " | added") 
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Host | User - " + "new_user_" + str(i) + " | added") 
             return True
 
 
@@ -2863,8 +2863,7 @@ def UPDATE_USER_SETTINGS(id, name, email, role, email_notification):
         entry.email_notification = email_notification
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + old_name + " | changed || name - " + entry.name +
-                             " | eMail - " + entry.email + " | Role - " + entry.role + " | eMail-Notification - " + entry.email_notification)
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | User - " + old_name + " | changed")
 
         return True
 
@@ -2878,7 +2877,7 @@ def CHANGE_USER_PASSWORD(id, hashed_password):
         entry.password = hashed_password    
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + entry.name + " | Password changed")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | User - " + entry.name + " | Password changed")
         return True
     
 
@@ -2888,7 +2887,7 @@ def DELETE_USER(user_id):
     if entry.name != "admin":
 
         try:
-            WRITE_LOGFILE_SYSTEM("DATABASE", "User - " + entry.name + " | deleted")    
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Host | User - " + entry.name + " | deleted")    
             User.query.filter_by(id=user_id).delete()
             db.session.commit()    
             return True

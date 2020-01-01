@@ -40,7 +40,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_1[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
@@ -56,7 +56,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_2[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
@@ -72,7 +72,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_3[1:-1].replace('"','') + " | " + str(e))    
                                            
             # #########
@@ -88,7 +88,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_4[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
@@ -104,7 +104,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_5[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
@@ -120,7 +120,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_6[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
@@ -136,7 +136,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_7[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
@@ -152,7 +152,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_8[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
@@ -168,7 +168,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_9[1:-1].replace('"','') + " | " + str(e))    
 
             # ##########
@@ -184,7 +184,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_10[1:-1].replace('"','') + " | " + str(e))    
 
             # ##########
@@ -200,7 +200,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_11[1:-1].replace('"','') + " | " + str(e))    
 
             # ##########
@@ -216,7 +216,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller.device.name + " | Command - " + 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_12[1:-1].replace('"','') + " | " + str(e))    
 
 
@@ -259,11 +259,11 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller_name + " | Command - " +
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
                                      controller_command + " | Scene - " + task[2] + " | not founded")
 
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller_name + " | Command - " +
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
                                  controller_command + " | Group - " + task[1] + " | not founded")
 
     # #################
@@ -314,19 +314,19 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                         CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, target_brightness, 2, 10)
 
                     else:
-                        WRITE_LOGFILE_SYSTEM("STATUS", "LED | Group - " + group.name +
+                        WRITE_LOGFILE_SYSTEM("STATUS", "Light | Group - " + group.name +
                                              " | " + scene_name + " : " + str(current_brightness) + " %")
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("WARNING", "LED | Group - " +
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Light | Group - " +
                                          group.name + " | OFF : 0 %")
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller_name + " | Command - " +
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
                                      controller_command + " | Command - " + task[2] + " | not valid")
 
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller_name + " | Command - " +
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
                                  controller_command + " | Group - " + task[1] + " | not founded")
 
     # #######
@@ -364,7 +364,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
             # group not founded
             if group_founded == False:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller_name + " | Command - " +
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
                                      controller_command + " | Group - " + input_group_name + " | not founded")
 
         if task[1] == "all":
@@ -412,10 +412,10 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                     command_position = command_position + 1
                            
             else:
-                WRITE_LOGFILE_SYSTEM("WARNING", "Controller - " + controller_name + " | " + check_result)
+                WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | " + check_result)
                                 
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller_name + " | Command - " + controller_command + " | Gerät - " + task[1] + " | not founded")
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Gerät - " + task[1] + " | not founded")
 
 
     # ##################
@@ -448,16 +448,16 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 START_PROGRAM_THREAD(program.id)
                 
             elif task[2] == "start" and GET_PROGRAM_STATUS() != None:
-                WRITE_LOGFILE_SYSTEM("WARNING", "Controller - " + controller_name + " | Command - " + controller_command + " | Other Program running")
+                WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Other Program running")
                                      
             elif task[2] == "stop":
                 STOP_PROGRAM_THREAD()
                 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller_name + " | Command - " + controller_command + " | Command not valid")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Command not valid")
 
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller_name + " | Command - " + controller_command + " | Program not founded")
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Program not founded")
 
 
     # #######
@@ -667,4 +667,4 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
    
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller_name + " | Command - " + controller_command + " | No Spotify Token founded")
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | No Spotify Token founded")

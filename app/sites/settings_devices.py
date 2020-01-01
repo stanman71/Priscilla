@@ -316,10 +316,10 @@ def settings_devices():
             time.sleep(1)
 
             if CHECK_ZIGBEE2MQTT_PAIRING("false"):             
-                WRITE_LOGFILE_SYSTEM("NETWORK", "ZigBee2MQTT | Pairing disabled") 
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled") 
             else:             
-                WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
 
 
@@ -348,12 +348,12 @@ def settings_devices():
                 time.sleep(1)
 
                 if CHECK_ZIGBEE2MQTT_PAIRING("True"):             
-                    WRITE_LOGFILE_SYSTEM("NETWORK", "ZigBee2MQTT | Pairing enabled") 
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing enabled | successful") 
                     SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
                     success_message_zigbee_pairing.append("Einstellung erfolgreich übernommen") 
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
                 else:             
-                    WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing enabled | Setting not confirmed")   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Pairing enabled | Setting not confirmed")   
                     error_message_zigbee_pairing.append("Einstellung nicht bestätigt") 
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
                                             
@@ -365,12 +365,12 @@ def settings_devices():
                 time.sleep(1)
 
                 if CHECK_ZIGBEE2MQTT_PAIRING("False"):                 
-                    WRITE_LOGFILE_SYSTEM("NETWORK", "ZigBee2MQTT | Pairing disabled") 
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
                     SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
                     success_message_zigbee_pairing.append("Einstellung erfolgreich übernommen") 
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")
                 else:             
-                    WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
                     error_message_zigbee_pairing.append("Einstellung nicht bestätigt") 
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
 
@@ -703,10 +703,10 @@ def download_devices_logfile(filepath):
     try:
         if os.path.isfile(path + filepath) == False:
             RESET_LOGFILE("log_devices")  
-        WRITE_LOGFILE_SYSTEM("EVENT", "File | /data/logs/" + filepath + " | downloaded") 
+        WRITE_LOGFILE_SYSTEM("EVENT", "Host | File | /data/logs/" + filepath + " | downloaded") 
 
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "File | /data/logs/" + filepath + " | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /data/logs/" + filepath + " | " + str(e))
         session['error_download_log'] = "Download Log || " + str(e)
 
     return send_from_directory(path, filepath)

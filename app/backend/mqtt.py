@@ -5,11 +5,11 @@ import json
 import datetime
 import time
 
-from app import app
-from app.database.models import *
-from app.backend.file_management import *
+from app                          import app
+from app.database.models          import *
+from app.backend.file_management  import *
 from app.backend.shared_resources import *
-from app.backend.email import SEND_EMAIL
+from app.backend.email            import SEND_EMAIL
 
 from ping3 import ping
 
@@ -25,8 +25,8 @@ def START_MQTT_RECEIVE_THREAD():
         Thread.start()  
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Thread | MQTT Receive | " + str(e))  
-        SEND_EMAIL("ERROR", "Thread | MQTT Receive | " + str(e))    
+        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | MQTT Receive | " + str(e))  
+        SEND_EMAIL("ERROR", "Host | Thread | MQTT Receive | " + str(e))    
 
     
 def MQTT_RECEIVE_THREAD():
@@ -41,8 +41,8 @@ def MQTT_RECEIVE_THREAD():
         else:
             client.subscribe("smarthome/#")
   
-            print("Network | MQTT | Connected") 
-            WRITE_LOGFILE_SYSTEM("NETWORK", "Network | MQTT | Connected")
+            print("Network | MQTT | connected") 
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | MQTT | connected")
             SET_DEVICE_CONNECTION_MQTT(True)
 
 
@@ -154,8 +154,8 @@ def MQTT_RECEIVE_THREAD():
                     Thread = threading.Thread(target=MQTT_MESSAGE, args=(channel, msg, ieeeAddr, device_type,))
                     Thread.start()   
                 except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Thread | MQTT Message | " + str(e)) 
-                    SEND_EMAIL("ERROR", "Thread | MQTT Message | " + str(e))                    
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | MQTT Message | " + str(e)) 
+                    SEND_EMAIL("ERROR", "Host | Thread | MQTT Message | " + str(e))                    
                     print(e)
 
 
@@ -167,8 +167,8 @@ def MQTT_RECEIVE_THREAD():
         client.loop_forever()
 
     except Exception as e:
-        print("ERROR: MQTT | " + str(e)) 
-        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e))        
+        print("ERROR: Network | MQTT | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | " + str(e))        
         SET_DEVICE_CONNECTION_MQTT(False)    
 
 
@@ -191,7 +191,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         if data["type"] == "pairing" and data["message"] == "interview_successful":
             time.sleep(5)
             UPDATE_DEVICES("zigbee2mqtt")
-            WRITE_LOGFILE_SYSTEM("NETWORK", "Network | Device - " + data["meta"]["friendly_name"] + " | added")   
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["meta"]["friendly_name"] + " | added")   
             SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device added - " + data["meta"]["friendly_name"])   
             time.sleep(10)      
             SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
@@ -204,10 +204,10 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
       
         # remove devices
         if data["type"] == "device_removed":
-            WRITE_LOGFILE_SYSTEM("NETWORK", "Network | Device - " + data["meta"]["friendly_name"] + " | deleted")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["meta"]["friendly_name"] + " | deleted")
 
         if data["type"] == "device_force_removed":
-            WRITE_LOGFILE_SYSTEM("NETWORK", "Network | Device - " + data["message"] + " | deleted (force)")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["message"] + " | deleted (force)")
 
 
     # start function networkmap
@@ -276,8 +276,8 @@ def START_MQTT_PUBLISH_THREAD():
         Thread.start()  
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Thread | MQTT Publish | " + str(e))  
-        SEND_EMAIL("ERROR", "Thread | MQTT Publish | " + str(e))    
+        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | MQTT Publish | " + str(e))  
+        SEND_EMAIL("ERROR", "Host | Thread | MQTT Publish | " + str(e))    
 
 
 def MQTT_PUBLISH_THREAD():
@@ -298,8 +298,8 @@ def MQTT_PUBLISH_THREAD():
         client.loop_start()
     
     except Exception as e:
-        print("ERROR: MQTT | " + str(e)) 
-        WRITE_LOGFILE_SYSTEM("ERROR", "MQTT | " + str(e))    
+        print("ERROR: Network | MQTT | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | " + str(e))    
         SET_DEVICE_CONNECTION_MQTT(False)        
 
 
@@ -318,7 +318,7 @@ def MQTT_PUBLISH_THREAD():
                     print(str(e))
                     
             except:
-                print("ERROR: MQTT")
+                print("ERROR: Network | MQTT")
                     
         time.sleep(0.5)
 
@@ -334,8 +334,8 @@ def START_MQTT_CONTROL_THREAD():
         Thread.start()  
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Thread | MQTT Publish | " + str(e))  
-        SEND_EMAIL("ERROR", "Thread | MQTT Publish | " + str(e))    
+        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | MQTT Publish | " + str(e))  
+        SEND_EMAIL("ERROR", "Host | Thread | MQTT Publish | " + str(e))    
 
 
 def MQTT_CONTROL_THREAD():

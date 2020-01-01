@@ -24,8 +24,8 @@ def START_REFRESH_MQTT_INPUT_MESSAGES_THREAD():
 		Thread.start()  
 		
 	except Exception as e:
-		WRITE_LOGFILE_SYSTEM("ERROR", "Thread | Refresh MQTT Messages | " + str(e)) 
-		SEND_EMAIL("ERROR", "Thread | Refresh MQTT Messages | " + str(e)) 
+		WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | Refresh MQTT Messages | " + str(e)) 
+		SEND_EMAIL("ERROR", "Host | Thread | Refresh MQTT Messages | " + str(e)) 
 
 
 def REFRESH_MQTT_INPUT_MESSAGES_THREAD():   

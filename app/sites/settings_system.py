@@ -7,7 +7,7 @@ from ping3               import ping
 from app                         import app
 from app.database.models         import *
 from app.backend.email           import SEND_EMAIL
-from app.backend.file_management import UPDATE_NETWORK_SETTINGS_FILE, GET_BACKUP_FILES, BACKUP_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP
+from app.backend.file_management import UPDATE_NETWORK_SETTINGS_FILE, GET_BACKUP_FILES, BACKUP_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP, WRITE_LOGFILE_SYSTEM
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
@@ -177,21 +177,21 @@ def settings_system():
                 if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
                     try:
                         os.system("sudo systemctl start zigbee2mqtt")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Activated")
-                        print("ZigBee2MQTT | Activated") 
+                        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | ZigBee2MQTT | enabled")
+                        print("ZigBee2MQTT | enabled") 
                         time.sleep(1)
                     except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | " + str(e)) 
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | ZigBee2MQTT | " + str(e)) 
                         print("ERROR: ZigBee2MQTT | " + str(e))      
 
                 else:
                     try:
                         os.system("sudo systemctl stop zigbee2mqtt")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "ZigBee2MQTT | Disabled")
-                        print("ZigBee2MQTT | Disabled") 
+                        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | ZigBee2MQTT | disabled")
+                        print("ZigBee2MQTT | disabled") 
                         time.sleep(1)
                     except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "ZigBee2MQTT | " + str(e)) 
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | ZigBee2MQTT | " + str(e)) 
                         print("ERROR: ZigBee2MQTT | " + str(e)) 
            
                 # logitech media server
@@ -199,21 +199,21 @@ def settings_system():
                 if GET_SYSTEM_SERVICES().lms_active == "True":
                     try:
                         os.system("sudo systemctl start logitechmediaserver")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "Logitech Media Server | Activated")
-                        print("Logitech Media Server | Activated") 
+                        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | Logitech Media Server | enabled")
+                        print("Logitech Media Server | enabled") 
                         time.sleep(1)
                     except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Logitech Media Server | " + str(e)) 
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | Logitech Media Server | " + str(e)) 
                         print("ERROR: Logitech Media Server | " + str(e))       
  
                 else: 
                     try:
                         os.system("sudo systemctl stop logitechmediaserver")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "Logitech Media Server | Disabled")
-                        print("Logitech Media Server | Disabled") 
+                        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services |Logitech Media Server | disabled")
+                        print("Logitech Media Server | disabled") 
                         time.sleep(1)
                     except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Logitech Media Server | " + str(e)) 
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | Logitech Media Server | " + str(e)) 
                         print("ERROR: Logitech Media Server | " + str(e)) 
 
                 # squeezelite player
@@ -221,21 +221,21 @@ def settings_system():
                 if GET_SYSTEM_SERVICES().squeezelite_active == "True":
                     try:
                         os.system("sudo systemctl start squeezelite")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "Squeezelie Player | Activated")
-                        print("Squeezelie Player | Activated") 
+                        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | Squeezelie Player | enabled")
+                        print("Squeezelie Player | enabled") 
                         time.sleep(1)
                     except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Squeezelie Player | " + str(e)) 
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | Squeezelie Player | " + str(e)) 
                         print("ERROR: Squeezelie Player | " + str(e))     
 
                 else:
                     try:
                         os.system("sudo systemctl stop squeezelite")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "Squeezelie Player | Disabled")
-                        print("Squeezelie Player | Disabled") 
+                        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | Squeezelie Player | disabled")
+                        print("Squeezelie Player | disabled") 
                         time.sleep(1)
                     except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Squeezelie Player | " + str(e)) 
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | Squeezelie Player | " + str(e)) 
                         print("ERROR: Squeezelie Player | " + str(e)) 
 
 

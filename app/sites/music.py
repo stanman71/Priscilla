@@ -8,6 +8,7 @@ from app.database.models          import *
 from app.backend.spotify          import *
 from app.backend.shared_resources import mqtt_message_queue, GET_MQTT_INCOMING_MESSAGES, GET_DEVICE_CONNECTION_MQTT
 from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS
+from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
 
 from lms import find_server
 
@@ -218,7 +219,7 @@ def music():
 
         # login failed
         except Exception as e:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Spotify | " + str(e)) 
+            WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
             SEND_EMAIL("ERROR", "Spotify | " + str(e)) 
             
             spotify_user = ""
@@ -404,5 +405,5 @@ def spotify_token():
 @permission_required
 def spotify_logout():
     DELETE_SPOTIFY_TOKEN()
-    WRITE_LOGFILE_SYSTEM("SUCCESS", "Spotify | Logout") 
+    WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify | Logout") 
     return redirect(url_for('music'))      

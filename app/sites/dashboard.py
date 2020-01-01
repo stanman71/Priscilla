@@ -9,6 +9,8 @@ from app.backend.led             import *
 from app.backend.spotify         import *
 from app.backend.mqtt            import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD
 from app.backend.process_program import *
+from app.backend.file_management import WRITE_LOGFILE_SYSTEM
+
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
@@ -223,7 +225,7 @@ def dashboard():
 
         # login failed
         except Exception as e:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Spotify | " + str(e)) 
+            WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
             SEND_EMAIL("ERROR", "Spotify | " + str(e)) 
             
             list_spotify_playlists = ""

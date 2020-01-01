@@ -477,8 +477,8 @@ def GET_SUNRISE_TIME(lat, long):
       
       
    except Exception as e:    
-      WRITE_LOGFILE_SYSTEM("ERROR", "Update Sunrise / Sunset | " + str(e))
-      SEND_EMAIL("ERROR", "Update Sunrise / Sunset | " + str(e))
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Update Sunrise / Sunset | " + str(e))
+      SEND_EMAIL("ERROR", "Scheduler | Update Sunrise / Sunset | " + str(e))
 
 
 def GET_SUNSET_TIME(lat, long):
@@ -506,8 +506,8 @@ def GET_SUNSET_TIME(lat, long):
 
 
    except Exception as e:    
-      WRITE_LOGFILE_SYSTEM("ERROR", "Update Sunrise / Sunset | " + str(e))
-      SEND_EMAIL("ERROR", "Update Sunrise / Sunset | " + str(e))
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Update Sunrise / Sunset | " + str(e))
+      SEND_EMAIL("ERROR", "Scheduler | Update Sunrise / Sunset | " + str(e))
 
 
 """ ################################ """

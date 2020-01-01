@@ -25,8 +25,8 @@ def PROCESS_MANAGEMENT_THREAD():
         Thread.start() 
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Thread | Process Management | " + str(e)) 
-        SEND_EMAIL("ERROR", "Thread | Process Management | " + str(e))      
+        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | Process Management | " + str(e)) 
+        SEND_EMAIL("ERROR", "Host | Thread | Process Management | " + str(e))      
 
 
 def PROCESS_MANAGEMENT():
@@ -62,9 +62,9 @@ def PROCESS_MANAGEMENT():
         except Exception as e:         
             try:   
                 if "index out of range" not in str(e):
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Process Management | " + str(e))  
-                    SEND_EMAIL("ERROR", "Process Management | " + str(e))               
-                    print("ERROR: Process Management | " + str(e))
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Host | Process Management | " + str(e))  
+                    SEND_EMAIL("ERROR", "Host | Process Management | " + str(e))               
+                    print("ERROR: Host | Process Management | " + str(e))
                     
             except:
                 pass

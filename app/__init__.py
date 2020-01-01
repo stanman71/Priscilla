@@ -52,7 +52,7 @@ def background_thread():
 
         # system_log
 
-        selected_log_types = ["EVENT", "STATUS", "NETWORK", "DATABASE", "SUCCESS", "WARNING", "ERROR"]
+        selected_log_types = ["EVENT", "STATUS", "DATABASE", "SUCCESS", "WARNING", "ERROR"]
         log_search         = ""
 
         # get log entries
@@ -229,9 +229,9 @@ except Exception as e:
 if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
 
     if CHECK_ZIGBEE2MQTT_AT_STARTUP():  
-        print("Network | ZigBee2MQTT | Connected") 
+        print("Network | ZigBee2MQTT | connected") 
         
-        WRITE_LOGFILE_SYSTEM("NETWORK", "ZigBee2MQTT | Connected")
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | connected")
 
         # deactivate pairing at startup
         SET_ZIGBEE2MQTT_PAIRING("False")
@@ -250,7 +250,7 @@ if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
                     data = json.loads(message[2])
           
                     if data["permit_join"] == True:
-                        WRITE_LOGFILE_SYSTEM("NETWORK", "Network | ZigBee2MQTT | Pairing disabled") 
+                        WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
                         SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")
 
 
@@ -268,7 +268,7 @@ if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
                                 data = json.loads(message[2])
           
                                 if data["permit_join"] == True:
-                                    WRITE_LOGFILE_SYSTEM("NETWORK", "Network | ZigBee2MQTT | Pairing disabled") 
+                                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
                                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")     
 
                                 else:                
@@ -289,30 +289,30 @@ if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
 
 else:
     os.system("sudo systemctl stop zigbee2mqtt")
-    WRITE_LOGFILE_SYSTEM("NETWORK", "Network | ZigBee2MQTT | Disabled")
-    print("Network | ZigBee2MQTT | Disabled") 
+    WRITE_LOGFILE_SYSTEM("SUCCESS", "Host | Services | ZigBee2MQTT | disabled")
+    print("Host | Services | ZigBee2MQTT | disabled") 
 
 
 if GET_SYSTEM_SERVICES().lms_active != "True":
     try:
         os.system("sudo systemctl stop logitechmediaserver")
-        WRITE_LOGFILE_SYSTEM("EVENT", "Logitech Media Server | Disabled")
-        print("Logitech Media Server | Disabled") 
+        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | Logitech Media Server | disabled")
+        print("Host | Services | Logitech Media Server | disabled") 
         time.sleep(1)
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Logitech Media Server | " + str(e)) 
-        print("ERROR: Logitech Media Server | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | Logitech Media Server | " + str(e)) 
+        print("ERROR: Host | Services | Logitech Media Server | " + str(e)) 
 
 
 if GET_SYSTEM_SERVICES().squeezelite_active != "True":
     try:
         os.system("sudo systemctl stop squeezelite")
-        WRITE_LOGFILE_SYSTEM("EVENT", "Squeezelie Player | Disabled")
-        print("Squeezelie Player | Disabled") 
+        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | Squeezelie Player | disabled")
+        print("Host | Services | Squeezelie Player | disabled") 
         time.sleep(1)
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Squeezelie Player | " + str(e)) 
-        print("ERROR: Squeezelie Player | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | Squeezelie Player | " + str(e)) 
+        print("ERROR: Host | Services | Squeezelie Player | " + str(e)) 
 
 
 """ #################### """
