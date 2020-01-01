@@ -114,7 +114,7 @@ def MQTT_RECEIVE_THREAD():
         # message block ?
         if (device_type == "controller"):
     
-            for existing_message in GET_MQTT_INCOMING_MESSAGES(1):              
+            for existing_message in GET_MQTT_INCOMING_MESSAGES(2):              
                 
                 # search for other messages from the same device
                 if existing_message[1] == channel:

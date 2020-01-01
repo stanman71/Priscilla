@@ -248,13 +248,33 @@ if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
             
                 try:
                     data = json.loads(message[2])
-                    
+          
                     if data["permit_join"] == True:
                         WRITE_LOGFILE_SYSTEM("NETWORK", "Network | ZigBee2MQTT | Pairing disabled") 
                         SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")
-                    else:             
-                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
-                        SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed") 
+
+
+                    # if failed, repeat process
+                    else:   
+
+                        channel = "miranda/zigbee2mqtt/bridge/config/permit_join"
+                        msg     = "false"
+
+                        heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
+                        time.sleep(5)
+
+                        for message in GET_MQTT_INCOMING_MESSAGES(30):
+                            if message[1] == "smarthome/zigbee2mqtt/bridge/config":                        
+                                data = json.loads(message[2])
+          
+                                if data["permit_join"] == True:
+                                    WRITE_LOGFILE_SYSTEM("NETWORK", "Network | ZigBee2MQTT | Pairing disabled") 
+                                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")     
+
+                                else:                
+                                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
+                                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed") 
+
 
                 except:
                     WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed") 

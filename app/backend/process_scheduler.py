@@ -599,7 +599,7 @@ def START_SCHEDULER_TASK(task_object):
          if task[1] == "all" or task[1] == "ALL":
 
                for group in GET_ALL_LED_GROUPS():
-                  scene_name = group.current_setting
+                  scene_name = group.current_scene
                   scene      = GET_LED_SCENE_BY_NAME(scene_name)
 
                   WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')

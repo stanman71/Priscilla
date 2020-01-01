@@ -96,7 +96,7 @@ def CHECK_LED_GROUP_SETTING_PROCESS(group_id, scene_id, scene, brightness, delay
     
     # set current state
     if result == []:
-        SET_LED_GROUP_CURRENT_SETTING(group_id, scene)
+        SET_LED_GROUP_CURRENT_SCENE(group_id, scene)
         SET_LED_GROUP_CURRENT_BRIGHTNESS(group_id, brightness)   
         
     else:
@@ -106,7 +106,7 @@ def CHECK_LED_GROUP_SETTING_PROCESS(group_id, scene_id, scene, brightness, delay
         
         # set current state 
         if result == []:
-            SET_LED_GROUP_CURRENT_SETTING(group_id, scene)
+            SET_LED_GROUP_CURRENT_SCENE(group_id, scene)
             SET_LED_GROUP_CURRENT_BRIGHTNESS(group_id, brightness)  
         
         else:
@@ -116,7 +116,7 @@ def CHECK_LED_GROUP_SETTING_PROCESS(group_id, scene_id, scene, brightness, delay
      
               
     # output
-    SET_LED_GROUP_CURRENT_SETTING(group_id, scene)
+    SET_LED_GROUP_CURRENT_SCENE(group_id, scene)
     SET_LED_GROUP_CURRENT_BRIGHTNESS(group_id, brightness)                
                 
     group_name = GET_LED_GROUP_BY_ID(group_id).name
@@ -442,7 +442,7 @@ def SET_LED_GROUP_BRIGHTNESS(group_id, brightness_global = 100):
     
     try:
         group      = GET_LED_GROUP_BY_ID(group_id)
-        scene_name = GET_LED_GROUP_BY_ID(group_id).current_setting
+        scene_name = GET_LED_GROUP_BY_ID(group_id).current_scene
         scene      = GET_LED_SCENE_BY_NAME(scene_name)
         
         # led 1

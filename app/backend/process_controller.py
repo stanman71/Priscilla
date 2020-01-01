@@ -284,7 +284,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             # command valid ?
             if command == "turn_up" or command == "turn_down":
                 
-                scene_name = group.current_setting
+                scene_name = group.current_scene
 
                 # led_group off ?
                 if scene_name != "off":
@@ -356,7 +356,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
                 if input_group_name == group.name.lower():
                     group_founded = True
-                    scene_name    = group.current_setting
+                    scene_name    = group.current_scene
                     scene         = GET_LED_SCENE_BY_NAME(scene_name)
 
                     SET_LED_GROUP_TURN_OFF(group.id)
@@ -369,7 +369,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
         if task[1] == "all":
             for group in GET_ALL_LED_GROUPS():
-                scene_name = group.current_setting
+                scene_name = group.current_scene
                 scene      = GET_LED_SCENE_BY_NAME(scene_name)
 
                 SET_LED_GROUP_TURN_OFF(group.id)

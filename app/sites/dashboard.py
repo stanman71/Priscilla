@@ -56,17 +56,18 @@ def dashboard():
             try:
                 group      = GET_LED_GROUP_BY_ID(i)
                 scene_name = str(request.form.get("set_led_scene_" + str(i)))
+                brightness = request.form.get("set_led_brightness_" + str(i))
+                scene      = GET_LED_SCENE_BY_NAME(scene_name)
 
                 if scene_name == "OFF":
-                    SET_LED_GROUP_TURN_OFF(group.id)
-                    CHECK_LED_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 2, 10)
+                    if group.current_scene != "OFF":
+                        SET_LED_GROUP_TURN_OFF(group.id)
+                        CHECK_LED_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 2, 10)
 
                 else:
-                    scene      = GET_LED_SCENE_BY_NAME(scene_name)
-                    brightness = request.form.get("set_led_brightness_" + str(i))
-                    
-                    SET_LED_GROUP_SCENE(group.id, scene.id, int(brightness))
-                    CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, int(brightness), 2, 10)
+                    if group.current_scene != scene_name or int(group.current_brightness) != int(brightness):
+                        SET_LED_GROUP_SCENE(group.id, scene.id, int(brightness))
+                        CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, int(brightness), 2, 10)
 
             except:
                 pass

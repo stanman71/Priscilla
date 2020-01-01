@@ -86,7 +86,7 @@
                             </td> 
                             <td style="width:35%" class="minwidth_150">
                               <select class="form-control" data-size="5" name="set_led_scene_{{entry.id}}" style="background-color:#27293D"> 
-                                <option value = "{{ entry.current_setting }}" > {{ entry.current_setting }} </option>          
+                                <option value = "{{ entry.current_scene }}" > {{ entry.current_scene }} </option>          
                                 <option disabled>------------------</option>        
                                 {% for each in dropdown_list_led_scenes %}
                                   <option value="{{each.name }}"> {{ each.name }} </option>
@@ -123,14 +123,14 @@
 
                         {% for entry in list_devices %}
                           <tr>                
-                            <td style="width:30%" class="minwidth_150">
+                            <td style="width:35%" class="minwidth_200">
                               <div class="row justify-content-md-left">
                                 <div class="col-sm-10">                                    
                                   {{ entry.name }} 
                                 </div>
                               </div>
                             </td> 
-                            <td style="width:25%" class="minwidth_150">
+                            <td style="width:22%" class="minwidth_150">
                               <select class="form-control" data-size="5" name="set_command_{{entry.id}}" style="background-color:#27293D"> 
                                 <option value = "None" > None </option>          
                                 <option disabled>------------------</option>        
@@ -140,9 +140,9 @@
                                   {% endfor %}     
                                 {% endif %}  
                               </select>                            
-                            </td>   
-                            <td style="width:5%"></td>
-                            <td style="width:40%" class="minwidth_150">
+                            </td>  
+                            <td style="width:3%"></td> 
+                            <td style="width:40%" class="minwidth_200">
                               {{ entry.last_values_string }}
                             </td>                                                                                 
                           </tr>

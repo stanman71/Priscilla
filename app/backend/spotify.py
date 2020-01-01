@@ -309,7 +309,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)         
                 SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
 
-                time.sleep(1)
+                time.sleep(0.5)
                 spotify_device_id = sp.current_playback(market=None)['device']['id']
                 sp.shuffle(True, device_id=spotify_device_id) 
                 sp.next_track(device_id=spotify_device_id)      
@@ -332,7 +332,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                                                           GET_SPOTIFY_SETTINGS().default_playlist_uri, 
                                                           GET_SPOTIFY_SETTINGS().default_volume)
                     
-                    time.sleep(1)
+                    time.sleep(0.5)
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
                     sp.shuffle(True, device_id=spotify_device_id) 
                     sp.next_track(device_id=spotify_device_id)                    
@@ -353,7 +353,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                     sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)      
                     SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
 
-                    time.sleep(1)
+                    time.sleep(0.5)
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
                     sp.shuffle(True, device_id=spotify_device_id) 
                     sp.next_track(device_id=spotify_device_id)     
@@ -381,7 +381,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                                                           GET_SPOTIFY_SETTINGS().default_playlist_uri, 
                                                           GET_SPOTIFY_SETTINGS().default_volume)
                     
-                    time.sleep(1)
+                    time.sleep(0.5)
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
                     sp.shuffle(True, device_id=spotify_device_id)  
                     sp.next_track(device_id=spotify_device_id)    

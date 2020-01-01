@@ -66,13 +66,13 @@ class Devices(db.Model):
     last_contact                  = db.Column(db.String(50))
     last_values_json              = db.Column(db.String(200))  
     last_values_string            = db.Column(db.String(200)) 
-    exception_option              = db.Column(db.String(50)) 
-    exception_setting             = db.Column(db.String(50))     
-    exception_sensor_ieeeAddr     = db.Column(db.String(50))   
-    exception_sensor_input_values = db.Column(db.String(50))     
-    exception_value_1             = db.Column(db.String(50))
-    exception_value_2             = db.Column(db.String(50))
-    exception_value_3             = db.Column(db.String(50))       
+    exception_option              = db.Column(db.String(50), server_default=("None")) 
+    exception_setting             = db.Column(db.String(50), server_default=("None"))     
+    exception_sensor_ieeeAddr     = db.Column(db.String(50), server_default=("None"))   
+    exception_sensor_input_values = db.Column(db.String(50), server_default=("None"))     
+    exception_value_1             = db.Column(db.String(50), server_default=("None"))
+    exception_value_2             = db.Column(db.String(50), server_default=("None"))
+    exception_value_3             = db.Column(db.String(50), server_default=("None"))       
 
 class eMail(db.Model):
     __tablename__  = 'email'
@@ -130,7 +130,7 @@ class LED_Groups(db.Model):
     led_name_9            = db.Column(db.String(50)) 
     led_device_type_9     = db.Column(db.String(50))
     collapse              = db.Column(db.String(50))    
-    current_setting       = db.Column(db.String(50), server_default=("OFF"))
+    current_scene         = db.Column(db.String(50), server_default=("OFF"))
     current_brightness    = db.Column(db.Integer, server_default=("0"))
 
 class LED_Scenes(db.Model):
@@ -1308,9 +1308,9 @@ def SET_LED_GROUP_NAME(id, name):
     db.session.commit()  
 
 
-def SET_LED_GROUP_CURRENT_SETTING(id, current_setting):
+def SET_LED_GROUP_CURRENT_SCENE(id, current_scene):
     entry = LED_Groups.query.filter_by(id=id).first()
-    entry.current_setting = current_setting     
+    entry.current_scene = current_scene     
     db.session.commit()  
 
 
