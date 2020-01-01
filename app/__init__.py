@@ -50,31 +50,51 @@ def background_thread():
     while True:
         socketio.sleep(0.5)
 
+        # ##########
         # system_log
+        # ##########
 
-        selected_log_types = ["EVENT", "STATUS", "DATABASE", "SUCCESS", "WARNING", "ERROR"]
-        log_search         = ""
+        try:
 
-        # get log entries
-        if GET_LOGFILE_SYSTEM(selected_log_types, 500, log_search) != None:
-            data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, 500, log_search)
-        else:
-            data_log_system = ""
+            selected_log_types = ["EVENT", "STATUS", "DATABASE", "SUCCESS", "WARNING", "ERROR"]
+            log_search         = ""
 
-        socketio.emit('system_log',
-                      {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
-                       'data_1_title': data_log_system[1][1] + " ||| " + data_log_system[1][0], 'data_1_content': data_log_system[1][2], 
-                       'data_2_title': data_log_system[2][1] + " ||| " + data_log_system[2][0], 'data_2_content': data_log_system[2][2], 
-                       'data_3_title': data_log_system[3][1] + " ||| " + data_log_system[3][0], 'data_3_content': data_log_system[3][2], 
-                       'data_4_title': data_log_system[4][1] + " ||| " + data_log_system[4][0], 'data_4_content': data_log_system[4][2], 
-                       'data_5_title': data_log_system[5][1] + " ||| " + data_log_system[5][0], 'data_5_content': data_log_system[5][2], 
-                       'data_6_title': data_log_system[6][1] + " ||| " + data_log_system[6][0], 'data_6_content': data_log_system[6][2], 
-                       'data_7_title': data_log_system[7][1] + " ||| " + data_log_system[7][0], 'data_7_content': data_log_system[7][2], 
-                       'data_8_title': data_log_system[8][1] + " ||| " + data_log_system[8][0], 'data_8_content': data_log_system[8][2], 
-                       'data_9_title': data_log_system[9][1] + " ||| " + data_log_system[9][0], 'data_9_content': data_log_system[9][2]},                                                    
-                       namespace='/socketIO')
+            # get log entries
+            if GET_LOGFILE_SYSTEM(selected_log_types, 500, log_search) != None:
+                data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, 500, log_search)
+            else:
+                data_log_system = ""
 
+            socketio.emit('system_log',
+                         {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
+                          'data_1_title': data_log_system[1][1] + " ||| " + data_log_system[1][0], 'data_1_content': data_log_system[1][2], 
+                          'data_2_title': data_log_system[2][1] + " ||| " + data_log_system[2][0], 'data_2_content': data_log_system[2][2], 
+                          'data_3_title': data_log_system[3][1] + " ||| " + data_log_system[3][0], 'data_3_content': data_log_system[3][2], 
+                          'data_4_title': data_log_system[4][1] + " ||| " + data_log_system[4][0], 'data_4_content': data_log_system[4][2], 
+                          'data_5_title': data_log_system[5][1] + " ||| " + data_log_system[5][0], 'data_5_content': data_log_system[5][2], 
+                          'data_6_title': data_log_system[6][1] + " ||| " + data_log_system[6][0], 'data_6_content': data_log_system[6][2], 
+                          'data_7_title': data_log_system[7][1] + " ||| " + data_log_system[7][0], 'data_7_content': data_log_system[7][2], 
+                          'data_8_title': data_log_system[8][1] + " ||| " + data_log_system[8][0], 'data_8_content': data_log_system[8][2], 
+                          'data_9_title': data_log_system[9][1] + " ||| " + data_log_system[9][0], 'data_9_content': data_log_system[9][2]},                                                    
+                          namespace='/socketIO')
+
+        except:
+            socketio.emit('system_log',
+                         {'data_0_title': "" + " ||| " + "", 'data_0_content': "", 
+                          'data_1_title': "" + " ||| " + "", 'data_1_content': "", 
+                          'data_2_title': "" + " ||| " + "", 'data_2_content': "", 
+                          'data_3_title': "" + " ||| " + "", 'data_3_content': "", 
+                          'data_4_title': "" + " ||| " + "", 'data_4_content': "", 
+                          'data_5_title': "" + " ||| " + "", 'data_5_content': "", 
+                          'data_6_title': "" + " ||| " + "", 'data_6_content': "", 
+                          'data_7_title': "" + " ||| " + "", 'data_7_content': "", 
+                          'data_8_title': "" + " ||| " + "", 'data_8_content': "", 
+                          'data_9_title': "" + " ||| " + "", 'data_9_content': ""},                                                    
+                          namespace='/socketIO')            
+
+        # #####
         # music
+        # #####
 
         try:
             spotify_token = GET_SPOTIFY_TOKEN()
@@ -105,17 +125,33 @@ def background_thread():
                          {'current_device': "", 'current_state': "", 'current_track': "", 'current_artists': "", 'current_progress': "", 'current_playlist': ""},                                                               
                          namespace='/socketIO')                 
 
+        # #######
         # program
+        # #######
 
-        socketio.emit('program',
-                      {'program_status': GET_PROGRAM_STATUS()},                                                               
-                      namespace='/socketIO')
+        try:
+            socketio.emit('program',
+                        {'program_status': GET_PROGRAM_STATUS()},                                                               
+                        namespace='/socketIO')
 
-        # zigbee2mqtt pairing
+        except:
+            socketio.emit('program',
+                        {'program_status': ""},                                                               
+                        namespace='/socketIO')            
 
-        socketio.emit('zigbee2mqtt_pairing',
-                      {'zigbee2mqtt_pairing_status': GET_ZIGBEE2MQTT_PAIRING_STATUS()},                                                               
-                      namespace='/socketIO')
+        # ##########################
+        # zigbee2mqtt pairing status
+        # ##########################
+
+        try:
+            socketio.emit('zigbee2mqtt_pairing',
+                        {'zigbee2mqtt_pairing_status': GET_ZIGBEE2MQTT_PAIRING_STATUS()},                                                               
+                        namespace='/socketIO')
+
+        except:
+             socketio.emit('zigbee2mqtt_pairing',
+                        {'zigbee2mqtt_pairing_status': GET_ZIGBEE2MQTT_PAIRING_STATUS()},                                                               
+                        namespace='/socketIO')           
 
 
 @socketio.on('connect', namespace='/socketIO')
