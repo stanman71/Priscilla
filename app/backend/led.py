@@ -122,10 +122,10 @@ def CHECK_LED_GROUP_SETTING_PROCESS(group_id, scene_id, scene, brightness, delay
     group_name = GET_LED_GROUP_BY_ID(group_id).name
                 
     if result == []:
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "LED | Group - " + group_name + " | Setting changed | " + str(scene) + " : "  + str(brightness) + " %") 
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Light | Group - " + group_name + " | Setting changed | " + str(scene) + " : "  + str(brightness) + " %") 
     else:
-        WRITE_LOGFILE_SYSTEM("WARNING", "LED | Group - " + group_name + " | "  + str(scene) + " : "  + str(brightness) + " | " + str(result)) 
-        SEND_EMAIL("WARNING", "LED | Group - " + group_name + " | "  + str(scene) + " : "  + str(brightness) + " | " + str(result)) 
+        WRITE_LOGFILE_SYSTEM("WARNING", "Light | Group - " + group_name + " | "  + str(scene) + " : "  + str(brightness) + " | " + str(result)) 
+        SEND_EMAIL("WARNING", "Light | Group - " + group_name + " | "  + str(scene) + " : "  + str(brightness) + " | " + str(result)) 
 
     return result     
                                                              
@@ -257,8 +257,8 @@ def CHECK_LED_GROUP_SETTING(group_id, scene_id, setting_json, limit):
     
     except Exception as e:
         print(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "LED | Start Scene | " + str(e))
-        SEND_EMAIL("ERROR", "LED | Start Scene | " + str(e))            
+        WRITE_LOGFILE_SYSTEM("ERROR", "Light | Start Scene | " + str(e))
+        SEND_EMAIL("ERROR", "Light | Start Scene | " + str(e))            
         return [str(e)]
     
         
@@ -411,8 +411,8 @@ def SET_LED_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
 
     
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "LED | Start Scene | " + str(e))            
-        SEND_EMAIL("ERROR", "LED | Start Scene | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "Light | Start Scene | " + str(e))            
+        SEND_EMAIL("ERROR", "Light | Start Scene | " + str(e))
         return [str(e)]
     
 
@@ -502,8 +502,8 @@ def SET_LED_GROUP_BRIGHTNESS(group_id, brightness_global = 100):
     
     
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "LED | Set Brightness | " + str(e))
-        SEND_EMAIL("ERROR", "LED | Set Brightness | " + str(e))            
+        WRITE_LOGFILE_SYSTEM("ERROR", "Light | Set Brightness | " + str(e))
+        SEND_EMAIL("ERROR", "Light | Set Brightness | " + str(e))            
         return [str(e)]
 
 
@@ -543,6 +543,6 @@ def SET_LED_GROUP_TURN_OFF(group_id):
         return True
 
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "LED | Turn_off | " + str(e))
-        SEND_EMAIL("ERROR", "LED | Turn_off | " + str(e))            
+        WRITE_LOGFILE_SYSTEM("ERROR", "Light | Turn_off | " + str(e))
+        SEND_EMAIL("ERROR", "Light | Turn_off | " + str(e))            
         return [str(e)]

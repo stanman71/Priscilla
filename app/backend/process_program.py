@@ -138,18 +138,15 @@ def PROGRAM_THREAD(program_id):
                                 group_name = line_content[1]    
                                 
                                 if line_content[2] != "off" and line_content[2] != "OFF":
-
                                     scene_name        = line_content[2]
                                     global_brightness = line_content[3]
-
-                                    group = GET_LED_GROUP_BY_NAME(group_name)
-                                    scene = GET_LED_SCENE_BY_NAME(scene_name)
+                                    group             = GET_LED_GROUP_BY_NAME(group_name)
+                                    scene             = GET_LED_SCENE_BY_NAME(scene_name)
 
                                     SET_LED_GROUP_SCENE(group.id, scene.id, int(global_brightness))
                                     CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, global_brightness, 2, 10)
 
                                 if line_content[2] == "off" or line_content[2] == "OFF":
-
                                     group = GET_LED_GROUP_BY_NAME(group_name)
                                     scene = GET_LED_SCENE_BY_NAME(scene_name)
                                                    
@@ -178,46 +175,27 @@ def PROGRAM_THREAD(program_id):
                                  
                                 # check device exception
                                 check_result = CHECK_DEVICE_EXCEPTIONS(device.id, program_setting)
-                                
-                               
-                                if check_result == True:      
-               
-                                    # new device setting ?  
-                                    new_setting = False
+                                                             
+                                if check_result == True:               
 
-                                    if not "," in program_setting:
-                                        if not program_setting in device.last_values_json:
-                                            new_setting = True
+                                    if device.gateway == "mqtt":
+                                        channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+                                    if device.gateway == "zigbee2mqtt":   
+                                        channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                                    # more then one setting value:
-                                    else:   
-                                        program_setting_temp = program_setting
-                                        list_program_setting = program_setting_temp.split(",")
+                                    command_position  = 0
+                                    list_command_json = device.commands_json.split(",")
 
-                                        for setting in list_program_setting:
+                                    # get the json command statement and start process
+                                    for command in device.commands.split(","):     
+                                                        
+                                        if program_setting in command:
+                                            heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
+                                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_setting, 20)      
+                                            break
 
-                                            if not setting in device.last_values_json:
-                                                new_setting = True  
-                        
-                        
-                                    # setting changed  
-                                    if new_setting == True: 
-
-                                        if device.gateway == "mqtt":
-                                            channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
-                                        if device.gateway == "zigbee2mqtt":   
-                                            channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
-
-                                        # get the json command statement and start process
-                                        for command_json in device.commands_json.split(","):        
-                                            if program_setting in command_json:
-                                                heapq.heappush(mqtt_message_queue, (10, (channel, command_json)))            
-                                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_setting, 20)      
-                                                break
+                                        command_position = command_position + 1
        
-                                    else:
-                                        WRITE_LOGFILE_SYSTEM("STATUS", "Devices | Device - " + device.name + " | " + program_setting)                                
-
                                 else:
                                     WRITE_LOGFILE_SYSTEM("WARNING", "Program - " + program_name + " | " + check_result)
                                 

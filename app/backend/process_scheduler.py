@@ -542,20 +542,16 @@ def START_SCHEDULER_TASK(task_object):
                   except:
                      brightness = 100
 
-                  # new led setting ?
-                  if group.current_setting != scene.name or int(group.current_brightness) != brightness:
-                     
-                     WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                      
-                     
-                     SET_LED_GROUP_SCENE(group.id, scene.id, brightness)
-                     CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
-
+                  WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                      
+                  
+                  SET_LED_GROUP_SCENE(group.id, scene.id, brightness)
+                  CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
                else:
-                  WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Scene - " + task[2] + " | not founded")
+                  WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Scene - " + task[2] + " - not founded")
 
          else:
-               WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Group - " + task[1] + " | not founded")
+               WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Group - " + task[1] + " - not founded")
 
 
    except Exception as e:
@@ -590,33 +586,26 @@ def START_SCHEDULER_TASK(task_object):
 
                      if input_group_name.lower() == group.name.lower():
                            group_founded = True   
-
-                           # new led setting ?
-                           if group.current_setting != "OFF":
                               
-                              WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                              
-                              
-                              SET_LED_GROUP_TURN_OFF(group.id)
-                              CHECK_LED_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
-
+                           WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                              
+                           
+                           SET_LED_GROUP_TURN_OFF(group.id)
+                           CHECK_LED_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
                   if group_founded == False:
-                     WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Group - " + input_group_name + " | not founded")     
+                     WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Group - " + input_group_name + " - not founded")     
 
 
          if task[1] == "all" or task[1] == "ALL":
 
                for group in GET_ALL_LED_GROUPS():
+                  scene_name = group.current_setting
+                  scene      = GET_LED_SCENE_BY_NAME(scene_name)
 
-                  # new led setting ?
-                  if group.current_setting != "OFF":
-                     scene_name = group.current_setting
-                     scene      = GET_LED_SCENE_BY_NAME(scene_name)
+                  WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')
 
-                     WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')
-
-                     SET_LED_GROUP_TURN_OFF(group.id)
-                     CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 5, 20)    
+                  SET_LED_GROUP_TURN_OFF(group.id)
+                  CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 5, 20)    
                         
 
    except Exception as e:
@@ -652,49 +641,33 @@ def START_SCHEDULER_TASK(task_object):
                   # check device exception
                   check_result = CHECK_DEVICE_EXCEPTIONS(device.id, scheduler_setting)
                             
-                  if check_result == True:                         
-                  
-                     # new device setting ?  
-                     new_setting = False
-                     
-                     # one settings value only
-                     if not "," in scheduler_setting:
-                        if not scheduler_setting in device.last_values_json:
-                              new_setting = True
-                                                                  
-                     # more then one setting value:
-                     else:   
-                        scheduler_setting_temp  = scheduler_setting
-                        list_scheduler_settings = scheduler_setting_temp.split(",")
-                        
-                        for setting in list_scheduler_settings:
-                              
-                              if not setting in device.last_values_json:
-                                 new_setting = True  
+                  if check_result == True:           
 
+                     WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')    
 
-                     # setting changed
-                     if new_setting == True:
+                     if device.gateway == "mqtt":
+                           channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+                     if device.gateway == "zigbee2mqtt":   
+                           channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                        WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                              
+                     command_position  = 0
+                     list_command_json = device.commands_json.split(",")
 
-                        if device.gateway == "mqtt":
-                              channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
-                        if device.gateway == "zigbee2mqtt":   
-                              channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
-
-                        # get the json command statement and start process
-                        for command_json in device.commands_json.split(","):        
-                           if scheduler_setting in command_json:
-                              heapq.heappush(mqtt_message_queue, (1, (channel, command_json)))            
+                     # get the json command statement and start process
+                     for command in device.commands.split(","):     
+                                          
+                           if scheduler_setting in command:
+                              heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
                               CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting, 20)      
                               break
+
+                           command_position = command_position + 1
 
                   else:
                      WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | " + check_result)
 
             else:
-                  WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Device - " + input_device_name + " | not founded")                  
+                  WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Device - " + input_device_name + " - not founded")                  
 
 
    except Exception as e:
@@ -713,6 +686,8 @@ def START_SCHEDULER_TASK(task_object):
          program = GET_PROGRAM_BY_NAME(task[1].lower())
 
          if program != None:
+
+               WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')
 
                if task[2] == "start" and GET_PROGRAM_STATUS() == None:
                   START_PROGRAM_THREAD(program.id)
@@ -743,7 +718,6 @@ def START_SCHEDULER_TASK(task_object):
       if "backup_database" in task_object.task:
          BACKUP_DATABASE() 
 
-
    except Exception as e:
       print(e)
       WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))     
@@ -758,7 +732,6 @@ def START_SCHEDULER_TASK(task_object):
          UPDATE_DEVICES("mqtt")
          UPDATE_DEVICES("zigbee2mqtt")
 
-
    except Exception as e:
       print(e)
       WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
@@ -772,7 +745,6 @@ def START_SCHEDULER_TASK(task_object):
       if "request_sensordata" in task_object.task:
          task = task_object.task.split(" # ")
          REQUEST_SENSORDATA(task[1])  
-
 
    except Exception as e:
       print(e)
@@ -792,6 +764,8 @@ def START_SCHEDULER_TASK(task_object):
 
          # check spotify login 
          if spotify_token != "":
+
+               WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')
                
                sp       = spotipy.Spotify(auth=spotify_token)
                sp.trace = False

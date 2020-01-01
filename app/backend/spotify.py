@@ -223,11 +223,10 @@ def REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
                         heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
 
                     except Exception as e:
-                        print(e)
                         WRITE_LOGFILE_SYSTEM("ERROR", "Devices | Device - " + client_music.name + " | " + str(e))      
+                        print(e)
 
             # restart timer
-
             current_timer = 0
 
 
@@ -242,6 +241,9 @@ def REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
 
 def SET_MUSIC_VOLUME(spotify_token, volume):
 
+    if int(volume) == 0:
+        volume = 33
+
     sp                  = spotipy.Spotify(auth=spotify_token)
     sp.trace            = False     
     spotify_device_id   = sp.current_playback(market=None)['device']['id']
@@ -253,7 +255,36 @@ def SET_MUSIC_VOLUME(spotify_token, volume):
         server = find_server()
 
         for player in server.players:
-                player.set_volume(volume)     
+            player.set_volume(volume)     
+
+
+""" ################################### """
+"""  update multiroom default settings  """
+""" ################################### """
+
+def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
+
+    # update multiroom settings
+    if "multiroom" in GET_SPOTIFY_SETTINGS().default_device_name:
+        
+        try:
+            sp                   = spotipy.Spotify(auth=SPOTIFY_TOKEN)
+            sp.trace             = False     
+            list_spotify_devices = sp.devices()["devices"]  
+
+            for device in list_spotify_devices:    
+                if "multiroom" in device['name']:
+                    spotify_default_device_name = device['name']
+                    spotify_default_device_id   = device['id']
+
+                    SET_SPOTIFY_DEFAULT_SETTINGS(spotify_default_device_id, 
+                                                 spotify_default_device_name, 
+                                                 GET_SPOTIFY_SETTINGS().default_playlist_uri, 
+                                                 GET_SPOTIFY_SETTINGS().default_playlist_name, 
+                                                 GET_SPOTIFY_SETTINGS().default_volume)
+
+        except:
+            pass
 
 
 """ ################# """
@@ -274,25 +305,86 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 # start former playlist
                 spotify_device_id = sp.current_playback(market=None)['device']['id']
                 context_uri       = sp.current_playback(market=None)["context"]["uri"]
-                sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)      
-                sp.next_track(device_id=spotify_device_id)    
+
+                sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)         
                 SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
+
+                time.sleep(1)
+                spotify_device_id = sp.current_playback(market=None)['device']['id']
+                sp.shuffle(True, device_id=spotify_device_id) 
+                sp.next_track(device_id=spotify_device_id)      
+
+            except:
+                             
+                try:                 
+                    # start former track
+                    spotify_device_id = sp.current_playback(market=None)['device']['id']                   
+                    track_uri         = sp.current_playback(market=None)['item']['uri']
+
+                    sp.start_playback(device_id=spotify_device_id, context_uri=None, uris=[track_uri], offset = None)  
+                    SET_MUSIC_VOLUME(spotify_token, spotify_volume)
+
+                except:               
+                    # start default settings
+                    UPDATE_MULTIROOM_DEFAULT_SETTINGS()
+
+                    SPOTIFY_START_PLAYLIST(spotify_token, GET_SPOTIFY_SETTINGS().default_device_id, 
+                                                          GET_SPOTIFY_SETTINGS().default_playlist_uri, 
+                                                          GET_SPOTIFY_SETTINGS().default_volume)
+                    
+                    time.sleep(1)
+                    spotify_device_id = sp.current_playback(market=None)['device']['id']
+                    sp.shuffle(True, device_id=spotify_device_id) 
+                    sp.next_track(device_id=spotify_device_id)                    
+                         
+
+        if command == "play/stop":    
+            
+            try:
+                spotify_current_playback = sp.current_playback(market=None)
+                spotify_device_id        = sp.current_playback(market=None)['device']['id']
+
+                if str(spotify_current_playback['is_playing']).upper() == "TRUE":
+                    sp.pause_playback(device_id=spotify_device_id)  
+
+                else:             
+                    # start former playlist
+                    context_uri = sp.current_playback(market=None)["context"]["uri"]
+                    sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)      
+                    SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
+
+                    time.sleep(1)
+                    spotify_device_id = sp.current_playback(market=None)['device']['id']
+                    sp.shuffle(True, device_id=spotify_device_id) 
+                    sp.next_track(device_id=spotify_device_id)     
 
             except:
                              
                 try:
-                    # start former track
-                    spotify_device_id = sp.current_playback(market=None)['device']['id']
-                    track_uri         = sp.current_playback(market=None)['item']['uri']
-                    sp.start_playback(device_id=spotify_device_id, context_uri=None, uris=[track_uri], offset = None)  
-                    SET_MUSIC_VOLUME(spotify_token, spotify_volume)
+                    spotify_current_playback = sp.current_playback(market=None)
+                    spotify_device_id        = sp.current_playback(market=None)['device']['id']
 
-                except:
+                    if str(spotify_current_playback['is_playing']).upper() == "TRUE":
+                        sp.pause_playback(device_id=spotify_device_id)  
+
+                    else:                      
+                        # start former track
+                        track_uri = sp.current_playback(market=None)['item']['uri']
+                        sp.start_playback(device_id=spotify_device_id, context_uri=None, uris=[track_uri], offset = None)  
+                        SET_MUSIC_VOLUME(spotify_token, spotify_volume)
+
+                except:               
                     # start default settings
+                    UPDATE_MULTIROOM_DEFAULT_SETTINGS()
+
                     SPOTIFY_START_PLAYLIST(spotify_token, GET_SPOTIFY_SETTINGS().default_device_id, 
                                                           GET_SPOTIFY_SETTINGS().default_playlist_uri, 
                                                           GET_SPOTIFY_SETTINGS().default_volume)
-                    sp.shuffle(True, device_id=GET_SPOTIFY_SETTINGS().default_device_id)      
+                    
+                    time.sleep(1)
+                    spotify_device_id = sp.current_playback(market=None)['device']['id']
+                    sp.shuffle(True, device_id=spotify_device_id)  
+                    sp.next_track(device_id=spotify_device_id)    
 
 
         if command == "previous":      
@@ -321,7 +413,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             spotify_device_id = sp.current_playback(market=None)['device']['id']  
             SET_MUSIC_VOLUME(spotify_token, spotify_volume)    
 
-        if command == "turn_up":   
+        if command == "volume_up":   
             volume = spotify_volume + 10
             
             if volume > 100:
@@ -329,7 +421,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                
             SET_MUSIC_VOLUME(spotify_token, volume)
                 
-        if command == "turn_down":   
+        if command == "volume_down":   
             volume = spotify_volume - 10
             
             if volume < 0:

@@ -58,21 +58,15 @@ def dashboard():
                 scene_name = str(request.form.get("set_led_scene_" + str(i)))
 
                 if scene_name == "OFF":
-
-                    # new led setting ?
-                    if group.current_setting != "OFF":
-                        SET_LED_GROUP_TURN_OFF(group.id)
-                        CHECK_LED_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 2, 10)
-
+                    SET_LED_GROUP_TURN_OFF(group.id)
+                    CHECK_LED_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 2, 10)
 
                 else:
                     scene      = GET_LED_SCENE_BY_NAME(scene_name)
                     brightness = request.form.get("set_led_brightness_" + str(i))
-
-                    # new led setting ?
-                    if group.current_setting != scene.name or int(group.current_brightness) != int(brightness):
-                        SET_LED_GROUP_SCENE(group.id, scene.id, int(brightness))
-                        CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, int(brightness), 2, 10)
+                    
+                    SET_LED_GROUP_SCENE(group.id, scene.id, int(brightness))
+                    CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, int(brightness), 2, 10)
 
             except:
                 pass
@@ -93,45 +87,24 @@ def dashboard():
                     check_result = CHECK_DEVICE_EXCEPTIONS(device.id, device_setting)
                         
                     if check_result == True:               
-                
-                        new_setting = False
-                        
-                        # new device setting ?  
-                        if device.last_values_json != None:
-                            
-                            # one setting value
-                            if not "," in device_setting:
-                                if not device_setting in device.last_values_json:
-                                    new_setting = True
-                                                                    
-                            # more then one setting value
-                            else:
-                                device_setting_temp  = device_setting
-                                list_device_settings = device_setting_temp.split(",")
-                                
-                                for setting in list_device_settings:
-                                    
-                                    if not setting in device.last_values_json:
-                                        new_setting = True                      
 
-                        else:
-                            new_setting = True
+                        if device.gateway == "mqtt":
+                            channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+                        if device.gateway == "zigbee2mqtt":   
+                            channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
+                        command_position  = 0
+                        list_command_json = device.commands_json.split(",")
 
-                        # setting changed           
-                        if new_setting == True:    
+                        # get the json command statement and start process
+                        for command in device.commands.split(","):     
+                                            
+                            if device_setting in command:
+                                heapq.heappush(mqtt_message_queue, (1, (channel, list_command_json[command_position])))            
+                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting, 20)      
+                                break
 
-                            if device.gateway == "mqtt":
-                                channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
-                            if device.gateway == "zigbee2mqtt":   
-                                channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
-
-                            # get the json command statement and start process
-                            for command_json in device.commands_json.split(","):        
-                                if device_setting in command_json:
-                                    heapq.heappush(mqtt_message_queue, (1, (channel, command_json)))            
-                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting, 20)      
-                                    break
+                            command_position = command_position + 1
 
                     else:
                         WRITE_LOGFILE_SYSTEM("WARNING", "Network | " + check_result)       

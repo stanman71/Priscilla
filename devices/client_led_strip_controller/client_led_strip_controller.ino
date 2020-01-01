@@ -330,7 +330,7 @@ void callback (char* topic, byte* payload, unsigned int length) {
         DynamicJsonDocument msg(512);
         
         msg["ieeeAddr"]    = ieeeAddr;
-        msg["model"]       = "client led_rgb";
+        msg["model"]       = "led_rgb_controller 1.2";
         msg["device_type"] = "led_rgb";
         msg["description"] = "MQTT Client LED RGB";
     
@@ -339,6 +339,9 @@ void callback (char* topic, byte* payload, unsigned int length) {
 
         JsonArray data_commands = msg.createNestedArray("commands");
         data_commands.add("");     
+
+        JsonArray data_commands_json = msg.createNestedArray("commands_json");
+        data_commands_json.add("");     
 
         // convert msg to char
         char msg_Char[512];

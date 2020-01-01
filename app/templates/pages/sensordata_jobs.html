@@ -246,11 +246,17 @@
                               <input type="radio" class="custom-control-input" id="radio_always_active_{{ entry.id }}" {% if entry.always_active == "True" %} checked="on" {% endif %} value="True" name="radio_input_setting_{{ entry.id }}">
                               <label class="custom-control-label" for="radio_always_active_{{ entry.id }}">alles speichern</label>
                             </div> 
-                            <br>       
-                            <div class="custom-control custom-radio custom-control-inline">
-                              <input type="radio" class="custom-control-input" id="radio_request_only_{{ entry.id }}" {% if entry.always_active == "False" %} checked="on" {% endif %} value="False" name="radio_input_setting_{{ entry.id }}">
-                              <label class="custom-control-label" for="radio_request_only_{{ entry.id }}">nur Abfragen speichern</label>
-                            </div> 
+
+                            {% if entry.device.device_type == "sensor_active" %}
+
+                              <br>       
+                              <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="radio_request_only_{{ entry.id }}" {% if entry.always_active == "False" %} checked="on" {% endif %} value="False" name="radio_input_setting_{{ entry.id }}">
+                                <label class="custom-control-label" for="radio_request_only_{{ entry.id }}">nur Abfragen speichern</label>
+                              </div> 
+
+                            {% endif %}
+
                           </td>     
                           <td>   
                             <!-- Button trigger modal -->
@@ -292,15 +298,13 @@
                 <div class="table-responsive">
                   <table class="table tablesorter">
                     <thead>
-                      <th scope="col" style="width:3%"></th>  
-                      <th scope="col" style="width:18%" class="minwidth_200">Gerät</th>
-                      <th scope="col" style="width:54%" class="minwidth_300">Letzte Werte</th>
+                      <th scope="col" style="width:20%" class="minwidth_200">Gerät</th>
+                      <th scope="col" style="width:55%" class="minwidth_300">Letzte Werte</th>
                       <th scope="col" style="width:25%" class="minwidth_200">Zeitpunkt</th>
                     </thead>
                     <tbody> 
                       {% for entry in list_sensors %}
-                      <tr>         
-                        <td></td>                                
+                      <tr>                                       
                         <td>
                           {{ entry.name }}                  
                         </td> 
@@ -340,16 +344,20 @@
               <div class="card-body"> 
                 {% if list_plants_datafiles != "No Files founded" %}
                   <div class="table-responsive">
-                    <table class="table tablesorter">         
+                    <table class="table tablesorter"> 
+                      <thead> 
+                        <th scope="col" style="width:77%" class="minwidth_200">Datein</th>
+                        <th scope="col" style="width:10%"></th>
+                        <th scope="col" style="width:10%"></th>
+                      </thead>                            
                       <tbody> 
                         {% for entry in list_sensordata_files %}
-                        <tr>
-                          <td style="width:3%"></td>                           
-                          <td style="width:77%">{{ entry }}</td> 
-                          <td style="width:10%">
+                        <tr>                          
+                          <td>{{ entry }}</td> 
+                          <td>
                             <a class="btn btn-default pull-left" href="/sensordata/download/file/{{ entry }}?time={{ timestamp }}" role="button">DOWNLOAD</a>
                           </td>  
-                          <td style="width:10%">
+                          <td>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_file_dialog_{{entry.id}}">DELETE</button>
                             <!-- Modal -->

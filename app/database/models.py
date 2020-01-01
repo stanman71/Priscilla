@@ -765,20 +765,20 @@ def GET_ALL_DEVICES(selector):
     devices     = Devices.query.all()
   
     if selector == "":
-        for device in devices:
-            
+        for device in devices:      
             device_list.append(device)     
 
     if selector == "controller":
         for device in devices:
-            if device.device_type == "controller":
-                
+            if device.device_type == "controller":        
                 device_list.append(device)      
  
     if selector == "devices":
         for device in devices:
             if (device.device_type == "power_switch" or
-                device.device_type == "heater"):
+                device.device_type == "blind" or
+                device.device_type == "heater_thermostat" or
+                device.device_type == "watering_controller"):
                 
                 device_list.append(device)      
 
@@ -791,15 +791,15 @@ def GET_ALL_DEVICES(selector):
 
     if selector == "client_music":
         for device in devices:
-            if (device.device_type == "client_music"):
-                    
+            if (device.device_type == "client_music"):        
                 device_list.append(device)        
 
     if selector == "sensors":
-        for device in devices:
-            
+        for device in devices:     
             if (device.device_type == "sensor_passiv" or 
-                device.device_type == "sensor_active"):
+                device.device_type == "sensor_active" or
+                device.device_type == "heater_thermostat" or
+                device.device_type == "watering_controller"):
                 
                 device_list.append(device)   
  
@@ -846,7 +846,7 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", descriptio
                 
                 return True
 
-        return "Gerätelimit erreicht (50)"                           
+        return "Gerätelimit erreicht (100)"                           
                 
     else:
         SET_DEVICE_LAST_CONTACT(ieeeAddr)  
@@ -855,7 +855,7 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", descriptio
 def SET_DEVICE_NAME(ieeeAddr, new_name):
     entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
     
-    WRITE_LOGFILE_SYSTEM("DATABASE", "Device | " + entry.name + " | Name changed" + " || Name - " + new_name)
+    WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + entry.name + " | Name changed" + " || Name - " + new_name)
     
     entry.name = new_name
     db.session.commit()       
@@ -878,6 +878,30 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
         last_values_string = last_values_string.replace('"',"")
         last_values_string = last_values_string.replace(":",": ")
         last_values_string = last_values_string.replace(",",", ")
+
+
+        # special case eurotronic heater_thermostat 
+        if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "SPZB0001":
+
+            # reduce string statement 
+            last_values_string_modified = ""
+
+            for element in last_values_string.split(","):
+                if "local_temperature" in element:
+                    last_values_string_modified = last_values_string_modified + element + ", "
+                if "current_heating_setpoint" in element:
+                    last_values_string_modified = last_values_string_modified + element + ", "                   
+                if "system_mode" in element and "eurotronic" not in element:
+                    last_values_string_modified = last_values_string_modified + element + ", "
+                if "eurotronic_error_status" in element:
+                    last_values_string_modified = last_values_string_modified + element + ", "
+
+            # change battery_level scale to max_value = 100
+            data          = json.loads(last_values) 
+            battery_value = int(int(data['battery']) * 6.7) 
+
+            last_values_string = last_values_string_modified + "battery: " + str(battery_value)
+
         
         timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         entry.last_values_json   = last_values
@@ -906,7 +930,7 @@ def UPDATE_DEVICE(id, name, gateway, model, device_type = "", description = "", 
         entry.commands_json = str(commands_json)               
         db.session.commit()    
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + entry.name + " | changed")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + entry.name + " | changed")
    
         if device_type == "controller":
             ADD_CONTROLLER(GET_DEVICE_BY_ID(id).ieeeAddr)
@@ -948,7 +972,7 @@ def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting, exceptio
         entry.exception_value_3             = exception_value_3            
         db.session.commit()  
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + entry.name + " | Exception Settings | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + entry.name + " | Exception Settings | changed") 
 
         return True
 
@@ -973,8 +997,7 @@ def CHANGE_DEVICE_POSITION(id, direction):
                 
                 device_2.id = id
                 device_1.id = new_id
-                db.session.commit()
-                
+                db.session.commit()       
                 return 
 
     if direction == "down":
@@ -992,8 +1015,7 @@ def CHANGE_DEVICE_POSITION(id, direction):
                 
                 device_2.id = id
                 device_1.id = new_id
-                db.session.commit()
-                
+                db.session.commit()           
                 return 
 
 
@@ -1005,48 +1027,48 @@ def DELETE_DEVICE(ieeeAddr):
     for entry in entries:
         if (entry.device_ieeeAddr_1 == ieeeAddr) or (entry.device_ieeeAddr_2 == ieeeAddr):
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in Aufgabenplanung"
+            error_list = error_list + ", " + device.name + " eingetragen in Aufgabenplanung"
     
     # check sensordata
     entries = GET_ALL_SENSORDATA_JOBS()
     for entry in entries:
         if entry.device_ieeeAddr == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in Sensordaten / Jobs"
+            error_list = error_list + ", " + device.name + " eingetragen in Sensordaten / Jobs"
 
     # check led groups
     entries = GET_ALL_LED_GROUPS()
     for entry in entries:
         if entry.led_ieeeAddr_1 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+            error_list = error_list + ", " + device.name + " eingetragen in LED / Gruppen"
         if entry.led_ieeeAddr_2 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+            error_list = error_list + ", " + device.name + " eingetragen in LED / Gruppen"
         if entry.led_ieeeAddr_3 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen" 
+            error_list = error_list + ", " + device.name + " eingetragen in LED / Gruppen" 
         if entry.led_ieeeAddr_4 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+            error_list = error_list + ", " + device.name + " eingetragen in LED / Gruppen"
         if entry.led_ieeeAddr_5 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+            error_list = error_list + ", " + device.name + " eingetragen in LED / Gruppen"
         if entry.led_ieeeAddr_6 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+            error_list = error_list + ", " + device.name + " eingetragen in LED / Gruppen"
         if entry.led_ieeeAddr_7 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+            error_list = error_list + ", " + device.name + " eingetragen in LED / Gruppen"
         if entry.led_ieeeAddr_8 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"
+            error_list = error_list + ", " + device.name + " eingetragen in LED / Gruppen"
         if entry.led_ieeeAddr_9 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + "," + device.name + " eingetragen in LED / Gruppen"            
+            error_list = error_list + ", " + device.name + " eingetragen in LED / Gruppen"            
         
     if error_list != "":
-        return error_list[1:]   
+        return error_list[2:]   
                
     else:
         
@@ -1060,11 +1082,11 @@ def DELETE_DEVICE(ieeeAddr):
             Devices.query.filter_by(ieeeAddr=ieeeAddr).delete()
             db.session.commit() 
             
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Device - " + device_name + " | deleted")                      
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + device_name + " | deleted")                      
             return True
 
         except Exception as e:
-            return e
+            return str(e)
 
 
 """ ################## """

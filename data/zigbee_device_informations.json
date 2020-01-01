@@ -1,41 +1,5 @@
 {"data": [
 			{
-				"model"           : "MCCGQ11LM",
-				"device_type"     : "sensor_passiv",
-				"description"     : "AQARA Contact Sensor",
-				"input_values"    : ["contact"],
-				"input_events"    : [],
-				"commands"        : [],
-				"commands_json"   : []			
-			},				
-			{
-				"model"           : "WSDCGQ11LM",
-				"device_type"     : "sensor_passiv",
-				"description"     : "AQARA Environment Sensor",
-				"input_values"    : ["temperature","humidity","pressure","battery"],
-				"input_events"    : [],
-				"commands"        : [],
-				"commands_json"   : []
-			},	
-			{
-				"model"           : "RTCGQ11LM",
-				"device_type"     : "sensor_passiv",
-				"description"     : "AQARA Human Detector Sensor",
-				"input_values"    : ["illuminance","occupancy","battery"],
-				"input_events"    : [],
-				"commands"        : [],
-				"commands_json"   : []
-			},				
-			{
-				"model"           : "WXKG11LM",
-				"device_type"     : "controller",
-				"description"     : "AQARA Wireless Switch",
-				"input_values"    : [],
-				"input_events"    : ["{'click':'single'}","{'click':'double'}"],
-				"commands"        : [],
-				"commands_json"   : []
-			},	
-			{
 				"model"           : "CC2530.ROUTER",
 				"device_type"     : "router",
 				"description"     : "CUSTOM CC2530 + CC2592 Router",
@@ -46,22 +10,292 @@
 			},				
 			{
 				"model"           : "SPZB0001",
-				"device_type"     : "heater",
-				"description"     : "Eurotronic Heater Thermostat",
-				"input_values"    : ["current_heating_setpoint","system_mode","local_temperature","eurotronic_error_status","battery"],
+				"device_type"     : "heater_thermostat",
+				"description"     : "Eurotronic heater thermostat",
+				"input_values"    : ["local_temperature"],
 				"input_events"    : [],
-				"commands"        : ["16","18","20","21","22","23","24","25","BREAK","HEAT"],				
+				"commands"        : ["16","18","20","21","22","23","24","25","OFF","HEAT"],				
 				"commands_json"   : ["{'current_heating_setpoint':16}","{'current_heating_setpoint':18}","{'current_heating_setpoint':20}",
 				                     "{'current_heating_setpoint':21}","{'current_heating_setpoint':22}","{'current_heating_setpoint':23}",
 									 "{'current_heating_setpoint':24}","{'current_heating_setpoint':25}",
 									 "{'eurotronic_system_mode':32}","{'eurotronic_system_mode':16}"]
-			},			
+			},
+			{
+				"model"           : "LED1545G12",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED bulb E27 980 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "LED1546G12",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED bulb E27 950 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},							
+			{
+				"model"           : "LED1623G12",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED bulb E27 1000 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "LED1537R6",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED bulb GU10 400 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
+			{
+				"model"           : "LED1650R5",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED bulb GU10 400 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "LED1536G5",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED bulb E14 400 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "LED1837R5",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED bulb GU10 400 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "LED1842G3",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED bulb E27 WW clear 250 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "LED1733G7",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED bulb E14 600 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "LED1624G9",
+				"device_type"     : "led_rgb",
+				"description"     : "IKEA TRADFRI LED bulb E14/E27 600 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
 			{
 				"model"           : "LED1649C5",
 				"device_type"     : "led_simple",
-				"description"     : "IKEA TRADFRI LED bulb E12/E14/E17 400 lumen",
+				"description"     : "IKEA TRADFRI LED bulb E14 400 lumen",
 				"input_values"    : [],
 				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "LED1732G11",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED bulb E27 1000 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "LED1836G9",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED bulb E27 806 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "LED1736G9",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED bulb E27 806 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "T1820",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA LEPTITER Recessed spot light",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "ICPSHC24-10EU-IL-1",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI driver for wireless control (10 watt)",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "ICPSHC24-30EU-IL-1",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI driver for wireless control (30 watt)",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "L1527",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA FLOALT LED light panel",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "L1528",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA FLOALT LED light panel",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},							
+			{
+				"model"           : "L1529",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA FLOALT LED light panel",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "T1829",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA GUNNARP panel 40*40",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
+			{
+				"model"           : "L1531",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA SURTE door light panel",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "E1603",
+				"device_type"     : "power_switch",
+				"description"     : "IKEA TRADFRI control outlet",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : ["ON","OFF"],				
+				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]
+			},	
+			{
+				"model"           : "E1702",
+				"device_type"     : "power_switch",
+				"description"     : "IKEA TRADFRI control outlet",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : ["ON","OFF"],				
+				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]
+			},	
+			{
+				"model"           : "E1525",
+				"device_type"     : "sensor_passiv",
+				"description"     : "IKEA TRADFRI motion sensor",
+				"input_values"    : ["occupancy"],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "E1746",
+				"device_type"     : "signal_repeater",
+				"description"     : "IKEA TRADFRI signal repeater",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "E1757",
+				"device_type"     : "blind",
+				"description"     : "IKEA FYRTUR roller blind",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : ["100% (OPEN)","80%","60%","40%","20%","0% (CLOSE)"],
+				"commands_json"   : ["{'position':100}","{'position':80}","{'position':60}","{'position':40}","{'position':20}","{'position':0}"]
+			},		
+			{
+				"model"           : "E1926",
+				"device_type"     : "blind",
+				"description"     : "IKEA KADRILJ roller blind",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : ["100% (OPEN)","80%","60%","40%","20%","0% (CLOSE)"],
+				"commands_json"   : ["{'position':100}","{'position':80}","{'position':60}","{'position':40}","{'position':20}","{'position':0}"]
+			},	
+			{
+				"model"           : "E1524/E1810",
+				"device_type"     : "controller",
+				"description"     : "IKEA TRADFRI remote control",
+				"input_values"    : [],
+				"input_events"    : ["{'action':'toggle'}","{'action':'arrow_left_click'}","{'action':'arrow_right_click'}","{'action':'brightness_up_click'}","{'action':'brightness_down_click'}"],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "E1766",
+				"device_type"     : "controller",
+				"description"     : "IKEA TRADFRI open/close remote",
+				"input_values"    : [],
+				"input_events"    : ["{'click':'open'}","{'click':'close'}"],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
+			{
+				"model"           : "E1744",
+				"device_type"     : "controller",
+				"description"     : "IKEA SYMFONISK sound controller",
+				"input_values"    : [],
+				"input_events"    : ["{'action':'play_pause'}","{'action':'rotate_left'}","{'action':'rotate_right'}","{'action':'skip_forward'}","{'action':'skip_backward'}"],
 				"commands"        : [],
 				"commands_json"   : []
 			},				
@@ -75,18 +309,27 @@
 				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]
 			},	
 			{
-				"model"           : "915005106701",
+				"model"           : "7299760PH",
 				"device_type"     : "led_rgb",
-				"description"     : "PHILIPS HUE LightStrip",
+				"description"     : "Philips Hue Bloom",
 				"input_values"    : [],
 				"input_events"    : [],
 				"commands"        : [],
 				"commands_json"   : []
-			},			
+			},	
 			{
-				"model"           : "9290012573A",
+				"model"           : "7146060PH",
 				"device_type"     : "led_rgb",
-				"description"     : "Philips Hue White & Color Ambiance E14/E27",
+				"description"     : "Philips Hue Go",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "7602031P7",
+				"device_type"     : "led_rgb",
+				"description"     : "Philips Hue Go with Bluetooth",
 				"input_values"    : [],
 				"input_events"    : [],
 				"commands"        : [],
@@ -100,16 +343,142 @@
 				"input_events"    : [],
 				"commands"        : [],
 				"commands_json"   : []
-			},						
+			},	
 			{
-				"model"           : "AC01353010G",
-				"device_type"     : "sensor_passiv",
-				"description"     : "OSRAM Smart+ Human Detector Sensor",
-				"input_values"    : ["temperature","occupancy","battery_low"],
+				"model"           : "9290011370",
+				"device_type"     : "led_simple",
+				"description"     : "Philips Hue white A60 bulb E27",
+				"input_values"    : [],
 				"input_events"    : [],
 				"commands"        : [],
 				"commands_json"   : []
 			},	
+			{
+				"model"           : "9290012573A",
+				"device_type"     : "led_rgb",
+				"description"     : "Philips Hue White & Color Ambiance E14/E27",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},
+			{
+				"model"           : "9290022166",
+				"device_type"     : "led_rgb",
+				"description"     : "Philips Hue White & Color Ambiance E14/E27",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},			
+			{
+				"model"           : "9290022169",
+				"device_type"     : "led_rgb",
+				"description"     : "Philips Hue white ambiance E27 with Bluetooth",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "LWG004",
+				"device_type"     : "led_simple",
+				"description"     : "Philips Hue white GU10",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "9290018195",
+				"device_type"     : "led_simple",
+				"description"     : "Philips Hue white GU10 with Bluetooth",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "915005106701",
+				"device_type"     : "led_rgb",
+				"description"     : "Philips Hue white and color ambiance LightStrip",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "8718696485880",
+				"device_type"     : "led_rgb",
+				"description"     : "Philips Hue white and color ambiance GU10",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
+			{
+				"model"           : "915005733701",
+				"device_type"     : "led_rgb",
+				"description"     : "Philips Hue White and color ambiance Play Lightbar",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},			
+			{
+				"model"           : "8718696695203",
+				"device_type"     : "led_simple",
+				"description"     : "Philips Hue white ambiance E14",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
+			{
+				"model"           : "7199960PH",
+				"device_type"     : "led_rgb",
+				"description"     : "Philips Hue Iris",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},						
+			{
+				"model"           : "7099860PH",
+				"device_type"     : "led_rgb",
+				"description"     : "Philips LivingColors Aura",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},
+			{
+				"model"           : "929002240401",
+				"device_type"     : "power_switch",
+				"description"     : "Philips Hue smart plug EU",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : ["ON","OFF"],				
+				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]
+			},	
+			{
+				"model"           : "9290012607",
+				"device_type"     : "sensor_passiv",
+				"description"     : "Philips Hue motion sensor",
+				"input_values"    : ["occupancy","temperature","illuminance"],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},
+			{
+				"model"           : "9290019758",
+				"device_type"     : "sensor_passiv",
+				"description"     : "Philips Hue motion sensor outdoor",
+				"input_values"    : ["occupancy","temperature","illuminance"],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},
 			{
 				"model"           : "AB3257001NJ",
 				"device_type"     : "power_switch",
@@ -118,6 +487,60 @@
 				"input_events"    : [],
 				"commands"        : ["ON","OFF"],				
 				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]
-			}						
+			},	
+			{
+				"model"           : "MCCGQ11LM",
+				"device_type"     : "sensor_passiv",
+				"description"     : "Xiaomi AQARA contact sensor",
+				"input_values"    : ["contact"],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []			
+			},	
+			{
+				"model"           : "SJCGQ11LM",
+				"device_type"     : "sensor_passiv",
+				"description"     : "Xiaomi AQARA water leak sensor",
+				"input_values"    : ["water_leak"],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []			
+			},	
+			{
+				"model"           : "WSDCGQ01LM",
+				"device_type"     : "sensor_passiv",
+				"description"     : "Xiaomi MiJia temperature and humidity sensor",
+				"input_values"    : ["temperature","humidity"],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},											
+			{
+				"model"           : "WSDCGQ11LM",
+				"device_type"     : "sensor_passiv",
+				"description"     : "Xiaomi Aqara temperature, humidity and pressure sensor",
+				"input_values"    : ["temperature","humidity","pressure"],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},		
+			{
+				"model"           : "DJT11LM",
+				"device_type"     : "sensor_passiv",
+				"description"     : "Xiaomi Aqara vibration sensor",
+				"input_values"    : ["drop","tilt","touch"],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},							
+			{
+				"model"           : "WXKG11LM",
+				"device_type"     : "controller",
+				"description"     : "Xiaomi AQARA wireless switch",
+				"input_values"    : [],
+				"input_events"    : ["{'click':'single'}","{'click':'double'}"],
+				"commands"        : [],
+				"commands_json"   : []
+			}									
 		]
 }

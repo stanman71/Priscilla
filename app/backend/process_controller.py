@@ -254,16 +254,9 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                     brightness = int(task[3])
                 except:
                     brightness = 100
-
-                # new led setting ?
-                if group.current_setting != scene.name or int(group.current_brightness) != brightness:
                     
-                    SET_LED_GROUP_SCENE(group.id, scene.id, brightness)
-                    CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
-
-                else:
-                    WRITE_LOGFILE_SYSTEM("STATUS", "LED | Group - " + group.name +
-                                         " | " + scene.name + " : " + str(brightness))
+                SET_LED_GROUP_SCENE(group.id, scene.id, brightness)
+                CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Controller - " + controller_name + " | Command - " +
@@ -363,17 +356,11 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
                 if input_group_name == group.name.lower():
                     group_founded = True
+                    scene_name    = group.current_setting
+                    scene         = GET_LED_SCENE_BY_NAME(scene_name)
 
-                    # new led setting ?
-                    if group.current_setting != "OFF":
-                        scene_name = group.current_setting
-                        scene = GET_LED_SCENE_BY_NAME(scene_name)
-
-                        SET_LED_GROUP_TURN_OFF(group.id)
-                        CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)
-
-                    else:
-                        WRITE_LOGFILE_SYSTEM("STATUS", "LED | Group - " + group.name + " | OFF : 0 %")
+                    SET_LED_GROUP_TURN_OFF(group.id)
+                    CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)
 
             # group not founded
             if group_founded == False:
@@ -382,17 +369,11 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
         if task[1] == "all":
             for group in GET_ALL_LED_GROUPS():
+                scene_name = group.current_setting
+                scene      = GET_LED_SCENE_BY_NAME(scene_name)
 
-                # new led setting ?
-                if group.current_setting != "OFF":
-                    scene_name = group.current_setting
-                    scene      = GET_LED_SCENE_BY_NAME(scene_name)
-
-                    SET_LED_GROUP_TURN_OFF(group.id)
-                    CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)
-
-            else:
-                WRITE_LOGFILE_SYSTEM("STATUS", "LED | Group - " + group.name + " | OFF : 0 %")
+                SET_LED_GROUP_TURN_OFF(group.id)
+                CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)
 
     # ######
     # device
@@ -411,48 +392,25 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             check_result = CHECK_DEVICE_EXCEPTIONS(device.id, controller_setting)
                  
             if check_result == True:               
-              
-                new_setting = False
-                
-                # new device setting ?  
-                if device.last_values_json != None:
-                    
-                    # one setting value
-                    if not "," in controller_setting:
-                        if not controller_setting in device.last_values_json:
-                            new_setting = True
-                                                               
-                    # more then one setting value
-                    else:
-                        controller_setting_temp = controller_setting
-                        list_controller_settings = controller_setting_temp.split(",")
-                        
-                        for setting in list_controller_settings:
-                            
-                            if not setting in device.last_values_json:
-                                new_setting = True
-                                
-                else:
-                    new_setting = True
 
-                # setting changed                      
-                if new_setting == True:    
+                if device.gateway == "mqtt":
+                    channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+                if device.gateway == "zigbee2mqtt":   
+                    channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                    if device.gateway == "mqtt":
-                        channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
-                    if device.gateway == "zigbee2mqtt":   
-                        channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
+                command_position  = 0
+                list_command_json = device.commands_json.split(",")
 
-                    # get the json command statement and start process
-                    for command_json in device.commands_json.split(","):        
-                        if controller_setting in command_json:
-                            heapq.heappush(mqtt_message_queue, (1, (channel, command_json)))            
-                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 20)      
-                            break
+                # get the json command statement and start process
+                for command in device.commands.split(","):     
+                                    
+                    if controller_setting in command:
+                        heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
+                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 20)      
+                        break
 
-                else:
-                    WRITE_LOGFILE_SYSTEM("STATUS", "Devices | Device - " + device.name + " | " + controller_setting) 
-                                                                   
+                    command_position = command_position + 1
+                           
             else:
                 WRITE_LOGFILE_SYSTEM("WARNING", "Controller - " + controller_name + " | " + check_result)
                                 
@@ -524,9 +482,10 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 spotify_volume = 50
             
             if task[1] == "play":
-                spotify_device_id = sp.current_playback(market=None)['device']['id']
-                sp.shuffle(True, device_id=spotify_device_id)
                 SPOTIFY_CONTROL(spotify_token, "play", spotify_volume) 
+
+            if task[1] == "play/stop":
+                SPOTIFY_CONTROL(spotify_token, "play/stop", spotify_volume) 
 
             if task[1] == "previous": 
                 SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
@@ -537,13 +496,13 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             if task[1] == "stop": 
                 SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)      
 
-            if task[1] == "turn_up":   
+            if task[1] == "volume_up":   
                 device_name = sp.current_playback(market=None)['device']['name']
-                SPOTIFY_CONTROL(spotify_token, "turn_up", spotify_volume)
+                SPOTIFY_CONTROL(spotify_token, "volume_up", spotify_volume)
 
-            if task[1] == "turn_down":   
+            if task[1] == "volume_down":   
                 device_name = sp.current_playback(market=None)['device']['name']
-                SPOTIFY_CONTROL(spotify_token, "turn_down", spotify_volume)                 
+                SPOTIFY_CONTROL(spotify_token, "volume_down", spotify_volume)                 
 
             if task[1].lower() == "volume":            
                 spotify_volume = int(task[2])

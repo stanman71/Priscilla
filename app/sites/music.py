@@ -44,10 +44,11 @@ list_search_album_results = ""
 @login_required
 @permission_required
 def music():   
-  
     global list_search_track_results
     global list_search_album_results
     
+    UPDATE_MULTIROOM_DEFAULT_SETTINGS()
+
     error_message_search_track                   = ""
     error_message_search_album                   = ""
     error_message_spotify                        = ""

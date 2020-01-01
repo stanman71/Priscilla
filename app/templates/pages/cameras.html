@@ -19,22 +19,28 @@
               <div class="card-body">
                 <form method="POST"> 
                   {% if camera_1 != None %}
-                    <button onclick="window.location.href='/cameras#'" name="select_camera_1" class="btn btn-default" type="submit">{{camera_1.name}}</button>    
+                    <button onclick="window.location.href='/cameras#'" name="select_camera_1" 
+                     {% if selected_camera == "camera_1" %} class="btn btn-primary" {% else %} class="btn btn-default" {% endif %} type="submit">{{camera_1.name}}</button>    
                   {% endif %}   
                   {% if camera_2 != None %}
-                    <button onclick="window.location.href='/cameras#'" name="select_camera_2" class="btn btn-default" type="submit">{{camera_2.name}}</button>    
+                    <button onclick="window.location.href='/cameras#'" name="select_camera_2" 
+                     {% if selected_camera == "camera_2" %} class="btn btn-primary" {% else %} class="btn btn-default" {% endif %} type="submit">{{camera_2.name}}</button>    
                   {% endif %}       
                   {% if camera_3 != None %}
-                    <button onclick="window.location.href='/cameras#'" name="select_camera_3" class="btn btn-default" type="submit">{{camera_3.name}}</button>    
+                    <button onclick="window.location.href='/cameras#'" name="select_camera_3" 
+                     {% if selected_camera == "camera_3" %} class="btn btn-primary" {% else %} class="btn btn-default" {% endif %} type="submit">{{camera_3.name}}</button>    
                   {% endif %}        
                   {% if camera_4 != None %}
-                    <button onclick="window.location.href='/cameras#'" name="select_camera_4" class="btn btn-default" type="submit">{{camera_4.name}}</button>    
+                    <button onclick="window.location.href='/cameras#'" name="select_camera_4" 
+                     {% if selected_camera == "camera_4" %} class="btn btn-primary" {% else %} class="btn btn-default" {% endif %} type="submit">{{camera_4.name}}</button>    
                   {% endif %}                      
                   {% if camera_5 != None %}
-                    <button onclick="window.location.href='/cameras#'" name="select_camera_5" class="btn btn-default" type="submit">{{camera_5.name}}</button>    
+                    <button onclick="window.location.href='/cameras#'" name="select_camera_5" 
+                     {% if selected_camera == "camera_5" %} class="btn btn-primary" {% else %} class="btn btn-default" {% endif %} type="submit">{{camera_5.name}}</button>    
                   {% endif %}    
                   {% if camera_6 != None %}
-                    <button onclick="window.location.href='/cameras#'" name="select_camera_6" class="btn btn-default" type="submit">{{camera_6.name}}</button>    
+                    <button onclick="window.location.href='/cameras#'" name="select_camera_6" 
+                     {% if selected_camera == "camera_6" %} class="btn btn-primary" {% else %} class="btn btn-default" {% endif %} type="submit">{{camera_6.name}}</button>    
                   {% endif %}                      
                 </form>
               </div>

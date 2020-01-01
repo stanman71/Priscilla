@@ -1056,6 +1056,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                if task[1].lower() == "play":
                   return list_task_errors
 
+               elif task[1].lower() == "play/stop":
+                  return list_task_errors
+
                elif task[1].lower() == "previous":
                   return list_task_errors
              
@@ -1065,10 +1068,10 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                elif task[1].lower() == "stop":
                   return list_task_errors
              
-               elif task[1].lower() == "turn_up":
+               elif task[1].lower() == "volume_up":
                   return list_task_errors                     
                                  
-               elif task[1].lower() == "turn_down":
+               elif task[1].lower() == "volume_down":
                   return list_task_errors
              
                elif task[1].lower() == "volume":             

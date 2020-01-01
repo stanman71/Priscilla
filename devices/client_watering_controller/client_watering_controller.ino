@@ -281,9 +281,9 @@ void callback (char* topic, byte* payload, unsigned int length) {
         DynamicJsonDocument msg(512);
         
         msg["ieeeAddr"]    = ieeeAddr;
-        msg["model"]       = "watering_controller_v1";
+        msg["model"]       = "watering_controller 1.3";
         msg["device_type"] = "watering_controller";
-        msg["description"] = "MQTT Watering_Controller v1";
+        msg["description"] = "MQTT Watering_Controller";
     
         JsonArray data_inputs = msg.createNestedArray("inputs");
         data_inputs.add("pump");
@@ -291,8 +291,17 @@ void callback (char* topic, byte* payload, unsigned int length) {
         data_inputs.add("sensor_watertank");        
 
         JsonArray data_commands = msg.createNestedArray("commands");
-        data_commands.add("{'pump':'ON','pump_duration':5}");     
-        data_commands.add("{'pump':'ON'}");              
+        data_commands.add("30");  
+        data_commands.add("60");  
+        data_commands.add("90");  
+        data_commands.add("120");                                          
+        data_commands.add("OFF");   
+
+        JsonArray data_commands = msg.createNestedArray("commands_json");
+        data_commands.add("{'pump':'ON','pump_duration':30}");     
+        data_commands.add("{'pump':'ON','pump_duration':60}");       
+        data_commands.add("{'pump':'ON','pump_duration':90}");     
+        data_commands.add("{'pump':'ON','pump_duration':120}");                            
         data_commands.add("{'pump':'OFF'}");   
 
         // convert msg to char
