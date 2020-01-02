@@ -266,6 +266,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
                                  controller_command + " | Group - " + task[2] + " | not founded")
 
+
     # #################
     # change brightness
     # #################
@@ -329,6 +330,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
                                  controller_command + " | Group - " + task[2] + " | not founded")
 
+
     # #########
     # light off
     # #########
@@ -376,48 +378,51 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 SET_LIGHTING_GROUP_TURN_OFF(group.id)
                 CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)
 
+
     # ######
     # device
     # ######
 
     if "device" in task:
         task   = task.split(" # ")
-        device = GET_DEVICE_BY_NAME(task[1].lower())
         
-        # device founded ?
-        if device != None:
-            
-            controller_setting = task[2]
+        # get input group names 
+        for device_name in task[1].split(","): 
+            device = GET_DEVICE_BY_NAME(device_name.strip())
 
-            # check device exception
-            check_result = CHECK_DEVICE_EXCEPTIONS(device.id, controller_setting)
-                 
-            if check_result == True:               
+            # device founded ?
+            if device != None:
+                controller_setting = task[2]
+                
+                # check device exception
+                check_result = CHECK_DEVICE_EXCEPTIONS(device.id, controller_setting)
+                            
+                if check_result == True:           
 
-                if device.gateway == "mqtt":
-                    channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
-                if device.gateway == "zigbee2mqtt":   
-                    channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
+                    if device.gateway == "mqtt":
+                        channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+                    if device.gateway == "zigbee2mqtt":   
+                        channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                command_position  = 0
-                list_command_json = device.commands_json.split(",")
+                    command_position  = 0
+                    list_command_json = device.commands_json.split(",")
 
-                # get the json command statement and start process
-                for command in device.commands.split(","):     
+                    # get the json command statement and start process
+                    for command in device.commands.split(","):     
+                                        
+                        if controller_setting in command:
+                            heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
+                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 20)      
+                            break
+
+                        command_position = command_position + 1
+
+                else:
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | " + check_result)
                                     
-                    if controller_setting in command:
-                        heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 20)      
-                        break
-
-                    command_position = command_position + 1
-                           
             else:
-                WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | " + check_result)
-                                
-        else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Gerät - " + task[1] + " | not founded")
-
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Gerät - " + task[1] + " | not founded")        
+    
 
     # ##################
     # request sensordata

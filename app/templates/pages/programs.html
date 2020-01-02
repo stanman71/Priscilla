@@ -689,29 +689,29 @@
                             </div>  
                             <br>
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-3"> 
+                              <div class="col-sm-4"> 
                                 Optional >> 
                               </div>
-                              <div class="col-sm-9"> 
+                              <div class="col-sm-8"> 
                                 globale Helligkeit 100 % 
                               </div>                        
                             </div>     
                             <br>
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-3"> 
+                              <div class="col-sm-4"> 
                                 Beleuchtung - Gruppen >>
                               </div>
-                              <div class="col-sm-9">   
+                              <div class="col-sm-8">   
                                 {% for group in list_lighting_group_options %}
                                   {{ group }} |
                                 {% endfor %}    
                               </div>  
                             </div>  
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-3"> 
+                              <div class="col-sm-4"> 
                                 Beleuchtung - Szenen >>
                               </div>
-                              <div class="col-sm-9">   
+                              <div class="col-sm-8">   
                                 {% for scene in list_lighting_scene_options %}
                                   {{ scene }} |
                                 {% endfor %}    
@@ -736,20 +736,20 @@
                           <td></td>
                         </tr>                                         
                         <tr>
-                          <td>device # Steckdose_TV # OFF</td>   
+                          <td>device # Steckdose_TV, Steckdose_Server # OFF</td>   
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                Gerät "Steckdose_TV" ausschalten
+                                Gerät "Steckdose_TV" und "Steckdose_Server" ausschalten
                               </div>
                             </div>  
                             <br>
                             {% for device in list_device_command_options %}
                               <div class="row justify-content-md-center">
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                   {{ device[0] }} >>
                                 </div>
-                                <div class="col-sm-9">          
+                                <div class="col-sm-8">          
                                   {{ device[1] | replace(',', ' | ') }} 
                                 </div>
                               </div> 
@@ -774,10 +774,10 @@
                             </div>        
                             <br>
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-3"> 
+                              <div class="col-sm-4"> 
                                 Sensordaten Jobs >>
                               </div>
-                              <div class="col-sm-9">   
+                              <div class="col-sm-8">   
                                 {% for job in list_sensordata_job_options %}
                                   {{ job }} |
                                 {% endfor %}    
@@ -804,51 +804,51 @@
                             <br>                          
                             <br>
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-3"> 
+                              <div class="col-sm-4"> 
                                 PLAY >> 
                               </div>
-                              <div class="col-sm-9"> 
+                              <div class="col-sm-8"> 
                                 abspielen starten
                               </div>                        
                             </div>                                            
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-3"> 
+                              <div class="col-sm-4"> 
                                 PREVIOUS >> 
                               </div>
-                              <div class="col-sm-9"> 
+                              <div class="col-sm-8"> 
                                 vorheriger Track 
                               </div>                        
                             </div>    
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-3"> 
+                              <div class="col-sm-4"> 
                                 NEXT >> 
                               </div>
-                              <div class="col-sm-9"> 
+                              <div class="col-sm-8"> 
                                 nächster Track 
                               </div>                        
                             </div>                        
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-3"> 
+                              <div class="col-sm-4"> 
                                 STOP >> 
                               </div>
-                              <div class="col-sm-9"> 
+                              <div class="col-sm-8"> 
                                 abspielen stoppen
                               </div>                        
                             </div>                        
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-3"> 
+                              <div class="col-sm-4"> 
                                 VOLUME # 70 >> 
                               </div>
-                              <div class="col-sm-9"> 
+                              <div class="col-sm-8"> 
                                 Lautstärke auf 70%
                               </div>
                             </div>                        
                             <br>        
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-3"> 
+                              <div class="col-sm-4"> 
                                 Spotify - Geräte >>
                               </div>
-                              <div class="col-sm-9">   
+                              <div class="col-sm-8">   
                                 {% for device in list_spotify_devices %}
                                   {% if device['type'] != "Smartphone" %}
                                     {% if "multiroom" in device['name'] %}
@@ -861,10 +861,10 @@
                               </div>
                             </div>                     
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-3"> 
+                              <div class="col-sm-4"> 
                                 Spotify - Playlists >>
                               </div>
-                              <div class="col-sm-9">   
+                              <div class="col-sm-8">   
                                 {% for playlist in list_spotify_playlists %}
                                   {% if playlist['name'] != "Discover Weekly" %}
                                     {{ playlist['name'] }} |

@@ -622,52 +622,44 @@ def START_SCHEDULER_TASK(task_object):
          
          task = task_object.task.split(" # ")
 
-         # get input group names and lower the letters
-         try:
-            list_devices = task[1].split(",")
-         except:
-            list_devices = [task[1]]
-
-
-         for input_device_name in list_devices: 
-            input_device_name = input_device_name.replace(" ", "")
-
-            device = GET_DEVICE_BY_NAME(input_device_name.lower())
+         # get input group names 
+         for device_name in task[1].split(","): 
+            device = GET_DEVICE_BY_NAME(device_name.strip())
 
             # device founded ?
             if device != None:
-                  scheduler_setting = task[2]
-                  
-                  # check device exception
-                  check_result = CHECK_DEVICE_EXCEPTIONS(device.id, scheduler_setting)
-                            
-                  if check_result == True:           
+               scheduler_setting = task[2]
+               
+               # check device exception
+               check_result = CHECK_DEVICE_EXCEPTIONS(device.id, scheduler_setting)
+                           
+               if check_result == True:           
 
-                     WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')    
+                  WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')    
 
-                     if device.gateway == "mqtt":
-                           channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
-                     if device.gateway == "zigbee2mqtt":   
-                           channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
+                  if device.gateway == "mqtt":
+                        channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+                  if device.gateway == "zigbee2mqtt":   
+                        channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                     command_position  = 0
-                     list_command_json = device.commands_json.split(",")
+                  command_position  = 0
+                  list_command_json = device.commands_json.split(",")
 
-                     # get the json command statement and start process
-                     for command in device.commands.split(","):     
-                                          
-                           if scheduler_setting in command:
-                              heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                              CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting, 20)      
-                              break
+                  # get the json command statement and start process
+                  for command in device.commands.split(","):     
+                                       
+                        if scheduler_setting in command:
+                           heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
+                           CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting, 20)      
+                           break
 
-                           command_position = command_position + 1
+                        command_position = command_position + 1
 
                   else:
                      WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | " + check_result)
 
             else:
-                  WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Device - " + input_device_name + " - not founded")                  
+                  WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Device - " + device_name.strip() + " - not founded")                  
 
 
    except Exception as e:

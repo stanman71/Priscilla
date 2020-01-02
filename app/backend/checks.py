@@ -136,6 +136,8 @@ def CHECK_PROGRAM_TASKS(program_id):
             # lighting     
             # ########    
             
+
+            # start scene
             elif "lighting" in line[1] and "scene" in line[1]:
                
                try:        
@@ -155,6 +157,7 @@ def CHECK_PROGRAM_TASKS(program_id):
                   list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")               
                         
 
+            # turn_off
             elif "lighting" in line[1] and "turn_off" in line[1]:
 
                try:
@@ -187,29 +190,22 @@ def CHECK_PROGRAM_TASKS(program_id):
                try:
                   line_content = line[1].split(" # ")
 
-                  device_name = line_content[1]    
-                  device      = ""
-                  device      = GET_DEVICE_BY_NAME(device_name)
+                  # check device names
+                  for device_name in line_content[1].split(","):
+
+                     if GET_DEVICE_BY_NAME(group_name.strip()) == None: 
+                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Gerät nicht gefunden >>> " + device_name)       
+
+                     # check commands
+                     else:
                         
-                  # check device
-                  if device != None:
-                     
-                     program_setting = line_content[2]
-                     program_setting = program_setting.replace(" ", "")
+                        device  = GET_DEVICE_BY_NAME(device_name.strip())  
+                        setting = task[2]
 
-                     setting_valid = False
+                        if setting.lower() not in device.commands_json.lower():
+                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Befehl ungültig >>> " + setting)
 
-                     # check device command 
-                     for command in device.commands.split(","):   
-                        if command == program_setting:
-                           setting_valid = True
 
-                     if setting_valid == False:
-                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Befehl ungültig >>> " + program_setting)
-
-                  else:
-                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Gerät nicht gefunden >>> " + device_name)
-                     
                except:
                   list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
 
@@ -645,8 +641,8 @@ def CHECK_TASKS(tasks, task_type):
 
 def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
    
-   list_task_errors          = []
-   controller_command_string = controller_command_json[1:-1].replace('"','')
+   list_task_errors   = []
+   controller_command = controller_command_json[1:-1].replace('"','')
 
    try:
       
@@ -660,56 +656,58 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             task = task.split(" # ") 
 
             # check group setting 
+
             try:
 
                if GET_LIGHTING_GROUP_BY_NAME(task[2].strip()) == None: 
 
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> Gruppe nicht vorhanden >>> " + task[2].strip())  
+                     list_task_errors.append(name + " >>> " + controller_command + " >>> Gruppe nicht vorhanden >>> " + task[2].strip())  
                   else:                               
                      list_task_errors.append(name + " >>> Gruppe nicht vorhanden >>> " + task[2].strip())  
 
             except:
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> Gruppe")
+                  list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Gruppe")
                else:
                   list_task_errors.append(name + " >>> fehlende Einstellung >>> Gruppe")
 
-
             # check scene setting    
+
             try:
 
                if GET_LIGHTING_SCENE_BY_NAME(task[3].strip()) == None: 
 
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> Szene nicht vorhanden >>> " + task[3].strip())  
+                     list_task_errors.append(name + " >>> " + controller_command + " >>> Szene nicht vorhanden >>> " + task[3].strip())  
                   else:                               
                      list_task_errors.append(name + " >>> Szene nicht vorhanden >>> " + task[3].strip())  
                   
             except:
 
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> Szene")
+                  list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Szene")
                else:               
                   list_task_errors.append(name + " >>> fehlende Einstellung >>> Szene")
 
+            # check brightness    
 
-            # check global brightness    
             try:
+
                if task[4].isdigit():
                   if 1 <= int(task[4]) <= 100:
                      return list_task_errors
 
                   else:
                      if task_type == "controller":
-                        list_task_errors.append(name + " >>> " + controller_command_string + " >>> ungültiger Wertebereich >>> Helligkeit")
+                        list_task_errors.append(name + " >>> " + controller_command + " >>> ungültiger Wertebereich >>> Helligkeit")
                      else:                        
                         list_task_errors.append(name + " >>> ungültiger Wertebereich >>> Helligkeit") 
                      return list_task_errors    
 
                else:
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> ungültige Einstellung >>> Helligkeit")
+                     list_task_errors.append(name + " >>> " + controller_command + " >>> ungültige Einstellung >>> Helligkeit")
                   else:                     
                      list_task_errors.append(name + " >>> ungültige Einstellung >>> Helligkeit")
                   return list_task_errors
@@ -719,7 +717,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Formatierung")
+               list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
             else:                
                list_task_errors.append(name + " >>> Ungültige Formatierung")
             return list_task_errors
@@ -739,10 +737,10 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   pass
                   
                else:
-                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> Gruppe nicht vorhanden >>> " + task[2])   
+                  list_task_errors.append(name + " >>> " + controller_command + " >>> Gruppe nicht vorhanden >>> " + task[2])   
                                     
             except:
-               list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> Gruppe")      
+               list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Gruppe")      
 
             # check brightness setting    
             try:
@@ -750,15 +748,15 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   return list_task_errors
                   
                else:
-                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> TURN_UP oder TURN_DOWN ?")
+                  list_task_errors.append(name + " >>> " + controller_command + " >>> TURN_UP oder TURN_DOWN ?")
                   return list_task_errors
                   
             except:
-               list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> TURN_UP oder TURN_DOWN")    
+               list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> TURN_UP oder TURN_DOWN")    
                return list_task_errors
 
          else:
-            list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Formatierung")
+            list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
             return list_task_errors
 
 
@@ -779,7 +777,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      if GET_LIGHTING_GROUP_BY_NAME(group_name.strip()) == None: 
 
                         if task_type == "controller":
-                           list_task_errors.append(name + " >>> " + controller_command_string + " >>> Gruppe nicht vorhanden >>> " + group_name.strip())  
+                           list_task_errors.append(name + " >>> " + controller_command + " >>> Gruppe nicht vorhanden >>> " + group_name.strip())  
                         else:                               
                            list_task_errors.append(name + " >>> Gruppe nicht vorhanden >>> " + group_name.strip())  
                      
@@ -788,7 +786,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                except:
 
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> Gruppe")
+                     list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Gruppe")
                   else:                            
                      list_task_errors.append(name + " >>> fehlende Einstellung >>> Gruppe")
                   
@@ -802,7 +800,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
             else:
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Eingabe >>> 'all' oder 'group'")
+                  list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Eingabe >>> 'all' oder 'group'")
                else:                   
                   list_task_errors.append(name + " >>> Ungültige Eingabe >>> 'all' oder 'group' ?")
                return list_task_errors  
@@ -810,7 +808,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Formatierung") 
+               list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung") 
             else:                   
                list_task_errors.append(name + " >>> Ungültige Formatierung")     
             return list_task_errors
@@ -821,44 +819,52 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # ######
       
       if "device" in task and "update" not in task:
+
          if " # " in task:
             task = task.split(" # ") 
 
             try:
-               device  = GET_DEVICE_BY_NAME(task[1].lower())        
-               setting = task[2]
 
-               setting_valid = False
+               # check device names
+               for device_name in task[1].split(","):
 
-               # check device command 
-               for command in device.commands.split(","):   
-                  if command == setting:
-                     setting_valid = True
-                     break
+                  if GET_DEVICE_BY_NAME(device_name.strip()) == None: 
 
-               if setting_valid == False:
+                     if task_type == "controller":
+                        list_task_errors.append(name + " >>> " + controller_command + " >>> Gerät nicht gefunden >>> " + device_name)
+                     else:
+                        list_task_errors.append(name + " >>> Gerät nicht gefunden >>> " + device_name)           
 
-                  if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültiger Befehl >>> " + task[2])
+                  # check commands
                   else:
-                     list_task_errors.append(name + " >>> Ungültiger Befehl >>> " + task[2])
+
+                     device  = GET_DEVICE_BY_NAME(device_name.strip())  
+                     setting = task[2]
+
+                     if setting.lower() not in device.commands_json.lower():
+                  
+                        if task_type == "controller":
+                           list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültiger Befehl >>> " + setting)
+                        else:
+                           list_task_errors.append(name + " >>> Ungültiger Befehl >>> " + setting)
                              
                return list_task_errors                  
               
             except:
                
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> Gerät nicht gefunden >>> " + task[1])
-               else:
-                  list_task_errors.append(name + " >>> Gerät nicht gefunden >>> " + task[1])
-                  
+                  list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
+               else:                
+                  list_task_errors.append(name + " >>> Ungültige Formatierung")       
+
                return list_task_errors
 
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Formatierung")
+               list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
             else:                
-               list_task_errors.append(name + " >>> Ungültige Formatierung")       
+               list_task_errors.append(name + " >>> Ungültige Formatierung")   
+
             return list_task_errors
             
 
@@ -877,14 +883,14 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                if program == None:
                
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> Programm nicht gefunden >>> " + task[1])
+                     list_task_errors.append(name + " >>> " + controller_command + " >>> Programm nicht gefunden >>> " + task[1])
                   else:
                      list_task_errors.append(name + " >>> " + task[1] + " Programm nicht gefunden")                  
                   
                if setting != "start" and setting != "stop":
                   
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültiger Befehl >>> " + task[2])
+                     list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültiger Befehl >>> " + task[2])
                   else:
                      list_task_errors.append(name + " >>> Ungültiger Befehl >>> " + task[2])
                
@@ -893,7 +899,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       
             except:
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Formatierung")
+                  list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
                else:
                   list_task_errors.append(name + " >>> Ungültige Formatierung")
                return list_task_errors
@@ -901,7 +907,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
          
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Formatierung")
+               list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
             else:                
                list_task_errors.append(name + " >>> Ungültige Formatierung")
             return list_task_errors
@@ -947,7 +953,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
                else:
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> Job nicht vorhanden >>> " + task[1])
+                     list_task_errors.append(name + " >>> " + controller_command + " >>> Job nicht vorhanden >>> " + task[1])
                   else:
                      list_task_errors.append(name + " >>> Job nicht vorhanden >>> " + task[1])
 
@@ -956,7 +962,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             except:
 
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> Job-Name")
+                     list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Job-Name")
                   else:
                      list_task_errors.append(name + " >>> fehlende Einstellung >>> Job-Name") 
 
@@ -965,7 +971,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
          else:
 
             if task_type == "controller":
-               list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> Job-Name")
+               list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Job-Name")
             else:
                list_task_errors.append(name + " >>> fehlende Einstellung >>> Job-Name") 
 
@@ -1092,7 +1098,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
                else:
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültiger Befehl >>> " + task[1])
+                     list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültiger Befehl >>> " + task[1])
                   else:
                      list_task_errors.append(name + " >>> """ + task[1] + " >>> Ungültiger Befehl")
                   return list_task_errors
@@ -1100,7 +1106,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
             except:
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> Befehl") 
+                  list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Befehl") 
                else:
                   list_task_errors.append(name + " >>> Befehl >>> fehlende Einstellung") 
                return list_task_errors
@@ -1108,7 +1114,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                                
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Formatierung")
+               list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
             else:
                list_task_errors.append(name + " >>> Ungültige Formatierung")   
             return list_task_errors
@@ -1128,7 +1134,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       
       
       if task_type == "controller":
-         list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Aufgabe") 
+         list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Aufgabe") 
       else:
          list_task_errors.append(name + " >>> Ungültige Aufgabe")
          
@@ -1138,7 +1144,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
    except Exception as e:
       
       if task_type == "controller":
-         list_task_errors.append(name + " >>> " + controller_command_string + " >>> Ungültige Aufgabe")   
+         list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Aufgabe")   
       else:
          list_task_errors.append("MISSING NAME >>> Ungültige Aufgabe") 
          

@@ -170,37 +170,43 @@ def PROGRAM_THREAD(program_id):
 
                             try:
                                       
-                                device_name = line_content[1]    
-                                device      = ""
-                                device      = GET_DEVICE_BY_NAME(device_name)
-                                
-                                program_setting = line_content[2]
-                                 
-                                # check device exception
-                                check_result = CHECK_DEVICE_EXCEPTIONS(device.id, program_setting)
-                                                             
-                                if check_result == True:               
+                                # get input group names 
+                                for device_name in line_content[1].split(","): 
+                                    device = GET_DEVICE_BY_NAME(device_name.strip())
 
-                                    if device.gateway == "mqtt":
-                                        channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
-                                    if device.gateway == "zigbee2mqtt":   
-                                        channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
+                                    # device founded ?
+                                    if device != None:
+                                        program_setting = line_content[2]
+                                        
+                                        # check device exception
+                                        check_result = CHECK_DEVICE_EXCEPTIONS(device.id, program_setting)
+                                                    
+                                        if check_result == True:           
+                                            
+                                            if device.gateway == "mqtt":
+                                                    channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+                                            if device.gateway == "zigbee2mqtt":   
+                                                    channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                                    command_position  = 0
-                                    list_command_json = device.commands_json.split(",")
+                                            command_position  = 0
+                                            list_command_json = device.commands_json.split(",")
 
-                                    # get the json command statement and start process
-                                    for command in device.commands.split(","):     
-                                                        
-                                        if program_setting in command:
-                                            heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_setting, 20)      
-                                            break
+                                            # get the json command statement and start process
+                                            for command in device.commands.split(","):     
+                                                                
+                                                if program_setting in command:
+                                                    heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
+                                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_setting, 20)      
+                                                    break
 
-                                        command_position = command_position + 1
-       
-                                else:
-                                    WRITE_LOGFILE_SYSTEM("WARNING", "Program - " + program_name + " | " + check_result)
+                                                    command_position = command_position + 1
+
+                                        else:
+                                            WRITE_LOGFILE_SYSTEM("WARNING", "Program - " + program_name + " | " + check_result)
+
+                                    else:
+                                        WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Device - " + device_name.strip() + " - not founded")     
+
                                 
                             except Exception as e:
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
@@ -231,7 +237,7 @@ def PROGRAM_THREAD(program_id):
                             line_content = line[1].split(" # ")
 
                             if GET_SPOTIFY_TOKEN() == "" and GET_SPOTIFY_REFRESH_TOKEN() != "":
-                                REFRESH_SPOTIFY_TOKEN()
+                                GENERATE_SPOTIFY_TOKEN()
 
                             spotify_token = GET_SPOTIFY_TOKEN()
 
