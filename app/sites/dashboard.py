@@ -5,14 +5,14 @@ from functools           import wraps
 
 from app                         import app, socketio
 from app.database.models         import *
-from app.backend.led             import *
+from app.backend.lighting        import *
 from app.backend.spotify         import *
 from app.backend.mqtt            import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD
 from app.backend.process_program import *
 from app.backend.file_management import WRITE_LOGFILE_SYSTEM
-
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
+
 
 import os, shutil, re, cgi
 
@@ -37,39 +37,37 @@ def permission_required(f):
 @login_required
 @permission_required
 def dashboard():
-
-    # custommize your page title / description here
-    page_title       = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
-    page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
+    page_title       = 'Smarthome | Dashboard'
+    page_description = 'The main page and Dashboard'
 
 
-    """ ############### """
-    """  led / devices  """
-    """ ############### """   
+    """ ############################ """
+    """  lightings_groups / devices  """
+    """ ############################ """   
 
-    if request.form.get("apply_changes_led_devices") != None: 
+    if request.form.get("apply_changes_lighting_groups_devices") != None: 
 
         for i in range (1,21):
             
-            # ###
-            # led 
-            # ###
+            # ########
+            # lighting 
+            # ########
 
             try:
-                group      = GET_LED_GROUP_BY_ID(i)
-                scene_name = str(request.form.get("set_led_scene_" + str(i)))
-                brightness = request.form.get("set_led_brightness_" + str(i))
-                scene      = GET_LED_SCENE_BY_NAME(scene_name)
+                group      = GET_LIGHTING_GROUP_BY_ID(i)
+                scene_name = str(request.form.get("set_lighting_group_scene_" + str(i)))
+                brightness = request.form.get("set_lighting_group_brightness_" + str(i))
+                scene      = GET_LIGHTING_SCENE_BY_NAME(scene_name)
 
                 if scene_name == "OFF":
                     if group.current_scene != "OFF":
-                        SET_LED_GROUP_TURN_OFF(group.id)
-                        CHECK_LED_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 2, 10)
+                        SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 2, 10)
 
                 else:
                     if group.current_scene != scene_name or int(group.current_brightness) != int(brightness):
-                        SET_LED_GROUP_SCENE(group.id, scene.id, int(brightness))
-                        CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, int(brightness), 2, 10)
+                        SET_LIGHTING_GROUP_SCENE(group.id, scene.id, int(brightness))
+                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, int(brightness), 2, 10)
 
             except:
                 pass
@@ -104,7 +102,7 @@ def dashboard():
                                             
                             if device_setting in command:
                                 heapq.heappush(mqtt_message_queue, (1, (channel, list_command_json[command_position])))            
-                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting, 20)      
+                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting, 30)      
                                 break
 
                             command_position = command_position + 1
@@ -226,7 +224,7 @@ def dashboard():
         # login failed
         except Exception as e:
             WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
-            SEND_EMAIL("ERROR", "Spotify | " + str(e)) 
+            SEND_EMAIL("ERROR", "Music | Spotify | " + str(e)) 
             
             list_spotify_playlists = ""
             list_spotify_devices   = ""
@@ -242,9 +240,9 @@ def dashboard():
         spotify_shuffle        = "False"
 
 
-    dropdown_list_led_scenes = GET_ALL_LED_SCENES()
-    list_led_groups          = GET_ALL_LED_GROUPS()
-    list_devices             = GET_ALL_DEVICES("devices")
+    dropdown_list_lighting_scenes = GET_ALL_LIGHTING_SCENES()
+    list_lighting_groups          = GET_ALL_LIGHTING_GROUPS()
+    list_devices                  = GET_ALL_DEVICES("devices")
 
     dropdown_list_programs   = GET_ALL_PROGRAMS()
     program_repeat           = str(GET_REPEAT_PROGRAM())
@@ -254,9 +252,11 @@ def dashboard():
     return render_template('layouts/default.html',
                             async_mode=socketio.async_mode,
                             data=data,
+                            title=page_title,        
+                            description=page_description,                               
                             content=render_template( 'pages/dashboard.html', 
-                                                    list_led_groups=list_led_groups,
-                                                    dropdown_list_led_scenes=dropdown_list_led_scenes,
+                                                    list_lighting_groups=list_lighting_groups,
+                                                    dropdown_list_lighting_scenes=dropdown_list_lighting_scenes,
                                                     spotify_token=spotify_token,      
                                                     list_spotify_playlists=list_spotify_playlists,
                                                     list_spotify_devices=list_spotify_devices, 
@@ -264,6 +264,6 @@ def dashboard():
                                                     spotify_shuffle=spotify_shuffle,
                                                     list_devices=list_devices,    
                                                     dropdown_list_programs=dropdown_list_programs,
-                                                    program_repeat=program_repeat,                                                            
+                                                    program_repeat=program_repeat,                                                     
                                                     ) 
                            )      

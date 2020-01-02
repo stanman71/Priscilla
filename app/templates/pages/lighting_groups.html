@@ -5,8 +5,8 @@
             <div class="card ">
               <div class="card-footer">    
                 <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
-                  <a href="/led/scenes" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Szenen</a>                
-                  <a href="/led/groups" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Gruppen</a>
+                  <a href="/lighting/scenes" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Szenen</a>                
+                  <a href="/lighting/groups" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Gruppen</a>
                 </div>           
               </div>  
             </div>  
@@ -16,9 +16,9 @@
 <!-- ADD GROUP  -->
 <!---------------->
 
-<!-- success message add led group -->
+<!-- success message add lighting group -->
 
-{% if success_message_add_led_group == True %}
+{% if success_message_add_lighting_group == True %}
   <div class="alert alert-success">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
@@ -27,15 +27,15 @@
   </div>
 {% endif %}  
 
-<!-- error message add led group --> 
+<!-- error message add lighting group --> 
 
-{% if error_message_add_led_group != [] %}
+{% if error_message_add_lighting_group != [] %}
   <div class="alert alert-info alert-with-icon" data-notify="container">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
     <span data-notify="icon" class="tim-icons icon-bell-55"></span>
-    {% for error in error_message_add_led_group %}
+    {% for error in error_message_add_lighting_group %}
       <span data-notify="message">{{ error }}</span>
     {% endfor %}
   </div>
@@ -45,15 +45,15 @@
             <div class="card">
               <form method="POST">         
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/led/groups#'" name="add_led_group" class="btn btn-fill btn-primary">NEW GROUP</button>
+                  <button type="submit" onclick="window.location.href='/lighting/groups#'" name="add_lighting_group" class="btn btn-fill btn-primary">NEW GROUP</button>
                 </div>
               </form>
             </div>
 
 
-<!---------------------->
-<!--  LED GROUP TABLE -->
-<!---------------------->   
+<!--------------------------->
+<!--  LIGHTING GROUP TABLE -->
+<!--------------------------->   
 
 <!-- error message settings -->
 
@@ -96,13 +96,13 @@
 
 
 
-{% for entry in list_led_groups %}
+{% for entry in list_lighting_groups %}
 
 <section id="table_{{entry.id}}"></section>  
 
-<!-- success message change settings led group -->
+<!-- success message change settings lighting group -->
 
-{% if success_message_change_settings_led_group == entry.id %}
+{% if success_message_change_settings_lighting_group == entry.id %}
   <div class="alert alert-success">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
@@ -111,14 +111,14 @@
   </div>
 {% endif %}  
 
-<!-- error message change settings led group -->
+<!-- error message change settings lighting group -->
 
-{% if error_message_change_settings_led_group['group_number'] == entry.id %}
+{% if error_message_change_settings_lighting_group['group_number'] == entry.id %}
   <div class="alert alert-danger">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    <span>{{ error_message_change_settings_led_group['message'] }}</span>
+    <span>{{ error_message_change_settings_lighting_group['message'] }}</span>
   </div>
 {% endif %}  
 
@@ -139,40 +139,40 @@
                           <th></th>
                           <th style="width:5%"></th>
                           <th></th>
-                          <th scope="col" style="width:12%" class="minwidth_200">LED Model</th>
-                          <th scope="col" style="width:30%" class="minwidth_200">LED</th>
+                          <th scope="col" style="width:12%" class="minwidth_200">Model</th>
+                          <th scope="col" style="width:30%" class="minwidth_200">Lichtquelle</th>
                           <th style="width:30%"></th>
                         </thead>
                         <tbody> 
                           <tr>
                             <th>
-                              <a href="/led/groups/position/up/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-up"></i></a>
-                              <a href="/led/groups/position/down/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-down"></i></a>                                  
+                              <a href="/lighting/groups/position/up/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-up"></i></a>
+                              <a href="/lighting/groups/position/down/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-down"></i></a>                                  
                             </td>                    
                             <td>
                               <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                             
                             </td>  
                             <td></td>
                             <td style="width:5%">
-                              <a href="/led/groups/add_led/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-add"></i></font></a>                          
+                              <a href="/lighting/groups/add_light/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-add"></i></font></a>                          
                               <br>  
                               <br>                                                                                                                
-                              <a href="/led/groups/remove_led/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-delete"></i></font></a>    
+                              <a href="/lighting/groups/remove_light/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-delete"></i></font></a>    
                             </td> 
                             <td></td> 
 
 <!-- section 1 -->
 
-                            <th>{{ entry.led_device_type_1 }}</td> 
+                            <th>{{ entry.light_device_type_1 }}</td> 
                             <th>
-                              <select class="form-control" data-size="5" name="set_led_ieeeAddr_1_{{ entry.id }}" style="background-color:#27293D"> 
-                                {% if entry.led_ieeeAddr_1 != "None" %}
-                                  <option value= "{{ entry.led_ieeeAddr_1 }}" > {{ entry.led_name_1 }} </option>  
+                              <select class="form-control" data-size="5" name="set_light_ieeeAddr_1_{{ entry.id }}" style="background-color:#27293D"> 
+                                {% if entry.light_ieeeAddr_1 != "None" %}
+                                  <option value= "{{ entry.light_ieeeAddr_1 }}" > {{ entry.light_name_1 }} </option>  
                                 {% else %}   
-                                  <option value = "None" > LED 1 </option>   
+                                  <option value = "None" > Lichtquelle 1 </option>   
                                 {% endif %}                       
                                 <option disabled>------------------</option>
-                                {% for each in dropdown_list_leds %}
+                                {% for each in dropdown_list_lights %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
                               </select>                   
@@ -181,7 +181,7 @@
 
 <!-- section 2 -->
 
-                        {% if entry.active_led_2 == "True" %} 
+                        {% if entry.active_light_2 == "True" %} 
 
                           </tr>
                           <tr style="border-style:hidden;">
@@ -190,16 +190,16 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.led_device_type_2 }}</td>             
+                            <th>{{ entry.light_device_type_2 }}</td>             
                             <td>
-                              <select class="form-control" data-size="5" name="set_led_ieeeAddr_2_{{ entry.id }}" style="background-color:#27293D"> 
-                                {% if entry.led_ieeeAddr_2 != "None" %}
-                                  <option value= "{{ entry.led_ieeeAddr_2 }}" > {{ entry.led_name_2 }} </option>  
+                              <select class="form-control" data-size="5" name="set_light_ieeeAddr_2_{{ entry.id }}" style="background-color:#27293D"> 
+                                {% if entry.light_ieeeAddr_2 != "None" %}
+                                  <option value= "{{ entry.light_ieeeAddr_2 }}" > {{ entry.light_name_2 }} </option>  
                                 {% else %}   
-                                  <option value = "None" > LED 2 </option>   
+                                  <option value = "None" > Lichtquelle 2 </option>   
                                 {% endif %}                       
                                 <option disabled>------------------</option>
-                                {% for each in dropdown_list_leds %}
+                                {% for each in dropdown_list_lights %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
                               </select>  
@@ -210,7 +210,7 @@
 
 <!-- section 3 -->
 
-                        {% if entry.active_led_3 == "True" %} 
+                        {% if entry.active_light_3 == "True" %} 
 
                           </tr>
                           <tr style="border-style:hidden;">
@@ -219,16 +219,16 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.led_device_type_3 }}</td>          
+                            <th>{{ entry.light_device_type_3 }}</td>          
                             <td>
-                              <select class="form-control" data-size="5" name="set_led_ieeeAddr_3_{{ entry.id }}" style="background-color:#27293D"> 
-                                {% if entry.led_ieeeAddr_3 != "None" %}
-                                  <option value= "{{ entry.led_ieeeAddr_3 }}" > {{ entry.led_name_3 }} </option>  
+                              <select class="form-control" data-size="5" name="set_light_ieeeAddr_3_{{ entry.id }}" style="background-color:#27293D"> 
+                                {% if entry.light_ieeeAddr_3 != "None" %}
+                                  <option value= "{{ entry.light_ieeeAddr_3 }}" > {{ entry.light_name_3 }} </option>  
                                 {% else %}   
-                                  <option value = "None" > LED 3 </option>   
+                                  <option value = "None" > Lichtquelle 3 </option>   
                                 {% endif %}                       
                                 <option disabled>------------------</option>
-                                {% for each in dropdown_list_leds %}
+                                {% for each in dropdown_list_lights %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
                               </select> 
@@ -239,7 +239,7 @@
 
 <!-- section 4 -->
 
-                        {% if entry.active_led_4 == "True" %} 
+                        {% if entry.active_light_4 == "True" %} 
 
                           </tr>
                           <tr style="border-style:hidden;">
@@ -248,16 +248,16 @@
                             <td></td>
                             <td></td> 
                             <td></td>
-                            <th>{{ entry.led_device_type_4 }}</td>            
+                            <th>{{ entry.light_device_type_4 }}</td>            
                             <td>
-                              <select class="form-control" data-size="5" name="set_led_ieeeAddr_4_{{ entry.id }}" style="background-color:#27293D"> 
-                                {% if entry.led_ieeeAddr_4 != "None" %}
-                                  <option value= "{{ entry.led_ieeeAddr_4 }}" > {{ entry.led_name_4 }} </option>  
+                              <select class="form-control" data-size="5" name="set_light_ieeeAddr_4_{{ entry.id }}" style="background-color:#27293D"> 
+                                {% if entry.light_ieeeAddr_4 != "None" %}
+                                  <option value= "{{ entry.light_ieeeAddr_4 }}" > {{ entry.light_name_4 }} </option>  
                                 {% else %}   
-                                  <option value = "None" > LED 4 </option>   
+                                  <option value = "None" > Lichtquelle 4 </option>   
                                 {% endif %}                       
                                 <option disabled>------------------</option>
-                                {% for each in dropdown_list_leds %}
+                                {% for each in dropdown_list_lights %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
                               </select> 
@@ -268,7 +268,7 @@
 
 <!-- section 5 -->
 
-                        {% if entry.active_led_5 == "True" %} 
+                        {% if entry.active_light_5 == "True" %} 
 
                           </tr>
                           <tr style="border-style:hidden;">
@@ -277,16 +277,16 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.led_device_type_5 }}</td>              
+                            <th>{{ entry.light_device_type_5 }}</td>              
                             <td>
-                              <select class="form-control" data-size="5" name="set_led_ieeeAddr_5_{{ entry.id }}" style="background-color:#27293D"> 
-                                {% if entry.led_ieeeAddr_5 != "None" %}
-                                  <option value= "{{ entry.led_ieeeAddr_5 }}" > {{ entry.led_name_5 }} </option>  
+                              <select class="form-control" data-size="5" name="set_light_ieeeAddr_5_{{ entry.id }}" style="background-color:#27293D"> 
+                                {% if entry.light_ieeeAddr_5 != "None" %}
+                                  <option value= "{{ entry.light_ieeeAddr_5 }}" > {{ entry.light_name_5 }} </option>  
                                 {% else %}   
-                                  <option value = "None" > LED 5 </option>   
+                                  <option value = "None" > Lichtquelle 5 </option>   
                                 {% endif %}                       
                                 <option disabled>------------------</option>
-                                {% for each in dropdown_list_leds %}
+                                {% for each in dropdown_list_lights %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
                               </select>   
@@ -297,7 +297,7 @@
 
 <!-- section 6 -->
 
-                        {% if entry.active_led_6 == "True" %} 
+                        {% if entry.active_light_6 == "True" %} 
 
                           </tr>
                           <tr style="border-style:hidden;">
@@ -306,16 +306,16 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.led_device_type_6 }}</td>             
+                            <th>{{ entry.light_device_type_6 }}</td>             
                             <td>
-                              <select class="form-control" data-size="5" name="set_led_ieeeAddr_6_{{ entry.id }}" style="background-color:#27293D"> 
-                                {% if entry.led_ieeeAddr_6 != "None" %}
-                                  <option value= "{{ entry.led_ieeeAddr_6 }}" > {{ entry.led_name_6 }} </option>  
+                              <select class="form-control" data-size="5" name="set_light_ieeeAddr_6_{{ entry.id }}" style="background-color:#27293D"> 
+                                {% if entry.light_ieeeAddr_6 != "None" %}
+                                  <option value= "{{ entry.light_ieeeAddr_6 }}" > {{ entry.light_name_6 }} </option>  
                                 {% else %}   
-                                  <option value = "None" > LED 6 </option>   
+                                  <option value = "None" > Lichtquelle 6 </option>   
                                 {% endif %}                       
                                 <option disabled>------------------</option>
-                                {% for each in dropdown_list_leds %}
+                                {% for each in dropdown_list_lights %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
                               </select> 
@@ -326,7 +326,7 @@
 
 <!-- section 7 -->
 
-                        {% if entry.active_led_7 == "True" %} 
+                        {% if entry.active_light_7 == "True" %} 
 
                           </tr>
                           <tr style="border-style:hidden;">
@@ -335,16 +335,16 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.led_device_type_7 }}</td>             
+                            <th>{{ entry.light_device_type_7 }}</td>             
                             <td>
-                              <select class="form-control" data-size="5" name="set_led_ieeeAddr_7_{{ entry.id }}" style="background-color:#27293D"> 
-                                {% if entry.led_ieeeAddr_7 != "None" %}
-                                  <option value= "{{ entry.led_ieeeAddr_7 }}" > {{ entry.led_name_7 }} </option>  
+                              <select class="form-control" data-size="5" name="set_light_ieeeAddr_7_{{ entry.id }}" style="background-color:#27293D"> 
+                                {% if entry.light_ieeeAddr_7 != "None" %}
+                                  <option value= "{{ entry.light_ieeeAddr_7 }}" > {{ entry.light_name_7 }} </option>  
                                 {% else %}   
-                                  <option value = "None" > LED 7 </option>   
+                                  <option value = "None" > Lichtquelle 7 </option>   
                                 {% endif %}                       
                                 <option disabled>------------------</option>
-                                {% for each in dropdown_list_leds %}
+                                {% for each in dropdown_list_lights %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
                               </select>  
@@ -355,7 +355,7 @@
 
 <!-- section 8 -->
 
-                         {% if entry.active_led_8 == "True" %} 
+                         {% if entry.active_light_8 == "True" %} 
 
                           </tr>
                           <tr style="border-style:hidden;">
@@ -364,16 +364,16 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.led_device_type_8 }}</td>             
+                            <th>{{ entry.light_device_type_8 }}</td>             
                             <td>
-                              <select class="form-control" data-size="5" name="set_led_ieeeAddr_8_{{ entry.id }}" style="background-color:#27293D"> 
-                                {% if entry.led_ieeeAddr_8 != "None" %}
-                                  <option value= "{{ entry.led_ieeeAddr_8 }}" > {{ entry.led_name_8 }} </option>  
+                              <select class="form-control" data-size="5" name="set_light_ieeeAddr_8_{{ entry.id }}" style="background-color:#27293D"> 
+                                {% if entry.light_ieeeAddr_8 != "None" %}
+                                  <option value= "{{ entry.light_ieeeAddr_8 }}" > {{ entry.light_name_8 }} </option>  
                                 {% else %}   
-                                  <option value = "None" > LED 8 </option>   
+                                  <option value = "None" > Lichtquelle 8 </option>   
                                 {% endif %}                       
                                 <option disabled>------------------</option>
-                                {% for each in dropdown_list_leds %}
+                                {% for each in dropdown_list_lights %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
                               </select>       
@@ -384,7 +384,7 @@
 
 <!-- section 9 -->
 
-                        {% if entry.active_led_9 == "True" %} 
+                        {% if entry.active_light_9 == "True" %} 
 
                           </tr>
                           <tr style="border-style:hidden;">
@@ -393,16 +393,16 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.led_device_type_9 }}</td>              
+                            <th>{{ entry.light_device_type_9 }}</td>              
                             <td>
-                              <select class="form-control" data-size="5" name="set_led_ieeeAddr_9_{{ entry.id }}" style="background-color:#27293D"> 
-                                {% if entry.led_ieeeAddr_9 != "None" %}
-                                  <option value= "{{ entry.led_ieeeAddr_9 }}" > {{ entry.led_name_9 }} </option>  
+                              <select class="form-control" data-size="5" name="set_light_ieeeAddr_9_{{ entry.id }}" style="background-color:#27293D"> 
+                                {% if entry.light_ieeeAddr_9 != "None" %}
+                                  <option value= "{{ entry.light_ieeeAddr_9 }}" > {{ entry.light_name_9 }} </option>  
                                 {% else %}   
-                                  <option value = "None" > LED 9 </option>   
+                                  <option value = "None" > Lichtquelle 9 </option>   
                                 {% endif %}                       
                                 <option disabled>------------------</option>
-                                {% for each in dropdown_list_leds %}
+                                {% for each in dropdown_list_lights %}
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
                               </select>                                
@@ -417,7 +417,7 @@
                     </div>                 
                   </div>            
                   <div class="card-footer">                   
-                    <button type="submit" onclick="window.location.href='/led/groups#table_{{entry.id}}'" name="save_led_group_settings" class="btn btn-fill btn-primary">SAVE</button>
+                    <button type="submit" onclick="window.location.href='/lighting/groups#table_{{entry.id}}'" name="save_lighting_group_settings" class="btn btn-fill btn-primary">SAVE</button>
 
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>
@@ -430,7 +430,7 @@
                           </div>          
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                            <button type="submit" onclick="window.location.href='/led/groups#'" name="delete_led_group_{{entry.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
+                            <button type="submit" onclick="window.location.href='/lighting/groups#'" name="delete_lighting_group_{{entry.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
                           </div>
                         </div>
                       </div>

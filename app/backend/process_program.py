@@ -8,7 +8,7 @@ from app.database.models          import *
 from app.backend.file_management  import *
 from app.backend.shared_resources import mqtt_message_queue, SET_PROGRAM_STATUS, GET_PROGRAM_STATUS
 from app.backend.mqtt             import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD, REQUEST_SENSORDATA
-from app.backend.led              import SET_LED_GROUP_SCENE, SET_LED_GROUP_TURN_OFF, CHECK_LED_GROUP_SETTING_THREAD
+from app.backend.lighting         import *
 from app.backend.spotify          import *
 
 stop_program    = False
@@ -126,33 +126,36 @@ def PROGRAM_THREAD(program_id):
                             line_content = line[1].split(" # ")
                             time.sleep(int(line_content[1]))          
 
-                        # ###
-                        # led 
-                        # ###
+                        # #####
+                        # light
+                        # #####
                                  
-                        if "scene" in line[1]:
+                        if "lighting" in line[1] and "scene" in line[1]:
                                 
                             line_content = line[1].split(" # ")
                             
                             try:
-                                group_name = line_content[1]    
-                                
-                                if line_content[2] != "off" and line_content[2] != "OFF":
-                                    scene_name        = line_content[2]
-                                    global_brightness = line_content[3]
-                                    group             = GET_LED_GROUP_BY_NAME(group_name)
-                                    scene             = GET_LED_SCENE_BY_NAME(scene_name)
+                                # start lighting scene
+                                if line_content[2].lower() != "turn_off":
+                                    group_name        = line_content[2] 
+                                    scene_name        = line_content[3]
+                                    global_brightness = line_content[4]
+                                    group             = GET_LIGHTING_GROUP_BY_NAME(group_name)
+                                    scene             = GET_LIGHTING_SCENE_BY_NAME(scene_name)
 
-                                    SET_LED_GROUP_SCENE(group.id, scene.id, int(global_brightness))
-                                    CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, global_brightness, 2, 10)
+                                    SET_LIGHTING_GROUP_SCENE(group.id, scene.id, int(global_brightness))
+                                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, global_brightness, 2, 10)
 
-                                if line_content[2] == "off" or line_content[2] == "OFF":
-                                    group = GET_LED_GROUP_BY_NAME(group_name)
-                                    scene = GET_LED_SCENE_BY_NAME(scene_name)
+                                # turn off group
+                                elif line_content[2].lower() == "turn_off" and line_content[3].lower() == "all":
+                                    group      = GET_LIGHTING_GROUP_BY_NAME(group_name)
+                                    scene_name = group.current_scene
+                                    scene      = GET_LIGHTING_SCENE_BY_NAME(scene_name)
                                                    
-                                    SET_LED_GROUP_TURN_OFF(group.id)
-                                    CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)                  
+                                    SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)   
 
+                                               
                             except Exception as e:
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
 

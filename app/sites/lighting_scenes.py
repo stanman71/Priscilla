@@ -26,83 +26,86 @@ def permission_required(f):
     return wrap
 
 
-led_scenes_rgb_values_array = [[0 for x in range(10)] for y in range(10)] 
+lighting_scenes_rgb_values_array = [[0 for x in range(10)] for y in range(10)] 
 
 
-@app.route('/led/scenes', methods=['GET', 'POST'])
+@app.route('/lighting/scenes', methods=['GET', 'POST'])
 @login_required
 @permission_required
-def led_scenes():
-    global led_scenes_rgb_values_array
+def lighting_scenes():
+    page_title = 'Smarthome | Lighting | Scenes'
+    page_description = 'The lighting scenes configuration page.'
 
-    success_message_change_settings           = []
-    error_message_change_settings             = []    
-    success_message_change_settings_led_scene = ""
-    error_message_change_settings_led_scene   = []    
-    success_message_add_led_scene             = False
-    error_message_add_led_scene               = []
+    global lighting_scenes_rgb_values_array
+
+    success_message_change_settings                = []
+    error_message_change_settings                  = []    
+    success_message_change_settings_lighting_scene = ""
+    error_message_change_settings_lighting_scene   = []    
+    success_message_add_lighting_scene             = False
+    error_message_add_lighting_scene               = []
     name = ""
 
-    RESET_LED_SCENE_COLLAPSE()
+    RESET_LIGHTING_SCENE_COLLAPSE()
 
 
-    """ ############### """
-    """  add led scene  """
-    """ ############### """   
+    """ #################### """
+    """  add lighting scene  """
+    """ #################### """   
 
-    if request.form.get("add_led_scene") != None:             
-        result = ADD_LED_SCENE()   
+    if request.form.get("add_lighting_scene") != None:             
+        result = ADD_LIGHTING_SCENE()   
         if result != True: 
-            error_message_add_led_scene.append(result)         
+            error_message_add_lighting_scene.append(result)         
 
         else:       
-            success_message_add_led_scene = True
+            success_message_add_lighting_scene = True
             
 
-    """ ################## """
-    """  table led scenes  """
-    """ ################## """   
+    """ ####################### """
+    """  table lighting scenes  """
+    """ ####################### """   
 
 
-    # set collapse open for option change led number
+    # set collapse open 
     if session.get("set_collapse_open", None) != None:
-        SET_LED_SCENE_COLLAPSE_OPEN(session.get('set_collapse_open'))
+        SET_LIGHTING_SCENE_COLLAPSE_OPEN(session.get('set_collapse_open'))
         session['set_collapse_open'] = None
 
 
     for i in range (1,11):
 
         # change scene
-        if request.form.get("save_led_scene_settings") != None:
+        if request.form.get("save_lighting_scene_settings") != None:
 
             if request.form.get("set_name_" + str(i)) != None:
                 
-                SET_LED_SCENE_COLLAPSE_OPEN(i)      
+                SET_LIGHTING_SCENE_COLLAPSE_OPEN(i)      
 
                 # ############
                 # name setting
                 # ############
 
-                led_scene  = GET_LED_SCENE_BY_ID(i)
+                lighting_scene  = GET_LIGHTING_SCENE_BY_ID(i)
                 input_name = request.form.get("set_name_" + str(i)).strip()                    
 
                 # add new name
-                if ((input_name != "") and (GET_LED_SCENE_BY_NAME(input_name) == None)):
+                if ((input_name != "") and (GET_LIGHTING_SCENE_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 
-                elif input_name == led_scene.name:
-                    name = led_scene.name                        
+                elif input_name == lighting_scene.name:
+                    name = lighting_scene.name                        
                     
                 # name already exist
-                elif ((GET_LED_SCENE_BY_NAME(input_name) != None) and (led_scene.name != input_name)):
-                    name = led_scene.name 
-                    error_message_change_settings_led_scene = {"scene_number": i,"message": "Name - " + input_name + " - bereits vergeben"}
+                elif ((GET_LIGHTING_SCENE_BY_NAME(input_name) != None) and (lighting_scene.name != input_name)):
+                    name = lighting_scene.name 
+                    error_message_change_settings_lighting_scene = {"scene_number": i,"message": "Name - " + input_name + " - bereits vergeben"}
 
                 # no input commited
                 else:                          
-                    name = GET_LED_SCENE_BY_ID(i).name 
-                    error_message_change_settings_led_scene = {"scene_number": i,"message": "Keinen Namen angegeben"}
+                    name = GET_LIGHTING_SCENE_BY_ID(i).name 
+                    error_message_change_settings_lighting_scene = {"scene_number": i,"message": "Keinen Namen angegeben"}
 
 
                 #######
@@ -110,7 +113,7 @@ def led_scenes():
                 #######
 
                 # check rgb
-                rgb_1 = led_scenes_rgb_values_array[i-1][1-1]
+                rgb_1 = lighting_scenes_rgb_values_array[i-1][1-1]
 
                 try:
                     rgb_1   = re.findall(r'\d+', rgb_1)
@@ -129,10 +132,10 @@ def led_scenes():
                 ## 2 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_led_2 == "True":
+                if GET_LIGHTING_SCENE_BY_ID(i).active_light_2 == "True":
 
                     # check rgb
-                    rgb_2 = led_scenes_rgb_values_array[i-1][2-1]
+                    rgb_2 = lighting_scenes_rgb_values_array[i-1][2-1]
 
                     try:
                         rgb_2   = re.findall(r'\d+', rgb_2)
@@ -157,10 +160,10 @@ def led_scenes():
                 ## 3 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_led_3 == "True":
+                if GET_LIGHTING_SCENE_BY_ID(i).active_light_3 == "True":
 
                     # check rgb
-                    rgb_3 = led_scenes_rgb_values_array[i-1][3-1]
+                    rgb_3 = lighting_scenes_rgb_values_array[i-1][3-1]
 
                     try:
                         rgb_3   = re.findall(r'\d+', rgb_3)
@@ -185,10 +188,10 @@ def led_scenes():
                 ## 4 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_led_4 == "True":
+                if GET_LIGHTING_SCENE_BY_ID(i).active_light_4 == "True":
 
                     # check rgb
-                    rgb_4 = led_scenes_rgb_values_array[i-1][4-1]
+                    rgb_4 = lighting_scenes_rgb_values_array[i-1][4-1]
 
                     try:
                         rgb_4   = re.findall(r'\d+', rgb_4)
@@ -213,10 +216,10 @@ def led_scenes():
                 ## 5 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_led_5 == "True":
+                if GET_LIGHTING_SCENE_BY_ID(i).active_light_5 == "True":
 
                     # check rgb
-                    rgb_5 = led_scenes_rgb_values_array[i-1][5-1]
+                    rgb_5 = lighting_scenes_rgb_values_array[i-1][5-1]
 
                     try:
                         rgb_5   = re.findall(r'\d+', rgb_5)
@@ -241,10 +244,10 @@ def led_scenes():
                 ## 6 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_led_6 == "True":
+                if GET_LIGHTING_SCENE_BY_ID(i).active_light_6 == "True":
 
                     # check rgb
-                    rgb_6 = led_scenes_rgb_values_array[i-1][6-1]
+                    rgb_6 = lighting_scenes_rgb_values_array[i-1][6-1]
 
                     try:
                         rgb_6   = re.findall(r'\d+', rgb_6)
@@ -269,10 +272,10 @@ def led_scenes():
                 ## 7 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_led_7 == "True":
+                if GET_LIGHTING_SCENE_BY_ID(i).active_light_7 == "True":
 
                     # check rgb
-                    rgb_7 = led_scenes_rgb_values_array[i-1][7-1]
+                    rgb_7 = lighting_scenes_rgb_values_array[i-1][7-1]
 
                     try:
                         rgb_7   = re.findall(r'\d+', rgb_7)
@@ -297,10 +300,10 @@ def led_scenes():
                 ## 8 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_led_8 == "True":
+                if GET_LIGHTING_SCENE_BY_ID(i).active_light_8 == "True":
 
                     # check rgb
-                    rgb_8 = led_scenes_rgb_values_array[i-1][8-1]
+                    rgb_8 = lighting_scenes_rgb_values_array[i-1][8-1]
 
                     try:
                         rgb_8   = re.findall(r'\d+', rgb_8)
@@ -325,10 +328,10 @@ def led_scenes():
                 ## 9 ##
                 #######
 
-                if GET_LED_SCENE_BY_ID(i).active_led_9 == "True":
+                if GET_LIGHTING_SCENE_BY_ID(i).active_light_9 == "True":
 
                     # check rgb
-                    rgb_9 = led_scenes_rgb_values_array[i-1][9-1]
+                    rgb_9 = lighting_scenes_rgb_values_array[i-1][9-1]
 
                     try:
                         rgb_9   = re.findall(r'\d+', rgb_9)
@@ -350,22 +353,22 @@ def led_scenes():
                     brightness_9 = 0
 
 
-                if SET_LED_SCENE(i, name, red_1, green_1, blue_1, brightness_1, red_2, green_2, blue_2, brightness_2, red_3, green_3, blue_3, brightness_3, 
-                                          red_4, green_4, blue_4, brightness_4, red_5, green_5, blue_5, brightness_5, red_6, green_6, blue_6, brightness_6, 
-                                          red_7, green_7, blue_7, brightness_7, red_8, green_8, blue_8, brightness_8, red_9, green_9, blue_9, brightness_9):
+                if SET_LIGHTING_SCENE(i, name, red_1, green_1, blue_1, brightness_1, red_2, green_2, blue_2, brightness_2, red_3, green_3, blue_3, brightness_3, 
+                                               red_4, green_4, blue_4, brightness_4, red_5, green_5, blue_5, brightness_5, red_6, green_6, blue_6, brightness_6, 
+                                               red_7, green_7, blue_7, brightness_7, red_8, green_8, blue_8, brightness_8, red_9, green_9, blue_9, brightness_9):
 
-                    success_message_change_settings_led_scene = i
+                    success_message_change_settings_lighting_scene = i
 
 
-    """ ################## """
-    """  delete led scene  """
-    """ ################## """   
+    """ ####################### """
+    """  delete lighting scene  """
+    """ ####################### """   
 
     for i in range (1,11):
 
-        if request.form.get("delete_led_scene_" + str(i)) != None:
-            scene  = GET_LED_SCENE_BY_ID(i).name  
-            result = DELETE_LED_SCENE(i)    
+        if request.form.get("delete_lighting_scene_" + str(i)) != None:
+            scene  = GET_LIGHTING_SCENE_BY_ID(i).name  
+            result = DELETE_LIGHTING_SCENE(i)    
 
             if result:
                 success_message_change_settings.append(scene + " || Erfolgreich gelöscht") 
@@ -373,31 +376,33 @@ def led_scenes():
                 error_message_change_settings.append(scene + " || " + str(result))
 
 
-    scene_1  = GET_LED_SCENE_BY_ID(1)
-    scene_2  = GET_LED_SCENE_BY_ID(2)
-    scene_3  = GET_LED_SCENE_BY_ID(3)
-    scene_4  = GET_LED_SCENE_BY_ID(4)
-    scene_5  = GET_LED_SCENE_BY_ID(5)
-    scene_6  = GET_LED_SCENE_BY_ID(6)
-    scene_7  = GET_LED_SCENE_BY_ID(7)
-    scene_8  = GET_LED_SCENE_BY_ID(8)
-    scene_9  = GET_LED_SCENE_BY_ID(9)
-    scene_10 = GET_LED_SCENE_BY_ID(10)
+    scene_1  = GET_LIGHTING_SCENE_BY_ID(1)
+    scene_2  = GET_LIGHTING_SCENE_BY_ID(2)
+    scene_3  = GET_LIGHTING_SCENE_BY_ID(3)
+    scene_4  = GET_LIGHTING_SCENE_BY_ID(4)
+    scene_5  = GET_LIGHTING_SCENE_BY_ID(5)
+    scene_6  = GET_LIGHTING_SCENE_BY_ID(6)
+    scene_7  = GET_LIGHTING_SCENE_BY_ID(7)
+    scene_8  = GET_LIGHTING_SCENE_BY_ID(8)
+    scene_9  = GET_LIGHTING_SCENE_BY_ID(9)
+    scene_10 = GET_LIGHTING_SCENE_BY_ID(10)
 
-    list_led_scenes = GET_ALL_LED_SCENES()
+    list_lighting_scenes = GET_ALL_LIGHTING_SCENES()
 
-    data = {'navigation': 'led'} 
+    data = {'navigation': 'lighting'} 
 
     return render_template('layouts/default.html',
-                            data=data,    
-                            content=render_template( 'pages/led_scenes.html', 
+                            data=data,   
+                            title=page_title,        
+                            description=page_description,                                
+                            content=render_template( 'pages/lighting_scenes.html', 
                                                     success_message_change_settings=success_message_change_settings,
                                                     error_message_change_settings=error_message_change_settings,
-                                                    success_message_change_settings_led_scene=success_message_change_settings_led_scene,
-                                                    error_message_change_settings_led_scene=error_message_change_settings_led_scene,  
-                                                    success_message_add_led_scene=success_message_add_led_scene,
-                                                    error_message_add_led_scene=error_message_add_led_scene,
-                                                    list_led_scenes=list_led_scenes,
+                                                    success_message_change_settings_lighting_scene=success_message_change_settings_lighting_scene,
+                                                    error_message_change_settings_lighting_scene=error_message_change_settings_lighting_scene,  
+                                                    success_message_add_lighting_scene=success_message_add_lighting_scene,
+                                                    error_message_add_lighting_scene=error_message_add_lighting_scene,
+                                                    list_lighting_scenes=list_lighting_scenes,
                                                     scene_1=scene_1,
                                                     scene_2=scene_2,      
                                                     scene_3=scene_3,    
@@ -412,40 +417,40 @@ def led_scenes():
                            )
 
 
-# change led scenes position 
-@app.route('/led/scenes/position/<string:direction>/<int:id>')
+# change lighting scenes position 
+@app.route('/lighting/scenes/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
-def change_led_scenes_position(id, direction):
-    CHANGE_LED_SCENES_POSITION(id, direction)
-    return redirect(url_for('led_scenes'))
+def change_lighting_scenes_position(id, direction):
+    CHANGE_LIGHTING_SCENES_POSITION(id, direction)
+    return redirect(url_for('lighting_scenes'))
 
 
-# led scenes option add led / remove led
-@app.route('/led/scenes/<string:option>/<int:id>')
+# lighting scenes option add light / remove light
+@app.route('/lighting/scenes/<string:option>/<int:id>')
 @login_required
 @permission_required
-def change_led_scenes_options(id, option):
-    if option == "add_led":
-        ADD_LED_SCENE_OBJECT(id)
+def change_lighting_scenes_options(id, option):
+    if option == "add_light":
+        ADD_LIGHTING_SCENE_OBJECT(id)
         session['set_collapse_open'] = id
         
-    if option == "remove_led":
-        REMOVE_LED_SCENE_OBJECT(id)
+    if option == "remove_light":
+        REMOVE_LIGHTING_SCENE_OBJECT(id)
         session['set_collapse_open'] = id
 
-    return redirect(url_for('led_scenes'))
+    return redirect(url_for('lighting_scenes'))
 
 
-@app.route("/led/scenes/data/rgb_values" ,methods=['POST'])
+@app.route("/lighting/scenes/data/rgb_values" ,methods=['POST'])
 def data_rgb_values():
-    global led_scenes_rgb_values_array
+    global lighting_scenes_rgb_values_array
 
     if request.method == 'POST':
         scene_number = request.json['scene_number']     
-        led_number   = request.json['led_number']    
+        light_number = request.json['light_number']    
         rgb_values   = request.json['rgb_values']
         
-        led_scenes_rgb_values_array[scene_number-1][led_number-1] = rgb_values
+        lighting_scenes_rgb_values_array[scene_number-1][light_number-1] = rgb_values
 	
     return json.dumps({'Status':'OK'})

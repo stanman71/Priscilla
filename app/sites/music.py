@@ -9,11 +9,11 @@ from app.backend.spotify          import *
 from app.backend.shared_resources import mqtt_message_queue, GET_MQTT_INCOMING_MESSAGES, GET_DEVICE_CONNECTION_MQTT
 from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
+from app.common                   import COMMON, STATUS
+from app.assets                   import *
+
 
 from lms import find_server
-
-from app.common           import COMMON, STATUS
-from app.assets           import *
 
 import requests
 import json
@@ -44,10 +44,13 @@ list_search_album_results = ""
 @app.route('/music', methods=['GET', 'POST'])
 @login_required
 @permission_required
-def music():   
+def music():    
+    page_title = 'Smarthome | Music'
+    page_description = 'The music configuration page.'
+
     global list_search_track_results
     global list_search_album_results
-    
+
     UPDATE_MULTIROOM_DEFAULT_SETTINGS()
 
     error_message_search_track                   = ""
@@ -357,7 +360,9 @@ def music():
     data = {'navigation': 'music'}    
 
     return render_template('layouts/default.html',
-                            data=data,    
+                            data=data,
+                            title=page_title,        
+                            description=page_description,                               
                             content=render_template( 'pages/music.html',
                                                     error_message_search_track=error_message_search_track,
                                                     error_message_search_album=error_message_search_album,

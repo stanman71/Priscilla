@@ -580,31 +580,25 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):
     device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
     counter = 1
 
-    # special case IKEA Roller Blinds 
-    if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "E1757" or GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "E1926":
-        return True
-
-    else:
-
-        while counter != repeats:  
-            
-            if device.gateway == "mqtt":
-                result = CHECK_MQTT_SETTING(device.ieeeAddr, setting)
-            if device.gateway == "zigbee2mqtt":
-                result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting)    
+    while counter != repeats:  
         
-            # set previous setting
-            if result == True:
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | Setting changed | " + setting)  
-                return True
+        if device.gateway == "mqtt":
+            result = CHECK_MQTT_SETTING(device.ieeeAddr, setting)
+        if device.gateway == "zigbee2mqtt":
+            result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting)    
+    
+        # set previous setting
+        if result == True:
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | Setting changed | " + setting)  
+            return True
 
-            counter = counter + 1
-            time.sleep(1)       
+        counter = counter + 1
+        time.sleep(1)       
 
-        # error message
-        WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)  
-        SEND_EMAIL("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)                
-        return ("Device - " + device.name + " | Setting not confirmed - " + setting) 
+    # error message
+    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)  
+    SEND_EMAIL("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)                
+    return ("Device - " + device.name + " | Setting not confirmed - " + setting) 
                          
 
 def CHECK_MQTT_SETTING(ieeeAddr, setting):        
@@ -876,14 +870,14 @@ def REQUEST_SENSORDATA(job_name):
                 filename = sensordata_job.filename
     
                 WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device_name + " | Sensordata | saved")  
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Sensordata | Job - " + job_name + " | Data saved")  
                 return True
                 
             except:
                 pass
 
-    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device_name + " | Sensordata | Data not founded") 
-    SEND_EMAIL("ERROR", "Network | Device - " + device_name + " | Sensordata | Data not founded")       
+    WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job - " + job_name + " | Data not founded") 
+    SEND_EMAIL("ERROR", "Sensordata | Job - " + job_name + " | Data not founded")       
 
    
 def SAVE_SENSORDATA(job_id):

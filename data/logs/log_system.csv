@@ -3483,3 +3483,85 @@ Timestamp,Type,Description
 2020-01-01 23:07:44,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-01-01 23:07:47,ERROR,|Network || ZigBee2MQTT || No Connection|
 2020-01-01 23:07:47,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 00:09:55,DATABASE,|Host || Network Settings || changed|
+2020-01-02 00:10:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:10:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:10:03,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 00:10:04,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 00:11:39,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:11:39,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:11:42,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 00:11:42,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 00:13:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:13:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:13:16,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 00:13:16,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 00:14:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:14:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:15:00,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 00:15:01,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 00:16:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:16:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:16:30,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 00:16:30,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 00:19:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:19:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:19:38,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 00:19:39,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 00:23:44,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:23:44,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:23:47,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 00:23:48,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 00:25:54,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:25:54,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:25:57,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 00:25:58,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 00:28:08,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:28:08,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:28:11,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 00:28:12,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 00:29:29,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:29:29,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:29:32,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 00:29:32,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 00:30:10,SUCCESS,|Network || MQTT || Update|
+2020-01-02 00:30:15,SUCCESS,|Network || ZigBee2MQTT || Update|
+2020-01-02 00:40:30,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:40:30,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 00:40:33,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 00:40:33,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 11:00:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 11:00:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 11:00:24,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 11:00:25,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 11:01:24,DATABASE,|Lighting || Group - Wohnzimmer || Settings || changed|
+2020-01-02 11:01:35,DATABASE,|Lighting || Group - Wohnzimmerj || Settings || changed|
+2020-01-02 11:01:41,DATABASE,|Lighting || Group - Wohnzimmer || Settings || changed|
+2020-01-02 11:01:44,DATABASE,|Lighting || Group - new_group_3 || added|
+2020-01-02 11:01:48,DATABASE,|Lighting || Group - new_group_3 || deleted|
+2020-01-02 11:04:45,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 11:04:45,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 11:04:48,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 11:04:49,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 11:06:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 11:06:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 11:06:19,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 11:06:20,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 11:06:31,DATABASE,|Light || Scene - test || Settings || changed|
+2020-01-02 11:06:37,DATABASE,|Light || Scene - test || Settings || changed|
+2020-01-02 11:06:46,DATABASE,|Lighting || Scene - new_scene_3 || added|
+2020-01-02 11:06:49,DATABASE,|Lighting || Scene - new_scene_3 || deleted|
+2020-01-02 11:07:10,DATABASE,|Network || Controller - 0x00158d0002337aa7 || Changed|
+2020-01-02 11:29:04,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 11:29:04,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-02 11:29:07,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-02 11:29:07,SUCCESS,|Music || Spotify Token || updated|
+2020-01-02 11:29:21,DATABASE,|Network || Controller - 0x00158d0002337aa7 || Changed|
+2020-01-02 11:29:24,DATABASE,|Network || Controller - 0x00158d0002337aa7 || Changed|
+2020-01-02 11:29:30,DATABASE,|Network || Controller - 0x00158d0002337aa7 || Changed|
+2020-01-02 11:29:32,DATABASE,|Network || Controller - 0x00158d0002337aa7 || Changed|
+2020-01-02 11:29:35,DATABASE,|Network || Controller - 0x00158d0002337aa7 || Changed|
+2020-01-02 11:29:41,DATABASE,|Network || Controller - 0x00158d0002337aa7 || Changed|
+2020-01-02 11:29:45,DATABASE,|Network || Controller - 0x00158d0002337aa7 || Changed|
+2020-01-02 11:30:10,SUCCESS,|Network || MQTT || Update|
+2020-01-02 11:30:15,SUCCESS,|Network || ZigBee2MQTT || Update|

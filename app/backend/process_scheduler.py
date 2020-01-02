@@ -9,7 +9,7 @@ import re
 
 from app                          import app
 from app.database.models          import *
-from app.backend.led              import *
+from app.backend.lighting         import *
 from app.backend.mqtt             import *
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM, GET_LOCATION_COORDINATES, BACKUP_DATABASE
 from app.backend.shared_resources import process_management_queue, mqtt_message_queue
@@ -519,17 +519,17 @@ def GET_SUNSET_TIME(lat, long):
 
 def START_SCHEDULER_TASK(task_object):
 
-   # ###########
-   # start scene
-   # ###########
+   # ####################
+   # start lighting scene
+   # ####################
 
    try:
-      if "scene" in task_object.task:
+      if "lighting" in task_object.task and "scene" in task_object.task:
 
          task = task_object.task.split(" # ")
          
-         group = GET_LED_GROUP_BY_NAME(task[1])
-         scene = GET_LED_SCENE_BY_NAME(task[2])
+         group = GET_LIGHTING_GROUP_BY_NAME(task[2])
+         scene = GET_LIGHTING_SCENE_BY_NAME(task[3])
 
          # group existing ?
          if group != None:
@@ -538,20 +538,20 @@ def START_SCHEDULER_TASK(task_object):
                if scene != None:
 
                   try:
-                     brightness = int(task[3])
+                     brightness = int(task[4])
                   except:
                      brightness = 100
 
                   WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                      
                   
-                  SET_LED_GROUP_SCENE(group.id, scene.id, brightness)
-                  CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+                  SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
+                  CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
                else:
-                  WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Scene - " + task[2] + " - not founded")
+                  WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Scene - " + task[3] + " - not founded")
 
          else:
-               WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Group - " + task[1] + " - not founded")
+               WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Group - " + task[2] + " - not founded")
 
 
    except Exception as e:
@@ -559,22 +559,22 @@ def START_SCHEDULER_TASK(task_object):
       WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))
 
 
-   # #######
-   # led off
-   # #######
+   # #########
+   # light off
+   # #########
 
    try:
-      if "led_off" in task_object.task:
+      if "lighting" in task_object.task and "turn_off" in task_object.task:
          
          task = task_object.task.split(" # ")
 
-         if task[1] == "group":
+         if task[2] == "group":
 
                # get input group names and lower the letters
                try:
-                  list_groups = task[2].split(",")
+                  list_groups = task[3].split(",")
                except:
-                  list_groups = [task[2]]
+                  list_groups = [task[3]]
 
                for input_group_name in list_groups: 
                   input_group_name = input_group_name.replace(" ", "")
@@ -582,30 +582,30 @@ def START_SCHEDULER_TASK(task_object):
                   group_founded = False
 
                   # get exist group names 
-                  for group in GET_ALL_LED_GROUPS():
+                  for group in GET_ALL_LIGHTING_GROUPS():
 
                      if input_group_name.lower() == group.name.lower():
                            group_founded = True   
                               
                            WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                              
                            
-                           SET_LED_GROUP_TURN_OFF(group.id)
-                           CHECK_LED_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
+                           SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                           CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
                   if group_founded == False:
                      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Group - " + input_group_name + " - not founded")     
 
 
-         if task[1] == "all" or task[1] == "ALL":
+         if task[2].lower() == "all":
 
-               for group in GET_ALL_LED_GROUPS():
+               for group in GET_ALL_LIGHTING_GROUPS():
                   scene_name = group.current_scene
-                  scene      = GET_LED_SCENE_BY_NAME(scene_name)
+                  scene      = GET_LIGHTING_SCENE_BY_NAME(scene_name)
 
                   WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')
 
-                  SET_LED_GROUP_TURN_OFF(group.id)
-                  CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 5, 20)    
+                  SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                  CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 5, 20)    
                         
 
    except Exception as e:

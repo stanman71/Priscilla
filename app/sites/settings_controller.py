@@ -10,6 +10,7 @@ from app.backend.spotify         import GET_SPOTIFY_TOKEN
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
+
 import spotipy
 
 # access rights
@@ -32,6 +33,9 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_controller():
+    page_title = 'Smarthome | Settings | Controller'
+    page_description = 'The controller configuration page.'
+
     success_message_change_settings_controller = False
 
     RESET_CONTROLLER_COLLAPSE()
@@ -119,17 +123,17 @@ def settings_controller():
     """  controller task options """
     """ ######################## """   
 
-    # list led group options    
-    list_led_group_options = []
+    # list lighting group options    
+    list_lighting_group_options = []
 
-    for group in GET_ALL_LED_GROUPS():
-        list_led_group_options.append(group.name)
+    for group in GET_ALL_LIGHTING_GROUPS():
+        list_lighting_group_options.append(group.name)
 
-    # list led scene options    
-    list_led_scene_options = []
+    # list lighting scene options    
+    list_lighting_scene_options = []
 
-    for scene in GET_ALL_LED_SCENES():
-        list_led_scene_options.append(scene.name)
+    for scene in GET_ALL_LIGHTING_SCENES():
+        list_lighting_scene_options.append(scene.name)
 
     # list sensordata job options    
     list_sensordata_job_options = []
@@ -172,12 +176,14 @@ def settings_controller():
 
     return render_template('layouts/default.html',
                             data=data,    
+                            title=page_title,        
+                            description=page_description,                               
                             content=render_template( 'pages/settings_controller.html', 
                                                     success_message_change_settings_controller=success_message_change_settings_controller,
                                                     error_message_controller_tasks=error_message_controller_tasks, 
                                                     list_controller=list_controller,
-                                                    list_led_group_options=list_led_group_options,
-                                                    list_led_scene_options=list_led_scene_options,
+                                                    list_lighting_group_options=list_lighting_group_options,
+                                                    list_lighting_scene_options=list_lighting_scene_options,
                                                     list_sensordata_job_options=list_sensordata_job_options,
                                                     list_program_options=list_program_options,                                                       
                                                     list_device_command_options=list_device_command_options,

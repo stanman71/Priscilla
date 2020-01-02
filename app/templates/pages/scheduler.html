@@ -629,17 +629,17 @@
                 <div class="card-body"> 
                   <div class="table-responsive">
                     <table class="table tablesorter">
-                      <tbody>                             
+                      <tbody>                                    
                         <tr>
                           <td><h4><p class="text-muted">Beleuchtung</p></h4></td>
                           <td></td>
                         </tr>                                                                       
                         <tr>
-                          <td>scene # wohnzimmer # relax # 100</td>
+                          <td>lighting # scene # wohnzimmer # relax # 100</td>
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                Starte LEDs der Gruppe "wohnzimmer" mit Szene "relax" 
+                                Starte Lichter der Gruppe "wohnzimmer" mit Szene "relax" 
                               </div>
                             </div>  
                             <br>
@@ -654,60 +654,32 @@
                             <br>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-3"> 
-                                LED - Gruppen >>
+                                Beleuchtung - Gruppen >>
                               </div>
                               <div class="col-sm-9">   
-                                {% for group in list_led_group_options %}
+                                {% for group in list_lighting_group_options %}
                                   {{ group }} |
                                 {% endfor %}    
                               </div>  
                             </div>  
                             <div class="row justify-content-md-center">
                               <div class="col-sm-3"> 
-                                LED - Szenen >>
+                                Beleuchtung - Szenen >>
                               </div>
                               <div class="col-sm-9">   
-                                {% for scene in list_led_scene_options %}
+                                {% for scene in list_lighting_scene_options %}
                                   {{ scene }} |
                                 {% endfor %}    
                               </div>  
                             </div>                              
                           </td>                                
                         </tr>
-                        <tr>
-                          <td>brightness # schlafzimmer # TURN_UP</td>
-                          <td>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-12"> 
-                                Erhöhe Helligkeit der LEDs Gruppe "schlafzimmer" um 20% 
-                              </div>
-                            </div>  
-                            <br>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-3"> 
-                                TURN_UP >>
-                              </div>
-                              <div class="col-sm-9"> 
-                                20 % heller 
-                              </div>                        
-                            </div>                                            
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-3"> 
-                                TURN_DOWN >> 
-                              </div>
-                              <div class="col-sm-9"> 
-                                20 % dunkler 
-                              </div>                        
-                            </div>
-                          </td>
-                        </tr>                                   
-                        <tr>
-                          <td>led_off # group # flur, bad</td>
-                          <td>LEDs der Gruppe "flur" und "bad" ausschalten</td>
+                          <td>lighting # turn_off # group # flur, bad</td>
+                          <td>Lichter der Gruppe "flur" und "bad" ausschalten</td>
                         </tr>               
                         <tr>
-                          <td>led_off # ALL</td>
-                          <td>alle LEDs ausschalten</td>
+                          <td>lighting # turn_off # ALL</td>
+                          <td>alle Lichter ausschalten</td>
                         </tr> 
                         <tr>
                           <td></td>

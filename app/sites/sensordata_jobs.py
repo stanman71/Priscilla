@@ -6,7 +6,6 @@ from functools           import wraps
 from app                          import app
 from app.database.models          import *
 from app.backend.file_management  import GET_PATH, GET_SENSORDATA_FILES, WRITE_LOGFILE_SYSTEM
-
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
@@ -31,16 +30,14 @@ def permission_required(f):
 @login_required
 @permission_required
 def sensordata_jobs():
+    page_title = 'Smarthome | Sensordata | Jobs'
+    page_description = 'The sensordata jobs configuration page.'
+
     success_message_change_settings = []      
     error_message_change_settings   = []    
     success_message_add_job         = False       
     error_message_add_job           = []
     error_message_datafile          = ""
-
-
-    page_title = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
-    page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
-
 
     # delete message
     if session.get('delete_job_success', None) != None:
@@ -309,7 +306,9 @@ def sensordata_jobs():
 
 
     return render_template('layouts/default.html',
-                            data=data,    
+                            data=data,  
+                            title=page_title,        
+                            description=page_description,                                 
                             content=render_template( 'pages/sensordata_jobs.html',
                                                     success_message_change_settings=success_message_change_settings,                               
                                                     error_message_change_settings=error_message_change_settings,   

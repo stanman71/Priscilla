@@ -24,10 +24,8 @@ def http_err(err_code):
 
 @app.errorhandler(400)
 def e400(e):
-
-    # custommize your page title / description here
-    page_title = 'Login - Flask Dark Dashboard | AppSeed App Generator'
-    page_description = 'Open-Source Flask Dark Dashboard, login page.'
+    page_title = 'Smarthome | Error'
+    page_description = 'error 400'
 
     data          = {'navigation': 'None'}
     error_message = http_err( 400)
@@ -35,6 +33,7 @@ def e400(e):
     return render_template( 'layouts/default.html',
                             data=data,
                             title=page_title,
+                            description=page_description,                                
                             content=render_template( 'pages/errors.html', 
                                                      error_message=error_message) 
                             )
@@ -42,10 +41,8 @@ def e400(e):
 
 @app.errorhandler(401)
 def e401(e):
-
-    # custommize your page title / description here
-    page_title = 'Login - Flask Dark Dashboard | AppSeed App Generator'
-    page_description = 'Open-Source Flask Dark Dashboard, login page.'
+    page_title = 'Smarthome | Error'
+    page_description = 'error 401'
 
     data          = {'navigation': 'None'}
     error_message = http_err( 401)
@@ -53,6 +50,7 @@ def e401(e):
     return render_template( 'layouts/default.html',
                             data=data,
                             title=page_title,
+                            description=page_description,                               
                             content=render_template( 'pages/errors.html', 
                                                      error_message=error_message) 
                             )
@@ -60,10 +58,8 @@ def e401(e):
 
 @app.errorhandler(403)
 def e403(e):
-
-    # custommize your page title / description here
-    page_title = 'Login - Flask Dark Dashboard | AppSeed App Generator'
-    page_description = 'Open-Source Flask Dark Dashboard, login page.'
+    page_title = 'Smarthome | Error'
+    page_description = 'error 403'
 
     data          = {'navigation': 'None'}
     error_message = http_err( 403)
@@ -71,6 +67,7 @@ def e403(e):
     return render_template( 'layouts/default.html',
                             data=data,
                             title=page_title,
+                            description=page_description,                                
                             content=render_template( 'pages/errors.html', 
                                                      error_message=error_message) 
                             )
@@ -78,10 +75,8 @@ def e403(e):
 
 @app.errorhandler(404)
 def e404(e):
-
-    # custommize your page title / description here
-    page_title = 'Login - Flask Dark Dashboard | AppSeed App Generator'
-    page_description = 'Open-Source Flask Dark Dashboard, login page.'
+    page_title = 'Smarthome | Error'
+    page_description = 'error 404'
 
     data          = {'navigation': 'None'}
     error_message = http_err( 404)
@@ -89,6 +84,7 @@ def e404(e):
     return render_template( 'layouts/default.html',
                             data=data,
                             title=page_title,
+                            description=page_description,                                
                             content=render_template( 'pages/errors.html', 
                                                      error_message=error_message) 
                             )
@@ -96,10 +92,8 @@ def e404(e):
 
 @app.errorhandler(410)
 def e410(e):
-
-    # custommize your page title / description here
-    page_title = 'Login - Flask Dark Dashboard | AppSeed App Generator'
-    page_description = 'Open-Source Flask Dark Dashboard, login page.'
+    page_title = 'Smarthome | Error'
+    page_description = 'error 410'
 
     data          = {'navigation': 'None'}
     error_message = http_err( 410)
@@ -107,6 +101,7 @@ def e410(e):
     return render_template( 'layouts/default.html',
                             data=data,
                             title=page_title,
+                            description=page_description,                                
                             content=render_template( 'pages/errors.html', 
                                                      error_message=error_message) 
                             )
@@ -114,10 +109,8 @@ def e410(e):
 
 @app.errorhandler(500)
 def e500(e):
-
-    # custommize your page title / description here
-    page_title = 'Login - Flask Dark Dashboard | AppSeed App Generator'
-    page_description = 'Open-Source Flask Dark Dashboard, login page.'
+    page_title = 'Smarthome | Error'
+    page_description = 'error 500'
 
     data          = {'navigation': 'None'}
     error_message = http_err( 500)
@@ -125,6 +118,7 @@ def e500(e):
     return render_template( 'layouts/default.html',
                             data=data,
                             title=page_title,
+                            description=page_description,                                
                             content=render_template( 'pages/errors.html', 
                                                      error_message=error_message) 
                             )

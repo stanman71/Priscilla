@@ -9,6 +9,7 @@ from app.backend.file_management import RESET_LOGFILE, GET_LOGFILE_SYSTEM, GET_P
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
+
 import datetime
 import os
 
@@ -32,6 +33,9 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_system_log():
+    page_title = 'Smarthome | Settings | SystemLOG'
+    page_description = 'The system log page.'
+
     success_message_logfile = False
     error_message_logfile   = ""
     
@@ -113,7 +117,9 @@ def settings_system_log():
     data = {'navigation': 'settings'}
 
     return render_template('layouts/default.html',
-                            data=data,    
+                            data=data,   
+                            title=page_title,        
+                            description=page_description,                                
                             content=render_template( 'pages/settings_system_log.html', 
                                                     error_message_logfile=error_message_logfile,
                                                     success_message_logfile=success_message_logfile,

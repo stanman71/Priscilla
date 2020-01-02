@@ -10,6 +10,7 @@ from app.backend.build_graph      import BUILD_GRAPH
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
+
 import datetime
 import time
 import pandas as pd
@@ -37,6 +38,9 @@ def permission_required(f):
 @login_required
 @permission_required
 def sensordata_statistics():
+    page_title = 'Smarthome | Sensordata | Statistics'
+    page_description = 'The sensordata statistics page.'
+
     global dropdown_list_dates_temp
 
     error_message_select_datafiles = []    
@@ -221,7 +225,9 @@ def sensordata_statistics():
     data = {'navigation': 'sensordata'}
 
     return render_template('layouts/default.html',
-                            data=data,    
+                            data=data,   
+                            title=page_title,        
+                            description=page_description,                                
                             content=render_template( 'pages/sensordata_statistics.html',
                                                     error_message_select_datafiles=error_message_select_datafiles,
                                                     error_message_create_graph=error_message_create_graph,

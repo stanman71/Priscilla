@@ -5,7 +5,7 @@ import time
 
 from app                          import app
 from app.database.models          import *
-from app.backend.led              import *
+from app.backend.lighting         import *
 from app.backend.mqtt             import *
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
 from app.backend.process_program  import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD
@@ -232,17 +232,17 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
     controller_command = controller_command[1:-1].replace('"','')
 
 
-    # ###########
-    # start scene
-    # ###########
+    # ####################
+    # start lighting scene
+    # ####################
 
-    if "scene" in task:
+    if "lighting" in task and "scene" in task:
 
         task = task.lower()
         task = task.split(" # ")
         
-        group = GET_LED_GROUP_BY_NAME(task[1])
-        scene = GET_LED_SCENE_BY_NAME(task[2])
+        group = GET_LIGHTING_GROUP_BY_NAME(task[2])
+        scene = GET_LIGHTING_SCENE_BY_NAME(task[3])
 
         # group existing ?
         if group != None:
@@ -251,32 +251,32 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             if scene != None:
 
                 try:
-                    brightness = int(task[3])
+                    brightness = int(task[4])
                 except:
                     brightness = 100
                     
-                SET_LED_GROUP_SCENE(group.id, scene.id, brightness)
-                CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+                SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
+                CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                     controller_command + " | Scene - " + task[2] + " | not founded")
+                                     controller_command + " | Scene - " + task[3] + " | not founded")
 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                 controller_command + " | Group - " + task[1] + " | not founded")
+                                 controller_command + " | Group - " + task[2] + " | not founded")
 
     # #################
     # change brightness
     # #################
 
-    if "brightness" in task:
+    if "lighting" in task and "brightness" in task:
         
         task = task.lower()
         task = task.split(" # ")
         
-        group   = GET_LED_GROUP_BY_NAME(task[1])
-        command = task[2]
+        group   = GET_LIGHTING_GROUP_BY_NAME(task[2])
+        command = task[3]
 
         # group existing ?
         if group != None:
@@ -286,10 +286,10 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 
                 scene_name = group.current_scene
 
-                # led_group off ?
+                # lighting_group off ?
                 if scene_name != "off":
                     
-                    scene = GET_LED_SCENE_BY_NAME(scene_name)
+                    scene = GET_LIGHTING_SCENE_BY_NAME(scene_name)
 
                     # get new brightness_value
                     current_brightness = group.current_brightness
@@ -300,8 +300,8 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                         if target_brightness > 100:
                             target_brightness = 100
 
-                        SET_LED_GROUP_BRIGHTNESS_DIMMER(group.id, "turn_up")
-                        CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, target_brightness, 2, 10)
+                        SET_LIGHTING_GROUP_BRIGHTNESS_DIMMER(group.id, "turn_up")
+                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, target_brightness, 2, 10)
 
                     elif (command == "turn_down") and current_brightness != 0:
 
@@ -310,8 +310,8 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                         if target_brightness < 0:
                             target_brightness = 0
 
-                        SET_LED_GROUP_BRIGHTNESS_DIMMER(group.id, "turn_down")
-                        CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, target_brightness, 2, 10)
+                        SET_LIGHTING_GROUP_BRIGHTNESS_DIMMER(group.id, "turn_down")
+                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, target_brightness, 2, 10)
 
                     else:
                         WRITE_LOGFILE_SYSTEM("STATUS", "Light | Group - " + group.name +
@@ -323,28 +323,28 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                     controller_command + " | Command - " + task[2] + " | not valid")
+                                     controller_command + " | Command - " + task[3] + " | not valid")
 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                 controller_command + " | Group - " + task[1] + " | not founded")
+                                 controller_command + " | Group - " + task[2] + " | not founded")
 
-    # #######
-    # led off
-    # #######
+    # #########
+    # light off
+    # #########
 
-    if "led_off" in task:
+    if "lighting" in task and "turn_off" in task:
         
         task = task.lower()
         task = task.split(" # ")
 
-        if task[1] == "group":
+        if task[2] == "group":
 
             # get input group names and lower the letters
             try:
-                list_groups = task[2].split(",")
+                list_groups = task[3].split(",")
             except:
-                list_groups = [task[2]]
+                list_groups = [task[3]]
 
             for input_group_name in list_groups:
                 input_group_name = input_group_name.replace(" ", "")
@@ -352,28 +352,29 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 group_founded = False
 
             # get exist group names
-            for group in GET_ALL_LED_GROUPS():
+            for group in GET_ALL_LIGHTING_GROUPS():
 
                 if input_group_name == group.name.lower():
                     group_founded = True
                     scene_name    = group.current_scene
-                    scene         = GET_LED_SCENE_BY_NAME(scene_name)
+                    scene         = GET_LIGHTING_SCENE_BY_NAME(scene_name)
 
-                    SET_LED_GROUP_TURN_OFF(group.id)
-                    CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)
+                    SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)
 
             # group not founded
             if group_founded == False:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
                                      controller_command + " | Group - " + input_group_name + " | not founded")
 
-        if task[1] == "all":
-            for group in GET_ALL_LED_GROUPS():
-                scene_name = group.current_scene
-                scene      = GET_LED_SCENE_BY_NAME(scene_name)
 
-                SET_LED_GROUP_TURN_OFF(group.id)
-                CHECK_LED_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)
+        if task[2].lower() == "all":
+            for group in GET_ALL_LIGHTING_GROUPS():
+                scene_name = group.current_scene
+                scene      = GET_LIGHTING_SCENE_BY_NAME(scene_name)
+
+                SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)
 
     # ######
     # device

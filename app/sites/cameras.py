@@ -17,14 +17,14 @@ import cv2
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "user" or current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "user" or current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -87,6 +87,9 @@ def GENERATE_FRAME(camera_url):
 @login_required
 @permission_required
 def cameras():
+    page_title       = 'Smarthome | Cameras'
+    page_description = 'The cameras configuration page.'
+
     success_message_change_settings = []      
     error_message_change_settings   = []    
     success_message_add_camera      = False       
@@ -100,10 +103,6 @@ def cameras():
             selected_camera = "camera_" + str(camera.id)
             break
     
-    
-    page_title       = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
-    page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
-
 
     # delete message
     if session.get('delete_camera_success', None) != None:
@@ -269,6 +268,8 @@ def cameras():
 
     return render_template('layouts/default.html',
                             data=data,    
+                            title=page_title,        
+                            description=page_description,               
                             content=render_template( 'pages/cameras.html',
                                                     success_message_change_settings=success_message_change_settings,                               
                                                     error_message_change_settings=error_message_change_settings,   
@@ -281,7 +282,7 @@ def cameras():
                                                     camera_3=camera_3,
                                                     camera_4=camera_4,    
                                                     camera_5=camera_5, 
-                                                    camera_6=camera_6,                                                              
+                                                    camera_6=camera_6,                                                             
                                                     ) 
                            )
 

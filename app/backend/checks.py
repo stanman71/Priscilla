@@ -42,34 +42,34 @@ def CHECK_DEVICE_EXCEPTION_SETTINGS(devices):
    return error_message_settings
 
 
-""" ################## """
-"""  check led groups  """
-""" ################## """
+""" ###################### """
+"""  check ighting groups  """
+""" ###################### """
 
-def CHECK_LED_GROUP_SETTINGS(settings):
+def CHECK_LIGHTING_GROUP_SETTINGS(settings):
    list_errors = []
 
-   # check setting open led_slots in groups
+   # check setting open light_slots in groups
    for element in settings:
       
-      if element.led_ieeeAddr_1 == None or element.led_ieeeAddr_1 == "None":
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> LED 1")        
-      if element.active_led_2 == "True" and (element.led_ieeeAddr_2 == None or element.led_ieeeAddr_2 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> LED 2") 
-      if element.active_led_3 == "True" and (element.led_ieeeAddr_3 == None or element.led_ieeeAddr_3 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> LED 3") 
-      if element.active_led_4 == "True" and (element.led_ieeeAddr_4 == None or element.led_ieeeAddr_4 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> LED 4") 
-      if element.active_led_5 == "True" and (element.led_ieeeAddr_5 == None or element.led_ieeeAddr_5 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> LED 5") 
-      if element.active_led_6 == "True" and (element.led_ieeeAddr_6 == None or element.led_ieeeAddr_6 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> LED 6") 
-      if element.active_led_7 == "True" and (element.led_ieeeAddr_7 == None or element.led_ieeeAddr_7 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> LED 7") 
-      if element.active_led_8 == "True" and (element.led_ieeeAddr_8 == None or element.led_ieeeAddr_8 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> LED 8") 
-      if element.active_led_9 == "True" and (element.led_ieeeAddr_9 == None or element.led_ieeeAddr_9 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> LED 9")   
+      if element.light_ieeeAddr_1 == None or element.light_ieeeAddr_1 == "None":
+          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 1")        
+      if element.active_light_2 == "True" and (element.light_ieeeAddr_2 == None or element.light_ieeeAddr_2 == "None"):
+          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 2") 
+      if element.active_light_3 == "True" and (element.light_ieeeAddr_3 == None or element.light_ieeeAddr_3 == "None"):
+          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 3") 
+      if element.active_light_4 == "True" and (element.light_ieeeAddr_4 == None or element.light_ieeeAddr_4 == "None"):
+          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 4") 
+      if element.active_light_5 == "True" and (element.light_ieeeAddr_5 == None or element.light_ieeeAddr_5 == "None"):
+          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 5") 
+      if element.active_light_6 == "True" and (element.light_ieeeAddr_6 == None or element.light_ieeeAddr_6 == "None"):
+          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 6") 
+      if element.active_light_7 == "True" and (element.light_ieeeAddr_7 == None or element.light_ieeeAddr_7 == "None"):
+          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 7") 
+      if element.active_light_8 == "True" and (element.light_ieeeAddr_8 == None or element.light_ieeeAddr_8 == "None"):
+          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 8") 
+      if element.active_light_9 == "True" and (element.light_ieeeAddr_9 == None or element.light_ieeeAddr_9 == "None"):
+          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 9")   
           
    return list_errors
 
@@ -132,46 +132,48 @@ def CHECK_PROGRAM_TASKS(program_id):
                   list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
 
 
-            # ###
-            # led     
-            # ###    
+            # ########
+            # lighting     
+            # ########    
             
-            elif "scene" in line[1]:
+            elif "lighting" in line[1] and "scene" in line[1]:
                
                try:        
                   line_content = line[1].split(" # ")
 
-                  try:
-                     # check led name
-                     group_name = line_content[1]    
-                     
-                     if GET_LED_GROUP_BY_NAME(group_name) != None:
-                        
-                        try:
-                        
-                           if line_content[2] != "off" and line_content[2] != "OFF":
-                              
-                              if GET_LED_SCENE_BY_NAME(line_content[2]) == None: 
-                                 list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Szene nicht gefunden >>> " + line_content[2])
+                  # check scene setting
+                  if GET_LIGHTING_GROUP_BY_NAME(line_content[2]) == None: 
+                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Gruppe nicht gefunden >>> " + line_content[2])
+                  
+                  if GET_LIGHTING_SCENE_BY_NAME(line_content[3]) == None: 
+                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Szene nicht gefunden >>> " + line_content[3])
 
-                              if not line_content[3].isdigit() or not (0 <= int(line_content[3]) <= 100):
-                                 list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Helligkeitswert")
-                                 
-                           elif line_content[2] == "off" or line_content[2] == "OFF":
-                              pass
-                              
-                           else:
-                              list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")                            
-      
-                        except:
-                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
-                        
-                     else:        
-                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> LED Gruppe nicht gefunden >>> " + group_name)
+                  if not line_content[4].isdigit() or not (0 <= int(line_content[4]) <= 100):
+                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Helligkeitswert")
 
-                  except:
-                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> LED Gruppe nicht gefunden >>> " + group_name)
-                     
+               except:
+                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")               
+                        
+
+            elif "lighting" in line[1] and "turn_off" in line[1]:
+
+               try:
+                  line_content = line[1].split(" # ")
+
+                  # check turn_off group setting
+                  if line_content[2].lower() == "group":
+
+                     for group_name in line_content[3].split(","):
+                        if GET_LIGHTING_GROUP_BY_NAME(group_name.strip()) == None: 
+                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Gruppe nicht gefunden >>> " + group_name.strip())  
+
+                  # check turn_off all setting
+                  elif line_content[2].lower() == "all":
+                     pass
+
+                  else:
+                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")                            
+
                except:
                   list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
 
@@ -192,23 +194,18 @@ def CHECK_PROGRAM_TASKS(program_id):
                   # check device
                   if device != None:
                      
-                     if not "led" in device.device_type:
-         
-                        program_setting = line_content[2]
-                        program_setting = program_setting.replace(" ", "")
+                     program_setting = line_content[2]
+                     program_setting = program_setting.replace(" ", "")
 
-                        setting_valid = False
+                     setting_valid = False
 
-                        # check device command 
-                        for command in device.commands.split(","):   
-                           if command == program_setting:
-                              setting_valid = True
+                     # check device command 
+                     for command in device.commands.split(","):   
+                        if command == program_setting:
+                           setting_valid = True
 
-                        if setting_valid == False:
-                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Befehl ungültig >>> " + program_setting)
-
-                     else:        
-                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Gerät ist eine LED")
+                     if setting_valid == False:
+                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Befehl ungültig >>> " + program_setting)
 
                   else:
                      list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Gerät nicht gefunden >>> " + device_name)
@@ -243,13 +240,13 @@ def CHECK_PROGRAM_TASKS(program_id):
                   line_content = line[1].split(" # ")       
                   
                   if (line_content[1].lower() != "play" and
-                     line_content[1].lower() != "previous" and
-                     line_content[1].lower() != "next" and
-                     line_content[1].lower() != "stop" and
-                     line_content[1].lower() != "volume" and
-                     line_content[1].lower() != "playlist" and
-                     line_content[1].lower() != "track" and
-                     line_content[1].lower() != "album"):
+                      line_content[1].lower() != "previous" and
+                      line_content[1].lower() != "next" and
+                      line_content[1].lower() != "stop" and
+                      line_content[1].lower() != "volume" and
+                      line_content[1].lower() != "playlist" and
+                      line_content[1].lower() != "track" and
+                      line_content[1].lower() != "album"):
 
                      list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Befehl")
 
@@ -658,96 +655,63 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # start_scene
       # ###########
       
-      if "scene" in task:
+      if "lighting" in task and "scene" in task:
          if " # " in task:
             task = task.split(" # ") 
 
             # check group setting 
             try:
-               group_exist = False
 
-               input_group_name = task[1]
-               input_group_name = input_group_name.lower()
+               if GET_LIGHTING_GROUP_BY_NAME(task[2].strip()) == None: 
 
-               # get exist group names and lower the letters
-               all_exist_groups = GET_ALL_LED_GROUPS()
-               
-               for exist_group in all_exist_groups:
-                  
-                  exist_group_name       = exist_group.name
-                  exist_group_name_lower = exist_group_name.lower()
-                  
-                  # compare the string names
-                  if input_group_name == exist_group_name_lower: 
-                     group_exist = True
-                     
-               if group_exist == True:
-                  pass
-                  
-               else:
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> LED Gruppe nicht vorhanden >>> " + task[1])
-                  else:
-                     list_task_errors.append(name + " >>> LED Gruppe nicht vorhanden >>> " + task[1])
+                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> Gruppe nicht vorhanden >>> " + task[2].strip())  
+                  else:                               
+                     list_task_errors.append(name + " >>> Gruppe nicht vorhanden >>> " + task[2].strip())  
 
             except:
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> LED Gruppe")
+                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> Gruppe")
                else:
-                  list_task_errors.append(name + " >>> fehlende Einstellung >>> LED Gruppe")
+                  list_task_errors.append(name + " >>> fehlende Einstellung >>> Gruppe")
+
 
             # check scene setting    
             try:
-               scene_exist = False
 
-               input_scene_name = task[2]
-               input_scene_name = input_scene_name.lower()
+               if GET_LIGHTING_SCENE_BY_NAME(task[3].strip()) == None: 
 
-               # get exist scene names and lower the letters
-               all_exist_scenes = GET_ALL_LED_SCENES()
-               
-               for exist_scene in all_exist_scenes:
-                  
-                  exist_scene_name       = exist_scene.name
-                  exist_scene_name_lower = exist_scene_name.lower()
-                  
-                  # compare the string names
-                  if input_scene_name == exist_scene_name_lower: 
-                     scene_exist = True
-                     
-               if scene_exist == True:
-                  pass
-                  
-               else:
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> LED Szene nicht vorhanden >>> " + task[2])
-                  else:                  
-                     list_task_errors.append(name + " >>> LED Szene nicht vorhanden >>> " + task[2])
-
+                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> Szene nicht vorhanden >>> " + task[3].strip())  
+                  else:                               
+                     list_task_errors.append(name + " >>> Szene nicht vorhanden >>> " + task[3].strip())  
+                  
             except:
+
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> LED Szene")
+                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> Szene")
                else:               
-                  list_task_errors.append(name + " >>> fehlende Einstellung >>> LED Szene")
+                  list_task_errors.append(name + " >>> fehlende Einstellung >>> Szene")
+
 
             # check global brightness    
             try:
-               if task[3].isdigit():
-                  if 1 <= int(task[3]) <= 100:
+               if task[4].isdigit():
+                  if 1 <= int(task[4]) <= 100:
                      return list_task_errors
 
                   else:
                      if task_type == "controller":
-                        list_task_errors.append(name + " >>> " + controller_command_string + " >>> ungültiger Wertebereich >>> Globale Helligkeit")
+                        list_task_errors.append(name + " >>> " + controller_command_string + " >>> ungültiger Wertebereich >>> Helligkeit")
                      else:                        
-                        list_task_errors.append(name + " >>> ungültiger Wertebereich >>> Globale Helligkeit") 
+                        list_task_errors.append(name + " >>> ungültiger Wertebereich >>> Helligkeit") 
                      return list_task_errors    
 
                else:
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> ungültige Einstellung >>> Globale Helligkeit")
+                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> ungültige Einstellung >>> Helligkeit")
                   else:                     
-                     list_task_errors.append(name + " >>> ungültige Einstellung >>> Globale Helligkeit")
+                     list_task_errors.append(name + " >>> ungültige Einstellung >>> Helligkeit")
                   return list_task_errors
 
             except:
@@ -765,24 +729,24 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # brightness dimmer
       # #################
       
-      if "brightness" in task and task_type == "controller":
+      if "lighting" in task and "brightness" in task and task_type == "controller":
          if " # " in task:
             task = task.split(" # ") 
 
             # check group setting
             try:
-               if GET_LED_GROUP_BY_NAME(task[1]):
+               if GET_LIGHTING_GROUP_BY_NAME(task[2]):
                   pass
                   
                else:
-                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> LED Gruppe nicht vorhanden >>> " + task[1])   
+                  list_task_errors.append(name + " >>> " + controller_command_string + " >>> Gruppe nicht vorhanden >>> " + task[2])   
                                     
             except:
-               list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> LED Gruppe")      
+               list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> Gruppe")      
 
             # check brightness setting    
             try:
-               if task[2] == "turn_up" or task[2] == "TURN_UP" or task[2] == "turn_down" or task[2] == "TURN_DOWN":
+               if task[3].lower() == "turn_up" or task[3].lower() == "turn_down":
                   return list_task_errors
                   
                else:
@@ -798,75 +762,41 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             return list_task_errors
 
 
-      # #######
-      # led_off
-      # #######
+      # ########
+      # turn_off
+      # ########
       
-      if "led_off" in task:
+      if "lighting" in task and "turn_off" in task:
          if " # " in task:
             task = task.split(" # ")
             
-            # check group setting
-            if "group" in task[1]:
+            # check turn_off groups
+            if "group" in task[2]:
 
-               try:
-                  
-                  # get input group names and lower the letters
-                  try:
-                        list_groups = task[2].split(",")
-                  except:
-                        list_groups = [task[2]]
+               try:      
+                  # check group names 
+                  for group_name in task[3].split(","):
+                     if GET_LIGHTING_GROUP_BY_NAME(group_name.strip()) == None: 
 
-                  for input_group_name in list_groups:
-                        
-                     input_group_name = input_group_name.replace(" ", "")
-                     input_group_name = input_group_name.lower()
-
-                     # get exist group names and lower the letters
-                     try:
-                        all_exist_group = GET_ALL_LED_GROUPS()
-                        
-                        group_exist = False
-                        
-                        for exist_group in all_exist_group:
-                           
-                           exist_group_name = exist_group.name
-                           exist_group_name = exist_group_name.lower()
-                           
-                           # compare the string names
-                           if input_group_name == exist_group_name: 
-                              group_exist = True
-                           
-                        if group_exist == True:
-                           pass
-                           
-                        else:
-                           if task_type == "controller":
-                              list_task_errors.append(name + " >>> " + controller_command_string + " >>> LED Gruppe nicht vorhanden >>> " + input_group_name)  
-                           else:                               
-                              list_task_errors.append(name + " >>> LED Gruppe nicht vorhanden >>> " + input_group_name)  
-                        
-                        return list_task_errors
-                        
-                     except:
                         if task_type == "controller":
-                           list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> LED Gruppe")
-                        else:                            
-                           list_task_errors.append(name + " >>> fehlende Einstellung >>> LED Gruppe")
-                        
-                        return list_task_errors
-                        
-               except:
-                  if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> LED Gruppe")
-                  else:                            
-                     list_task_errors.append(name + " >>> fehlende Einstellung >>> LED Gruppe")
-                  
-                  return list_task_errors 
+                           list_task_errors.append(name + " >>> " + controller_command_string + " >>> Gruppe nicht vorhanden >>> " + group_name.strip())  
+                        else:                               
+                           list_task_errors.append(name + " >>> Gruppe nicht vorhanden >>> " + group_name.strip())  
+                     
+                  return list_task_errors
 
-               
-            # check turn off all leds
-            elif task[1] == "all" or task[1] == "ALL": 
+               except:
+
+                  if task_type == "controller":
+                     list_task_errors.append(name + " >>> " + controller_command_string + " >>> fehlende Einstellung >>> Gruppe")
+                  else:                            
+                     list_task_errors.append(name + " >>> fehlende Einstellung >>> Gruppe")
+                  
+                  return list_task_errors
+                        
+   
+            # check turn off all lights
+            elif task[2].lower() == "all": 
                return list_task_errors
 
 

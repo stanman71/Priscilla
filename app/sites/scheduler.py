@@ -12,6 +12,7 @@ from app.backend.spotify           import GET_SPOTIFY_TOKEN
 from app.common                    import COMMON, STATUS
 from app.assets                    import *
 
+
 import spotipy
 
 # access rights
@@ -34,6 +35,9 @@ def permission_required(f):
 @login_required
 @permission_required
 def scheduler():
+    page_title = 'Smarthome | Programs'
+    page_description = 'The programs configuration page.'
+
     success_message_change_settings                = []
     error_message_change_settings                  = []       
     success_message_add_scheduler_task             = []
@@ -62,7 +66,7 @@ def scheduler():
     """  table scheduler tasks  """
     """ ####################### """   
 
-    # set collapse open for option change led number
+    # set collapse open 
     if session.get("set_collapse_open", None) != None:
         SET_SCHEDULER_TASK_COLLAPSE_OPEN(session.get('set_collapse_open'))
         session['set_collapse_open'] = None
@@ -364,17 +368,17 @@ def scheduler():
     """  scheduler task options  """
     """ ######################## """   
 
-    # list led group options    
-    list_led_group_options = []
+    # list lighting group options    
+    list_lighting_group_options = []
 
-    for group in GET_ALL_LED_GROUPS():
-        list_led_group_options.append(group.name)
+    for group in GET_ALL_LIGHTING_GROUPS():
+        list_lighting_group_options.append(group.name)
 
-    # list led scene options    
-    list_led_scene_options = []
+    # list lighting scene options    
+    list_lighting_scene_options = []
 
-    for scene in GET_ALL_LED_SCENES():
-        list_led_scene_options.append(scene.name)
+    for scene in GET_ALL_LIGHTING_SCENES():
+        list_lighting_scene_options.append(scene.name)
 
     # list sensordata job options    
     list_sensordata_job_options = []
@@ -549,7 +553,9 @@ def scheduler():
         device_25_input_values = ""
 
     return render_template('layouts/default.html',
-                            data=data,    
+                            data=data,  
+                            title=page_title,        
+                            description=page_description,                                 
                             content=render_template( 'pages/scheduler.html',
                                                     list_scheduler_tasks=list_scheduler_tasks,
                                                     dropdown_list_devices=dropdown_list_devices,
@@ -563,8 +569,8 @@ def scheduler():
                                                     error_message_scheduler_tasks_settings=error_message_scheduler_tasks_settings,
                                                     error_message_scheduler_tasks=error_message_scheduler_tasks,
                                                     success_message_change_settings_scheduler_task=success_message_change_settings_scheduler_task,
-                                                    list_led_group_options=list_led_group_options,
-                                                    list_led_scene_options=list_led_scene_options,
+                                                    list_lighting_group_options=list_lighting_group_options,
+                                                    list_lighting_scene_options=list_lighting_scene_options,
                                                     list_sensordata_job_options=list_sensordata_job_options,   
                                                     list_program_options=list_program_options,                                                 
                                                     list_device_command_options=list_device_command_options,
@@ -608,7 +614,7 @@ def change_scheduler_tasks_position(id, direction):
     return redirect(url_for('scheduler'))
 
 
-# led scheduler tasks option add sensor / remove sensor
+# scheduler tasks option add sensor / remove sensor
 @app.route('/scheduler/<string:option>/<int:id>')
 @login_required
 @permission_required

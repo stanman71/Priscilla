@@ -12,6 +12,7 @@ from app.backend.checks           import CHECK_DEVICE_EXCEPTION_SETTINGS
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
+
 import datetime
 import os
 import heapq
@@ -22,14 +23,14 @@ import threading
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        # except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -38,6 +39,9 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_devices():
+    page_title = 'Smarthome | Settings | Devices'
+    page_description = 'The devices configuration page.'
+
     error_message_mqtt_connection               = False
     error_message_zigbee2mqtt_connection        = False    
     success_message_change_settings_devices     = []         
@@ -49,10 +53,6 @@ def settings_devices():
     error_message_logfile                       = ""
 
     exceptions_collapse_open = False
-
-
-    page_title       = 'Icons - Flask Dark Dashboard | AppSeed App Generator'
-    page_description = 'Open-Source Flask Dark Dashboard, the icons page.'
 
     if GET_DEVICE_CONNECTION_MQTT() == False:
         error_message_mqtt_connection = True
@@ -547,6 +547,8 @@ def settings_devices():
 
     return render_template('layouts/default.html',
                             data=data,    
+                            title=page_title,        
+                            description=page_description,                               
                             content=render_template( 'pages/settings_devices.html',
                                                     error_message_mqtt_connection=error_message_mqtt_connection,
                                                     error_message_zigbee2mqtt_connection=error_message_zigbee2mqtt_connection,

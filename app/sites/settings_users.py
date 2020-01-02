@@ -32,6 +32,9 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_users():
+    page_title = 'Smarthome | Settings | Users'
+    page_description = 'The users configuration page.'
+
     success_message_add_user           = False
     error_message_add_user             = []
     success_message_change_settings    = []
@@ -199,7 +202,9 @@ def settings_users():
     data = {'navigation': 'settings'}
 
     return render_template('layouts/default.html',
-                            data=data,    
+                            data=data,  
+                            title=page_title,        
+                            description=page_description, 
                             content=render_template( 'pages/settings_users.html',
                                                      error_message_change_settings=error_message_change_settings,                            
                                                      error_message_add_user=error_message_add_user,

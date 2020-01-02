@@ -11,6 +11,7 @@ from app.backend.file_management import UPDATE_NETWORK_SETTINGS_FILE, GET_BACKUP
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
+
 import datetime
 import os
 import time
@@ -86,6 +87,9 @@ def HOST_SHUTDOWN():
 @login_required
 @permission_required
 def settings_system():
+    page_title = 'Smarthome | Settings | System'
+    page_description = 'The system configuration page.'
+
     success_message_change_settings_services = False    
     error_message_change_settings_services   = [] 
     success_message_change_settings_network  = False
@@ -388,7 +392,9 @@ def settings_system():
     data = {'navigation': 'settings'}
 
     return render_template('layouts/default.html',
-                            data=data,    
+                            data=data,   
+                            title=page_title,        
+                            description=page_description,                                
                             content=render_template( 'pages/settings_system.html',   
                                                     success_message_change_settings_services=success_message_change_settings_services,
                                                     error_message_change_settings_services=error_message_change_settings_services,

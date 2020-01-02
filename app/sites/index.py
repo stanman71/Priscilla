@@ -12,6 +12,7 @@ from app.database.models  import *
 from app.common           import COMMON, STATUS
 from app.assets           import *
 
+
 import os, shutil, re, cgi
 
 """ ############# """
@@ -37,16 +38,14 @@ def load_user(user_id):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    
+    page_title = 'Smarthome | Index'
+    page_description = 'The login page'    
+
     # define login form here
     form = LoginForm()
 
     # Flask message injected into the page, in case of any errors
     msg = None
-
-    # custommize your page title / description here
-    page_title = 'Login - Flask Dark Dashboard | AppSeed App Generator'
-    page_description = 'Open-Source Flask Dark Dashboard, login page.'
 
     if form.validate_on_submit():
         user = GET_USER_BY_NAME(form.name.data)
@@ -68,7 +67,8 @@ def index():
     # try to match the pages defined in -> themes/light-bootstrap/pages/
     return render_template( 'layouts/default.html',
                             data=data,
-                            title=page_title,
+                            title=page_title,        
+                            description=page_description,   
                             content=render_template( 'pages/index.html', 
                                                      form=form,
                                                      msg=msg) 

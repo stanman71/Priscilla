@@ -69,13 +69,13 @@
               <div class="card-body ">
                 <form method="POST">
 
-  <!-- led table -->
+  <!-- lighting table -->
 
                   <div class="table-full-width table-responsive">
                     <table class="table">
                       <tbody> 
 
-                        {% for entry in list_led_groups %}
+                        {% for entry in list_lighting_groups %}
                           <tr>                
                             <td style="width:30%" class="minwidth_150">
                               <div class="row justify-content-md-left">
@@ -85,10 +85,10 @@
                               </div>
                             </td> 
                             <td style="width:35%" class="minwidth_150">
-                              <select class="form-control" data-size="5" name="set_led_scene_{{entry.id}}" style="background-color:#27293D"> 
+                              <select class="form-control" data-size="5" name="set_lighting_group_scene_{{entry.id}}" style="background-color:#27293D"> 
                                 <option value = "{{ entry.current_scene }}" > {{ entry.current_scene }} </option>          
                                 <option disabled>------------------</option>        
-                                {% for each in dropdown_list_led_scenes %}
+                                {% for each in dropdown_list_lighting_scenes %}
                                   <option value="{{each.name }}"> {{ each.name }} </option>
                                 {% endfor %}     
                                 <option disabled>------------------</option>   
@@ -97,8 +97,8 @@
                             </td>   
                             <td style="width:5%"></td>
                             <td style="width:30%" class="minwidth_150">
-                              <input id="brightness_slider_led_dashboard_{{entry.id}}" data-slider-id="brightness_slider_led_dashboard_{{entry.id}}"
-                                name="set_led_brightness_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{entry.current_brightness}}"/> 
+                              <input id="brightness_slider_lighting_group_dashboard_{{entry.id}}" data-slider-id="brightness_slider_lighting_group_dashboard_{{entry.id}}"
+                                name="set_lighting_group_brightness_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{entry.current_brightness}}"/> 
                             </td>                                                                                 
                           </tr>
                         {% endfor %}
@@ -111,7 +111,7 @@
 
                   <div class="border-top my-2"></div>
                   <div class="text-center">
-                    <button type="submit" onclick="window.location.href='/dashboard#'" name="apply_changes_led_devices" class="btn btn-fill btn-primary">APPLY</button>
+                    <button type="submit" onclick="window.location.href='/dashboard#'" name="apply_changes_lighting_groups_devices" class="btn btn-fill btn-primary">APPLY</button>
                   </div>
                   <div class="border-top my-2"></div>
 
@@ -409,6 +409,7 @@
               </div>
             </div>
           </div>
+
 
         </div>
       </div>
