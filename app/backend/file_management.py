@@ -47,12 +47,12 @@ def CREATE_LOGFILE(filename):
             
             csvfile.close()
 
-        WRITE_LOGFILE_SYSTEM("EVENT", "Host | File | /data/logs/" + filename + ".csv | created")   
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/" + filename + ".csv | created")   
         return True   
            
     except Exception as e:
         if filename != "log_system":
-            WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /data/logs/" + filename + ".csv | " + str(e))  
+            WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/logs/" + filename + ".csv | " + str(e))  
         return(e)
 
         
@@ -60,7 +60,7 @@ def RESET_LOGFILE(filename):
     if os.path.isfile(PATH + "/data/logs/" + filename + ".csv"):
         os.remove (PATH + "/data/logs/" + filename + ".csv")
 
-        WRITE_LOGFILE_SYSTEM("EVENT", "Host | File | /data/logs/" + filename + ".csv | deleted")
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/" + filename + ".csv | deleted")
         
     result = CREATE_LOGFILE(filename)
     
@@ -122,7 +122,7 @@ def WRITE_LOGFILE_SYSTEM(log_type, description):
             return True
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /data/logs/log_system.csv | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/logs/log_system.csv | " + str(e))
         return (e)
         
     
@@ -159,7 +159,7 @@ def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):
             return data_reversed_filtered[0:rows]
             
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /data/logs/log_system.csv | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/logs/log_system.csv | " + str(e)) 
         return (e)   
 
 
@@ -178,7 +178,7 @@ def GET_ALL_LOCATIONS():
         
     except Exception as e:    
         return ("ERROR: Locations Import || " + str(e))
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | data/locations.ymal | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | data/locations.ymal | " + str(e))
         
 
 def GET_LOCATION_COORDINATES(location):
@@ -192,14 +192,14 @@ def GET_LOCATION_COORDINATES(location):
         
     except Exception as e:    
         return ("ERROR: Locations Import || " + str(e))
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | data/locations.ymal | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | data/locations.ymal | " + str(e))
 
 
-""" ################ """
-"""  network config  """
-""" ################ """
+""" ###################### """
+"""  linux network config  """
+""" ###################### """
 
-def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
+def UPDATE_NETWORK_SETTINGS_LINUX(dhcp, ip_address, gateway):
     
     try:
         file = "/etc/network/interfaces"
@@ -210,20 +210,20 @@ def UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
             conf_file.write("auto lo\n")
             conf_file.write("iface lo inet loopback\n")
     
-            if lan_dhcp != "True":
+            if dhcp != "True":
 
                 conf_file.write("\n")
                 conf_file.write("auto eth0\n")
                 conf_file.write("iface eth0 inet static\n")
-                conf_file.write("  address " + str(lan_ip_address) + "\n")
+                conf_file.write("  address " + str(ip_address) + "\n")
                 conf_file.write("  netmask 255.255.255.0\n")        
-                conf_file.write("  gateway " + str(lan_gateway) + "\n")    
+                conf_file.write("  gateway " + str(gateway) + "\n")    
 
             conf_file.close()
             return True
 
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /etc/network/interfaces | " + str(e))  
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /etc/network/interfaces | " + str(e))  
         return(e)
 
 
@@ -257,11 +257,11 @@ def BACKUP_DATABASE():
             oldest_file = min(full_path, key=os.path.getctime)
             os.remove(oldest_file)        
         
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Host | Database | Backup created")
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "System | Database | Backup created")
         return True
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Database | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | Database | " + str(e)) 
         return (e)
 
 
@@ -269,22 +269,22 @@ def RESTORE_DATABASE(filename):
     try:
         if filename.split("_")[1] == "database.db":
             shutil.copyfile(PATH + '/data/backup/' + filename, PATH + '/app/database/database.db')
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Host | Database_Backup | " + filename + " | restored")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "System | Database_Backup | " + filename + " | restored")
             return True
             
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Database_Backup | " + str(e))  
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | Database_Backup | " + str(e))  
         return (e)
         
         
 def DELETE_DATABASE_BACKUP(filename):
     try:
         os.remove (PATH + '/data/backup/' + filename)
-        WRITE_LOGFILE_SYSTEM("EVENT", "Host | File | /data/backup/" + filename + " | deleted")
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/backup/" + filename + " | deleted")
         return True
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /data/backup/" + filename + " | " + str(e))  
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/backup/" + filename + " | " + str(e))  
         return (e)
 
 
@@ -314,11 +314,11 @@ def CREATE_SENSORDATA_FILE(filename):
                 filewriter.writerow(['Timestamp','Device','Sensor','Sensor_Value'])
                 csvfile.close()
 
-            WRITE_LOGFILE_SYSTEM("EVENT", "Host | File | /data/csv/" + filename + ".csv | created") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/csv/" + filename + ".csv | created") 
             return True
                 
         except Exception as e:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /data/csv/" + filename + ".csv | " + str(e))
+            WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filename + ".csv | " + str(e))
 
     else:
         return True
@@ -337,7 +337,7 @@ def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
             csvfile.close()
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /data/csv/" + filename + ".csv | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filename + ".csv | " + str(e))
 
 
 def READ_SENSORDATA_FILE(filename):
@@ -350,15 +350,15 @@ def READ_SENSORDATA_FILE(filename):
     except Exception as e:
         if "Error tokenizing data. C error: Calling read(nbytes) on source failed. Try engine='python'." not in str(e):
             print(e)
-            WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /data/csv/" + filename + " | " + str(e))    
+            WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filename + " | " + str(e))    
 
 
 def DELETE_SENSORDATA_FILE(filename):
     try:
         os.remove (PATH + '/data/csv/' + filename)
-        WRITE_LOGFILE_SYSTEM("EVENT", "Host | File | /data/csv/" + filename + " | deleted")
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/csv/" + filename + " | deleted")
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /data/csv/" + filename + " | " + str(e))  
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filename + " | " + str(e))  
 
 
 """ ################################# """
@@ -419,4 +419,4 @@ def GET_DEVICE_INFORMATIONS(model):
         return ("", "", "", "", "", "")   
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /data/zigbee_device_informations.json | " + str(e))   
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/zigbee_device_informations.json | " + str(e))   

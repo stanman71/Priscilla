@@ -381,11 +381,11 @@ def delete_sensordata_jobs(id):
 def download_sensordata_file(filepath):
     try:
         path = GET_PATH() + "/data/csv/"     
-        WRITE_LOGFILE_SYSTEM("EVENT", "Host | File | /data/csv/" + filepath + " | downloaded")
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/csv/" + filepath + " | downloaded")
         return send_from_directory(path, filepath)
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /data/csv/" + filepath + " | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filepath + " | " + str(e)) 
         session['error_download_datafile'] = "Download Datafile || " + str(e)
 
 

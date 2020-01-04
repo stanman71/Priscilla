@@ -705,10 +705,10 @@ def download_devices_logfile(filepath):
     try:
         if os.path.isfile(path + filepath) == False:
             RESET_LOGFILE("log_devices")  
-        WRITE_LOGFILE_SYSTEM("EVENT", "Host | File | /data/logs/" + filepath + " | downloaded") 
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/" + filepath + " | downloaded") 
 
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /data/logs/" + filepath + " | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/logs/" + filepath + " | " + str(e))
         session['error_download_log'] = "Download Log || " + str(e)
 
     return send_from_directory(path, filepath)

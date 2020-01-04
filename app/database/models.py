@@ -83,13 +83,6 @@ class eMail(db.Model):
     username       = db.Column(db.String(50))
     password       = db.Column(db.String(50)) 
 
-class Host(db.Model):
-    __tablename__ = 'host'
-    id                = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    lan_dhcp          = db.Column(db.String(50), server_default=("True"))    
-    lan_ip_address    = db.Column(db.String(50))
-    lan_gateway       = db.Column(db.String(50))
-
 class Lighting_Groups(db.Model):
     __tablename__         = 'lighting_groups'
     id                      = db.Column(db.Integer, primary_key=True, autoincrement = True)
@@ -227,6 +220,26 @@ class Programs(db.Model):
     line_content_19   = db.Column(db.String(50), server_default=(""))
     line_active_20    = db.Column(db.String(50), server_default=(""))
     line_content_20   = db.Column(db.String(50), server_default=(""))
+    line_active_21    = db.Column(db.String(50), server_default=(""))
+    line_content_21   = db.Column(db.String(50), server_default=(""))
+    line_active_22    = db.Column(db.String(50), server_default=(""))
+    line_content_22   = db.Column(db.String(50), server_default=(""))
+    line_active_23    = db.Column(db.String(50), server_default=(""))
+    line_content_23   = db.Column(db.String(50), server_default=(""))
+    line_active_24    = db.Column(db.String(50), server_default=(""))
+    line_content_24   = db.Column(db.String(50), server_default=(""))
+    line_active_25    = db.Column(db.String(50), server_default=(""))
+    line_content_25   = db.Column(db.String(50), server_default=(""))
+    line_active_26    = db.Column(db.String(50), server_default=(""))
+    line_content_26   = db.Column(db.String(50), server_default=(""))
+    line_active_27    = db.Column(db.String(50), server_default=(""))
+    line_content_27   = db.Column(db.String(50), server_default=(""))
+    line_active_28    = db.Column(db.String(50), server_default=(""))
+    line_content_28   = db.Column(db.String(50), server_default=(""))
+    line_active_29    = db.Column(db.String(50), server_default=(""))
+    line_content_29   = db.Column(db.String(50), server_default=(""))
+    line_active_30    = db.Column(db.String(50), server_default=(""))
+    line_content_30   = db.Column(db.String(50), server_default=(""))    
 
 class Scheduler_Tasks(db.Model):
     __tablename__ = 'scheduler_tasks'
@@ -288,6 +301,13 @@ class Spotify_Settings(db.Model):
     default_playlist_name = db.Column(db.String(50))   
     default_volume        = db.Column(db.Integer, server_default=("0"))
 
+class System(db.Model):
+    __tablename__ = 'system'
+    id         = db.Column(db.Integer, primary_key=True, autoincrement = True)   
+    ip_address = db.Column(db.String(50))
+    gateway    = db.Column(db.String(50))
+    dhcp       = db.Column(db.String(50), server_default=("True"))     
+
 class System_Services(db.Model):
     __tablename__ = 'system_services'
     id                 = db.Column(db.Integer, primary_key=True, autoincrement = True)
@@ -329,16 +349,6 @@ if eMail.query.filter_by().first() == None:
         id = 1,
     )
     db.session.add(email)
-    db.session.commit()
-
-# ####
-# host 
-# ####
-
-if Host.query.filter_by().first() == None:
-    host = Host(
-    )
-    db.session.add(host)
     db.session.commit()
    
 # ###############
@@ -392,6 +402,16 @@ if Spotify_Settings.query.filter_by().first() == None:
         id = 1,
     )
     db.session.add(spotify_settings)
+    db.session.commit()
+
+# ######
+# system 
+# ######
+
+if System.query.filter_by().first() == None:
+    system = System(
+    )
+    db.session.add(system)
     db.session.commit()
 
 # ###############
@@ -1127,47 +1147,7 @@ def SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password
         entry.password       = password
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | eMail Settings | changed") 
-        return True
-
-
-""" ################### """
-""" ################### """
-"""         host        """
-""" ################### """
-""" ################### """
-
-
-def GET_HOST_NETWORK():
-    return Host.query.filter_by().first()
-
-
-def UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
-    entry = Host.query.filter_by().first()
-    
-    # values changed ?
-    if entry.lan_dhcp != lan_dhcp:   
-    
-        entry.lan_dhcp        = lan_dhcp    
-        db.session.commit()
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network Settings | changed")    
-
-        return True 
-
-
-def UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway):
-    entry = Host.query.filter_by().first()
-
-    # values changed ?
-    if entry.lan_ip_address != lan_ip_address or entry.lan_gateway != lan_gateway:   
-     
-        entry.lan_ip_address  = lan_ip_address
-        entry.lan_gateway     = lan_gateway  
-        db.session.commit()
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Network Settings | changed") 
-
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | eMail Settings | changed") 
         return True
 
 
@@ -1879,7 +1859,7 @@ def GET_PROGRAM_BY_ID(id):
 
 
 def ADD_PROGRAM():
-    for i in range(1,21):
+    for i in range(1,31):
         if Programs.query.filter_by(id=i).first():
             pass
         else:
@@ -1895,13 +1875,15 @@ def ADD_PROGRAM():
 
             return True
 
-    return "Programmlimit erreicht (20)"
+    return "Programmlimit erreicht (30)"
 
 
 def SET_PROGRAM_SETTINGS(id, name, line_content_1,  line_content_2,  line_content_3,  line_content_4,  line_content_5, 
                                    line_content_6,  line_content_7,  line_content_8,  line_content_9,  line_content_10,
                                    line_content_11, line_content_12, line_content_13, line_content_14, line_content_15, 
-                                   line_content_16, line_content_17, line_content_18, line_content_19, line_content_20): 
+                                   line_content_16, line_content_17, line_content_18, line_content_19, line_content_20, 
+                                   line_content_21, line_content_22, line_content_23, line_content_24, line_content_25, 
+                                   line_content_26, line_content_27, line_content_28, line_content_29, line_content_30): 
 
     entry = Programs.query.filter_by(id=id).first()
 
@@ -1914,7 +1896,12 @@ def SET_PROGRAM_SETTINGS(id, name, line_content_1,  line_content_2,  line_conten
                                entry.line_content_13 != line_content_13 or entry.line_content_14 != line_content_14 or
                                entry.line_content_15 != line_content_15 or entry.line_content_16 != line_content_16 or
                                entry.line_content_17 != line_content_17 or entry.line_content_18 != line_content_18 or 
-                               entry.line_content_19 != line_content_19 or entry.line_content_20 != line_content_20):
+                               entry.line_content_19 != line_content_19 or entry.line_content_20 != line_content_20 or
+                               entry.line_content_21 != line_content_21 or entry.line_content_22 != line_content_22 or
+                               entry.line_content_23 != line_content_23 or entry.line_content_24 != line_content_24 or
+                               entry.line_content_25 != line_content_25 or entry.line_content_26 != line_content_26 or
+                               entry.line_content_27 != line_content_27 or entry.line_content_28 != line_content_28 or 
+                               entry.line_content_29 != line_content_29 or entry.line_content_30 != line_content_30):
 
         entry.name            = name 
         entry.line_content_1  = line_content_1 
@@ -1937,6 +1924,16 @@ def SET_PROGRAM_SETTINGS(id, name, line_content_1,  line_content_2,  line_conten
         entry.line_content_18 = line_content_18 
         entry.line_content_19 = line_content_19 
         entry.line_content_20 = line_content_20 
+        entry.line_content_21 = line_content_21 
+        entry.line_content_22 = line_content_22 
+        entry.line_content_23 = line_content_23 
+        entry.line_content_24 = line_content_24 
+        entry.line_content_25 = line_content_25 
+        entry.line_content_26 = line_content_26 
+        entry.line_content_27 = line_content_27 
+        entry.line_content_28 = line_content_28 
+        entry.line_content_29 = line_content_29 
+        entry.line_content_30 = line_content_30         
         db.session.commit()
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "Program | " + entry.name + " | changed")  
@@ -2022,11 +2019,101 @@ def ADD_PROGRAM_LINE(id):
         entry.line_active_20 = "True"
         db.session.commit()
         return
+    if entry.line_active_21 != "True":
+        entry.line_active_21 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_22 != "True":
+        entry.line_active_22 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_23 != "True":
+        entry.line_active_23 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_24 != "True":
+        entry.line_active_24 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_25 != "True":
+        entry.line_active_25 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_26 != "True":
+        entry.line_active_26 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_27 != "True":
+        entry.line_active_27 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_28 != "True":
+        entry.line_active_28 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_29 != "True":
+        entry.line_active_29 = "True"
+        db.session.commit()
+        return
+    if entry.line_active_30 != "True":
+        entry.line_active_30 = "True"
+        db.session.commit()
+        return
 
 
 def REMOVE_PROGRAM_LINE(id):
     entry = Programs.query.filter_by(id=id).first()
 
+    if entry.line_active_30 == "True":
+        entry.line_active_30    = ""
+        entry.line_content_30   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_29 == "True":
+        entry.line_active_29    = ""
+        entry.line_content_29   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_28 == "True":
+        entry.line_active_28    = ""
+        entry.line_content_28   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_27 == "True":
+        entry.line_active_27    = ""
+        entry.line_content_27   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_26 == "True":
+        entry.line_active_26    = ""
+        entry.line_content_26   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_25 == "True":
+        entry.line_active_25    = ""
+        entry.line_content_25   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_24 == "True":
+        entry.line_active_24    = ""
+        entry.line_content_24   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_23 == "True":
+        entry.line_active_23    = ""
+        entry.line_content_23   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_22 == "True":
+        entry.line_active_22    = ""
+        entry.line_content_22   = ""
+        db.session.commit()
+        return 
+    if entry.line_active_21 == "True":
+        entry.line_active_21    = ""
+        entry.line_content_21   = ""
+        db.session.commit()
+        return 
     if entry.line_active_20 == "True":
         entry.line_active_20    = ""
         entry.line_content_20   = ""
@@ -2225,6 +2312,56 @@ def CHANGE_PROGRAMS_LINE_POSITION(id, line, direction):
             entry.line_content_19   = entry.line_content_20
             entry.line_content_20   = line_content_temp
             db.session.commit()
+        if line == 21:
+            line_content_temp       = entry.line_content_20
+            entry.line_content_20   = entry.line_content_21
+            entry.line_content_21   = line_content_temp
+            db.session.commit()
+        if line == 22:
+            line_content_temp       = entry.line_content_21
+            entry.line_content_21   = entry.line_content_22
+            entry.line_content_22   = line_content_temp
+            db.session.commit()
+        if line == 23:
+            line_content_temp       = entry.line_content_22
+            entry.line_content_22   = entry.line_content_23
+            entry.line_content_23   = line_content_temp
+            db.session.commit()
+        if line == 24:
+            line_content_temp       = entry.line_content_23
+            entry.line_content_23   = entry.line_content_24
+            entry.line_content_24   = line_content_temp
+            db.session.commit()
+        if line == 25:
+            line_content_temp       = entry.line_content_24
+            entry.line_content_24   = entry.line_content_25
+            entry.line_content_25   = line_content_temp
+            db.session.commit()
+        if line == 26:
+            line_content_temp       = entry.line_content_25
+            entry.line_content_25   = entry.line_content_26
+            entry.line_content_26   = line_content_temp
+            db.session.commit()
+        if line == 27:
+            line_content_temp       = entry.line_content_26
+            entry.line_content_26   = entry.line_content_27
+            entry.line_content_27   = line_content_temp
+            db.session.commit()
+        if line == 28:
+            line_content_temp       = entry.line_content_27
+            entry.line_content_27   = entry.line_content_28
+            entry.line_content_28   = line_content_temp
+            db.session.commit()
+        if line == 29:
+            line_content_temp       = entry.line_content_28
+            entry.line_content_28   = entry.line_content_29
+            entry.line_content_29   = line_content_temp
+            db.session.commit()
+        if line == 30:
+            line_content_temp       = entry.line_content_29
+            entry.line_content_29   = entry.line_content_30
+            entry.line_content_30   = line_content_temp
+            db.session.commit()
 
     if direction == "down":
 
@@ -2322,6 +2459,56 @@ def CHANGE_PROGRAMS_LINE_POSITION(id, line, direction):
             line_content_temp      = entry.line_content_20
             entry.line_content_20  = entry.line_content_19
             entry.line_content_19   = line_content_temp 
+            db.session.commit()
+        if line == 20 and entry.line_active_21 == "True":
+            line_content_temp      = entry.line_content_21
+            entry.line_content_21  = entry.line_content_20
+            entry.line_content_20   = line_content_temp 
+            db.session.commit()
+        if line == 21 and entry.line_active_22 == "True":
+            line_content_temp      = entry.line_content_22
+            entry.line_content_22  = entry.line_content_21
+            entry.line_content_21   = line_content_temp 
+            db.session.commit()
+        if line == 22 and entry.line_active_23 == "True":
+            line_content_temp      = entry.line_content_23
+            entry.line_content_23  = entry.line_content_22
+            entry.line_content_22   = line_content_temp 
+            db.session.commit()
+        if line == 23 and entry.line_active_24 == "True":
+            line_content_temp      = entry.line_content_24
+            entry.line_content_24  = entry.line_content_23
+            entry.line_content_23   = line_content_temp 
+            db.session.commit()
+        if line == 24 and entry.line_active_25 == "True":
+            line_content_temp      = entry.line_content_25
+            entry.line_content_25  = entry.line_content_24
+            entry.line_content_24   = line_content_temp 
+            db.session.commit()
+        if line == 25 and entry.line_active_26 == "True":
+            line_content_temp      = entry.line_content_26
+            entry.line_content_26  = entry.line_content_25
+            entry.line_content_25   = line_content_temp 
+            db.session.commit()
+        if line == 26 and entry.line_active_27 == "True":
+            line_content_temp      = entry.line_content_27
+            entry.line_content_27  = entry.line_content_26
+            entry.line_content_26   = line_content_temp 
+            db.session.commit()
+        if line == 27 and entry.line_active_28 == "True":
+            line_content_temp      = entry.line_content_28
+            entry.line_content_28  = entry.line_content_27
+            entry.line_content_27   = line_content_temp 
+            db.session.commit()
+        if line == 28 and entry.line_active_29 == "True":
+            line_content_temp      = entry.line_content_29
+            entry.line_content_29  = entry.line_content_28
+            entry.line_content_28   = line_content_temp 
+            db.session.commit()
+        if line == 29 and entry.line_active_30 == "True":
+            line_content_temp      = entry.line_content_30
+            entry.line_content_30  = entry.line_content_29
+            entry.line_content_29   = line_content_temp 
             db.session.commit()
 
 
@@ -2769,6 +2956,33 @@ def SET_SPOTIFY_DEFAULT_SETTINGS(default_device_id, default_device_name, default
         return True
 
 
+""" ################### """
+""" ################### """
+"""        system       """
+""" ################### """
+""" ################### """
+
+
+def GET_SYSTEM_NETWORK_SETTINGS():
+    return System.query.filter_by().first()
+
+
+def SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, dhcp):
+    entry = System.query.filter_by().first()
+
+    # values changed ?
+    if entry.ip_address != ip_address or entry.gateway != gateway or entry.dhcp != dhcp:   
+     
+        entry.ip_address = ip_address
+        entry.gateway    = gateway  
+        entry.dhcp       = dhcp 
+        db.session.commit()
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | Network Settings | changed") 
+
+        return True
+
+
 """ ################## """
 """ ################## """
 """  system services   """
@@ -2791,7 +3005,7 @@ def SET_SYSTEM_SERVICES(zigbee2mqtt_active, lms_active, squeezelite_active):
         entry.squeezelite_active   = squeezelite_active               
         db.session.commit()   
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | Services | Settings changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | Services | Settings changed") 
         return True
 
 
@@ -2836,7 +3050,7 @@ def ADD_USER():
             db.session.add(new_user)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Host | User - " + "new_user_" + str(i) + " | added") 
+            WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + "new_user_" + str(i) + " | added") 
             return True
 
 
@@ -2854,7 +3068,7 @@ def UPDATE_USER_SETTINGS(id, name, email, role, email_notification):
         entry.email_notification = email_notification
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | User - " + old_name + " | changed")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + old_name + " | changed")
 
         return True
 
@@ -2868,7 +3082,7 @@ def CHANGE_USER_PASSWORD(id, hashed_password):
         entry.password = hashed_password    
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Host | User - " + entry.name + " | Password changed")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + entry.name + " | Password changed")
         return True
     
 
@@ -2878,7 +3092,7 @@ def DELETE_USER(user_id):
     if entry.name != "admin":
 
         try:
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Host | User - " + entry.name + " | deleted")    
+            WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + entry.name + " | deleted")    
             User.query.filter_by(id=user_id).delete()
             db.session.commit()    
             return True

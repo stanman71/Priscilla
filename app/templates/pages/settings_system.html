@@ -209,8 +209,8 @@
                       <div class="row justify-content-md-left">
                         <div class="col-sm-1">                                                     
                           <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="checkbox_lan_dhcp" {% if lan_dhcp == "True" %} checked="on" {% endif %} name="checkbox_lan_dhcp">
-                            <label class="custom-control-label" for="checkbox_lan_dhcp">DHCP</label>   
+                            <input type="checkbox" class="custom-control-input" id="checkbox_dhcp" {% if dhcp == "True" %} checked="on" {% endif %} name="checkbox_dhcp">
+                            <label class="custom-control-label" for="checkbox_dhcp">DHCP</label>   
                             <br>
                             <br>                             
                           </div>  
@@ -218,22 +218,22 @@
                         <div class="col-sm-2">                       
                           <div class="form-group">
                             <label>LAN Adresse</label>
-                            {% if lan_dhcp == "True" %}
+                            {% if dhcp == "True" %}
                               <br>
-                              {% if lan_ip_address != None %}{{ lan_ip_address }}{% endif %}
+                              {% if ip_address != None %}{{ ip_address }}{% endif %}
                             {% else %} 
-                              <input type="text" class="form-control" name="set_lan_ip_address" value="{% if lan_ip_address != None %}{{ lan_ip_address }}{% endif %}" />
+                              <input type="text" class="form-control" name="set_ip_address" value="{% if ip_address != None %}{{ ip_address }}{% endif %}" />
                             {% endif %} 
                           </div>
                         </div>           
                         <div class="col-sm-2">                       
                           <div class="form-group">
                             <label>LAN Gateway</label>
-                            {% if lan_dhcp == "True" %}
+                            {% if dhcp == "True" %}
                               <br>
-                              {% if lan_gateway != None %}{{ lan_gateway }}{% endif %}
+                              {% if gateway != None %}{{ gateway }}{% endif %}
                             {% else %}                             
-                              <input type="text" class="form-control" name="set_lan_gateway" value="{% if lan_gateway != None %}{{ lan_gateway }}{% endif %}" /> 
+                              <input type="text" class="form-control" name="set_gateway" value="{% if gateway != None %}{{ gateway }}{% endif %}" /> 
                             {% endif %}     
                           </div>
                         </div>                           

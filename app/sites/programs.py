@@ -220,12 +220,65 @@ def programs():
                 except:
                     line_content_20 = "None"
 
+                try:                    
+                    line_content_21 = request.form.get("set_line_content_21_" + str(i)).strip()     
+                except:
+                    line_content_21 = "None"
+
+                try:                    
+                    line_content_22 = request.form.get("set_line_content_22_" + str(i)).strip()     
+                except:
+                    line_content_22 = "None"
+
+                try:                    
+                    line_content_23 = request.form.get("set_line_content_23_" + str(i)).strip()     
+                except:
+                    line_content_23 = "None"
+
+                try:                    
+                    line_content_24 = request.form.get("set_line_content_24_" + str(i)).strip()     
+                except:
+                    line_content_24 = "None"
+
+                try:                    
+                    line_content_25 = request.form.get("set_line_content_25_" + str(i)).strip()     
+                except:
+                    line_content_25 = "None"
+
+                try:                    
+                    line_content_26 = request.form.get("set_line_content_26_" + str(i)).strip()     
+                except:
+                    line_content_26 = "None"
+
+                try:                    
+                    line_content_27 = request.form.get("set_line_content_27_" + str(i)).strip()     
+                except:
+                    line_content_27 = "None"
+
+                try:                    
+                    line_content_28 = request.form.get("set_line_content_28_" + str(i)).strip()     
+                except:
+                    line_content_28 = "None"
+
+                try:                    
+                    line_content_29 = request.form.get("set_line_content_29_" + str(i)).strip()     
+                except:
+                    line_content_29 = "None"
+
+                try:                    
+                    line_content_30 = request.form.get("set_line_content_30_" + str(i)).strip()     
+                except:
+                    line_content_30 = "None"
+
+
                 if error_founded == False:           
 
                     if SET_PROGRAM_SETTINGS(i, name, line_content_1,line_content_2, line_content_3, line_content_4, line_content_5, 
                                                      line_content_6, line_content_7, line_content_8, line_content_9, line_content_10,
                                                      line_content_11, line_content_12, line_content_13, line_content_14, line_content_15, 
-                                                     line_content_16, line_content_17, line_content_18, line_content_19, line_content_20):
+                                                     line_content_16, line_content_17, line_content_18, line_content_19, line_content_20,
+                                                     line_content_21, line_content_22, line_content_23, line_content_24, line_content_25, 
+                                                     line_content_26, line_content_27, line_content_28, line_content_29, line_content_30):
 
                         success_message_change_settings_program.append("Einstellungen erfolgreich geändert")           
 
@@ -234,7 +287,7 @@ def programs():
     """  start program  """
     """ ############### """   
 
-    for i in range (1,26):
+    for i in range (1,31):
         if request.form.get("start_program_" + str(i)) != None:
             result           = START_PROGRAM_THREAD(i)
             selected_program = GET_PROGRAM_BY_ID(i)
@@ -255,7 +308,7 @@ def programs():
     """  stop program  """
     """ ############## """   
 
-    for i in range (1,26):
+    for i in range (1,31):
         if request.form.get("stop_program_" + str(i)) != None:
             result           = STOP_PROGRAM_THREAD()   
             selected_program = GET_PROGRAM_BY_ID(i) 
@@ -270,7 +323,7 @@ def programs():
     """  delete program  """
     """ ################ """   
 
-    for i in range (1,26):
+    for i in range (1,31):
 
         if request.form.get("delete_program_" + str(i)) != None:
             program = GET_PROGRAM_BY_ID(i).name  

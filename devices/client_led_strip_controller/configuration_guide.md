@@ -84,9 +84,9 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
        >>> https://www.berrybase.de/bauelemente/passive-bauelemente/widerstaende/metallschichtwiderstaende/0-6w-1/10k-953k-ohm/metallschichtwiderstand-10-0k-ohm-0-6w-177-1-0207-axial-durchsteckmontage?c=168
 
-- resistor 330
+- resistor 470
 
-       >>> https://www.berrybase.de/bauelemente/passive-bauelemente/widerstaende/metallschichtwiderstaende/0-6w-1/100-976-ohm/metallschichtwiderstand-330-0-ohm-0-6w-177-1-0207-axial-durchsteckmontage?c=168
+       >>> https://www.ebay.de/itm/Widerstand-1Ohm-100-kOhm-Metallfilm-50-Stuck-Auswahl-1-4W-0-25W-1-Widerstande/372813822157?hash=item56cd6f78cd:m:mqtBKZoaux-2gebuzxM_WWg
 
 - LED diode red / green
 
@@ -98,7 +98,7 @@ https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=
 
 - relais modul
 
-       >>> https://www.berrybase.de/bauelemente/sensoren-module/relaiskarten/5v-1-kanal-relais-modul
+       >>> https://www.ebay.de/itm/1-Kanal-Relais-5V-230V-Raspberry-Pi-Modul-Channel-Relay-Arduino/252713915632?hash=item3ad6ec54f0:g:7q8AAOSwXbFb33f7
 
 - internal cables and connectors
 

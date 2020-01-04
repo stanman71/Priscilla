@@ -4,12 +4,13 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 from ping3               import ping
 
-from app                         import app
-from app.database.models         import *
-from app.backend.email           import SEND_EMAIL
-from app.backend.file_management import UPDATE_NETWORK_SETTINGS_FILE, GET_BACKUP_FILES, BACKUP_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP, WRITE_LOGFILE_SYSTEM
-from app.common                  import COMMON, STATUS
-from app.assets                  import *
+from app                          import app
+from app.database.models          import *
+from app.backend.email            import SEND_EMAIL
+from app.backend.file_management  import UPDATE_NETWORK_SETTINGS_LINUX, GET_BACKUP_FILES, BACKUP_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP, WRITE_LOGFILE_SYSTEM
+from app.backend.shared_resources import SET_ZIGBEE2MQTT_PAIRING_STATUS
+from app.common                   import COMMON, STATUS
+from app.assets                   import *
 
 
 import datetime
@@ -71,15 +72,15 @@ def PING_IP_ADDRESS(ip_address):
         return False
 
 
-def HOST_REBOOT():
+def SYSTEM_REBOOT():
     time.sleep(10)
-    WRITE_LOGFILE_SYSTEM("EVENT", "Host | Reboot") 
+    WRITE_LOGFILE_SYSTEM("EVENT", "System | Reboot") 
     os.system("sudo reboot")
 
 
-def HOST_SHUTDOWN():
+def SYSTEM_SHUTDOWN():
     time.sleep(10)
-    WRITE_LOGFILE_SYSTEM("EVENT", "Host | Shutdown")     
+    WRITE_LOGFILE_SYSTEM("EVENT", "System | Shutdown")     
     os.system("sudo shutdown")
 
 
@@ -105,9 +106,9 @@ def settings_system():
     message_ip_config_change    = False
     message_test_settings_email = ""
 
-    lan_dhcp          = GET_HOST_NETWORK().lan_dhcp
-    lan_ip_address    = GET_HOST_NETWORK().lan_ip_address
-    lan_gateway       = GET_HOST_NETWORK().lan_gateway
+    ip_address = GET_SYSTEM_NETWORK_SETTINGS().ip_address
+    gateway    = GET_SYSTEM_NETWORK_SETTINGS().gateway
+    dhcp       = GET_SYSTEM_NETWORK_SETTINGS().dhcp
 
     # restore message
     if session.get('restore_database_success', None) != None:
@@ -134,13 +135,13 @@ def settings_system():
         
     # restart raspi 
     if request.form.get("restart_system") != None:
-        Thread = threading.Thread(target=HOST_REBOOT)
+        Thread = threading.Thread(target=SYSTEM_REBOOT)
         Thread.start()    
         message_system = "System wird in 10 Sekunden neugestartet"
         
     # shutdown raspi 
     if request.form.get("shutdown_system") != None:
-        Thread = threading.Thread(target=HOST_SHUTDOWN)
+        Thread = threading.Thread(target=SYSTEM_SHUTDOWN)
         Thread.start()    
         message_system = "System wird in 10 Sekunden heruntergefahren"
 
@@ -181,66 +182,67 @@ def settings_system():
                 if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
                     try:
                         os.system("sudo systemctl start zigbee2mqtt")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | ZigBee2MQTT | enabled")
-                        print("ZigBee2MQTT | enabled") 
+                        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | ZigBee2MQTT | enabled")       
+                        SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled") 
+                        print("System | Services | ZigBee2MQTT | enabled") 
                         time.sleep(1)
                     except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | ZigBee2MQTT | " + str(e)) 
-                        print("ERROR: ZigBee2MQTT | " + str(e))      
+                        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | ZigBee2MQTT | " + str(e)) 
+                        print("ERROR: System | Services | ZigBee2MQTT | " + str(e))      
 
                 else:
                     try:
                         os.system("sudo systemctl stop zigbee2mqtt")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | ZigBee2MQTT | disabled")
-                        print("ZigBee2MQTT | disabled") 
+                        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | ZigBee2MQTT | disabled")
+                        print("System | Services | ZigBee2MQTT | disabled") 
                         time.sleep(1)
                     except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | ZigBee2MQTT | " + str(e)) 
-                        print("ERROR: ZigBee2MQTT | " + str(e)) 
+                        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | ZigBee2MQTT | " + str(e)) 
+                        print("ERROR: System | Services | ZigBee2MQTT | " + str(e)) 
            
                 # logitech media server
 
                 if GET_SYSTEM_SERVICES().lms_active == "True":
                     try:
                         os.system("sudo systemctl start logitechmediaserver")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | Logitech Media Server | enabled")
-                        print("Logitech Media Server | enabled") 
+                        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Logitech Media Server | enabled")
+                        print("System | Services | Logitech Media Server | enabled") 
                         time.sleep(1)
                     except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | Logitech Media Server | " + str(e)) 
-                        print("ERROR: Logitech Media Server | " + str(e))       
+                        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
+                        print("ERROR: System | Services | Logitech Media Server | " + str(e))       
  
                 else: 
                     try:
                         os.system("sudo systemctl stop logitechmediaserver")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services |Logitech Media Server | disabled")
-                        print("Logitech Media Server | disabled") 
+                        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services |Logitech Media Server | disabled")
+                        print("System | Services | Logitech Media Server | disabled") 
                         time.sleep(1)
                     except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | Logitech Media Server | " + str(e)) 
-                        print("ERROR: Logitech Media Server | " + str(e)) 
+                        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
+                        print("ERROR: System | Services | Logitech Media Server | " + str(e)) 
 
                 # squeezelite player
 
                 if GET_SYSTEM_SERVICES().squeezelite_active == "True":
                     try:
                         os.system("sudo systemctl start squeezelite")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | Squeezelie Player | enabled")
-                        print("Squeezelie Player | enabled") 
+                        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | enabled")
+                        print("System | Services | Squeezelie Player | enabled") 
                         time.sleep(1)
                     except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | Squeezelie Player | " + str(e)) 
-                        print("ERROR: Squeezelie Player | " + str(e))     
+                        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
+                        print("ERROR: System | Services | Squeezelie Player | " + str(e))     
 
                 else:
                     try:
                         os.system("sudo systemctl stop squeezelite")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | Squeezelie Player | disabled")
-                        print("Squeezelie Player | disabled") 
+                        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | disabled")
+                        print("System | Services | Squeezelie Player | disabled") 
                         time.sleep(1)
                     except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | Squeezelie Player | " + str(e)) 
-                        print("ERROR: Squeezelie Player | " + str(e)) 
+                        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
+                        print("ERROR: System | Services | Squeezelie Player | " + str(e)) 
 
 
     """ ################# """
@@ -249,46 +251,46 @@ def settings_system():
                 
     if request.form.get("set_settings_network") != None:
         
-        if request.form.get("checkbox_lan_dhcp"):
-            lan_dhcp = "True" 
+        if request.form.get("checkbox_dhcp"):
+            dhcp = "True" 
         else:
-            lan_dhcp = "False"  
+            dhcp = "False"  
 
         # no dhcp ?
-        if lan_dhcp == "False":  
+        if dhcp == "False":  
 
-            # first reload of the website after deactivate dhcp, website don't know the values "set_lan_ip_address" and "set_lan_gateway"
-            if request.form.get("set_lan_ip_address") != None:          
+            # first reload of the website after deactivate dhcp, website don't know the values "set_ip_address" and "set_gateway"
+            if request.form.get("set_ip_address") != None:          
 
                 save_settings_lan = True
                         
-                if request.form.get("set_lan_ip_address") != "":
-                    new_lan_ip_address = request.form.get("set_lan_ip_address").strip()  
+                if request.form.get("set_ip_address") != "":
+                    new_ip_address = request.form.get("set_ip_address").strip()  
 
-                    if new_lan_ip_address != lan_ip_address:
+                    if new_ip_address != ip_address:
 
-                        if CHECK_IP_ADDRESS(new_lan_ip_address) == False:
+                        if CHECK_IP_ADDRESS(new_ip_address) == False:
                             error_message_change_settings_network.append("Netzwerk || Ungültige IP-Adresse angegeben")
                             save_settings_lan = False
                                 
-                        elif PING_IP_ADDRESS(new_lan_ip_address) == True or new_lan_ip_address == GET_HOST_NETWORK().lan_ip_address:
+                        elif PING_IP_ADDRESS(new_ip_address) == True or new_ip_address == GET_SYSTEM_NETWORK_SETTINGS().ip_address:
                             error_message_change_settings_network.append("Netzwerk || IP-Adresse bereits vergeben")
                             save_settings_lan = False
 
                         else:
-                            lan_ip_address = new_lan_ip_address
+                            ip_address = new_ip_address
 
                 else:
                     error_message_change_settings_network.append("Netzwerk || Keine IP-Adresse angegeben") 
                     
-                if request.form.get("set_lan_gateway") != "":
-                    lan_gateway = request.form.get("set_lan_gateway").strip()              
+                if request.form.get("set_gateway") != "":
+                    gateway = request.form.get("set_gateway").strip()              
 
-                    if CHECK_IP_ADDRESS(lan_gateway) == False:
+                    if CHECK_IP_ADDRESS(gateway) == False:
                         error_message_change_settings_network.append("Netzwerk || Ungültiges Gateway angegeben")
                         save_settings_lan = False
                         
-                    if CHECK_IP_ADDRESS(lan_gateway) == True and PING_IP_ADDRESS(lan_gateway) == False:
+                    if CHECK_IP_ADDRESS(gateway) == True and PING_IP_ADDRESS(gateway) == False:
                         error_message_change_settings_network.append("Netzwerk || Gateway nicht gefunden")
                         save_settings_lan = False
 
@@ -300,22 +302,20 @@ def settings_system():
 
                     changes_saved = False
 
-                    if UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
+                    if SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, dhcp):
                         changes_saved = True
-                    if UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway):
-                        changes_saved = True
-                    if UPDATE_NETWORK_SETTINGS_FILE(lan_dhcp, lan_ip_address, lan_gateway):
+                    if UPDATE_NETWORK_SETTINGS_LINUX(dhcp, ip_address, gateway):
                         changes_saved = True
 
                     if changes_saved == True:
                         success_message_change_settings_network = True
 
             else:
-                if UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
+                if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_NETWORK_SETTINGS().ip_address, GET_SYSTEM_NETWORK_SETTINGS().gateway, dhcp):
                     success_message_change_settings_network = True       
 
         else:
-            if UPDATE_HOST_INTERFACE_LAN_DHCP(lan_dhcp):
+            if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_NETWORK_SETTINGS().ip_address, GET_SYSTEM_NETWORK_SETTINGS().gateway, dhcp):
                 success_message_change_settings_network = True  
 
 
@@ -380,9 +380,9 @@ def settings_system():
             error_message_backup_database = "Backup || " + str(result)
 
 
-    lan_dhcp          = GET_HOST_NETWORK().lan_dhcp
-    lan_ip_address    = GET_HOST_NETWORK().lan_ip_address
-    lan_gateway       = GET_HOST_NETWORK().lan_gateway
+    dhcp       = GET_SYSTEM_NETWORK_SETTINGS().dhcp
+    ip_address = GET_SYSTEM_NETWORK_SETTINGS().ip_address
+    gateway    = GET_SYSTEM_NETWORK_SETTINGS().gateway
 
     system_services   = GET_SYSTEM_SERVICES()     
     spotify_settings  = GET_SPOTIFY_SETTINGS()
@@ -408,9 +408,9 @@ def settings_system():
                                                     error_message_backup_database=error_message_backup_database,                                                       
                                                     success_message_backup_database=success_message_backup_database,                                                                                                     
                                                     message_system=message_system,
-                                                    lan_dhcp=lan_dhcp,
-                                                    lan_ip_address=lan_ip_address,
-                                                    lan_gateway=lan_gateway,  
+                                                    dhcp=dhcp,
+                                                    ip_address=ip_address,
+                                                    gateway=gateway,  
                                                     system_services=system_services,
                                                     spotify_settings=spotify_settings,
                                                     email_settings=email_settings,                                            

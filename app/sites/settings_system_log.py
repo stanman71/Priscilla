@@ -147,10 +147,10 @@ def download_system_log(filepath):
         if os.path.isfile(path + filepath) is False:
             RESET_LOGFILE("log_system")  
             
-        WRITE_LOGFILE_SYSTEM("EVENT", "Host | File | /logs/" + filepath + " | downloaded") 
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /logs/" + filepath + " | downloaded") 
 
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | File | /logs/" + filepath + " | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /logs/" + filepath + " | " + str(e))
         session['error_download_log'] = "Download Log || " + str(e)
 
     return send_from_directory(path, filepath)

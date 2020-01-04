@@ -25,8 +25,8 @@ def START_MQTT_RECEIVE_THREAD():
         Thread.start()  
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | MQTT Receive | " + str(e))  
-        SEND_EMAIL("ERROR", "Host | Thread | MQTT Receive | " + str(e))    
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | MQTT Receive | " + str(e))  
+        SEND_EMAIL("ERROR", "System | Thread | MQTT Receive | " + str(e))    
 
     
 def MQTT_RECEIVE_THREAD():
@@ -154,8 +154,8 @@ def MQTT_RECEIVE_THREAD():
                     Thread = threading.Thread(target=MQTT_MESSAGE, args=(channel, msg, ieeeAddr, device_type,))
                     Thread.start()   
                 except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | MQTT Message | " + str(e)) 
-                    SEND_EMAIL("ERROR", "Host | Thread | MQTT Message | " + str(e))                    
+                    WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | MQTT Message | " + str(e)) 
+                    SEND_EMAIL("ERROR", "System | Thread | MQTT Message | " + str(e))                    
                     print(e)
 
 
@@ -276,8 +276,8 @@ def START_MQTT_PUBLISH_THREAD():
         Thread.start()  
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | MQTT Publish | " + str(e))  
-        SEND_EMAIL("ERROR", "Host | Thread | MQTT Publish | " + str(e))    
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | MQTT Publish | " + str(e))  
+        SEND_EMAIL("ERROR", "System | Thread | MQTT Publish | " + str(e))    
 
 
 def MQTT_PUBLISH_THREAD():
@@ -334,8 +334,8 @@ def START_MQTT_CONTROL_THREAD():
         Thread.start()  
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | MQTT Publish | " + str(e))  
-        SEND_EMAIL("ERROR", "Host | Thread | MQTT Publish | " + str(e))    
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | MQTT Publish | " + str(e))  
+        SEND_EMAIL("ERROR", "System | Thread | MQTT Publish | " + str(e))    
 
 
 def MQTT_CONTROL_THREAD():

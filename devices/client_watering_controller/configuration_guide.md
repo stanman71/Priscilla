@@ -69,9 +69,9 @@ This project controls the watering system.
 
        >>> https://www.berrybase.de/bauelemente/passive-bauelemente/widerstaende/metallschichtwiderstaende/0-6w-1/1m-10m-ohm/metallschichtwiderstand-1-0m-ohm-0-6w-177-1-0207-axial-durchsteckmontage?c=168
 
-- resistor 330
+- resistor 470
 
-       >>> https://www.berrybase.de/bauelemente/passive-bauelemente/widerstaende/metallschichtwiderstaende/0-6w-1/100-976-ohm/metallschichtwiderstand-330-0-ohm-0-6w-177-1-0207-axial-durchsteckmontage?c=168
+       >>> https://www.ebay.de/itm/Widerstand-1Ohm-100-kOhm-Metallfilm-50-Stuck-Auswahl-1-4W-0-25W-1-Widerstande/372813822157?hash=item56cd6f78cd:m:mqtBKZoaux-2gebuzxM_WWg
 
 - LED diode red / green
 

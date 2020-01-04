@@ -169,21 +169,21 @@ def connect_system_log():
 time.sleep(1)
 
 try:
-    lan_ip_address = netifaces.ifaddresses('eth0')[netifaces.AF_INET][0]["addr"]  
+    ip_address = netifaces.ifaddresses('eth0')[netifaces.AF_INET][0]["addr"]  
 except:
-    lan_ip_address = ""
+    ip_address = ""
     
 try:
-    lan_gateway = ""
+    gateway = ""
     
     for element in netifaces.gateways()[2]: 
         if element[1] == "eth0":
-            lan_gateway = element[0]
+            gateway = element[0]
         
 except:
-    lan_gateway = ""
+    gateway = ""
     
-UPDATE_HOST_INTERFACE_LAN(lan_ip_address, lan_gateway)
+SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, GET_SYSTEM_NETWORK_SETTINGS().dhcp)
 
 
 """ ####### """
@@ -325,30 +325,30 @@ if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
 
 else:
     os.system("sudo systemctl stop zigbee2mqtt")
-    WRITE_LOGFILE_SYSTEM("SUCCESS", "Host | Services | ZigBee2MQTT | disabled")
-    print("Host | Services | ZigBee2MQTT | disabled") 
+    WRITE_LOGFILE_SYSTEM("SUCCESS", "System | Services | ZigBee2MQTT | disabled")
+    print("System | Services | ZigBee2MQTT | disabled") 
 
 
 if GET_SYSTEM_SERVICES().lms_active != "True":
     try:
         os.system("sudo systemctl stop logitechmediaserver")
-        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | Logitech Media Server | disabled")
-        print("Host | Services | Logitech Media Server | disabled") 
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Logitech Media Server | disabled")
+        print("System | Services | Logitech Media Server | disabled") 
         time.sleep(1)
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | Logitech Media Server | " + str(e)) 
-        print("ERROR: Host | Services | Logitech Media Server | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
+        print("ERROR: System | Services | Logitech Media Server | " + str(e)) 
 
 
 if GET_SYSTEM_SERVICES().squeezelite_active != "True":
     try:
         os.system("sudo systemctl stop squeezelite")
-        WRITE_LOGFILE_SYSTEM("EVENT", "Host | Services | Squeezelie Player | disabled")
-        print("Host | Services | Squeezelie Player | disabled") 
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | disabled")
+        print("System | Services | Squeezelie Player | disabled") 
         time.sleep(1)
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Services | Squeezelie Player | " + str(e)) 
-        print("ERROR: Host | Services | Squeezelie Player | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
+        print("ERROR: System | Services | Squeezelie Player | " + str(e)) 
 
 
 """ #################### """
@@ -358,4 +358,4 @@ if GET_SYSTEM_SERVICES().squeezelite_active != "True":
 PROCESS_MANAGEMENT_THREAD()
 START_REFRESH_SPOTIFY_TOKEN_THREAD(3000)
 
-socketio.run(app, host = GET_HOST_NETWORK().lan_ip_address, port = 80, debug=False)
+socketio.run(app, host = GET_SYSTEM_NETWORK_SETTINGS().ip_address, port = 80, debug=False)
