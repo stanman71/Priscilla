@@ -1133,8 +1133,14 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # #####################
       # empty task controller
       # #####################
-      
-      if (None in task or "None" in task or "" in task) and task_type == "controller": 
+
+      if task == None and task_type == "controller": 
+         return list_task_errors
+
+      if task == "None" and task_type == "controller": 
+         return list_task_errors
+
+      if task == "" and task_type == "controller": 
          return list_task_errors
 
 
@@ -1151,11 +1157,30 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       return list_task_errors
    
    
-   except Exception as e:
-      
-      if task_type == "controller":
+   except:
+
+      # #####################
+      # empty task controller
+      # #####################
+
+      if task == None and task_type == "controller": 
+         return list_task_errors
+
+      elif task == "None" and task_type == "controller": 
+         return list_task_errors
+
+      elif task == "" and task_type == "controller": 
+         return list_task_errors
+
+
+      # ##########
+      # task error
+      # ##########
+
+      elif task_type == "controller":
          list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Aufgabe")   
+         return list_task_errors
+
       else:
-         list_task_errors.append("MISSING NAME >>> Ungültige Aufgabe") 
-         
-      return list_task_errors
+         list_task_errors.append("MISSING NAME >>> Ungültige Aufgabe")        
+         return list_task_errors

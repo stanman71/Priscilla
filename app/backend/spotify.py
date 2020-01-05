@@ -61,10 +61,10 @@ API_VERSION           = "v1"
 SPOTIFY_API_URL       = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
 
 # Server-side Parameters
-if GET_SYSTEM_NETWORK_SETTINGS().ip_address == "":
+if GET_SYSTEM_SETTINGS().ip_address == "":
     REDIRECT_URI = "http://127.0.0.1:80/music/spotify/token"
 else:
-    REDIRECT_URI = "http://" + str(GET_SYSTEM_NETWORK_SETTINGS().ip_address) + ":80/music/spotify/token"
+    REDIRECT_URI = "http://" + str(GET_SYSTEM_SETTINGS().ip_address) + ":80/music/spotify/token"
 
 
 SCOPE                 = "playlist-read-private user-read-recently-played user-read-currently-playing user-read-playback-state streaming"

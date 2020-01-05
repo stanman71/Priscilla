@@ -23,14 +23,14 @@ import threading
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        try:
-            if current_user.role == "administrator":
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('logout'))
-        except Exception as e:
-            print(e)
+        #try:
+        if current_user.role == "administrator":
+            return f(*args, **kwargs)
+        else:
             return redirect(url_for('logout'))
+        #except Exception as e:
+        #    print(e)
+        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -57,7 +57,7 @@ def settings_devices():
     if GET_DEVICE_CONNECTION_MQTT() == False:
         error_message_mqtt_connection = True
 
-    if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
+    if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
         if GET_DEVICE_CONNECTION_ZIGBEE2MQTT() == False:
             error_message_zigbee2mqtt_connection = True
 
@@ -110,7 +110,7 @@ def settings_devices():
                                 if GET_DEVICE_CONNECTION_MQTT() == True:
 
                                     # check zigbee service
-                                    if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":                                     
+                                    if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":                                     
                                         channel  = "smarthome/zigbee2mqtt/bridge/config/rename"
                                         msg      = '{"old": "' + device.name + '", "new": "' + input_name + '"}'
 
@@ -331,7 +331,7 @@ def settings_devices():
             error_message_zigbee_pairing.append("Keine MQTT-Verbindung")  
 
         # check zigbee service
-        elif GET_SYSTEM_SERVICES().zigbee2mqtt_active != "True":  
+        elif GET_SYSTEM_SETTINGS().zigbee2mqtt_active != "True":  
             error_message_zigbee_pairing.append("Zigbee ist deaktiviert")              
 
         else:
@@ -379,7 +379,7 @@ def settings_devices():
     if request.form.get("update_zigbee_topology") != None: 
 
         # check mqtt connection
-        if GET_DEVICE_CONNECTION_MQTT() == True and GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
+        if GET_DEVICE_CONNECTION_MQTT() == True and GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
 
             channel  = "smarthome/zigbee2mqtt/bridge/networkmap"
             msg      = "graphviz"
@@ -410,7 +410,7 @@ def settings_devices():
     
     list_devices        = GET_ALL_DEVICES("")
     zigbee2mqtt_pairing = GET_ZIGBEE2MQTT_PAIRING()
-    system_services     = GET_SYSTEM_SERVICES()  
+    system_services     = GET_SYSTEM_SETTINGS()  
 
     data = {'navigation': 'settings'}
 
@@ -421,129 +421,130 @@ def settings_devices():
     # get sensor list
     try:
         device_1_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(1).input_values
-        device_1_input_values = device_1_input_values.replace(" ", "")
+        device_1_input_values = device_1_input_values.strip()
     except:
         device_1_input_values = ""
     try:
         device_2_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(2).input_values
-        device_2_input_values = device_2_input_values.replace(" ", "")
+        device_2_input_values = device_2_input_values.strip()
     except:
         device_2_input_values = ""
     try:        
         device_3_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(3).input_values
-        device_3_input_values = device_3_input_values.replace(" ", "")
+        device_3_input_values = device_3_input_values.strip()
     except:
         device_3_input_values = ""
     try:        
         device_4_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(4).input_values
-        device_4_input_values = device_4_input_values.replace(" ", "")
+        device_4_input_values = device_4_input_values.strip()
     except:
         device_4_input_values = ""
     try:        
         device_5_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(5).input_values
-        device_5_input_values = device_5_input_values.replace(" ", "")
+        device_5_input_values = device_5_input_values.strip()
     except:
         device_5_input_values = ""
     try:        
         device_6_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(6).input_values
-        device_6_input_values = device_6_input_values.replace(" ", "")
+        device_6_input_values = device_6_input_values.strip()
     except:
         device_6_input_values = ""
     try:        
         device_7_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(7).input_values
-        device_7_input_values = device_7_input_values.replace(" ", "")
+        device_7_input_values = device_7_input_values.strip()
     except:
         device_7_input_values = ""
     try:        
         device_8_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(8).input_values
-        device_8_input_values = device_8_input_values.replace(" ", "")
+        device_8_input_values = device_8_input_values.strip()
     except:
         device_8_input_values = ""
     try:        
         device_9_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(9).input_values
-        device_9_input_values = device_9_input_values.replace(" ", "")
+        device_9_input_values = device_9_input_values.strip()
     except:
         device_9_input_values = ""
     try:        
         device_10_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(10).input_values
-        device_10_input_values = device_10_input_values.replace(" ", "")
+        device_10_input_values = device_10_input_values.strip()
     except:
         device_10_input_values = ""
     try:        
         device_11_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(11).input_values
-        device_11_input_values = device_11_input_values.replace(" ", "")
+        device_11_input_values = device_11_input_values.strip()
     except:
         device_11_input_values = ""
     try:        
         device_12_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(12).input_values
-        device_12_input_values = device_12_input_values.replace(" ", "")
+        device_12_input_values = device_12_input_values.strip()
     except:
         device_12_input_values = ""
     try:        
         device_13_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(13).input_values
-        device_13_input_values = device_13_input_values.replace(" ", "")
+        device_13_input_values = device_13_input_values.strip()
     except:
         device_13_input_values = ""
     try:        
         device_14_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(14).input_values
-        device_14_input_values = device_14_input_values.replace(" ", "")
+        device_14_input_values = device_14_input_values.strip()
     except:
         device_14_input_values = ""
     try:        
         device_15_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(15).input_values
-        device_15_input_values = device_15_input_values.replace(" ", "")
+        device_15_input_values = device_15_input_values.strip()
     except:
         device_15_input_values = ""    
     try:        
         device_16_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(16).input_values
-        device_16_input_values = device_16_input_values.replace(" ", "")
+        device_16_input_values = device_16_input_values.strip()
     except:
         device_16_input_values = ""
     try:        
         device_17_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(17).input_values
-        device_17_input_values = device_17_input_values.replace(" ", "")
+        device_17_input_values = device_17_input_values.strip()
     except:
         device_17_input_values = ""
     try:        
         device_18_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(18).input_values
-        device_18_input_values = device_18_input_values.replace(" ", "")
+        device_18_input_values = device_18_input_values.strip()
     except:
         device_18_input_values = ""
     try:        
         device_19_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(19).input_values
-        device_19_input_values = device_19_input_values.replace(" ", "")
+        device_19_input_values = device_19_input_values.strip()
     except:
         device_19_input_values = ""
     try:        
         device_20_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(20).input_values
-        device_20_input_values = device_20_input_values.replace(" ", "")
+        device_20_input_values = device_20_input_values.strip()
     except:
         device_20_input_values = ""   
     try:        
         device_21_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(21).input_values
-        device_21_input_values = device_21_input_values.replace(" ", "")
+        device_21_input_values = device_21_input_values.strip()
     except:
         device_21_input_values = ""   
     try:        
         device_22_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(22).input_values
-        device_22_input_values = device_22_input_values.replace(" ", "")
+        device_22_input_values = device_22_input_values.strip()
     except:
         device_22_input_values = ""   
     try:        
         device_23_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(23).input_values
-        device_23_input_values = device_23_input_values.replace(" ", "")
+        device_23_input_values = device_23_input_values.strip()
     except:
         device_23_input_values = ""   
     try:        
         device_24_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(24).input_values
-        device_24_input_values = device_24_input_values.replace(" ", "")
+        device_24_input_values = device_24_input_values.strip()
     except:
         device_24_input_values = ""   
     try:        
         device_25_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(25).input_values
-        device_25_input_values = device_25_input_values.replace(" ", "")
+        device_25_input_values = device_25_input_values.strip()
     except:
         device_25_input_values = ""
+
 
     return render_template('layouts/default.html',
                             data=data,    
@@ -628,7 +629,7 @@ def remove_device(ieeeAddr):
         if device_gateway == "zigbee2mqtt":
 
             # check zigbee service
-            if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":     
+            if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":     
 
                 result = DELETE_DEVICE(ieeeAddr)
 

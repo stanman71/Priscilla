@@ -396,6 +396,11 @@ home
 
        >>> sudo nano /opt/zigbee2mqtt/data/configuration.yaml
 
+           homeassistant: false
+
+           # deactivate joining of new devices
+           permit_join: false
+
            # MQTT settings
            mqtt:
            # MQTT base topic for zigbee2mqtt MQTT messages
@@ -405,7 +410,7 @@ home
            # MQTT server authentication, uncomment if required:
            # user: <my_user>
            # password: <my_password>
-           
+       
            advanced:
              network_key: [network_key]
              log_directory: /home/pi/smarthome/data/logs/zigbee2mqtt/
@@ -439,8 +444,9 @@ home
 
 #### 4.4 Pairing
 
-- bridge software must be running to pairing new devices automatically
-- zigbee2mqtt setting: {permit_join: true}
+- joining of new devices is deactivate
+- you have to active the joining in smarthome / settings / devices
+- zigbee2mqtt setting to allow joining: {permit_join: true}
 
 </br>
 

@@ -116,11 +116,11 @@
                     </div>
                     <div class="col-md-8">
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="radio_zigbee2mqtt_active_true" {% if system_services.zigbee2mqtt_active == "True" %} checked="on" {% endif %} value="True" name="radio_zigbee2mqtt_active">
+                        <input type="radio" class="custom-control-input" id="radio_zigbee2mqtt_active_true" {% if system_settings.zigbee2mqtt_active == "True" %} checked="on" {% endif %} value="True" name="radio_zigbee2mqtt_active">
                         <label class="custom-control-label" for="radio_zigbee2mqtt_active_true">Aktiviert</label>
                       </div>                      
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="radio_zigbee2mqtt_active_false" {% if system_services.zigbee2mqtt_active == "False" %} checked="on" {% endif %} value="False" name="radio_zigbee2mqtt_active">
+                        <input type="radio" class="custom-control-input" id="radio_zigbee2mqtt_active_false" {% if system_settings.zigbee2mqtt_active == "False" %} checked="on" {% endif %} value="False" name="radio_zigbee2mqtt_active">
                         <label class="custom-control-label" for="radio_zigbee2mqtt_active_false">Deaktiviert</label>
                       </div>      
                       <br>
@@ -133,11 +133,11 @@
                     </div>
                     <div class="col-md-8">
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="radio_lms_active_true" {% if system_services.lms_active == "True" %} checked="on" {% endif %} value="True" name="radio_lms_active">
+                        <input type="radio" class="custom-control-input" id="radio_lms_active_true" {% if system_settings.lms_active == "True" %} checked="on" {% endif %} value="True" name="radio_lms_active">
                         <label class="custom-control-label" for="radio_lms_active_true">Aktiviert</label>
                       </div>                      
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="radio_lms_active_false" {% if system_services.lms_active == "False" %} checked="on" {% endif %} value="False" name="radio_lms_active">
+                        <input type="radio" class="custom-control-input" id="radio_lms_active_false" {% if system_settings.lms_active == "False" %} checked="on" {% endif %} value="False" name="radio_lms_active">
                         <label class="custom-control-label" for="radio_lms_active_false">Deaktiviert</label>
                       </div>      
                       <br>
@@ -150,11 +150,11 @@
                     </div>
                     <div class="col-md-8">
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="radio_squeezelite_active_true" {% if system_services.squeezelite_active == "True" %} checked="on" {% endif %} value="True" name="radio_squeezelite_active">
+                        <input type="radio" class="custom-control-input" id="radio_squeezelite_active_true" {% if system_settings.squeezelite_active == "True" %} checked="on" {% endif %} value="True" name="radio_squeezelite_active">
                         <label class="custom-control-label" for="radio_squeezelite_active_true">Aktiviert</label>
                       </div>                      
                       <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="radio_squeezelite_active_false" {% if system_services.squeezelite_active == "False" %} checked="on" {% endif %} value="False" name="radio_squeezelite_active">
+                        <input type="radio" class="custom-control-input" id="radio_squeezelite_active_false" {% if system_settings.squeezelite_active == "False" %} checked="on" {% endif %} value="False" name="radio_squeezelite_active">
                         <label class="custom-control-label" for="radio_squeezelite_active_false">Deaktiviert</label>
                       </div>      
                       <br>
@@ -209,7 +209,7 @@
                       <div class="row justify-content-md-left">
                         <div class="col-sm-1">                                                     
                           <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="checkbox_dhcp" {% if dhcp == "True" %} checked="on" {% endif %} name="checkbox_dhcp">
+                            <input type="checkbox" class="custom-control-input" id="checkbox_dhcp" {% if system_settings.dhcp == "True" %} checked="on" {% endif %} name="checkbox_dhcp">
                             <label class="custom-control-label" for="checkbox_dhcp">DHCP</label>   
                             <br>
                             <br>                             
@@ -218,22 +218,22 @@
                         <div class="col-sm-2">                       
                           <div class="form-group">
                             <label>LAN Adresse</label>
-                            {% if dhcp == "True" %}
+                            {% if system_settings.dhcp == "True" %}
                               <br>
-                              {% if ip_address != None %}{{ ip_address }}{% endif %}
+                              {% if system_settings.ip_address != None %}{{ system_settings.ip_address }}{% endif %}
                             {% else %} 
-                              <input type="text" class="form-control" name="set_ip_address" value="{% if ip_address != None %}{{ ip_address }}{% endif %}" />
+                              <input type="text" class="form-control" name="set_ip_address" value="{% if system_settings.ip_address != None %}{{ system_settings.ip_address }}{% endif %}" />
                             {% endif %} 
                           </div>
                         </div>           
                         <div class="col-sm-2">                       
                           <div class="form-group">
                             <label>LAN Gateway</label>
-                            {% if dhcp == "True" %}
+                            {% if system_settings.dhcp == "True" %}
                               <br>
-                              {% if gateway != None %}{{ gateway }}{% endif %}
+                              {% if system_settings.gateway != None %}{{ system_settings.gateway }}{% endif %}
                             {% else %}                             
-                              <input type="text" class="form-control" name="set_gateway" value="{% if gateway != None %}{{ gateway }}{% endif %}" /> 
+                              <input type="text" class="form-control" name="set_gateway" value="{% if system_settings.gateway != None %}{{ system_settings.gateway }}{% endif %}" /> 
                             {% endif %}     
                           </div>
                         </div>                           

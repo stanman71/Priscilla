@@ -106,9 +106,9 @@ def settings_system():
     message_ip_config_change    = False
     message_test_settings_email = ""
 
-    ip_address = GET_SYSTEM_NETWORK_SETTINGS().ip_address
-    gateway    = GET_SYSTEM_NETWORK_SETTINGS().gateway
-    dhcp       = GET_SYSTEM_NETWORK_SETTINGS().dhcp
+    ip_address = GET_SYSTEM_SETTINGS().ip_address
+    gateway    = GET_SYSTEM_SETTINGS().gateway
+    dhcp       = GET_SYSTEM_SETTINGS().dhcp
 
     # restore message
     if session.get('restore_database_success', None) != None:
@@ -174,12 +174,12 @@ def settings_system():
 
         if error_founded == False:
 
-            if SET_SYSTEM_SERVICES(zigbee2mqtt_active, lms_active, squeezelite_active):
+            if SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active, lms_active, squeezelite_active):
                 success_message_change_settings_services = True
 
                 # zigbee
 
-                if GET_SYSTEM_SERVICES().zigbee2mqtt_active == "True":
+                if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
                     try:
                         os.system("sudo systemctl start zigbee2mqtt")
                         WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | ZigBee2MQTT | enabled")       
@@ -202,7 +202,7 @@ def settings_system():
            
                 # logitech media server
 
-                if GET_SYSTEM_SERVICES().lms_active == "True":
+                if GET_SYSTEM_SETTINGS().lms_active == "True":
                     try:
                         os.system("sudo systemctl start logitechmediaserver")
                         WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Logitech Media Server | enabled")
@@ -224,7 +224,7 @@ def settings_system():
 
                 # squeezelite player
 
-                if GET_SYSTEM_SERVICES().squeezelite_active == "True":
+                if GET_SYSTEM_SETTINGS().squeezelite_active == "True":
                     try:
                         os.system("sudo systemctl start squeezelite")
                         WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | enabled")
@@ -273,7 +273,7 @@ def settings_system():
                             error_message_change_settings_network.append("Netzwerk || Ungültige IP-Adresse angegeben")
                             save_settings_lan = False
                                 
-                        elif PING_IP_ADDRESS(new_ip_address) == True or new_ip_address == GET_SYSTEM_NETWORK_SETTINGS().ip_address:
+                        elif PING_IP_ADDRESS(new_ip_address) == True or new_ip_address == GET_SYSTEM_SETTINGS().ip_address:
                             error_message_change_settings_network.append("Netzwerk || IP-Adresse bereits vergeben")
                             save_settings_lan = False
 
@@ -311,11 +311,11 @@ def settings_system():
                         success_message_change_settings_network = True
 
             else:
-                if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_NETWORK_SETTINGS().ip_address, GET_SYSTEM_NETWORK_SETTINGS().gateway, dhcp):
+                if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_SETTINGS().ip_address, GET_SYSTEM_SETTINGS().gateway, dhcp):
                     success_message_change_settings_network = True       
 
         else:
-            if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_NETWORK_SETTINGS().ip_address, GET_SYSTEM_NETWORK_SETTINGS().gateway, dhcp):
+            if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_SETTINGS().ip_address, GET_SYSTEM_SETTINGS().gateway, dhcp):
                 success_message_change_settings_network = True  
 
 
@@ -379,12 +379,7 @@ def settings_system():
         else:
             error_message_backup_database = "Backup || " + str(result)
 
-
-    dhcp       = GET_SYSTEM_NETWORK_SETTINGS().dhcp
-    ip_address = GET_SYSTEM_NETWORK_SETTINGS().ip_address
-    gateway    = GET_SYSTEM_NETWORK_SETTINGS().gateway
-
-    system_services   = GET_SYSTEM_SERVICES()     
+    system_settings   = GET_SYSTEM_SETTINGS()     
     spotify_settings  = GET_SPOTIFY_SETTINGS()
     email_settings    = GET_EMAIL_SETTINGS()
     list_backup_files = GET_BACKUP_FILES()
@@ -408,10 +403,7 @@ def settings_system():
                                                     error_message_backup_database=error_message_backup_database,                                                       
                                                     success_message_backup_database=success_message_backup_database,                                                                                                     
                                                     message_system=message_system,
-                                                    dhcp=dhcp,
-                                                    ip_address=ip_address,
-                                                    gateway=gateway,  
-                                                    system_services=system_services,
+                                                    system_settings=system_settings,
                                                     spotify_settings=spotify_settings,
                                                     email_settings=email_settings,                                            
                                                     list_backup_files=list_backup_files,                    

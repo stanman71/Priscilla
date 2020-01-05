@@ -303,14 +303,10 @@ class Spotify_Settings(db.Model):
 
 class System(db.Model):
     __tablename__ = 'system'
-    id         = db.Column(db.Integer, primary_key=True, autoincrement = True)   
-    ip_address = db.Column(db.String(50))
-    gateway    = db.Column(db.String(50))
-    dhcp       = db.Column(db.String(50), server_default=("True"))     
-
-class System_Services(db.Model):
-    __tablename__ = 'system_services'
-    id                 = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    id                 = db.Column(db.Integer, primary_key=True, autoincrement = True)   
+    ip_address         = db.Column(db.String(50))
+    gateway            = db.Column(db.String(50))
+    dhcp               = db.Column(db.String(50), server_default=("True"))     
     zigbee2mqtt_active = db.Column(db.String(50), server_default=("False"))
     lms_active         = db.Column(db.String(50), server_default=("False"))   
     squeezelite_active = db.Column(db.String(50), server_default=("False"))   
@@ -410,19 +406,9 @@ if Spotify_Settings.query.filter_by().first() == None:
 
 if System.query.filter_by().first() == None:
     system = System(
-    )
-    db.session.add(system)
-    db.session.commit()
-
-# ###############
-# system services
-# ###############
-
-if System_Services.query.filter_by().first() == None:
-    system_services = System_Services(
         id = 1,
     )
-    db.session.add(system_services)
+    db.session.add(system)
     db.session.commit()
 
 # ####
@@ -916,11 +902,15 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
                 if "eurotronic_error_status" in element:
                     last_values_string_modified = last_values_string_modified + element + ", "
 
-            # change battery_level scale to max_value = 100
-            data          = json.loads(last_values) 
-            battery_value = int(int(data['battery']) * 6.7) 
+            try:
+                # change battery_level scale to max_value = 100
+                data          = json.loads(last_values) 
+                battery_value = int(int(data['battery']) * 6.7) 
 
-            last_values_string = last_values_string_modified + "battery: " + str(battery_value)
+                last_values_string = last_values_string_modified + "battery: " + str(battery_value)
+
+            except:
+                last_values_string = last_values_string_modified
 
         
         timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
@@ -2963,7 +2953,7 @@ def SET_SPOTIFY_DEFAULT_SETTINGS(default_device_id, default_device_name, default
 """ ################### """
 
 
-def GET_SYSTEM_NETWORK_SETTINGS():
+def GET_SYSTEM_SETTINGS():
     return System.query.filter_by().first()
 
 
@@ -2978,24 +2968,14 @@ def SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, dhcp):
         entry.dhcp       = dhcp 
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "System | Network Settings | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | Network | changed") 
 
         return True
 
 
-""" ################## """
-""" ################## """
-"""  system services   """
-""" ################## """
-""" ################## """
-
-def GET_SYSTEM_SERVICES():
-    return System_Services.query.first()   
-
-
-def SET_SYSTEM_SERVICES(zigbee2mqtt_active, lms_active, squeezelite_active):
+def SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active, lms_active, squeezelite_active):
                              
-    entry = System_Services.query.filter_by().first()
+    entry = System.query.filter_by().first()
 
     # values changed ?
     if (entry.zigbee2mqtt_active != zigbee2mqtt_active or entry.lms_active != lms_active or entry.squeezelite_active != squeezelite_active):
@@ -3005,7 +2985,7 @@ def SET_SYSTEM_SERVICES(zigbee2mqtt_active, lms_active, squeezelite_active):
         entry.squeezelite_active   = squeezelite_active               
         db.session.commit()   
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "System | Services | Settings changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | Services | changed") 
         return True
 
 
