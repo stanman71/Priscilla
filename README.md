@@ -519,6 +519,8 @@ https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
 
 https://www.zigbee2mqtt.io/information/zigbee_network.html
 </br>
+https://ptvo.info/cc2530-based-zigbee-coordinator-and-router-112/
+</br>
 </br>
 
 <a name="5.1 Hardware"></a>
@@ -539,7 +541,7 @@ https://www.zigbee2mqtt.io/information/zigbee_network.html
 
 - voltage regulator 3.3V (router only)
 
-       >>> https://www.ebay.de/itm/Spannungsregler-Modul-AMS1117-3-3V-800mA-Arduino-Raspberry-Pi-Atmega/152386958012
+       >>> https://www.ebay.de/itm/Spannungswandler-Konverter-DC-3-3V-zu-12V-3A-18W-Adapter-Wandler-Konverter/253043664951?hash=item3aea93e837:g:DhAAAOSwIhxZZ1Tc
 
 - power connector (router only)
 
@@ -547,9 +549,9 @@ https://www.zigbee2mqtt.io/information/zigbee_network.html
 
 - power source (router only)
 
-       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01I1JEWPU/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
+       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01GRYFNAE/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
 
-- case
+- case (router only)
 
        >>> https://www.tme.eu/de/details/abs-54p/universal-gehause/maszczyk/km-54p-gy/
        >>> https://www.tme.eu/de/details/km-54p/universal-gehause/maszczyk/km-54p-bk/

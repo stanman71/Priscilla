@@ -15,23 +15,39 @@ stop_program    = False
 repeat_program  = False
 
 
-def START_PROGRAM_THREAD(program_id):
+def START_PROGRAM_THREAD(program_id, force = False):
 
-    if GET_PROGRAM_STATUS() == "None":
+    if force == False:
+        if GET_PROGRAM_STATUS() == "None":
+
+            try:
+                Thread = threading.Thread(target=PROGRAM_THREAD, args=(program_id, ))
+                Thread.start()    
+                
+                program_name = GET_PROGRAM_BY_ID(program_id).name
+                WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+                return True
+            
+            except Exception as e:
+                return e
+
+        else:
+            return("Other Program running")
+
+    if force == True:
+        STOP_PROGRAM_THREAD()
+        time.sleep(1)
 
         try:
-            Thread = threading.Thread(target=PROGRAM_THREAD, args=(program_id, ))
+            Thread = threading.Thread(target=PROGRAM_THREAD_FORCE, args=(program_id, ))
             Thread.start()    
             
             program_name = GET_PROGRAM_BY_ID(program_id).name
-            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | Force | started") 
             return True
         
         except Exception as e:
-            return e
-
-    else:
-        return("Other Program running")
+            return e        
 
     
 def STOP_PROGRAM_THREAD():
@@ -389,4 +405,315 @@ def PROGRAM_THREAD(program_id):
 
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "Programm - " + GET_PROGRAM_BY_ID(program_id).name + " | " + str(e))
+        return str(e)
+
+
+def PROGRAM_THREAD_FORCE(program_id):
+
+    try:
+
+        list_lines = [[GET_PROGRAM_BY_ID(program_id).line_active_1,  GET_PROGRAM_BY_ID(program_id).line_content_1],
+                      [GET_PROGRAM_BY_ID(program_id).line_active_2,  GET_PROGRAM_BY_ID(program_id).line_content_2],
+                      [GET_PROGRAM_BY_ID(program_id).line_active_3,  GET_PROGRAM_BY_ID(program_id).line_content_3],
+                      [GET_PROGRAM_BY_ID(program_id).line_active_4,  GET_PROGRAM_BY_ID(program_id).line_content_4],
+                      [GET_PROGRAM_BY_ID(program_id).line_active_5,  GET_PROGRAM_BY_ID(program_id).line_content_5],
+                      [GET_PROGRAM_BY_ID(program_id).line_active_6,  GET_PROGRAM_BY_ID(program_id).line_content_6],                 
+                      [GET_PROGRAM_BY_ID(program_id).line_active_7,  GET_PROGRAM_BY_ID(program_id).line_content_7],                 
+                      [GET_PROGRAM_BY_ID(program_id).line_active_8,  GET_PROGRAM_BY_ID(program_id).line_content_8],                 
+                      [GET_PROGRAM_BY_ID(program_id).line_active_9,  GET_PROGRAM_BY_ID(program_id).line_content_9],                 
+                      [GET_PROGRAM_BY_ID(program_id).line_active_10, GET_PROGRAM_BY_ID(program_id).line_content_10],   
+                      [GET_PROGRAM_BY_ID(program_id).line_active_11, GET_PROGRAM_BY_ID(program_id).line_content_11],   
+                      [GET_PROGRAM_BY_ID(program_id).line_active_12, GET_PROGRAM_BY_ID(program_id).line_content_12],   
+                      [GET_PROGRAM_BY_ID(program_id).line_active_13, GET_PROGRAM_BY_ID(program_id).line_content_13],
+                      [GET_PROGRAM_BY_ID(program_id).line_active_14, GET_PROGRAM_BY_ID(program_id).line_content_14],   
+                      [GET_PROGRAM_BY_ID(program_id).line_active_15, GET_PROGRAM_BY_ID(program_id).line_content_15],
+                      [GET_PROGRAM_BY_ID(program_id).line_active_16, GET_PROGRAM_BY_ID(program_id).line_content_16],   
+                      [GET_PROGRAM_BY_ID(program_id).line_active_17, GET_PROGRAM_BY_ID(program_id).line_content_17],
+                      [GET_PROGRAM_BY_ID(program_id).line_active_18, GET_PROGRAM_BY_ID(program_id).line_content_18],   
+                      [GET_PROGRAM_BY_ID(program_id).line_active_19, GET_PROGRAM_BY_ID(program_id).line_content_19],            
+                      [GET_PROGRAM_BY_ID(program_id).line_active_20, GET_PROGRAM_BY_ID(program_id).line_content_20],                  
+                      [GET_PROGRAM_BY_ID(program_id).line_active_21, GET_PROGRAM_BY_ID(program_id).line_content_21],  
+                      [GET_PROGRAM_BY_ID(program_id).line_active_22, GET_PROGRAM_BY_ID(program_id).line_content_22],  
+                      [GET_PROGRAM_BY_ID(program_id).line_active_23, GET_PROGRAM_BY_ID(program_id).line_content_23],  
+                      [GET_PROGRAM_BY_ID(program_id).line_active_24, GET_PROGRAM_BY_ID(program_id).line_content_24],  
+                      [GET_PROGRAM_BY_ID(program_id).line_active_25, GET_PROGRAM_BY_ID(program_id).line_content_25],  
+                      [GET_PROGRAM_BY_ID(program_id).line_active_26, GET_PROGRAM_BY_ID(program_id).line_content_26],  
+                      [GET_PROGRAM_BY_ID(program_id).line_active_27, GET_PROGRAM_BY_ID(program_id).line_content_27],  
+                      [GET_PROGRAM_BY_ID(program_id).line_active_28, GET_PROGRAM_BY_ID(program_id).line_content_28], 
+                      [GET_PROGRAM_BY_ID(program_id).line_active_29, GET_PROGRAM_BY_ID(program_id).line_content_29],  
+                      [GET_PROGRAM_BY_ID(program_id).line_active_30, GET_PROGRAM_BY_ID(program_id).line_content_30]] 
+
+
+        program_name = GET_PROGRAM_BY_ID(program_id).name
+
+        # get total lines
+        lines_total = 0
+
+        for line in list_lines:
+            if line[0] == "True":
+                lines_total = lines_total + 1
+
+
+        line_number = 1
+
+        for line in list_lines:
+                
+            # update program info
+            SET_PROGRAM_STATUS(program_name + " ( Force | " + str(line_number) + " | " + str(lines_total) + " || " + str(line[1]) + " )")
+                
+            # line active ?
+            if line[0] == "True":
+
+
+                # #####
+                # break
+                # #####
+                        
+                if "break" in line[1]:
+                        
+                    line_content = line[1].split(" # ")
+                    time.sleep(int(line_content[1]))          
+
+                # #####
+                # light
+                # #####
+                            
+                if "lighting" in line[1] and "scene" in line[1]:
+                        
+                    line_content = line[1].split(" # ")
+                    
+                    try:
+                        # start lighting scene
+                        if line_content[2].lower() != "turn_off":
+                            group_name        = line_content[2] 
+                            scene_name        = line_content[3]
+                            global_brightness = line_content[4]
+                            group             = GET_LIGHTING_GROUP_BY_NAME(group_name)
+                            scene             = GET_LIGHTING_SCENE_BY_NAME(scene_name)
+
+                            SET_LIGHTING_GROUP_SCENE(group.id, scene.id, int(global_brightness))
+                            CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, global_brightness, 2, 10)
+
+                        # turn off group
+                        elif line_content[2].lower() == "turn_off" and line_content[3].lower() == "all":
+                            group      = GET_LIGHTING_GROUP_BY_NAME(group_name)
+                            scene_name = group.current_scene
+                            scene      = GET_LIGHTING_SCENE_BY_NAME(scene_name)
+                                            
+                            SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                            CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)   
+
+                                        
+                    except Exception as e:
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Force | Zeile - " + line[1] + " | " + str(e))
+
+
+                # ######    
+                # device
+                # ######
+
+                if "device" in line[1]:
+                        
+                    line_content = line[1].split(" # ")
+
+                    try:
+                                
+                        # get input group names 
+                        for device_name in line_content[1].split(","): 
+                            device = GET_DEVICE_BY_NAME(device_name.strip())
+
+                            # device founded ?
+                            if device != None:
+                                program_setting = line_content[2]
+                                
+                                # check device exception
+                                check_result = CHECK_DEVICE_EXCEPTIONS(device.id, program_setting)
+                                            
+                                if check_result == True:           
+                                    
+                                    if device.gateway == "mqtt":
+                                            channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+                                    if device.gateway == "zigbee2mqtt":   
+                                            channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
+
+                                    command_position  = 0
+                                    list_command_json = device.commands_json.split(",")
+
+                                    # get the json command statement and start process
+                                    for command in device.commands.split(","):     
+                                                        
+                                        if program_setting in command:
+                                            heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
+                                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_setting, 20)      
+                                            break
+
+                                            command_position = command_position + 1
+
+                                else:
+                                    WRITE_LOGFILE_SYSTEM("WARNING", "Program - " + program_name + " | Force | " + check_result)
+
+                            else:
+                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Force | Device - " + device_name.strip() + " - not founded")     
+
+                        
+                    except Exception as e:
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Force | Zeile - " + line[1] + " | " + str(e))
+
+
+                # ##################
+                # request sensordata
+                # ##################
+
+                if "request_sensordata" in line[1]:
+
+                    line_content = line[1].split(" # ")
+
+                    try:
+                        job_number = line_content[1]    
+                        REQUEST_SENSORDATA(job_number)              
+
+                    except Exception as e:
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Force | Zeile - " + line[1] + " | " + str(e))
+
+
+                # #######
+                # spotify
+                # #######
+
+                if "spotify" in line[1]:
+                        
+                    line_content = line[1].split(" # ")
+
+                    if GET_SPOTIFY_TOKEN() == "" and GET_SPOTIFY_REFRESH_TOKEN() != "":
+                        GENERATE_SPOTIFY_TOKEN()
+
+                    spotify_token = GET_SPOTIFY_TOKEN()
+
+                    # check spotify login 
+                    if spotify_token != "":
+                        
+                        try:
+                            
+                            sp       = spotipy.Spotify(auth=spotify_token)
+                            sp.trace = False
+
+
+                            # basic control
+                            
+                            try:
+                            
+                                spotify_device_id = sp.current_playback(market=None)['device']['id']
+                                spotify_volume    = sp.current_playback(market=None)['device']['volume_percent']
+
+                                if line_content[1].lower() == "play":
+                                    SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
+                        
+                                if line_content[1].lower() == "previous":
+                                    SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
+
+                                if line_content[1].lower() == "next":
+                                    SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
+
+                                if line_content[1].lower() == "stop": 
+                                    SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)   
+
+                                if line_content[1].lower() == "volume":          
+                                    spotify_volume = int(line_content[2])
+                                    SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
+
+                            except:
+                                pass
+                                                                    
+                            
+                            # start playlist
+                                    
+                            if line_content[1].lower() == "playlist": 
+
+                                # get spotify_device_id
+                                device_name          = line_content[2]                                    
+                                list_spotify_devices = sp.devices()["devices"]  
+                                
+                                for device in list_spotify_devices:
+                                    if device['name'].lower() == device_name.lower():
+                                        spotify_device_id = device['id']  
+                                        continue                                
+                                
+                                # get playlist_uri
+                                playlist_name          = line_content[3]
+                                list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]
+                                
+                                for playlist in list_spotify_playlists:
+                                    if playlist['name'].lower() == playlist_name.lower():
+                                        playlist_uri = playlist['uri']
+                                        continue
+                                        
+                                # get volume
+                                playlist_volume = int(line_content[4])
+                                
+                                SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume)
+                        
+                    
+                            # start track
+                                    
+                            if line_content[1].lower() == "track": 
+
+                                # get spotify_device_id
+                                device_name          = line_content[2]                                    
+                                list_spotify_devices = sp.devices()["devices"]  
+                                
+                                for device in list_spotify_devices:
+                                    if device['name'].lower() == device_name.lower():
+                                        spotify_device_id = device['id']  
+                                        continue                                
+                                
+                                # get playlist_uri
+                                track_uri = SPOTIFY_SEARCH_TRACK(spotify_token, line_content[3], line_content[4], 1) [0][2]
+                                        
+                                # get volume
+                                track_volume = int(line_content[5])
+                                
+                                SPOTIFY_START_TRACK(spotify_token, spotify_device_id, track_uri, track_volume)
+
+
+                            # start album
+                                    
+                            if line_content[1].lower() == "album": 
+
+                                # get spotify_device_id
+                                device_name          = line_content[2]                                    
+                                list_spotify_devices = sp.devices()["devices"]  
+                                
+                                for device in list_spotify_devices:
+                                    if device['name'].lower() == device_name.lower():
+                                        spotify_device_id = device['id']  
+                                        continue                                
+                                
+                                # get album_uri
+                                album_uri = SPOTIFY_SEARCH_ALBUM(spotify_token, line_content[3], line_content[4], 1) [0][2]
+                                        
+                                # get volume
+                                album_volume = int(line_content[5])
+                                
+                                SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
+
+
+                        except Exception as e:
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Force | Zeile - " + line[1] + " | " + str(e))
+    
+                                    
+                    else:
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Programm - " + GET_PROGRAM_BY_ID(program_id).name + " | Force | No Spotify Token founded")   
+
+                    
+                line_number = line_number + 1
+                time.sleep(1)
+            
+        
+        SET_PROGRAM_STATUS("None")    
+        time.sleep(10)
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | Force | finished")
+                
+
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "Programm - " + GET_PROGRAM_BY_ID(program_id).name + " | Force | " + str(e))
         return str(e)

@@ -77,10 +77,6 @@ def programs():
         if selected_program != None:
             selected_program = GET_PROGRAM_BY_NAME(selected_program)   
             
-            # check program settings
-            program_id = selected_program.id
-            #error_message_content = CHECK_PROGRAM(program_id)            
-
 
     """ ################# """
     """  program settings """

@@ -897,13 +897,13 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   else:
                      list_task_errors.append(name + " >>> " + task[1] + " Programm nicht gefunden")                  
                   
-               if setting != "start" and setting != "stop":
+               if setting != "start" and setting != "stop" and setting != "force":
                   
                   if task_type == "controller":
                      list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültiger Befehl >>> " + task[2])
                   else:
                      list_task_errors.append(name + " >>> Ungültiger Befehl >>> " + task[2])
-               
+ 
                return list_task_errors
       
       
@@ -1156,7 +1156,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
          
       return list_task_errors
    
-   
+
    except:
 
       # #####################
@@ -1182,5 +1182,5 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
          return list_task_errors
 
       else:
-         list_task_errors.append("MISSING NAME >>> Ungültige Aufgabe")        
+         list_task_errors.append(name + " >>> Ungültige Aufgabe")        
          return list_task_errors

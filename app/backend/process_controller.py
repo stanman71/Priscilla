@@ -443,22 +443,24 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
     if "program" in task:
         
-        task = task.lower()
-        task = task.split(" # ")
-        
+        task    = task.lower()
+        task    = task.split(" # ") 
         program = GET_PROGRAM_BY_NAME(task[1].lower())
 
         if program != None:
 
-            if task[2] == "start" and GET_PROGRAM_STATUS() == None:
+            if task[2] == "start" and GET_PROGRAM_STATUS() == "None":
                 START_PROGRAM_THREAD(program.id)
                 
-            elif task[2] == "start" and GET_PROGRAM_STATUS() != None:
+            elif task[2] == "start" and GET_PROGRAM_STATUS() != "None":
                 WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Other Program running")
                                      
             elif task[2] == "stop":
                 STOP_PROGRAM_THREAD()
-                
+
+            elif task[2] == "force":
+                START_PROGRAM_THREAD(program.id, True)                      
+
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Command not valid")
 

@@ -674,21 +674,25 @@ def START_SCHEDULER_TASK(task_object):
    try:
       if "program" in task_object.task:
          
-         task    = task_object.task.split(" # ")
-         program = GET_PROGRAM_BY_NAME(task[1].lower())
+         task    = task_object.task.lower()         
+         task    = task.split(" # ")
+         program = GET_PROGRAM_BY_NAME(task[1])
 
          if program != None:
 
                WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')
 
-               if task[2] == "start" and GET_PROGRAM_STATUS() == None:
+               if task[2] == "start" and GET_PROGRAM_STATUS() == "None":
                   START_PROGRAM_THREAD(program.id)
                   
-               elif task[2] == "start" and GET_PROGRAM_STATUS() != None:
+               elif task[2] == "start" and GET_PROGRAM_STATUS() != "None":
                   WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | Other Program running")  
                   
                elif task[2] == "stop":
                   STOP_PROGRAM_THREAD() 
+
+               elif task[2] == "force":
+                  START_PROGRAM_THREAD(program.id, True)               
                   
                else:
                   WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Command not valid")

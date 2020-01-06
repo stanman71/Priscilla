@@ -99,11 +99,15 @@
                   <div class="row justify-content-md-left">
                     <div class="col-sm-3">                     
                       <select class="form-control" data-size="5" name="select_program" style="background-color:#27293D"> 
-                        {% for each in dropdown_list_programs %}
-                          {% if each != None %}
-                          <option value="{{each.name}}">{{each.name}}</option>
-                          {% endif %}
-                        {% endfor %}       
+                        {% if dropdown_list_programs != [] %}
+                          {% for each in dropdown_list_programs %}
+                            {% if each != None %}
+                            <option value="{{each.name}}">{{each.name}}</option>
+                            {% endif %}
+                          {% endfor %}       
+                        {% else %}
+                        <option value= "" > Keine Programme gefunden </option>    
+                        {% endif %}                           
                       </select>      
                     </div>
                   </div>  
@@ -897,16 +901,16 @@
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                Starte Lichter der Gruppe "wohnzimmer" mit Szene "relax" 
+                                Starte Lichter der Gruppe "wohnzimmer" mit Szene "relax" und Helligkeit "100%" 
                               </div>
                             </div>  
                             <br>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
-                                Optional >> 
+                                100 >> 
                               </div>
                               <div class="col-sm-8"> 
-                                globale Helligkeit 100 % 
+                                Helligkeit 100 % 
                               </div>                        
                             </div>     
                             <br>
