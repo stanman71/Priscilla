@@ -13,7 +13,7 @@ from app.backend.lighting         import *
 from app.backend.mqtt             import *
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM, GET_LOCATION_COORDINATES, BACKUP_DATABASE
 from app.backend.shared_resources import process_management_queue, mqtt_message_queue
-from app.backend.process_program  import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD
+from app.backend.process_program  import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD, SET_REPEAT_PROGRAM
 from app.backend.spotify          import *
 from app.backend.email            import SEND_EMAIL
 
@@ -687,9 +687,16 @@ def START_SCHEDULER_TASK(task_object):
                   
                elif task[2] == "start" and GET_PROGRAM_STATUS() != "None":
                   WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | Other Program running")  
-                  
+
                elif task[2] == "stop":
                   STOP_PROGRAM_THREAD() 
+
+               elif task[2] == "repeat" and GET_PROGRAM_STATUS() == "None":
+                  START_PROGRAM_THREAD(program.id)
+                  SET_REPEAT_PROGRAM(True)
+                  
+               elif task[2] == "repeat" and GET_PROGRAM_STATUS() != "None":
+                  WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | Other Program running")  
 
                elif task[2] == "force":
                   START_PROGRAM_THREAD(program.id, True)               

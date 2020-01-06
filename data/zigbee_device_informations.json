@@ -260,7 +260,7 @@
 				"description"     : "IKEA FYRTUR roller blind",
 				"input_values"    : [],
 				"input_events"    : [],
-				"commands"        : ["100% > OPEN","80%","70%","60%","50%","40%","30%","20%","0% > CLOSE","STOP"],
+				"commands"        : ["100 > OPEN","80","70","60","50","40","30","20","0 > CLOSE","STOP"],
 				"commands_json"   : ["{'position':100}","{'position':80}","{'position':70}","{'position':60}","{'position':50}","{'position':40}","{'position':30}","{'position':20}","{'position':0}","{'state':'stop'}"]
 			},		
 			{
@@ -269,7 +269,7 @@
 				"description"     : "IKEA KADRILJ roller blind",
 				"input_values"    : [],
 				"input_events"    : [],
-				"commands"        : ["100% > OPEN","80%","70%","60%","50%","40%","30%","20%","0% > CLOSE","STOP"],
+				"commands"        : ["100 > OPEN","80","70","60","50","40","30","20","0 > CLOSE","STOP"],
 				"commands_json"   : ["{'position':100}","{'position':80}","{'position':70}","{'position':60}","{'position':50}","{'position':40}","{'position':30}","{'position':20}","{'position':0}","{'state':'stop'}"]
 			},	
 			{

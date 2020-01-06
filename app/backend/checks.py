@@ -897,7 +897,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   else:
                      list_task_errors.append(name + " >>> " + task[1] + " Programm nicht gefunden")                  
                   
-               if setting != "start" and setting != "stop" and setting != "force":
+               if setting != "start" and setting != "stop" and setting != "repeat" and setting != "force":
                   
                   if task_type == "controller":
                      list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültiger Befehl >>> " + task[2])

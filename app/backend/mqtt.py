@@ -110,6 +110,21 @@ def MQTT_RECEIVE_THREAD():
                     except:
                         new_message = False                 
 
+                        # special case IKEA blinds
+                        try:        
+                            existing_data = json.loads(existing_message[2])
+                            new_data      = json.loads(msg)
+
+                            if existing_data["position"] != new_data["position"]:
+                                new_message = True
+                                break
+                                
+                            else:
+                                new_message = False
+                                
+                        except:
+                            new_message = False     
+
 
         # message block ?
         if (device_type == "controller"):
@@ -585,30 +600,25 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):
     device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
     counter = 1
 
-    # special case IKEA blinds
-    if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "E1757" or GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "E1926":
-        setting = "position"
-
-    else:
-        while counter != repeats:  
-            
-            if device.gateway == "mqtt":
-                result = CHECK_MQTT_SETTING(device.ieeeAddr, setting)
-            if device.gateway == "zigbee2mqtt":
-                result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting)    
+    while counter != repeats:  
         
-            # set previous setting
-            if result == True:
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | Setting changed | " + setting)  
-                return True
+        if device.gateway == "mqtt":
+            result = CHECK_MQTT_SETTING(device.ieeeAddr, setting)
+        if device.gateway == "zigbee2mqtt":
+            result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting)    
+    
+        # set previous setting
+        if result == True:
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | Setting changed | " + setting)  
+            return True
 
-            counter = counter + 1
-            time.sleep(1)       
+        counter = counter + 1
+        time.sleep(1)       
 
-        # error message
-        WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)  
-        SEND_EMAIL("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)                
-        return ("Device - " + device.name + " | Setting not confirmed - " + setting) 
+    # error message
+    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)  
+    SEND_EMAIL("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)                
+    return ("Device - " + device.name + " | Setting not confirmed - " + setting) 
                          
 
 def CHECK_MQTT_SETTING(ieeeAddr, setting):        
