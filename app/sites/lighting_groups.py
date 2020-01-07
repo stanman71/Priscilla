@@ -30,7 +30,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def lighting_groups():
-    page_title = 'Smarthome | Lighting | Groups'
+    page_title       = 'Smarthome | Lighting | Groups'
     page_description = 'The lighting groups configuration page.'
 
     success_message_change_settings                = []
@@ -95,12 +95,12 @@ def lighting_groups():
                 # name already exist
                 elif ((GET_LIGHTING_GROUP_BY_NAME(input_name) != None) and (lighting_group.name != input_name)):
                     name = lighting_group.name 
-                    error_message_change_settings_lighting_group = {"group_number": i,"message": "Name - " + input_name + " - bereits vergeben"}
+                    error_message_change_settings_lighting_group = {"group_number": i,"message": "Name - " + input_name + " - already taken"}
 
                 # no input commited
                 else:                          
                     name = GET_LIGHTING_GROUP_BY_ID(i).name 
-                    error_message_change_settings_lighting_group = {"group_number": i,"message": "Keinen Namen angegeben"}
+                    error_message_change_settings_lighting_group = {"group_number": i,"message": "No name given"}
 
 
                 # ################
@@ -155,7 +155,7 @@ def lighting_groups():
                     if num > 1:
 
                         if light_ieeeAddr != "None" and light_ieeeAddr != None:
-                            error_message_change_settings_lighting_group = {"group_number": i, "message": "Lichtquelle mehrmals eingetragen || " + GET_DEVICE_BY_IEEEADDR(light_ieeeAddr).name}  
+                            error_message_change_settings_lighting_group = {"group_number": i, "message": "Light selected several times || " + GET_DEVICE_BY_IEEEADDR(light_ieeeAddr).name}  
                             break
 
                     else:
@@ -310,7 +310,7 @@ def lighting_groups():
             result = DELETE_LIGHTING_GROUP(i)            
 
             if result:
-                success_message_change_settings.append(group + " || Erfolgreich gelöscht") 
+                success_message_change_settings.append(group + " || Group successfully deleted") 
             else:
                 error_message_change_settings.append(group + " || " + str(result))
 

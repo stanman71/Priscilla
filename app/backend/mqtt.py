@@ -271,7 +271,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
         # start schedular job 
         for task in GET_ALL_SCHEDULER_TASKS():
-            if task.option_sensors == "True" and task.option_pause != "True":
+            if task.trigger_sensors == "True" and task.option_pause != "True":
                 heapq.heappush(process_management_queue, (10, ("scheduler", task.id, ieeeAddr)))
 
 
@@ -896,8 +896,8 @@ def REQUEST_SENSORDATA(job_name):
             except:
                 pass
 
-    WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job - " + job_name + " | Data not founded") 
-    SEND_EMAIL("ERROR", "Sensordata | Job - " + job_name + " | Data not founded")       
+    WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job - " + job_name + " | No Data founded") 
+    SEND_EMAIL("ERROR", "Sensordata | Job - " + job_name + " | No Data founded")       
 
    
 def SAVE_SENSORDATA(job_id):

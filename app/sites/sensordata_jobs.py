@@ -30,7 +30,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def sensordata_jobs():
-    page_title = 'Smarthome | Sensordata | Jobs'
+    page_title       = 'Smarthome | Sensordata | Jobs'
     page_description = 'The sensordata jobs configuration page.'
 
     success_message_change_settings = []      
@@ -96,14 +96,14 @@ def sensordata_jobs():
                     
                 # name already exist
                 elif ((GET_SENSORDATA_JOB_BY_NAME(input_name) != None) and (sensordata_job.name != input_name)):
-                    error_message_change_settings.append(sensordata_job.name + " || Name - " + input_name + " - bereits vergeben")  
+                    error_message_change_settings.append(sensordata_job.name + " || Name - " + input_name + " - already taken")  
                     error_founded = True
                     name = sensordata_job.name
 
                 # no input commited
                 else:                          
                     name = GET_SENSORDATA_JOB_BY_ID(i).name
-                    error_message_change_settings.append(sensordata_job.name + " || Keinen Namen angegeben") 
+                    error_message_change_settings.append(sensordata_job.name + " || No name given") 
                     error_founded = True  
 
 
@@ -115,7 +115,7 @@ def sensordata_jobs():
                     filename = request.form.get("set_filename_" + str(i)).strip()   
                 else:
                     filename = GET_SENSORDATA_JOB_BY_ID(i).filename 
-                    error_message_change_settings.append(sensordata_job.name + " >>> Keine Datei angegeben")  
+                    error_message_change_settings.append(sensordata_job.name + " || No file given")  
 
 
                 # ##############
@@ -129,7 +129,7 @@ def sensordata_jobs():
                 elif GET_DEVICE_BY_ID(device):
                     device_ieeeAddr = GET_DEVICE_BY_ID(device).ieeeAddr
                 else:
-                    error_message_change_settings.append(sensordata_job.name + " >>> Kein Gerät angegeben") 
+                    error_message_change_settings.append(sensordata_job.name + " || No device selected") 
                     device_ieeeAddr = ""
                     sensor_key      = ""
   
@@ -139,7 +139,7 @@ def sensordata_jobs():
                 # ##############
 
                 if device_ieeeAddr == "":
-                    error_message_change_settings.append(sensordata_job.name + " >>> Keinen Sensor angegeben") 
+                    error_message_change_settings.append(sensordata_job.name + " || No sensor selected") 
 
                 else:
                     # replace array_position to sensor name 
@@ -165,7 +165,7 @@ def sensordata_jobs():
                 if error_founded == False: 
 
                     if SET_SENSORDATA_JOB_SETTINGS(i, name, filename, device_ieeeAddr, sensor_key, always_active):
-                        success_message_change_settings.append(name + " || Einstellungen gespeichert") 
+                        success_message_change_settings.append(name + " || Settings successfully saved") 
 
 
     list_sensordata_jobs  = GET_ALL_SENSORDATA_JOBS()
@@ -367,7 +367,7 @@ def delete_sensordata_jobs(id):
     result = DELETE_SENSORDATA_JOB(id)
 
     if result == True:
-        session['delete_job_success'] = job + " || Erfolgreich gelöscht"
+        session['delete_job_success'] = job + " || Job successfully deleted"
     else:
         session['delete_job_error'] = job + " || " + str(result)
 

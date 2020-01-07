@@ -247,10 +247,10 @@ class Scheduler_Tasks(db.Model):
     name                        = db.Column(db.String(50), unique=True)
     task                        = db.Column(db.String(50))
     visible                     = db.Column(db.String(50))   
-    option_time                 = db.Column(db.String(50)) 
-    option_sun                  = db.Column(db.String(50))
-    option_sensors              = db.Column(db.String(50))
-    option_position             = db.Column(db.String(50))
+    trigger_time                = db.Column(db.String(50)) 
+    trigger_sun_position        = db.Column(db.String(50))
+    trigger_sensors             = db.Column(db.String(50))
+    trigger_position            = db.Column(db.String(50))
     option_repeat               = db.Column(db.String(50))
     option_pause                = db.Column(db.String(50))
     day                         = db.Column(db.String(50))
@@ -363,14 +363,14 @@ for task in Scheduler_Tasks.query.all():
 
 if update_devices_founded == False:
     scheduler_task_update_devices = Scheduler_Tasks(
-        name          = "update_devices",
-        task          = "update_devices",
-        visible       = "False",
-        option_time   = "True",
-        option_repeat = "True",
-        day           = "*",        
-        hour          = "*",
-        minute        = "30",       
+        name           = "update_devices",
+        task           = "update_devices",
+        visible        = "False",
+        trigger_time   = "True",
+        option_repeat  = "True",
+        day            = "*",        
+        hour           = "*",
+        minute         = "30",       
     )
     db.session.add(scheduler_task_update_devices)
     db.session.commit()
@@ -380,7 +380,7 @@ if backup_database_founded == False:
         name          = "backup_database",
         task          = "backup_database",
         visible       = "False",        
-        option_time   = "True",
+        trigger_time  = "True",
         option_repeat = "True",
         day           = "*",        
         hour          = "00",
@@ -2561,7 +2561,7 @@ def ADD_SCHEDULER_TASK():
 
 
 def SET_SCHEDULER_TASK(id, name, task,
-                       option_time, option_sun, option_sensors, option_position, option_repeat, option_pause, 
+                       trigger_time, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause, 
                        day, hour, minute, 
                        option_sunrise, option_sunset, location,
                        device_ieeeAddr_1, device_name_1, device_input_values_1, sensor_key_1, operator_1, value_1, main_operator_second_sensor,
@@ -2572,9 +2572,9 @@ def SET_SCHEDULER_TASK(id, name, task,
     old_name = entry.name
 
     # values changed ?
-    if (entry.name != name or entry.task != task or entry.option_time != option_time or
-        entry.option_sun != option_sun or entry.option_sensors != option_sensors or 
-        entry.option_position != option_position or entry.option_repeat != option_repeat or entry.option_pause != option_pause or 
+    if (entry.name != name or entry.task != task or entry.trigger_time != trigger_time or
+        entry.trigger_sun_position != trigger_sun_position or entry.trigger_sensors != trigger_sensors or 
+        entry.trigger_position != trigger_position or entry.option_repeat != option_repeat or entry.option_pause != option_pause or 
         entry.day != day or entry.hour != hour or entry.minute != minute or
         entry.option_sunrise != option_sunrise or entry.option_sunset != option_sunset or entry.location != location or
         entry.device_ieeeAddr_1 != device_ieeeAddr_1 or entry.sensor_key_1 != sensor_key_1 or 
@@ -2585,10 +2585,10 @@ def SET_SCHEDULER_TASK(id, name, task,
             
         entry.name                        = name
         entry.task                        = task      
-        entry.option_time                 = option_time    
-        entry.option_sun                  = option_sun            
-        entry.option_sensors              = option_sensors
-        entry.option_position             = option_position        
+        entry.trigger_time                = trigger_time    
+        entry.trigger_sun_position        = trigger_sun_position            
+        entry.trigger_sensors             = trigger_sensors
+        entry.trigger_position            = trigger_position        
         entry.option_repeat               = option_repeat
         entry.option_pause                = option_pause
         entry.day                         = day

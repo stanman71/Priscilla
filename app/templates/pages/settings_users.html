@@ -6,11 +6,11 @@
             <div class="card ">
               <div class="card-footer">    
                 <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
-                  <a href="/settings/system" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">System</a>               
-                  <a href="/settings/devices" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Geräte</a>                  
-                  <a href="/settings/controller" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Controller</a>                                      
-                  <a href="/settings/users" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Benutzer</a>                                   
-                  <a href="/settings/system_log" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Ereignisse</a>
+                  <a href="/settings/system" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">System</a>
+                  <a href="/settings/devices" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Devices</a>                  
+                  <a href="/settings/controller" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Controller</a>                                  
+                  <a href="/settings/users" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Users</a>                  
+                  <a href="/settings/system_log" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">System Log</a>
                 </div>         
               </div>  
             </div>  
@@ -27,7 +27,7 @@
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    <span>Benutzer erfolgreich hinzugefügt</span>
+    <span>User successfully added</span>
   </div>
 {% endif %}  
 
@@ -105,10 +105,10 @@
                   <div class="table-responsive">
                     <table class="table tablesorter">
                       <thead>
-                        <th scope="col" style="width:20%" class="minwidth_200">Benutzer</th>
-                        <th scope="col" style="width:20%" class="minwidth_200">eMail-Adresse</th>
-                        <th scope="col" style="width:20%" class="minwidth_200">Passwort ändern</th>
-                        <th scope="col" style="width:17%" class="minwidth_200">Optionen</th>                
+                        <th scope="col" style="width:20%" class="minwidth_200">User</th>
+                        <th scope="col" style="width:20%" class="minwidth_200">eMail-Address</th>
+                        <th scope="col" style="width:20%" class="minwidth_200">Change password</th>
+                        <th scope="col" style="width:17%" class="minwidth_200">Options</th>                
                         <th scope="col" style="width:5%"></th>
                       </thead>
                       <tbody>
@@ -148,7 +148,7 @@
                                 <div class="col-sm-10">                                    
                                   <input type="password" class="form-control" name="set_password_{{ entry.id }}" value="" /> 
                                   <br>
-                                  <label>Passwort wiederholen</label>
+                                  <label>Repeat password</label>
                                   <input type="password" class="form-control" name="set_password_repeat_{{ entry.id }}" value="" />  
                                 </div>
                               </div>
@@ -172,13 +172,13 @@
 
                               <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="radio_role_administrator_{{ entry.id }}" {% if entry.role == "administrator" %} checked="on" {% endif %} value="administrator" name="radio_role_{{ entry.id }}">
-                                <label class="custom-control-label" for="radio_role_administrator_{{ entry.id }}">Administrator</label>
+                                <label class="custom-control-label" for="radio_role_administrator_{{ entry.id }}">Admin</label>
                               </div>  
                               <br>
                               <br>   
                               <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="checkbox_email_notification_{{ entry.id }}" {% if entry.email_notification == "True" %} checked="on" {% endif %} name="checkbox_email_notification_{{ entry.id }}">
-                                <label class="custom-control-label" for="checkbox_email_notification_{{ entry.id }}">Benachrichtigungen</label>
+                                <label class="custom-control-label" for="checkbox_email_notification_{{ entry.id }}">Notifications</label>
                               </div>
                             </td>
                             <td>

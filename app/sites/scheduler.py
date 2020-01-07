@@ -35,8 +35,8 @@ def permission_required(f):
 @login_required
 @permission_required
 def scheduler():
-    page_title = 'Smarthome | Programs'
-    page_description = 'The programs configuration page.'
+    page_title       = 'Smarthome | Scheduler'
+    page_description = 'The scheduler configuration page.'
 
     success_message_change_settings                = []
     error_message_change_settings                  = []       
@@ -97,14 +97,14 @@ def scheduler():
                     
                 # name already exist
                 elif ((GET_SCHEDULER_TASK_BY_NAME(input_name) != None) and (scheduler_task.name != input_name)):
-                    error_message_change_settings.append(scheduler_task.name + " || Name - " + input_name + " - bereits vergeben")  
+                    error_message_change_settings.append(scheduler_task.name + " || Name - " + input_name + " - already taken")  
                     error_founded = True
                     name = scheduler_task.name
 
                 # no input commited
                 else:                          
                     name = GET_SCHEDULER_TASK_BY_ID(i).name
-                    error_message_change_settings.append(scheduler_task.name + " || Keinen Namen angegeben") 
+                    error_message_change_settings.append(scheduler_task.name + " || No name given") 
                     error_founded = True  
 
 
@@ -116,7 +116,7 @@ def scheduler():
                     task = request.form.get("set_task_" + str(i)).strip()
                 else:
                     task = GET_SCHEDULER_TASK_BY_ID(i).task
-                    error_message_change_settings.append("Keine Aufgabe angegeben")
+                    error_message_change_settings.append("No task given")
 
 
                 # #################
@@ -124,28 +124,28 @@ def scheduler():
                 # #################
 
                 # set checkbox time
-                if request.form.get("checkbox_option_time_" + str(i)):
-                    option_time = "True"
+                if request.form.get("checkbox_trigger_time_" + str(i)):
+                    trigger_time = "True"
                 else:
-                    option_time = ""  
+                    trigger_time = ""  
 
                 # set checkbox sun
-                if request.form.get("checkbox_option_sun_" + str(i)):
-                    option_sun = "True"
+                if request.form.get("checkbox_trigger_sun_position" + str(i)):
+                    trigger_sun_position = "True"
                 else:
-                    option_sun = "" 
+                    trigger_sun_position = "" 
 
                 # set checkbox sensors
-                if request.form.get("checkbox_option_sensors_" + str(i)):
-                    option_sensors = "True"
+                if request.form.get("checkbox_trigger_sensors_" + str(i)):
+                    trigger_sensors = "True"
                 else:
-                    option_sensors = ""  
+                    trigger_sensors = ""  
 
                 # set checkbox position
-                if request.form.get("checkbox_option_position_" + str(i)):
-                    option_position = "True"
+                if request.form.get("checkbox_trigger_position_" + str(i)):
+                    trigger_position = "True"
                 else:
-                    option_position = ""  
+                    trigger_position = ""  
                                        
                 # set checkbox repeat
                 if request.form.get("checkbox_option_repeat_" + str(i)):
@@ -336,7 +336,7 @@ def scheduler():
                 if error_founded == False: 
 
                     if SET_SCHEDULER_TASK(i, name, task, 
-                                            option_time, option_sun, option_sensors, option_position, option_repeat, option_pause,
+                                            trigger_time, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause,
                                             day, hour, minute,
                                             option_sunrise, option_sunset, location,
                                             device_ieeeAddr_1, device_name_1, device_input_values_1, 
@@ -359,7 +359,7 @@ def scheduler():
             result = DELETE_SCHEDULER_TASK(i)            
 
             if result:
-                success_message_change_settings.append(scene + " || Erfolgreich gelöscht") 
+                success_message_change_settings.append(scene + " || Task successfully deleted") 
             else:
                 error_message_change_settings.append(scene + " || " + str(result))
 

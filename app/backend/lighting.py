@@ -257,8 +257,8 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting_json, limit):
     
     except Exception as e:
         print(e)
-        WRITE_LOGFILE_SYSTEM("ERROR", "Lighting | Start Scene | " + str(e))
-        SEND_EMAIL("ERROR", "Lighting | Start Scene | " + str(e))            
+        WRITE_LOGFILE_SYSTEM("ERROR", "Lighting | Start scene | " + str(e))
+        SEND_EMAIL("ERROR", "Lighting | Start scene | " + str(e))            
         return [str(e)]
     
         
@@ -411,8 +411,8 @@ def SET_LIGHTING_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
 
     
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Lighting | Start Scene | " + str(e))            
-        SEND_EMAIL("ERROR", "Lighting | Start Scene | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "Lighting | Start scene | " + str(e))            
+        SEND_EMAIL("ERROR", "Lighting | Start scene | " + str(e))
         return [str(e)]
     
 
@@ -502,7 +502,7 @@ def SET_LIGHTING_GROUP_BRIGHTNESS(group_id, brightness_global = 100):
     
     
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Lighting | Set Brightness | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "Lighting | Set brightness | " + str(e))
         SEND_EMAIL("ERROR", "Lighting | Set Brightness | " + str(e))            
         return [str(e)]
 

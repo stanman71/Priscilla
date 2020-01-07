@@ -178,14 +178,14 @@ def cameras():
                     
                 # name already exist
                 elif ((GET_CAMERA_BY_NAME(input_name) != None) and (camera.name != input_name)):
-                    error_message_change_settings.append(camera.name + " || Name - " + input_name + " - bereits vergeben")  
+                    error_message_change_settings.append(camera.name + " || Name - " + input_name + " - already taken")  
                     error_founded = True
                     name = camera.name
 
                 # no input commited
                 else:                          
                     name = GET_CAMERA_BY_ID(i).name
-                    error_message_change_settings.append(camera.name + " || Keinen Namen angegeben") 
+                    error_message_change_settings.append(camera.name + " || No name given") 
                     error_founded = True  
 
 
@@ -205,14 +205,14 @@ def cameras():
                     
                 # url already exist
                 elif ((GET_CAMERA_BY_URL(input_url) != None) and (camera.url != input_url)):
-                    error_message_change_settings.append(camera.name + " || URL bereits vergeben")  
+                    error_message_change_settings.append(camera.name + " || URL already taken")  
                     error_founded = True
                     url = camera.url
 
                 # no input commited
                 else:                          
                     url = GET_CAMERA_BY_ID(i).url
-                    error_message_change_settings.append(camera.name + " || Keine URL angegeben") 
+                    error_message_change_settings.append(camera.name + " || No URL given") 
                     error_founded = True  
 
             
@@ -227,7 +227,7 @@ def cameras():
                 # save settings
                 if error_founded == False: 
                     if SET_CAMERA_SETTINGS(i, name, url, user, password):
-                        success_message_change_settings.append(name + " || Einstellungen gespeichert || System muss neugestartet werden") 
+                        success_message_change_settings.append(name + " || Settings successfully saved - System restart nessessary") 
 
 
     """ ############# """
@@ -305,7 +305,7 @@ def delete_camera(id):
     result  = DELETE_CAMERA(id)
 
     if result == True:
-        session['delete_camera_success'] = camera + " || Erfolgreich gelöscht"
+        session['delete_camera_success'] = camera + " || Camera successfully deleted"
     else:
         session['delete_camera_error'] = camera + " || " + str(result)
 

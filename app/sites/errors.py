@@ -24,7 +24,7 @@ def http_err(err_code):
 
 @app.errorhandler(400)
 def e400(e):
-    page_title = 'Smarthome | Error'
+    page_title       = 'Smarthome | Error'
     page_description = 'error 400'
 
     data          = {'navigation': 'None'}
@@ -41,7 +41,7 @@ def e400(e):
 
 @app.errorhandler(401)
 def e401(e):
-    page_title = 'Smarthome | Error'
+    page_title       = 'Smarthome | Error'
     page_description = 'error 401'
 
     data          = {'navigation': 'None'}
@@ -58,7 +58,7 @@ def e401(e):
 
 @app.errorhandler(403)
 def e403(e):
-    page_title = 'Smarthome | Error'
+    page_title       = 'Smarthome | Error'
     page_description = 'error 403'
 
     data          = {'navigation': 'None'}
@@ -75,7 +75,7 @@ def e403(e):
 
 @app.errorhandler(404)
 def e404(e):
-    page_title = 'Smarthome | Error'
+    page_title       = 'Smarthome | Error'
     page_description = 'error 404'
 
     data          = {'navigation': 'None'}
@@ -92,7 +92,7 @@ def e404(e):
 
 @app.errorhandler(410)
 def e410(e):
-    page_title = 'Smarthome | Error'
+    page_title       = 'Smarthome | Error'
     page_description = 'error 410'
 
     data          = {'navigation': 'None'}
@@ -109,7 +109,7 @@ def e410(e):
 
 @app.errorhandler(500)
 def e500(e):
-    page_title = 'Smarthome | Error'
+    page_title       = 'Smarthome | Error'
     page_description = 'error 500'
 
     data          = {'navigation': 'None'}

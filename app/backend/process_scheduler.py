@@ -33,14 +33,14 @@ def PROCESS_SCHEDULER(task, ieeeAddr):
    start_task = False
 
    # check time   
-   if task.option_time == "True":
+   if task.trigger_time == "True":
       if not CHECK_SCHEDULER_TIME(task):
          return
       else:
          start_task = True
 
    # check sensors
-   if task.option_sensors == "True":
+   if task.trigger_sensors == "True":
 
       # find sensor jobs with fitting ieeeAddr only
       if (task.device_ieeeAddr_1 == ieeeAddr or task.device_ieeeAddr_2 == ieeeAddr):
@@ -49,21 +49,23 @@ def PROCESS_SCHEDULER(task, ieeeAddr):
          else:
             start_task = True
 
-   # check sun
-   if task.option_sunrise == "True":
-      if not CHECK_SCHEDULER_SUNRISE(task):
-         return   
-      else:
-         start_task = True
+   # check sun_position
+   if task.trigger_sun_position == "True": 
 
-   if task.option_sunset == "True":
-      if not CHECK_SCHEDULER_SUNSET(task):
-         return     
-      else:
-         start_task = True
+      if task.option_sunrise == "True":
+         if not CHECK_SCHEDULER_SUNRISE(task):
+            return   
+         else:
+            start_task = True
+
+      if task.option_sunset == "True":
+         if not CHECK_SCHEDULER_SUNSET(task):
+            return     
+         else:
+            start_task = True
 
    # check position
-   if task.option_position == "True": 
+   if task.trigger_position == "True": 
    
       if task.option_home == "True" or task.option_away == "True":
          ping_result = CHECK_SCHEDULER_PING(task)
@@ -298,8 +300,7 @@ def CHECK_SCHEDULER_SENSORS(task):
       
       # Options: <, >, =
    
-      if ((task.main_operator_second_sensor == ">" or task.main_operator_second_sensor == "<" or task.main_operator_second_sensor == "=") and
-          (sensor_value_1 != "Message nicht gefunden" and sensor_value_2 != "Message nicht gefunden")):
+      if task.main_operator_second_sensor == ">" or task.main_operator_second_sensor == "<" or task.main_operator_second_sensor == "=":
          
          if task.main_operator_second_sensor == "=":
             try:
@@ -334,7 +335,7 @@ def CHECK_SCHEDULER_SENSORS(task):
          passing_1 = False
          
          try:
-            if task.operator_1 == "=" and not task.value_1.isdigit() and sensor_value_1 != "Message nicht gefunden":
+            if task.operator_1 == "=" and not task.value_1.isdigit():
                if str(sensor_value_1).lower() == str(task.value_1).lower():
                   passing_1 = True
                else:
@@ -375,7 +376,7 @@ def CHECK_SCHEDULER_SENSORS(task):
          passing_2 = False
             
          try:             
-            if task.operator_2 == "=" and not task.value_2.isdigit() and sensor_value_1 != "Message nicht gefunden":
+            if task.operator_2 == "=" and not task.value_2.isdigit():
                if str(sensor_value_2).lower() == str(task.value_2).lower():
                   passing_2 = True
                else:
@@ -686,7 +687,7 @@ def START_SCHEDULER_TASK(task_object):
                   START_PROGRAM_THREAD(program.id)
                   
                elif task[2] == "start" and GET_PROGRAM_STATUS() != "None":
-                  WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | Other Program running")  
+                  WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | Other program running")  
 
                elif task[2] == "stop":
                   STOP_PROGRAM_THREAD() 
@@ -696,13 +697,13 @@ def START_SCHEDULER_TASK(task_object):
                   SET_REPEAT_PROGRAM(True)
                   
                elif task[2] == "repeat" and GET_PROGRAM_STATUS() != "None":
-                  WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | Other Program running")  
+                  WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | Other program running")  
 
                elif task[2] == "force":
                   START_PROGRAM_THREAD(program.id, True)               
                   
                else:
-                  WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Command not valid")
+                  WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Invalid command")
 
          else:
                WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Program not founded")           

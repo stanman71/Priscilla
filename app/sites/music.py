@@ -45,7 +45,7 @@ list_search_album_results = ""
 @login_required
 @permission_required
 def music():    
-    page_title = 'Smarthome | Music'
+    page_title       = 'Smarthome | Music'
     page_description = 'The music configuration page.'
 
     global list_search_track_results
@@ -306,7 +306,7 @@ def music():
                             if result != True:
                                 error_message_change_settings_client_music.append(result)
                             else:
-                                success_message_change_settings_client_music.append(device.name + " || Einstellungen gespeichert")
+                                success_message_change_settings_client_music.append(device.name + " || Settings successfully saved")
                                 
                                 # update last values for GUI
                                 try:
@@ -330,7 +330,7 @@ def music():
                         if result != True:
                             error_message_change_settings_client_music.append(result)
                         else:
-                            success_message_change_settings_client_music.append(device.name + " || Einstellungen gespeichert")
+                            success_message_change_settings_client_music.append(device.name + " || Settings successfully saved")
                             
                             # update last values for GUI
                             try:
@@ -352,7 +352,7 @@ def music():
                 heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
 
     else:
-        error_message_change_settings_client_music.append("Keine MQTT-Verbindung")
+        error_message_change_settings_client_music.append("No MQTT connection")
 
     list_client_music = GET_ALL_DEVICES("client_music")
     default_settings  = GET_SPOTIFY_SETTINGS()

@@ -38,7 +38,7 @@ def load_user(user_id):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    page_title = 'Smarthome | Index'
+    page_title       = 'Smarthome | Index'
     page_description = 'The login page'    
 
     # define login form here

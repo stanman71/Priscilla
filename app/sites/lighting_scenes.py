@@ -33,7 +33,7 @@ lighting_scenes_rgb_values_array = [[0 for x in range(10)] for y in range(10)]
 @login_required
 @permission_required
 def lighting_scenes():
-    page_title = 'Smarthome | Lighting | Scenes'
+    page_title       = 'Smarthome | Lighting | Scenes'
     page_description = 'The lighting scenes configuration page.'
 
     global lighting_scenes_rgb_values_array
@@ -100,12 +100,12 @@ def lighting_scenes():
                 # name already exist
                 elif ((GET_LIGHTING_SCENE_BY_NAME(input_name) != None) and (lighting_scene.name != input_name)):
                     name = lighting_scene.name 
-                    error_message_change_settings_lighting_scene = {"scene_number": i,"message": "Name - " + input_name + " - bereits vergeben"}
+                    error_message_change_settings_lighting_scene = {"scene_number": i,"message": "Name - " + input_name + " - already taken"}
 
                 # no input commited
                 else:                          
                     name = GET_LIGHTING_SCENE_BY_ID(i).name 
-                    error_message_change_settings_lighting_scene = {"scene_number": i,"message": "Keinen Namen angegeben"}
+                    error_message_change_settings_lighting_scene = {"scene_number": i,"message": "No name given"}
 
 
                 #######
@@ -371,7 +371,7 @@ def lighting_scenes():
             result = DELETE_LIGHTING_SCENE(i)    
 
             if result:
-                success_message_change_settings.append(scene + " || Erfolgreich gelöscht") 
+                success_message_change_settings.append(scene + " || Scene successfully deleted") 
             else:
                 error_message_change_settings.append(scene + " || " + str(result))
 

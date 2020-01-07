@@ -38,7 +38,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def sensordata_statistics():
-    page_title = 'Smarthome | Sensordata | Statistics'
+    page_title       = 'Smarthome | Sensordata | Statistics'
     page_description = 'The sensordata statistics page.'
 
     global dropdown_list_dates_temp
@@ -91,9 +91,9 @@ def sensordata_statistics():
             else:
                 df = df_1
                 if data_file_2 == data_file_3 and data_file_2 != "" and data_file_2 != "None":
-                    error_message_select_datafiles.append("Datei " + data_file_2 + " mehrmals ausgewählt")
+                    error_message_select_datafiles.append("File " + data_file_2 + " selected several times")
                 if data_file_1 == data_file_2 or data_file_1 == data_file_3:
-                    error_message_select_datafiles.append("Datei " + data_file_1 + " mehrmals ausgewählt")  
+                    error_message_select_datafiles.append("File " + data_file_1 + " selected several times")  
 
             import datetime as dt
 
@@ -128,10 +128,10 @@ def sensordata_statistics():
                     dropdown_list_dates.append(date_temp)        
                 
             except Exception as e:
-                error_message_select_datafiles.append("Fehler beim Öffnen der Datein || " + str(e))
+                error_message_select_datafiles.append("Error opening files || " + str(e))
 
         else:
-            error_message_select_datafiles.append("Keine Datei ausgewählt")
+            error_message_select_datafiles.append("No file selected")
         
         
     # update dropdown_list_dates_temp or get former dropdown_list_dates
@@ -215,10 +215,10 @@ def sensordata_statistics():
                     graph_created = True
          
             else:
-                error_message_create_graph.append("Zeitraum >>> 1. Datum muss kleiner als das 2. Datum sein")
+                error_message_create_graph.append("Time || First date must be earlier than second date")
 
         except Exception as e:
-            error_message_create_graph.append("Daten konnten nicht verarbeitet werden || " + str(e))
+            error_message_create_graph.append("Data could not be processed || " + str(e))
 
     dropdown_list_sensordata_files = GET_SENSORDATA_FILES() 
 

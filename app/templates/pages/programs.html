@@ -19,7 +19,7 @@
 
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title"><b>Programme</b></h4>
+                <h4 class="card-title"><b>Programs</b></h4>
               </div>
             </div>
 
@@ -35,7 +35,7 @@
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    <span>Programm erfolgreich hinzugefügt</span>
+    <span>Program successfully added</span>
   </div>
 {% endif %}  
 
@@ -106,7 +106,7 @@
                             {% endif %}
                           {% endfor %}       
                         {% else %}
-                        <option value= "" > Keine Programme gefunden </option>    
+                        <option value= "" > No programs founded </option>    
                         {% endif %}                           
                       </select>      
                     </div>
@@ -869,7 +869,7 @@
 
             <div class="card">
               <div class="card-header">
-                <a data-toggle="collapse" href="#collapse_info"><font color="white"><b><i class='uil uil-arrow-down'> Befehle </i></b></font></a>
+                <a data-toggle="collapse" href="#collapse_info"><font color="white"><b><i class='uil uil-arrow-down'> Commands </i></b></font></a>
                 <br>
                 <br>
               </div>                 
@@ -883,7 +883,7 @@
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                10 Sekunden Pause
+                                break 10 seconds
                               </div>
                             </div>                                   
                           </td>
@@ -893,15 +893,15 @@
                           <td></td>
                         </tr>         
                         <tr>
-                          <td><h4><p class="text-muted">Beleuchtung</p></h4></td>
+                          <td><h4><p class="text-muted">Lighting</p></h4></td>
                           <td></td>
                         </tr>                                                                       
                         <tr>
-                          <td>lighting # scene # wohnzimmer # relax # 100</td>
+                          <td>lighting # scene # livingroom # relax # 100</td>
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                Starte Lichter der Gruppe "wohnzimmer" mit Szene "relax" und Helligkeit "100%" 
+                                start | scene "relax" | group "livingroom" | brightness "100%"
                               </div>
                             </div>  
                             <br>
@@ -910,13 +910,13 @@
                                 100 >> 
                               </div>
                               <div class="col-sm-8"> 
-                                Helligkeit 100 % 
+                                brightness 100 % 
                               </div>                        
                             </div>     
                             <br>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
-                                Beleuchtung - Gruppen >>
+                                Lighting - Groups >>
                               </div>
                               <div class="col-sm-8">   
                                 {% for group in list_lighting_group_options %}
@@ -926,7 +926,7 @@
                             </div>  
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
-                                Beleuchtung - Szenen >>
+                                Lighting - Scenes >>
                               </div>
                               <div class="col-sm-8">   
                                 {% for scene in list_lighting_scene_options %}
@@ -935,29 +935,29 @@
                               </div>  
                             </div>                              
                           </td>                                
-                        </tr>                             
-                        <tr>
-                          <td>lighting # turn_off # group # flur, bad</td>
-                          <td>Lichter der Gruppe "flur" und "bad" ausschalten</td>
+                        </tr>
+                        <tr>                        
+                          <td>lighting # turn_off # group # kitchen, bathroom</td>
+                          <td>turn off the lights of group "bathroom" and "kitchen"</td>
                         </tr>               
                         <tr>
                           <td>lighting # turn_off # ALL</td>
-                          <td>alle Lichter ausschalten</td>
+                          <td>turn off all lights</td>
                         </tr> 
                         <tr>
                           <td></td>
                           <td></td>
                         </tr>       
                         <tr>
-                          <td><h4><p class="text-muted">Geräte</p></h4></td>
+                          <td><h4><p class="text-muted">Devices</p></h4></td>
                           <td></td>
                         </tr>                                         
                         <tr>
-                          <td>device # Steckdose_TV, Steckdose_Server # OFF</td>   
+                          <td>device # Power_TV, Power_Server # OFF</td>   
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                Gerät "Steckdose_TV" und "Steckdose_Server" ausschalten
+                                send | command "OFF" | devices "Power_TV" and "Power_Server"
                               </div>
                             </div>  
                             <br>
@@ -978,7 +978,7 @@
                           <td></td>
                         </tr>     
                         <tr>
-                          <td><h4><p class="text-muted">Sensordaten</p></h4></td>
+                          <td><h4><p class="text-muted">Sensordata</p></h4></td>
                           <td></td>
                         </tr>                           
                         <tr>
@@ -986,13 +986,13 @@
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                Sensordaten von "sensor_1" abfragen und speichern
+                                request and save "sensor_1" data
                               </div>
                             </div>        
                             <br>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
-                                Sensordaten Jobs >>
+                                Sensordata Jobs >>
                               </div>
                               <div class="col-sm-8">   
                                 {% for job in list_sensordata_job_options %}
@@ -1007,7 +1007,7 @@
                           <td></td>
                         </tr>                                          
                         <tr>
-                          <td><h4><p class="text-muted">Musik</p></h4></td>
+                          <td><h4><p class="text-muted">Music</p></h4></td>
                           <td></td>
                         </tr>                           
                         <tr>
@@ -1015,7 +1015,7 @@
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                letztes Lied / Album / Playlist auf "aktiven" Spotify-Gerät starten oder DEFAULT_SETTINGS
+                                start last song / album / playlist on active spotify-device or start DEFAULT_SETTINGS
                               </div>
                             </div>  
                             <br>                          
@@ -1025,7 +1025,7 @@
                                 PLAY >> 
                               </div>
                               <div class="col-sm-8"> 
-                                abspielen starten
+                                start playing
                               </div>                        
                             </div>                                            
                             <div class="row justify-content-md-center">
@@ -1033,7 +1033,7 @@
                                 PREVIOUS >> 
                               </div>
                               <div class="col-sm-8"> 
-                                vorheriger Track 
+                                previous track 
                               </div>                        
                             </div>    
                             <div class="row justify-content-md-center">
@@ -1041,7 +1041,7 @@
                                 NEXT >> 
                               </div>
                               <div class="col-sm-8"> 
-                                nächster Track 
+                                next track
                               </div>                        
                             </div>                        
                             <div class="row justify-content-md-center">
@@ -1049,7 +1049,7 @@
                                 STOP >> 
                               </div>
                               <div class="col-sm-8"> 
-                                abspielen stoppen
+                                stop playing
                               </div>                        
                             </div>                        
                             <div class="row justify-content-md-center">
@@ -1057,13 +1057,13 @@
                                 VOLUME # 70 >> 
                               </div>
                               <div class="col-sm-8"> 
-                                Lautstärke auf 70%
+                                set volume to 70%
                               </div>
                             </div>                        
                             <br>        
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
-                                Spotify - Geräte >>
+                                Spotify - Devices >>
                               </div>
                               <div class="col-sm-8">   
                                 {% for device in list_spotify_devices %}
@@ -1092,17 +1092,17 @@
                           </td>                    
                         </tr>                                                    
                         <tr>
-                          <td>spotify # playlist # PC # Gemischt # 50</td>
-                          <td>Playlist "Gemischt" auf Gerät "PC" mit Lautstärke 50 % starten</td>
+                          <td>spotify # playlist # PC # Rock # 50</td>
+                          <td>start | playlist "Rock" | device "PC"</td>
                         </tr>     
                         <tr>
                           <td>spotify # track # PC # Go Time # Young Mozart # 25</td>
-                          <td>Track "Go Time" von "Young Mozart" auf Gerät "PC" mit Lautstärke 25 % starten</td>
+                          <td>start | track "Go Time" | interprets "Young Mozart" | device "PC" | volume "25%"</td>
                         </tr>     
                         <tr>
                           <td>spotify # album # PC # Hold On # Nano # 60</td>
-                          <td>Album "Hold On" von "Nano" auf Gerät "PC" mit Lautstärke 60 % starten</td>
-                        </tr>                                                                                       
+                          <td>start | album "Hold On" | interprets "Nano" | device "PC" | volume "25%"</td>
+                        </tr>                                                                                                    
                       </tbody>
                     </table>                
                   </div>                 

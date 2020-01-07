@@ -32,7 +32,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_users():
-    page_title = 'Smarthome | Settings | Users'
+    page_title       = 'Smarthome | Settings | Users'
     page_description = 'The users configuration page.'
 
     success_message_add_user           = False
@@ -102,14 +102,14 @@ def settings_users():
                     
                 # name already exist
                 elif ((GET_USER_BY_NAME(input_name) != None) and (user.name != input_name)):
-                    error_message_change_settings.append(user.name + " || Name - " + input_name + " - bereits vergeben")  
+                    error_message_change_settings.append(user.name + " || Name - " + input_name + " - already taken")  
                     error_founded = True
                     name = user.name
 
                 # no input commited
                 else:                          
                     name = GET_USER_BY_ID(i).name
-                    error_message_change_settings.append(user.name + " || Keinen Namen angegeben") 
+                    error_message_change_settings.append(user.name + " || No name given") 
                     error_founded = True  
 
 
@@ -129,14 +129,14 @@ def settings_users():
                     
                 # email already exist
                 elif ((GET_USER_BY_EMAIL(input_email) != None) and (user.email != input_email)):
-                    error_message_change_settings.append(user.name + " || eMail-Adresse - " + input_email + " - bereits vergeben") 
+                    error_message_change_settings.append(user.name + " || eMail - " + input_email + " - already taken") 
                     error_founded = True
                     email = user.email 
 
                 # no input commited
                 else:                          
                     email = GET_USER_BY_ID(i).email
-                    error_message_change_settings.append(user.name + " || Keine eMail-Adresse angegeben") 
+                    error_message_change_settings.append(user.name + " || No eMail given") 
                     error_founded = True  
 
 
@@ -154,13 +154,13 @@ def settings_users():
                                 hashed_password = generate_password_hash(password, method='sha256')
                                     
                             else:
-                                error_message_change_settings.append(user.name + " || Eingegebene Passwörter sind nicht identisch")
+                                error_message_change_settings.append(user.name + " || Passwords are not identical")
                             
                         else:    
-                            error_message_change_settings.append(user.name + " || Passwort muss zwischen 8 und 20 Zeichen haben")
+                            error_message_change_settings.append(user.name + " || Password must have between 8 and 20 characters")
                             
                     except:
-                        error_message_change_settings.append(user.name + " || Passwort muss zwischen 8 und 20 Zeichen haben")
+                        error_message_change_settings.append(user.name + " || Password must have between 8 and 20 characters")
 
 
                 # role
@@ -186,14 +186,14 @@ def settings_users():
                             changes_saved = True
 
                     if changes_saved == True:
-                        success_message_change_settings.append(name + " || Einstellungen erfolgreich gespeichert") 
+                        success_message_change_settings.append(name + " || Settings successfully saved") 
 
 
     user_list = GET_ALL_USERS()
 
     try:                                        
         if GET_USER_BY_NAME("admin").password == "sha256$OeDkVenT$bc8d974603b713097e69fc3efa1132991bfb425c59ec00f207e4b009b91f4339":
-            message_admin_password_not_changed = "admin || Passwort muss geändert werden"
+            message_admin_password_not_changed = "admin || Password must be changed"
     except:
         pass
 
@@ -225,7 +225,7 @@ def delete_user(id):
     result = DELETE_USER(id)
 
     if result == True:
-        session['delete_user_success'] = name + " || Erfolgreich gelöscht"
+        session['delete_user_success'] = name + " || User successfully deleted"
     else:
         session['delete_user_error'] = name + " || " + str(result)
 

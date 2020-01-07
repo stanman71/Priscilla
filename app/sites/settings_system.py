@@ -88,7 +88,7 @@ def SYSTEM_SHUTDOWN():
 @login_required
 @permission_required
 def settings_system():
-    page_title = 'Smarthome | Settings | System'
+    page_title       = 'Smarthome | Settings | System'
     page_description = 'The system configuration page.'
 
     success_message_change_settings_services = False    
@@ -137,13 +137,13 @@ def settings_system():
     if request.form.get("restart_system") != None:
         Thread = threading.Thread(target=SYSTEM_REBOOT)
         Thread.start()    
-        message_system = "System wird in 10 Sekunden neugestartet"
+        message_system = "System will restart in 10 seconds"
         
     # shutdown raspi 
     if request.form.get("shutdown_system") != None:
         Thread = threading.Thread(target=SYSTEM_SHUTDOWN)
         Thread.start()    
-        message_system = "System wird in 10 Sekunden heruntergefahren"
+        message_system = "System will shutdown in 10 seconds"
 
 
     """ ################### """
@@ -152,97 +152,90 @@ def settings_system():
 
     if request.form.get("update_settings_services") != None:
 
-        error_founded = False
-
         if request.form.get("radio_zigbee2mqtt_active") != None:
             zigbee2mqtt_active = request.form.get("radio_zigbee2mqtt_active")
         else:
-            error_message_change_settings_services.append("Ungültige Eingabe Zigbee || Keinen Wert angegeben") 
-            error_founded = True           
+            zigbee2mqtt_active = "False"        
 
         if request.form.get("radio_lms_active") != None:
             lms_active = request.form.get("radio_lms_active")
         else:
-            error_message_change_settings_services.append("Ungültige Eingabe Logitech Media Server || Keinen Wert angegeben") 
-            error_founded = True      
+            zigbee2mqtt_active = "False"       
 
         if request.form.get("radio_squeezelite_active") != None:
             squeezelite_active = request.form.get("radio_squeezelite_active")
         else:
-            error_message_change_settings_services.append("Ungültige Eingabe Squeezelite Player || Keinen Wert angegeben") 
-            error_founded = True          
+            zigbee2mqtt_active = "False"           
 
-        if error_founded == False:
+        if SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active, lms_active, squeezelite_active):
+            success_message_change_settings_services = True
 
-            if SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active, lms_active, squeezelite_active):
-                success_message_change_settings_services = True
+            # zigbee
 
-                # zigbee
+            if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
+                try:
+                    os.system("sudo systemctl start zigbee2mqtt")
+                    WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | ZigBee2MQTT | enabled")       
+                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled") 
+                    print("System | Services | ZigBee2MQTT | enabled") 
+                    time.sleep(1)
+                except Exception as e:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | ZigBee2MQTT | " + str(e)) 
+                    print("ERROR: System | Services | ZigBee2MQTT | " + str(e))      
 
-                if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
-                    try:
-                        os.system("sudo systemctl start zigbee2mqtt")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | ZigBee2MQTT | enabled")       
-                        SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled") 
-                        print("System | Services | ZigBee2MQTT | enabled") 
-                        time.sleep(1)
-                    except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | ZigBee2MQTT | " + str(e)) 
-                        print("ERROR: System | Services | ZigBee2MQTT | " + str(e))      
+            else:
+                try:
+                    os.system("sudo systemctl stop zigbee2mqtt")
+                    WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | ZigBee2MQTT | disabled")
+                    print("System | Services | ZigBee2MQTT | disabled") 
+                    time.sleep(1)
+                except Exception as e:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | ZigBee2MQTT | " + str(e)) 
+                    print("ERROR: System | Services | ZigBee2MQTT | " + str(e)) 
+        
+            # logitech media server
 
-                else:
-                    try:
-                        os.system("sudo systemctl stop zigbee2mqtt")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | ZigBee2MQTT | disabled")
-                        print("System | Services | ZigBee2MQTT | disabled") 
-                        time.sleep(1)
-                    except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | ZigBee2MQTT | " + str(e)) 
-                        print("ERROR: System | Services | ZigBee2MQTT | " + str(e)) 
-           
-                # logitech media server
+            if GET_SYSTEM_SETTINGS().lms_active == "True":
+                try:
+                    os.system("sudo systemctl start logitechmediaserver")
+                    WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Logitech Media Server | enabled")
+                    print("System | Services | Logitech Media Server | enabled") 
+                    time.sleep(1)
+                except Exception as e:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
+                    print("ERROR: System | Services | Logitech Media Server | " + str(e))       
 
-                if GET_SYSTEM_SETTINGS().lms_active == "True":
-                    try:
-                        os.system("sudo systemctl start logitechmediaserver")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Logitech Media Server | enabled")
-                        print("System | Services | Logitech Media Server | enabled") 
-                        time.sleep(1)
-                    except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
-                        print("ERROR: System | Services | Logitech Media Server | " + str(e))       
- 
-                else: 
-                    try:
-                        os.system("sudo systemctl stop logitechmediaserver")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services |Logitech Media Server | disabled")
-                        print("System | Services | Logitech Media Server | disabled") 
-                        time.sleep(1)
-                    except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
-                        print("ERROR: System | Services | Logitech Media Server | " + str(e)) 
+            else: 
+                try:
+                    os.system("sudo systemctl stop logitechmediaserver")
+                    WRITE_LOGFILE_SYSTEM("EVENT", "System | Services |Logitech Media Server | disabled")
+                    print("System | Services | Logitech Media Server | disabled") 
+                    time.sleep(1)
+                except Exception as e:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
+                    print("ERROR: System | Services | Logitech Media Server | " + str(e)) 
 
-                # squeezelite player
+            # squeezelite player
 
-                if GET_SYSTEM_SETTINGS().squeezelite_active == "True":
-                    try:
-                        os.system("sudo systemctl start squeezelite")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | enabled")
-                        print("System | Services | Squeezelie Player | enabled") 
-                        time.sleep(1)
-                    except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
-                        print("ERROR: System | Services | Squeezelie Player | " + str(e))     
+            if GET_SYSTEM_SETTINGS().squeezelite_active == "True":
+                try:
+                    os.system("sudo systemctl start squeezelite")
+                    WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | enabled")
+                    print("System | Services | Squeezelie Player | enabled") 
+                    time.sleep(1)
+                except Exception as e:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
+                    print("ERROR: System | Services | Squeezelie Player | " + str(e))     
 
-                else:
-                    try:
-                        os.system("sudo systemctl stop squeezelite")
-                        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | disabled")
-                        print("System | Services | Squeezelie Player | disabled") 
-                        time.sleep(1)
-                    except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
-                        print("ERROR: System | Services | Squeezelie Player | " + str(e)) 
+            else:
+                try:
+                    os.system("sudo systemctl stop squeezelite")
+                    WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | disabled")
+                    print("System | Services | Squeezelie Player | disabled") 
+                    time.sleep(1)
+                except Exception as e:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
+                    print("ERROR: System | Services | Squeezelie Player | " + str(e)) 
 
 
     """ ################# """
@@ -270,32 +263,32 @@ def settings_system():
                     if new_ip_address != ip_address:
 
                         if CHECK_IP_ADDRESS(new_ip_address) == False:
-                            error_message_change_settings_network.append("Netzwerk || Ungültige IP-Adresse angegeben")
+                            error_message_change_settings_network.append("Network || Invalid IP-Address")
                             save_settings_lan = False
                                 
                         elif PING_IP_ADDRESS(new_ip_address) == True or new_ip_address == GET_SYSTEM_SETTINGS().ip_address:
-                            error_message_change_settings_network.append("Netzwerk || IP-Adresse bereits vergeben")
+                            error_message_change_settings_network.append("Network || IP-Address already taken")
                             save_settings_lan = False
 
                         else:
                             ip_address = new_ip_address
 
                 else:
-                    error_message_change_settings_network.append("Netzwerk || Keine IP-Adresse angegeben") 
+                    error_message_change_settings_network.append("Network || No IP-Address given") 
                     
                 if request.form.get("set_gateway") != "":
                     gateway = request.form.get("set_gateway").strip()              
 
                     if CHECK_IP_ADDRESS(gateway) == False:
-                        error_message_change_settings_network.append("Netzwerk || Ungültiges Gateway angegeben")
+                        error_message_change_settings_network.append("Network || Invalid gateway")
                         save_settings_lan = False
                         
                     if CHECK_IP_ADDRESS(gateway) == True and PING_IP_ADDRESS(gateway) == False:
-                        error_message_change_settings_network.append("Netzwerk || Gateway nicht gefunden")
+                        error_message_change_settings_network.append("Network || Gateway not founded")
                         save_settings_lan = False
 
                 else:
-                    error_message_change_settings_network.append("Netzwerk || Kein Gateway angegeben") 
+                    error_message_change_settings_network.append("Network || No gateway given") 
                     save_settings_lan = False
 
                 if save_settings_lan == True:
@@ -361,7 +354,7 @@ def settings_system():
             settings.username == "" or 
             settings.password == ""):
 
-            message_test_settings_email = "eMail-Einstellungen sind unvollständig"    
+            message_test_settings_email = "eMail settings are incomplete"    
 
         else:   
             message_test_settings_email = SEND_EMAIL("TEST", "TEST")
@@ -375,7 +368,7 @@ def settings_system():
         result = BACKUP_DATABASE() 
         
         if result:
-            success_message_backup_database = "Backup || Erfolgreich erstellt"
+            success_message_backup_database = "Backup || Successfully deleted"
         else:
             error_message_backup_database = "Backup || " + str(result)
 
@@ -418,7 +411,7 @@ def restore_database_backup(filename):
     result = RESTORE_DATABASE(filename)
 
     if result == True:
-        session['restore_database_success'] = filename + " || Erfolgreich wiederhergestellt"
+        session['restore_database_success'] = filename + " || Successfully restored"
     else:
         session['restore_database_error'] = filename + " || " + result
 
@@ -433,7 +426,7 @@ def delete_database_backup(filename):
     result = DELETE_DATABASE_BACKUP(filename)
 
     if result == True:
-        session['delete_database_success'] = filename + " || Erfolgreich gelöscht"
+        session['delete_database_success'] = filename + " || Successfully deleted"
     else:
         session['delete_database_error'] = filename + " || " + result
 

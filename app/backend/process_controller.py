@@ -260,11 +260,11 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                     controller_command + " | Scene - " + task[3] + " | not founded")
+                                     controller_command + " | Scene - " + task[3] + " - not founded")
 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                 controller_command + " | Group - " + task[2] + " | not founded")
+                                 controller_command + " | Group - " + task[2] + " - not founded")
 
 
     # #################
@@ -324,11 +324,11 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                     controller_command + " | Command - " + task[3] + " | not valid")
+                                     controller_command + " | Command - " + task[3] + " - invalid")
 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                 controller_command + " | Group - " + task[2] + " | not founded")
+                                 controller_command + " | Group - " + task[2] + " - not founded")
 
 
     # #########
@@ -367,7 +367,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             # group not founded
             if group_founded == False:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                     controller_command + " | Group - " + input_group_name + " | not founded")
+                                     controller_command + " | Group - " + input_group_name + " - not founded")
 
 
         if task[2].lower() == "all":
@@ -421,7 +421,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                     WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | " + check_result)
                                     
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Gerät - " + task[1] + " | not founded")        
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Gerät - " + task[1] + " - not founded")        
     
 
     # ##################
@@ -453,7 +453,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 START_PROGRAM_THREAD(program.id)
                 
             elif task[2] == "start" and GET_PROGRAM_STATUS() != "None":
-                WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Other Program running")
+                WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Other program running")
 
             elif task[2] == "stop":
                 STOP_PROGRAM_THREAD()
@@ -463,16 +463,16 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 SET_REPEAT_PROGRAM(True)
                 
             elif task[2] == "repeat" and GET_PROGRAM_STATUS() != "None":
-                WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Other Program running")                                
+                WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Other program running")                                
 
             elif task[2] == "force":
                 START_PROGRAM_THREAD(program.id, True)                      
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Command not valid")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Invalid command")
 
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Program not founded")
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Program - " + program + " - not founded")
 
 
     # #######

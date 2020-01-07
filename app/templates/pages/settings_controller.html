@@ -6,12 +6,11 @@
               <div class="card-footer">    
                 <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
                   <a href="/settings/system" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">System</a>
-                  <a href="/settings/devices" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Geräte</a>                  
+                  <a href="/settings/devices" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Devices</a>                  
                   <a href="/settings/controller" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Controller</a>                                  
-                  <a href="/settings/users" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Benutzer</a>                  
-                  <a href="/settings/system_log" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Ereignisse</a>
-  
-                 </div>         
+                  <a href="/settings/users" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Users</a>                  
+                  <a href="/settings/system_log" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">System Log</a>
+                </div>         
               </div>  
             </div>  
 
@@ -209,7 +208,7 @@
 
             <div class="card">
               <div class="card-header">
-                <a data-toggle="collapse" href="#collapse_info"><font color="white"><b><i class='uil uil-arrow-down'> Befehle </i></b></font></a>
+                <a data-toggle="collapse" href="#collapse_info"><font color="white"><b><i class='uil uil-arrow-down'> Commands </i></b></font></a>
                 <br>
                 <br>
               </div>                 
@@ -217,17 +216,17 @@
                 <div class="card-body"> 
                   <div class="table-responsive">                
                     <table class="table tablesorter">
-                      <tbody>                                   
+                      <tbody>                                    
                         <tr>
-                          <td><h4><p class="text-muted">Beleuchtung</p></h4></td>
+                          <td><h4><p class="text-muted">Lighting</p></h4></td>
                           <td></td>
                         </tr>                                                                       
                         <tr>
-                          <td>lighting # scene # wohnzimmer # relax # 100</td>
+                          <td>lighting # scene # livingroom # relax # 100</td>
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                Starte Lichter der Gruppe "wohnzimmer" mit Szene "relax" und Helligkeit "100%" 
+                                start | scene "relax" | group "livingroom" | brightness "100%"
                               </div>
                             </div>  
                             <br>
@@ -236,13 +235,13 @@
                                 100 >> 
                               </div>
                               <div class="col-sm-8"> 
-                                Helligkeit 100 % 
+                                brightness 100 % 
                               </div>                        
                             </div>     
                             <br>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
-                                Beleuchtung - Gruppen >>
+                                Lighting - Groups >>
                               </div>
                               <div class="col-sm-8">   
                                 {% for group in list_lighting_group_options %}
@@ -252,7 +251,7 @@
                             </div>  
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
-                                Beleuchtung - Szenen >>
+                                Lighting - Scenes >>
                               </div>
                               <div class="col-sm-8">   
                                 {% for scene in list_lighting_scene_options %}
@@ -260,14 +259,14 @@
                                 {% endfor %}    
                               </div>  
                             </div>                              
-                          </td>                                
+                          </td>                                                     
                         </tr>
                         <tr>
-                          <td>lighting # brightness # schlafzimmer # TURN_UP</td>
+                          <td>lighting # brightness # bedroom # TURN_UP</td>
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                Erhöhe Helligkeit der Lichtergruppe "schlafzimmer" um 20% 
+                                increase brightness in "bedroom" by 20%
                               </div>
                             </div>  
                             <br>
@@ -276,7 +275,7 @@
                                 TURN_UP >>
                               </div>
                               <div class="col-sm-8"> 
-                                20 % heller 
+                                increase brightness
                               </div>                        
                             </div>                                            
                             <div class="row justify-content-md-center">
@@ -284,33 +283,33 @@
                                 TURN_DOWN >> 
                               </div>
                               <div class="col-sm-8"> 
-                                20 % dunkler 
+                                decrease brightness
                               </div>                        
                             </div>
                           </td>
-                        </tr>                                   
+                        </tr>  
                         <tr>
-                          <td>lighting # turn_off # group # flur, bad</td>
-                          <td>Lichter der Gruppe "flur" und "bad" ausschalten</td>
+                          <td>lighting # turn_off # group # kitchen, bathroom</td>
+                          <td>turn off the lights of group "bathroom" and "kitchen"</td>
                         </tr>               
                         <tr>
                           <td>lighting # turn_off # ALL</td>
-                          <td>alle Lichter ausschalten</td>
+                          <td>turn off all lights</td>
                         </tr> 
                         <tr>
                           <td></td>
                           <td></td>
                         </tr>       
                         <tr>
-                          <td><h4><p class="text-muted">Geräte</p></h4></td>
+                          <td><h4><p class="text-muted">Devices</p></h4></td>
                           <td></td>
                         </tr>                                         
                         <tr>
-                          <td>device # Steckdose_TV, Steckdose_Server # OFF</td>   
+                          <td>device # Power_TV, Power_Server # OFF</td>   
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                Gerät "Steckdose_TV" und "Steckdose_Server" ausschalten
+                                send | command "OFF" | devices "Power_TV" and "Power_Server"
                               </div>
                             </div>  
                             <br>
@@ -331,7 +330,7 @@
                           <td></td>
                         </tr>     
                         <tr>
-                          <td><h4><p class="text-muted">Sensordaten</p></h4></td>
+                          <td><h4><p class="text-muted">Sensordata</p></h4></td>
                           <td></td>
                         </tr>                           
                         <tr>
@@ -339,13 +338,13 @@
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                Sensordaten von "sensor_1" abfragen und speichern
+                                request and save "sensor_1" data
                               </div>
                             </div>        
                             <br>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
-                                Sensordaten Jobs >>
+                                Sensordata Jobs >>
                               </div>
                               <div class="col-sm-8">   
                                 {% for job in list_sensordata_job_options %}
@@ -360,7 +359,7 @@
                           <td></td>
                         </tr>     
                         <tr>
-                          <td><h4><p class="text-muted">Programme</p></h4></td>
+                          <td><h4><p class="text-muted">Programs</p></h4></td>
                           <td></td>
                         </tr>                                         
                         <tr>
@@ -368,7 +367,7 @@
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                Programm "SUNRISE" starten 
+                                start program "SUNRISE" 
                               </div>
                             </div>  
                             <br>
@@ -377,7 +376,7 @@
                                 START >> 
                               </div>
                               <div class="col-sm-8"> 
-                                starten 
+                                start 
                               </div>                        
                             </div>                                            
                             <div class="row justify-content-md-center">
@@ -385,15 +384,15 @@
                                 STOP >> 
                               </div>
                               <div class="col-sm-8"> 
-                                beenden 
+                                stop 
                               </div>                        
-                            </div> 
+                            </div>    
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
                                 REPEAT >> 
                               </div>
                               <div class="col-sm-8"> 
-                                wiederholt das Programm "SUNRISE" bis es beendet wird
+                                repeat the program "SUNRISE" until stop command
                               </div>                        
                             </div>                             
                             <div class="row justify-content-md-center">
@@ -401,28 +400,28 @@
                                 FORCE >> 
                               </div>
                               <div class="col-sm-8"> 
-                                beendet das laufende Programm und startet das neue Programm "SUNRISE" 
+                                stop the running program and start the program "SUNRISE"
                               </div>                        
-                            </div>                                                               
+                            </div>                                                              
                             <br>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
-                                Programme >>
+                                Programs >>
                               </div>
                               <div class="col-sm-8">   
                                 {% for program in list_program_options %}
                                   {{ program }} |
                                 {% endfor %}    
                               </div>  
-                            </div>                                                                      
+                            </div>                                                                       
                           </td>                    
-                        </tr>                            
+                        </tr>                             
                         <tr> 
                           <td></td>
                           <td></td>
                         </tr>   
                         <tr>
-                          <td><h4><p class="text-muted">Musik</p></h4></td>
+                          <td><h4><p class="text-muted">Music</p></h4></td>
                           <td></td>
                         </tr>                           
                         <tr>
@@ -430,7 +429,7 @@
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                letztes Lied / Album / Playlist auf "aktiven" Spotify-Gerät starten oder DEFAULT_SETTINGS
+                                start last song / album / playlist on active spotify-device or start DEFAULT_SETTINGS
                               </div>
                             </div>  
                             <br>                          
@@ -440,23 +439,23 @@
                                 PLAY >> 
                               </div>
                               <div class="col-sm-8"> 
-                                abspielen starten
+                                start playing
                               </div>                        
-                            </div>     
+                            </div>      
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
                                 PLAY/STOP >> 
                               </div>
                               <div class="col-sm-8"> 
-                                abspielen starten oder laufende Musik beenden
+                                start playing or stop running music
                               </div>                        
-                            </div>                                                                       
+                            </div>                                                                    
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
                                 PREVIOUS >> 
                               </div>
                               <div class="col-sm-8"> 
-                                vorheriger Track 
+                                previous track 
                               </div>                        
                             </div>    
                             <div class="row justify-content-md-center">
@@ -464,7 +463,7 @@
                                 NEXT >> 
                               </div>
                               <div class="col-sm-8"> 
-                                nächster Track 
+                                next track
                               </div>                        
                             </div>                        
                             <div class="row justify-content-md-center">
@@ -472,15 +471,15 @@
                                 STOP >> 
                               </div>
                               <div class="col-sm-8"> 
-                                abspielen stoppen
+                                stop playing
                               </div>                        
-                            </div>       
+                            </div>      
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
                                 VOLUME_UP >> 
                               </div>
                               <div class="col-sm-8"> 
-                                Lautstärke um 10% erhöhen
+                                increase volume
                               </div>                        
                             </div>    
                             <div class="row justify-content-md-center">
@@ -488,21 +487,21 @@
                                 VOLUME_DOWN >> 
                               </div>
                               <div class="col-sm-8"> 
-                                Lautstärke um 10% verringern
+                                decrease volume
                               </div>                        
-                            </div>                                                                             
+                            </div>                                                   
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
                                 VOLUME # 70 >> 
                               </div>
                               <div class="col-sm-8"> 
-                                Lautstärke auf 70%
+                                set volume to 70%
                               </div>
                             </div>                        
                             <br>        
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
-                                Spotify - Geräte >>
+                                Spotify - Devices >>
                               </div>
                               <div class="col-sm-8">   
                                 {% for device in list_spotify_devices %}
@@ -531,16 +530,16 @@
                           </td>                    
                         </tr>                                                    
                         <tr>
-                          <td>spotify # playlist # PC # Gemischt # 50</td>
-                          <td>Playlist "Gemischt" auf Gerät "PC" mit Lautstärke 50 % starten</td>
+                          <td>spotify # playlist # PC # Rock # 50</td>
+                          <td>start | playlist "Rock" | device "PC"</td>
                         </tr>     
                         <tr>
                           <td>spotify # track # PC # Go Time # Young Mozart # 25</td>
-                          <td>Track "Go Time" von "Young Mozart" auf Gerät "PC" mit Lautstärke 25 % starten</td>
+                          <td>start | track "Go Time" | interprets "Young Mozart" | device "PC" | volume "25%"</td>
                         </tr>     
                         <tr>
                           <td>spotify # album # PC # Hold On # Nano # 60</td>
-                          <td>Album "Hold On" von "Nano" auf Gerät "PC" mit Lautstärke 60 % starten</td>
+                          <td>start | album "Hold On" | interprets "Nano" | device "PC" | volume "25%"</td>
                         </tr>                                                                                       
                       </tbody>
                     </table>           

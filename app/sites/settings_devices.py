@@ -39,7 +39,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_devices():
-    page_title = 'Smarthome | Settings | Devices'
+    page_title       = 'Smarthome | Settings | Devices'
     page_description = 'The devices configuration page.'
 
     error_message_mqtt_connection               = False
@@ -102,7 +102,7 @@ def settings_devices():
                             # add new name
                             if gateway == "mqtt":
                                 SET_DEVICE_NAME(ieeeAddr, input_name)   
-                                success_message_change_settings_devices.append(input_name + " || Einstellungen gespeichert")  
+                                success_message_change_settings_devices.append(input_name + " || Settings successfully saved")  
                            
                             if gateway == "zigbee2mqtt":
 
@@ -118,27 +118,27 @@ def settings_devices():
 
                                         if CHECK_ZIGBEE2MQTT_NAME_CHANGED(device.name, input_name):
                                             SET_DEVICE_NAME(ieeeAddr, input_name)  
-                                            success_message_change_settings_devices.append(input_name + " || Einstellungen gespeichert")       
+                                            success_message_change_settings_devices.append(input_name + " || Settings successfully saved")       
                                         else:
-                                            error_message_change_settings_devices.append(device.name + " || Name konnte nicht verändert werden")       
+                                            error_message_change_settings_devices.append(device.name + " || Name could not be changed")       
 
                                     else:
-                                        error_message_change_settings_devices.append(device.name + " || Zigbee ist deaktiviert")    
+                                        error_message_change_settings_devices.append(device.name + " || Zigbee is disabled")    
                         
                         else: 
-                            error_message_change_settings_devices.append(device.name + " || Ungültige Eingabe || Name - " + input_name + " - bereits vergeben") 
+                            error_message_change_settings_devices.append(device.name + " || Invalid input | Name - " + input_name + " - already taken") 
 
                     # nothing changed 
                     elif input_name == device.name:  
                         pass
 
                     else: 
-                        error_message_change_settings_devices.append(device.name + " || Ungültige Eingabe") 
+                        error_message_change_settings_devices.append(device.name + " || Invalid input") 
 
 
                 else:
                     name = device.name
-                    error_message_change_settings_devices.append(name + " || Ungültige Eingabe || Keinen Namen angegeben")    
+                    error_message_change_settings_devices.append(name + " || Invalid input | No name given")    
 
 
     # update device list
@@ -151,7 +151,7 @@ def settings_devices():
             result_zigbee2mqtt = UPDATE_DEVICES("zigbee2mqtt")
 
             if result_mqtt == True and result_zigbee2mqtt == True:
-                success_message_change_settings_devices.append("Geräte || Erfolgreich aktualisiert")
+                success_message_change_settings_devices.append("Devices || Successfully updated")
             elif result_mqtt != True and result_zigbee2mqtt == True:
                 error_message_change_settings_devices.append(result_mqtt)
             elif result_mqtt == True and result_zigbee2mqtt != True:
@@ -328,11 +328,11 @@ def settings_devices():
 
         # check mqtt connection
         if GET_DEVICE_CONNECTION_MQTT() != True:  
-            error_message_zigbee_pairing.append("Keine MQTT-Verbindung")  
+            error_message_zigbee_pairing.append("No MQTT connection")  
 
         # check zigbee service
         elif GET_SYSTEM_SETTINGS().zigbee2mqtt_active != "True":  
-            error_message_zigbee_pairing.append("Zigbee ist deaktiviert")              
+            error_message_zigbee_pairing.append("Zigbee is disabled")              
 
         else:
             setting_pairing = str(request.form.get("radio_zigbee2mqtt_pairing"))
@@ -350,11 +350,11 @@ def settings_devices():
                 if CHECK_ZIGBEE2MQTT_PAIRING("True"):             
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing enabled | successful") 
                     SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
-                    success_message_zigbee_pairing.append("Einstellung erfolgreich übernommen") 
+                    success_message_zigbee_pairing.append("Settings successfully saved") 
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
                 else:             
                     WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Pairing enabled | Setting not confirmed")   
-                    error_message_zigbee_pairing.append("Einstellung nicht bestätigt") 
+                    error_message_zigbee_pairing.append("Setting not confirmed") 
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
                                             
             else:         
@@ -367,11 +367,11 @@ def settings_devices():
                 if CHECK_ZIGBEE2MQTT_PAIRING("False"):                 
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
                     SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
-                    success_message_zigbee_pairing.append("Einstellung erfolgreich übernommen") 
+                    success_message_zigbee_pairing.append("Settings successfully saved") 
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")
                 else:             
                     WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
-                    error_message_zigbee_pairing.append("Einstellung nicht bestätigt") 
+                    error_message_zigbee_pairing.append("Setting not confirmed") 
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
 
 
@@ -622,7 +622,7 @@ def remove_device(ieeeAddr):
             result = DELETE_DEVICE(ieeeAddr)
         
             if result == True:
-                session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"
+                session['delete_device_success'] = device_name + " || Device successfully deleted"
             else:
                 session['delete_device_error'] = device_name + " || " + str(result)
 
@@ -640,7 +640,7 @@ def remove_device(ieeeAddr):
                     heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
 
                     if CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
-                        session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"    
+                        session['delete_device_success'] = device_name + " || Device successfully deleted"    
 
                     # device didn't response (e.g. sensor with battery), force removing from database   
                     else:
@@ -650,15 +650,15 @@ def remove_device(ieeeAddr):
                         heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
 
                         if CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
-                            session['delete_device_success'] = device_name + " || Erfolgreich gelöscht"       
+                            session['delete_device_success'] = device_name + " || Device successfully deleted"       
                         else:
-                            session['delete_device_error'] = device_name + " || Löschung nicht bestätigt"      
+                            session['delete_device_error'] = device_name + " || Deletion not confirmed"      
 
                 else:
                     session['delete_device_error'] = device_name + " || " + str(result)                   
 
             else:
-                session['delete_device_error'] = device_name + " || Zigbee ist deaktiviert"      
+                session['delete_device_error'] = device_name + " || Zigbee is disabled"      
                
         return redirect(url_for('settings_devices'))
 

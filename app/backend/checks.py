@@ -16,7 +16,7 @@ def CHECK_DEVICE_EXCEPTION_SETTINGS(devices):
       if device.exception_option != "None":
 
          if device.exception_setting == "None" or device.exception_setting == None:
-            error_message_settings.append(device.name + " || Keine Aufgabe ausgewählt")         
+            error_message_settings.append(device.name + " || No task selected")         
 
          # exception setting ip_address
          if device.exception_option == "IP-Address":
@@ -24,20 +24,20 @@ def CHECK_DEVICE_EXCEPTION_SETTINGS(devices):
             # search for wrong chars
             for element in device.exception_value_1:
                if not element.isdigit() and element != "." and element != "," and element != " ":
-                  error_message_settings.append(device.name + " || Ungültige IP-Adresse")
+                  error_message_settings.append(device.name + " || Invalid IP-Address")
                   break
                
          # exception setting sensor
          if device.exception_option != "IP-Address": 
             
             if device.exception_value_1 == "None" or device.exception_value_1 == None:
-               error_message_settings.append(device.name + " || Keinen Sensor ausgewählt")
+               error_message_settings.append(device.name + " || No Sensor selected")
 
             if device.exception_value_2 == "None" or device.exception_value_2 == None:
-               error_message_settings.append(device.name + " || Keinen Operator (<, >, =) eingetragen")
+               error_message_settings.append(device.name + " || No Operator (<, >, =) selected")
 
             if device.exception_value_3 == "None" or device.exception_value_3 == None:
-               error_message_settings.append(device.name + " || Keinen Vergleichswert eingetragen")
+               error_message_settings.append(device.name + " || No check_value selected")
                   
    return error_message_settings
 
@@ -53,23 +53,23 @@ def CHECK_LIGHTING_GROUP_SETTINGS(settings):
    for element in settings:
       
       if element.light_ieeeAddr_1 == None or element.light_ieeeAddr_1 == "None":
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 1")        
+          list_errors.append(element.name + " || Missing setting | Light 1")        
       if element.active_light_2 == "True" and (element.light_ieeeAddr_2 == None or element.light_ieeeAddr_2 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 2") 
+          list_errors.append(element.name + " || Missing setting | Light 2") 
       if element.active_light_3 == "True" and (element.light_ieeeAddr_3 == None or element.light_ieeeAddr_3 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 3") 
+          list_errors.append(element.name + " || Missing setting | Light 3") 
       if element.active_light_4 == "True" and (element.light_ieeeAddr_4 == None or element.light_ieeeAddr_4 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 4") 
+          list_errors.append(element.name + " || Missing setting | Light 4") 
       if element.active_light_5 == "True" and (element.light_ieeeAddr_5 == None or element.light_ieeeAddr_5 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 5") 
+          list_errors.append(element.name + " || Missing setting | Light 5") 
       if element.active_light_6 == "True" and (element.light_ieeeAddr_6 == None or element.light_ieeeAddr_6 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 6") 
+          list_errors.append(element.name + " || Missing setting | Light 6") 
       if element.active_light_7 == "True" and (element.light_ieeeAddr_7 == None or element.light_ieeeAddr_7 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 7") 
+          list_errors.append(element.name + " || Missing setting | Light 7") 
       if element.active_light_8 == "True" and (element.light_ieeeAddr_8 == None or element.light_ieeeAddr_8 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 8") 
+          list_errors.append(element.name + " || Missing setting | Light 8") 
       if element.active_light_9 == "True" and (element.light_ieeeAddr_9 == None or element.light_ieeeAddr_9 == "None"):
-          list_errors.append(element.name + " >>> fehlende Einstellung >>> Lichtquelle 9")   
+          list_errors.append(element.name + " || Missing setting | Light 9")   
           
    return list_errors
 
@@ -136,10 +136,10 @@ def CHECK_PROGRAM_TASKS(program_id):
                   if line_content[1].isdigit():
                      continue
                   else:
-                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> fehlende Einstellung >>> Sekunden")
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Missing setting | Seconds")
                      
                except:
-                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
 
 
             # ########
@@ -155,16 +155,16 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                   # check scene setting
                   if GET_LIGHTING_GROUP_BY_NAME(line_content[2]) == None: 
-                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Gruppe nicht gefunden >>> " + line_content[2])
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Group not founded | " + line_content[2])
                   
                   if GET_LIGHTING_SCENE_BY_NAME(line_content[3]) == None: 
-                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Szene nicht gefunden >>> " + line_content[3])
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Scene not founded | " + line_content[3])
 
                   if not line_content[4].isdigit() or not (0 <= int(line_content[4]) <= 100):
-                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Helligkeitswert")
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid brightness_value")
 
                except:
-                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")               
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")               
                         
 
             # turn_off
@@ -178,17 +178,17 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                      for group_name in line_content[3].split(","):
                         if GET_LIGHTING_GROUP_BY_NAME(group_name.strip()) == None: 
-                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Gruppe nicht gefunden >>> " + group_name.strip())  
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Group not founded | " + group_name.strip())  
 
                   # check turn_off all setting
                   elif line_content[2].lower() == "all":
                      pass
 
                   else:
-                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")                            
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")                            
 
                except:
-                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
 
 
             # ######
@@ -204,7 +204,7 @@ def CHECK_PROGRAM_TASKS(program_id):
                   for device_name in line_content[1].split(","):
 
                      if GET_DEVICE_BY_NAME(group_name.strip()) == None: 
-                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Gerät nicht gefunden >>> " + device_name)       
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not founded | " + device_name)       
 
                      # check commands
                      else:
@@ -213,11 +213,11 @@ def CHECK_PROGRAM_TASKS(program_id):
                         setting = task[2]
 
                         if setting.lower() not in device.commands_json.lower():
-                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Befehl ungültig >>> " + setting)
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid command | " + setting)
 
 
                except:
-                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
 
 
             # ##################
@@ -230,10 +230,10 @@ def CHECK_PROGRAM_TASKS(program_id):
                   line_content = line[1].split(" # ")     
 
                   if not GET_SENSORDATA_JOB_BY_NAME(line_content[1]):
-                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Job nicht vorhanden")
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Job not founded")
 
                except:        
-                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
 
 
             # #######
@@ -254,7 +254,7 @@ def CHECK_PROGRAM_TASKS(program_id):
                       line_content[1].lower() != "track" and
                       line_content[1].lower() != "album"):
 
-                     list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Befehl")
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid Command")
 
                   # volume
 
@@ -262,14 +262,14 @@ def CHECK_PROGRAM_TASKS(program_id):
                      
                      try:
                         if not line_content[2].isdigit():
-                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
                      
                         else:
                            if not 0 <= int(line_content[2]) <= 100:
-                              list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
+                              list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (0 - 100)")
                               
                      except:
-                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
 
                   # playlist
       
@@ -281,17 +281,17 @@ def CHECK_PROGRAM_TASKS(program_id):
                         
                         try:
                            if not line_content[4].isdigit():
-                              list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+                              list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
                            
                            else:
                               if not 0 <= int(line_content[4]) <= 100:
-                                 list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
+                                 list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (0 - 100)")
 
                         except:
-                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
 
                      except:
-                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Unvollständige Angaben")
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
 
                   # track
                         
@@ -304,17 +304,17 @@ def CHECK_PROGRAM_TASKS(program_id):
                         
                         try:
                            if not line_content[5].isdigit():
-                              list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+                              list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
 
                            else:
                               if not 0 <= int(line_content[5]) <= 100:
-                                 list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
+                                 list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (0 - 100)")
 
                         except:
-                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
 
                      except:
-                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Unvollständige Angaben")
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
 
                   # album
 
@@ -327,20 +327,20 @@ def CHECK_PROGRAM_TASKS(program_id):
                         
                         try:
                            if not line_content[5].isdigit():
-                              list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+                              list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
 
                            else:
                               if not 0 <= int(line_content[5]) <= 100:
-                                 list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
+                                 list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (0 - 100)")
 
                         except:
-                           list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültiger Lautstärkewert")
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
 
                      except:
-                        list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Unvollständige Angaben")
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
 
                except:
-                  list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> Ungültige Formatierung")
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
 
          # ####
          # None
@@ -352,7 +352,7 @@ def CHECK_PROGRAM_TASKS(program_id):
             #  other
 
             elif line[1] != "":
-               list_errors.append("Zeile " + str(line_number) + " - " + line[1] + " >>> falsche Einstellung >>> Eingabetyp nicht gefunden")
+               list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
              
    except:
       pass
@@ -370,15 +370,11 @@ def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks):
 
    for task in scheduler_tasks:
 
-      if task.option_time != "True" and task.option_sun != "True" and task.option_sensors != "True" and task.option_position != "True":    
-         list_errors.append(task.name + " >>> Keine Bedingungsoption ausgewählt")          
+      if task.trigger_time != "True" and task.trigger_sun_position != "True" and task.trigger_sensors != "True" and task.trigger_position != "True":    
+         list_errors.append(task.name + " || No trigger selected")          
 
 
-      if task.option_time == "True":
-
-         # check settings sunrise / sunset option
-         if task.option_sun == "True":
-            list_errors.append(task.name + " >>> Ungültige Kombination >>> Zeit und Sonne nur getrennt verwenden")         
+      if task.trigger_time == "True":
 
          ### check day
 
@@ -388,13 +384,13 @@ def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks):
                   days = days.split(",")
                   for element in days:
                      if element.lower() not in ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]:
-                        list_errors.append(task.name + " >>> falsche Zeitangabe >>> Tag >>> Gültig: Mon, Tue, Wed, Thu, Fri, Sat, Sun, *")
+                        list_errors.append(task.name + " || Wrong time | Day")
                         break                                 
             else:
                   if task.day.lower() not in ["mon", "tue", "wed", "thu", "fri", "sat", "sun", "*"] and task.day != "*":
-                     list_errors.append(task.name + " >>> falsche Zeitangabe >>> Tag >>> Gültig: Mon, Tue, Wed, Thu, Fri, Sat, Sun, *") 
+                     list_errors.append(task.name + " || Wrong time | Day") 
          except:
-            list_errors.append(task.name + " >>> falsche Zeitangabe >>> Tag >>> Gültig: Mon, Tue, Wed, Thu, Fri, Sat, Sun, *")
+            list_errors.append(task.name + " || Wrong time | Day")
 
          ### check hour
             
@@ -406,32 +402,32 @@ def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks):
                   for element in hours:
  
                      if len(element) == 1 and element != "*":
-                        list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *")
+                        list_errors.append(task.name + " || Wrong time | Hour")
                         break
                     
                      try:
                         if not (0 <= int(element) <= 24):
-                           list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *")
+                           list_errors.append(task.name + " || Wrong time | Hour")
                            break
                         
                      except:
-                        list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *")
+                        list_errors.append(task.name + " || Wrong time | Hour")
                         break   
             else:
                   
                if len(task.hour) == 1 and task.hour != "*":
-                  list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *")
+                  list_errors.append(task.name + " || Wrong time | Hour")
                   break
                 
                try:
                   if not (0 <= int(task.hour) <= 24) and task.hour != "*":
-                     list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *") 
+                     list_errors.append(task.name + " || Wrong time | Hour") 
                except:
                   if task.hour != "*":
-                     list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *")    
+                     list_errors.append(task.name + " || Wrong time | Hour")    
 
          except:
-            list_errors.append(task.name + " >>> falsche Zeitangabe >>> Stunde >>> Gültig: 00 - 23, *")
+            list_errors.append(task.name + " || Wrong time | Hour")
 
          ### check minute
 
@@ -443,94 +439,97 @@ def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks):
                   for element in minutes:
                       
                      if len(element) == 1 and element != "*":
-                        list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *")
+                        list_errors.append(task.name + " || Wrong time | Minute")
                         break                      
                       
                      try:
                         if not (0 <= int(element) <= 60):
-                           list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *") 
+                           list_errors.append(task.name + " || Wrong time | Minute") 
                            break
                         
                      except:
-                        list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *") 
+                        list_errors.append(task.name + " || Wrong time | Minute") 
                         break   
             else:
                 
                if len(task.minute) == 1 and task.minute != "*":
-                  list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *")
+                  list_errors.append(task.name + " || Wrong time | Minute")
                   break
                 
                try:
                   if not (0 <= int(task.minute) <= 60) and task.minute != "*":
-                     list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *") 
+                     list_errors.append(task.name + " || Wrong time | Minute") 
                except:
                   if task.minute != "*":
-                     list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *") 
+                     list_errors.append(task.name + " || Wrong time | Minute") 
       
          except:
-            list_errors.append(task.name + " >>> falsche Zeitangabe >>> Minute >>> Gültig: 00 - 59, *") 
+            list_errors.append(task.name + " || Wrong time | Minute") 
 
 
-      if task.option_sun == "True":
+      if task.trigger_sun_position == "True":
 
          # check setting location
          if task.option_sunrise == "True" or task.option_sunset == "True":
             if task.location == "None":
-               list_errors.append(task.name + " >>> Zone wurde noch nicht eingestellt")
+               list_errors.append(task.name + " || No zone selected")
+         else:
+            list_errors.append(task.name + " || Missing setting | Sunrise or Sunset")
 
-      if task.option_sensors == "True":
+
+      if task.trigger_sensors == "True":
 
          # check mqtt devices
          if task.device_ieeeAddr_1 == "None" or task.device_ieeeAddr_1 == "" or task.device_ieeeAddr_1 == None:
-            list_errors.append(task.name + " >>> fehlende Einstellung >>> MQTT-Gerät 1") 
+            list_errors.append(task.name + " || Missing setting | Device 1") 
 
          if task.device_ieeeAddr_2 == "None" or task.device_ieeeAddr_2 == "" or task.device_ieeeAddr_2 == None:
             if task.main_operator_second_sensor != "None" and task.main_operator_second_sensor != None:
-               list_errors.append(task.name + " >>> fehlende Einstellung >>> MQTT-Gerät 2") 
+               list_errors.append(task.name + " || Missing setting | Device 2") 
                   
          # check sensors
          if task.sensor_key_1 == "None" or task.sensor_key_1 == None:
-            list_errors.append(task.name + " >>> fehlende Einstellung >>> Sensor 1") 
+            list_errors.append(task.name + " || Missing setting | Sensor 1") 
             
          if task.main_operator_second_sensor != "None" and task.main_operator_second_sensor != None:
             if task.sensor_key_2 == "None" or task.sensor_key_2 == None:
-               list_errors.append(task.name + " >>> fehlende Einstellung >>> Sensor 2")  
+               list_errors.append(task.name + " || Missing setting | Sensor 2")  
                
          # check operators
          if task.main_operator_second_sensor != "<" and task.main_operator_second_sensor != ">" and task.main_operator_second_sensor != "=":
             if task.operator_1 == "" or task.operator_1 == "None" or task.operator_1 == None: 
-               list_errors.append(task.name + " >>> fehlende Einstellung >>> Operator 1")
+               list_errors.append(task.name + " || Missing setting | Operator 1")
          
          if task.main_operator_second_sensor == "and" or task.main_operator_second_sensor == "or":
             if task.operator_2 == "None" or task.operator_2 == "" or task.operator_2 == None: 
-               list_errors.append(task.name + " >>> fehlende Einstellung >>> Operator 2")  
+               list_errors.append(task.name + " || Missing setting | Operator 2")  
 
          # check values
          if task.main_operator_second_sensor != "<" and task.main_operator_second_sensor != ">" and task.main_operator_second_sensor != "=":   
             if task.value_1 == "" or task.value_1 == "None" or task.value_1 == None: 
-               list_errors.append(task.name + " >>> fehlende Einstellung >>> Vergleichswert 1")   
+               list_errors.append(task.name + " || Missing setting | Value 1")   
                   
             elif (task.operator_1 == "<" or task.operator_1 == ">") and not task.value_1.isdigit():
                list_errors.append(task.name + 
-               " >>> ungültiger Eintrag >>> Vergleichswert 1 >>> nur Zahlen können mit dem gewählten Operator verwendet werden") 
+               " || Invalid input | Value 1 | Only numbers can be used with the selected operator") 
 
          if task.main_operator_second_sensor == "and" or task.main_operator_second_sensor == "or":
             if task.value_2 == "" or task.value_2 == "None" or task.value_2 == None:
-               list_errors.append(task.name + " >>> fehlende Einstellung >>> Vergleichswert 2")  
+               list_errors.append(task.name + " || Missing setting | Value 2")  
             elif (task.operator_2 == "<" or task.operator_2 == ">") and not task.value_2.isdigit():
                list_errors.append(task.name + 
-               " >>> ungültiger Eintrag >>> Vergleichswert 2 >>> nur Zahlen können mit dem gewählten Operator verwendet werden")                 
+               " || Invalid input | Value 2 | Only numbers can be used with the selected operator")                 
   
                
-      if task.option_position == "True":
+      if task.trigger_position == "True":
 
          # check setting choosed
          if task.option_home != "True" and task.option_away != "True":
-            list_errors.append(task.name + " >>> fehlende Einstellung >>> HOME oder AWAY")
+            list_errors.append(task.name + " || Missing setting | Home or Away")
 
          # check setting home / away
          if task.option_home == "True" and task.option_away == "True":
-            list_errors.append(task.name + " >>> Es kann nur HOME oder AWAY separat gewählt werden")
+            list_errors.append(task.name + " || Home or Away can be selected separately only")
 
          # check setting ip-addresses
          if task.option_home == "True" or task.option_away == "True":
@@ -540,7 +539,7 @@ def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks):
                # search for wrong chars
                for element in task.ip_addresses:
                   if not element.isdigit() and element != "." and element != "," and element != " ":
-                     list_errors.append(task.name + " >>> Ungültige IP-Adressen")
+                     list_errors.append(task.name + " || Invalid IP-Addresses")
                      break
 
    return list_errors
@@ -672,15 +671,15 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                if GET_LIGHTING_GROUP_BY_NAME(task[2].strip()) == None: 
 
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command + " >>> Gruppe nicht vorhanden >>> " + task[2].strip())  
+                     list_task_errors.append(name + " || " + controller_command + " | Group not founded | " + task[2].strip())  
                   else:                               
-                     list_task_errors.append(name + " >>> Gruppe nicht vorhanden >>> " + task[2].strip())  
+                     list_task_errors.append(name + " || Group not founded | " + task[2].strip())  
 
             except:
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Gruppe")
+                  list_task_errors.append(name + " || " + controller_command + " | Missing setting | Group")
                else:
-                  list_task_errors.append(name + " >>> fehlende Einstellung >>> Gruppe")
+                  list_task_errors.append(name + " || Missing setting | Group")
 
             # check scene setting    
 
@@ -689,16 +688,16 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                if GET_LIGHTING_SCENE_BY_NAME(task[3].strip()) == None: 
 
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command + " >>> Szene nicht vorhanden >>> " + task[3].strip())  
+                     list_task_errors.append(name + " || " + controller_command + " | Scene not founded | " + task[3].strip())  
                   else:                               
-                     list_task_errors.append(name + " >>> Szene nicht vorhanden >>> " + task[3].strip())  
+                     list_task_errors.append(name + " || Scene not founded | " + task[3].strip())  
                   
             except:
 
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Szene")
+                  list_task_errors.append(name + " || " + controller_command + " | Missing setting | Scene")
                else:               
-                  list_task_errors.append(name + " >>> fehlende Einstellung >>> Szene")
+                  list_task_errors.append(name + " || Missing setting | Scene")
 
             # check brightness    
 
@@ -710,16 +709,16 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
                   else:
                      if task_type == "controller":
-                        list_task_errors.append(name + " >>> " + controller_command + " >>> ungültiger Wertebereich >>> Helligkeit")
+                        list_task_errors.append(name + " || " + controller_command + " | Invalid brightness_value")
                      else:                        
-                        list_task_errors.append(name + " >>> ungültiger Wertebereich >>> Helligkeit") 
+                        list_task_errors.append(name + " || Invalid brightness_value") 
                      return list_task_errors    
 
                else:
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command + " >>> ungültige Einstellung >>> Helligkeit")
+                     list_task_errors.append(name + " || " + controller_command + " | Invalid brightness_value")
                   else:                     
-                     list_task_errors.append(name + " >>> ungültige Einstellung >>> Helligkeit")
+                     list_task_errors.append(name + " || Invalid brightness_value")
                   return list_task_errors
 
             except:
@@ -727,9 +726,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
+               list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
             else:                
-               list_task_errors.append(name + " >>> Ungültige Formatierung")
+               list_task_errors.append(name + " || Invalid formatting")
             return list_task_errors
      
      
@@ -747,10 +746,10 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   pass
                   
                else:
-                  list_task_errors.append(name + " >>> " + controller_command + " >>> Gruppe nicht vorhanden >>> " + task[2])   
+                  list_task_errors.append(name + " || " + controller_command + " | Group not founded | " + task[2])   
                                     
             except:
-               list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Gruppe")      
+               list_task_errors.append(name + " || " + controller_command + " | Missing setting | Group")      
 
             # check brightness setting    
             try:
@@ -758,15 +757,15 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   return list_task_errors
                   
                else:
-                  list_task_errors.append(name + " >>> " + controller_command + " >>> TURN_UP oder TURN_DOWN ?")
+                  list_task_errors.append(name + " || " + controller_command + " | TURN_UP or TURN_DOWN ?")
                   return list_task_errors
                   
             except:
-               list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> TURN_UP oder TURN_DOWN")    
+               list_task_errors.append(name + " || " + controller_command + " | Missing setting | TURN_UP or TURN_DOWN")    
                return list_task_errors
 
          else:
-            list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
+            list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
             return list_task_errors
 
 
@@ -787,18 +786,18 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      if GET_LIGHTING_GROUP_BY_NAME(group_name.strip()) == None: 
 
                         if task_type == "controller":
-                           list_task_errors.append(name + " >>> " + controller_command + " >>> Gruppe nicht vorhanden >>> " + group_name.strip())  
+                           list_task_errors.append(name + " || " + controller_command + " | Group not founded | " + group_name.strip())  
                         else:                               
-                           list_task_errors.append(name + " >>> Gruppe nicht vorhanden >>> " + group_name.strip())  
+                           list_task_errors.append(name + " || Group not founded | " + group_name.strip())  
                      
                   return list_task_errors
 
                except:
 
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Gruppe")
+                     list_task_errors.append(name + " || " + controller_command + " | Missing setting | Group")
                   else:                            
-                     list_task_errors.append(name + " >>> fehlende Einstellung >>> Gruppe")
+                     list_task_errors.append(name + " || Missing setting | Group")
                   
                   return list_task_errors
                         
@@ -810,17 +809,17 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
             else:
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Eingabe >>> 'all' oder 'group'")
+                  list_task_errors.append(name + " || " + controller_command + " | Invalid Input | 'all' or 'group'")
                else:                   
-                  list_task_errors.append(name + " >>> Ungültige Eingabe >>> 'all' oder 'group' ?")
+                  list_task_errors.append(name + " || Invalid Input | 'all' or 'group' ?")
                return list_task_errors  
 
 
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung") 
+               list_task_errors.append(name + " || " + controller_command + " | Invalid formatting") 
             else:                   
-               list_task_errors.append(name + " >>> Ungültige Formatierung")     
+               list_task_errors.append(name + " || Invalid formatting")     
             return list_task_errors
 
 
@@ -841,9 +840,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   if GET_DEVICE_BY_NAME(device_name.strip()) == None: 
 
                      if task_type == "controller":
-                        list_task_errors.append(name + " >>> " + controller_command + " >>> Gerät nicht gefunden >>> " + device_name)
+                        list_task_errors.append(name + " || " + controller_command + " | Device no founded | " + device_name)
                      else:
-                        list_task_errors.append(name + " >>> Gerät nicht gefunden >>> " + device_name)           
+                        list_task_errors.append(name + " || Device no founded | " + device_name)           
 
                   # check commands
                   else:
@@ -854,26 +853,26 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      if setting.lower() not in device.commands_json.lower():
                   
                         if task_type == "controller":
-                           list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültiger Befehl >>> " + setting)
+                           list_task_errors.append(name + " || " + controller_command + " | Invalid command | " + setting)
                         else:
-                           list_task_errors.append(name + " >>> Ungültiger Befehl >>> " + setting)
+                           list_task_errors.append(name + " || Invalid command | " + setting)
                              
                return list_task_errors                  
               
             except:
                
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
+                  list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
                else:                
-                  list_task_errors.append(name + " >>> Ungültige Formatierung")       
+                  list_task_errors.append(name + " || Invalid formatting")       
 
                return list_task_errors
 
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
+               list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
             else:                
-               list_task_errors.append(name + " >>> Ungültige Formatierung")   
+               list_task_errors.append(name + " || Invalid formatting")   
 
             return list_task_errors
             
@@ -893,33 +892,33 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                if program == None:
                
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command + " >>> Programm nicht gefunden >>> " + task[1])
+                     list_task_errors.append(name + " || " + controller_command + " | Program not founded | " + task[1])
                   else:
-                     list_task_errors.append(name + " >>> " + task[1] + " Programm nicht gefunden")                  
+                     list_task_errors.append(name + " || " + task[1] + " Program not founded")                  
                   
                if setting != "start" and setting != "stop" and setting != "repeat" and setting != "force":
                   
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültiger Befehl >>> " + task[2])
+                     list_task_errors.append(name + " || " + controller_command + " | Invalid command | " + task[2])
                   else:
-                     list_task_errors.append(name + " >>> Ungültiger Befehl >>> " + task[2])
+                     list_task_errors.append(name + " || Invalid command | " + task[2])
  
                return list_task_errors
       
       
             except:
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
+                  list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
                else:
-                  list_task_errors.append(name + " >>> Ungültige Formatierung")
+                  list_task_errors.append(name + " || Invalid formatting")
                return list_task_errors
          
          
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
+               list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
             else:                
-               list_task_errors.append(name + " >>> Ungültige Formatierung")
+               list_task_errors.append(name + " || Invalid formatting")
             return list_task_errors
          
 
@@ -963,27 +962,27 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
                else:
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command + " >>> Job nicht vorhanden >>> " + task[1])
+                     list_task_errors.append(name + " || " + controller_command + " | Job not founded | " + task[1])
                   else:
-                     list_task_errors.append(name + " >>> Job nicht vorhanden >>> " + task[1])
+                     list_task_errors.append(name + " || Job not founded | " + task[1])
 
                   return list_task_errors   
 
             except:
 
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Job-Name")
+                     list_task_errors.append(name + " || " + controller_command + " | Missing setting | Job")
                   else:
-                     list_task_errors.append(name + " >>> fehlende Einstellung >>> Job-Name") 
+                     list_task_errors.append(name + " || Missing setting | Job") 
 
                   return list_task_errors
 
          else:
 
             if task_type == "controller":
-               list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Job-Name")
+               list_task_errors.append(name + " || " + controller_command + " | Missing setting | Job")
             else:
-               list_task_errors.append(name + " >>> fehlende Einstellung >>> Job-Name") 
+               list_task_errors.append(name + " || Missing setting | Job") 
 
             return list_task_errors
 
@@ -1024,15 +1023,15 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
              
                   try:
                      if not task[2].isdigit():
-                        list_task_errors.append(name + " >>> """ + task[2] + " >>> Ungültiger Lautstärkewert") 
+                        list_task_errors.append(name + " || " + task[2] + " | Invalid volume_value") 
                      else:
                         if not 0 <= int(task[2]) <= 100:
-                           list_task_errors.append(name + " >>> """ + task[2] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
+                           list_task_errors.append(name + " || " + task[2] + " | Invalid volume_value")
                            
                      return list_task_errors
                            
                   except:
-                     list_task_errors.append(name + " >>> """ + task[2] + " >>> Ungültiger Lautstärkewert") 
+                     list_task_errors.append(name + " || " + task[2] + " | Invalid volume_value") 
                      return list_task_errors
                   
                elif task[1].lower() == "playlist": 
@@ -1043,19 +1042,19 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      
                      try:
                         if not task[4].isdigit():
-                           list_task_errors.append(name + " >>> """ + task[4] + " >>> Ungültiger Lautstärkewert") 
+                           list_task_errors.append(name + " || " + task[4] + " | Invalid volume_value") 
                         else:
                            if not 0 <= int(task[4]) <= 100:
-                              list_task_errors.append(name + " >>> """ + task[4] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
+                              list_task_errors.append(name + " || " + task[4] + " | Invalid volume_value")
                               
                         return list_task_errors
                                  
                      except:
-                        list_task_errors.append(name + " >>> """ + task[4] + " >>> Ungültiger Lautstärkewert") 
+                        list_task_errors.append(name + " || " + task[4] + " | Invalid volume_value") 
                         return list_task_errors
                         
                   except:
-                     list_task_errors.append(name + " >>> """ + str(task) + " >>> Unvollständige Angaben")  
+                     list_task_errors.append(name + " || " + str(task) + " | Invalid volume_value")  
                      return list_task_errors                
                      
                elif task[1].lower() == "track": 
@@ -1067,19 +1066,19 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      
                      try:
                         if not task[5].isdigit():
-                           list_task_errors.append(name + " >>> """ + task[5] + " >>> Ungültiger Lautstärkewert") 
+                           list_task_errors.append(name + " || " + task[5] + " | Invalid volume_value") 
                         else:
                            if not 0 <= int(task[5]) <= 100:
-                              list_task_errors.append(name + " >>> """ + task[5] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
+                              list_task_errors.append(name + " || " + task[5] + " | Invalid volume_value")
                               
                         return list_task_errors
                                  
                      except:
-                        list_task_errors.append(name + " >>> """ + task[5] + " >>> Ungültiger Lautstärkewert") 
+                        list_task_errors.append(name + " || " + task[5] + " | Invalid volume_value") 
                         return list_task_errors
                         
                   except:
-                     list_task_errors.append(name + " >>> """ + str(task) + " >>> Unvollständige Angaben") 
+                     list_task_errors.append(name + " || " + str(task) + " | Invalid volume_value") 
                      return list_task_errors  
 
                elif task[1].lower() == "album": 
@@ -1091,42 +1090,42 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      
                      try:
                         if not task[5].isdigit():
-                           list_task_errors.append(name + " >>> """ + task[5] + " >>> Ungültiger Lautstärkewert") 
+                           list_task_errors.append(name + " || " + task[5] + " | Invalid volume_value") 
                         else:
                            if not 0 <= int(task[5]) <= 100:
-                              list_task_errors.append(name + " >>> """ + task[5] + " >>> Zulässige Lautstärke liegt zwischen 0 % und 100 %")
+                              list_task_errors.append(name + " || " + task[5] + " | Invalid volume_value")
                         
                         return list_task_errors
                                  
                      except:
-                        list_task_errors.append(name + " >>> """ + task[5] + " >>> Ungültiger Lautstärkewert") 
+                        list_task_errors.append(name + " || " + task[5] + " | Invalid volume_value") 
                         return list_task_errors
                         
                   except:
-                     list_task_errors.append(name + " >>> """ + str(task) + " >>> Unvollständige Angaben") 
+                     list_task_errors.append(name + " || " + str(task) + " | Invalid volume_value") 
                      return list_task_errors                   
 
                else:
                   if task_type == "controller":
-                     list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültiger Befehl >>> " + task[1])
+                     list_task_errors.append(name + " || " + controller_command + " | Invalid command | " + task[1])
                   else:
-                     list_task_errors.append(name + " >>> """ + task[1] + " >>> Ungültiger Befehl")
+                     list_task_errors.append(name + " || " + task[1] + " | Invalid command")
                   return list_task_errors
 
 
             except:
                if task_type == "controller":
-                  list_task_errors.append(name + " >>> " + controller_command + " >>> fehlende Einstellung >>> Befehl") 
+                  list_task_errors.append(name + " || " + controller_command + " | Missing setting | Command") 
                else:
-                  list_task_errors.append(name + " >>> Befehl >>> fehlende Einstellung") 
+                  list_task_errors.append(name + " || Missing setting | Command") 
                return list_task_errors
 
                                
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Formatierung")
+               list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
             else:
-               list_task_errors.append(name + " >>> Ungültige Formatierung")   
+               list_task_errors.append(name + " || Invalid formatting")   
             return list_task_errors
             
 
@@ -1150,9 +1149,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       
       
       if task_type == "controller":
-         list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Aufgabe") 
+         list_task_errors.append(name + " || " + controller_command + " | Invalid task") 
       else:
-         list_task_errors.append(name + " >>> Ungültige Aufgabe")
+         list_task_errors.append(name + " || Invalid task")
          
       return list_task_errors
    
@@ -1178,9 +1177,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # ##########
 
       elif task_type == "controller":
-         list_task_errors.append(name + " >>> " + controller_command + " >>> Ungültige Aufgabe")   
+         list_task_errors.append(name + " || " + controller_command + " | Invalid task")   
          return list_task_errors
 
       else:
-         list_task_errors.append(name + " >>> Ungültige Aufgabe")        
+         list_task_errors.append(name + " || Invalid task")        
          return list_task_errors

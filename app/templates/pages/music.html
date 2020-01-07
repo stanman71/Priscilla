@@ -23,7 +23,7 @@
 
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title"><b>Musik</b></h4>
+                <h4 class="card-title"><b>Music</b></h4>
               </div>
             </div>
 
@@ -34,7 +34,7 @@
             <div class="card">          
               <form method="POST">
                 <div class="card-body">                          
-                  Spotify-Account >>> {% if spotify_user == "" %}<font color="salmon"> Nicht eingeloggt </font>{% else %}<font color="lightgreen"> {{ spotify_user }} </font>{% endif %}</span>
+                  Spotify >>> {% if spotify_user == "" %}<font color="salmon"> Not logged in </font>{% else %}<font color="lightgreen"> {{ spotify_user }} </font>{% endif %}</span>
                 </div>   
                 <div class="card-footer">                                                                    
                   {% if spotify_user == "" %}
@@ -75,7 +75,7 @@
                         <th scope="col" style="width:15%" class="minwidth_150">Player</th>   
                         <th scope="col" style="width:10%" class="minwidth_100">Playing</th>                                                      
                         <th scope="col" style="width:20%" class="minwidth_200">Track</th>                                     
-                        <th scope="col" style="width:20%" class="minwidth_200">Interpreten</th>      
+                        <th scope="col" style="width:20%" class="minwidth_200">Interprets</th>      
                         <th scope="col" style="width:10%" class="minwidth_100">Progress</th>                                          
                         <th scope="col" style="width:20%" class="minwidth_200">Playlist</th> 
                       </thead>                                             
@@ -163,7 +163,7 @@
       <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
         <i class="tim-icons icon-simple-remove"></i>
       </button>
-      <span>Einstellungen erfolgreich geändert</span>
+      <span>Settings successfully changed</span>
     </div>
   {% endif %}  
 
@@ -176,7 +176,7 @@
                         <th scope="col" style="width:30%" class="minwidth_300">Player</th>                               
                         <th scope="col" style="width:30%" class="minwidth_300">Playlist</th>
                         <th scope="col" style="width:5%"></th>   
-                        <th scope="col" style="width:20%" class="minwidth_100">Lautstärke</th>  
+                        <th scope="col" style="width:20%" class="minwidth_100">Volume</th>  
                         <th scope="col" style="width:15%" class="minwidth_100"></th>                                   
                       </thead>
                       <tbody> 
@@ -190,7 +190,7 @@
                                   {% endif %}
                                 {% endfor %}
                               {% else %}
-                              <option value= "" > Keine Geräte gefunden </option>
+                              <option value= "" > No devices founded </option>
                               {% endif %}  
                             </select>                                    
                           </td>     
@@ -203,7 +203,7 @@
                                   {% endif %}
                                 {% endfor %}
                               {% else %}
-                              <option value= "" > Keine Playlist gefunden </option>
+                              <option value= "" > No playlists founded </option>
                               {% endif %}  
                             </select>    
                           </td>   
@@ -235,7 +235,7 @@
                         <th scope="col" style="width:30%" class="minwidth_300">Default Player</th>                               
                         <th scope="col" style="width:30%" class="minwidth_300">Default Playlist</th>
                         <th scope="col" style="width:5%"></th>   
-                        <th scope="col" style="width:20%" class="minwidth_100">Default Lautstärke</th>  
+                        <th scope="col" style="width:20%" class="minwidth_100">Default Volume</th>  
                         <th scope="col" style="width:15%" class="minwidth_100"></th>                                      
                       </thead>
                       <tbody> 
@@ -251,7 +251,7 @@
                                   {% endif %}
                                 {% endfor %}
                               {% else %}
-                              <option value= "" > Keine Geräte gefunden </option>
+                              <option value= "" > No devices founded </option>
                               {% endif %}  
                               <option disabled>------------------</option>  
                               <option value="None"> None </option> 
@@ -268,7 +268,7 @@
                                   {% endif %}
                                 {% endfor %}
                               {% else %}
-                              <option value= "" > Keine Playlist gefunden </option>
+                              <option value= "" > No playlists founded </option>
                               {% endif %}  
                               <option disabled>------------------</option>  
                               <option value="None"> None </option> 
@@ -314,7 +314,7 @@
         
             <div class="card ">
               <div class="card-header">
-                <a data-toggle="collapse" href="#collapse_search_track"><font color="white"><b><i class='uil uil-arrow-down'> Suche Track </i></b></font></a>
+                <a data-toggle="collapse" href="#collapse_search_track"><font color="white"><b><i class='uil uil-arrow-down'> Search Track </i></b></font></a>
                 <br>
                 <br>
               </div>            
@@ -330,7 +330,7 @@
                       </div>  
                     </div>    
                     <br>                                                 
-                    <input type="submit" onclick="window.location.href='/music#table_track'" class="btn btn-default" name="spotify_search_track" value="Suchen" />                  
+                    <input type="submit" onclick="window.location.href='/music#table_track'" class="btn btn-default" name="spotify_search_track" value="Search" />                  
                     <br>
                     <br>
                   
@@ -340,10 +340,10 @@
                         <table class="table tablesorter">
                           <thead>
                             <th scope="col" style="width:25%" class="minwidth_200">Track</th>   
-                            <th scope="col" style="width:25%" class="minwidth_200">Interpreten</th> 
-                            <th scope="col" style="width:20%" class="minwidth_150">Gerät</th>   
-                            <th scope="col" style="width:20%" class="minwidth_150">Lautstärke</th>                                 
-                            <th scope="col" style="width:10%" class="minwidth_100">Abspielen</th>                                   
+                            <th scope="col" style="width:25%" class="minwidth_200">Interprets</th> 
+                            <th scope="col" style="width:20%" class="minwidth_150">Device</th>   
+                            <th scope="col" style="width:20%" class="minwidth_150">Volume</th>                                 
+                            <th scope="col" style="width:10%" class="minwidth_100"></th>                                   
                           </thead>
                           <tbody> 
                             
@@ -367,7 +367,7 @@
                                         {% endif %}
                                       {% endfor %}
                                     {% else %}
-                                    <option value= "" > Keine Geräte gefunden </option>
+                                    <option value= "" > No devices founded </option>
                                     {% endif %}
                                   </select>    
                                 </td>                             
@@ -427,7 +427,7 @@
       
             <div class="card ">
               <div class="card-header">
-                <a data-toggle="collapse" href="#collapse_search_album"><font color="white"><b><i class='uil uil-arrow-down'> Suche Album </i></b></font></a>
+                <a data-toggle="collapse" href="#collapse_search_album"><font color="white"><b><i class='uil uil-arrow-down'> Search Album </i></b></font></a>
                 <br>
                 <br>
               </div>            
@@ -443,7 +443,7 @@
                       </div>  
                     </div>
                     <br>                                   
-                    <input type="submit" onclick="window.location.href='/music#table_album'" class="btn btn-default" name="spotify_search_album" value="Suchen" />
+                    <input type="submit" onclick="window.location.href='/music#table_album'" class="btn btn-default" name="spotify_search_album" value="Search" />
                     <br>
                     <br>
                   
@@ -453,10 +453,10 @@
                         <table class="table tablesorter">
                           <thead>
                             <th scope="col" style="width:25%" class="minwidth_200">Album</th>   
-                            <th scope="col" style="width:25%" class="minwidth_200">Interpreten</th> 
-                            <th scope="col" style="width:20%" class="minwidth_150">Gerät</th>   
-                            <th scope="col" style="width:20%" class="minwidth_150">Lautstärke</th>                                 
-                            <th scope="col" style="width:10%" class="minwidth_100">Abspielen</th>                                   
+                            <th scope="col" style="width:25%" class="minwidth_200">Interprets</th> 
+                            <th scope="col" style="width:20%" class="minwidth_150">Device</th>   
+                            <th scope="col" style="width:20%" class="minwidth_150">Volume</th>                                 
+                            <th scope="col" style="width:10%" class="minwidth_100"></th>                                   
                           </thead>
                           <tbody> 
                             
@@ -480,7 +480,7 @@
                                         {% endif %}
                                       {% endfor %}
                                     {% else %}
-                                    <option value= "" > Keine Geräte gefunden </option>
+                                    <option value= "" > No devices founded </option>
                                     {% endif %}
                                   </select>    
                                 </td>                             
@@ -560,9 +560,9 @@
 
                       <thead>
                         <th scope="col" style="width:20%" class="minwidth_200">Client</th>   
-                        <th scope="col" style="width:20%" class="minwidth_200">Geräte Typ</th>                                  
+                        <th scope="col" style="width:20%" class="minwidth_200">Device_Type</th>                                  
                         <th scope="col" style="width:10%" class="minwidth_100">Interface</th>
-                        <th scope="col" style="width:20%" class="minwidth_200">Lautstärke</th>
+                        <th scope="col" style="width:20%" class="minwidth_200">Volume</th>
                         <th scope="col" style="width:30%"></th>                            
                       </thead>
                       <tbody> 

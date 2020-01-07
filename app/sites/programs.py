@@ -34,7 +34,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def programs():
-    page_title = 'Smarthome | Programs'
+    page_title       = 'Smarthome | Programs'
     page_description = 'The programs configuration page.'
 
     success_message_add_program             = False       
@@ -106,14 +106,14 @@ def programs():
                     
                 # name already exist
                 elif ((GET_PROGRAM_BY_NAME(input_name) != None) and (selected_program.name != input_name)):
-                    error_message_change_settings_program.append(selected_program.name + " || Name - " + input_name + " - bereits vergeben")  
+                    error_message_change_settings_program.append(selected_program.name + " || Name - " + input_name + " - already taken")  
                     name = selected_program.name
                     error_founded = True  
 
                 # no input commited
                 else:                          
                     name = GET_PROGRAM_BY_ID(i).name
-                    error_message_change_settings_program.append(selected_program.name + " || Keinen Namen angegeben") 
+                    error_message_change_settings_program.append(selected_program.name + " || No name given") 
                     error_founded = True  
 
                 try:
@@ -276,7 +276,7 @@ def programs():
                                                      line_content_21, line_content_22, line_content_23, line_content_24, line_content_25, 
                                                      line_content_26, line_content_27, line_content_28, line_content_29, line_content_30):
 
-                        success_message_change_settings_program.append("Einstellungen erfolgreich geändert")           
+                        success_message_change_settings_program.append("Settings successfully saved")           
 
 
     """ ############### """
@@ -289,7 +289,7 @@ def programs():
             selected_program = GET_PROGRAM_BY_ID(i)
 
             if result:
-                success_message_change_settings_program.append("Progrmm erfolgreich gestartet")
+                success_message_change_settings_program.append("Progrm successfully started")
 
                 if request.form.get("checkbox_program_repeat") == "on":
                     SET_REPEAT_PROGRAM(True)
@@ -310,7 +310,7 @@ def programs():
             selected_program = GET_PROGRAM_BY_ID(i) 
 
             if result:
-                success_message_change_settings_program.append("Progrmm erfolgreich beendet")
+                success_message_change_settings_program.append("Progrm successfully stopped")
             else:
                 success_message_change_settings_program.append(" ERROR || " + str(result))
 
@@ -326,7 +326,7 @@ def programs():
             result  = DELETE_PROGRAM(i)    
 
             if result:
-                success_message_change_settings.append(program + " || Erfolgreich gelöscht") 
+                success_message_change_settings.append(program + " || Program successfully deleted") 
             else:
                 error_message_change_settings.append(program + " || " + str(result))
 

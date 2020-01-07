@@ -214,29 +214,30 @@ scheduler.start()
 def update_sunrise_sunset():
     for task in GET_ALL_SCHEDULER_TASKS():
 
-        if task.option_sunrise == "True" or task.option_sunset == "True":
+        if task.trigger_sun_position == "True":
+            if task.option_sunrise == "True" or task.option_sunset == "True":
 
-            # get coordinates
-            coordinates = GET_LOCATION_COORDINATES(task.location)
+                # get coordinates
+                coordinates = GET_LOCATION_COORDINATES(task.location)
 
-            if coordinates != "None" and coordinates != None: 
+                if coordinates != "None" and coordinates != None: 
 
-                # update sunrise / sunset
-                SET_SCHEDULER_TASK_SUNRISE(task.id, GET_SUNRISE_TIME(float(coordinates[0]), float(coordinates[1])))
-                SET_SCHEDULER_TASK_SUNSET(task.id, GET_SUNSET_TIME(float(coordinates[0]), float(coordinates[1])))
+                    # update sunrise / sunset
+                    SET_SCHEDULER_TASK_SUNRISE(task.id, GET_SUNRISE_TIME(float(coordinates[0]), float(coordinates[1])))
+                    SET_SCHEDULER_TASK_SUNSET(task.id, GET_SUNSET_TIME(float(coordinates[0]), float(coordinates[1])))
                             
 
 @scheduler.task('cron', id='scheduler_time', minute='*')
 def scheduler_time():
     for task in GET_ALL_SCHEDULER_TASKS():
-        if (task.option_time == "True" or task.option_sun == "True") and task.option_pause != "True":
+        if (task.trigger_time == "True" or task.trigger_sun_position == "True") and task.option_pause != "True":
             heapq.heappush(process_management_queue, (20, ("scheduler", task.id, "")))         
     
 
 @scheduler.task('cron', id='scheduler_ping', second='0, 15, 30, 45')
 def scheduler_ping(): 
     for task in GET_ALL_SCHEDULER_TASKS():
-        if task.option_position == "True" and task.option_pause != "True":
+        if task.trigger_position == "True" and task.option_pause != "True":
             heapq.heappush(process_management_queue, (20, ("scheduler", task.id, "")))
 
 

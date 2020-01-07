@@ -14,11 +14,11 @@
 				"description"     : "Eurotronic heater thermostat",
 				"input_values"    : ["local_temperature"],
 				"input_events"    : [],
-				"commands"        : ["16","18","20","21","22","23","24","25","OFF","HEAT"],				
-				"commands_json"   : ["{'current_heating_setpoint':16}","{'current_heating_setpoint':18}","{'current_heating_setpoint':20}",
-				                     "{'current_heating_setpoint':21}","{'current_heating_setpoint':22}","{'current_heating_setpoint':23}",
-									 "{'current_heating_setpoint':24}","{'current_heating_setpoint':25}",
-									 "{'eurotronic_system_mode':32}","{'eurotronic_system_mode':16}"]
+				"commands"        : ["16","17","18","19","20","21","22","23","24","25","OFF","HEAT"],				
+				"commands_json"   : ["{'current_heating_setpoint':16}","{'current_heating_setpoint':17}","{'current_heating_setpoint':18}",
+									 "{'current_heating_setpoint':19}","{'current_heating_setpoint':20}","{'current_heating_setpoint':21}",
+									 "{'current_heating_setpoint':22}","{'current_heating_setpoint':23}","{'current_heating_setpoint':24}",
+									 "{'current_heating_setpoint':25}","{'eurotronic_system_mode':32}","{'eurotronic_system_mode':16}"]
 			},
 			{
 				"model"           : "LED1545G12",
@@ -260,8 +260,8 @@
 				"description"     : "IKEA FYRTUR roller blind",
 				"input_values"    : [],
 				"input_events"    : [],
-				"commands"        : ["100 > OPEN","80","70","60","50","40","30","20","0 > CLOSE","STOP"],
-				"commands_json"   : ["{'position':100}","{'position':80}","{'position':70}","{'position':60}","{'position':50}","{'position':40}","{'position':30}","{'position':20}","{'position':0}","{'state':'stop'}"]
+				"commands"        : ["100","90","80","70","60","50","40","30","20","10","0","STOP"],
+				"commands_json"   : ["{'position':100}","{'position':90}","{'position':80}","{'position':70}","{'position':60}","{'position':50}","{'position':40}","{'position':30}","{'position':20}","{'position':10}","{'position':0}","{'state':'stop'}"]
 			},		
 			{
 				"model"           : "E1926",
@@ -269,8 +269,8 @@
 				"description"     : "IKEA KADRILJ roller blind",
 				"input_values"    : [],
 				"input_events"    : [],
-				"commands"        : ["100 > OPEN","80","70","60","50","40","30","20","0 > CLOSE","STOP"],
-				"commands_json"   : ["{'position':100}","{'position':80}","{'position':70}","{'position':60}","{'position':50}","{'position':40}","{'position':30}","{'position':20}","{'position':0}","{'state':'stop'}"]
+				"commands"        : ["100","90","80","70","60","50","40","30","20","10","0","STOP"],
+				"commands_json"   : ["{'position':100}","{'position':90}","{'position':80}","{'position':70}","{'position':60}","{'position':50}","{'position':40}","{'position':30}","{'position':20}","{'position':10}","{'position':0}","{'state':'stop'}"]
 			},	
 			{
 				"model"           : "E1524/E1810",

@@ -7,12 +7,11 @@
               <div class="card-footer">    
                 <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
                   <a href="/settings/system" class="btn btn-primary btn-lg" role="button" aria-pressed="true">System</a>
-                  <a href="/settings/devices" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Geräte</a>                  
-                  <a href="/settings/controller" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Controller</a>                                   
-                  <a href="/settings/users" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Benutzer</a>                  
-                  <a href="/settings/system_log" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Ereignisse</a>
-  
-                 </div>         
+                  <a href="/settings/devices" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Devices</a>                  
+                  <a href="/settings/controller" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Controller</a>                                  
+                  <a href="/settings/users" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Users</a>                  
+                  <a href="/settings/system_log" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">System Log</a>
+                </div>         
               </div>  
             </div>  
 
@@ -87,7 +86,7 @@
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    <span>Einstellungen erfolgreich geändert</span>
+    <span>Settings successfully changed</span>
   </div>
 {% endif %}  
 
@@ -106,7 +105,7 @@
 
             <div class="card"> 
               <div class="card-header">
-                <h5 class="title">Dienste</h5>
+                <h5 class="title">Services</h5>
               </div>                 
               <form method="POST">
                 <div class="card-body">        
@@ -117,11 +116,11 @@
                     <div class="col-md-8">
                       <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" class="custom-control-input" id="radio_zigbee2mqtt_active_true" {% if system_settings.zigbee2mqtt_active == "True" %} checked="on" {% endif %} value="True" name="radio_zigbee2mqtt_active">
-                        <label class="custom-control-label" for="radio_zigbee2mqtt_active_true">Aktiviert</label>
+                        <label class="custom-control-label" for="radio_zigbee2mqtt_active_true">enabled</label>
                       </div>                      
                       <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" class="custom-control-input" id="radio_zigbee2mqtt_active_false" {% if system_settings.zigbee2mqtt_active == "False" %} checked="on" {% endif %} value="False" name="radio_zigbee2mqtt_active">
-                        <label class="custom-control-label" for="radio_zigbee2mqtt_active_false">Deaktiviert</label>
+                        <label class="custom-control-label" for="radio_zigbee2mqtt_active_false">disabled</label>
                       </div>      
                       <br>
                       <br>
@@ -134,11 +133,11 @@
                     <div class="col-md-8">
                       <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" class="custom-control-input" id="radio_lms_active_true" {% if system_settings.lms_active == "True" %} checked="on" {% endif %} value="True" name="radio_lms_active">
-                        <label class="custom-control-label" for="radio_lms_active_true">Aktiviert</label>
+                        <label class="custom-control-label" for="radio_lms_active_true">enabled</label>
                       </div>                      
                       <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" class="custom-control-input" id="radio_lms_active_false" {% if system_settings.lms_active == "False" %} checked="on" {% endif %} value="False" name="radio_lms_active">
-                        <label class="custom-control-label" for="radio_lms_active_false">Deaktiviert</label>
+                        <label class="custom-control-label" for="radio_lms_active_false">disabled</label>
                       </div>      
                       <br>
                       <br>
@@ -151,11 +150,11 @@
                     <div class="col-md-8">
                       <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" class="custom-control-input" id="radio_squeezelite_active_true" {% if system_settings.squeezelite_active == "True" %} checked="on" {% endif %} value="True" name="radio_squeezelite_active">
-                        <label class="custom-control-label" for="radio_squeezelite_active_true">Aktiviert</label>
+                        <label class="custom-control-label" for="radio_squeezelite_active_true">enabled</label>
                       </div>                      
                       <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" class="custom-control-input" id="radio_squeezelite_active_false" {% if system_settings.squeezelite_active == "False" %} checked="on" {% endif %} value="False" name="radio_squeezelite_active">
-                        <label class="custom-control-label" for="radio_squeezelite_active_false">Deaktiviert</label>
+                        <label class="custom-control-label" for="radio_squeezelite_active_false">disabled</label>
                       </div>      
                       <br>
                       <br>
@@ -181,7 +180,7 @@
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    <span>Einstellungen erfolgreich geändert - Neustart des Systems notwendig</span>
+    <span>Settings successfully changed - System restart nessessary</span>
   </div>
 {% endif %}  
 
@@ -200,7 +199,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Netzwerk</h5>
+                <h5 class="title">Network</h5>
               </div>            
               <form method="POST">        
                 <div class="card-body">
@@ -217,7 +216,7 @@
                         </div>                  
                         <div class="col-sm-2">                       
                           <div class="form-group">
-                            <label>LAN Adresse</label>
+                            <label>LAN Address</label>
                             {% if system_settings.dhcp == "True" %}
                               <br>
                               {% if system_settings.ip_address != None %}{{ system_settings.ip_address }}{% endif %}
@@ -261,7 +260,7 @@
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    <span>Einstellungen erfolgreich geändert</span>
+    <span>Settings successfully changed</span>
   </div>
 {% endif %}  
 
@@ -319,7 +318,7 @@
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    <span>Einstellungen erfolgreich geändert</span>
+    <span>Settings successfully changed</span>
   </div>
 {% endif %}  
 
@@ -351,7 +350,7 @@
       <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
         <i class="tim-icons icon-simple-remove"></i>
       </button>
-      <span data-notify="message">eMail erfolgreich versendet</span> 
+      <span data-notify="message">eMail successfully sent</span> 
     </div>
   {% endif %} 
 {% endif %}  
@@ -365,7 +364,7 @@
                   <div class="row">
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label>Server Adresse</label>
+                        <label>Server Address</label>
                          <input type="text" class="form-control" name="set_server_address" value="{% if email_settings.server_address != None %}{{ email_settings.server_address }}{% endif %}" />
                       </div>
                     </div>
@@ -391,13 +390,13 @@
                   <div class="row">
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label>Benutzername</label>
+                        <label>Username</label>
                         <input type="text" class="form-control" name="set_username" value="{% if email_settings.username != None %}{{ email_settings.username }}{% endif %}" />
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label>Passwort</label>
+                        <label>Password</label>
                         <input type="password" class="form-control" name="set_password" value="{% if email_settings.password != None %}{{ email_settings.password }}{% endif %}" />
                       </div>
                     </div>
@@ -441,7 +440,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Backup</h5>
+                <h5 class="title">Backups</h5>
               </div>            
               <form method="POST">          
                 <div class="card-body"> 
@@ -504,7 +503,7 @@
             </div>
 
             <div class="text-right">
-              Version 1.0
+              Version 1.1
             </div>
 
           </div>
