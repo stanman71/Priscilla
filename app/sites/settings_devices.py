@@ -300,34 +300,6 @@ def settings_devices():
     """  zigbee  """
     """ ######## """
 
-    # disable pairing after 30 minutes automatically
-    def DISABLE_ZIGBEE_PAIRING_THREAD():
-        
-        # check mqtt connection
-        if GET_DEVICE_CONNECTION_MQTT() == True:  
-
-            time.sleep(1800)
-
-            SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
-
-            channel  = "smarthome/zigbee2mqtt/bridge/config/permit_join"
-            msg      = "false"
-
-            heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
-            time.sleep(1)
-
-            if CHECK_ZIGBEE2MQTT_PAIRING("False"):             
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
-                SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled") 
-            else:             
-                WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
-                SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
-
-        else:
-            WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | No MQTT connection") 
-            SET_ZIGBEE2MQTT_PAIRING_STATUS("No MQTT connection")       
-
-
     # change pairing setting
     if request.form.get("set_zigbee_pairing") != None: 
 
@@ -343,14 +315,9 @@ def settings_devices():
             setting_pairing = str(request.form.get("radio_zigbee2mqtt_pairing_setting"))
             
             if setting_pairing == "True":               
-                channel  = "smarthome/zigbee2mqtt/bridge/config/permit_join"
-                msg      = "true"
+                heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "true")))   
 
-                heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
-
-                Thread = threading.Thread(target=DISABLE_ZIGBEE_PAIRING_THREAD)
-                Thread.start()                      
-                time.sleep(1)
+                SET_ZIGBEE_PAIRING_TIMER("True")          
 
                 if CHECK_ZIGBEE2MQTT_PAIRING("True"):             
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing enabled | successful") 
@@ -363,11 +330,9 @@ def settings_devices():
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
                                             
             else:         
-                channel  = "smarthome/zigbee2mqtt/bridge/config/permit_join"
-                msg      = "false"
-
-                heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
-                time.sleep(1)
+                heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "false")))   
+               
+                SET_ZIGBEE_PAIRING_TIMER("False")
 
                 if CHECK_ZIGBEE2MQTT_PAIRING("False"):                 
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
@@ -385,11 +350,7 @@ def settings_devices():
 
         # check mqtt connection
         if GET_DEVICE_CONNECTION_MQTT() == True and GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
-
-            channel  = "smarthome/zigbee2mqtt/bridge/networkmap"
-            msg      = "graphviz"
-
-            heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
+            heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/networkmap", "graphviz")))
             time.sleep(10)
 
 

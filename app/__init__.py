@@ -190,7 +190,7 @@ SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, GET_SYSTEM_SETTINGS().dhcp)
 """ ####### """
 
 from app.sites                      import index, dashboard, scheduler, programs, lighting_scenes, lighting_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_devices, settings_controller, settings_users, settings_system_log, errors
-from app.backend.shared_resources   import process_management_queue, START_REFRESH_MQTT_INPUT_MESSAGES_THREAD
+from app.backend.shared_resources   import process_management_queue, mqtt_message_queue, START_REFRESH_MQTT_INPUT_MESSAGES_THREAD, START_DISABLE_ZIGBEE_PAIRING_THREAD
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
 from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_AT_STARTUP, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.email              import SEND_EMAIL
@@ -272,14 +272,14 @@ if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
             
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | connected")
 
+            START_DISABLE_ZIGBEE_PAIRING_THREAD()
+
             # deactivate pairing at startup
             SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
 
-            if not CHECK_ZIGBEE2MQTT_PAIRING("False"):    
-                channel = "miranda/zigbee2mqtt/bridge/config/permit_join"
-                msg     = "false"
+            if not CHECK_ZIGBEE2MQTT_PAIRING("False"):   
 
-                heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
+                heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "false")))    
 
                 if CHECK_ZIGBEE2MQTT_PAIRING("False"):             
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 

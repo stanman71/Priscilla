@@ -82,7 +82,7 @@ def MQTT_RECEIVE_THREAD():
                 device_type = ""    
                 
             
-        # message block ?
+        # message ignore ?
         if (device_type == "led_rgb" or 
             device_type == "led_simple" or 
             device_type == "power_switch" or 
@@ -95,8 +95,10 @@ def MQTT_RECEIVE_THREAD():
                 # search for other messages from the same device
                 if existing_message[1] == channel:
                     
+                    # device sends new data ?
+
                     try:
-                        # device sends new data ?
+                        # normal case 
                         existing_data = json.loads(existing_message[2])
                         new_data      = json.loads(msg)
 
@@ -110,8 +112,8 @@ def MQTT_RECEIVE_THREAD():
                     except:
                         new_message = False                 
 
-                        # special case IKEA blinds
-                        try:        
+                        try:      
+                            # special case IKEA blinds   
                             existing_data = json.loads(existing_message[2])
                             new_data      = json.loads(msg)
 
@@ -126,20 +128,22 @@ def MQTT_RECEIVE_THREAD():
                             new_message = False     
 
 
-        # message block ?
+        # message ignore ?
         if (device_type == "controller"):
     
-            for existing_message in GET_MQTT_INCOMING_MESSAGES(1):              
+            for existing_message in GET_MQTT_INCOMING_MESSAGES(3):              
                 
                 # search for other messages from the same device
                 if existing_message[1] == channel:
                     
+                    # controller sends new data ?
+
                     try:
-                        # device sends new data ?
+                        # first case command "action"
                         existing_data = json.loads(existing_message[2])
                         new_data      = json.loads(msg)
 
-                        if existing_data["state"] != new_data["state"]:
+                        if existing_data["action"] != new_data["action"]:
                             new_message = True
                             break
                             
@@ -148,6 +152,21 @@ def MQTT_RECEIVE_THREAD():
                             
                     except:
                         new_message = False  
+
+                        try:     
+                            # second case command "click"   
+                            existing_data = json.loads(existing_message[2])
+                            new_data      = json.loads(msg)
+
+                            if existing_data["click"] != new_data["click"]:
+                                new_message = True
+                                break
+                                
+                            else:
+                                new_message = False
+                                
+                        except:
+                            new_message = False     
 
 
         # message passing
