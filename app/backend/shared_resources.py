@@ -79,28 +79,38 @@ def GET_MQTT_INCOMING_MESSAGES(limit):
 
 program_status = "None"
 
-def SET_PROGRAM_STATUS(value):
-	global program_status
-	program_status = value
-
 def GET_PROGRAM_STATUS():
     global program_status
     return program_status 
+
+def SET_PROGRAM_STATUS(value):
+	global program_status
+	program_status = value
 
 
 """ ############################ """
 """  zigbee2mqtt pairing status  """
 """ ############################ """
 
-zigbee2mqtt_pairing_status = "None"
+zigbee2mqtt_pairing_setting = "None"
+zigbee2mqtt_pairing_status  = "None"
 
-def SET_ZIGBEE2MQTT_PAIRING_STATUS(value):
-	global zigbee2mqtt_pairing_status
-	zigbee2mqtt_pairing_status = value
+def GET_ZIGBEE2MQTT_PAIRING_SETTING():
+    global zigbee2mqtt_pairing_setting
+    return zigbee2mqtt_pairing_setting 
+
+def SET_ZIGBEE2MQTT_PAIRING_SETTING(setting):
+	global zigbee2mqtt_pairing_setting
+	zigbee2mqtt_pairing_setting = setting
+
 
 def GET_ZIGBEE2MQTT_PAIRING_STATUS():
     global zigbee2mqtt_pairing_status
     return zigbee2mqtt_pairing_status 
+
+def SET_ZIGBEE2MQTT_PAIRING_STATUS(value):
+	global zigbee2mqtt_pairing_status
+	zigbee2mqtt_pairing_status = value
 
 
 """ ################# """
@@ -110,19 +120,18 @@ def GET_ZIGBEE2MQTT_PAIRING_STATUS():
 device_connetion_mqtt        = False
 device_connetion_zigbee2mqtt = False
 
-def SET_DEVICE_CONNECTION_MQTT(value):
-	global device_connetion_mqtt
-	device_connetion_mqtt = value
-
 def GET_DEVICE_CONNECTION_MQTT():
     global device_connetion_mqtt
     return device_connetion_mqtt 
 
-def SET_DEVICE_CONNECTION_ZIGBEE2MQTT(value):
-	global device_connetion_zigbee2mqtt
-	device_connetion_zigbee2mqtt = value	
+def SET_DEVICE_CONNECTION_MQTT(value):
+	global device_connetion_mqtt
+	device_connetion_mqtt = value
 
 def GET_DEVICE_CONNECTION_ZIGBEE2MQTT():
     global device_connetion_zigbee2mqtt
     return device_connetion_zigbee2mqtt	
 
+def SET_DEVICE_CONNECTION_ZIGBEE2MQTT(value):
+	global device_connetion_zigbee2mqtt
+	device_connetion_zigbee2mqtt = value	

@@ -2,10 +2,9 @@ from flask             import Flask
 from flask_bootstrap   import Bootstrap
 from flask_mail        import Mail
 from flask_apscheduler import APScheduler
-
-from threading import Lock
-from flask import Flask, render_template, session, request, copy_current_request_context
-from flask_socketio import SocketIO, emit
+from threading         import Lock
+from flask             import Flask, render_template, session, request, copy_current_request_context
+from flask_socketio    import SocketIO, emit
 
 # load RES
 from app import assets  
@@ -262,67 +261,47 @@ except Exception as e:
 """ ######## """
 """ services """
 """ ######## """
- 
+
 if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
 
-    if CHECK_ZIGBEE2MQTT_AT_STARTUP():  
-        print("Network | ZigBee2MQTT | connected") 
-        
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | connected")
+    # check mqtt connection
+    if GET_DEVICE_CONNECTION_MQTT() == True:  
 
-        # deactivate pairing at startup
-        SET_ZIGBEE2MQTT_PAIRING("False")
-        
-        channel = "miranda/zigbee2mqtt/bridge/config/permit_join"
-        msg     = "false"
-
-        heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
-        time.sleep(10)
-
-        # check pairing setting
-        for message in GET_MQTT_INCOMING_MESSAGES(15):
-            if message[1] == "smarthome/zigbee2mqtt/bridge/config":
+        if CHECK_ZIGBEE2MQTT_AT_STARTUP():  
+            print("Network | ZigBee2MQTT | connected") 
             
-                try:
-                    data = json.loads(message[2])
-          
-                    if data["permit_join"] == True:
-                        WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
-                        SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | connected")
 
+            # deactivate pairing at startup
+            SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
 
-                    # if failed, repeat process
-                    else:   
+            if not CHECK_ZIGBEE2MQTT_PAIRING("False"):    
+                channel = "miranda/zigbee2mqtt/bridge/config/permit_join"
+                msg     = "false"
 
-                        channel = "miranda/zigbee2mqtt/bridge/config/permit_join"
-                        msg     = "false"
+                heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
 
-                        heapq.heappush(process_management_queue, (20, ("send_mqtt_message", channel, msg)))   
-                        time.sleep(5)
-
-                        for message in GET_MQTT_INCOMING_MESSAGES(30):
-                            if message[1] == "smarthome/zigbee2mqtt/bridge/config":                        
-                                data = json.loads(message[2])
-          
-                                if data["permit_join"] == True:
-                                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
-                                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")     
-
-                                else:                
-                                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
-                                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed") 
-
-
-                except:
-                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed") 
+                if CHECK_ZIGBEE2MQTT_PAIRING("False"):             
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
+                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled") 
+                else:             
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
+
+            else:
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
+                SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")     
+
+        else:
+            print("ERROR: Network | ZigBee2MQTT | No Connection") 
             
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")        
+            SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | No Connection")  
+            SET_ZIGBEE2MQTT_PAIRING_STATUS("No Zigbee2MQTT Connection")        
+
     else:
-        print("ERROR: Network | ZigBee2MQTT | No Connection") 
-        
-        WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")        
-        SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | No Connection")  
-        SET_ZIGBEE2MQTT_PAIRING_STATUS("No Connection")        
+        WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | No MQTT connection") 
+        SET_ZIGBEE2MQTT_PAIRING_STATUS("No MQTT connection")                  
 
 else:
     os.system("sudo systemctl stop zigbee2mqtt")

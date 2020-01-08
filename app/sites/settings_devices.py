@@ -7,7 +7,7 @@ from app                          import app
 from app.database.models          import *
 from app.backend.mqtt             import UPDATE_DEVICES, CHECK_ZIGBEE2MQTT_NAME_CHANGED, CHECK_ZIGBEE2MQTT_DEVICE_DELETED, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.file_management  import GET_PATH, RESET_LOGFILE, WRITE_LOGFILE_SYSTEM
-from app.backend.shared_resources import mqtt_message_queue, GET_DEVICE_CONNECTION_MQTT, GET_DEVICE_CONNECTION_ZIGBEE2MQTT, SET_ZIGBEE2MQTT_PAIRING_STATUS
+from app.backend.shared_resources import *
 from app.backend.checks           import CHECK_DEVICE_EXCEPTION_SETTINGS
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
@@ -23,14 +23,14 @@ import threading
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -300,6 +300,7 @@ def settings_devices():
     """  zigbee  """
     """ ######## """
 
+    # disable pairing after 30 minutes automatically
     def DISABLE_ZIGBEE_PAIRING_THREAD():
         
         # check mqtt connection
@@ -307,7 +308,7 @@ def settings_devices():
 
             time.sleep(1800)
 
-            SET_ZIGBEE2MQTT_PAIRING("false")
+            SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
 
             channel  = "smarthome/zigbee2mqtt/bridge/config/permit_join"
             msg      = "false"
@@ -315,12 +316,16 @@ def settings_devices():
             heapq.heappush(mqtt_message_queue, (20, (channel, msg)))   
             time.sleep(1)
 
-            if CHECK_ZIGBEE2MQTT_PAIRING("false"):             
+            if CHECK_ZIGBEE2MQTT_PAIRING("False"):             
                 WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled") 
             else:             
-                WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
+                WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
+
+        else:
+            WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | No MQTT connection") 
+            SET_ZIGBEE2MQTT_PAIRING_STATUS("No MQTT connection")       
 
 
     # change pairing setting
@@ -335,7 +340,7 @@ def settings_devices():
             error_message_zigbee_pairing.append("Zigbee is disabled")              
 
         else:
-            setting_pairing = str(request.form.get("radio_zigbee2mqtt_pairing"))
+            setting_pairing = str(request.form.get("radio_zigbee2mqtt_pairing_setting"))
             
             if setting_pairing == "True":               
                 channel  = "smarthome/zigbee2mqtt/bridge/config/permit_join"
@@ -349,11 +354,11 @@ def settings_devices():
 
                 if CHECK_ZIGBEE2MQTT_PAIRING("True"):             
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing enabled | successful") 
-                    SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
+                    SET_ZIGBEE2MQTT_PAIRING_SETTING(setting_pairing)
                     success_message_zigbee_pairing.append("Settings successfully saved") 
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
                 else:             
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Pairing enabled | Setting not confirmed")   
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing enabled | Setting not confirmed")   
                     error_message_zigbee_pairing.append("Setting not confirmed") 
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
                                             
@@ -366,11 +371,11 @@ def settings_devices():
 
                 if CHECK_ZIGBEE2MQTT_PAIRING("False"):                 
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
-                    SET_ZIGBEE2MQTT_PAIRING(setting_pairing)
+                    SET_ZIGBEE2MQTT_PAIRING_SETTING(setting_pairing)
                     success_message_zigbee_pairing.append("Settings successfully saved") 
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")
                 else:             
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
                     error_message_zigbee_pairing.append("Setting not confirmed") 
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
 
@@ -385,7 +390,7 @@ def settings_devices():
             msg      = "graphviz"
 
             heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
-            time.sleep(5)
+            time.sleep(10)
 
 
     """ ############ """
@@ -408,9 +413,10 @@ def settings_devices():
     dropdown_list_exception_options = ["IP-Address"] 
     dropdown_list_operators         = ["=", ">", "<"]
     
-    list_devices        = GET_ALL_DEVICES("")
-    zigbee2mqtt_pairing = GET_ZIGBEE2MQTT_PAIRING()
-    system_services     = GET_SYSTEM_SETTINGS()  
+    list_devices                = GET_ALL_DEVICES("")
+    zigbee2mqtt_pairing_setting = GET_ZIGBEE2MQTT_PAIRING_SETTING()
+    system_services             = GET_SYSTEM_SETTINGS()  
+    
 
     data = {'navigation': 'settings'}
 
@@ -567,7 +573,7 @@ def settings_devices():
                                                     list_exception_sensors=list_exception_sensors,
                                                     dropdown_list_exception_options=dropdown_list_exception_options,
                                                     dropdown_list_operators=dropdown_list_operators,
-                                                    zigbee2mqtt_pairing=zigbee2mqtt_pairing,
+                                                    zigbee2mqtt_pairing_setting=zigbee2mqtt_pairing_setting,
                                                     timestamp=timestamp,    
                                                     exceptions_collapse_open=exceptions_collapse_open,  
                                                     device_1_input_values=device_1_input_values,

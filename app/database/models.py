@@ -320,11 +320,6 @@ class User(UserMixin, db.Model):
     password           = db.Column(db.String(100))
     email_notification = db.Column(db.String(20))
 
-class ZigBee2MQTT(db.Model):
-    __tablename__ = 'zigbee2mqtt'
-    id      = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    pairing = db.Column(db.String(50))
-
 
 """ ################################ """
 """ ################################ """
@@ -424,17 +419,6 @@ if User.query.filter_by(name='admin').first() is None:
         email_notification = "True"
     )           
     db.session.add(user)
-    db.session.commit()
-
-# ###########
-# zigbee2mqtt 
-# ###########
-
-if ZigBee2MQTT.query.filter_by().first() is None:
-    zigbee2mqtt = ZigBee2MQTT(
-        pairing = "False",
-    )
-    db.session.add(zigbee2mqtt)
     db.session.commit()
 
 
@@ -3082,20 +3066,3 @@ def DELETE_USER(user_id):
 
     else:
         return "Benutzer kann nicht gelöscht werden"
-
-
-""" ################### """
-""" ################### """
-"""     zigbee2mqtt     """
-""" ################### """
-""" ################### """
-
-    
-def GET_ZIGBEE2MQTT_PAIRING():
-    return ZigBee2MQTT.query.filter_by().first().pairing
-
-
-def SET_ZIGBEE2MQTT_PAIRING(setting):
-    entry = ZigBee2MQTT.query.filter_by().first()
-    entry.pairing = setting
-    db.session.commit()

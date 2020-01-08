@@ -129,7 +129,7 @@ def MQTT_RECEIVE_THREAD():
         # message block ?
         if (device_type == "controller"):
     
-            for existing_message in GET_MQTT_INCOMING_MESSAGES(2):              
+            for existing_message in GET_MQTT_INCOMING_MESSAGES(1):              
                 
                 # search for other messages from the same device
                 if existing_message[1] == channel:
@@ -728,8 +728,8 @@ def CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
 def CHECK_ZIGBEE2MQTT_PAIRING(pairing_setting):    
     counter = 1
 
-    while counter != 5:       
-        for message in GET_MQTT_INCOMING_MESSAGES(10):
+    while counter != 10:       
+        for message in GET_MQTT_INCOMING_MESSAGES(15):
             if message[1] == "smarthome/zigbee2mqtt/bridge/config":
             
                 try:

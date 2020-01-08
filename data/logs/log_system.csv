@@ -3678,3 +3678,16 @@ Timestamp,Type,Description
 2020-01-07 15:54:30,ERROR,|System || Process Management || argument of type 'NoneType' is not iterable|
 2020-01-07 15:54:45,ERROR,|System || Process Management || argument of type 'NoneType' is not iterable|
 2020-01-07 15:54:52,DATABASE,|Scheduler || Task - new_scheduler_task_3 || deleted|
+2020-01-08 09:16:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-08 09:16:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-08 09:16:37,ERROR,|Network || ZigBee2MQTT || No Connection|
+2020-01-08 09:16:39,SUCCESS,|Music || Spotify Token updated|
+2020-01-08 09:19:23,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-01-08 09:19:24,SUCCESS,|Music || Spotify Token updated|
+2020-01-08 09:19:24,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-08 09:19:24,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-08 11:51:36,DATABASE,|System || Network || changed|
+2020-01-08 11:51:40,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-01-08 11:51:40,SUCCESS,|Music || Spotify Token updated|
+2020-01-08 11:51:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-08 11:51:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
