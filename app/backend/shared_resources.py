@@ -172,8 +172,9 @@ def DISABLE_ZIGBEE_PAIRING_THREAD():
 
 					else:
 						WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
-						SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")					
-
+						SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
+						SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")	
+										
 			except:
 				pass
 

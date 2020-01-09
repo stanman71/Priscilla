@@ -461,7 +461,7 @@ def ADD_CAMERA():
             WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera - " + "new_camera_" + str(i) + " | added")               
             return True
             
-    return "Kameralimit erreicht (6)"
+    return "Limit reached (6)"
 
 
 def SET_CAMERA_SETTINGS(id, name, url, user, password):         
@@ -836,7 +836,7 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", descriptio
                 
                 return True
 
-        return "Gerätelimit erreicht (100)"                           
+        return "Limit reached (100)"                           
                 
     else:
         SET_DEVICE_LAST_CONTACT(ieeeAddr)  
@@ -1021,45 +1021,45 @@ def DELETE_DEVICE(ieeeAddr):
     for entry in entries:
         if (entry.device_ieeeAddr_1 == ieeeAddr) or (entry.device_ieeeAddr_2 == ieeeAddr):
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " eingetragen in Aufgabenplanung"
+            error_list = error_list + ", " + device.name + " used in scheduler"
     
     # check sensordata
     entries = GET_ALL_SENSORDATA_JOBS()
     for entry in entries:
         if entry.device_ieeeAddr == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " eingetragen in Sensordaten / Jobs"
+            error_list = error_list + ", " + device.name + " used in sensordata / jobs"
 
     # check lighting groups
     entries = GET_ALL_LIGHTING_GROUPS()
     for entry in entries:
         if entry.light_ieeeAddr_1 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " eingetragen in Beleuchtung / Gruppen"
+            error_list = error_list + ", " + device.name + " used in lighting / groups"
         if entry.light_ieeeAddr_2 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " eingetragen in Beleuchtung / Gruppen"
+            error_list = error_list + ", " + device.name + " used in lighting / groups"
         if entry.light_ieeeAddr_3 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " eingetragen in Beleuchtung / Gruppen" 
+            error_list = error_list + ", " + device.name + " used in lighting / groups" 
         if entry.light_ieeeAddr_4 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " eingetragen in Beleuchtung / Gruppen"
+            error_list = error_list + ", " + device.name + " used in lighting / groups"
         if entry.light_ieeeAddr_5 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " eingetragen in Beleuchtung / Gruppen"
+            error_list = error_list + ", " + device.name + " used in lighting / groups"
         if entry.light_ieeeAddr_6 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " eingetragen in Beleuchtung / Gruppen"
+            error_list = error_list + ", " + device.name + " used in lighting / groups"
         if entry.light_ieeeAddr_7 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " eingetragen in Beleuchtung / Gruppen"
+            error_list = error_list + ", " + device.name + " used in lighting / groups"
         if entry.light_ieeeAddr_8 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " eingetragen in Beleuchtung / Gruppen"
+            error_list = error_list + ", " + device.name + " used in lighting / groups"
         if entry.light_ieeeAddr_9 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " eingetragen in Beleuchtung / Gruppen"            
+            error_list = error_list + ", " + device.name + " used in lighting / groups"            
         
     if error_list != "":
         return error_list[2:]   
@@ -1173,7 +1173,7 @@ def ADD_LIGHTING_GROUP():
             WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Group - " + "new_group_" + str(i) + " | added")  
             return True
 
-    return "Gruppenlimit erreicht (20)"
+    return "Limit reached (20)"
 
 
 def SET_LIGHTING_GROUP(id, name, light_ieeeAddr_1, light_name_1, light_device_type_1, 
@@ -1506,7 +1506,7 @@ def GET_LIGHTING_SCENE_BY_NAME(name):
             
 
 def ADD_LIGHTING_SCENE():
-    for i in range(1,11):
+    for i in range(1,21):
         if Lighting_Scenes.query.filter_by(id=i).first():
             pass
         else:
@@ -1525,7 +1525,7 @@ def ADD_LIGHTING_SCENE():
             WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Scene - " + "new_scene_" + str(i) + " | added")  
             return True
 
-    return "Szenenlimit erreicht (10)"
+    return "Limit reached (20)"
 
 
 def SET_LIGHTING_SCENE(id, name, red_1, green_1, blue_1, brightness_1, red_2, green_2, blue_2, brightness_2, red_3, green_3, blue_3, brightness_3, 
@@ -1849,7 +1849,7 @@ def ADD_PROGRAM():
 
             return True
 
-    return "Programmlimit erreicht (30)"
+    return "Limit reached (30)"
 
 
 def SET_PROGRAM_SETTINGS(id, name, line_content_1,  line_content_2,  line_content_3,  line_content_4,  line_content_5, 
@@ -2522,7 +2522,7 @@ def GET_ALL_SCHEDULER_TASKS():
 
 
 def ADD_SCHEDULER_TASK():
-    for i in range(1,26):
+    for i in range(1,31):
         if Scheduler_Tasks.query.filter_by(id=i).first():
             pass
         else:
@@ -2541,7 +2541,7 @@ def ADD_SCHEDULER_TASK():
             WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Task - " + "new_scheduler_task_" + str(i) + " | added")             
             return True
 
-    return "Aufgabenlimit erreicht (25)"
+    return "Limit reached (30)"
 
 
 def SET_SCHEDULER_TASK(id, name, task,
@@ -2794,7 +2794,7 @@ def ADD_SENSORDATA_JOB():
             WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata | Job - " + "new_job_" + str(i) + " | added")                    
             return True
 
-    return "Job-Limit erreicht (25)"
+    return "Limit reached (25)"
 
 
 def SET_SENSORDATA_JOB_SETTINGS(id, name, filename, device_ieeeAddr, sensor_key, always_active):        
@@ -3017,6 +3017,8 @@ def ADD_USER():
             WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + "new_user_" + str(i) + " | added") 
             return True
 
+    return "Limit reached (25)"        
+
 
 def UPDATE_USER_SETTINGS(id, name, email, role, email_notification):    
     
@@ -3065,4 +3067,4 @@ def DELETE_USER(user_id):
                 return(e)
 
     else:
-        return "Benutzer kann nicht gelöscht werden"
+        return "User 'admin' cannot be deleted"

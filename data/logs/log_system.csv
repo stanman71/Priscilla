@@ -3691,3 +3691,37 @@ Timestamp,Type,Description
 2020-01-08 11:51:40,SUCCESS,|Music || Spotify Token updated|
 2020-01-08 11:51:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-01-08 11:51:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-09 09:19:10,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-01-09 09:19:10,SUCCESS,|Music || Spotify Token updated|
+2020-01-09 09:19:11,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-09 09:19:11,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-09 09:19:35,DATABASE,|Lighting || Scene - new_scene_3 || added|
+2020-01-09 09:19:36,DATABASE,|Lighting || Scene - new_scene_4 || added|
+2020-01-09 09:19:37,DATABASE,|Lighting || Scene - new_scene_5 || added|
+2020-01-09 09:19:38,DATABASE,|Lighting || Scene - new_scene_6 || added|
+2020-01-09 09:19:38,DATABASE,|Lighting || Scene - new_scene_7 || added|
+2020-01-09 09:19:39,DATABASE,|Lighting || Scene - new_scene_8 || added|
+2020-01-09 09:19:40,DATABASE,|Lighting || Scene - new_scene_9 || added|
+2020-01-09 09:19:41,DATABASE,|Lighting || Scene - new_scene_10 || added|
+2020-01-09 09:23:10,DATABASE,|Lighting || Scene - new_scene_11 || added|
+2020-01-09 09:23:10,DATABASE,|Lighting || Scene - new_scene_12 || added|
+2020-01-09 09:23:11,DATABASE,|Lighting || Scene - new_scene_13 || added|
+2020-01-09 09:30:06,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-01-09 09:30:06,SUCCESS,|Music || Spotify Token updated|
+2020-01-09 09:30:07,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-09 09:30:07,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-09 09:30:13,DATABASE,|Lighting || Scene - new_scene_14 || added|
+2020-01-09 09:31:54,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-01-09 09:31:54,SUCCESS,|Music || Spotify Token updated|
+2020-01-09 09:31:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-09 09:31:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-01-09 09:32:06,DATABASE,|Light || Scene - new_scene_13 || Settings || changed|
+2020-01-09 09:32:09,DATABASE,|Light || Scene - new_scene_13 || Settings || changed|
+2020-01-09 09:32:35,DATABASE,|Light || Scene - new_scene_13 || Settings || changed|
+2020-01-09 09:32:43,DATABASE,|Lighting || Scene - new_scene_13 || deleted|
+2020-01-09 09:32:48,DATABASE,|Lighting || Scene - new_scene_14 || deleted|
+2020-01-09 09:32:52,DATABASE,|Lighting || Scene - new_scene_10 || deleted|
+2020-01-09 09:32:54,DATABASE,|Lighting || Scene - new_scene_10 || added|
+2020-01-09 09:33:00,DATABASE,|Lighting || Scene - new_scene_10 || deleted|
+2020-01-09 09:33:04,DATABASE,|Lighting || Scene - new_scene_3 || deleted|
+2020-01-09 09:33:07,DATABASE,|Lighting || Scene - new_scene_4 || deleted|

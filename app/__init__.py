@@ -275,21 +275,22 @@ if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
             START_DISABLE_ZIGBEE_PAIRING_THREAD()
 
             # deactivate pairing at startup
-            SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
-
             if not CHECK_ZIGBEE2MQTT_PAIRING("False"):   
 
                 heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "false")))    
 
                 if CHECK_ZIGBEE2MQTT_PAIRING("False"):             
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
+                    SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled") 
                 else:             
                     WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
+                    SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
 
             else:
                 WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
+                SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")     
 
         else:
@@ -297,10 +298,12 @@ if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
             
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")        
             SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | No Connection")  
+            SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
             SET_ZIGBEE2MQTT_PAIRING_STATUS("No Zigbee2MQTT Connection")        
 
     else:
         WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | No MQTT connection") 
+        SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
         SET_ZIGBEE2MQTT_PAIRING_STATUS("No MQTT connection")                  
 
 else:

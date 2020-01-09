@@ -212,29 +212,30 @@ def MQTT_RECEIVE_THREAD():
 
 def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
   
-    # zigbee2mqtt log messages
-    if channel == "smarthome/zigbee2mqtt/bridge/log":
-        
+    if channel == "smarthome/zigbee2mqtt/bridge/log":  
         data = json.loads(msg)
         
-        # new device conneted
-        if data["type"] == "pairing" and data["message"] == "interview_started":
-            SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device founded - " + data["meta"]["friendly_name"])   
+        # zigbee2mqtt pairing log messages
+        if GET_ZIGBEE2MQTT_PAIRING_SETTING() == "True":
 
-        # device successful added
-        if data["type"] == "pairing" and data["message"] == "interview_successful":
-            time.sleep(5)
-            UPDATE_DEVICES("zigbee2mqtt")
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["meta"]["friendly_name"] + " | added")   
-            SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device added - " + data["meta"]["friendly_name"])   
-            time.sleep(10)      
-            SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
+            # new device connected
+            if data["type"] == "pairing" and data["message"] == "interview_started":
+                SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device founded - " + data["meta"]["friendly_name"])   
 
-        # device connection failed
-        if data["type"] == "pairing" and data["message"] == "interview_failed":
-            SET_ZIGBEE2MQTT_PAIRING_STATUS("Device adding failed - " + data["meta"]["friendly_name"])   
-            time.sleep(10)
-            SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
+            # device successful added
+            if data["type"] == "pairing" and data["message"] == "interview_successful":
+                time.sleep(5)
+                UPDATE_DEVICES("zigbee2mqtt")
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["meta"]["friendly_name"] + " | added")   
+                SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device added - " + data["meta"]["friendly_name"])   
+                time.sleep(10)      
+                SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
+
+            # device connection failed
+            if data["type"] == "pairing" and data["message"] == "interview_failed":
+                SET_ZIGBEE2MQTT_PAIRING_STATUS("Device adding failed - " + data["meta"]["friendly_name"])   
+                time.sleep(10)
+                SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
       
         # remove devices
         if data["type"] == "device_removed":
@@ -640,7 +641,9 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):
     return ("Device - " + device.name + " | Setting not confirmed - " + setting) 
                          
 
-def CHECK_MQTT_SETTING(ieeeAddr, setting):        
+def CHECK_MQTT_SETTING(ieeeAddr, setting):     
+    setting = setting.lower()    
+
     for message in GET_MQTT_INCOMING_MESSAGES(10):
         
         # search for fitting message in incoming_messages_list
@@ -648,7 +651,7 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting):
                        
             # only one setting value
             if not "," in setting:    
-                if setting.lower() in message[2].lower():
+                if setting.strip() in message[2].lower():
                     return True
                                                     
             # more then one setting value:
@@ -657,7 +660,7 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting):
                 list_settings = setting.split(",")
                 
                 for setting in list_settings:           
-                    if not setting.lower() in message[2].lower():
+                    if not setting.strip() in message[2].lower():
                         return False    
                         
                 return True
@@ -666,6 +669,7 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting):
    
 
 def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
+    setting = setting.lower()
 
     if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
 
@@ -676,7 +680,7 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
 
                 # only one setting value
                 if not "," in setting:       
-                    if setting.lower() in message[2].lower():
+                    if setting.strip() in message[2].lower():
                         return True
                                     
                 # more then one setting value:
@@ -685,7 +689,7 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
                     list_settings = setting.split(",")
                     
                     for setting in list_settings:        
-                        if not setting.lower() in message[2].lower():
+                        if not setting.strip() in message[2].lower():
                             return False    
                             
                     return True                    

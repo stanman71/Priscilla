@@ -26,7 +26,7 @@ def permission_required(f):
     return wrap
 
 
-lighting_scenes_rgb_values_array = [[0 for x in range(10)] for y in range(10)] 
+lighting_scenes_rgb_values_array = [[0 for x in range(10)] for y in range(20)] 
 
 
 @app.route('/lighting/scenes', methods=['GET', 'POST'])
@@ -73,7 +73,7 @@ def lighting_scenes():
         session['set_collapse_open'] = None
 
 
-    for i in range (1,11):
+    for i in range (1,21):
 
         # change scene
         if request.form.get("save_lighting_scene_settings") != None:
@@ -364,7 +364,7 @@ def lighting_scenes():
     """  delete lighting scene  """
     """ ####################### """   
 
-    for i in range (1,11):
+    for i in range (1,21):
 
         if request.form.get("delete_lighting_scene_" + str(i)) != None:
             scene  = GET_LIGHTING_SCENE_BY_ID(i).name  
@@ -386,6 +386,16 @@ def lighting_scenes():
     scene_8  = GET_LIGHTING_SCENE_BY_ID(8)
     scene_9  = GET_LIGHTING_SCENE_BY_ID(9)
     scene_10 = GET_LIGHTING_SCENE_BY_ID(10)
+    scene_11 = GET_LIGHTING_SCENE_BY_ID(11)
+    scene_12 = GET_LIGHTING_SCENE_BY_ID(12)
+    scene_13 = GET_LIGHTING_SCENE_BY_ID(13)
+    scene_14 = GET_LIGHTING_SCENE_BY_ID(14)
+    scene_15 = GET_LIGHTING_SCENE_BY_ID(15)
+    scene_16 = GET_LIGHTING_SCENE_BY_ID(16)
+    scene_17 = GET_LIGHTING_SCENE_BY_ID(17)
+    scene_18 = GET_LIGHTING_SCENE_BY_ID(18)
+    scene_19 = GET_LIGHTING_SCENE_BY_ID(19)
+    scene_20 = GET_LIGHTING_SCENE_BY_ID(20)
 
     list_lighting_scenes = GET_ALL_LIGHTING_SCENES()
 
@@ -412,7 +422,17 @@ def lighting_scenes():
                                                     scene_7=scene_7,
                                                     scene_8=scene_8,
                                                     scene_9=scene_9,
-                                                    scene_10=scene_10,                                                
+                                                    scene_10=scene_10,        
+                                                    scene_11=scene_11,  
+                                                    scene_12=scene_12,  
+                                                    scene_13=scene_13,  
+                                                    scene_14=scene_14,  
+                                                    scene_15=scene_15,  
+                                                    scene_16=scene_16,  
+                                                    scene_17=scene_17,  
+                                                    scene_18=scene_18,  
+                                                    scene_19=scene_19,  
+                                                    scene_20=scene_20,                                                      
                                                     ) 
                            )
 

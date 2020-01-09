@@ -321,13 +321,14 @@ def settings_devices():
 
                 if CHECK_ZIGBEE2MQTT_PAIRING("True"):             
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing enabled | successful") 
-                    SET_ZIGBEE2MQTT_PAIRING_SETTING(setting_pairing)
-                    success_message_zigbee_pairing.append("Settings successfully saved") 
+                    SET_ZIGBEE2MQTT_PAIRING_SETTING("True")
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
+                    success_message_zigbee_pairing.append("Setting successfully changed")                     
                 else:             
                     WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing enabled | Setting not confirmed")   
-                    error_message_zigbee_pairing.append("Setting not confirmed") 
+                    SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
+                    error_message_zigbee_pairing.append("Setting not confirmed")                     
                                             
             else:         
                 heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "false")))   
@@ -336,14 +337,14 @@ def settings_devices():
 
                 if CHECK_ZIGBEE2MQTT_PAIRING("False"):                 
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
-                    SET_ZIGBEE2MQTT_PAIRING_SETTING(setting_pairing)
-                    success_message_zigbee_pairing.append("Settings successfully saved") 
+                    SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")
+                    success_message_zigbee_pairing.append("Setting successfully changed") 
                 else:             
                     WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
-                    error_message_zigbee_pairing.append("Setting not confirmed") 
+                    SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
-
+                    error_message_zigbee_pairing.append("Setting not confirmed") 
 
     # request zigbee topology
     if request.form.get("update_zigbee_topology") != None: 

@@ -325,7 +325,7 @@ def music():
 
                         heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')))     
 
-                        result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}', 20)
+                        result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, client_music_interface + ', ' + str(client_music_volume), 20)
                         
                         if result != True:
                             error_message_change_settings_client_music.append(result)
