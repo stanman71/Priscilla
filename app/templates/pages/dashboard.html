@@ -54,9 +54,30 @@
     namespace  = '/socketIO';
     var socket = io(namespace);
 
-    socket.on('program', function(msg) {
-        $('#program_status').text(msg.program_status);                        
+    socket.on('program_thread_1', function(msg) {
+        $('#program_1_name').text(msg.program_name);                                                  
     });
+
+    socket.on('program_thread_2', function(msg) {
+        $('#program_2_name').text(msg.program_name);                                                   
+    });
+
+    socket.on('program_thread_3', function(msg) {
+        $('#program_3_name').text(msg.program_name);                                                   
+    });
+
+    socket.on('program_thread_4', function(msg) {
+        $('#program_4_name').text(msg.program_name);                                                  
+    });
+
+    socket.on('program_thread_5', function(msg) {
+        $('#program_5_name').text(msg.program_name);                                                 
+    });
+
+    socket.on('program_thread_6', function(msg) {
+        $('#program_6_name').text(msg.program_name);                                                 
+    });
+
   });
 </script>
 
@@ -161,7 +182,7 @@
               <div class="card-body ">
                 <form method="POST">
                   <div class="row justify-content-md-left">
-                    <div class="col-sm-5">          
+                    <div class="col-sm-6">          
                       <div class="vertical_center">             
                         <select class="form-control" data-size="5" name="select_program" style="background-color:#27293D"> 
                           {% for each in dropdown_list_programs %}
@@ -172,28 +193,49 @@
                         </select>     
                       </div>   
                     </div>
-                    <div class="col-sm-7">  
+                    <div class="col-sm-6">  
                       <div class="text-right">
                         <button type="submit" onclick="window.location.href='/dashboard#'" name="start_program" class="btn btn-fill btn-info">START</button>                      
-                        <button type="submit" onclick="window.location.href='/dashboard#'" name="stop_program" class="btn btn-fill btn-info">STOP</button>
                       </div> 
                     </div> 
                   </div>  
+
+                  <div class="border-top my-2"></div>
+
                   <div class="row justify-content-md-center">     
-                    <div class="col-sm-9">   
+                    <div class="col-sm-4">   
                       <div class="vertical_center">  
-                        <h5><div id="program_status"></div></h5>
+                        <div id="program_1_name"></div>
                       </div>
-                    </div>                                                              
-                    <div class="col-sm-3">        
+                    </div>    
+                    <div class="col-sm-4">   
                       <div class="vertical_center">  
-                        <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="checkbox_program_repeat_setting" {% if program_repeat == "True" %} checked="on" {% endif %} name="checkbox_program_repeat">
-                          <label class="custom-control-label" for="checkbox_program_repeat_setting">Repeat</label>
-                        </div>
+                        <div id="program_2_name"></div>
                       </div>
-                    </div>
-                  </div>
+                    </div>   
+                    <div class="col-sm-4">   
+                      <div class="vertical_center">  
+                        <div id="program_3_name"></div>
+                      </div>
+                    </div>  
+                  </div>   
+                  <div class="row justify-content-md-center">     
+                    <div class="col-sm-4">   
+                      <div class="vertical_center">  
+                        <div id="program_4_name"></div>
+                      </div>
+                    </div>   
+                    <div class="col-sm-4">   
+                      <div class="vertical_center">  
+                        <div id="program_5_name"></div>
+                      </div> 
+                    </div>  
+                    <div class="col-sm-4">   
+                      <div class="vertical_center">  
+                        <div id="program_6_name"></div>
+                      </div> 
+                    </div>                                                                                                                                                                     
+                  </div>                       
                 </div>
               </form>   
             </div>
@@ -297,7 +339,7 @@
 
                   <div class="row justify-content-md-center">                                                 
                     <div class="col-sm-3">    
-                      <p><span>Devices: </span></p> 
+                      <p><span>Devices</span></p> 
                     </div>                        
                     <div class="col-sm-9">                           
                       <div id="current_device"></div> 
@@ -306,7 +348,7 @@
 
                   <div class="row justify-content-md-center">                                                 
                     <div class="col-sm-3">  
-                      <p><span>Playing: </span></p>  
+                      <p><span>Playing</span></p>  
                     </div>                        
                     <div class="col-sm-9">                           
                       <div id="current_state"></div> 
@@ -315,7 +357,7 @@
 
                   <div class="row justify-content-md-center">                                                 
                     <div class="col-sm-3">   
-                      <p><span>Track: </span></p>                         
+                      <p><span>Track</span></p>                         
                     </div>                        
                     <div class="col-sm-9">                           
                       <div id="current_track"></div> 
@@ -324,7 +366,7 @@
 
                   <div class="row justify-content-md-center">                                                 
                     <div class="col-sm-3">    
-                      <p><span>Artists: </span></p>                        
+                      <p><span>Artists</span></p>                        
                     </div>
                     <div class="col-sm-9">                           
                       <div id="current_artists"></div> 

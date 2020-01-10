@@ -123,15 +123,6 @@ def dashboard():
     if request.form.get("start_program") != None:
         START_PROGRAM_THREAD(request.form.get("select_program"))
 
-        if request.form.get("checkbox_program_repeat") == "on":
-            SET_REPEAT_PROGRAM(True)
-        else:
-            SET_REPEAT_PROGRAM(False)
-
-    if request.form.get("stop_program") != None:
-        STOP_PROGRAM_THREAD()   
-        SET_REPEAT_PROGRAM(False)
-
 
     """ ####### """
     """  music  """
@@ -245,7 +236,6 @@ def dashboard():
     list_devices                  = GET_ALL_DEVICES("devices")
 
     dropdown_list_programs   = GET_ALL_PROGRAMS()
-    program_repeat           = str(GET_REPEAT_PROGRAM())
 
     data = {'navigation': 'dashboard'}
 
@@ -263,7 +253,6 @@ def dashboard():
                                                     spotify_volume=spotify_volume, 
                                                     spotify_shuffle=spotify_shuffle,
                                                     list_devices=list_devices,    
-                                                    dropdown_list_programs=dropdown_list_programs,
-                                                    program_repeat=program_repeat,                                                     
+                                                    dropdown_list_programs=dropdown_list_programs,                                                  
                                                     ) 
                            )      

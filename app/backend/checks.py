@@ -113,250 +113,264 @@ def CHECK_PROGRAM_TASKS(program_id):
                  [GET_PROGRAM_BY_ID(program_id).line_active_30, GET_PROGRAM_BY_ID(program_id).line_content_30]] 
 
    line_number = 0
-            
-   try:
-   
-      for line in list_lines:           
-         line_number = line_number + 1
 
-         # line active ?
-         if line[0] == "True":
-         
-            
-            # #####
-            # break
-            # #####
-                  
-            if "break" in line[1]:     
-                     
-               try: 
-                  line_content = line[1].split(" # ")
-                  
-                  # check delay value            
-                  if line_content[1].isdigit():
-                     continue
-                  else:
-                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Missing setting | Seconds")
-                     
-               except:
-                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
+   for line in list_lines:           
+      line_number = line_number + 1
 
-
-            # ########
-            # lighting     
-            # ########    
-            
-
-            # start scene
-            elif "lighting" in line[1] and "scene" in line[1]:
-               
-               try:        
-                  line_content = line[1].split(" # ")
-
-                  # check scene setting
-                  if GET_LIGHTING_GROUP_BY_NAME(line_content[2]) == None: 
-                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Group not founded | " + line_content[2])
-                  
-                  if GET_LIGHTING_SCENE_BY_NAME(line_content[3]) == None: 
-                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Scene not founded | " + line_content[3])
-
-                  if not line_content[4].isdigit() or not (0 <= int(line_content[4]) <= 100):
-                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid brightness_value")
-
-               except:
-                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")               
-                        
-
-            # turn_off
-            elif "lighting" in line[1] and "turn_off" in line[1]:
-
-               try:
-                  line_content = line[1].split(" # ")
-
-                  # check turn_off group setting
-                  if line_content[2].lower() == "group":
-
-                     for group_name in line_content[3].split(","):
-                        if GET_LIGHTING_GROUP_BY_NAME(group_name.strip()) == None: 
-                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Group not founded | " + group_name.strip())  
-
-                  # check turn_off all setting
-                  elif line_content[2].lower() == "all":
-                     pass
-
-                  else:
-                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")                            
-
-               except:
-                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
-
-
-            # ######
-            # device
-            # ######
-
-            elif "device" in line[1]:
-
-               try:
-                  line_content = line[1].split(" # ")
-
-                  # check device names
-                  for device_name in line_content[1].split(","):
-
-                     if GET_DEVICE_BY_NAME(group_name.strip()) == None: 
-                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not founded | " + device_name)       
-
-                     # check commands
-                     else:
-                        
-                        device  = GET_DEVICE_BY_NAME(device_name.strip())  
-                        setting = task[2]
-
-                        if setting.lower() not in device.commands_json.lower():
-                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid command | " + setting)
-
-
-               except:
-                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
-
-
-            # ##################
-            # request_sensordata
-            # ##################
-            
-            elif "request_sensordata" in line[1]:
-
-               try:        
-                  line_content = line[1].split(" # ")     
-
-                  if not GET_SENSORDATA_JOB_BY_NAME(line_content[1]):
-                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Job not founded")
-
-               except:        
-                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
-
-
-            # #######
-            # spotify 
-            # #######
-            
-            elif "spotify" in line[1]:
-               
-               try:        
-                  line_content = line[1].split(" # ")       
-                  
-                  if (line_content[1].lower() != "play" and
-                      line_content[1].lower() != "previous" and
-                      line_content[1].lower() != "next" and
-                      line_content[1].lower() != "stop" and
-                      line_content[1].lower() != "volume" and
-                      line_content[1].lower() != "playlist" and
-                      line_content[1].lower() != "track" and
-                      line_content[1].lower() != "album"):
-
-                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid Command")
-
-                  # volume
-
-                  if line_content[1].lower() == "volume":
-                     
-                     try:
-                        if not line_content[2].isdigit():
-                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
-                     
-                        else:
-                           if not 0 <= int(line_content[2]) <= 100:
-                              list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (0 - 100)")
-                              
-                     except:
-                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
-
-                  # playlist
+      # line active ?
+      if line[0] == "True":
       
-                  if line_content[1].lower() == "playlist": 
-                     
-                     try:
-                        device_name   = line_content[2]                                    
-                        playlist_name = line_content[3]
-                        
-                        try:
-                           if not line_content[4].isdigit():
-                              list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
-                           
-                           else:
-                              if not 0 <= int(line_content[4]) <= 100:
-                                 list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (0 - 100)")
-
-                        except:
-                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
-
-                     except:
-                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
-
-                  # track
-                        
-                  if line_content[1].lower() == "track": 
-                     
-                     try:
-                        device_name  = line_content[2]                                    
-                        track_title  = line_content[3]
-                        track_artist = line_content[4]
-                        
-                        try:
-                           if not line_content[5].isdigit():
-                              list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
-
-                           else:
-                              if not 0 <= int(line_content[5]) <= 100:
-                                 list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (0 - 100)")
-
-                        except:
-                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
-
-                     except:
-                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
-
-                  # album
-
-                  if line_content[1].lower() == "album": 
-                     
-                     try:
-                        device_name  = line_content[2]                                    
-                        album_title  = line_content[3]
-                        album_artist = line_content[4]
-                        
-                        try:
-                           if not line_content[5].isdigit():
-                              list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
-
-                           else:
-                              if not 0 <= int(line_content[5]) <= 100:
-                                 list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (0 - 100)")
-
-                        except:
-                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
-
-                     except:
-                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
-
-               except:
-                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
-
-         # ####
-         # None
-         # ####
-
-            elif line[1] == "None":
-               pass
-
-            #  other
-
-            elif line[1] != "":
+         
+         # #####
+         # break
+         # #####
+               
+         if "break" in line[1]:     
+                  
+            try: 
+               line_content = line[1].split(" # ")
+               
+               # check delay value            
+               if line_content[1].isdigit():
+                  continue
+               else:
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Missing setting | Seconds")
+                  
+            except:
                list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
-             
-   except:
-      pass
 
+
+         # ########
+         # lighting     
+         # ########    
+         
+
+         # start scene
+         elif "lighting" in line[1] and "scene" in line[1]:
+            
+            try:        
+               line_content = line[1].split(" # ")
+
+               # check scene setting
+               if GET_LIGHTING_GROUP_BY_NAME(line_content[2]) == None: 
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Group not founded | " + line_content[2])
+               
+               if GET_LIGHTING_SCENE_BY_NAME(line_content[3]) == None: 
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Scene not founded | " + line_content[3])
+
+               if not line_content[4].isdigit() or not (0 <= int(line_content[4]) <= 100):
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid brightness_value")
+
+            except:
+               list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")               
+                     
+
+         # turn_off
+         elif "lighting" in line[1] and "turn_off" in line[1]:
+
+            try:
+               line_content = line[1].split(" # ")
+
+               # check turn_off group setting
+               if line_content[2].lower() == "group":
+
+                  for group_name in line_content[3].split(","):
+                     if GET_LIGHTING_GROUP_BY_NAME(group_name.strip()) == None: 
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Group not founded | " + group_name.strip())  
+
+               # check turn_off all setting
+               elif line_content[2].lower() == "all":
+                  pass
+
+               else:
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")                            
+
+            except:
+               list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
+
+
+         # ######
+         # device
+         # ######
+
+         elif "device" in line[1]:
+
+            try:
+               line_content = line[1].split(" # ")
+
+               # check device names
+               for device_name in line_content[1].split(","):
+
+                  if GET_DEVICE_BY_NAME(group_name.strip()) == None: 
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not founded | " + device_name)       
+
+                  # check commands
+                  else:
+                     
+                     device  = GET_DEVICE_BY_NAME(device_name.strip())  
+                     setting = task[2]
+
+                     if setting.lower() not in device.commands_json.lower():
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid command | " + setting)
+
+
+            except:
+               list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
+
+
+         # ##################
+         # request_sensordata
+         # ##################
+         
+         elif "request_sensordata" in line[1]:
+
+            try:        
+               line_content = line[1].split(" # ")     
+
+               if not GET_SENSORDATA_JOB_BY_NAME(line_content[1]):
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Job not founded")
+
+            except:        
+               list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
+
+
+         # #######
+         # program
+         # #######
+         
+         elif "program" in line[1]:
+
+            try:        
+               line_content = line[1].split(" # ")     
+
+               if not GET_PROGRAM_BY_NAME(line_content[1].lower()):
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Program not founded")
+
+               if line_content[2].lower() != "start" and line_content[2].lower() != "stop":
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " | Invalid command")
+
+            except:        
+               list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
+
+
+         # #######
+         # spotify 
+         # #######
+         
+         elif "spotify" in line[1]:
+            
+            try:        
+               line_content = line[1].split(" # ")       
+               
+               if (line_content[1].lower() != "play" and
+                     line_content[1].lower() != "previous" and
+                     line_content[1].lower() != "next" and
+                     line_content[1].lower() != "stop" and
+                     line_content[1].lower() != "volume" and
+                     line_content[1].lower() != "playlist" and
+                     line_content[1].lower() != "track" and
+                     line_content[1].lower() != "album"):
+
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid Command")
+
+               # volume
+
+               if line_content[1].lower() == "volume":
+                  
+                  try:
+                     if not line_content[2].isdigit():
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+                  
+                     else:
+                        if not 0 <= int(line_content[2]) <= 100:
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (0 - 100)")
+                           
+                  except:
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+
+               # playlist
+   
+               if line_content[1].lower() == "playlist": 
+                  
+                  try:
+                     device_name   = line_content[2]                                    
+                     playlist_name = line_content[3]
+                     
+                     try:
+                        if not line_content[4].isdigit():
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+                        
+                        else:
+                           if not 0 <= int(line_content[4]) <= 100:
+                              list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (0 - 100)")
+
+                     except:
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+
+                  except:
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+
+               # track
+                     
+               if line_content[1].lower() == "track": 
+                  
+                  try:
+                     device_name  = line_content[2]                                    
+                     track_title  = line_content[3]
+                     track_artist = line_content[4]
+                     
+                     try:
+                        if not line_content[5].isdigit():
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+
+                        else:
+                           if not 0 <= int(line_content[5]) <= 100:
+                              list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (0 - 100)")
+
+                     except:
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+
+                  except:
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+
+               # album
+
+               if line_content[1].lower() == "album": 
+                  
+                  try:
+                     device_name  = line_content[2]                                    
+                     album_title  = line_content[3]
+                     album_artist = line_content[4]
+                     
+                     try:
+                        if not line_content[5].isdigit():
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+
+                        else:
+                           if not 0 <= int(line_content[5]) <= 100:
+                              list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (0 - 100)")
+
+                     except:
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+
+                  except:
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+
+            except:
+               list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
+
+      # ####
+      # None
+      # ####
+
+         elif line[1] == "None":
+            pass
+
+         #  other
+
+         elif line[1] != "":
+            list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
+             
    return list_errors
 
 

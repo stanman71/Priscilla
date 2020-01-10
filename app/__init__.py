@@ -111,32 +111,119 @@ def background_thread():
 
                 socketio.emit('music',
                              {'current_device': current_device, 'current_state': current_state, 'current_track': current_track, 
-                             'current_artists': current_artists, 'current_progress': current_progress, 'current_playlist': current_playlist},                                                               
-                             namespace='/socketIO')
+                              'current_artists': current_artists, 'current_progress': current_progress, 'current_playlist': current_playlist},                                                               
+                              namespace='/socketIO')
 
             else:
                 socketio.emit('music',
                              {'current_device': "", 'current_state': "", 'current_track': "", 'current_artists': "", 'current_progress': "", 'current_playlist': ""},                                                               
-                             namespace='/socketIO')          
+                               namespace='/socketIO')          
 
         except:
             socketio.emit('music',
                          {'current_device': "", 'current_state': "", 'current_track': "", 'current_artists': "", 'current_progress': "", 'current_playlist': ""},                                                               
-                         namespace='/socketIO')                 
+                           namespace='/socketIO')                 
 
-        # #######
-        # program
-        # #######
+        # ########
+        # programs
+        # ########
 
         try:
-            socketio.emit('program',
-                        {'program_status': GET_PROGRAM_STATUS()},                                                               
-                        namespace='/socketIO')
+            socketio.emit('program_thread_1',
+                         {'program_name': GET_PROGRAM_THREAD_STATUS_1()[0], 
+                          'line': GET_PROGRAM_THREAD_STATUS_1()[1], 
+                          'lines_total': GET_PROGRAM_THREAD_STATUS_1()[2],
+                          'command': GET_PROGRAM_THREAD_STATUS_1()[3]},
+                           namespace='/socketIO')
 
         except:
-            socketio.emit('program',
-                        {'program_status': ""},                                                               
-                        namespace='/socketIO')            
+            socketio.emit('program_thread_1',
+                         {'program_name':"", 
+                          'line': "", 
+                          'lines_total': "",
+                          'command': ""},
+                           namespace='/socketIO')       
+
+        try:
+            socketio.emit('program_thread_2',
+                         {'program_name': GET_PROGRAM_THREAD_STATUS_2()[0], 
+                          'line': GET_PROGRAM_THREAD_STATUS_2()[1], 
+                          'lines_total': GET_PROGRAM_THREAD_STATUS_2()[2],
+                          'command': GET_PROGRAM_THREAD_STATUS_2()[3]},
+                           namespace='/socketIO')
+
+        except:
+            socketio.emit('program_thread_2',
+                         {'program_name':"", 
+                          'line': "", 
+                          'lines_total': "",
+                          'command': ""},
+                           namespace='/socketIO')     
+
+        try:
+            socketio.emit('program_thread_3',
+                         {'program_name': GET_PROGRAM_THREAD_STATUS_3()[0], 
+                          'line': GET_PROGRAM_THREAD_STATUS_3()[1], 
+                          'lines_total': GET_PROGRAM_THREAD_STATUS_3()[2],
+                          'command': GET_PROGRAM_THREAD_STATUS_3()[3]},
+                           namespace='/socketIO')
+
+        except:
+            socketio.emit('program_thread_3',
+                         {'program_name':"", 
+                          'line': "", 
+                          'lines_total': "",
+                          'command': ""},
+                           namespace='/socketIO')     
+
+        try:
+            socketio.emit('program_thread_4',
+                         {'program_name': GET_PROGRAM_THREAD_STATUS_4()[0], 
+                          'line': GET_PROGRAM_THREAD_STATUS_4()[1], 
+                          'lines_total': GET_PROGRAM_THREAD_STATUS_4()[2],
+                          'command': GET_PROGRAM_THREAD_STATUS_4()[3]},
+                           namespace='/socketIO')
+
+        except:
+            socketio.emit('program_thread_4',
+                         {'program_name':"", 
+                          'line': "", 
+                          'lines_total': "",
+                          'command': ""},
+                           namespace='/socketIO')     
+
+        try:
+            socketio.emit('program_thread_5',
+                         {'program_name': GET_PROGRAM_THREAD_STATUS_5()[0], 
+                          'line': GET_PROGRAM_THREAD_STATUS_5()[1], 
+                          'lines_total': GET_PROGRAM_THREAD_STATUS_5()[2],
+                          'command': GET_PROGRAM_THREAD_STATUS_5()[3]},
+                           namespace='/socketIO')
+
+        except:
+            socketio.emit('program_thread_5',
+                         {'program_name':"", 
+                          'line': "", 
+                          'lines_total': "",
+                          'command': ""},
+                           namespace='/socketIO')     
+
+        try:
+            socketio.emit('program_thread_6',
+                         {'program_name': GET_PROGRAM_THREAD_STATUS_6()[0], 
+                          'line': GET_PROGRAM_THREAD_STATUS_6()[1], 
+                          'lines_total': GET_PROGRAM_THREAD_STATUS_6()[2],
+                          'command': GET_PROGRAM_THREAD_STATUS_6()[3]},
+                           namespace='/socketIO')
+
+        except:
+            socketio.emit('program_thread_6',
+                         {'program_name':"", 
+                          'line': "", 
+                          'lines_total': "",
+                          'command': ""},
+                           namespace='/socketIO')     
+
 
         # ##########################
         # zigbee2mqtt pairing status
@@ -145,12 +232,12 @@ def background_thread():
         try:
             socketio.emit('zigbee2mqtt_pairing',
                         {'zigbee2mqtt_pairing_status': GET_ZIGBEE2MQTT_PAIRING_STATUS()},                                                               
-                        namespace='/socketIO')
-
+                          namespace='/socketIO')
+ 
         except:
              socketio.emit('zigbee2mqtt_pairing',
                         {'zigbee2mqtt_pairing_status': GET_ZIGBEE2MQTT_PAIRING_STATUS()},                                                               
-                        namespace='/socketIO')           
+                          namespace='/socketIO')           
 
 
 @socketio.on('connect', namespace='/socketIO')
@@ -190,7 +277,6 @@ SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, GET_SYSTEM_SETTINGS().dhcp)
 """ ####### """
 
 from app.sites                      import index, dashboard, scheduler, programs, lighting_scenes, lighting_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_devices, settings_controller, settings_users, settings_system_log, errors
-from app.backend.shared_resources   import process_management_queue, mqtt_message_queue, START_REFRESH_MQTT_INPUT_MESSAGES_THREAD, START_DISABLE_ZIGBEE_PAIRING_THREAD
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
 from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_AT_STARTUP, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.email              import SEND_EMAIL

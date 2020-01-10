@@ -8,9 +8,9 @@ from app.database.models          import *
 from app.backend.lighting         import *
 from app.backend.mqtt             import *
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
-from app.backend.process_program  import START_PROGRAM_THREAD, STOP_PROGRAM_THREAD, SET_REPEAT_PROGRAM
+from app.backend.process_program  import *
 from app.backend.spotify          import *
-from app.backend.shared_resources import mqtt_message_queue, GET_PROGRAM_STATUS
+from app.backend.shared_resources import *
 
 from difflib import SequenceMatcher
 
@@ -445,28 +445,15 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
         
         task    = task.lower()
         task    = task.split(" # ") 
-        program = GET_PROGRAM_BY_NAME(task[1].lower())
+        program = GET_PROGRAM_BY_NAME(task[1])
 
         if program != None:
 
-            if task[2] == "start" and GET_PROGRAM_STATUS() == "None":
+            if task[2] == "start":
                 START_PROGRAM_THREAD(program.id)
-                
-            elif task[2] == "start" and GET_PROGRAM_STATUS() != "None":
-                WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Other program running")
 
             elif task[2] == "stop":
-                STOP_PROGRAM_THREAD()
-
-            elif task[2] == "repeat" and GET_PROGRAM_STATUS() == "None":
-                START_PROGRAM_THREAD(program.id)
-                SET_REPEAT_PROGRAM(True)
-                
-            elif task[2] == "repeat" and GET_PROGRAM_STATUS() != "None":
-                WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Other program running")                                
-
-            elif task[2] == "force":
-                START_PROGRAM_THREAD(program.id, True)                      
+                STOP_PROGRAM_THREAD_BY_NAME(program.name)       
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Invalid command")

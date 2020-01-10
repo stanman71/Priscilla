@@ -18,14 +18,14 @@ import spotipy
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        try:
-            if current_user.role == "user" or current_user.role == "administrator":
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('logout'))
-        except Exception as e:
-            print(e)
+        #try:
+        if current_user.role == "user" or current_user.role == "administrator":
+            return f(*args, **kwargs)
+        else:
             return redirect(url_for('logout'))
+        #except Exception as e:
+        #    print(e)
+        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -37,12 +37,25 @@ def programs():
     page_title       = 'Smarthome | Programs'
     page_description = 'The programs configuration page.'
 
+    success_message_program_stop            = "" 
+    error_message_program_stop              = ""
     success_message_add_program             = False       
     error_message_add_program               = []
     success_message_change_settings         = []
     error_message_change_settings           = []
     success_message_change_settings_program = []
     error_message_change_settings_program   = []
+
+
+    # stop message
+    if session.get('program_stop_success', None) != None:
+        success_message_program_stop = session.get('program_stop_success')
+        session['program_stop_success'] = None
+        
+    if session.get('program_stop_error', None) != None:
+        error_message_program_stop = session.get('program_stop_error')
+        session['program_stop_error'] = None       
+
 
     selected_program = ""
 
@@ -289,30 +302,9 @@ def programs():
             selected_program = GET_PROGRAM_BY_ID(i)
 
             if result:
-                success_message_change_settings_program.append("Progrm successfully started")
-
-                if request.form.get("checkbox_program_repeat") == "on":
-                    SET_REPEAT_PROGRAM(True)
-                else:
-                    SET_REPEAT_PROGRAM(False)                
-
+                success_message_change_settings_program.append("Program successfully started")
             else:
-                success_message_change_settings_program.append(" ERROR || " + str(result))
-
-
-    """ ############## """
-    """  stop program  """
-    """ ############## """   
-
-    for i in range (1,31):
-        if request.form.get("stop_program_" + str(i)) != None:
-            result           = STOP_PROGRAM_THREAD()   
-            selected_program = GET_PROGRAM_BY_ID(i) 
-
-            if result:
-                success_message_change_settings_program.append("Progrm successfully stopped")
-            else:
-                success_message_change_settings_program.append(" ERROR || " + str(result))
+                success_message_change_settings_program.append("ERROR || " + str(result))
 
 
     """ ################ """
@@ -353,6 +345,12 @@ def programs():
     for job in GET_ALL_SENSORDATA_JOBS():
         list_sensordata_job_options.append(job.name)
 
+    # list program options    
+    list_program_options = []
+
+    for program in GET_ALL_PROGRAMS():
+        list_program_options.append(program.name)
+
     # list device command options    
     list_device_command_options = []
     
@@ -375,7 +373,6 @@ def programs():
 
 
     dropdown_list_programs = GET_ALL_PROGRAMS()
-    program_repeat         = str(GET_REPEAT_PROGRAM())
 
     if selected_program != "":
         error_message_program_tasks = CHECK_PROGRAM_TASKS(selected_program.id)        
@@ -389,6 +386,8 @@ def programs():
                             title=page_title,        
                             description=page_description,                                  
                             content=render_template( 'pages/programs.html',
+                                                    success_message_program_stop=success_message_program_stop,
+                                                    error_message_program_stop=error_message_program_stop,
                                                     success_message_add_program=success_message_add_program,
                                                     error_message_add_program=error_message_add_program,
                                                     success_message_change_settings=success_message_change_settings,
@@ -402,11 +401,55 @@ def programs():
                                                     list_lighting_scene_options=list_lighting_scene_options,
                                                     list_sensordata_job_options=list_sensordata_job_options,                                                    
                                                     list_device_command_options=list_device_command_options,
+                                                    list_program_options=list_program_options,                                                     
                                                     list_spotify_devices=list_spotify_devices,     
-                                                    list_spotify_playlists=list_spotify_playlists,    
-                                                    program_repeat=program_repeat,                                                                                                     
+                                                    list_spotify_playlists=list_spotify_playlists, 
                                                     ) 
                            )
+
+
+# stop program 
+@app.route('/programs/stop/<int:id>')
+@login_required
+@permission_required
+def stop_program(id):
+    if id == 1 and GET_PROGRAM_THREAD_STATUS_1()[0] != "None":
+        if STOP_PROGRAM_THREAD_BY_ID(id): 
+            session['program_stop_success'] = "Thread 1 successfully stopped"
+        else:
+            session['program_stop_error'] = "Thread 1 not stopped"
+
+    if id == 2 and GET_PROGRAM_THREAD_STATUS_2()[0] != "None":
+        if STOP_PROGRAM_THREAD_BY_ID(id): 
+            session['program_stop_success'] = "Thread 2 successfully stopped"
+        else:
+            session['program_stop_error'] = "Thread 2 not stopped"
+
+    if id == 3 and GET_PROGRAM_THREAD_STATUS_3()[0] != "None":
+        if STOP_PROGRAM_THREAD_BY_ID(id): 
+            session['program_stop_success'] = "Thread 3 successfully stopped"
+        else:
+            session['program_stop_error'] = "Thread 3 not stopped"
+
+    if id == 4 and GET_PROGRAM_THREAD_STATUS_4()[0] != "None":
+        if STOP_PROGRAM_THREAD_BY_ID(id): 
+            session['program_stop_success'] = "Thread 4 successfully stopped"
+        else:
+            session['program_stop_error'] = "Thread 4 not stopped"
+
+    if id == 5 and GET_PROGRAM_THREAD_STATUS_5()[0] != "None":
+        if STOP_PROGRAM_THREAD_BY_ID(id): 
+            session['program_stop_success'] = "Thread 5 successfully stopped"
+        else:
+            session['program_stop_error'] = "Thread 5 not stopped"
+
+    if id == 6 and GET_PROGRAM_THREAD_STATUS_6()[0] != "None":
+        if STOP_PROGRAM_THREAD_BY_ID(id): 
+            session['program_stop_success'] = "Thread 6 successfully stopped"
+        else:
+            session['program_stop_error'] = "Thread 6 not stopped"
+
+    return redirect(url_for('programs'))
 
 
 # programs option add line / remove line
@@ -423,6 +466,7 @@ def change_programs_options(id, option):
         session['selected_program_id'] = id
 
     return redirect(url_for('programs'))
+
 
 # change lines position 
 @app.route('/programs/position/<string:direction>/<int:line>/<int:id>')

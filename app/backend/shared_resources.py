@@ -75,15 +75,60 @@ def GET_MQTT_INCOMING_MESSAGES(limit):
 """  program status  """
 """ ################ """
 
-program_status = "None"
+program_thread_status_1 = ["None",0,0,""]
+program_thread_status_2 = ["None",0,0,""]
+program_thread_status_3 = ["None",0,0,""]
+program_thread_status_4 = ["None",0,0,""]
+program_thread_status_5 = ["None",0,0,""]
+program_thread_status_6 = ["None",0,0,""]
 
-def GET_PROGRAM_STATUS():
-    global program_status
-    return program_status 
+def GET_PROGRAM_THREAD_STATUS_1():
+    global program_thread_status_1
+    return program_thread_status_1 
 
-def SET_PROGRAM_STATUS(value):
-	global program_status
-	program_status = value
+def SET_PROGRAM_THREAD_STATUS_1(program_name, line, lines_total, command):
+	global program_thread_status_1
+	program_thread_status_1 = [program_name, line, lines_total, command]
+
+def GET_PROGRAM_THREAD_STATUS_2():
+    global program_thread_status_2
+    return program_thread_status_2 
+
+def SET_PROGRAM_THREAD_STATUS_2(program_name, line, lines_total, command):
+	global program_thread_status_2
+	program_thread_status_2 = [program_name, line, lines_total, command]
+
+def GET_PROGRAM_THREAD_STATUS_3():
+    global program_thread_status_3
+    return program_thread_status_3 
+
+def SET_PROGRAM_THREAD_STATUS_3(program_name, line, lines_total, command):
+	global program_thread_status_3
+	program_thread_status_3 = [program_name, line, lines_total, command]
+
+def GET_PROGRAM_THREAD_STATUS_4():
+    global program_thread_status_4
+    return program_thread_status_4 
+
+def SET_PROGRAM_THREAD_STATUS_4(program_name, line, lines_total, command):
+	global program_thread_status_4
+	program_thread_status_4 = [program_name, line, lines_total, command]
+
+def GET_PROGRAM_THREAD_STATUS_5():
+    global program_thread_status_5
+    return program_thread_status_5 
+
+def SET_PROGRAM_THREAD_STATUS_5(program_name, line, lines_total, command):
+	global program_thread_status_5
+	program_thread_status_5 = [program_name, line, lines_total, command]
+
+def GET_PROGRAM_THREAD_STATUS_6():
+    global program_thread_status_6
+    return program_thread_status_6 
+
+def SET_PROGRAM_THREAD_STATUS_6(program_name, line, lines_total, command):
+	global program_thread_status_6
+	program_thread_status_6 = [program_name, line, lines_total, command]
 
 
 """ ##################### """

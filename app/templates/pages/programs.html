@@ -6,9 +6,48 @@
     namespace  = '/socketIO';
     var socket = io(namespace);
 
-    socket.on('program', function(msg) {
-        $('#program_status').text(msg.program_status);                        
+    socket.on('program_thread_1', function(msg) {
+        $('#program_1_name').text(msg.program_name);   
+        $('#program_1_line').text(msg.line); 
+        $('#program_1_lines_total').text(msg.lines_total);   
+        $('#program_1_command').text(msg.command);                                                  
     });
+
+    socket.on('program_thread_2', function(msg) {
+        $('#program_2_name').text(msg.program_name);   
+        $('#program_2_line').text(msg.line); 
+        $('#program_2_lines_total').text(msg.lines_total);   
+        $('#program_2_command').text(msg.command);                                                  
+    });
+
+    socket.on('program_thread_3', function(msg) {
+        $('#program_3_name').text(msg.program_name);   
+        $('#program_3_line').text(msg.line); 
+        $('#program_3_lines_total').text(msg.lines_total);   
+        $('#program_3_command').text(msg.command);                                                  
+    });
+
+    socket.on('program_thread_4', function(msg) {
+        $('#program_4_name').text(msg.program_name);   
+        $('#program_4_line').text(msg.line); 
+        $('#program_4_lines_total').text(msg.lines_total);   
+        $('#program_4_command').text(msg.command);                                                  
+    });
+
+    socket.on('program_thread_5', function(msg) {
+        $('#program_5_name').text(msg.program_name);   
+        $('#program_5_line').text(msg.line); 
+        $('#program_5_lines_total').text(msg.lines_total);   
+        $('#program_5_command').text(msg.command);                                                  
+    });
+
+    socket.on('program_thread_6', function(msg) {
+        $('#program_6_name').text(msg.program_name);   
+        $('#program_6_line').text(msg.line); 
+        $('#program_6_lines_total').text(msg.lines_total);   
+        $('#program_6_command').text(msg.command);                                                  
+    });
+
   });
 </script>
 
@@ -23,10 +62,275 @@
               </div>
             </div>
 
+<!------------------------>
+<!-- PROGRAMS OVERVIEW  -->
+<!------------------------>
 
-<!----------------->
-<!-- ADD PROGRAM -->
-<!----------------->
+<!-- success message program stop -->
+
+{% if success_message_program_stop != "" %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>{{ success_message_program_stop }}</span>
+  </div>
+{% endif %}  
+
+<!-- error message program stop --> 
+
+{% if error_message_program_stop != "" %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>{{ error_message_program_stop }}</span>
+  </div>      
+{% endif %}  
+
+
+            <div class="card ">      
+              <div class="card-body"> 
+                <div class="table-responsive">
+                  <table class="table tablesorter">
+                    <thead>
+                      <th scope="col" style="width:5%"  class="minwidth_50">ID</th>
+                      <th scope="col" style="width:20%" class="minwidth_200">Name</th>
+                      <th scope="col" style="width:5%"  class="minwidth_50">Line</th>
+                      <th scope="col" style="width:5%"  class="minwidth_50">Lines_Total</th>
+                      <th scope="col" style="width:65%" class="minwidth_300">Command</th>
+                      <th scope="col" style="width:65%" class="minwidth_100"></th>
+                    </thead>
+                    <tbody> 
+
+                      <tr>                                       
+                        <td>
+                          1                 
+                        </td> 
+                        <td>
+                          <div id="program_1_name"></div>
+                        </td> 
+                        <td>
+                          <div id="program_1_line"></div>                
+                        </td>
+                        <td>
+                          <div id="program_1_lines_total"></div>              
+                        </td>
+                        <td>
+                          <div id="program_1_command"></div>             
+                        </td>
+                        <td>   
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_1">STOP</button>
+                          <!-- Modal -->
+                          <div class="modal fade" id="delete_dialog_1">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">STOP Thread 1 ?</h5>
+                                </div>          
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                  <a class="btn btn-danger" href="/programs/stop/1#" role="button">STOP</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>                          
+                        </td>                          
+                      </tr>
+
+                      <tr>                                       
+                        <td>
+                          2                 
+                        </td> 
+                        <td>
+                          <div id="program_2_name"></div>
+                        </td> 
+                        <td>
+                          <div id="program_2_line"></div>                
+                        </td>
+                        <td>
+                          <div id="program_2_lines_total"></div>              
+                        </td>
+                        <td>
+                          <div id="program_2_command"></div>             
+                        </td>
+                        <td>   
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_2">STOP</button>
+                          <!-- Modal -->
+                          <div class="modal fade" id="delete_dialog_2">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">STOP Thread 2 ?</h5>
+                                </div>          
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                  <a class="btn btn-danger" href="/programs/stop/2#" role="button">STOP</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>                          
+                        </td>                           
+                      </tr>
+
+                      <tr>                                       
+                        <td>
+                          3                 
+                        </td> 
+                        <td>
+                          <div id="program_3_name"></div>
+                        </td> 
+                        <td>
+                          <div id="program_3_line"></div>                
+                        </td>
+                        <td>
+                          <div id="program_3_lines_total"></div>              
+                        </td>
+                        <td>
+                          <div id="program_3_command"></div>             
+                        </td>
+                        <td>   
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_3">STOP</button>
+                          <!-- Modal -->
+                          <div class="modal fade" id="delete_dialog_3">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">STOP Thread 3 ?</h5>
+                                </div>          
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                  <a class="btn btn-danger" href="/programs/stop/3#" role="button">STOP</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>                          
+                        </td>                           
+                      </tr>
+
+                      <tr>                                       
+                        <td>
+                          4                 
+                        </td> 
+                        <td>
+                          <div id="program_4_name"></div>
+                        </td> 
+                        <td>
+                          <div id="program_4_line"></div>                
+                        </td>
+                        <td>
+                          <div id="program_4_lines_total"></div>              
+                        </td>
+                        <td>
+                          <div id="program_4_command"></div>             
+                        </td>
+                        <td>   
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_4">STOP</button>
+                          <!-- Modal -->
+                          <div class="modal fade" id="delete_dialog_4">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">STOP Thread 4 ?</h5>
+                                </div>          
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                  <a class="btn btn-danger" href="/programs/stop/4#" role="button">STOP</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>                          
+                        </td>                           
+                      </tr>
+
+                      <tr>                                       
+                        <td>
+                          5                 
+                        </td> 
+                        <td>
+                          <div id="program_5_name"></div>
+                        </td> 
+                        <td>
+                          <div id="program_5_line"></div>                
+                        </td>
+                        <td>
+                          <div id="program_5_lines_total"></div>              
+                        </td>
+                        <td>
+                          <div id="program_5_command"></div>             
+                        </td>
+                        <td>   
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_5">STOP</button>
+                          <!-- Modal -->
+                          <div class="modal fade" id="delete_dialog_5">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">STOP Thread 5 ?</h5>
+                                </div>          
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                  <a class="btn btn-danger" href="/programs/stop/5#" role="button">STOP</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>                          
+                        </td>                           
+                      </tr>
+
+                      <tr>                                       
+                        <td>
+                          6                 
+                        </td> 
+                        <td>
+                          <div id="program_6_name"></div>
+                        </td> 
+                        <td>
+                          <div id="program_6_line"></div>                
+                        </td>
+                        <td>
+                          <div id="program_6_lines_total"></div>              
+                        </td>
+                        <td>
+                          <div id="program_6_command"></div>             
+                        </td>
+                        <td>   
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_6">STOP</button>
+                          <!-- Modal -->
+                          <div class="modal fade" id="delete_dialog_6">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">STOP Thread 6 ?</h5>
+                                </div>          
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                  <a class="btn btn-danger" href="/programs/stop/6#" role="button">STOP</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>                          
+                        </td>                           
+                      </tr>
+
+                    </tbody>
+                  </table>         
+                </div>
+              </div>            
+            </div>
+
+
+<!------------------>
+<!-- ADD PROGRAM  -->
+<!------------------>
+
+<section id="new_program"></section>
 
 <!-- success message add program -->
 
@@ -57,14 +361,16 @@
             <div class="card">
               <form method="POST">         
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/programs#'" name="add_program" class="btn btn-fill btn-primary">NEW PROGRAM</button>
+                  <button type="submit" onclick="window.location.href='/programs#new_program'" name="add_program" class="btn btn-fill btn-primary">NEW PROGRAM</button>
                 </div>
               </form>
             </div>
 
-<!--------------------->
-<!-- PROGRAMS TABLE  -->
-<!--------------------->   
+<!---------------------->
+<!-- PROGRAMS TABLE   -->
+<!---------------------->   
+
+<section id="open_program"></section>
 
 <!-- success message change settings -->
 
@@ -112,7 +418,7 @@
                     </div>
                   </div>  
                   <br>                              
-                  <button type="submit" onclick="window.location.href='/programs#'" name="open_program" class="btn btn-fill btn-primary">OPEN</button>          
+                  <button type="submit" onclick="window.location.href='/programs#open_program'" name="open_program" class="btn btn-fill btn-primary">OPEN</button>          
                 </div>
               </form>
             </div>
@@ -820,22 +1126,12 @@
                     <div class="col-sm-2">    
                       <button type="submit" onclick="window.location.href='/programs#selected_program'" name="save_program_settings" class="btn btn-fill btn-primary">SAVE</button>
                     </div>                        
-                    <div class="col-sm-4">    
+                    <div class="col-sm-2">    
                        <div class="vertical_center">                     
                         <button type="submit" onclick="window.location.href='/programs#selected_program'" name="start_program_{{ selected_program.id }}" class="btn btn-fill btn-info">START</button>
-                        <button type="submit" onclick="window.location.href='/programs#selected_program'" name="stop_program_{{ selected_program.id }}" class="btn btn-fill btn-info">STOP</button>
-                        <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="checkbox_program_repeat_setting" {% if program_repeat == "True" %} checked="on" {% endif %} name="checkbox_program_repeat">
-                          <label class="custom-control-label" for="checkbox_program_repeat_setting">Repeat</label>
-                        </div>
                       </div>
-                    </div>
-                    <div class="col-sm-4">  
-                      <div class="vertical_center"> 
-                        <h5><div id="program_status"></div></h5>
-                      </div> 
-                    </div>                        
-                    <div class="col-sm-2">  
+                    </div>                       
+                    <div class="col-sm-8">  
 
                       <!-- Button trigger modal -->
                       <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{selected_program.id}}">DELETE</button>
@@ -1005,7 +1301,53 @@
                         <tr>                       
                           <td></td>
                           <td></td>
-                        </tr>                                          
+                        </tr> 
+                        <tr>
+                          <td><h4><p class="text-muted">Programs</p></h4></td>
+                          <td></td>
+                        </tr>                             
+                        <tr>
+                          <td>program # SUNRISE # START</td>
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                start program "SUNRISE" 
+                              </div>
+                            </div>  
+                            <br>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                START >> 
+                              </div>
+                              <div class="col-sm-8"> 
+                                start 
+                              </div>                        
+                            </div>                                            
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                STOP >> 
+                              </div>
+                              <div class="col-sm-8"> 
+                                stop (exept the current program)
+                              </div>                        
+                            </div>                                                               
+                            <br>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                Programs >>
+                              </div>
+                              <div class="col-sm-8">   
+                                {% for program in list_program_options %}
+                                  {{ program }} |
+                                {% endfor %}    
+                              </div>  
+                            </div>                                                                       
+                          </td>                    
+                        </tr>  
+                        <tr>                       
+                          <td></td>
+                          <td></td>
+                        </tr>                                                                                           
                         <tr>
                           <td><h4><p class="text-muted">Music</p></h4></td>
                           <td></td>
