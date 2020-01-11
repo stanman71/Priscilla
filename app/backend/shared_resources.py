@@ -75,12 +75,12 @@ def GET_MQTT_INCOMING_MESSAGES(limit):
 """  program status  """
 """ ################ """
 
-program_thread_status_1 = ["None",0,0,""]
-program_thread_status_2 = ["None",0,0,""]
-program_thread_status_3 = ["None",0,0,""]
-program_thread_status_4 = ["None",0,0,""]
-program_thread_status_5 = ["None",0,0,""]
-program_thread_status_6 = ["None",0,0,""]
+program_thread_status_1 = ["None","","",""]
+program_thread_status_2 = ["None","","",""]
+program_thread_status_3 = ["None","","",""]
+program_thread_status_4 = ["None","","",""]
+program_thread_status_5 = ["None","","",""]
+program_thread_status_6 = ["None","","",""]
 
 def GET_PROGRAM_THREAD_STATUS_1():
     global program_thread_status_1

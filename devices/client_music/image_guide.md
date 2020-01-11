@@ -20,9 +20,9 @@ A raspberry pi controller to play music by using spotify and lms.
 
 ### 1 Hardware
 
-<a name="1.1 Small Speaker (max 3W)"></a>
+<a name="1.1 Small Speaker (max 3W Output)"></a>
 
-#### 1.1 Small Speaker (max 3W)
+#### 1.1 Small Speaker (max 3W Output)
 
 - ! no direct volume control on the device !
 
@@ -48,9 +48,9 @@ A raspberry pi controller to play music by using spotify and lms.
 
 </br>
 
-<a name="1.2 Big Speaker (max 30W)"></a>
+<a name="1.2 Big Speaker (max 30W Output)"></a>
 
-#### 1.2 Big Speaker (max 30W)
+#### 1.2 Big Speaker (max 30W Output)
 
 - Raspberry Pi Zero WH
 

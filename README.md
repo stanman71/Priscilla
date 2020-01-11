@@ -18,17 +18,13 @@ This project creates a smarthome environment.
       * <a href="#4.4 Pairing">4.4 Pairing</a>   
       * <a href="#4.5 Autostart">4.5 Autostart</a>   
       * <a href="#4.6 Update">4.6 Update</a>   
-   * <a href="#5 Zigbee Coordinator / Router">5 Zigbee Coordinator / Router</a>
-      * <a href="#5.1 Hardware">5.1 Hardware</a>
-      * <a href="#5.2 Flashing">5.2 Flashing</a>
-      * <a href="#5.3 Raspberry Pi installation (coordinator only)">5.3 Raspberry Pi installation (coordinator only)</a>   
-   * <a href="#6 Zigbee Devices">6 Zigbee Devices</a>   
-      * <a href="#6.1 Supported">6.1 Supported</a>
-      * <a href="#6.2 Add new Devices">6.2 Add new Devices</a>        
-   * <a href="#7 Logitech Media Server (LMS)">7 Logitech Media Server (LMS)</a>
-      * <a href="#7.1 Installation">7.1 Installation</a>
-      * <a href="#7.2 Squeezelite Player">7.2 Squeezelite Player</a>
-      * <a href="#7.3 LMS Configuration">7.3 LMS Configuration</a>     
+   * <a href="#5 Zigbee Devices">5 Zigbee Devices</a>   
+      * <a href="#5.1 Supported">5.1 Supported</a>
+      * <a href="#5.2 Add new Devices">5.2 Add new Devices</a>        
+   * <a href="#6 Logitech Media Server (LMS)">6 Logitech Media Server (LMS)</a>
+      * <a href="#6.1 Installation">6.1 Installation</a>
+      * <a href="#6.2 Squeezelite Player">6.2 Squeezelite Player</a>
+      * <a href="#6.3 LMS Configuration">6.3 LMS Configuration</a>     
 
 
 ### Features
@@ -447,6 +443,7 @@ home
 - joining of new devices is deactivate
 - you have to active the joining in smarthome / settings / devices
 - zigbee2mqtt setting to allow joining: {permit_join: true}
+- if you remove devices from your network and don't change your network_key, they can rejoin, even without the permission
 
 </br>
 
@@ -513,172 +510,13 @@ https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
 ------------
 </br>
 
-<a name="5 Zigbee2MQTT Coordinator / Router"></a>
+<a name="5 Zigbee Devices"></a>
 
-### 5 Zigbee2MQTT Coordinator / Router
+### 5 Zigbee Devices
 
-https://www.zigbee2mqtt.io/information/zigbee_network.html
-</br>
-https://ptvo.info/cc2530-based-zigbee-coordinator-and-router-112/
-</br>
-</br>
+<a name="5.1 Supported"></a>
 
-<a name="5.1 Hardware"></a>
-
-#### 5.1 Hardware
-
-- E18-MS1PA1-PCB
-
-       >>> https://de.aliexpress.com/item/32803068018.html
-
-- socket strip (2x5)
-
-       >>> https://www.ebay.de/itm/273382759328?ViewItem=&item=273382759328
-
-- internal cables and connectors
-
-       >>> https://www.ebay.de/itm/JST-XH-2-54-Stecker-inkl-15cm-Kabel-XH-Buchse-2-3-4-5-6-7-8-9-10-Pin-24AWG-RC/183748172867
-
-- voltage regulator 3.3V (router only)
-
-       >>> https://www.ebay.de/itm/Spannungswandler-Konverter-DC-3-3V-zu-12V-3A-18W-Adapter-Wandler-Konverter/253043664951?hash=item3aea93e837:g:DhAAAOSwIhxZZ1Tc
-
-- power connector (router only)
-
-       >>> https://www.berrybase.de/bauelemente/steckverbinder/stromversorgungs-steckverbinder/dc-stecker-hohlstecker/dc-einbaubuchse-f-252-r-hohlstecker-5-5x2-5mm-metallausf-252-hrung-l-246-tanschluss?c=115
-
-- power source (router only)
-
-       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01GRYFNAE/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
-
-- case (router only)
-
-       >>> https://www.tme.eu/de/details/abs-54p/universal-gehause/maszczyk/km-54p-gy/
-       >>> https://www.tme.eu/de/details/km-54p/universal-gehause/maszczyk/km-54p-bk/
-
-</br>
-
-<a name="5.2 Flashing"></a>
-
-https://github.com/Koenkk/Z-Stack-firmware
-</br>
-https://github.com/Koenkk/zigbee2mqtt/issues/1437
-</br>
-</br>
-
-#### 5.2 Flashing (Windows Environment)
-
-- install SmartRF Flash programmer and CC debugger driver (admin rights necessary)
-
-       >>> /devices/zigbee_coordinator_router/Flashing/flash-programmer-1.12.8.zip
-       >>> /devices/zigbee_coordinator_router/Flashing/swrc212a.zip
-
-- connect the debugger to the E18-MS1PA1-PCB Board
-
-       >>> CC debugger -> E18-MS1PA1-PCB
-
-           1 -> GND
-           2 -> 3,3V
-           3 -> P2.2
-           4 -> P2.1
-           7 -> RESET
-           9 -> 3,3V
-
-           connect pin 2 and 9
-
-<p align="center">
-  <img src="https://github.com/stanman71/Watering_Control/blob/master/zigbee_coordinator/soldering/Flashing/Programmer%20connection%20to%20E18-MS1PA1-PCB.png">
-</p>
-
-</br>
-
-- connect the CC debugger to the PC
-
-- if the light on the CC debugger is RED
-
-       >>> press set reset button on the CC debugger
-       >>> if the light is still red, check the connection to the E18-MS1PA1-PCB   
-
-- if the light on the CC debugger is GREEN 
-
-       >>> ready for the next step   
-
-- unzip the firmware files
-
-       >>> /home/pi/smarthome/devices/zigbee_coordinator_router/z-stack_firmware.zip
-
-- start SmartRF Flash Programmer
-
-       >>> select a coordinator / router firmware (.hex file)
-       >>> don't keep the old ieeeAddr
-	>>> select "Erase, program and verify"
-       >>> click “Perform actions” 
-
-- if something fails, reset the CC debugger and restart the process
-
-</br>
-
-<a name="5.3 Raspberry Pi installation (coordinator only)"></a>
-
-#### 5.3 Raspberry Pi installation (coordinator only)
-
-https://www.zigbee2mqtt.io/information/connecting_cc2530.html
-</br>
-</br>
-
-- connect the coordinator to the Raspberry Pi
-
-       >>> coordinator -> Raspberry Pi
-	   
-                   VCC -> 3,3V (Pin1)
-                   GND -> GND  (Pin6)
-                   P02 -> TXD  (Pin8  / BCM 14)
-                   P03 -> RXD  (Pin10 / BCM 15)
-
-- start the Raspberry Pi
-
-- add following at the end of the config file
-
-       >>> sudo nano /boot/config.txt 
-	   
-           [zigbee]
-           enable_uart=1
-           dtoverlay=pi3-disable-bt
-
-- disable the modem system service 
-
-       >>> sudo systemctl disable hciuart
-
-- remove any of the following entries in the cmdline file, if present
-
-       >>> sudo nano /boot/cmdline.txt
-
-           console=serial0,115200 
-           console=ttyAMA0,115200
-
-- add the lines in zigbee2mqtt config
-
-       >>> sudo nano /opt/zigbee2mqtt/data/configuration.yaml
-	   
-           serial:
-             port: /dev/ttyAMA0
-           advanced:
-             baudrate: 115200
-             rtscts: false
-
-- reboot your raspberry	
-
-</br>
-------------
-</br>
-
-<a name="6 Zigbee Devices"></a>
-
-### 6 Zigbee Devices
-
-<a name="6.1 Supported"></a>
-
-#### 6.1 Supported
+#### 5.1 Supported
 
 - Eurotronic heater thermostat (SPZB0001)
 - IKEA TRADFRI LED bulb E27 980 lumen (LED1545G12)
@@ -739,9 +577,9 @@ https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 
 </br>
 
-<a name="6.2 Add new Devices"></a>
+<a name="5.2 Add new Devices"></a>
 
-#### 6.2 Add new Devices
+#### 5.2 Add new Devices
 
 - go the to overview of all possible devices
 
@@ -758,9 +596,9 @@ https://www.zigbee2mqtt.io/information/connecting_cc2530.html
 ------------
 </br>
 
-<a name="7 Logitech Media Server (LMS)"></a>
+<a name="6 Logitech Media Server (LMS)"></a>
 
-### 7 Logitech Media Server (LMS)
+### 6 Logitech Media Server (LMS)
 
 https://www.hagensieker.com/wordpress/2018/06/12/302/
 </br>
@@ -768,9 +606,9 @@ http://downloads.slimdevices.com/nightly/7.9/sc/
 </br>
 </br>
 
-<a name="7.1 Installation"></a>
+<a name="6.1 Installation"></a>
 
-#### 7.1 Installation
+#### 6.1 Installation
 
 - install dependencies 
 
@@ -786,9 +624,9 @@ http://downloads.slimdevices.com/nightly/7.9/sc/
 
 </br>
 
-<a name="7.2 Squeezelite Player"></a>
+<a name="6.2 Squeezelite Player"></a>
 
-#### 7.2 Squeezelite Player
+#### 6.2 Squeezelite Player
 
 - create a multiroom group placeholder
 
@@ -815,9 +653,9 @@ http://downloads.slimdevices.com/nightly/7.9/sc/
 
 </br>
 
-<a name="7.3 LMS Configuration"></a>
+<a name="6.3 LMS Configuration"></a>
 
-#### 7.3 LMS Configuration 
+#### 6.3 LMS Configuration 
 
 - open LMS web-gui
 

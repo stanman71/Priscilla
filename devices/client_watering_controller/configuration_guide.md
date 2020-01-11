@@ -41,7 +41,7 @@ This project controls the watering system.
 
 - example
 
-       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01I4YDJZG/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
+       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01HRR96ZI/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
 
 </br>
 
@@ -103,5 +103,5 @@ This project controls the watering system.
 
 - case
 
-       >>> https://www.tme.eu/de/details/abs-78z/universal-gehause/maszczyk/km-78-gy/      
-       >>> https://www.tme.eu/de/details/abs-78z_bk/universal-gehause/maszczyk/km-78z-bk/
+       >>> https://www.tme.eu/de/details/km-31no_j/universal-gehause/maszczyk/km-31no-gy/
+       >>> https://www.tme.eu/de/details/km-31no_b/universal-gehause/maszczyk/km-31no-bk/

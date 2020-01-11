@@ -43,16 +43,20 @@ https://www.amazon.de/UpgradeWS2812B-Individuell-Adressierbar-Wasserdicht-5M-WS2
 
 #### 1.2 Power Source
 
-https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
-</br>
-</br>
-
 - 60 mA per LED (white)
 
        >>> 30 LED / Meter ~ 5  W
        >>> 60 LED / Meter ~ 10 W     
 
 - less power results in lower max brightness
+
+- less leds (> 150)
+
+       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01HRR96ZI/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
+
+- many leds (< 150)
+
+       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
 
 </br>
 
