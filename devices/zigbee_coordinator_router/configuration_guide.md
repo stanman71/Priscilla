@@ -48,6 +48,8 @@ https://github.com/Koenkk/Z-Stack-firmware
 </br>
 https://github.com/Koenkk/zigbee2mqtt/issues/1437
 </br>
+https://www.zigbee2mqtt.io/getting_started/flashing_the_cc2531.html
+</br>
 </br>
 
 #### 1.2 Flashing (Windows Environment)
@@ -94,9 +96,9 @@ https://github.com/Koenkk/zigbee2mqtt/issues/1437
 
 - start SmartRF Flash Programmer
 
-       >>> select a coordinator / router firmware (.hex file)
+       >>> select a coordinator firmware (.hex file) > default without router / source_routing with router
        >>> don't keep the old ieeeAddr
-	   >>> select "Erase, program and verify"
+	>>> select "Erase, program and verify"
        >>> click “Perform actions” 
 
 - if something fails, reset the CC debugger and restart the process
@@ -208,6 +210,8 @@ https://github.com/Koenkk/Z-Stack-firmware
 </br>
 https://github.com/Koenkk/zigbee2mqtt/issues/1437
 </br>
+https://www.zigbee2mqtt.io/how_tos/how_to_create_a_cc2530_router.html
+</br>
 </br>
 
 #### 2.2 Flashing (Windows Environment)
@@ -254,9 +258,11 @@ https://github.com/Koenkk/zigbee2mqtt/issues/1437
 
 - start SmartRF Flash Programmer
 
-       >>> select a coordinator / router firmware (.hex file)
+       >>> select a router firmware (.hex file)
        >>> don't keep the old ieeeAddr
 	>>> select "Erase, program and verify"
        >>> click “Perform actions” 
 
 - if something fails, reset the CC debugger and restart the process
+
+- the coordinator needs a source_routing firmware in this case

@@ -267,7 +267,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             
             # special case eurotronic heater_thermostat
             if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "SPZB0001":
-                if int(data["battery"]) < 5:
+                if int(data["battery"]) < 10:
                     WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")
                     SEND_EMAIL("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")                    
                 

@@ -81,6 +81,9 @@ program_thread_status_3 = ["None","","",""]
 program_thread_status_4 = ["None","","",""]
 program_thread_status_5 = ["None","","",""]
 program_thread_status_6 = ["None","","",""]
+program_thread_status_7 = ["None","","",""]
+program_thread_status_8 = ["None","","",""]
+program_thread_status_9 = ["None","","",""]
 
 def GET_PROGRAM_THREAD_STATUS_1():
     global program_thread_status_1
@@ -129,6 +132,30 @@ def GET_PROGRAM_THREAD_STATUS_6():
 def SET_PROGRAM_THREAD_STATUS_6(program_name, line, lines_total, command):
 	global program_thread_status_6
 	program_thread_status_6 = [program_name, line, lines_total, command]
+
+def GET_PROGRAM_THREAD_STATUS_7():
+    global program_thread_status_7
+    return program_thread_status_7 
+
+def SET_PROGRAM_THREAD_STATUS_7(program_name, line, lines_total, command):
+	global program_thread_status_7
+	program_thread_status_7 = [program_name, line, lines_total, command]
+
+def GET_PROGRAM_THREAD_STATUS_8():
+    global program_thread_status_8
+    return program_thread_status_8 
+
+def SET_PROGRAM_THREAD_STATUS_8(program_name, line, lines_total, command):
+	global program_thread_status_8
+	program_thread_status_8 = [program_name, line, lines_total, command]
+
+def GET_PROGRAM_THREAD_STATUS_9():
+    global program_thread_status_9
+    return program_thread_status_9 
+
+def SET_PROGRAM_THREAD_STATUS_9(program_name, line, lines_total, command):
+	global program_thread_status_9
+	program_thread_status_9 = [program_name, line, lines_total, command]
 
 
 """ ##################### """

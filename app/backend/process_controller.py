@@ -36,7 +36,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                 if str(controller.command_1)[1:-1] in str(msg):
                     START_CONTROLLER_TASK(controller.task_1, controller.device.name, controller.command_1)                      
                     return
-                            
+          
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
@@ -238,11 +238,10 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
     if "lighting" in task and "scene" in task:
 
-        task = task.lower()
         task = task.split(" # ")
         
-        group = GET_LIGHTING_GROUP_BY_NAME(task[2])
-        scene = GET_LIGHTING_SCENE_BY_NAME(task[3])
+        group = GET_LIGHTING_GROUP_BY_NAME(task[2].strip())
+        scene = GET_LIGHTING_SCENE_BY_NAME(task[3].strip())
 
         # group existing ?
         if group != None:
@@ -251,7 +250,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             if scene != None:
 
                 try:
-                    brightness = int(task[4])
+                    brightness = int(task[4].strip())
                 except:
                     brightness = 100
                     
@@ -273,11 +272,10 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
     if "lighting" in task and "brightness" in task:
         
-        task = task.lower()
         task = task.split(" # ")
         
-        group   = GET_LIGHTING_GROUP_BY_NAME(task[2])
-        command = task[3]
+        group   = GET_LIGHTING_GROUP_BY_NAME(task[2].strip())
+        command = task[3].strip()
 
         # group existing ?
         if group != None:
@@ -337,10 +335,9 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
     if "lighting" in task and "turn_off" in task:
         
-        task = task.lower()
         task = task.split(" # ")
 
-        if task[2] == "group":
+        if task[2].lower() == "group":
 
             # get input group names and lower the letters
             try:
@@ -349,14 +346,14 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 list_groups = [task[3]]
 
             for input_group_name in list_groups:
-                input_group_name = input_group_name.replace(" ", "")
+                input_group_name = input_group_name.strip()
 
                 group_founded = False
 
             # get exist group names
             for group in GET_ALL_LIGHTING_GROUPS():
 
-                if input_group_name == group.name.lower():
+                if input_group_name.lower() == group.name.lower():
                     group_founded = True
                     scene_name    = group.current_scene
                     scene         = GET_LIGHTING_SCENE_BY_NAME(scene_name)
@@ -384,7 +381,8 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
     # ######
 
     if "device" in task:
-        task   = task.split(" # ")
+        
+        task = task.split(" # ")
         
         # get input group names 
         for device_name in task[1].split(","): 
@@ -392,7 +390,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
             # device founded ?
             if device != None:
-                controller_setting = task[2]
+                controller_setting = task[2].strip()
                 
                 # check device exception
                 check_result = CHECK_DEVICE_EXCEPTIONS(device.id, controller_setting)
@@ -430,10 +428,9 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
     if "request_sensordata" in task:
 
-        task = task.lower()
-        task = task.split(" # ")
+        task       = task.split(" # ")
+        job_number = task[1].strip()    
 
-        job_number = task[1]    
         REQUEST_SENSORDATA(job_number)              
 
 
@@ -443,9 +440,8 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
     if "program" in task:
         
-        task    = task.lower()
         task    = task.split(" # ") 
-        program = GET_PROGRAM_BY_NAME(task[1])
+        program = GET_PROGRAM_BY_NAME(task[1].strip())
 
         if program != None:
 
@@ -471,8 +467,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
         spotify_token = GET_SPOTIFY_TOKEN()
         
         if spotify_token != "":
-            
-            task = task.lower()         
+                
             task = task.split(" # ")
             
             sp       = spotipy.Spotify(auth=spotify_token)
@@ -483,26 +478,26 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             except:
                 spotify_volume = 50
             
-            if task[1] == "play":
+            if task[1].lower() == "play":
                 SPOTIFY_CONTROL(spotify_token, "play", spotify_volume) 
 
-            if task[1] == "play/stop":
+            if task[1].lower() == "play/stop":
                 SPOTIFY_CONTROL(spotify_token, "play/stop", spotify_volume) 
 
-            if task[1] == "previous": 
+            if task[1].lower() == "previous": 
                 SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
 
-            if task[1] == "next":
+            if task[1].lower() == "next":
                 SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
 
-            if task[1] == "stop": 
+            if task[1].lower() == "stop": 
                 SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)      
 
-            if task[1] == "volume_up":   
+            if task[1].lower() == "volume_up":   
                 device_name = sp.current_playback(market=None)['device']['name']
                 SPOTIFY_CONTROL(spotify_token, "volume_up", spotify_volume)
 
-            if task[1] == "volume_down":   
+            if task[1].lower() == "volume_down":   
                 device_name = sp.current_playback(market=None)['device']['name']
                 SPOTIFY_CONTROL(spotify_token, "volume_down", spotify_volume)                 
 

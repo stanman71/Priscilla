@@ -224,6 +224,54 @@ def background_thread():
                           'command': ""},
                            namespace='/socketIO')     
 
+        try:
+            socketio.emit('program_thread_7',
+                         {'program_name': GET_PROGRAM_THREAD_STATUS_7()[0], 
+                          'line': GET_PROGRAM_THREAD_STATUS_7()[1], 
+                          'lines_total': GET_PROGRAM_THREAD_STATUS_7()[2],
+                          'command': GET_PROGRAM_THREAD_STATUS_7()[3]},
+                           namespace='/socketIO')
+
+        except:
+            socketio.emit('program_thread_7',
+                         {'program_name':"", 
+                          'line': "", 
+                          'lines_total': "",
+                          'command': ""},
+                           namespace='/socketIO')     
+
+        try:
+            socketio.emit('program_thread_8',
+                         {'program_name': GET_PROGRAM_THREAD_STATUS_8()[0], 
+                          'line': GET_PROGRAM_THREAD_STATUS_8()[1], 
+                          'lines_total': GET_PROGRAM_THREAD_STATUS_8()[2],
+                          'command': GET_PROGRAM_THREAD_STATUS_8()[3]},
+                           namespace='/socketIO')
+
+        except:
+            socketio.emit('program_thread_8',
+                         {'program_name':"", 
+                          'line': "", 
+                          'lines_total': "",
+                          'command': ""},
+                           namespace='/socketIO')     
+
+        try:
+            socketio.emit('program_thread_9',
+                         {'program_name': GET_PROGRAM_THREAD_STATUS_9()[0], 
+                          'line': GET_PROGRAM_THREAD_STATUS_9()[1], 
+                          'lines_total': GET_PROGRAM_THREAD_STATUS_9()[2],
+                          'command': GET_PROGRAM_THREAD_STATUS_9()[3]},
+                           namespace='/socketIO')
+
+        except:
+            socketio.emit('program_thread_9',
+                         {'program_name':"", 
+                          'line': "", 
+                          'lines_total': "",
+                          'command': ""},
+                           namespace='/socketIO')                                
+
 
         # ##########################
         # zigbee2mqtt pairing status
@@ -276,7 +324,7 @@ SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, GET_SYSTEM_SETTINGS().dhcp)
 """ imports """
 """ ####### """
 
-from app.sites                      import index, dashboard, scheduler, programs, lighting_scenes, lighting_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_devices, settings_controller, settings_users, settings_system_log, errors
+from app.sites                      import index, dashboard, scheduler, programs, lighting_scenes, lighting_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_threads, settings_devices, settings_controller, settings_users, settings_system_log, errors
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
 from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_AT_STARTUP, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.email              import SEND_EMAIL

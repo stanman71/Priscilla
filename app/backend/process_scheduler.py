@@ -252,12 +252,12 @@ def CHECK_SCHEDULER_SENSORS(task):
             passing = True    
          else:
             passing = False
-      if task.operator_1 == "<" and task.value_1.isdigit():
+      if task.operator_1 == ">" and task.value_1.isdigit():
          if int(sensor_value_1) < int(task.value_1):
             passing = True
          else:
             passing = False
-      if task.operator_1 == ">" and task.value_1.isdigit():
+      if task.operator_1 == "<" and task.value_1.isdigit():
          if int(sensor_value_1) > int(task.value_1):
             passing = True 
          else:
@@ -314,13 +314,13 @@ def CHECK_SCHEDULER_SENSORS(task):
                else:
                   passing = False           
                   
-         if task.main_operator_second_sensor == "<":
+         if task.main_operator_second_sensor == ">":
             if int(sensor_value_1) < int(sensor_value_2):
                passing = True
             else:
                passing = False
                
-         if task.main_operator_second_sensor == ">":
+         if task.main_operator_second_sensor == "<":
             if int(sensor_value_1) > int(sensor_value_2):
                passing = True 
             else:
@@ -353,7 +353,7 @@ def CHECK_SCHEDULER_SENSORS(task):
             pass
             
          try:                   
-            if task.operator_1 == "<" and task.value_1.isdigit():
+            if task.operator_1 == ">" and task.value_1.isdigit():
                if int(sensor_value_1) < int(task.value_1):
                   passing_1 = True
                else:
@@ -362,7 +362,7 @@ def CHECK_SCHEDULER_SENSORS(task):
             pass
             
          try:                       
-            if task.operator_1 == ">" and task.value_1.isdigit():
+            if task.operator_1 == "<" and task.value_1.isdigit():
                if int(sensor_value_1) > int(task.value_1):
                   passing_1 = True 
                else:
@@ -394,7 +394,7 @@ def CHECK_SCHEDULER_SENSORS(task):
             pass
             
          try: 
-            if task.operator_2 == "<" and task.value_2.isdigit():
+            if task.operator_2 == ">" and task.value_2.isdigit():
                if int(sensor_value_2) < int(task.value_2):
                   passing_2 = True
                else:
@@ -403,7 +403,7 @@ def CHECK_SCHEDULER_SENSORS(task):
             pass
             
          try:                                
-            if task.operator_2 == ">" and task.value_2.isdigit():
+            if task.operator_2 == "<" and task.value_2.isdigit():
                if int(sensor_value_2) > int(task.value_2):
                   passing_2 = True 
                else:
@@ -529,8 +529,8 @@ def START_SCHEDULER_TASK(task_object):
 
          task = task_object.task.split(" # ")
          
-         group = GET_LIGHTING_GROUP_BY_NAME(task[2])
-         scene = GET_LIGHTING_SCENE_BY_NAME(task[3])
+         group = GET_LIGHTING_GROUP_BY_NAME(task[2].strip())
+         scene = GET_LIGHTING_SCENE_BY_NAME(task[3].strip())
 
          # group existing ?
          if group != None:
@@ -539,7 +539,7 @@ def START_SCHEDULER_TASK(task_object):
                if scene != None:
 
                   try:
-                     brightness = int(task[4])
+                     brightness = int(task[4].strip())
                   except:
                      brightness = 100
 
@@ -578,7 +578,7 @@ def START_SCHEDULER_TASK(task_object):
                   list_groups = [task[3]]
 
                for input_group_name in list_groups: 
-                  input_group_name = input_group_name.replace(" ", "")
+                  input_group_name = input_group_name.strip()
 
                   group_founded = False
 
@@ -629,7 +629,7 @@ def START_SCHEDULER_TASK(task_object):
 
             # device founded ?
             if device != None:
-               scheduler_setting = task[2]
+               scheduler_setting = task[2].strip()
                
                # check device exception
                check_result = CHECK_DEVICE_EXCEPTIONS(device.id, scheduler_setting)
@@ -677,7 +677,7 @@ def START_SCHEDULER_TASK(task_object):
          
          task    = task_object.task.lower()         
          task    = task.split(" # ")
-         program = GET_PROGRAM_BY_NAME(task[1])
+         program = GET_PROGRAM_BY_NAME(task[1].strip())
 
          if program != None:
 
@@ -735,7 +735,7 @@ def START_SCHEDULER_TASK(task_object):
    try:
       if "request_sensordata" in task_object.task:
          task = task_object.task.split(" # ")
-         REQUEST_SENSORDATA(task[1])  
+         REQUEST_SENSORDATA(task[1].strip())  
 
    except Exception as e:
       print(e)

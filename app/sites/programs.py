@@ -18,14 +18,14 @@ import spotipy
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "user" or current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "user" or current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -37,25 +37,12 @@ def programs():
     page_title       = 'Smarthome | Programs'
     page_description = 'The programs configuration page.'
 
-    success_message_program_stop            = "" 
-    error_message_program_stop              = ""
     success_message_add_program             = False       
     error_message_add_program               = []
     success_message_change_settings         = []
     error_message_change_settings           = []
     success_message_change_settings_program = []
     error_message_change_settings_program   = []
-
-
-    # stop message
-    if session.get('program_stop_success', None) != None:
-        success_message_program_stop = session.get('program_stop_success')
-        session['program_stop_success'] = None
-        
-    if session.get('program_stop_error', None) != None:
-        error_message_program_stop = session.get('program_stop_error')
-        session['program_stop_error'] = None       
-
 
     selected_program = ""
 
@@ -386,8 +373,6 @@ def programs():
                             title=page_title,        
                             description=page_description,                                  
                             content=render_template( 'pages/programs.html',
-                                                    success_message_program_stop=success_message_program_stop,
-                                                    error_message_program_stop=error_message_program_stop,
                                                     success_message_add_program=success_message_add_program,
                                                     error_message_add_program=error_message_add_program,
                                                     success_message_change_settings=success_message_change_settings,
@@ -406,50 +391,6 @@ def programs():
                                                     list_spotify_playlists=list_spotify_playlists, 
                                                     ) 
                            )
-
-
-# stop program 
-@app.route('/programs/stop/<int:id>')
-@login_required
-@permission_required
-def stop_program(id):
-    if id == 1 and GET_PROGRAM_THREAD_STATUS_1()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 1 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 1 not stopped"
-
-    if id == 2 and GET_PROGRAM_THREAD_STATUS_2()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 2 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 2 not stopped"
-
-    if id == 3 and GET_PROGRAM_THREAD_STATUS_3()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 3 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 3 not stopped"
-
-    if id == 4 and GET_PROGRAM_THREAD_STATUS_4()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 4 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 4 not stopped"
-
-    if id == 5 and GET_PROGRAM_THREAD_STATUS_5()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 5 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 5 not stopped"
-
-    if id == 6 and GET_PROGRAM_THREAD_STATUS_6()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 6 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 6 not stopped"
-
-    return redirect(url_for('programs'))
 
 
 # programs option add line / remove line

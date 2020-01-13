@@ -48,40 +48,6 @@
   });
 </script>
 
-<script type="text/javascript" charset="utf-8">
-  $(document).ready(function() {
-
-    namespace  = '/socketIO';
-    var socket = io(namespace);
-
-    socket.on('program_thread_1', function(msg) {
-        $('#program_1_name').text(msg.program_name);                                                  
-    });
-
-    socket.on('program_thread_2', function(msg) {
-        $('#program_2_name').text(msg.program_name);                                                   
-    });
-
-    socket.on('program_thread_3', function(msg) {
-        $('#program_3_name').text(msg.program_name);                                                   
-    });
-
-    socket.on('program_thread_4', function(msg) {
-        $('#program_4_name').text(msg.program_name);                                                  
-    });
-
-    socket.on('program_thread_5', function(msg) {
-        $('#program_5_name').text(msg.program_name);                                                 
-    });
-
-    socket.on('program_thread_6', function(msg) {
-        $('#program_6_name').text(msg.program_name);                                                 
-    });
-
-  });
-</script>
-
-
 
       <div class="content">
         <div class="row">
@@ -198,44 +164,7 @@
                         <button type="submit" onclick="window.location.href='/dashboard#'" name="start_program" class="btn btn-fill btn-info">START</button>                      
                       </div> 
                     </div> 
-                  </div>  
-
-                  <div class="border-top my-2"></div>
-
-                  <div class="row justify-content-md-center">     
-                    <div class="col-sm-4">   
-                      <div class="vertical_center">  
-                        <div id="program_1_name"></div>
-                      </div>
-                    </div>    
-                    <div class="col-sm-4">   
-                      <div class="vertical_center">  
-                        <div id="program_2_name"></div>
-                      </div>
-                    </div>   
-                    <div class="col-sm-4">   
-                      <div class="vertical_center">  
-                        <div id="program_3_name"></div>
-                      </div>
-                    </div>  
-                  </div>   
-                  <div class="row justify-content-md-center">     
-                    <div class="col-sm-4">   
-                      <div class="vertical_center">  
-                        <div id="program_4_name"></div>
-                      </div>
-                    </div>   
-                    <div class="col-sm-4">   
-                      <div class="vertical_center">  
-                        <div id="program_5_name"></div>
-                      </div> 
-                    </div>  
-                    <div class="col-sm-4">   
-                      <div class="vertical_center">  
-                        <div id="program_6_name"></div>
-                      </div> 
-                    </div>                                                                                                                                                                     
-                  </div>                       
+                  </div>                      
                 </div>
               </form>   
             </div>

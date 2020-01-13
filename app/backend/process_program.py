@@ -18,6 +18,9 @@ stop_program_thread_3 = False
 stop_program_thread_4 = False
 stop_program_thread_5 = False
 stop_program_thread_6 = False
+stop_program_thread_7 = False
+stop_program_thread_8 = False
+stop_program_thread_9 = False
 
 
 def START_PROGRAM_THREAD(program_id):
@@ -28,7 +31,7 @@ def START_PROGRAM_THREAD(program_id):
             thread_id    = 1
             program_name = GET_PROGRAM_BY_ID(program_id).name
 
-            program_thread_1 = threading.Thread(target = PROGRAM_THREAD, args =(lambda : True,thread_id,program_id, )) 
+            program_thread_1 = threading.Thread(target = PROGRAM_THREAD, args =(thread_id,program_id, )) 
             program_thread_1.start()   
    
             SET_PROGRAM_THREAD_STATUS_1(program_name,0,0,"")
@@ -39,7 +42,7 @@ def START_PROGRAM_THREAD(program_id):
             thread_id    = 2
             program_name = GET_PROGRAM_BY_ID(program_id).name
 
-            program_thread_2 = threading.Thread(target = PROGRAM_THREAD, args =(lambda : True,thread_id,program_id, )) 
+            program_thread_2 = threading.Thread(target = PROGRAM_THREAD, args =(thread_id,program_id, )) 
             program_thread_2.start()   
    
             SET_PROGRAM_THREAD_STATUS_2(program_name,0,0,"")
@@ -50,7 +53,7 @@ def START_PROGRAM_THREAD(program_id):
             thread_id    = 3
             program_name = GET_PROGRAM_BY_ID(program_id).name
 
-            program_thread_3 = threading.Thread(target = PROGRAM_THREAD, args =(lambda : True,thread_id,program_id, )) 
+            program_thread_3 = threading.Thread(target = PROGRAM_THREAD, args =(thread_id,program_id, )) 
             program_thread_3.start()   
    
             SET_PROGRAM_THREAD_STATUS_3(program_name,0,0,"")
@@ -61,7 +64,7 @@ def START_PROGRAM_THREAD(program_id):
             thread_id    = 4
             program_name = GET_PROGRAM_BY_ID(program_id).name
 
-            program_thread_4 = threading.Thread(target = PROGRAM_THREAD, args =(lambda : True,thread_id,program_id, )) 
+            program_thread_4 = threading.Thread(target = PROGRAM_THREAD, args =(thread_id,program_id, )) 
             program_thread_4.start()   
    
             SET_PROGRAM_THREAD_STATUS_4(program_name,0,0,"")
@@ -72,7 +75,7 @@ def START_PROGRAM_THREAD(program_id):
             thread_id    = 5
             program_name = GET_PROGRAM_BY_ID(program_id).name
 
-            program_thread_5 = threading.Thread(target = PROGRAM_THREAD, args =(lambda : True,thread_id,program_id, )) 
+            program_thread_5 = threading.Thread(target = PROGRAM_THREAD, args =(thread_id,program_id, )) 
             program_thread_5.start()   
    
             SET_PROGRAM_THREAD_STATUS_5(program_name,0,0,"")
@@ -83,12 +86,45 @@ def START_PROGRAM_THREAD(program_id):
             thread_id    = 6
             program_name = GET_PROGRAM_BY_ID(program_id).name
 
-            program_thread_6 = threading.Thread(target = PROGRAM_THREAD, args =(lambda : True,thread_id,program_id, )) 
+            program_thread_6 = threading.Thread(target = PROGRAM_THREAD, args =(thread_id,program_id, )) 
             program_thread_6.start()   
    
             SET_PROGRAM_THREAD_STATUS_6(program_name,0,0,"")
             WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
             return True
+
+        elif GET_PROGRAM_THREAD_STATUS_7()[0] == "None":
+            thread_id    = 7
+            program_name = GET_PROGRAM_BY_ID(program_id).name
+
+            program_thread_7 = threading.Thread(target = PROGRAM_THREAD, args =(thread_id,program_id, )) 
+            program_thread_7.start()   
+   
+            SET_PROGRAM_THREAD_STATUS_7(program_name,0,0,"")
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            return True
+
+        elif GET_PROGRAM_THREAD_STATUS_8()[0] == "None":
+            thread_id    = 8
+            program_name = GET_PROGRAM_BY_ID(program_id).name
+
+            program_thread_8 = threading.Thread(target = PROGRAM_THREAD, args =(thread_id,program_id, )) 
+            program_thread_8.start()   
+   
+            SET_PROGRAM_THREAD_STATUS_8(program_name,0,0,"")
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            return True
+
+        elif GET_PROGRAM_THREAD_STATUS_9()[0] == "None":
+            thread_id    = 9
+            program_name = GET_PROGRAM_BY_ID(program_id).name
+
+            program_thread_9 = threading.Thread(target = PROGRAM_THREAD, args =(thread_id,program_id, )) 
+            program_thread_9.start()   
+   
+            SET_PROGRAM_THREAD_STATUS_9(program_name,0,0,"")
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            return True            
 
         else:
             return ("No empty program tread founded")
@@ -104,6 +140,10 @@ def STOP_PROGRAM_THREAD_BY_ID(thread_id):
     global stop_program_thread_4
     global stop_program_thread_5    
     global stop_program_thread_6   
+    global stop_program_thread_7   
+    global stop_program_thread_8   
+    global stop_program_thread_9   
+
 
     if thread_id == 1 :
         stop_program_thread_1 = True
@@ -141,64 +181,116 @@ def STOP_PROGRAM_THREAD_BY_ID(thread_id):
         SET_PROGRAM_THREAD_STATUS_6(program_name,"","","STOPPED")
         return True
 
+    if thread_id == 7 :
+        stop_program_thread_7 = True
+        program_name = GET_PROGRAM_THREAD_STATUS_7()[0]
+        SET_PROGRAM_THREAD_STATUS_7(program_name,"","","STOPPED")
+        return True
 
-def STOP_PROGRAM_THREAD_BY_NAME(program_name):
+    if thread_id == 8 :
+        stop_program_thread_8 = True
+        program_name = GET_PROGRAM_THREAD_STATUS_8()[0]
+        SET_PROGRAM_THREAD_STATUS_8(program_name,"","","STOPPED")
+        return True
+
+    if thread_id == 9 :
+        stop_program_thread_9 = True
+        program_name = GET_PROGRAM_THREAD_STATUS_9()[0]
+        SET_PROGRAM_THREAD_STATUS_9(program_name,"","","STOPPED")
+        return True
+
+
+
+def STOP_PROGRAM_THREAD_BY_NAME(program_name, thread_id = 0):
     global stop_program_thread_1
     global stop_program_thread_2
     global stop_program_thread_3
     global stop_program_thread_4
     global stop_program_thread_5    
     global stop_program_thread_6  
+    global stop_program_thread_7
+    global stop_program_thread_8  
+    global stop_program_thread_9  
 
     try:
 
-        if program_name.lower() == GET_PROGRAM_THREAD_STATUS_1()[0].lower():
-            stop_program_thread_1 = True
-            program_name = GET_PROGRAM_THREAD_STATUS_1()[0]
-            SET_PROGRAM_THREAD_STATUS_1(program_name,"","","STOPPED")            
-            return True
+        if thread_id != 1:
+            if program_name.lower() == GET_PROGRAM_THREAD_STATUS_1()[0].lower():
+                stop_program_thread_1 = True
+                program_name = GET_PROGRAM_THREAD_STATUS_1()[0]
+                SET_PROGRAM_THREAD_STATUS_1(program_name,"","","STOPPED")            
+                return True
 
-        if program_name.lower() == GET_PROGRAM_THREAD_STATUS_2()[0].lower():
-            stop_program_thread_2 = True
-            program_name = GET_PROGRAM_THREAD_STATUS_2()[0]
-            SET_PROGRAM_THREAD_STATUS_2(program_name,"","","STOPPED")                   
-            return True
+        if thread_id != 2:
+            if program_name.lower() == GET_PROGRAM_THREAD_STATUS_2()[0].lower():
+                stop_program_thread_2 = True
+                program_name = GET_PROGRAM_THREAD_STATUS_2()[0]
+                SET_PROGRAM_THREAD_STATUS_2(program_name,"","","STOPPED")                   
+                return True
 
-        if program_name.lower() == GET_PROGRAM_THREAD_STATUS_3()[0].lower():
-            stop_program_thread_3 = True
-            program_name = GET_PROGRAM_THREAD_STATUS_3()[0]
-            SET_PROGRAM_THREAD_STATUS_3(program_name,"","","STOPPED")                   
-            return True
+        if thread_id != 3:
+            if program_name.lower() == GET_PROGRAM_THREAD_STATUS_3()[0].lower():
+                stop_program_thread_3 = True
+                program_name = GET_PROGRAM_THREAD_STATUS_3()[0]
+                SET_PROGRAM_THREAD_STATUS_3(program_name,"","","STOPPED")                   
+                return True
 
-        if program_name.lower() == GET_PROGRAM_THREAD_STATUS_4()[0].lower():
-            stop_program_thread_4 = True
-            program_name = GET_PROGRAM_THREAD_STATUS_4()[0]
-            SET_PROGRAM_THREAD_STATUS_4(program_name,"","","STOPPED")                   
-            return True
+        if thread_id != 4:
+            if program_name.lower() == GET_PROGRAM_THREAD_STATUS_4()[0].lower():
+                stop_program_thread_4 = True
+                program_name = GET_PROGRAM_THREAD_STATUS_4()[0]
+                SET_PROGRAM_THREAD_STATUS_4(program_name,"","","STOPPED")                   
+                return True
 
-        if program_name.lower() == GET_PROGRAM_THREAD_STATUS_5()[0].lower():
-            stop_program_thread_5 = True
-            program_name = GET_PROGRAM_THREAD_STATUS_5()[0]
-            SET_PROGRAM_THREAD_STATUS_5(program_name,"","","STOPPED")                   
-            return True
+        if thread_id != 5:
+            if program_name.lower() == GET_PROGRAM_THREAD_STATUS_5()[0].lower():
+                stop_program_thread_5 = True
+                program_name = GET_PROGRAM_THREAD_STATUS_5()[0]
+                SET_PROGRAM_THREAD_STATUS_5(program_name,"","","STOPPED")                   
+                return True
 
-        if program_name.lower() == GET_PROGRAM_THREAD_STATUS_6()[0].lower():
-            stop_program_thread_6 = True
-            program_name = GET_PROGRAM_THREAD_STATUS_6()[0]
-            SET_PROGRAM_THREAD_STATUS_6(program_name,"","","STOPPED")                   
-            return True
+        if thread_id != 6:
+            if program_name.lower() == GET_PROGRAM_THREAD_STATUS_6()[0].lower():
+                stop_program_thread_6 = True
+                program_name = GET_PROGRAM_THREAD_STATUS_6()[0]
+                SET_PROGRAM_THREAD_STATUS_6(program_name,"","","STOPPED")                   
+                return True
+
+        if thread_id != 7:
+            if program_name.lower() == GET_PROGRAM_THREAD_STATUS_7()[0].lower():
+                stop_program_thread_7 = True
+                program_name = GET_PROGRAM_THREAD_STATUS_7()[0]
+                SET_PROGRAM_THREAD_STATUS_7(program_name,"","","STOPPED")                   
+                return True
+
+        if thread_id != 8:
+            if program_name.lower() == GET_PROGRAM_THREAD_STATUS_8()[0].lower():
+                stop_program_thread_8 = True
+                program_name = GET_PROGRAM_THREAD_STATUS_8()[0]
+                SET_PROGRAM_THREAD_STATUS_8(program_name,"","","STOPPED")                   
+                return True
+
+        if thread_id != 9:
+            if program_name.lower() == GET_PROGRAM_THREAD_STATUS_9()[0].lower():
+                stop_program_thread_9 = True
+                program_name = GET_PROGRAM_THREAD_STATUS_9()[0]
+                SET_PROGRAM_THREAD_STATUS_9(program_name,"","","STOPPED")                   
+                return True
 
     except:
         pass
 
    
-def PROGRAM_THREAD(running, thread_id, program_id):
+def PROGRAM_THREAD(thread_id, program_id):
     global stop_program_thread_1
     global stop_program_thread_2
     global stop_program_thread_3
     global stop_program_thread_4
     global stop_program_thread_5
     global stop_program_thread_6
+    global stop_program_thread_7
+    global stop_program_thread_8
+    global stop_program_thread_9
 
     try:
 
@@ -289,6 +381,28 @@ def PROGRAM_THREAD(running, thread_id, program_id):
                 WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
                 break
 
+            if thread_id == 7 and stop_program_thread_7 == True:
+                stop_program_thread_7 = False  
+                
+                SET_PROGRAM_THREAD_STATUS_7("None","","","")
+                WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
+                break
+
+            if thread_id == 8 and stop_program_thread_8 == True:
+                stop_program_thread_8 = False  
+                
+                SET_PROGRAM_THREAD_STATUS_8("None","","","")
+                WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
+                break
+
+            if thread_id == 9 and stop_program_thread_9 == True:
+                stop_program_thread_9 = False  
+                
+                SET_PROGRAM_THREAD_STATUS_9("None","","","")
+                WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
+                break            
+
+
             # program keep running
             else:
 
@@ -305,6 +419,13 @@ def PROGRAM_THREAD(running, thread_id, program_id):
                     SET_PROGRAM_THREAD_STATUS_5(program_name,line_number,lines_total,line[1])
                 if thread_id == 6:
                     SET_PROGRAM_THREAD_STATUS_6(program_name,line_number,lines_total,line[1])
+                if thread_id == 7:
+                    SET_PROGRAM_THREAD_STATUS_7(program_name,line_number,lines_total,line[1])
+                if thread_id == 8:
+                    SET_PROGRAM_THREAD_STATUS_8(program_name,line_number,lines_total,line[1])
+                if thread_id == 9:
+                    SET_PROGRAM_THREAD_STATUS_9(program_name,line_number,lines_total,line[1])
+
 
                 # line active ?
                 if line[0] == "True":
@@ -317,39 +438,118 @@ def PROGRAM_THREAD(running, thread_id, program_id):
                     if "break" in line[1]:
                             
                         line_content = line[1].split(" # ")
-                        time.sleep(int(line_content[1]))          
+
+                        second = 0
+
+                        while second != int(line_content[1].strip()):
+                            second = second + 1
+                            time.sleep(1)
+
+                            # program stopped
+                            if thread_id == 1 and stop_program_thread_1 == True:
+                                break
+                            if thread_id == 2 and stop_program_thread_2 == True:
+                                break
+                            if thread_id == 3 and stop_program_thread_3 == True:
+                                break
+                            if thread_id == 4 and stop_program_thread_4 == True:
+                                break
+                            if thread_id == 5 and stop_program_thread_5 == True:
+                                break
+                            if thread_id == 6 and stop_program_thread_6 == True:
+                                break                            
+                            if thread_id == 7 and stop_program_thread_7 == True:
+                                break       
+                            if thread_id == 8 and stop_program_thread_8 == True:
+                                break       
+                            if thread_id == 9 and stop_program_thread_9 == True:
+                                break       
 
 
                     # #####
                     # light
                     # #####
-                                
+
                     if "lighting" in line[1] and "scene" in line[1]:
-                            
+
                         line_content = line[1].split(" # ")
-                        
+
                         try:
-                            # start lighting scene
-                            if line_content[2].lower() != "turn_off":
-                                group_name        = line_content[2] 
-                                scene_name        = line_content[3]
-                                global_brightness = line_content[4]
-                                group             = GET_LIGHTING_GROUP_BY_NAME(group_name)
-                                scene             = GET_LIGHTING_SCENE_BY_NAME(scene_name)
+                            
+                            group = GET_LIGHTING_GROUP_BY_NAME(line_content[2].strip())
+                            scene = GET_LIGHTING_SCENE_BY_NAME(line_content[3].strip())
 
-                                SET_LIGHTING_GROUP_SCENE(group.id, scene.id, int(global_brightness))
-                                CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, global_brightness, 2, 10)
+                            # group existing ?
+                            if group != None:
 
+                                # scene existing ?
+                                if scene != None:
+
+                                    try:
+                                        brightness = int(line_content[4].strip())
+                                    except:
+                                        brightness = 100           
+                                    
+                                    SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
+                                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+
+                                else:
+                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Scene - " + line_content[2] + " - not founded")   
+
+                            else:
+                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + line_content[3] + " - not founded")   
+         
+                        except Exception as e:
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
+
+
+                    if "lighting" in line[1] and "turn_off" in line[1]:
+
+                        line_content = line[1].split(" # ")
+
+                        try:
+                            
                             # turn off group
-                            elif line_content[2].lower() == "turn_off" and line_content[3].lower() == "all":
-                                group      = GET_LIGHTING_GROUP_BY_NAME(group_name)
-                                scene_name = group.current_scene
-                                scene      = GET_LIGHTING_SCENE_BY_NAME(scene_name)
-                                                
-                                SET_LIGHTING_GROUP_TURN_OFF(group.id)
-                                CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)   
+                            if line_content[2].lower() == "group":
 
-                                            
+                                # get input group names and lower the letters
+                                try:
+                                    list_groups = line_content[3].split(",")
+                                except:
+                                    list_groups = [line_content[3]]
+
+                                for input_group_name in list_groups:
+                                    input_group_name = input_group_name.strip()
+
+                                    group_founded = False
+
+                                # get exist group names
+                                for group in GET_ALL_LIGHTING_GROUPS():
+
+                                    if input_group_name.lower() == group.name.lower():
+                                        group_founded = True
+                                        scene_name    = group.current_scene
+                                        scene         = GET_LIGHTING_SCENE_BY_NAME(scene_name)
+
+                                        SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)
+
+                                # group not founded
+                                if group_founded == False:
+                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + input_group_name + " - not founded")   
+
+
+                            # turn off all
+                            if line_content[2].lower() == "all":
+
+                                for group in GET_ALL_LIGHTING_GROUPS():
+                                    scene_name = group.current_scene
+                                    scene      = GET_LIGHTING_SCENE_BY_NAME(scene_name)
+
+                                    SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)
+
+
                         except Exception as e:
                             WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
 
@@ -400,8 +600,7 @@ def PROGRAM_THREAD(running, thread_id, program_id):
 
                                 else:
                                     WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Device - " + device_name.strip() + " - not founded")     
-
-                            
+             
                         except Exception as e:
                             WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
 
@@ -415,8 +614,7 @@ def PROGRAM_THREAD(running, thread_id, program_id):
                         line_content = line[1].split(" # ")
 
                         try:
-                            job_number = line_content[1]    
-                            REQUEST_SENSORDATA(job_number)              
+                            REQUEST_SENSORDATA(line_content[1].strip())              
 
                         except Exception as e:
                             WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
@@ -430,7 +628,7 @@ def PROGRAM_THREAD(running, thread_id, program_id):
                         
                         line_content = line[1].split(" # ")
 
-                        program = GET_PROGRAM_BY_NAME(line_content[1])
+                        program = GET_PROGRAM_BY_NAME(line_content[1].strip())
 
                         if program != None:
 
@@ -438,7 +636,7 @@ def PROGRAM_THREAD(running, thread_id, program_id):
                                 START_PROGRAM_THREAD(program.id)
                                 
                             elif line_content[2].lower() == "stop":
-                                STOP_PROGRAM_THREAD_BY_NAME(program.name)
+                                STOP_PROGRAM_THREAD_BY_NAME(program.name, thread_id)
 
                             else:
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | Invalid command")
@@ -610,6 +808,21 @@ def PROGRAM_THREAD(running, thread_id, program_id):
             SET_PROGRAM_THREAD_STATUS_6("None","","","")   
             time.sleep(10)
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")
+
+        if thread_id == 7:
+            SET_PROGRAM_THREAD_STATUS_7("None","","","")   
+            time.sleep(10)
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")
+
+        if thread_id == 8:
+            SET_PROGRAM_THREAD_STATUS_8("None","","","")   
+            time.sleep(10)
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")
+
+        if thread_id == 9:
+            SET_PROGRAM_THREAD_STATUS_9("None","","","")   
+            time.sleep(10)
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")            
 
 
     except Exception as e:

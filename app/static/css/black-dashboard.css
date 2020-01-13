@@ -17792,7 +17792,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card-tasks-programs {
-  min-height: 150px;
+  min-height: 80px;
 }
 
 .card-tasks-music {
@@ -17800,11 +17800,11 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card-tasks-issues {
-  height: 328px;
+  height: 259px;
 }
 
 .card-tasks .table-full-width {
-  max-height: 305px;
+  max-height: 235px;
   position: relative;
 }
 

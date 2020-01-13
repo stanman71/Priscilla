@@ -889,7 +889,7 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
             try:
                 # change battery_level scale to max_value = 100
                 data          = json.loads(last_values) 
-                battery_value = int(int(data['battery']) * 6.7) 
+                battery_value = int(int(data['battery']) * 5) 
 
                 last_values_string = last_values_string_modified + "battery: " + str(battery_value)
 
@@ -1151,6 +1151,7 @@ def GET_LIGHTING_GROUP_BY_ID(id):
 
 
 def GET_LIGHTING_GROUP_BY_NAME(name):
+
     for group in Lighting_Groups.query.all():
         
         if group.name.lower() == name.lower():
