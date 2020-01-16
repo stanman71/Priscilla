@@ -1,6 +1,6 @@
-# LED_STRIP_CONTROLLER
+# Sensor Module
 
-This project controls customized led stripes.
+This project provide customized sensor plattform.
 
    * <a href="#1 Hardware">1 Hardware</a>
       * <a href="#1.1 LED Strip">1.1 LED Strip</a>
@@ -15,48 +15,20 @@ This project controls customized led stripes.
 
 ### 1 Hardware
 
-<a name="1.1 LED Strip"></a>
+<a name="1.1 Sensors"></a>
 
-https://www.youtube.com/watch?v=QnvircC22hU
-</br>
-http://www.thesmarthomehookup.com/the-complete-guide-to-selecting-individually-addressable-led-strips/
-</br>
-</br>
+- Motion Sensor (AM312)
 
-#### 1.1 LED Strip
+       >>> https://www.roboter-bausatz.de/2328/mini-ir-bewegungssensor
 
-https://de.aliexpress.com/item/32961181562.html?spm=a2g0x.12010612.8148356.2.17c34641klhRl2
-</br>
-https://www.amazon.de/UpgradeWS2812B-Individuell-Adressierbar-Wasserdicht-5M-WS2815-30-NP-BK-12V/dp/B07KXKF62H/ref=sr_1_4?keywords=VISDOLL&qid=1572691327&s=lighting&search-type=ss&sr=1-4
-</br>
-</br>
-
-- specifications
-
-       >>> WS2815 Chip
-       >>> 12V
-       >>> backup function (all LEDs behind a broken LED still addressable)
-
-</br>
 
 <a name="1.2 Power Source"></a>
 
 #### 1.2 Power Source
 
-- 60 mA per LED (white)
+- 12V
 
-       >>> 30 LED / Meter ~ 5  W
-       >>> 60 LED / Meter ~ 10 W     
-
-- less power results in lower max brightness
-
-- less leds (> 150)
-
-       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01HRR96ZI/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
-
-- many leds (< 150)
-
-       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
+       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01GRYFNAE/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
 
 </br>
 
@@ -75,10 +47,6 @@ https://www.amazon.de/UpgradeWS2812B-Individuell-Adressierbar-Wasserdicht-5M-WS2
 - cooler TO-220
 
        >>> https://www.ebay.de/itm/10x-ALUMINIUMKUHLER-Kuhlkorper-Sets-fur-to-220-Transistor-20x15x10mm-APFBB-C-W/163945663799
-
-- capacitor 2200µF
-
-       >>> https://www.ebay.de/itm/Elko-Panasonic-FR-2200uF-35V-Kondensator-105-C-Low-ESR-same-as-FM-854439/312606746499
 
 - capacitor 10µF
 
@@ -100,10 +68,6 @@ https://www.amazon.de/UpgradeWS2812B-Individuell-Adressierbar-Wasserdicht-5M-WS2
 
        >>> https://www.berrybase.de/bauelemente/schalter-taster/mikroschalter-taster/kurzhubtaster-vertikale-printmontage-6x6mm-h-5-0mm?c=86
 
-- relais modul
-
-       >>> https://www.ebay.de/itm/1-Kanal-Relais-5V-230V-Raspberry-Pi-Modul-Channel-Relay-Arduino/252713915632?hash=item3ad6ec54f0:g:7q8AAOSwXbFb33f7
-
 - internal cables and connectors
 
        >>> https://www.berrybase.de/bauelemente/steckverbinder/rastersteckverbinder-2-50mm/kabel-mit-jst-xh-2.54mm-steckverbinder-awg26-20cm
@@ -116,15 +80,11 @@ https://www.amazon.de/UpgradeWS2812B-Individuell-Adressierbar-Wasserdicht-5M-WS2
 
        >>> https://www.berrybase.de/bauelemente/steckverbinder/stift-buchsenleisten-jumper/buchsenleiste-1x-3-polig-rm-2-54-h-8-4-gerade?c=114
 
-- LED strip connector
-
-       >>> https://www.ebay.de/itm/2-6-polig-M13-Steckverbinder-Paare-Kupplungen-Einbaustecker-5A-Metall/323694504483?hash=item4b5db22a23:m:m2bkEBP3zzAsnkZ22qxPWCw
-
 - power connector
 
        >>> https://www.berrybase.de/bauelemente/steckverbinder/stromversorgungs-steckverbinder/dc-stecker-hohlstecker/dc-einbaubuchse-f-252-r-hohlstecker-5-5x2-5mm-metallausf-252-hrung-l-246-tanschluss?c=115
 
 - case
 
-       >>> https://www.tme.eu/de/details/km-31no_j/universal-gehause/maszczyk/km-31no-gy/
-       >>> https://www.tme.eu/de/details/km-31no_b/universal-gehause/maszczyk/km-31no-bk/
+       >>> https://www.tme.eu/de/details/abs-54p/universal-gehause/maszczyk/km-54p-gy/
+       >>> https://www.tme.eu/de/details/km-54p/universal-gehause/maszczyk/km-54p-bk/

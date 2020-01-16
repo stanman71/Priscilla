@@ -4,8 +4,7 @@
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h>          
 #include <ArduinoJson.h>     
-#include <PubSubClient.h>   
-#include <FastLED.h>  
+#include <PubSubClient.h>     
 
 // MQTT
 char mqtt_server[40];
@@ -20,6 +19,12 @@ PubSubClient client(espClient);
 //wifi manager
 bool shouldSaveConfig = false;   
 
+// OUTPUT
+int CHANNEL_1 = 5;           // D1 
+int CHANNEL_2 = 4;           // D2 
+int CHANNEL_3 = 0;           // D3 
+int CHANNEL_4 = 2;           // D7 
+
 // RESET 
 int PIN_RESET_SETTING = 16;  // D0
 
@@ -27,22 +32,11 @@ int PIN_RESET_SETTING = 16;  // D0
 int PIN_LED_GREEN = 14;      // D5
 int PIN_LED_RED   = 12;      // D6
 
-// RELAIS_CONTROL
-int RELAIS_CONTROL = 4;      // D2
+String channel_1_state = "DISABLED";    // change to "OFF" to activate
+String channel_2_state = "DISABLED";    // change to "OFF" to activate
+String channel_3_state = "DISABLED";    // change to "OFF" to activate
+String channel_4_state = "DISABLED";    // change to "OFF" to activate
 
-// FASTLED
-#define DATA_PIN 5           // D1
-#define NUM_LEDS 300
-
-CRGB leds[NUM_LEDS];
-
-String state   = "OFF";
-int brightness = 0;
-int red        = 0;
-int green      = 0;
-int blue       = 0;
-
-boolean state_changed = true;
 
 // ############
 // split string
@@ -255,15 +249,13 @@ void reconnect() {
 
         if (client.connect(clientId.c_str(), mqtt_username, mqtt_password)) { 
   
-            default_mqtt_message();
+            send_default_mqtt_message();
 
             client.subscribe("smarthome/mqtt/#");
             Serial.println("MQTT Connected...");
 
             digitalWrite(BUILTIN_LED, LOW);       
-            digitalWrite(PIN_LED_RED, LOW);
-            digitalWrite(PIN_LED_GREEN, HIGH);            
-
+          
         } else {        
             Serial.print("failed, rc=");
             Serial.print(client.state());
@@ -273,39 +265,6 @@ void reconnect() {
     }
 }
 
-
-// ####################
-// mqtt default message
-// ####################
-
-void default_mqtt_message() {
-
-    // create channel  
-    String payload_path = "smarthome/mqtt/" + String(ieeeAddr);      
-    char attributes[100];
-    payload_path.toCharArray( path, 100 );    
- 
-    // create msg as json
-    DynamicJsonDocument msg(128);
-
-    msg["state"]      = state;
-    msg["brightness"] = brightness;
-    msg["color"]["r"] = red;
-    msg["color"]["g"] = green;
-    msg["color"]["b"] = blue;
- 
-    // convert msg to char
-    char msg_Char[128];
-    serializeJson(msg, msg_Char);
-
-    Serial.print("Channel: ");
-    Serial.println(path);
-    Serial.print("Publish message: ");
-    Serial.println(msg_Char);
-    Serial.println();
-    
-    client.publish(path, msg_Char);    
-}
 
 // #############
 // MQTT messages
@@ -330,18 +289,48 @@ void callback (char* topic, byte* payload, unsigned int length) {
         DynamicJsonDocument msg(512);
         
         msg["ieeeAddr"]    = ieeeAddr;
-        msg["model"]       = "led_controller 1.2";
-        msg["device_type"] = "led_rgb";
-        msg["description"] = "MQTT Client LED Strip";
+        msg["model"]       = "sensor_module 1.0";
+        msg["device_type"] = "sensor_module";
+        msg["description"] = "MQTT Sensor_Module";
     
-        JsonArray data_inputs = msg.createNestedArray("inputs");
-        data_inputs.add("");   
-
+        JsonArray data_inputs   = msg.createNestedArray("inputs");
         JsonArray data_commands = msg.createNestedArray("commands");
-        data_commands.add("");     
+       
+        if (channel_1_state != "DISABLED"){
+            data_commands.add("Channal_1_ON");
+            data_commands.add("Channal_1_OFF");       
+        }
+        if (channel_2_state != "DISABLED"){         
+            data_commands.add("Channal_2_ON");
+            data_commands.add("Channal_2_OFF");     
+        }
+        if (channel_3_state != "DISABLED"){            
+            data_commands.add("Channal_3_ON");
+            data_commands.add("Channal_3_OFF");     
+        }
+        if (channel_4_state != "DISABLED"){        
+            data_commands.add("Channal_4_ON");
+            data_commands.add("Channal_4_OFF");     
+        }
 
         JsonArray data_commands_json = msg.createNestedArray("commands_json");
-        data_commands_json.add("");     
+
+        if (channel_1_state != "DISABLED"){
+            data_commands.add("{'channel_1:'ON'}");     
+            data_commands.add("{'channel_1:'OFF'}");    
+        }
+        if (channel_2_state != "DISABLED"){    
+            data_commands.add("{'channel_2:'ON'}");     
+            data_commands.add("{'channel_2:'OFF'}");    
+        }
+        if (channel_3_state != "DISABLED"){    
+            data_commands.add("{'channel_3:'ON'}");     
+            data_commands.add("{'channel_3:'OFF'}");    
+        }
+        if (channel_4_state != "DISABLED"){                
+            data_commands.add("{'channel_4:'ON'}");     
+            data_commands.add("{'CHANNEL_4:'OFF'}");    
+        }        
 
         // convert msg to char
         char msg_Char[512];
@@ -358,9 +347,8 @@ void callback (char* topic, byte* payload, unsigned int length) {
 
     // get 
     if (check_ieeeAddr == ieeeAddr and check_command == "get"){
-        default_mqtt_message();    
+        send_default_mqtt_message();    
     }    
-
 
     // set 
     if (check_ieeeAddr == ieeeAddr and check_command == "set"){
@@ -378,57 +366,146 @@ void callback (char* topic, byte* payload, unsigned int length) {
         // convert msg to json
         DynamicJsonDocument msg_json(128);
         deserializeJson(msg_json, msg);
+    
+        // control channel 1
 
-        String temp_state = msg_json["state"];
-        
-        state      = temp_state;    
-        brightness = msg_json["brightness"];
-        red        = msg_json["color"]["r"];
-        green      = msg_json["color"]["g"];
-        blue       = msg_json["color"]["b"];
+        if (channel_1_state != "DISABLED"){        
+            String channel_1_setting = msg_json["channel_1"];
 
-        state_changed = true;
+            if (channel_1_setting == "ON") {
 
-        if (state == "ON"){   
+                digitalWrite(CHANNEL_1, HIGH);
+                channel_1_state = "ON";
 
-            Serial.print("State: ");
-            Serial.print(state); 
-            Serial.print(" / Brightmess: ");
-            Serial.print(brightness);            
-            Serial.print(" / Red: ");
-            Serial.print(red);            
-            Serial.print(" / Green: ");
-            Serial.print(green);            
-            Serial.print(" / Blue: "); 
-            Serial.println(blue);             
+                send_default_mqtt_message(); 
+                Serial.println("CHANNEL_1_ON");
+            }
 
-        } else {
-                   
-            brightness = 0;
-            red        = 0;
-            green      = 0;
-            blue       = 0;
+            if (channel_1_setting == "OFF") {
 
-            Serial.print("State: ");
-            Serial.print(state); 
-            Serial.print(" / Brightmess: ");
-            Serial.print(brightness);            
-            Serial.print(" / Red: ");
-            Serial.print(red);            
-            Serial.print(" / Green: ");
-            Serial.print(green);            
-            Serial.print(" / Blue: "); 
-            Serial.println(blue);       
-         
-        }       
+                digitalWrite(CHANNEL_1, LOW);
+                channel_1_state = "OFF";
 
-        while (!client.connected()) {
-            reconnect();
+                send_default_mqtt_message(); 
+                Serial.println("CHANNEL_1_OFF");
+            }
         }
-        
-        default_mqtt_message();                          
+
+        // control channel 2
+
+        if (channel_2_state != "DISABLED"){        
+            String channel_2_setting = msg_json["channel_2"];
+
+            if (channel_2_setting == "ON") {
+
+                digitalWrite(CHANNEL_2, HIGH);
+                channel_2_state = "ON";
+
+                send_default_mqtt_message(); 
+                Serial.println("CHANNEL_2_ON");
+            }
+
+            if (channel_2_setting == "OFF") {
+
+                digitalWrite(CHANNEL_2, LOW);
+                channel_2_state = "OFF";
+
+                send_default_mqtt_message(); 
+                Serial.println("CHANNEL_1_OFF");
+            }
+        }
+
+        // control channel 3
+
+        if (channel_3_state != "DISABLED"){        
+            String channel_3_setting = msg_json["channel_3"];
+
+            if (channel_3_setting == "ON") {
+
+                digitalWrite(CHANNEL_3, HIGH);
+                channel_3_state = "ON";
+
+                send_default_mqtt_message(); 
+                Serial.println("CHANNEL_3_ON");
+            }
+
+            if (channel_3_setting == "OFF") {
+
+                digitalWrite(CHANNEL_3, LOW);
+                channel_3_state = "OFF";
+
+                send_default_mqtt_message(); 
+                Serial.println("CHANNEL_3_OFF");
+            }
+        }
+
+        // control channel 4
+
+        if (channel_4_state != "DISABLED"){        
+            String channel_4_setting = msg_json["channel_4"];
+
+            if (channel_4_setting == "ON") {
+
+                digitalWrite(CHANNEL_4, HIGH);
+                channel_4_state = "ON";
+
+                send_default_mqtt_message(); 
+                Serial.println("CHANNEL_4_ON");
+            }
+
+            if (channel_4_setting == "OFF") {
+
+                digitalWrite(CHANNEL_4, LOW);
+                channel_4_state = "OFF";
+
+                send_default_mqtt_message(); 
+                Serial.println("CHANNEL_4_OFF");
+            }
+        }
     }     
 }
+
+
+// ####################
+// mqtt default message
+// ####################
+
+void send_default_mqtt_message() {
+
+    // create channel  
+    String payload_path = "smarthome/mqtt/" + String(ieeeAddr);      
+    char attributes[100];
+    payload_path.toCharArray( path, 100 );    
+ 
+    // create msg as json
+    DynamicJsonDocument msg(256);
+
+    if (channel_1_state != "DISABLED"){      
+        msg["channel_1"] = channel_1_state;
+    }
+    if (channel_2_state != "DISABLED"){          
+        msg["channel_2"] = channel_2_state;
+    }
+    if (channel_3_state != "DISABLED"){          
+        msg["channel_3"] = channel_3_state;
+    }
+    if (channel_4_state != "DISABLED"){        
+        msg["channel_4"] = channel_4_state;
+    }
+
+    // convert msg to char
+    char msg_Char[256];
+    serializeJson(msg, msg_Char);
+
+    Serial.print("Channel: ");
+    Serial.println(path);
+    Serial.print("Publish message: ");
+    Serial.println(msg_Char);
+    Serial.println();
+    
+    client.publish(path, msg_Char);    
+}
+
 
 // #####
 // setup
@@ -438,18 +515,25 @@ void setup() {
 
     Serial.begin(115200);
     Serial.println();
-        
-    pinMode(RELAIS_CONTROL, OUTPUT);     
+
     pinMode(PIN_LED_RED,OUTPUT);
-    pinMode(PIN_LED_GREEN,OUTPUT);  
-    pinMode(BUILTIN_LED, OUTPUT);     
+    pinMode(PIN_LED_GREEN,OUTPUT);
+    pinMode(BUILTIN_LED, OUTPUT);   
     pinMode(PIN_RESET_SETTING,INPUT);
 
     digitalWrite(BUILTIN_LED, HIGH); 
-    digitalWrite(RELAIS_CONTROL, LOW);     
-
     digitalWrite(PIN_LED_RED, HIGH);
     digitalWrite(PIN_LED_GREEN, LOW);
+
+    pinMode(CHANNEL_1, OUTPUT); 
+    pinMode(CHANNEL_2, OUTPUT); 
+    pinMode(CHANNEL_3, OUTPUT); 
+    pinMode(CHANNEL_4, OUTPUT); 
+
+    digitalWrite(CHANNEL_1, LOW);
+    digitalWrite(CHANNEL_2, LOW);
+    digitalWrite(CHANNEL_3, LOW);
+    digitalWrite(CHANNEL_4, LOW);    
 
     Serial.println(digitalRead(PIN_RESET_SETTING));    
 
@@ -466,8 +550,6 @@ void setup() {
     
     client.setServer(mqtt_server, 1884);
     client.setCallback(callback); 
-
-    FastLED.addLeds<WS2813, DATA_PIN, RGB>(leds, NUM_LEDS);
 }
 
 
@@ -480,24 +562,7 @@ void loop() {
     if (!client.connected()) {
         reconnect();
     }
-
-    if (state_changed == true){   
-
-        if (brightness != 0){   
-            digitalWrite(RELAIS_CONTROL, HIGH); 
-
-            delay(250);
-          
-            FastLED.clear();
-            fill_solid( leds, NUM_LEDS, CRGB(green, red, blue));
-            FastLED.setBrightness(brightness);
-            FastLED.show();
-
-        } else {
-            digitalWrite(RELAIS_CONTROL, LOW);  
-        }
-    }
-
+    
     delay(100);
     client.loop();
 }

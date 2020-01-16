@@ -20,15 +20,31 @@ PubSubClient client(espClient);
 bool shouldSaveConfig = false;   
 
 // INPUT
-int PIN_WATERTANK = 13;     // D7
-
-// OUTPUT 
-int PIN_PUMP      = 5;      // D1
-int PIN_LED_GREEN = 14;     // D5
-int PIN_LED_RED   = 12;     // D6
+int SENSOR_1 = 5;            // D1 
+int SENSOR_2 = 4;            // D2 
+int SENSOR_3 = 0;            // D3 
+int SENSOR_4 = 13;           // D7 
+int SENSOR_5 = A0;           // A0 
 
 // RESET 
-int PIN_RESET_SETTING = 4;  // D2
+int PIN_RESET_SETTING = 16;  // D0
+
+// LED
+int PIN_LED_GREEN = 14;      // D5
+int PIN_LED_RED   = 12;      // D6
+
+String sensor_1_state = "ENABLED";     // change to "ENABLED" or "READ_ONLY" to activate
+String sensor_2_state = "DISABLED";    // change to "ENABLED" or "READ_ONLY" to activate
+String sensor_3_state = "DISABLED";    // change to "ENABLED" or "READ_ONLY" to activate
+String sensor_4_state = "DISABLED";    // change to "ENABLED" or "READ_ONLY" to activate
+String sensor_5_state = "DISABLED";    // change to "READ_ONLY" to activate
+
+int sensor_1_last_value = 0;
+int sensor_2_last_value = 0;
+int sensor_3_last_value = 0;
+int sensor_4_last_value = 0;
+int sensor_5_last_value = 0;
+
 
 // ############
 // split string
@@ -241,7 +257,7 @@ void reconnect() {
 
         if (client.connect(clientId.c_str(), mqtt_username, mqtt_password)) { 
   
-            send_default_mqtt_message(0);
+            send_default_mqtt_message();
 
             client.subscribe("smarthome/mqtt/#");
             Serial.println("MQTT Connected...");
@@ -281,28 +297,30 @@ void callback (char* topic, byte* payload, unsigned int length) {
         DynamicJsonDocument msg(512);
         
         msg["ieeeAddr"]    = ieeeAddr;
-        msg["model"]       = "watering_controller 1.3";
-        msg["device_type"] = "watering_controller";
-        msg["description"] = "MQTT Watering_Controller";
+        msg["model"]       = "sensor_module 1.0";
+        msg["device_type"] = "sensor_module";
+        msg["description"] = "MQTT Sensor_Module";
     
-        JsonArray data_inputs = msg.createNestedArray("inputs");
-        data_inputs.add("pump");
-        data_inputs.add("pump_duration");        
-        data_inputs.add("sensor_watertank");        
+        JsonArray data_inputs   = msg.createNestedArray("inputs");
 
-        JsonArray data_commands = msg.createNestedArray("commands");
-        data_commands.add("30");  
-        data_commands.add("60");  
-        data_commands.add("90");  
-        data_commands.add("120");                                          
-        data_commands.add("OFF");   
+        if (sensor_1_state != "DISABLED"){
+            data_inputs.add("sensor_1");   
+        }
+        if (sensor_2_state != "DISABLED"){  
+            data_inputs.add("sensor_2");   
+        }
+        if (sensor_3_state != "DISABLED"){    
+            data_inputs.add("sensor_3");  
+        }
+        if (sensor_4_state != "DISABLED"){   
+            data_inputs.add("sensor_4");
+        }
+        if (sensor_5_state != "DISABLED"){
+            data_inputs.add("sensor_5");
+        }   
 
-        JsonArray data_commands = msg.createNestedArray("commands_json");
-        data_commands.add("{'pump':'ON','pump_duration':30}");     
-        data_commands.add("{'pump':'ON','pump_duration':60}");       
-        data_commands.add("{'pump':'ON','pump_duration':90}");     
-        data_commands.add("{'pump':'ON','pump_duration':120}");                            
-        data_commands.add("{'pump':'OFF'}");   
+        JsonArray data_commands      = msg.createNestedArray("commands");
+        JsonArray data_commands_json = msg.createNestedArray("commands_json");
 
         // convert msg to char
         char msg_Char[512];
@@ -319,81 +337,8 @@ void callback (char* topic, byte* payload, unsigned int length) {
 
     // get 
     if (check_ieeeAddr == ieeeAddr and check_command == "get"){
-        send_default_mqtt_message(0);    
-    }    
-
-
-    // set 
-    if (check_ieeeAddr == ieeeAddr and check_command == "set"){
-
-        char msg[length+1];
-  
-        for (int i = 0; i < length; i++) {
-            msg[i] = (char)payload[i];
-        }
-        msg[length] = '\0';
-        
-        Serial.print("msg: ");
-        Serial.println(msg);
-
-        // convert msg to json
-        DynamicJsonDocument msg_json(128);
-        deserializeJson(msg_json, msg);
-    
-        String pump_setting  = msg_json["pump"];
-        int pump_duration    = msg_json["pump_duration"];
-
-        // control pump automatically  
-        if (pump_setting == "ON" and pump_duration != 0) {
-
-            digitalWrite(PIN_PUMP, HIGH);
-
-            send_default_mqtt_message(pump_duration);
-            
-            Serial.println("PUMP_ON");
-
-            delay(pump_duration * 1000);
-            
-            // #########
-            // stop pump
-            // #########
-            
-            digitalWrite(PIN_PUMP, LOW);
-     
-            while (!client.connected()) {
-                reconnect();
-            }
-            
-            send_default_mqtt_message(0);
-            Serial.println("PUMP_OFF");                               
-        }
-
-        // start pump manually    
-        if (pump_setting == "ON" and pump_duration == 0) {
-
-            digitalWrite(PIN_PUMP, HIGH);
-     
-            while (!client.connected()) {
-                reconnect();
-            }
-            
-            send_default_mqtt_message(0);
-            Serial.println("PUMP_ON");                                
-        }
-
-        // stop pump manually    
-        if (pump_setting == "OFF") {
-
-            digitalWrite(PIN_PUMP, LOW);
-     
-            while (!client.connected()) {
-                reconnect();
-            }
-            
-            send_default_mqtt_message(0);
-            Serial.println("PUMP_OFF");                                
-        }
-    }     
+        send_default_mqtt_message();    
+    }      
 }
 
 
@@ -401,7 +346,7 @@ void callback (char* topic, byte* payload, unsigned int length) {
 // mqtt default message
 // ####################
 
-void send_default_mqtt_message(int pump_duration_value) {
+void send_default_mqtt_message() {
 
     // create channel  
     String payload_path = "smarthome/mqtt/" + String(ieeeAddr);      
@@ -411,22 +356,21 @@ void send_default_mqtt_message(int pump_duration_value) {
     // create msg as json
     DynamicJsonDocument msg(128);
 
-    // get pump state
-    if (digitalRead(PIN_PUMP) == 1) { 
-      
-        msg["pump"] = "ON";
-        
-    } else { 
-      
-        msg["pump"] = "OFF";
+    if (sensor_1_state != "DISABLED"){
+        msg["sensor_1"] = digitalRead(SENSOR_1);
     }
-
-    msg["pump_duration"] = pump_duration_value;
-
-    // get sensor data
-    int sensor_watertank = digitalRead(PIN_WATERTANK);
-
-    msg["sensor_watertank"] = sensor_watertank;
+    if (sensor_2_state != "DISABLED"){
+        msg["sensor_2"] = digitalRead(SENSOR_2);
+    }
+    if (sensor_3_state != "DISABLED"){
+        msg["sensor_3"] = digitalRead(SENSOR_3);
+    }
+    if (sensor_4_state != "DISABLED"){    
+        msg["sensor_4"] = digitalRead(SENSOR_4);
+    }
+    if (sensor_5_state != "DISABLED"){    
+        msg["sensor_5"] = analogRead(SENSOR_5);
+    }
 
     // convert msg to char
     char msg_Char[128];
@@ -450,19 +394,21 @@ void setup() {
 
     Serial.begin(115200);
     Serial.println();
-        
-    pinMode(PIN_PUMP,OUTPUT);
+
     pinMode(PIN_LED_RED,OUTPUT);
     pinMode(PIN_LED_GREEN,OUTPUT);
-    pinMode(BUILTIN_LED, OUTPUT); 
-    pinMode(PIN_WATERTANK,INPUT);       
+    pinMode(BUILTIN_LED, OUTPUT);   
     pinMode(PIN_RESET_SETTING,INPUT);
 
     digitalWrite(BUILTIN_LED, HIGH); 
-    digitalWrite(PIN_PUMP, LOW); 
-
     digitalWrite(PIN_LED_RED, HIGH);
     digitalWrite(PIN_LED_GREEN, LOW);
+
+    pinMode(SENSOR_1, INPUT); 
+    pinMode(SENSOR_2, INPUT); 
+    pinMode(SENSOR_3, INPUT); 
+    pinMode(SENSOR_4, INPUT); 
+    pinMode(SENSOR_5, INPUT); 
 
     Serial.println(digitalRead(PIN_RESET_SETTING));    
 
@@ -491,18 +437,34 @@ void loop() {
     if (!client.connected()) {
         reconnect();
     }
-    
-    int sensor_watertank = digitalRead(PIN_WATERTANK);
 
-    if (sensor_watertank == 0) {
-      digitalWrite(PIN_LED_RED, HIGH);
-      digitalWrite(PIN_LED_GREEN, HIGH);
+    if (sensor_1_state == "ENABLED"){
+        if (sensor_1_last_value != digitalRead(SENSOR_1)){
+            sensor_1_last_value = digitalRead(SENSOR_1);
+            send_default_mqtt_message();
+        }
     }
 
-    if (sensor_watertank == 1) {
-      digitalWrite(PIN_LED_RED, LOW);
-      digitalWrite(PIN_LED_GREEN, HIGH);
-    }   
+    if (sensor_2_state == "ENABLED"){
+        if (sensor_2_last_value != digitalRead(SENSOR_2)){
+            sensor_2_last_value = digitalRead(SENSOR_2);
+            send_default_mqtt_message();
+        }
+    }
+
+    if (sensor_3_state == "ENABLED"){
+        if (sensor_3_last_value != digitalRead(SENSOR_3)){
+            sensor_3_last_value = digitalRead(SENSOR_3);
+            send_default_mqtt_message();
+        }
+    }
+
+    if (sensor_4_state == "ENABLED"){
+        if (sensor_4_last_value != digitalRead(SENSOR_4)){
+            sensor_4_last_value = digitalRead(SENSOR_4);
+            send_default_mqtt_message();
+        }
+    }
 
     delay(100);
     client.loop();
