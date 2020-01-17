@@ -1,9 +1,9 @@
-# Client WATERING_CONTROLLER
+# Relais Module
 
-This project controls the watering system.
+This project provide customized relais plattform.
 
    * <a href="#1 Hardware">1 Hardware</a>
-      * <a href="#1.1 Pump">1.1 Pump</a>
+      * <a href="#1.1 Relais">1.1 Relais</a>
       * <a href="#1.2 Power Source">1.2 Power Source</a>
       * <a href="#1.3 Controller">1.3 Controller</a>
 
@@ -15,18 +15,18 @@ This project controls the watering system.
 
 ### 1 Hardware
 
-<a name="1.1 Pump"></a>
+<a name="1.1 Relais"></a>
 
-#### 1.1 Pump
+#### 1.1 Relais
 
 - specifications
 
-       >>> 5V
-       >>> USB-A connector
+       >>> 3V or 5V
+       >>> 1 - 4 channels
 
 - example
 
-       >>> https://www.ebay.de/itm/Ultra-quiet-Mini-DC5V-120L-H-Kuhl-Burstenlos-Motor-Wasserpumpe-Tauchpumpe-Billig/273837357212?hash=item3fc1fa789c:g:Z1wAAOSw6jJcHJ8I
+       >>> https://www.ebay.de/itm/1-2-4-8-Kanal-5-12V-Relais-Modul-mit-Optokoppler-fur-Arduino-High-Low-Trigger/133000810319
 
 </br>
 
@@ -81,10 +81,6 @@ This project controls the watering system.
 
        >>> https://www.berrybase.de/bauelemente/schalter-taster/mikroschalter-taster/kurzhubtaster-vertikale-printmontage-6x6mm-h-5-0mm?c=86
 
-- transistor TIP122
-
-       >>> https://www.berrybase.de/bauelemente/aktive-bauelemente/transistoren/transistoren-tip../tip122-npn-darlington-transistor-100v-8a-to-220
-
 - internal cables and connectors
 
        >>> https://www.berrybase.de/bauelemente/steckverbinder/rastersteckverbinder-2-50mm/kabel-mit-jst-xh-2.54mm-steckverbinder-awg26-20cm
@@ -101,7 +97,12 @@ This project controls the watering system.
 
        >>> https://www.berrybase.de/bauelemente/steckverbinder/stromversorgungs-steckverbinder/dc-stecker-hohlstecker/dc-einbaubuchse-f-252-r-hohlstecker-5-5x2-5mm-metallausf-252-hrung-l-246-tanschluss?c=115
 
-- case
+- case (1 channel relais)
+
+       >>> https://www.tme.eu/de/details/abs-54p/universal-gehause/maszczyk/km-54p-gy/
+       >>> https://www.tme.eu/de/details/km-54p/universal-gehause/maszczyk/km-54p-bk/
+
+- case (2 - 4 channel relais)
 
        >>> https://www.tme.eu/de/details/km-31no_j/universal-gehause/maszczyk/km-31no-gy/
        >>> https://www.tme.eu/de/details/km-31no_b/universal-gehause/maszczyk/km-31no-bk/

@@ -26,7 +26,12 @@ This project provide customized sensor plattform.
 
 #### 1.2 Power Source
 
-- 12V
+- specifications
+
+       >>> 12V
+       >>> 5,5x2,5 connector
+
+- example
 
        >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01GRYFNAE/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
 

@@ -1,11 +1,12 @@
-# LED_STRIP_CONTROLLER
+# Engine Module
 
-This project controls customized led stripes.
+This project provide customized engine plattform.
 
    * <a href="#1 Hardware">1 Hardware</a>
-      * <a href="#1.1 LED Strip">1.1 LED Strip</a>
-      * <a href="#1.2 Power Source">1.2 Power Source</a>
-      * <a href="#1.3 Controller">1.3 Controller</a>
+      * <a href="#1.1 Stepper Engine">1.1 Stepper Engine</a>
+      * <a href="#1.2 Servos">1.2 Servos</a>      
+      * <a href="#1.3 Power Source">1.3 Power Source</a>
+      * <a href="#1.4 Controller">1.4 Controller</a>
 
 </br>
 ------------
@@ -15,59 +16,60 @@ This project controls customized led stripes.
 
 ### 1 Hardware
 
-<a name="1.1 LED Strip"></a>
+<a name="1.1 Stepper Engine"></a>
 
-https://www.youtube.com/watch?v=QnvircC22hU
+#### 1.1 Stepper Engine
+
+https://www.schmalzhaus.com/EasyDriver/
 </br>
-http://www.thesmarthomehookup.com/the-complete-guide-to-selecting-individually-addressable-led-strips/
+https://www.schmalzhaus.com/EasyDriver/Examples/EasyDriverExamples.html
+</br>
+https://www.instructables.com/id/MQTT-Home-Automated-Blinds/
 </br>
 </br>
 
-#### 1.1 LED Strip
+- stepper shield (EasyDriver)
 
-https://de.aliexpress.com/item/32961181562.html?spm=a2g0x.12010612.8148356.2.17c34641klhRl2
+       >>> https://www.antratek.de/easydriver-stepper-motor-driver?PageSpeed=noscript
+
+- stepper engine example (NEMA 17)
+
+       >>> https://www.antratek.de/stepper-motor-12v
+
 </br>
-https://www.amazon.de/UpgradeWS2812B-Individuell-Adressierbar-Wasserdicht-5M-WS2815-30-NP-BK-12V/dp/B07KXKF62H/ref=sr_1_4?keywords=VISDOLL&qid=1572691327&s=lighting&search-type=ss&sr=1-4
+
+<a name="1.2 Servos"></a>
+
+#### 1.2 Servos
+
+https://diyi0t.com/servo-motor-tutorial-for-arduino-and-esp8266/
 </br>
 </br>
 
 - specifications
 
-       >>> WS2815 Chip
-       >>> 12V
-       >>> backup function (all LEDs behind a broken LED still addressable)
+       >>> 3V or 5V
 
 </br>
 
-<a name="1.2 Power Source"></a>
+<a name="1.3 Power Source"></a>
 
-#### 1.2 Power Source
-
-- 60 mA per LED (white)
-
-       >>> 30 LED / Meter ~ 5  W
-       >>> 60 LED / Meter ~ 10 W     
-
-- less power results in lower max brightness
+#### 1.3 Power Source
 
 - specifications
 
        >>> 12V
        >>> 5,5x2,5 connector
 
-- less leds (> 150)
+- example
 
        >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01HRR96ZI/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
 
-- many leds (< 150)
-
-       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B07FLZ1SGY/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
-
 </br>
 
-<a name="1.3 Controller"></a>
+<a name="1.4 Controller"></a>
 
-#### 1.3 Controller
+#### 1.4 Controller
 
 - Wemos D1 Mini v3 (China only)
 
@@ -77,14 +79,6 @@ https://www.amazon.de/UpgradeWS2812B-Individuell-Adressierbar-Wasserdicht-5M-WS2
 
        >>> https://www.berrybase.de/bauelemente/aktive-bauelemente/ics/ics-l../l7805abv-spannungsregler-linear-5v-1a-to-220-3-pin
 
-- cooler TO-220
-
-       >>> https://www.ebay.de/itm/10x-ALUMINIUMKUHLER-Kuhlkorper-Sets-fur-to-220-Transistor-20x15x10mm-APFBB-C-W/163945663799
-
-- capacitor 2200µF
-
-       >>> https://www.ebay.de/itm/Elko-Panasonic-FR-2200uF-35V-Kondensator-105-C-Low-ESR-same-as-FM-854439/312606746499
-
 - capacitor 10µF
 
        >>> https://www.ebay.de/itm/10-f-50-V-105-Elektrolytkondenstoren-10-Stuck-Elko-10uf/254357533995?hash=item3b38e3f52b:g:H4QAAOSwNRdX85if
@@ -92,6 +86,10 @@ https://www.amazon.de/UpgradeWS2812B-Individuell-Adressierbar-Wasserdicht-5M-WS2
 - resistor 10K
 
        >>> https://www.berrybase.de/bauelemente/passive-bauelemente/widerstaende/metallschichtwiderstaende/0-6w-1/10k-953k-ohm/metallschichtwiderstand-10-0k-ohm-0-6w-177-1-0207-axial-durchsteckmontage?c=168
+
+- resistor 1K
+
+       >>> https://www.berrybase.de/bauelemente/passive-bauelemente/widerstaende/metallschichtwiderstaende/0-6w-1/1m-10m-ohm/metallschichtwiderstand-1-0m-ohm-0-6w-177-1-0207-axial-durchsteckmontage?c=168
 
 - resistor 470
 
@@ -120,10 +118,6 @@ https://www.amazon.de/UpgradeWS2812B-Individuell-Adressierbar-Wasserdicht-5M-WS2
 - socket strip (3 pin)
 
        >>> https://www.berrybase.de/bauelemente/steckverbinder/stift-buchsenleisten-jumper/buchsenleiste-1x-3-polig-rm-2-54-h-8-4-gerade?c=114
-
-- LED strip connector
-
-       >>> https://www.ebay.de/itm/2-6-polig-M13-Steckverbinder-Paare-Kupplungen-Einbaustecker-5A-Metall/323694504483?hash=item4b5db22a23:m:m2bkEBP3zzAsnkZ22qxPWCw
 
 - power connector
 

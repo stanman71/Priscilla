@@ -23,7 +23,7 @@ bool shouldSaveConfig = false;
 int CHANNEL_1 = 5;           // D1 
 int CHANNEL_2 = 4;           // D2 
 int CHANNEL_3 = 0;           // D3 
-int CHANNEL_4 = 2;           // D7 
+int CHANNEL_4 = 13;          // D7 
 
 // RESET 
 int PIN_RESET_SETTING = 16;  // D0

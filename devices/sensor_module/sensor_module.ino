@@ -39,6 +39,12 @@ String sensor_3_state = "DISABLED";    // change to "ENABLED" or "READ_ONLY" to 
 String sensor_4_state = "DISABLED";    // change to "ENABLED" or "READ_ONLY" to activate
 String sensor_5_state = "DISABLED";    // change to "READ_ONLY" to activate
 
+String sensor_1_name = "occupancy";
+String sensor_2_name = "sensor_2";
+String sensor_3_name = "sensor_3";
+String sensor_4_name = "sensor_4";
+String sensor_5_name = "sensor_5";
+
 int sensor_1_last_value = 0;
 int sensor_2_last_value = 0;
 int sensor_3_last_value = 0;
@@ -304,19 +310,19 @@ void callback (char* topic, byte* payload, unsigned int length) {
         JsonArray data_inputs   = msg.createNestedArray("inputs");
 
         if (sensor_1_state != "DISABLED"){
-            data_inputs.add("sensor_1");   
+            data_inputs.add(sensor_1_name);        
         }
         if (sensor_2_state != "DISABLED"){  
-            data_inputs.add("sensor_2");   
+            data_inputs.add(sensor_2_name);   
         }
         if (sensor_3_state != "DISABLED"){    
-            data_inputs.add("sensor_3");  
+            data_inputs.add(sensor_3_name);  
         }
         if (sensor_4_state != "DISABLED"){   
-            data_inputs.add("sensor_4");
+            data_inputs.add(sensor_4_name);
         }
         if (sensor_5_state != "DISABLED"){
-            data_inputs.add("sensor_5");
+            data_inputs.add(sensor_5_name);
         }   
 
         JsonArray data_commands      = msg.createNestedArray("commands");
@@ -357,19 +363,35 @@ void send_default_mqtt_message() {
     DynamicJsonDocument msg(128);
 
     if (sensor_1_state != "DISABLED"){
-        msg["sensor_1"] = digitalRead(SENSOR_1);
+        if (digitalRead(SENSOR_1) == 0){
+            msg[sensor_1_name] = "False";
+        } else {
+            msg[sensor_1_name] = "True";
+        }
     }
     if (sensor_2_state != "DISABLED"){
-        msg["sensor_2"] = digitalRead(SENSOR_2);
+        if (digitalRead(SENSOR_2) == 0){
+            msg[sensor_2_name] = "False";
+        } else {
+            msg[sensor_2_name] = "True";
+        }
     }
     if (sensor_3_state != "DISABLED"){
-        msg["sensor_3"] = digitalRead(SENSOR_3);
+        if (digitalRead(SENSOR_3) == 0){
+            msg[sensor_3_name] = "False";
+        } else {
+            msg[sensor_3_name] = "True";
+        }
     }
     if (sensor_4_state != "DISABLED"){    
-        msg["sensor_4"] = digitalRead(SENSOR_4);
+        if (digitalRead(SENSOR_4) == 0){
+            msg[sensor_4_name] = "False";
+        } else {
+            msg[sensor_4_name] = "True";
+        }
     }
     if (sensor_5_state != "DISABLED"){    
-        msg["sensor_5"] = analogRead(SENSOR_5);
+        msg[sensor_5_name] = analogRead(SENSOR_5);
     }
 
     // convert msg to char
