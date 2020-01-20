@@ -33,11 +33,11 @@ int PIN_RESET_SETTING = 16;  // D0
 int PIN_LED_GREEN = 14;      // D5
 int PIN_LED_RED   = 12;      // D6
 
-String sensor_1_state = "ENABLED";     // change to "ENABLED" or "READ_ONLY" to activate
-String sensor_2_state = "DISABLED";    // change to "ENABLED" or "READ_ONLY" to activate
-String sensor_3_state = "DISABLED";    // change to "ENABLED" or "READ_ONLY" to activate
-String sensor_4_state = "DISABLED";    // change to "ENABLED" or "READ_ONLY" to activate
-String sensor_5_state = "DISABLED";    // change to "READ_ONLY" to activate
+String sensor_1_state = "ENABLED";     // change to "ENABLED" or "REQUEST_ONLY" to activate
+String sensor_2_state = "DISABLED";    // change to "ENABLED" or "REQUEST_ONLY" to activate
+String sensor_3_state = "DISABLED";    // change to "ENABLED" or "REQUEST_ONLY" to activate
+String sensor_4_state = "DISABLED";    // change to "ENABLED" or "REQUEST_ONLY" to activate
+String sensor_5_state = "DISABLED";    // change to "REQUEST_ONLY" to activate
 
 String sensor_1_name = "occupancy";
 String sensor_2_name = "sensor_2";
@@ -362,35 +362,35 @@ void send_default_mqtt_message() {
     // create msg as json
     DynamicJsonDocument msg(128);
 
-    if (sensor_1_state != "DISABLED"){
+    if (sensor_1_state == "ENABLED" or sensor_1_state == "REQUEST_ONLY"){
         if (digitalRead(SENSOR_1) == 0){
             msg[sensor_1_name] = "False";
         } else {
             msg[sensor_1_name] = "True";
         }
     }
-    if (sensor_2_state != "DISABLED"){
+    if (sensor_2_state == "ENABLED" or sensor_2_state == "REQUEST_ONLY"){
         if (digitalRead(SENSOR_2) == 0){
             msg[sensor_2_name] = "False";
         } else {
             msg[sensor_2_name] = "True";
         }
     }
-    if (sensor_3_state != "DISABLED"){
+    if (sensor_3_state == "ENABLED" or sensor_3_state == "REQUEST_ONLY"){
         if (digitalRead(SENSOR_3) == 0){
             msg[sensor_3_name] = "False";
         } else {
             msg[sensor_3_name] = "True";
         }
     }
-    if (sensor_4_state != "DISABLED"){    
+    if (sensor_4_state == "ENABLED" or sensor_4_state == "REQUEST_ONLY"){  
         if (digitalRead(SENSOR_4) == 0){
             msg[sensor_4_name] = "False";
         } else {
             msg[sensor_4_name] = "True";
         }
     }
-    if (sensor_5_state != "DISABLED"){    
+    if (sensor_5_state == "REQUEST_ONLY"){    
         msg[sensor_5_name] = analogRead(SENSOR_5);
     }
 

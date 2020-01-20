@@ -48,9 +48,13 @@ A raspberry pi controller to play music by using spotify and lms.
 
        >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/erweiterungsboards/hifiberry/hifiberry-miniamp
 
-- USB cabel
+- speaker + case
 
-       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/kabel-adapter/usb-kabel-adapter/micro-usb-kabel-mit-offenem-kabelende-zur-stromversorgung
+       >>> https://www.hs-sound.de/2-Stueck-Cheap-Trick-CT-209-Lautsprecher-Fertig-Gehaeuse-Holz-MDF-fuer-TangBand-W3-871_1
+
+- power converter
+
+       >>> https://www.ebay.de/itm/Auto-Ladeger-t-DC-Konverter-Modul-12V-5V-3A-15W-mit-Micro-USB-Kabel-New-UL-X/264570752052?ssPageName=STRK%3AMEBIDX%3AIT&_trksid=p2060353.m2749.l2649
 
 - power connector
 
@@ -59,7 +63,6 @@ A raspberry pi controller to play music by using spotify and lms.
 - Power Source
 
        >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01I1JEWPU/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
-
 
 </br>
 
@@ -86,6 +89,10 @@ A raspberry pi controller to play music by using spotify and lms.
 - Hifiberry Case
 
        >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi-zero/gehaeuse/geh-228-use-f-252-r-hifiberry-miniamp-und-raspberry-pi-zero-schwarz
+
+- speaker example
+
+       >>> https://www.hifisound.de/de/Hifi-Komponenten/Hifi-Lautsprecher/Kompakt/Q-Acoustics-3020i-Regal-Lautsprecher-weiss.html?gclid=EAIaIQobChMI3-zIouKK5wIVicx3Ch3hGQyGEAQYAiABEgIzc_D_BwE
 
 
 </br>

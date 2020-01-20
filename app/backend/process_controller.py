@@ -236,7 +236,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
     # start lighting scene
     # ####################
 
-    if "lighting" in task and "scene" in task:
+    if "lighting" in task and "start_scene" in task:
 
         task = task.split(" # ")
         
@@ -260,6 +260,52 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
                                      controller_command + " | Scene - " + task[3] + " - not founded")
+
+        else:
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
+                                 controller_command + " | Group - " + task[2] + " - not founded")
+
+
+    # #####################
+    # rotate lighting scene
+    # #####################
+
+    if "lighting" in task and "rotate_scene" in task:
+
+        task = task.split(" # ") 
+
+        group = GET_LIGHTING_GROUP_BY_NAME(task[2].strip())
+
+        # group existing ?
+        if group != None:
+
+            # create list of scene names
+            list_scene_names = []
+
+            for scene in GET_ALL_LIGHTING_SCENES():
+                list_scene_names.append(scene.name)
+
+            # find position of current scene
+            scene_position = 0
+
+            for position, scene_name in enumerate(list_scene_names):
+                if scene_name == group.current_scene:
+                    scene_position = position
+
+            # get next scene
+            try:
+                # current scene is not the last scene
+                next_scene = list_scene_names[scene_position + 1]
+            except:
+                # current scene is the last scene
+                next_scene = list_scene_names[0]
+
+
+            scene      = GET_LIGHTING_SCENE_BY_NAME(next_scene)    
+            brightness = group.current_brightness
+                    
+            SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
+            CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +

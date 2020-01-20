@@ -223,11 +223,11 @@
                           <td></td>
                         </tr>                                                                       
                         <tr>
-                          <td>lighting # scene # livingroom # relax # 100</td>
+                          <td>lighting # start_scene # livingroom # relax # 100</td>
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                start | scene "relax" | group "livingroom" | brightness "100%"
+                                group "livingroom" | scene "relax" | brightness "100%"
                               </div>
                             </div>  
                             <br>
@@ -260,6 +260,16 @@
                                 {% endfor %}    
                               </div>  
                             </div>                              
+                          </td>                                                     
+                        </tr>
+                        <tr>
+                          <td>lighting # rotate_scene # livingroom</td>
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                rotate scene setting of group "livingroom"
+                              </div>
+                            </div>                       
                           </td>                                                     
                         </tr>
                         <tr>

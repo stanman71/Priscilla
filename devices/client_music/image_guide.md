@@ -20,11 +20,11 @@ A raspberry pi controller to play music by using spotify and lms.
 
 ### 1 Hardware
 
-<a name="1.1 Small Speaker (max 3W Output)"></a>
+<a name="1.1 Small Speaker (max 3W)"></a>
 
-#### 1.1 Small Speaker (max 3W Output)
+#### 1.1 Small Speaker (max 3W)
 
-- ! no direct volume control on the device !
+- ! no direct sound control on the device !
 
 - Raspberry Pi Zero WH
 
@@ -38,19 +38,27 @@ A raspberry pi controller to play music by using spotify and lms.
 
        >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/erweiterungsboards/hifiberry/hifiberry-miniamp
 
+- speaker + case
+
+       >>> https://www.hs-sound.de/2-Stueck-Cheap-Trick-CT-209-Lautsprecher-Fertig-Gehaeuse-Holz-MDF-fuer-TangBand-W3-871_1
+
+- power converter
+
+       >>> https://www.ebay.de/itm/Auto-Ladeger-t-DC-Konverter-Modul-12V-5V-3A-15W-mit-Micro-USB-Kabel-New-UL-X/264570752052?ssPageName=STRK%3AMEBIDX%3AIT&_trksid=p2060353.m2749.l2649
+
+- power connector
+
+       >>> https://www.berrybase.de/bauelemente/steckverbinder/stromversorgungs-steckverbinder/dc-stecker-hohlstecker/dc-einbaubuchse-f-252-r-hohlstecker-5-5x2-5mm-metallausf-252-hrung-l-246-tanschluss?c=115
+
 - Power Source
 
-       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/stromversorgung/netzteile-fuer-die-steckdose/micro-usb-netzteil-5v/3-1a-schwarz
-
-- Hifiberry Case
-
-       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi-zero/gehaeuse/geh-228-use-f-252-r-hifiberry-miniamp-und-raspberry-pi-zero-schwarz
+       >>> https://www.amazon.de/LEICKE-Netzteil-Universal-2-5mm-Stecker/dp/B01I1JEWPU/ref=sr_1_15?__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=netzteil%2BWS2811&qid=1571760422&sr=8-15&th=1
 
 </br>
 
-<a name="1.2 Big Speaker (max 30W Output)"></a>
+<a name="1.2 Big Speaker (max 30W)"></a>
 
-#### 1.2 Big Speaker (max 30W Output)
+#### 1.2 Big Speaker (max 30W)
 
 - Raspberry Pi Zero WH
 
@@ -70,8 +78,13 @@ A raspberry pi controller to play music by using spotify and lms.
 
 - Hifiberry Case
 
-       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi/gehaeuse/fuer-raspberry-pi-3-modell-b/highpi-case-f-252-r-hifiberry-dac-43-rca/digi-43/amp-43-und-raspberry-pi-3-2-modell-b/
+       >>> https://www.berrybase.de/raspberry-pi-co/raspberry-pi-zero/gehaeuse/geh-228-use-f-252-r-hifiberry-miniamp-und-raspberry-pi-zero-schwarz
 
+- speaker example
+
+       >>> https://www.hifisound.de/de/Hifi-Komponenten/Hifi-Lautsprecher/Kompakt/Q-Acoustics-3020i-Regal-Lautsprecher-weiss.html?gclid=EAIaIQobChMI3-zIouKK5wIVicx3Ch3hGQyGEAQYAiABEgIzc_D_BwE
+
+       
 </br>
 ------------
 </br>

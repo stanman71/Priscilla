@@ -130,7 +130,7 @@ def CHECK_LIGHTING_GROUP_SETTING_PROCESS(group_id, scene_id, scene, brightness, 
     return result     
                                                              
     
-def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting_json, limit):
+def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting, limit):
     
     error_list = []
 
@@ -145,7 +145,7 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting_json, limit):
             # light 1
             light_1 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_1)
 
-            if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_1, setting_json, 10) == False:
+            if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_1, setting, 10) == False:
                 error_list.append(light_1.name + " >>> Setting not confirmed")
 
             # light 2
@@ -154,11 +154,11 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting_json, limit):
             if group.active_light_2 == "True": 
 
                 if scene.active_light_2 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_2, setting_json, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_2, setting, 10) == False:
                         error_list.append(light_2.name + " >>> Setting not confirmed")
                                 
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_2, '{"state":"OFF"}', 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_2, "OFF", 10) == False:
                         error_list.append(light_2.name + " >>> Setting not confirmed")
 
             # light 3
@@ -167,11 +167,11 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting_json, limit):
             if group.active_light_3 == "True": 
 
                 if scene.active_light_3 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_3, setting_json, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_3, setting, 10) == False:
                         error_list.append(light_3.name + " >>> Setting not confirmed")
                                 
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_3, '{"state":"OFF"}', 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_3, "OFF", 10) == False:
                         error_list.append(light_3.name + " >>> Setting not confirmed")
 
             # light 4
@@ -180,11 +180,11 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting_json, limit):
             if group.active_light_4 == "True": 
 
                 if scene.active_light_4 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_4, setting_json, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_4, setting, 10) == False:
                         error_list.append(light_4.name + " >>> Setting not confirmed")
                                 
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_4, '{"state":"OFF"}', 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_4, "OFF", 10) == False:
                         error_list.append(light_4.name + " >>> Setting not confirmed")
 
             # light 5
@@ -193,11 +193,11 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting_json, limit):
             if group.active_light_5 == "True": 
 
                 if scene.active_light_5 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_5, setting_json, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_5, setting, 10) == False:
                         error_list.append(light_5.name + " >>> Setting not confirmed")
                                 
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_5, '{"state":"OFF"}', 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_5, "OFF", 10) == False:
                         error_list.append(light_5.name + " >>> Setting not confirmed")
 
             # light 6
@@ -206,11 +206,11 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting_json, limit):
             if group.active_light_6 == "True": 
 
                 if scene.active_light_6 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_6, setting_json, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_6, setting, 10) == False:
                         error_list.append(light_6.name + " >>> Setting not confirmed")
                                 
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_6, '{"state":"OFF"}', 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_6, "OFF", 10) == False:
                         error_list.append(light_6.name + " >>> Setting not confirmed")
 
             # light 7
@@ -219,11 +219,11 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting_json, limit):
             if group.active_light_7 == "True": 
 
                 if scene.active_light_7 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_7, setting_json, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_7, setting, 10) == False:
                         error_list.append(light_7.name + " >>> Setting not confirmed")
                                 
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_7, '{"state":"OFF"}', 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_7, "OFF", 10) == False:
                         error_list.append(light_7.name + " >>> Setting not confirmed")
 
             # light 8
@@ -232,11 +232,11 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting_json, limit):
             if group.active_light_8 == "True": 
 
                 if scene.active_light_8 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_8, setting_json, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_8, setting, 10) == False:
                         error_list.append(light_8.name + " >>> Setting not confirmed")
                                 
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_8, '{"state":"OFF"}', 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_8, "OFF", 10) == False:
                         error_list.append(light_8.name + " >>> Setting not confirmed")
 
             # light 9
@@ -245,11 +245,11 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting_json, limit):
             if group.active_light_9 == "True": 
 
                 if scene.active_light_9 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_9, setting_json, 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_9, setting, 10) == False:
                         error_list.append(light_9.name + " >>> Setting not confirmed")
                                 
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_9, '{"state":"OFF"}', 10) == False:
+                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_9, "OFF", 10) == False:
                         error_list.append(light_9.name + " >>> Setting not confirmed")
 
         return error_list

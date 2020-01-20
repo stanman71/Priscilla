@@ -25,17 +25,16 @@ http://www.thesmarthomehookup.com/the-complete-guide-to-selecting-individually-a
 
 #### 1.1 LED Strip
 
-https://de.aliexpress.com/item/32961181562.html?spm=a2g0x.12010612.8148356.2.17c34641klhRl2
-</br>
-https://www.amazon.de/UpgradeWS2812B-Individuell-Adressierbar-Wasserdicht-5M-WS2815-30-NP-BK-12V/dp/B07KXKF62H/ref=sr_1_4?keywords=VISDOLL&qid=1572691327&s=lighting&search-type=ss&sr=1-4
-</br>
-</br>
-
 - specifications
 
        >>> WS2815 Chip
        >>> 12V
        >>> backup function (all LEDs behind a broken LED still addressable)
+
+- examples
+
+       >>> https://de.aliexpress.com/item/32961181562.html?spm=a2g0x.12010612.8148356.2.17c34641klhRl2
+       >>> https://www.amazon.de/UpgradeWS2812B-Individuell-Adressierbar-Wasserdicht-5M-WS2815-30-NP-BK-12V/dp/B07KXKF62H/ref=sr_1_4?keywords=VISDOLL&qid=1572691327&s=lighting&search-type=ss&sr=1-4
 
 </br>
 
@@ -43,7 +42,7 @@ https://www.amazon.de/UpgradeWS2812B-Individuell-Adressierbar-Wasserdicht-5M-WS2
 
 #### 1.2 Power Source
 
-- 60 mA per LED (white)
+- 60 mA per LED 
 
        >>> 30 LED / Meter ~ 5  W
        >>> 60 LED / Meter ~ 10 W     

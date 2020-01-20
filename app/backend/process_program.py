@@ -470,7 +470,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                     # light
                     # #####
 
-                    if "lighting" in line[1] and "scene" in line[1]:
+                    if "lighting" in line[1] and "start_scene" in line[1]:
 
                         line_content = line[1].split(" # ")
 

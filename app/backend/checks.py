@@ -146,7 +146,7 @@ def CHECK_PROGRAM_TASKS(program_id):
          
 
          # start scene
-         elif "lighting" in line[1] and "scene" in line[1]:
+         elif "lighting" in line[1] and "start_scene" in line[1]:
             
             try:        
                line_content = line[1].split(" # ")
@@ -674,7 +674,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # start_scene
       # ###########
       
-      if "lighting" in task and "scene" in task:
+      if "lighting" in task and "start_scene" in task:
          if " # " in task:
             task = task.split(" # ") 
 
@@ -745,7 +745,35 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                list_task_errors.append(name + " || Invalid formatting")
             return list_task_errors
      
-     
+
+      # ############
+      # rotate_scene
+      # ############
+      
+      if "lighting" in task and "rotate_scene" in task and task_type == "controller":
+         if " # " in task:
+            task = task.split(" # ") 
+
+            # check group setting 
+            try:
+
+               if GET_LIGHTING_GROUP_BY_NAME(task[2].strip()) == None: 
+                  list_task_errors.append(name + " || " + controller_command + " | Group not founded | " + task[2].strip()) 
+                  return list_task_errors 
+
+               else:
+                  return list_task_errors 
+
+            except:
+               list_task_errors.append(name + " || " + controller_command + " | Missing setting | Group")
+               return list_task_errors
+
+
+         else:
+            list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
+            return list_task_errors    
+
+
       # #################
       # brightness dimmer
       # #################

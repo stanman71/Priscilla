@@ -525,7 +525,7 @@ def START_SCHEDULER_TASK(task_object):
    # ####################
 
    try:
-      if "lighting" in task_object.task and "scene" in task_object.task:
+      if "lighting" in task_object.task and "start_scene" in task_object.task:
 
          task = task_object.task.split(" # ")
          
