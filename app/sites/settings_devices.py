@@ -346,14 +346,6 @@ def settings_devices():
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
                     error_message_zigbee_pairing.append("Setting not confirmed") 
 
-    # request zigbee topology
-    if request.form.get("update_zigbee_topology") != None: 
-
-        # check mqtt connection
-        if GET_DEVICE_CONNECTION_MQTT() == True and GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
-            heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/networkmap", "graphviz")))
-            time.sleep(10)
-
 
     """ ############ """
     """  device log  """

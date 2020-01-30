@@ -98,34 +98,35 @@ def MQTT_RECEIVE_THREAD():
                     # device sends new data ?
 
                     try:
-                        # normal case 
                         existing_data = json.loads(existing_message[2])
                         new_data      = json.loads(msg)
 
-                        if existing_data["state"] != new_data["state"]:
-                            new_message = True
-                            break
-                            
-                        else:
-                            new_message = False
-                            
-                    except:
-                        new_message = False                 
+                        # default case 
+                        try:
+                            if existing_data["state"] != new_data["state"]:
+                                new_message = True
+                                break
+                                
+                            else:
+                                new_message = False
 
-                        try:      
-                            # special case IKEA blinds   
-                            existing_data = json.loads(existing_message[2])
-                            new_data      = json.loads(msg)
+                        except:
+                            pass
 
+                        # special case IKEA blinds   
+                        try:                     
                             if existing_data["position"] != new_data["position"]:
                                 new_message = True
                                 break
                                 
                             else:
                                 new_message = False
-                                
+
                         except:
-                            new_message = False     
+                            pass
+                                
+                    except:
+                        new_message = False     
 
 
         # message ignore ?
@@ -139,34 +140,35 @@ def MQTT_RECEIVE_THREAD():
                     # controller sends new data ?
 
                     try:
-                        # first case command "action"
                         existing_data = json.loads(existing_message[2])
                         new_data      = json.loads(msg)
 
-                        if existing_data["action"] != new_data["action"]:
-                            new_message = True
-                            break
-                            
-                        else:
-                            new_message = False
-                            
-                    except:
-                        new_message = False  
-
-                        try:     
-                            # second case command "click"   
-                            existing_data = json.loads(existing_message[2])
-                            new_data      = json.loads(msg)
-
-                            if existing_data["click"] != new_data["click"]:
+                        # command "action"
+                        try:
+                            if existing_data["action"] != new_data["action"]:
                                 new_message = True
                                 break
                                 
                             else:
                                 new_message = False
-                                
+
                         except:
-                            new_message = False     
+                            pass
+                                
+                        # command "click"
+                        try:
+                            if existing_data["click"] != new_data["click"]:
+                                new_message = True
+                                break
+                                
+                            else:
+                                new_message = False       
+
+                        except:
+                            pass                 
+                            
+                    except:
+                        new_message = False  
 
 
         # message passing
@@ -267,7 +269,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             
             # special case eurotronic heater_thermostat
             if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "SPZB0001":
-                if int(data["battery"]) < 10:
+                if int(data["battery"]) < 5:
                     WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")
                     SEND_EMAIL("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")                    
                 
@@ -595,9 +597,12 @@ def UPDATE_DEVICES(gateway):
                     return ("Network | ZigBee2MQTT | Update | " + str(error)) 
                 else:
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Update")
+
+                    # update zigbee topology
+                    heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/networkmap", "graphviz")))
                     return True
-                                    
-                
+     
+     
             except Exception as e:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Update | " + str(e))  
                 SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | Update | " + str(e))             

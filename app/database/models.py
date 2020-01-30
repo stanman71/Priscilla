@@ -348,13 +348,16 @@ if eMail.query.filter_by().first() == None:
 
 update_devices_founded       = False
 backup_database_founded      = False
-restart_client_music_founded = False
+reset_log_files_founded      = False
 
 for task in Scheduler_Tasks.query.all():
     if task.name.lower() == "update_devices":
         update_devices_founded = True
     if task.name.lower() == "backup_database":
         backup_database_founded = True
+    if task.name.lower() == "reset_log_files":
+        reset_log_files_founded = True
+
 
 if update_devices_founded == False:
     scheduler_task_update_devices = Scheduler_Tasks(
@@ -384,6 +387,21 @@ if backup_database_founded == False:
     db.session.add(scheduler_task_backup_database)
     db.session.commit()
     
+if reset_log_files_founded == False:
+    scheduler_task_reset_log_files = Scheduler_Tasks(
+        name          = "reset_log_files",
+        task          = "reset_log_files",
+        visible       = "False",        
+        trigger_time  = "True",
+        option_repeat = "True",
+        day           = "*",        
+        hour          = "01",
+        minute        = "00",        
+    )
+    db.session.add(scheduler_task_reset_log_files)
+    db.session.commit()
+
+
 # #######
 # spotify
 # #######

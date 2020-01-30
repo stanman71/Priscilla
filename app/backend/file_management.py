@@ -76,13 +76,6 @@ def WRITE_LOGFILE_DEVICES(channel, msg):
     if os.path.isfile(PATH + "/data/logs/log_devices.csv") is False:
         CREATE_LOGFILE("log_devices")
         
-    # replace file if size > 2,5 mb
-    file_size = os.path.getsize(PATH + "/data/logs/log_devices.csv")
-    file_size = round(file_size / 1024 / 1024, 2)
-    
-    if file_size > 2.5:
-        RESET_LOGFILE("log_devices")
-
     try:
         
         # open csv file
@@ -103,13 +96,6 @@ def WRITE_LOGFILE_SYSTEM(log_type, description):
     # create file if not exist
     if os.path.isfile(PATH + "/data/logs/log_system.csv") is False:
         CREATE_LOGFILE("log_system")
-
-    # replace file if size > 2.5 mb
-    file_size = os.path.getsize(PATH + "/data/logs/log_system.csv")
-    file_size = round(file_size / 1024 / 1024, 2)
-    
-    if file_size > 2.5:
-        RESET_LOGFILE("log_system")
 
     try:
         # open csv file

@@ -728,6 +728,40 @@ def START_SCHEDULER_TASK(task_object):
       WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
 
 
+   # ###############
+   # reset log files
+   # ###############
+
+   try:
+      if "reset_log_files" in task_object.task:
+
+         # reset device log if size > 2,5 mb
+         file_size = os.path.getsize(PATH + "/data/logs/log_devices.csv")
+         file_size = round(file_size / 1024 / 1024, 2)
+         
+         if file_size > 2.5:
+            RESET_LOGFILE("log_devices")
+
+         # reset system log if size > 2.5 mb
+         file_size = os.path.getsize(PATH + "/data/logs/log_system.csv")
+         file_size = round(file_size / 1024 / 1024, 2)
+         
+         if file_size > 2.5:
+            RESET_LOGFILE("log_system")
+
+         # delete system2mqtt log if size > 5 mb
+         file_size = os.path.getsize(PATH + "/data/logs/zigbee2mqtt/log.txt")
+         file_size = round(file_size / 1024 / 1024, 2)   
+
+         if file_size > 5:
+            os.remove (PATH + "/data/logs/zigbee2mqtt/log.txt")
+
+
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
+
+
    # ##################
    # request sensordata
    # ##################

@@ -184,8 +184,7 @@ def on_message(client, userdata, message):
 
     if channel == "smarthome/mqtt/devices":
         channel = "smarthome/mqtt/log"
-        msg     = ('{"ieeeAddr":"' + device_ieeeAddr + '","model":"' + GET_MODEL() + 
-                   '","device_type":"client_music","description":"MQTT Client Music","input_values":[],"input_events":[],"commands":[],"commands_json":[]}')
+        msg     = '{"ieeeAddr":"' + device_ieeeAddr + '","model":"' + GET_MODEL() + '","device_type":"client_music","description":"MQTT Client Music","input_values":[],"input_events":[],"commands":[],"commands_json":[]}'
 
         MQTT_PUBLISH(channel, msg)
 

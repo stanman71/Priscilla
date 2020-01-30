@@ -151,10 +151,6 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
        >>> sudo apt install python3-opencv -y
            (https://raspberrypi.stackexchange.com/questions/100253/how-can-i-install-opencv-on-raspberry-pi-4-raspbian-buster)
 
-- replace wrong spotipy file
- 
-       >>> sudo cp /home/pi/smarthome/support/spotipy/client.py /usr/local/lib/python3.7/dist-packages/spotipy/client.py
-
 - change folder permissions
 
        >>> sudo chmod -v -R 070 /home/pi/smarthome

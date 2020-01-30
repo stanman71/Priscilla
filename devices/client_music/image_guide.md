@@ -11,6 +11,7 @@ A raspberry pi controller to play music by using spotify and lms.
    * <a href="#3 Client Music">3 Client Music</a>
    * <a href="#4 Squeezelite Client">4 Squeezelite Client</a>
    * <a href="#5 Raspotify">5 Raspotify</a>
+   * <a href="#6 Smarthome">6 Smarthome</a>
 
 </br>
 ------------
@@ -111,7 +112,7 @@ A raspberry pi controller to play music by using spotify and lms.
 
        >>> Putty:
 
-           Raspberry Pi IP-Address
+           Host:     defaultclientmusic
            Port:     22
            User:     pi
            Password: raspberry
@@ -167,7 +168,7 @@ A raspberry pi controller to play music by using spotify and lms.
 	       SL_SOUNDCARD="hw:CARD=sndrpihifiberry,DEV=0"
 	       SB_EXTRA_ARGS="-a 180"
 
-- change hostname (equal to squeezelite name)
+- change hostname (equal to squeezelite name | NO "_")
 
        >>> sudo nano /etc/hostname
 
@@ -191,6 +192,20 @@ A raspberry pi controller to play music by using spotify and lms.
 	    DEVICE_NAME=" ... " 
 	    OPTIONS="--username <USERNAME> --password <PASSWORD> --device hw:1,0"
 
+           > DEVICE_NAME is the hostname <
+
 - restart the raspberry pi
 
        >>> sudo reboot
+
+</br>
+------------
+</br>
+
+<a name="6 SmartHome"></a>
+
+### 6 SmartHome
+
+- update devices
+
+- change the speaker name to the same name as Squeezelite / Raspotify
