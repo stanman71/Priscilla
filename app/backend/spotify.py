@@ -232,7 +232,16 @@ def REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
             # restart timer
             current_timer = 0
 
-        elif current_timer == 600 or current_timer == 1200 or current_timer == 1800 or current_timer == 2400:
+        elif (current_timer == 300 or 
+              current_timer == 600 or 
+              current_timer == 900 or 
+              current_timer == 1200 or 
+              current_timer == 1500 or               
+              current_timer == 1800 or 
+              current_timer == 2100 or 
+              current_timer == 2400 or                             
+              current_timer == 2700):
+
             RESTART_CLIENT_MUSIC()
             current_timer = current_timer + 1
             time.sleep(1)
