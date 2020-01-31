@@ -145,25 +145,40 @@ def DELETE_SPOTIFY_TOKEN():
     SET_SPOTIFY_REFRESH_TOKEN("")
 
 
-def RESTART_CLIENT_MUSIC():
+def CHECK_CLIENT_MUSIC_CONNECTION():
 
     try:
-        sp                  = spotipy.Spotify(auth=SPOTIFY_TOKEN)
-        sp.trace            = False     
-        spotify_device_name = sp.current_playback(market=None)['device']['name']
-    except:
-        spotify_device_name = ""
+        sp                   = spotipy.Spotify(auth=SPOTIFY_TOKEN)
+        sp.trace             = False     
+        list_spotify_devices = sp.devices()["devices"]  
 
-    for client_music in GET_ALL_DEVICES("client_music"):
+        for client_music in GET_ALL_DEVICES("client_music"):
+            device_founded = False
 
-        if client_music.name.lower() not in spotify_device_name.lower():
+            # check device connected to spotify
+            if "spotify" in client_music.last_values_string:
+                for element in list_spotify_devices:
+                    if client_music.name.lower() == element["name"].lower():
+                        device_founded = True
 
-            try:
-                heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
+            # find multiroom group and check device connected lms
+            if "multiroom" in client_music.last_values_string:
+                for element in list_spotify_devices:
+                    if "multiroom" in element["name"].lower() and client_music.name.lower() in element["name"].lower():
+                        device_founded = True                        
 
-            except Exception as e:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + client_music.name + " | " + str(e))      
-                print(e)
+            # if no connection founded, restart services
+            if device_founded == False:
+
+                try:
+                    heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
+
+                except Exception as e:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + client_music.name + " | " + str(e))      
+                    print(e)
+
+    except Exception as e:
+        print(e)
 
 
 """ ###################### """
@@ -227,22 +242,12 @@ def REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
             except:
                 pass
                 
-            RESTART_CLIENT_MUSIC()
-
             # restart timer
             current_timer = 0
 
-        elif (current_timer == 300 or 
-              current_timer == 600 or 
-              current_timer == 900 or 
-              current_timer == 1200 or 
-              current_timer == 1500 or               
-              current_timer == 1800 or 
-              current_timer == 2100 or 
-              current_timer == 2400 or                             
-              current_timer == 2700):
-
-            RESTART_CLIENT_MUSIC()
+        # check device connections every 30 seconds
+        elif (current_timer % 30 == 0):
+            CHECK_CLIENT_MUSIC_CONNECTION()
             current_timer = current_timer + 1
             time.sleep(1)
 
