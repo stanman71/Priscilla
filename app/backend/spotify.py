@@ -145,6 +145,27 @@ def DELETE_SPOTIFY_TOKEN():
     SET_SPOTIFY_REFRESH_TOKEN("")
 
 
+def RESTART_CLIENT_MUSIC():
+
+    try:
+        sp                  = spotipy.Spotify(auth=SPOTIFY_TOKEN)
+        sp.trace            = False     
+        spotify_device_name = sp.current_playback(market=None)['device']['name']
+    except:
+        spotify_device_name = ""
+
+    for client_music in GET_ALL_DEVICES("client_music"):
+
+        if client_music.name.lower() not in spotify_device_name.lower():
+
+            try:
+                heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
+
+            except Exception as e:
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + client_music.name + " | " + str(e))      
+                print(e)
+
+
 """ ###################### """
 """  token refresh thread  """
 """ ###################### """
@@ -206,29 +227,15 @@ def REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
             except:
                 pass
                 
-            # restart music clients
-
-            try:
-                sp                  = spotipy.Spotify(auth=SPOTIFY_TOKEN)
-                sp.trace            = False     
-                spotify_device_name = sp.current_playback(market=None)['device']['name']
-            except:
-                spotify_device_name = ""
-
-            for client_music in GET_ALL_DEVICES("client_music"):
-
-                if client_music.name.lower() not in spotify_device_name.lower():
-
-                    try:
-                        heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
-
-                    except Exception as e:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + client_music.name + " | " + str(e))      
-                        print(e)
+            RESTART_CLIENT_MUSIC()
 
             # restart timer
             current_timer = 0
 
+        elif current_timer == 600 or current_timer == 1200 or current_timer == 1800 or current_timer == 2400:
+            RESTART_CLIENT_MUSIC()
+            current_timer = current_timer + 1
+            time.sleep(1)
 
         else:
             current_timer = current_timer + 1

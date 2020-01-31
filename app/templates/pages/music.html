@@ -186,7 +186,11 @@
                               {% if spotify_devices != "" %}
                                 {% for device in list_spotify_devices %}                   
                                   {% if device['type'] != "Smartphone" %}
-                                    <option value="{{ device['id'] }}" > {{ device['name'] }} </option>
+                                    {% if "multiroom" in device['name'] %}
+                                      <option value="{{ device['id'] }}" > MULTIROOM | {{ device['name'] | replace("multiroom, ","") | replace(" & multiroom","") | replace("multiroom","") | replace(" & ",", ") }}</option>
+                                    {% else %}
+                                      <option value="{{ device['id'] }}" > {{ device['name'] }} </option>
+                                    {% endif %}
                                   {% endif %}
                                 {% endfor %}
                               {% else %}
@@ -242,12 +246,16 @@
                         <tr>                   
                           <td>
                             <select class="form-control" data-size="5" name="set_spotify_default_device_id" style="background-color:#27293D"> 
-                              <option value = "{{ default_settings.default_device_id }}" > {{ default_settings.default_device_name }} </option>          
+                              <option value = "{{ default_settings.default_device_id }}" > MULTIROOM | {{ default_settings.default_device_name | replace("multiroom, ","") | replace(" & multiroom","") | replace("multiroom","") | replace(" & ",", ") }} </option>          
                               <option disabled>------------------</option>    
                               {% if spotify_devices != "" %}
                                 {% for device in list_spotify_devices %}                  
                                   {% if device['type'] != "Smartphone" %}
-                                    <option value="{{ device['id'] }}" > {{ device['name'] }} </option>
+                                    {% if "multiroom" in device['name'] %}
+                                      <option value="{{ device['id'] }}" > MULTIROOM | {{ device['name'] | replace("multiroom, ","") | replace(" & multiroom","") | replace("multiroom","") | replace(" & ",", ") }}</option>
+                                    {% else %}
+                                      <option value="{{ device['id'] }}" > {{ device['name'] }} </option>
+                                    {% endif %}
                                   {% endif %}
                                 {% endfor %}
                               {% else %}

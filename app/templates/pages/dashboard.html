@@ -189,7 +189,7 @@
                                 {% for device in list_spotify_devices %}                   
                                   {% if device['type'] != "Smartphone" %}
                                     {% if "multiroom" in device['name'] %}
-                                      <option value="{{ device['id'] }}" > multiroom </option>
+                                      <option value="{{ device['id'] }}" > MULTIROOM </option>
                                     {% else %}
                                       <option value="{{ device['id'] }}" > {{ device['name'] }} </option>
                                     {% endif %}
