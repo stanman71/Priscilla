@@ -12,18 +12,6 @@ https://developer.spotify.com/documentation/web-api/reference/search/search/
 https://developer.spotify.com/documentation/web-api/reference/player/start-a-users-playback/
 
 
-BUGFIX SPOTIPY:
-
-Error:    AttributeError: 'Spotify' object has no attribute 'devices'
-Solution: Replace the old client.py file 
-
-          > new client.py file is in /smarthome/support
-          > destination linux_path: /usr/local/lib/python3.7/dist-packages/spotipy
-          > sudo cp /home/pi/smarthome/support/Spotipy/client.py /usr/local/lib/python3.7/dist-packages/spotipy/client.py
-
-https://stackoverflow.com/questions/47028093/attributeerror-spotify-object-has-no-attribute-current-user-saved-tracks
-
-
 """
 
 from app                          import app
@@ -44,6 +32,7 @@ import heapq
 from urllib.parse import quote
 
 from lms import find_server
+
 
 """ ########################## """
 """  spotify authentification  """
@@ -107,7 +96,7 @@ def GENERATE_SPOTIFY_TOKEN(auth_token):
     post_request = requests.post(SPOTIFY_TOKEN_URL, data=body)
 
     answer = json.loads(post_request.text)
-    
+
     try:
         SPOTIFY_TOKEN = answer["access_token"]
         WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Login successful")
@@ -126,8 +115,6 @@ def GENERATE_SPOTIFY_TOKEN(auth_token):
     except:
         WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Refresh Token not received | " + str(answer))
         SEND_EMAIL("ERROR", "Music | Spotify Refresh Token not received | " + str(answer))           
- 
-    REFRESH_SPOTIFY_TOKEN_THREAD(0)
 
 
 def GET_SPOTIFY_TOKEN():
@@ -184,7 +171,6 @@ def CHECK_CLIENT_MUSIC_CONNECTION():
 """ ###################### """
 """  token refresh thread  """
 """ ###################### """
-
 
 def START_REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
     

@@ -2925,8 +2925,6 @@ def SET_SPOTIFY_REFRESH_TOKEN(refresh_token):
 
         entry.refresh_token = refresh_token
         db.session.commit()
-
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify Token | changed") 
         return True
 
 
