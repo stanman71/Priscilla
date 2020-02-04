@@ -541,6 +541,33 @@
 				"input_events"    : ["{'click':'single'}","{'click':'double'}"],
 				"commands"        : [],
 				"commands_json"   : []
-			}									
+			},		
+			{
+				"model"           : "WXCJKG11LM",
+				"device_type"     : "controller",
+				"description"     : "Xiaomi Aqara Opple switch 1 band",
+				"input_values"    : [],
+				"input_events"    : ["{'action':'button_1_single'}","{'action':'button_2_single'}"],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "WXCJKG12LM",
+				"device_type"     : "controller",
+				"description"     : "Xiaomi Aqara Opple switch 2 band",
+				"input_values"    : [],
+				"input_events"    : ["{'action':'button_1_single'}","{'action':'button_2_single'}","{'action':'button_3_single'}","{'action':'button_4_single'}"],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
+			{
+				"model"           : "WXCJKG13LM",
+				"device_type"     : "controller",
+				"description"     : "Xiaomi Aqara Opple switch 3 band",
+				"input_values"    : [],
+				"input_events"    : ["{'action':'button_1_single'}","{'action':'button_2_single'}","{'action':'button_3_single'}","{'action':'button_4_single'}","{'action':'button_5_single'}","{'action':'button_6_single'}"],
+				"commands"        : [],
+				"commands_json"   : []
+			}							
 		]
 }

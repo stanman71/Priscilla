@@ -246,36 +246,36 @@ def CHECK_PROGRAM_TASKS(program_id):
                if not GET_PROGRAM_BY_NAME(line_content[1].lower()):
                   list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Program not founded")
 
-               if line_content[2].lower() != "start" and line_content[2].lower() != "stop":
+               if line_content[2].strip() != "START" and line_content[2].strip() != "STOP":
                   list_errors.append("Line " + str(line_number) + " - " + line[1] + " | Invalid command")
 
             except:        
                list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
 
 
-         # #######
-         # spotify 
-         # #######
+         # #####
+         # music 
+         # #####
          
-         elif "spotify" in line[1]:
+         elif "music" in line[1]:
             
             try:        
                line_content = line[1].split(" # ")       
                
-               if (line_content[1].lower() != "play" and
-                     line_content[1].lower() != "previous" and
-                     line_content[1].lower() != "next" and
-                     line_content[1].lower() != "stop" and
-                     line_content[1].lower() != "volume" and
-                     line_content[1].lower() != "playlist" and
-                     line_content[1].lower() != "track" and
-                     line_content[1].lower() != "album"):
+               if (line_content[1].strip() != "PLAY" and
+                     line_content[1].strip() != "PREVIOUS" and
+                     line_content[1].strip() != "NEXT" and
+                     line_content[1].strip() != "STOP" and
+                     line_content[1].strip() != "VOLUME" and
+                     line_content[1].strip() != "playlist" and
+                     line_content[1].strip() != "track" and
+                     line_content[1].strip() != "album"):
 
                   list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid Command")
 
                # volume
 
-               if line_content[1].lower() == "volume":
+               if line_content[1].strip() == "volume":
                   
                   try:
                      if not line_content[2].isdigit():
@@ -290,7 +290,7 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                # playlist
    
-               if line_content[1].lower() == "playlist": 
+               if line_content[1].strip() == "playlist": 
                   
                   try:
                      device_name   = line_content[2]                                    
@@ -312,7 +312,7 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                # track
                      
-               if line_content[1].lower() == "track": 
+               if line_content[1].strip() == "track": 
                   
                   try:
                      device_name  = line_content[2]                                    
@@ -335,7 +335,7 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                # album
 
-               if line_content[1].lower() == "album": 
+               if line_content[1].strip() == "album": 
                   
                   try:
                      device_name  = line_content[2]                                    
@@ -928,8 +928,8 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             task = task.split(" # ") 
 
             try:
-               program = GET_PROGRAM_BY_NAME(task[1].lower())
-               setting = task[2].lower()
+               program = GET_PROGRAM_BY_NAME(task[1].strip())
+               setting = task[2].strip()
                   
                if program == None:
                
@@ -938,7 +938,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   else:
                      list_task_errors.append(name + " || " + task[1] + " Program not founded")                  
                   
-               if setting != "start" and setting != "stop" and setting != "repeat" and setting != "force":
+               if setting != "START" and setting != "STOP":
                   
                   if task_type == "controller":
                      list_task_errors.append(name + " || " + controller_command + " | Invalid command | " + task[2])
@@ -1029,39 +1029,39 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             return list_task_errors
 
 
-      # #######
-      # spotify     
-      # #######
+      # #####
+      # music     
+      # #####
         
-      if "spotify" in task:
+      if "music" in task:
          if " # " in task:
             task = task.split(" # ")
 
             # check settings
             try:   
                    
-               if task[1].lower() == "play":
+               if task[1].strip() == "PLAY":
                   return list_task_errors
 
-               elif task[1].lower() == "play/stop":
+               elif task[1].strip() == "PLAY/STOP":
                   return list_task_errors
 
-               elif task[1].lower() == "previous":
+               elif task[1].strip() == "PREVIOUS":
                   return list_task_errors
              
-               elif task[1].lower() == "next":
+               elif task[1].strip() == "NEXT":
                   return list_task_errors   
                   
-               elif task[1].lower() == "stop":
+               elif task[1].strip() == "STOP":
                   return list_task_errors
              
-               elif task[1].lower() == "volume_up":
+               elif task[1].strip() == "VOLUME_UP":
                   return list_task_errors                     
                                  
-               elif task[1].lower() == "volume_down":
+               elif task[1].strip() == "VOLUME_DOWN":
                   return list_task_errors
              
-               elif task[1].lower() == "volume":             
+               elif task[1].strip() == "VOLUME":             
              
                   try:
                      if not task[2].isdigit():
@@ -1076,28 +1076,21 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      list_task_errors.append(name + " || " + task[2] + " | Invalid volume_value") 
                      return list_task_errors
                   
-               elif task[1].lower() == "playlist": 
-                  
+               elif task[1].strip() == "playlist": 
+
                   try:
-                     device_name   = task[2]                                    
-                     playlist_name = task[3]
-                     
-                     try:
-                        if not task[4].isdigit():
-                           list_task_errors.append(name + " || " + task[4] + " | Invalid volume_value") 
-                        else:
-                           if not 0 <= int(task[4]) <= 100:
-                              list_task_errors.append(name + " || " + task[4] + " | Invalid volume_value")
-                              
-                        return list_task_errors
-                                 
-                     except:
+                     if not task[4].isdigit():
                         list_task_errors.append(name + " || " + task[4] + " | Invalid volume_value") 
-                        return list_task_errors
-                        
+                     else:
+                        if not 0 <= int(task[4]) <= 100:
+                           list_task_errors.append(name + " || " + task[4] + " | Invalid volume_value")
+                           
+                     return list_task_errors
+                              
                   except:
-                     list_task_errors.append(name + " || " + str(task) + " | Invalid volume_value")  
-                     return list_task_errors                
+                     list_task_errors.append(name + " || " + task[4] + " | Invalid volume_value") 
+                     return list_task_errors
+   
                      
                elif task[1].lower() == "track": 
                   

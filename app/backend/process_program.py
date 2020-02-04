@@ -632,10 +632,10 @@ def PROGRAM_THREAD(thread_id, program_id):
 
                         if program != None:
 
-                            if line_content[2].lower() == "start":
+                            if line_content[2].strip() == "START":
                                 START_PROGRAM_THREAD(program.id)
                                 
-                            elif line_content[2].lower() == "stop":
+                            elif line_content[2].strip() == "STOP":
                                 STOP_PROGRAM_THREAD_BY_NAME(program.name, thread_id)
 
                             else:
@@ -645,11 +645,11 @@ def PROGRAM_THREAD(thread_id, program_id):
                             WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | Program - " + program + " - not founded")
 
 
-                    # #######
-                    # spotify
-                    # #######
+                    # #####
+                    # music
+                    # #####
 
-                    if "spotify" in line[1]:
+                    if "music" in line[1]:
                             
                         line_content = line[1].split(" # ")
 
@@ -674,19 +674,19 @@ def PROGRAM_THREAD(thread_id, program_id):
                                     spotify_device_id = sp.current_playback(market=None)['device']['id']
                                     spotify_volume    = sp.current_playback(market=None)['device']['volume_percent']
 
-                                    if line_content[1].lower() == "play":
+                                    if line_content[1].strip() == "PLAY":
                                         SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
                             
-                                    if line_content[1].lower() == "previous":
+                                    if line_content[1].strip() == "PREVIOUS":
                                         SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
 
-                                    if line_content[1].lower() == "next":
+                                    if line_content[1].strip() == "NEXT":
                                         SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
 
-                                    if line_content[1].lower() == "stop": 
+                                    if line_content[1].strip() == "STOP": 
                                         SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)   
 
-                                    if line_content[1].lower() == "volume":          
+                                    if line_content[1].strip() == "VOLUME":          
                                         spotify_volume = int(line_content[2])
                                         SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
 
@@ -696,10 +696,10 @@ def PROGRAM_THREAD(thread_id, program_id):
                                 
                                 # start playlist
                                         
-                                if line_content[1].lower() == "playlist": 
+                                if line_content[1].strip() == "playlist": 
 
                                     # get spotify_device_id
-                                    device_name          = line_content[2]                                    
+                                    device_name          = line_content[2].strip()                                    
                                     list_spotify_devices = sp.devices()["devices"]  
                                     
                                     for device in list_spotify_devices:
@@ -708,7 +708,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                             continue                                
                                     
                                     # get playlist_uri
-                                    playlist_name          = line_content[3]
+                                    playlist_name          = line_content[3].strip()
                                     list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]
                                     
                                     for playlist in list_spotify_playlists:
@@ -717,17 +717,17 @@ def PROGRAM_THREAD(thread_id, program_id):
                                             continue
                                             
                                     # get volume
-                                    playlist_volume = int(line_content[4])
+                                    playlist_volume = int(line_content[4].strip())
                                     
                                     SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume)
                             
                         
                                 # start track
                                         
-                                if line_content[1].lower() == "track": 
+                                if line_content[1].strip() == "track": 
 
                                     # get spotify_device_id
-                                    device_name          = line_content[2]                                    
+                                    device_name          = line_content[2].strip()                                    
                                     list_spotify_devices = sp.devices()["devices"]  
                                     
                                     for device in list_spotify_devices:
@@ -736,20 +736,20 @@ def PROGRAM_THREAD(thread_id, program_id):
                                             continue                                
                                     
                                     # get playlist_uri
-                                    track_uri = SPOTIFY_SEARCH_TRACK(spotify_token, line_content[3], line_content[4], 1) [0][2]
+                                    track_uri = SPOTIFY_SEARCH_TRACK(spotify_token, line_content[3].strip(), line_content[4].strip(), 1) [0][2]
                                             
                                     # get volume
-                                    track_volume = int(line_content[5])
+                                    track_volume = int(line_content[5].strip())
                                     
                                     SPOTIFY_START_TRACK(spotify_token, spotify_device_id, track_uri, track_volume)
 
 
                                 # start album
                                         
-                                if line_content[1].lower() == "album": 
+                                if line_content[1].strip() == "album": 
 
                                     # get spotify_device_id
-                                    device_name          = line_content[2]                                    
+                                    device_name          = line_content[2].strip()                                    
                                     list_spotify_devices = sp.devices()["devices"]  
                                     
                                     for device in list_spotify_devices:
@@ -758,10 +758,10 @@ def PROGRAM_THREAD(thread_id, program_id):
                                             continue                                
                                     
                                     # get album_uri
-                                    album_uri = SPOTIFY_SEARCH_ALBUM(spotify_token, line_content[3], line_content[4], 1) [0][2]
+                                    album_uri = SPOTIFY_SEARCH_ALBUM(spotify_token, line_content[3].strip(), line_content[4].strip(), 1) [0][2]
                                             
                                     # get volume
-                                    album_volume = int(line_content[5])
+                                    album_volume = int(line_content[5].strip())
                                     
                                     SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
 
