@@ -95,10 +95,10 @@ def settings_system():
     error_message_change_settings_services   = [] 
     success_message_change_settings_network  = False
     error_message_change_settings_network    = []
+    success_message_change_settings_email    = False       
+    error_message_change_settings_email      = []     
     success_message_change_settings_spotify  = False       
     error_message_change_settings_spotify    = []     
-    success_message_change_settings_email    = False       
-    error_message_change_settings_email      = [] 
     success_message_backup_database          = ""    
     error_message_backup_database            = ""
 
@@ -176,7 +176,7 @@ def settings_system():
                 try:
                     os.system("sudo systemctl start zigbee2mqtt")
                     WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | ZigBee2MQTT | enabled")       
-                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled") 
+                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")  
                     print("System | Services | ZigBee2MQTT | enabled") 
                     time.sleep(1)
                 except Exception as e:
@@ -187,6 +187,7 @@ def settings_system():
                 try:
                     os.system("sudo systemctl stop zigbee2mqtt")
                     WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | ZigBee2MQTT | disabled")
+                    SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
                     print("System | Services | ZigBee2MQTT | disabled") 
                     time.sleep(1)
                 except Exception as e:
@@ -312,20 +313,6 @@ def settings_system():
                 success_message_change_settings_network = True  
 
 
-    """ ################## """
-    """  settings spotify  """
-    """ ################## """    
-    
-    # update email settings
-    if request.form.get("update_settings_spotify") != None:  
-
-        client_id = request.form.get("set_client_id").strip()  
-        client_secret = request.form.get("set_client_secret").strip()  
-
-        if SET_SPOTIFY_SETTINGS(client_id, client_secret):
-            success_message_change_settings_spotify = True
-
-
     """ ################ """
     """  settings email  """
     """ ################ """    
@@ -360,6 +347,20 @@ def settings_system():
             message_test_settings_email = SEND_EMAIL("TEST", "TEST")
 
 
+    """ ################## """
+    """  settings spotify  """
+    """ ################## """    
+    
+    # update email settings
+    if request.form.get("update_settings_spotify") != None:  
+
+        client_id = request.form.get("set_client_id").strip()  
+        client_secret = request.form.get("set_client_secret").strip()  
+
+        if SET_SPOTIFY_SETTINGS(client_id, client_secret):
+            success_message_change_settings_spotify = True
+
+
     """ ################ """
     """  backup database """
     """ ################ """    
@@ -388,11 +389,11 @@ def settings_system():
                                                     error_message_change_settings_services=error_message_change_settings_services,
                                                     success_message_change_settings_network=success_message_change_settings_network,                             
                                                     error_message_change_settings_network=error_message_change_settings_network, 
-                                                    success_message_change_settings_spotify=success_message_change_settings_spotify,       
-                                                    error_message_change_settings_spotify=error_message_change_settings_spotify,
                                                     success_message_change_settings_email=success_message_change_settings_email,                                                       
                                                     error_message_change_settings_email=error_message_change_settings_email,
-                                                    message_test_settings_email=message_test_settings_email, 
+                                                    message_test_settings_email=message_test_settings_email,                                                     
+                                                    success_message_change_settings_spotify=success_message_change_settings_spotify,       
+                                                    error_message_change_settings_spotify=error_message_change_settings_spotify,
                                                     error_message_backup_database=error_message_backup_database,                                                       
                                                     success_message_backup_database=success_message_backup_database,                                                                                                     
                                                     message_system=message_system,
@@ -404,7 +405,7 @@ def settings_system():
                             )
 
 # restore database backup
-@app.route('/settings/system/backup/restore/backup_database/<string:filename>')
+@app.route('/settings/system/backup_database/restore/<string:filename>')
 @login_required
 @permission_required
 def restore_database_backup(filename):
@@ -419,7 +420,7 @@ def restore_database_backup(filename):
 
 
 # delete database backup
-@app.route('/settings/system/backup/delete/backup_database/<string:filename>')
+@app.route('/settings/system/backup_database/delete/<string:filename>')
 @login_required
 @permission_required
 def delete_database_backup(filename):

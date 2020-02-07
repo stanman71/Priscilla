@@ -172,10 +172,10 @@ def CHECK_CLIENT_MUSIC_CONNECTION():
 """  token refresh thread  """
 """ ###################### """
 
-def START_REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
+def START_REFRESH_SPOTIFY_TOKEN_THREAD():
     
     try:
-        Thread = threading.Thread(target=REFRESH_SPOTIFY_TOKEN_THREAD, args=(first_delay, ))
+        Thread = threading.Thread(target=REFRESH_SPOTIFY_TOKEN_THREAD)
         Thread.start()  
         
     except Exception as e:
@@ -183,63 +183,66 @@ def START_REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):
         SEND_EMAIL("ERROR", "Host | Thread | Refresh Spotify Token | " + str(e)) 
 
 
-def REFRESH_SPOTIFY_TOKEN_THREAD(first_delay):   
+def REFRESH_SPOTIFY_TOKEN_THREAD():   
     
-    current_timer = first_delay
+    current_timer = 3000
     
     global SPOTIFY_TOKEN        
     global SPOTIFY_REFRESH_TOKEN
     
-    while SPOTIFY_REFRESH_TOKEN != "":
+    while True:
+
+        # check spotify login 
+        if SPOTIFY_REFRESH_TOKEN != "":
         
-        if current_timer == 3000:
+            if current_timer == 3000:
 
-            # get a new token
+                # get a new token
+            
+                body = {
+                    "grant_type" : "refresh_token",
+                    "refresh_token" : GET_SPOTIFY_REFRESH_TOKEN()
+                }
+
+                auth_str = '{}:{}'.format(CLIENT_ID, CLIENT_SECRET)
+                b64_auth_str = base64.b64encode(auth_str.encode()).decode()
+
+                headers = {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Basic {}'.format(b64_auth_str)
+                }
+
+                post_refresh = requests.post(SPOTIFY_TOKEN_URL, data=body, headers=headers) 
+                answer       = json.loads(post_refresh.text)
+
+                try:
+                    SPOTIFY_TOKEN = answer["access_token"]
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Token updated") 
+                    
+                except Exception as e:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Token not updated | " + str(e)) 
+                    SEND_EMAIL("ERROR", "Music | Spotify Token not updated | " + str(e)) 
+
+                try:
+                    SET_SPOTIFY_REFRESH_TOKEN(answer["refresh_token"])
+                    SPOTIFY_REFRESH_TOKEN = answer["refresh_token"]        
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Refresh Token updated")  
+                    
+                except:
+                    pass
+                    
+                # restart timer
+                current_timer = 0
+
+            # check device connections every 30 seconds
+            elif (current_timer % 30 == 0):
+                CHECK_CLIENT_MUSIC_CONNECTION()
+                current_timer = current_timer + 1
+
+            else:
+                current_timer = current_timer + 1
         
-            body = {
-                "grant_type" : "refresh_token",
-                "refresh_token" : GET_SPOTIFY_REFRESH_TOKEN()
-            }
-
-            auth_str = '{}:{}'.format(CLIENT_ID, CLIENT_SECRET)
-            b64_auth_str = base64.b64encode(auth_str.encode()).decode()
-
-            headers = {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic {}'.format(b64_auth_str)
-            }
-
-            post_refresh = requests.post(SPOTIFY_TOKEN_URL, data=body, headers=headers) 
-            answer       = json.loads(post_refresh.text)
-
-            try:
-                SPOTIFY_TOKEN = answer["access_token"]
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Token updated") 
-                
-            except Exception as e:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Token not updated | " + str(e)) 
-                SEND_EMAIL("ERROR", "Music | Spotify Token not updated | " + str(e)) 
-
-            try:
-                SET_SPOTIFY_REFRESH_TOKEN(answer["refresh_token"])
-                SPOTIFY_REFRESH_TOKEN = answer["refresh_token"]        
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Refresh Token updated")  
-                
-            except:
-                pass
-                
-            # restart timer
-            current_timer = 0
-
-        # check device connections every 30 seconds
-        elif (current_timer % 30 == 0):
-            CHECK_CLIENT_MUSIC_CONNECTION()
-            current_timer = current_timer + 1
-            time.sleep(1)
-
-        else:
-            current_timer = current_timer + 1
-            time.sleep(1)
+        time.sleep(1)
 
 
 """ ############## """
@@ -415,7 +418,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             SET_MUSIC_VOLUME(spotify_token, spotify_volume)    
 
         if command == "volume_up":   
-            volume = spotify_volume + 10
+            volume = spotify_volume + 5
             
             if volume > 100:
                 volume = 100
@@ -423,7 +426,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             SET_MUSIC_VOLUME(spotify_token, volume)
                 
         if command == "volume_down":   
-            volume = spotify_volume - 10
+            volume = spotify_volume - 5
             
             if volume < 0:
                 volume = 0

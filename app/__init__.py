@@ -473,6 +473,6 @@ if GET_SYSTEM_SETTINGS().squeezelite_active != "True":
 """ #################### """
 
 PROCESS_MANAGEMENT_THREAD()
-START_REFRESH_SPOTIFY_TOKEN_THREAD(3000)
+START_REFRESH_SPOTIFY_TOKEN_THREAD()
 
 socketio.run(app, host = GET_SYSTEM_SETTINGS().ip_address, port = 80, debug=False)

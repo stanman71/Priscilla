@@ -988,6 +988,14 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
          return list_task_errors
 
 
+      # ###############
+      # reset_log_files
+      # ###############
+      
+      if task == "reset_log_files" and task_type == "scheduler":
+         return list_task_errors
+
+
       # ##################
       # request_sensordata
       # ##################

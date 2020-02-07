@@ -585,11 +585,11 @@ def START_SCHEDULER_TASK(task_object):
                   # get exist group names 
                   for group in GET_ALL_LIGHTING_GROUPS():
 
+                     WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')    
+
                      if input_group_name.lower() == group.name.lower():
                            group_founded = True   
                               
-                           WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')                              
-                           
                            SET_LIGHTING_GROUP_TURN_OFF(group.id)
                            CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
@@ -599,14 +599,11 @@ def START_SCHEDULER_TASK(task_object):
 
          if task[2].lower() == "all":
 
+               WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')
+
                for group in GET_ALL_LIGHTING_GROUPS():
-                  scene_name = group.current_scene
-                  scene      = GET_LIGHTING_SCENE_BY_NAME(scene_name)
-
-                  WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')
-
                   SET_LIGHTING_GROUP_TURN_OFF(group.id)
-                  CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 5, 20)    
+                  CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
                         
 
    except Exception as e:

@@ -528,11 +528,9 @@ def PROGRAM_THREAD(thread_id, program_id):
 
                                     if input_group_name.lower() == group.name.lower():
                                         group_founded = True
-                                        scene_name    = group.current_scene
-                                        scene         = GET_LIGHTING_SCENE_BY_NAME(scene_name)
 
                                         SET_LIGHTING_GROUP_TURN_OFF(group.id)
-                                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)
+                                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
                                 # group not founded
                                 if group_founded == False:
@@ -543,11 +541,8 @@ def PROGRAM_THREAD(thread_id, program_id):
                             if line_content[2].lower() == "all":
 
                                 for group in GET_ALL_LIGHTING_GROUPS():
-                                    scene_name = group.current_scene
-                                    scene      = GET_LIGHTING_SCENE_BY_NAME(scene_name)
-
                                     SET_LIGHTING_GROUP_TURN_OFF(group.id)
-                                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, "OFF", 0, 2, 10)
+                                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
 
                         except Exception as e:

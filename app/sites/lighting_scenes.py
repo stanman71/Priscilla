@@ -6,6 +6,7 @@ from functools           import wraps
 from app                         import app
 from app.database.models         import *
 from app.backend.checks          import CHECK_TASKS
+from app.backend.lighting        import *
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
@@ -73,10 +74,10 @@ def lighting_scenes():
         session['set_collapse_open'] = None
 
 
-    for i in range (1,21):
+    # save scene settings
+    if request.form.get("save_lighting_scene_settings") != None or request.form.get("test_lighting_scene") != None:
 
-        # change scene
-        if request.form.get("save_lighting_scene_settings") != None:
+        for i in range (1,21):
 
             if request.form.get("set_name_" + str(i)) != None:
                 
@@ -360,6 +361,21 @@ def lighting_scenes():
                     success_message_change_settings_lighting_scene = i
 
 
+    # test scene settings
+    if request.form.get("test_lighting_scene") != None:
+
+        for i in range (1,21):
+
+            if request.form.get("set_lighting_group_" + str(i)) != None:
+                
+                group      = GET_LIGHTING_GROUP_BY_ID(request.form.get("set_lighting_group_" + str(i)))
+                scene      = GET_LIGHTING_SCENE_BY_ID(i)
+                brightness = int(request.form.get("set_lighting_group_brightness_" + str(i)))
+                         
+                SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
+                CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+
+
     """ ####################### """
     """  delete lighting scene  """
     """ ####################### """   
@@ -397,7 +413,8 @@ def lighting_scenes():
     scene_19 = GET_LIGHTING_SCENE_BY_ID(19)
     scene_20 = GET_LIGHTING_SCENE_BY_ID(20)
 
-    list_lighting_scenes = GET_ALL_LIGHTING_SCENES()
+    list_lighting_scenes          = GET_ALL_LIGHTING_SCENES()
+    dropdown_list_lighting_groups = GET_ALL_LIGHTING_GROUPS()
 
     data = {'navigation': 'lighting'} 
 
@@ -413,6 +430,7 @@ def lighting_scenes():
                                                     success_message_add_lighting_scene=success_message_add_lighting_scene,
                                                     error_message_add_lighting_scene=error_message_add_lighting_scene,
                                                     list_lighting_scenes=list_lighting_scenes,
+                                                    dropdown_list_lighting_groups=dropdown_list_lighting_groups,
                                                     scene_1=scene_1,
                                                     scene_2=scene_2,      
                                                     scene_3=scene_3,    
