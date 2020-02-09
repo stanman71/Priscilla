@@ -4,7 +4,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
 from app                         import app
-from app.database.models         import *
+from app.backend.database_models import *
 from app.backend.process_program import * 
 from app.backend.checks          import CHECK_PROGRAM_TASKS
 from app.backend.spotify         import GET_SPOTIFY_TOKEN

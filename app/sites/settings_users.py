@@ -4,10 +4,10 @@ from werkzeug.security   import generate_password_hash
 from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
-from app                 import app
-from app.database.models import *
-from app.common          import COMMON, STATUS
-from app.assets          import *
+from app                         import app
+from app.backend.database_models import *
+from app.common                  import COMMON, STATUS
+from app.assets                  import *
 
 import datetime
 

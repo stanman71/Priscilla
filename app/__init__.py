@@ -16,23 +16,37 @@ import heapq
 import json
 
 
-# Grabs the folder where the script runs.
-basedir = os.path.abspath(os.path.dirname(__file__))
+""" ###### """
+"""  path  """
+""" ###### """
+
+# windows
+if os.name == "nt":                 
+    PATH = os.path.abspath("") 
+# linux
+else:                               
+    PATH = "/home/pi/smarthome/"
+
+
+""" ####### """
+"""  flask  """
+""" ####### """
 
 app = Flask(__name__, static_url_path='/static')
-app.config['SECRET_KEY']                     = "random"        #os.urandom(20).hex()
-app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///' + os.path.join(basedir, 'database/database.db')
+app.config['SECRET_KEY'] = "random"        #os.urandom(20).hex()
+app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///' + PATH + '/data/database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SEND_FILE_MAX_AGE_DEFAULT']      = 1
-
-from app.database.models          import *
-from app.backend.spotify          import *
-from app.backend.shared_resources import *
 
 
 # Expose globals to Jinja2 templates
 app.add_template_global(assets     , 'assets')
 app.add_template_global(app.config , 'cfg'   )
+
+
+from app.backend.database_models  import *
+from app.backend.spotify          import *
+from app.backend.shared_resources import *
 
 
 """ ######### """
@@ -328,7 +342,6 @@ from app.sites                      import index, dashboard, scheduler, programs
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
 from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_AT_STARTUP, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.email              import SEND_EMAIL
-from app.backend.file_management    import GET_LOCATION_COORDINATES
 from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
 from app.backend.spotify            import START_REFRESH_SPOTIFY_TOKEN_THREAD
 

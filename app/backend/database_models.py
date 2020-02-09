@@ -48,6 +48,22 @@ class Controller(db.Model):
     task_11         = db.Column(db.String(50))   
     command_12      = db.Column(db.String(50))
     task_12         = db.Column(db.String(50))       
+    command_13      = db.Column(db.String(50))
+    task_13         = db.Column(db.String(50))       
+    command_14      = db.Column(db.String(50))
+    task_14         = db.Column(db.String(50))       
+    command_15      = db.Column(db.String(50))
+    task_15         = db.Column(db.String(50))       
+    command_16      = db.Column(db.String(50))
+    task_16         = db.Column(db.String(50))       
+    command_17      = db.Column(db.String(50))
+    task_17         = db.Column(db.String(50))       
+    command_18      = db.Column(db.String(50))
+    task_18         = db.Column(db.String(50))       
+    command_19      = db.Column(db.String(50))
+    task_19         = db.Column(db.String(50))       
+    command_20      = db.Column(db.String(50))
+    task_20         = db.Column(db.String(50))       
     collapse        = db.Column(db.String(50))        
 
 class Devices(db.Model):
@@ -430,6 +446,7 @@ if System.query.filter_by().first() == None:
 
 if User.query.filter_by(name='admin').first() is None:
     user = User(
+        id                 = 0,
         name               = "admin",
         email              = "member@example.com",
         role               = "administrator",
@@ -648,6 +665,38 @@ def UPDATE_CONTROLLER_EVENTS():
             controller.command_12 = device_input_events[11]
         except:
             controller.command_12 = "None"      
+        try:
+            controller.command_13 = device_input_events[12]
+        except:
+            controller.command_13 = "None"      
+        try:
+            controller.command_14 = device_input_events[13]
+        except:
+            controller.command_14 = "None"      
+        try:
+            controller.command_15 = device_input_events[14]
+        except:
+            controller.command_15 = "None"      
+        try:
+            controller.command_16 = device_input_events[15]
+        except:
+            controller.command_16 = "None"      
+        try:
+            controller.command_17 = device_input_events[16]
+        except:
+            controller.command_17 = "None"      
+        try:
+            controller.command_18 = device_input_events[17]
+        except:
+            controller.command_18 = "None"      
+        try:
+            controller.command_19 = device_input_events[18]
+        except:
+            controller.command_19 = "None"      
+        try:
+            controller.command_20 = device_input_events[19]
+        except:
+            controller.command_20 = "None"      
 
         db.session.commit()
 
@@ -673,13 +722,17 @@ def RESET_CONTROLLER_COLLAPSE():
         db.session.commit()   
 
 
-def SET_CONTROLLER_TASKS(id, task_1 = "", task_2 = "", task_3 = "", task_4  = "", task_5  = "", task_6  = "", 
-                             task_7 = "", task_8 = "", task_9 = "", task_10 = "", task_11 = "", task_12 = ""):  
+def SET_CONTROLLER_TASKS(id, task_1  = "", task_2  = "", task_3  = "", task_4  = "", task_5  = "", task_6  = "", 
+                             task_7  = "", task_8  = "", task_9  = "", task_10 = "", task_11 = "", task_12 = "",
+                             task_13 = "", task_14 = "", task_15 = "", task_16 = "", task_17 = "", task_18 = "",          
+                             task_19 = "", task_20 = ""):  
 
     entry = Controller.query.filter_by(id=id).first()
 
-    if (entry.task_1 != task_1 or entry.task_2 != task_2 or entry.task_3 != task_3 or entry.task_4  != task_4  or entry.task_5  != task_5  or entry.task_6  != task_6 or 
-        entry.task_7 != task_7 or entry.task_8 != task_8 or entry.task_9 != task_9 or entry.task_10 != task_10 or entry.task_11 != task_11 or entry.task_12 != task_12):
+    if (entry.task_1  != task_1  or entry.task_2  != task_2  or entry.task_3  != task_3  or entry.task_4  != task_4  or entry.task_5  != task_5  or 
+        entry.task_6  != task_6  or entry.task_7  != task_7  or entry.task_8  != task_8  or entry.task_9  != task_9  or entry.task_10 != task_10 or 
+        entry.task_11 != task_11 or entry.task_12 != task_12 or entry.task_13 != task_13 or entry.task_14 != task_14 or entry.task_15 != task_15 or 
+        entry.task_16 != task_16 or entry.task_17 != task_17 or entry.task_18 != task_18 or entry.task_19 != task_19 or entry.task_20 != task_20):
 
         entry.task_1  = task_1
         entry.task_2  = task_2
@@ -692,7 +745,16 @@ def SET_CONTROLLER_TASKS(id, task_1 = "", task_2 = "", task_3 = "", task_4  = ""
         entry.task_9  = task_9    
         entry.task_10 = task_10              
         entry.task_11 = task_11      
-        entry.task_12 = task_12              
+        entry.task_12 = task_12    
+        entry.task_13 = task_13   
+        entry.task_14 = task_14   
+        entry.task_15 = task_15   
+        entry.task_16 = task_16   
+        entry.task_17 = task_17   
+        entry.task_18 = task_18   
+        entry.task_19 = task_19   
+        entry.task_20 = task_20     
+        
         db.session.commit() 
 
         controller_name = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr).name
@@ -3017,7 +3079,7 @@ def GET_ALL_USERS():
     
 
 def ADD_USER():
-    for i in range(1,26):
+    for i in range(1,11):
         if User.query.filter_by(id=i).first():
             pass
         else:
@@ -3034,7 +3096,7 @@ def ADD_USER():
             WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + "new_user_" + str(i) + " | added") 
             return True
 
-    return "Limit reached (25)"        
+    return "Limit reached (10)"        
 
 
 def UPDATE_USER_SETTINGS(id, name, email, role, email_notification):    

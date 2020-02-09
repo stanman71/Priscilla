@@ -1,5 +1,5 @@
 from app                         import app
-from app.database.models         import *
+from app.backend.database_models import *
 
 import datetime
 
@@ -578,7 +578,6 @@ def CHECK_TASKS(tasks, task_type):
             result = CHECK_TASK_OPERATION(controller.task_1, name, task_type, controller.command_1)
             
             if result != []:
-               
                for error in result:   
                   list_task_errors.append(error)    
                
@@ -586,7 +585,6 @@ def CHECK_TASKS(tasks, task_type):
             result = CHECK_TASK_OPERATION(controller.task_2, name, task_type, controller.command_2)
             
             if result != []:
-               
                for error in result:   
                   list_task_errors.append(error)        
                          
@@ -594,7 +592,6 @@ def CHECK_TASKS(tasks, task_type):
             result = CHECK_TASK_OPERATION(controller.task_3, name, task_type, controller.command_3)
             
             if result != []:
-               
                for error in result:   
                   list_task_errors.append(error)                 
                
@@ -602,7 +599,6 @@ def CHECK_TASKS(tasks, task_type):
             result = CHECK_TASK_OPERATION(controller.task_4, name, task_type, controller.command_4)
             
             if result != []:
-               
                for error in result:   
                   list_task_errors.append(error)       
                
@@ -610,7 +606,6 @@ def CHECK_TASKS(tasks, task_type):
             result = CHECK_TASK_OPERATION(controller.task_5, name, task_type, controller.command_5)
             
             if result != []:
-               
                for error in result:   
                   list_task_errors.append(error)                     
                
@@ -618,7 +613,6 @@ def CHECK_TASKS(tasks, task_type):
             result = CHECK_TASK_OPERATION(controller.task_6, name, task_type, controller.command_6)
             
             if result != []:
-               
                for error in result:   
                   list_task_errors.append(error)       
                
@@ -626,7 +620,6 @@ def CHECK_TASKS(tasks, task_type):
             result = CHECK_TASK_OPERATION(controller.task_7, name, task_type, controller.command_7)
             
             if result != []:
-               
                for error in result:   
                   list_task_errors.append(error)                   
                
@@ -634,7 +627,6 @@ def CHECK_TASKS(tasks, task_type):
             result = CHECK_TASK_OPERATION(controller.task_8, name, task_type, controller.command_8)
             
             if result != []:
-               
                for error in result:   
                   list_task_errors.append(error)                   
                                              
@@ -642,9 +634,85 @@ def CHECK_TASKS(tasks, task_type):
             result = CHECK_TASK_OPERATION(controller.task_9, name, task_type, controller.command_9)
             
             if result != []:
-               
                for error in result:   
                   list_task_errors.append(error)            
+
+         if controller.command_10 != None and controller.command_10 != "None": 
+            result = CHECK_TASK_OPERATION(controller.task_10, name, task_type, controller.command_10)
+            
+            if result != []:
+               for error in result:   
+                  list_task_errors.append(error)         
+
+         if controller.command_11 != None and controller.command_11 != "None": 
+            result = CHECK_TASK_OPERATION(controller.task_11, name, task_type, controller.command_11)
+            
+            if result != []:
+               for error in result:   
+                  list_task_errors.append(error)         
+
+         if controller.command_12 != None and controller.command_12 != "None": 
+            result = CHECK_TASK_OPERATION(controller.task_12, name, task_type, controller.command_12)
+            
+            if result != []:
+               for error in result:   
+                  list_task_errors.append(error)         
+
+         if controller.command_13 != None and controller.command_13 != "None": 
+            result = CHECK_TASK_OPERATION(controller.task_13, name, task_type, controller.command_13)
+            
+            if result != []: 
+               for error in result:   
+                  list_task_errors.append(error)         
+
+         if controller.command_14 != None and controller.command_14 != "None": 
+            result = CHECK_TASK_OPERATION(controller.task_14, name, task_type, controller.command_14)
+            
+            if result != []:
+               for error in result:   
+                  list_task_errors.append(error)         
+
+         if controller.command_15 != None and controller.command_15 != "None": 
+            result = CHECK_TASK_OPERATION(controller.task_15, name, task_type, controller.command_15)
+            
+            if result != []:   
+               for error in result:   
+                  list_task_errors.append(error)         
+
+         if controller.command_16 != None and controller.command_16 != "None": 
+            result = CHECK_TASK_OPERATION(controller.task_16, name, task_type, controller.command_16)
+            
+            if result != []:
+               for error in result:   
+                  list_task_errors.append(error)         
+
+         if controller.command_17 != None and controller.command_17 != "None": 
+            result = CHECK_TASK_OPERATION(controller.task_17, name, task_type, controller.command_17)
+            
+            if result != []:
+               for error in result:   
+                  list_task_errors.append(error)         
+
+         if controller.command_18 != None and controller.command_18 != "None": 
+            result = CHECK_TASK_OPERATION(controller.task_18, name, task_type, controller.command_18)
+            
+            if result != []:
+               for error in result:   
+                  list_task_errors.append(error)         
+
+         if controller.command_19 != None and controller.command_19 != "None": 
+            result = CHECK_TASK_OPERATION(controller.task_19, name, task_type, controller.command_19)
+            
+            if result != []: 
+               for error in result:   
+                  list_task_errors.append(error)                                             
+
+         if controller.command_20 != None and controller.command_20 != "None": 
+            result = CHECK_TASK_OPERATION(controller.task_20, name, task_type, controller.command_20)
+            
+            if result != []:    
+               for error in result:   
+                  list_task_errors.append(error)         
 
    # scheduler
 

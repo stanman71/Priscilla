@@ -68,6 +68,7 @@
                                 value="{% if entry.task_1 != None and entry.task_1 != "None" %}{{ entry.task_1 }}{% endif %}" />
                             </td> 
                           </tr>
+                          
                           {% if entry.command_2 != "None" %}
                             <tr style="border-style:hidden;"> 
                               <td style="width:20%"> 
@@ -79,6 +80,7 @@
                               </td>
                             </tr>  
                           {% endif %}  
+
                           {% if entry.command_3 != "None" %}
                             <tr style="border-style:hidden;"> 
                               <td style="width:20%"> 
@@ -90,6 +92,7 @@
                               </td>
                             </tr>  
                           {% endif %}  
+
                           {% if entry.command_4 != "None" %}
                             <tr style="border-style:hidden;"> 
                               <td style="width:20%"> 
@@ -101,6 +104,7 @@
                               </td>
                             </tr>  
                           {% endif %}  
+                          
                           {% if entry.command_5 != "None" %}
                             <tr style="border-style:hidden;"> 
                               <td style="width:20%"> 
@@ -112,6 +116,7 @@
                               </td>
                             </tr>  
                           {% endif %}  
+
                           {% if entry.command_6 != "None" %}
                             <tr style="border-style:hidden;"> 
                               <td style="width:20%"> 
@@ -123,6 +128,7 @@
                               </td>
                             </tr>  
                           {% endif %}  
+
                           {% if entry.command_7 != "None" %}
                             <tr style="border-style:hidden;"> 
                               <td style="width:20%"> 
@@ -134,6 +140,7 @@
                               </td>
                             </tr>  
                           {% endif %}  
+
                           {% if entry.command_8 != "None" %}
                             <tr style="border-style:hidden;"> 
                               <td style="width:20%"> 
@@ -145,6 +152,7 @@
                               </td>
                             </tr>  
                           {% endif %}   
+                          
                           {% if entry.command_9 != "None" %}
                             <tr style="border-style:hidden;"> 
                               <td style="width:20%"> 
@@ -155,7 +163,8 @@
                                   value="{% if entry.task_9 != None and entry.task_9 != "None" %}{{ entry.task_9 }}{% endif %}" /> 
                               </td>
                             </tr>  
-                          {% endif %}            
+                          {% endif %}    
+
                           {% if entry.command_10 != "None" %}
                             <tr style="border-style:hidden;"> 
                               <td style="width:20%"> 
@@ -167,6 +176,7 @@
                               </td>
                             </tr>  
                           {% endif %}      
+
                           {% if entry.command_11 != "None" %}
                             <tr style="border-style:hidden;"> 
                               <td style="width:20%"> 
@@ -177,7 +187,8 @@
                                   value="{% if entry.task_11 != None and entry.task_11 != "None" %}{{ entry.task_11 }}{% endif %}" /> 
                               </td>
                             </tr>  
-                          {% endif %}      
+                          {% endif %}     
+
                           {% if entry.command_12 != "None" %}
                             <tr style="border-style:hidden;"> 
                               <td style="width:20%"> 
@@ -189,6 +200,103 @@
                               </td>
                             </tr>  
                           {% endif %}      
+
+                          {% if entry.command_13 != "None" %}
+                            <tr style="border-style:hidden;"> 
+                              <td style="width:20%"> 
+                                {{ entry.command_13 | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} 
+                              </td>
+                              <td style="width:77%"> 
+                                <input type="text" class="form-control" name="set_task_13_{{entry.id}}"
+                                  value="{% if entry.task_13 != None and entry.task_13 != "None" %}{{ entry.task_13 }}{% endif %}" /> 
+                              </td>
+                            </tr>  
+                          {% endif %}     
+
+                          {% if entry.command_14 != "None" %}
+                            <tr style="border-style:hidden;"> 
+                              <td style="width:20%"> 
+                                {{ entry.command_14 | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} 
+                              </td>
+                              <td style="width:77%"> 
+                                <input type="text" class="form-control" name="set_task_14_{{entry.id}}"
+                                  value="{% if entry.task_14 != None and entry.task_14 != "None" %}{{ entry.task_14 }}{% endif %}" /> 
+                              </td>
+                            </tr>  
+                          {% endif %}     
+
+                          {% if entry.command_15 != "None" %}
+                            <tr style="border-style:hidden;"> 
+                              <td style="width:20%"> 
+                                {{ entry.command_15 | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} 
+                              </td>
+                              <td style="width:77%"> 
+                                <input type="text" class="form-control" name="set_task_15_{{entry.id}}"
+                                  value="{% if entry.task_15 != None and entry.task_15 != "None" %}{{ entry.task_15 }}{% endif %}" /> 
+                              </td>
+                            </tr>  
+                          {% endif %}     
+
+                          {% if entry.command_16 != "None" %}
+                            <tr style="border-style:hidden;"> 
+                              <td style="width:20%"> 
+                                {{ entry.command_16 | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} 
+                              </td>
+                              <td style="width:77%"> 
+                                <input type="text" class="form-control" name="set_task_16_{{entry.id}}"
+                                  value="{% if entry.task_16 != None and entry.task_16 != "None" %}{{ entry.task_16 }}{% endif %}" /> 
+                              </td>
+                            </tr>  
+                          {% endif %}     
+
+                          {% if entry.command_17 != "None" %}
+                            <tr style="border-style:hidden;"> 
+                              <td style="width:20%"> 
+                                {{ entry.command_17 | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} 
+                              </td>
+                              <td style="width:77%"> 
+                                <input type="text" class="form-control" name="set_task_17_{{entry.id}}"
+                                  value="{% if entry.task_17 != None and entry.task_17 != "None" %}{{ entry.task_17 }}{% endif %}" /> 
+                              </td>
+                            </tr>  
+                          {% endif %}     
+
+                          {% if entry.command_18 != "None" %}
+                            <tr style="border-style:hidden;"> 
+                              <td style="width:20%"> 
+                                {{ entry.command_18 | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} 
+                              </td>
+                              <td style="width:77%"> 
+                                <input type="text" class="form-control" name="set_task_18_{{entry.id}}"
+                                  value="{% if entry.task_18 != None and entry.task_18 != "None" %}{{ entry.task_18 }}{% endif %}" /> 
+                              </td>
+                            </tr>  
+                          {% endif %}  
+
+                          {% if entry.command_19 != "None" %}
+                            <tr style="border-style:hidden;"> 
+                              <td style="width:20%"> 
+                                {{ entry.command_19 | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} 
+                              </td>
+                              <td style="width:77%"> 
+                                <input type="text" class="form-control" name="set_task_19_{{entry.id}}"
+                                  value="{% if entry.task_19 != None and entry.task_19 != "None" %}{{ entry.task_19 }}{% endif %}" /> 
+                              </td>
+                            </tr>  
+                          {% endif %}     
+
+                          {% if entry.command_20 != "None" %}
+                            <tr style="border-style:hidden;"> 
+                              <td style="width:20%"> 
+                                {{ entry.command_20 | replace('"', '') | replace('{', '') | replace('}', '') | replace(':', ': ') | replace(',', ', ') }} 
+                              </td>
+                              <td style="width:77%"> 
+                                <input type="text" class="form-control" name="set_task_20_{{entry.id}}"
+                                  value="{% if entry.task_20 != None and entry.task_20 != "None" %}{{ entry.task_20 }}{% endif %}" /> 
+                              </td>
+                            </tr>  
+                          {% endif %}      
+
                         </tbody>
                       </table>
                     </div>                 

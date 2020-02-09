@@ -4,7 +4,7 @@ import json
 import heapq
 
 from app                          import app
-from app.database.models          import *
+from app.backend.database_models  import *
 from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS
 from app.backend.email            import SEND_EMAIL
 from app.backend.shared_resources import mqtt_message_queue

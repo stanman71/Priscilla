@@ -15,7 +15,7 @@ https://developer.spotify.com/documentation/web-api/reference/player/start-a-use
 """
 
 from app                          import app
-from app.database.models          import *
+from app.backend.database_models  import *
 from app.backend.file_management  import *
 from app.backend.email            import SEND_EMAIL
 from app.backend.shared_resources import mqtt_message_queue

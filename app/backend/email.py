@@ -2,7 +2,7 @@ from flask_mail import Mail, Message
 import os
 
 from app import app
-from app.database.models import *
+from app.backend.database_models import *
 from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 
 

@@ -4,7 +4,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
 from app                         import app
-from app.database.models         import *
+from app.backend.database_models import *
 from app.backend.process_program import * 
 from app.common                  import COMMON, STATUS
 from app.assets                  import *

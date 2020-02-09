@@ -4,7 +4,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
 from app                           import app
-from app.database.models           import *
+from app.backend.database_models   import *
 from app.backend.file_management   import GET_ALL_LOCATIONS, GET_LOCATION_COORDINATES
 from app.backend.checks            import CHECK_TASKS, CHECK_SCHEDULER_TASKS_SETTINGS
 from app.backend.process_scheduler import GET_SUNRISE_TIME, GET_SUNSET_TIME

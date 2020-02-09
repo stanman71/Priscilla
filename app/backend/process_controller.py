@@ -4,7 +4,7 @@ import json
 import time
 
 from app                          import app
-from app.database.models          import *
+from app.backend.database_models  import *
 from app.backend.lighting         import *
 from app.backend.mqtt             import *
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
@@ -218,6 +218,134 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                     print(e)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
                                          controller.command_12[1:-1].replace('"','') + " | " + str(e))    
+
+            # ##########
+            # command_13
+            # ##########
+            
+            try:
+
+                if str(controller.command_13)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_13, controller.device.name, controller.command_13)            
+                    return
+           
+            except Exception as e:
+                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
+                    print(e)
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
+                                         controller.command_13[1:-1].replace('"','') + " | " + str(e))    
+
+            # ##########
+            # command_14
+            # ##########
+            
+            try:
+
+                if str(controller.command_14)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_14, controller.device.name, controller.command_14)            
+                    return
+           
+            except Exception as e:
+                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
+                    print(e)
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
+                                         controller.command_14[1:-1].replace('"','') + " | " + str(e))    
+
+            # ##########
+            # command_15
+            # ##########
+            
+            try:
+
+                if str(controller.command_15)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_15, controller.device.name, controller.command_15)            
+                    return
+           
+            except Exception as e:
+                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
+                    print(e)
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
+                                         controller.command_15[1:-1].replace('"','') + " | " + str(e))    
+
+            # ##########
+            # command_16
+            # ##########
+            
+            try:
+
+                if str(controller.command_16)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_16, controller.device.name, controller.command_16)            
+                    return
+           
+            except Exception as e:
+                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
+                    print(e)
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
+                                         controller.command_16[1:-1].replace('"','') + " | " + str(e))    
+
+            # ##########
+            # command_17
+            # ##########
+            
+            try:
+
+                if str(controller.command_17)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_17, controller.device.name, controller.command_17)            
+                    return
+           
+            except Exception as e:
+                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
+                    print(e)
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
+                                         controller.command_17[1:-1].replace('"','') + " | " + str(e))    
+
+            # ##########
+            # command_18
+            # ##########
+            
+            try:
+
+                if str(controller.command_18)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_18, controller.device.name, controller.command_18)            
+                    return
+           
+            except Exception as e:
+                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
+                    print(e)
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
+                                         controller.command_18[1:-1].replace('"','') + " | " + str(e))    
+
+            # ##########
+            # command_19
+            # ##########
+            
+            try:
+
+                if str(controller.command_19)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_19, controller.device.name, controller.command_19)            
+                    return
+           
+            except Exception as e:
+                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
+                    print(e)
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
+                                         controller.command_19[1:-1].replace('"','') + " | " + str(e))    
+
+            # ##########
+            # command_20
+            # ##########
+            
+            try:
+
+                if str(controller.command_20)[1:-1] in str(msg):
+                    START_CONTROLLER_TASK(controller.task_20, controller.device.name, controller.command_20)            
+                    return
+           
+            except Exception as e:
+                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
+                    print(e)
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
+                                         controller.command_20[1:-1].replace('"','') + " | " + str(e))                                             
 
 
 """ ################################ """
@@ -518,34 +646,38 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 spotify_volume = sp.current_playback(market=None)['device']['volume_percent']
             except:
                 spotify_volume = 50
+
+            try:
             
-            if task[1].strip() == "PLAY":
-                SPOTIFY_CONTROL(spotify_token, "play", spotify_volume) 
+                if task[1].strip() == "PLAY":
+                    SPOTIFY_CONTROL(spotify_token, "play", spotify_volume) 
 
-            if task[1].strip() == "PLAY/STOP":
-                SPOTIFY_CONTROL(spotify_token, "play/stop", spotify_volume) 
+                if task[1].strip() == "PLAY/STOP":
+                    SPOTIFY_CONTROL(spotify_token, "play/stop", spotify_volume) 
 
-            if task[1].strip()== "PREVIOUS": 
-                SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
+                if task[1].strip()== "PREVIOUS": 
+                    SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
 
-            if task[1].strip() == "NEXT":
-                SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
+                if task[1].strip() == "NEXT":
+                    SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
 
-            if task[1].strip() == "STOP": 
-                SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)      
+                if task[1].strip() == "STOP": 
+                    SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)      
 
-            if task[1].strip() == "VOLUME_UP":   
-                device_name = sp.current_playback(market=None)['device']['name']
-                SPOTIFY_CONTROL(spotify_token, "volume_up", spotify_volume)
+                if task[1].strip() == "VOLUME_UP":   
+                    device_name = sp.current_playback(market=None)['device']['name']
+                    SPOTIFY_CONTROL(spotify_token, "volume_up", spotify_volume)
 
-            if task[1].strip() == "VOLUME_DOWN":   
-                device_name = sp.current_playback(market=None)['device']['name']
-                SPOTIFY_CONTROL(spotify_token, "volume_down", spotify_volume)                 
+                if task[1].strip() == "VOLUME_DOWN":   
+                    device_name = sp.current_playback(market=None)['device']['name']
+                    SPOTIFY_CONTROL(spotify_token, "volume_down", spotify_volume)                 
 
-            if task[1].strip() == "VOLUME":            
-                spotify_volume = int(task[2].strip())
-                SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
+                if task[1].strip() == "VOLUME":            
+                    spotify_volume = int(task[2].strip())
+                    SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
 
+            except:
+                pass
 
             # start playlist
                     

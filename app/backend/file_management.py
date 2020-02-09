@@ -232,7 +232,7 @@ def GET_BACKUP_FILES():
 
 def BACKUP_DATABASE():  
     try:
-        shutil.copyfile(PATH + '/app/database/database.db', 
+        shutil.copyfile(PATH + '/data/database.db', 
                         PATH + '/data/backup/' + str(datetime.datetime.now().date()) + '_database.db')
                 
         # if more then 10 backups saved, delete oldest backup file
@@ -254,7 +254,7 @@ def BACKUP_DATABASE():
 def RESTORE_DATABASE(filename):
     try:
         if filename.split("_")[1] == "database.db":
-            shutil.copyfile(PATH + '/data/backup/' + filename, PATH + '/app/database/database.db')
+            shutil.copyfile(PATH + '/data/backup/' + filename, PATH + '/data/database.db')
             WRITE_LOGFILE_SYSTEM("SUCCESS", "System | Database_Backup | " + filename + " | restored")
             return True
             

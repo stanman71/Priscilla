@@ -4,7 +4,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
 from app                         import app
-from app.database.models         import *
+from app.backend.database_models import *
 from app.backend.checks          import CHECK_TASKS
 from app.backend.spotify         import GET_SPOTIFY_TOKEN
 from app.common                  import COMMON, STATUS
@@ -114,8 +114,55 @@ def settings_controller():
                     task_12 = request.form.get("set_task_12_" + str(i)).strip()
                 else:
                     task_12 = "None"  
-                                                            
-                if SET_CONTROLLER_TASKS(i, task_1, task_2, task_3, task_4, task_5, task_6, task_7, task_8, task_9, task_10, task_11, task_12):
+
+                if request.form.get("set_task_13_" + str(i)) != "" and request.form.get("set_task_13_" + str(i)) != None:
+                    task_13 = request.form.get("set_task_13_" + str(i)).strip()
+                else:
+                    task_13 = "None"  
+
+                if request.form.get("set_task_14_" + str(i)) != "" and request.form.get("set_task_14_" + str(i)) != None:
+                    task_14 = request.form.get("set_task_14_" + str(i)).strip()
+                else:
+                    task_14 = "None"  
+
+                if request.form.get("set_task_15_" + str(i)) != "" and request.form.get("set_task_15_" + str(i)) != None:
+                    task_15 = request.form.get("set_task_15_" + str(i)).strip()
+                else:
+                    task_15 = "None"  
+
+                if request.form.get("set_task_15_" + str(i)) != "" and request.form.get("set_task_15_" + str(i)) != None:
+                    task_15 = request.form.get("set_task_15_" + str(i)).strip()
+                else:
+                    task_15 = "None"  
+
+                if request.form.get("set_task_16_" + str(i)) != "" and request.form.get("set_task_16_" + str(i)) != None:
+                    task_16 = request.form.get("set_task_16_" + str(i)).strip()
+                else:
+                    task_16 = "None"  
+
+                if request.form.get("set_task_17_" + str(i)) != "" and request.form.get("set_task_17_" + str(i)) != None:
+                    task_17 = request.form.get("set_task_17_" + str(i)).strip()
+                else:
+                    task_17 = "None"  
+
+                if request.form.get("set_task_18_" + str(i)) != "" and request.form.get("set_task_18_" + str(i)) != None:
+                    task_18 = request.form.get("set_task_18_" + str(i)).strip()
+                else:
+                    task_18 = "None"  
+
+                if request.form.get("set_task_19_" + str(i)) != "" and request.form.get("set_task_19_" + str(i)) != None:
+                    task_19 = request.form.get("set_task_19_" + str(i)).strip()
+                else:
+                    task_19 = "None"  
+
+                if request.form.get("set_task_20_" + str(i)) != "" and request.form.get("set_task_20_" + str(i)) != None:
+                    task_20 = request.form.get("set_task_20_" + str(i)).strip()
+                else:
+                    task_20 = "None"  
+
+                if SET_CONTROLLER_TASKS(i, task_1,  task_2,  task_3,  task_4,  task_5,  task_6,  task_7,  task_8,  task_9,  task_10, 
+                                           task_11, task_12, task_13, task_14, task_15, task_16, task_17, task_18, task_19, task_20):
+                                           
                     success_message_change_settings_controller = i
 
                                                     

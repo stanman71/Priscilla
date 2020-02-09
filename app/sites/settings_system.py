@@ -5,7 +5,7 @@ from functools           import wraps
 from ping3               import ping
 
 from app                          import app
-from app.database.models          import *
+from app.backend.database_models  import *
 from app.backend.email            import SEND_EMAIL
 from app.backend.file_management  import UPDATE_NETWORK_SETTINGS_LINUX, GET_BACKUP_FILES, BACKUP_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP, WRITE_LOGFILE_SYSTEM
 from app.backend.shared_resources import SET_ZIGBEE2MQTT_PAIRING_STATUS

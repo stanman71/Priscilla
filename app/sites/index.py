@@ -7,10 +7,10 @@ from flask_wtf.file     import FileField, FileRequired
 from wtforms            import StringField, TextAreaField, SubmitField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, DataRequired
 
-from app                  import app
-from app.database.models  import *
-from app.common           import COMMON, STATUS
-from app.assets           import *
+from app                         import app
+from app.backend.database_models import *
+from app.common                  import COMMON, STATUS
+from app.assets                  import *
 
 
 import os, shutil, re, cgi

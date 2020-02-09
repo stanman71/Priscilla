@@ -6,7 +6,7 @@ import datetime
 import time
 
 from app                          import app
-from app.database.models          import *
+from app.backend.database_models  import *
 from app.backend.file_management  import *
 from app.backend.shared_resources import *
 from app.backend.email            import SEND_EMAIL

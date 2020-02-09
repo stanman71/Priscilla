@@ -4,7 +4,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
 from app                          import app
-from app.database.models          import *
+from app.backend.database_models  import *
 from app.backend.spotify          import *
 from app.backend.shared_resources import mqtt_message_queue, GET_MQTT_INCOMING_MESSAGES, GET_DEVICE_CONNECTION_MQTT
 from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS

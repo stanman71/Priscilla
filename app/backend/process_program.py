@@ -4,7 +4,7 @@ import time
 import spotipy
 
 from app                          import app
-from app.database.models          import *
+from app.backend.database_models  import *
 from app.backend.file_management  import *
 from app.backend.shared_resources import *
 from app.backend.mqtt             import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD, REQUEST_SENSORDATA

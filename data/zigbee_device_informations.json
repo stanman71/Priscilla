@@ -547,7 +547,7 @@
 				"device_type"     : "controller",
 				"description"     : "Xiaomi Aqara Opple switch 1 band",
 				"input_values"    : [],
-				"input_events"    : ["{'action':'button_1_single'}","{'action':'button_2_single'}"],
+				"input_events"    : ["{'action':'button_1_single'}","{'action':'button_1_double'}","{'action':'button_1_hold'}","{'action':'button_2_single'}","{'action':'button_2_double'}","{'action':'button_2_hold'}"],
 				"commands"        : [],
 				"commands_json"   : []
 			},	
@@ -556,7 +556,7 @@
 				"device_type"     : "controller",
 				"description"     : "Xiaomi Aqara Opple switch 2 band",
 				"input_values"    : [],
-				"input_events"    : ["{'action':'button_1_single'}","{'action':'button_2_single'}","{'action':'button_3_single'}","{'action':'button_4_single'}"],
+				"input_events"    : ["{'action':'button_1_single'}","{'action':'button_1_double'}","{'action':'button_1_hold'}","{'action':'button_2_single'}","{'action':'button_2_double'}","{'action':'button_2_hold'}","{'action':'button_3_single'}","{'action':'button_3_double'}","{'action':'button_3_hold'}","{'action':'button_4_single'}","{'action':'button_4_double'}","{'action':'button_4_hold'}"],
 				"commands"        : [],
 				"commands_json"   : []
 			},				
@@ -565,7 +565,7 @@
 				"device_type"     : "controller",
 				"description"     : "Xiaomi Aqara Opple switch 3 band",
 				"input_values"    : [],
-				"input_events"    : ["{'action':'button_1_single'}","{'action':'button_2_single'}","{'action':'button_3_single'}","{'action':'button_4_single'}","{'action':'button_5_single'}","{'action':'button_6_single'}"],
+				"input_events"    : ["{'action':'button_1_single'}","{'action':'button_1_double'}","{'action':'button_1_hold'}","{'action':'button_2_single'}","{'action':'button_2_double'}","{'action':'button_2_hold'}","{'action':'button_3_single'}","{'action':'button_3_double'}","{'action':'button_3_hold'}","{'action':'button_4_single'}","{'action':'button_4_double'}","{'action':'button_4_hold'}","{'action':'button_5_single'}","{'action':'button_5_double'}","{'action':'button_5_hold'}","{'action':'button_6_single'}","{'action':'button_6_double'}","{'action':'button_6_hold'}"],
 				"commands"        : [],
 				"commands_json"   : []
 			}							

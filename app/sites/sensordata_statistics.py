@@ -4,7 +4,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
 from app                          import app
-from app.database.models          import *
+from app.backend.database_models  import *
 from app.backend.file_management  import READ_SENSORDATA_FILE, GET_SENSORDATA_FILES
 from app.backend.build_graph      import BUILD_GRAPH
 from app.common                   import COMMON, STATUS

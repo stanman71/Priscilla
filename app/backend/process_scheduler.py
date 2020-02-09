@@ -8,7 +8,7 @@ import spotipy
 import re
 
 from app                          import app
-from app.database.models          import *
+from app.backend.database_models  import *
 from app.backend.lighting         import *
 from app.backend.mqtt             import *
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM, GET_LOCATION_COORDINATES, BACKUP_DATABASE

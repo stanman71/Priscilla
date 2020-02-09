@@ -4,7 +4,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
 from app                         import app
-from app.database.models         import *
+from app.backend.database_models import *
 from app.backend.file_management import RESET_LOGFILE, GET_LOGFILE_SYSTEM, GET_PATH, WRITE_LOGFILE_SYSTEM
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
