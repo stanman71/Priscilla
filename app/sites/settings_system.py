@@ -239,9 +239,9 @@ def settings_system():
                     print("ERROR: System | Services | Squeezelie Player | " + str(e)) 
 
 
-    """ ################# """
-    """  settings network """
-    """ ################# """    
+    """ ################## """
+    """  settings network  """
+    """ ################## """    
                 
     if request.form.get("set_settings_network") != None:
         
@@ -250,14 +250,17 @@ def settings_system():
         else:
             dhcp = "False"  
 
-        # no dhcp ?
+        # #############
+        # dhcp disabled
+        # #############
+
         if dhcp == "False":  
 
             # first reload of the website after deactivate dhcp, website don't know the values "set_ip_address" and "set_gateway"
             if request.form.get("set_ip_address") != None:          
-
                 save_settings_lan = True
                         
+                # ip address
                 if request.form.get("set_ip_address") != "":
                     new_ip_address = request.form.get("set_ip_address").strip()  
 
@@ -277,6 +280,7 @@ def settings_system():
                 else:
                     error_message_change_settings_network.append("Network || No IP-Address given") 
                     
+                # gateway
                 if request.form.get("set_gateway") != "":
                     gateway = request.form.get("set_gateway").strip()              
 
@@ -292,11 +296,19 @@ def settings_system():
                     error_message_change_settings_network.append("Network || No gateway given") 
                     save_settings_lan = False
 
-                if save_settings_lan == True:
+                # port
+                if request.form.get("set_port") != "":
+                    port = request.form.get("set_port").strip()      
 
+                else:
+                    error_message_change_settings_network.append("Network || No port given") 
+                    save_settings_lan = False
+
+                # save settings
+                if save_settings_lan == True:
                     changes_saved = False
 
-                    if SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, dhcp):
+                    if SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, port, dhcp):
                         changes_saved = True
                     if UPDATE_NETWORK_SETTINGS_LINUX(dhcp, ip_address, gateway):
                         changes_saved = True
@@ -305,12 +317,33 @@ def settings_system():
                         success_message_change_settings_network = True
 
             else:
-                if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_SETTINGS().ip_address, GET_SYSTEM_SETTINGS().gateway, dhcp):
+                if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_SETTINGS().ip_address, GET_SYSTEM_SETTINGS().gateway, GET_SYSTEM_SETTINGS().port, dhcp):
                     success_message_change_settings_network = True       
 
+        # ##############
+        # dhcp activated
+        # ##############
+
         else:
-            if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_SETTINGS().ip_address, GET_SYSTEM_SETTINGS().gateway, dhcp):
-                success_message_change_settings_network = True  
+            save_settings_lan = True
+
+            # port
+            if request.form.get("set_port") != "":
+                port = request.form.get("set_port").strip()      
+
+            else:
+                error_message_change_settings_network.append("Network || No port given") 
+                save_settings_lan = False
+
+            # save settings
+            if save_settings_lan == True:
+                changes_saved = False
+
+                if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_SETTINGS().ip_address, GET_SYSTEM_SETTINGS().gateway, port, dhcp):
+                    changes_saved = True
+
+                if changes_saved == True:
+                    success_message_change_settings_network = True            
 
 
     """ ################ """

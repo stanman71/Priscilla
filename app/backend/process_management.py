@@ -61,7 +61,7 @@ def PROCESS_MANAGEMENT():
   
         except Exception as e:         
             try:   
-                if "index out of range" not in str(e):
+                if "index out of range" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
                     WRITE_LOGFILE_SYSTEM("ERROR", "System | Process Management | " + str(e))  
                     SEND_EMAIL("ERROR", "System | Process Management | " + str(e))               
                     print("ERROR: System | Process Management | " + str(e))

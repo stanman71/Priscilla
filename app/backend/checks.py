@@ -483,10 +483,10 @@ def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks):
 
       if task.trigger_sun_position == "True":
 
-         # check setting location
+         # check coordinates 
          if task.option_sunrise == "True" or task.option_sunset == "True":
-            if task.location == "None":
-               list_errors.append(task.name + " || No zone selected")
+            if task.latitude == "None" or task.longitude == "None":
+               list_errors.append(task.name + " || Coordinates not complete")
          else:
             list_errors.append(task.name + " || Missing setting | Sunrise or Sunset")
 

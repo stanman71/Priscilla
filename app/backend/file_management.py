@@ -149,38 +149,6 @@ def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):
         return (e)   
 
 
-""" ################ """
-"""  file locations  """
-""" ################ """
-
-def GET_ALL_LOCATIONS():
-    try:
-        # open locations file
-        with open(PATH + "/data/locations.ymal", "r") as file_locations:
-            locations = yaml.load(file_locations, Loader=yaml.SafeLoader)
-            file_locations.close()
-
-        return (locations["Locations"].keys())
-        
-    except Exception as e:    
-        return ("ERROR: Locations Import || " + str(e))
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | data/locations.ymal | " + str(e))
-        
-
-def GET_LOCATION_COORDINATES(location):
-    try:
-        # open locations file
-        with open(PATH + "/data/locations.ymal", "r") as file_locations:
-            locations = yaml.load(file_locations, Loader=yaml.SafeLoader)
-            file_locations.close()
-
-        return (locations["Locations"][location])
-        
-    except Exception as e:    
-        return ("ERROR: Locations Import || " + str(e))
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | data/locations.ymal | " + str(e))
-
-
 """ ###################### """
 """  linux network config  """
 """ ###################### """
@@ -354,7 +322,7 @@ def DELETE_SENSORDATA_FILE(filename):
 def GET_DEVICE_INFORMATIONS(model):
     
     try:
-        with open(PATH + "/data/zigbee_device_informations.json", 'r') as data_file:
+        with open(PATH + "/app/zigbee_device_informations.json", 'r') as data_file:
             data_loaded = json.load(data_file)
 
         for device in data_loaded["data"]:
@@ -405,4 +373,4 @@ def GET_DEVICE_INFORMATIONS(model):
         return ("", "", "", "", "", "")   
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/zigbee_device_informations.json | " + str(e))   
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /app/zigbee_device_informations.json | " + str(e))   

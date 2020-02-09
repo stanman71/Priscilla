@@ -367,19 +367,12 @@
                                   </div>   
                                 </div>                     
                                 <div class="col-sm-4">                                         
-                                  <select class="form-control" data-size="5" name="set_location_{{ entry.id }}" style="background-color:#27293D"> 
-                                    {% if entry.location != None and entry.location != "None" %}
-                                      <option value= "{{ entry.location }}" > {{ entry.location }} </option>
-                                    {% else %}
-                                      <option value= "" > Location </option>
-                                    {% endif %}
-                                    <option disabled>------------------</option>    
-                                    {% for each in dropdown_list_locations %}
-                                      <option value= "{{ each }}" > {{ each }} </option>
-                                    {% endfor %}                                                                                
-                                  </select>        
+                                  <input type="text" class="form-control" placeholder="Latitude" name="set_latitude_{{ entry.id }}"
+                                    value = {% if entry.latitude != None and entry.latitude != "None" %}"{{ entry.latitude }}"{% else %}""{% endif %} />   
                                 </div> 
                                 <div class="col-sm-4">   
+                                  <input type="text" class="form-control" placeholder="Longitude" name="set_longitude_{{ entry.id }}"
+                                    value = {% if entry.longitude != None and entry.longitude != "None" %}"{{ entry.longitude }}"{% else %}""{% endif %} />                                   
                                 </div>   
                               </div>                                                      
                             </td>                           

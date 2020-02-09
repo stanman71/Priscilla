@@ -236,7 +236,14 @@
                               <input type="text" class="form-control" name="set_gateway" value="{% if system_settings.gateway != None %}{{ system_settings.gateway }}{% endif %}" /> 
                             {% endif %}     
                           </div>
-                        </div>                           
+                        </div>       
+                        <div class="col-sm-2">                       
+                          <div class="form-group">
+                            <label>LAN Port</label>
+                              <br>                      
+                              <input type="text" class="form-control" name="set_port" value="{% if system_settings.port != None %}{{ system_settings.port }}{% endif %}" /> 
+                          </div>
+                        </div>                                               
                       </div>
                     </div>
                   </div>                  

@@ -17,12 +17,54 @@ from difflib import SequenceMatcher
 
 """ ################################ """
 """ ################################ """
+"""  command hold break loop thread  """
+""" ################################ """
+""" ################################ """
+
+
+command_hold_break_loop = False
+
+def START_COMMAND_HOLD_BREAK_LOOP_THREAD():
+	try:
+		Thread = threading.Thread(target=COMMAND_HOLD_BREAK_LOOP_THREAD)
+		Thread.start()  
+		
+	except Exception as e:
+		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Break Loop Thread | " + str(e)) 
+		SEND_EMAIL("ERROR", "System | Thread | Break Loop Thread | " + str(e))     
+    
+
+def COMMAND_HOLD_BREAK_LOOP_THREAD():   
+    global command_hold_break_loop
+
+    limit = 0
+
+    while True:
+
+        # search for release message
+        for message in GET_MQTT_INCOMING_MESSAGES(3):   
+            if "release" in str(message[2]):
+                command_hold_break_loop = True
+                return
+
+        # limit 10 seconds
+        if limit == 50:
+            command_hold_break_loop = True
+            return
+
+        limit = limit + 1
+        time.sleep(0.2)
+
+
+""" ################################ """
+""" ################################ """
 """        process controller        """
 """ ################################ """
 """ ################################ """
 
 
 def PROCESS_CONTROLLER(ieeeAddr, msg):
+    global command_hold_break_loop
 
     for controller in GET_ALL_CONTROLLER():
         
@@ -34,8 +76,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:                                                                                    
                 if str(controller.command_1)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_1, controller.device.name, controller.command_1)                      
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_1, controller.device.name, controller.command_1)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_1, controller.device.name, controller.command_1)                      
+                        return
           
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -50,8 +103,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_2)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_2, controller.device.name, controller.command_2)                
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_2, controller.device.name, controller.command_2)    
+
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_2, controller.device.name, controller.command_2)                      
+                        return
                           
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -66,9 +130,20 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_3)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_3, controller.device.name, controller.command_3)               
-                    return                      
-           
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_3, controller.device.name, controller.command_3)    
+
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_3, controller.device.name, controller.command_3)                      
+                        return
+
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
                     print(e)
@@ -82,8 +157,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_4)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_4, controller.device.name, controller.command_4)                 
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_4, controller.device.name, controller.command_4)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_4, controller.device.name, controller.command_4)                      
+                        return
                             
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -98,8 +184,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_5)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_5, controller.device.name, controller.command_5)                    
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_5, controller.device.name, controller.command_5)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_5, controller.device.name, controller.command_5)                      
+                        return
                             
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -114,8 +211,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_6)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_6, controller.device.name, controller.command_6)                    
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_6, controller.device.name, controller.command_6)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_6, controller.device.name, controller.command_6)                      
+                        return
                                
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -130,8 +238,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
            
                 if str(controller.command_7)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_7, controller.device.name, controller.command_7)                   
-                    return                      
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_7, controller.device.name, controller.command_7)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_7, controller.device.name, controller.command_7)                      
+                        return                  
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -146,8 +265,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:                                            
                                                 
                 if str(controller.command_8)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_8, controller.device.name, controller.command_8)                   
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_8, controller.device.name, controller.command_8)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_8, controller.device.name, controller.command_8)                      
+                        return
                             
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -162,8 +292,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_9)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_9, controller.device.name, controller.command_9)                    
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_9, controller.device.name, controller.command_9)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_9, controller.device.name, controller.command_9)                      
+                        return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -178,8 +319,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:                                              
                                             
                 if str(controller.command_10)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_10, controller.device.name, controller.command_10)                 
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_10, controller.device.name, controller.command_10)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_10, controller.device.name, controller.command_10)                      
+                        return
         
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -194,8 +346,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
                                                                        
                 if str(controller.command_11)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_11, controller.device.name, controller.command_11)               
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_11, controller.device.name, controller.command_11)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_11, controller.device.name, controller.command_11)                      
+                        return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -210,8 +373,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_12)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_12, controller.device.name, controller.command_12)            
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_12, controller.device.name, controller.command_12)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_12, controller.device.name, controller.command_12)                      
+                        return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -226,8 +400,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_13)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_13, controller.device.name, controller.command_13)            
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_13, controller.device.name, controller.command_13)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_13, controller.device.name, controller.command_13)                      
+                        return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -242,8 +427,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_14)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_14, controller.device.name, controller.command_14)            
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_14, controller.device.name, controller.command_14)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_14, controller.device.name, controller.command_14)                      
+                        return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -258,8 +454,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_15)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_15, controller.device.name, controller.command_15)            
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_15, controller.device.name, controller.command_15)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_15, controller.device.name, controller.command_15)                      
+                        return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -274,8 +481,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_16)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_16, controller.device.name, controller.command_16)            
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_16, controller.device.name, controller.command_16)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_16, controller.device.name, controller.command_16)                      
+                        return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -290,8 +508,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_17)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_17, controller.device.name, controller.command_17)            
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_17, controller.device.name, controller.command_17)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_17, controller.device.name, controller.command_17)                      
+                        return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -306,8 +535,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_18)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_18, controller.device.name, controller.command_18)            
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_18, controller.device.name, controller.command_18)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_18, controller.device.name, controller.command_18)                      
+                        return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -322,8 +562,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_19)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_19, controller.device.name, controller.command_19)            
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_19, controller.device.name, controller.command_19)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_19, controller.device.name, controller.command_19)                      
+                        return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):
@@ -338,8 +589,19 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:
 
                 if str(controller.command_20)[1:-1] in str(msg):
-                    START_CONTROLLER_TASK(controller.task_20, controller.device.name, controller.command_20)            
-                    return
+
+                    # special case "hold" command
+                    if "hold" in str(msg):                       
+                        START_COMMAND_HOLD_BREAK_LOOP_THREAD()
+                         
+                        while command_hold_break_loop == False:     
+                            START_CONTROLLER_TASK(controller.task_20, controller.device.name, controller.command_20)    
+                            
+                        command_hold_break_loop = False
+
+                    else:
+                        START_CONTROLLER_TASK(controller.task_20, controller.device.name, controller.command_20)                      
+                        return
            
             except Exception as e:
                 if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e):

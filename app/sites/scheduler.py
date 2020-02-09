@@ -5,7 +5,6 @@ from functools           import wraps
 
 from app                           import app
 from app.backend.database_models   import *
-from app.backend.file_management   import GET_ALL_LOCATIONS, GET_LOCATION_COORDINATES
 from app.backend.checks            import CHECK_TASKS, CHECK_SCHEDULER_TASKS_SETTINGS
 from app.backend.process_scheduler import GET_SUNRISE_TIME, GET_SUNSET_TIME
 from app.backend.spotify           import GET_SPOTIFY_TOKEN
@@ -130,7 +129,7 @@ def scheduler():
                     trigger_time = ""  
 
                 # set checkbox sun
-                if request.form.get("checkbox_trigger_sun_position" + str(i)):
+                if request.form.get("checkbox_trigger_sun_position_" + str(i)):
                     trigger_sun_position = "True"
                 else:
                     trigger_sun_position = "" 
@@ -199,20 +198,21 @@ def scheduler():
                 else:              
                     option_sunset = "None"  
 
-                # set location
-                location = request.form.get("set_location_" + str(i))
+                # set coordinates
+                latitude  = request.form.get("set_latitude_" + str(i))
+
+                if latitude == "" or latitude == None:           
+                    latitude = "None"  
+
+                longitude = request.form.get("set_longitude_" + str(i))
                 
-                if location == "" or location == None:           
-                    location = "None"  
+                if longitude == "" or longitude == None:           
+                    longitude = "None"  
                                                   
                 # update sunrise / sunset  
-                if location != "None":
-                    
-                    # get coordinates
-                    coordinates = GET_LOCATION_COORDINATES(location)
-                     
-                    SET_SCHEDULER_TASK_SUNRISE(i, GET_SUNRISE_TIME(float(coordinates[0]), float(coordinates[1])))
-                    SET_SCHEDULER_TASK_SUNSET(i, GET_SUNSET_TIME(float(coordinates[0]), float(coordinates[1])))
+                if latitude != "None" and longitude != "None":               
+                    SET_SCHEDULER_TASK_SUNRISE(i, GET_SUNRISE_TIME(float(latitude), float(longitude)))
+                    SET_SCHEDULER_TASK_SUNSET(i, GET_SUNSET_TIME(float(latitude), float(longitude)))
                             
                 else:
                     SET_SCHEDULER_TASK_SUNRISE(i, "None")
@@ -338,7 +338,7 @@ def scheduler():
                     if SET_SCHEDULER_TASK(i, name, task, 
                                             trigger_time, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause,
                                             day, hour, minute,
-                                            option_sunrise, option_sunset, location,
+                                            option_sunrise, option_sunset, latitude, longitude,
                                             device_ieeeAddr_1, device_name_1, device_input_values_1, 
                                             sensor_key_1, operator_1, value_1, main_operator_second_sensor,
                                             device_ieeeAddr_2, device_name_2, device_input_values_2, 
@@ -421,7 +421,6 @@ def scheduler():
     dropdown_list_devices                     = GET_ALL_DEVICES("sensors")
     dropdown_list_operators                   = ["=", ">", "<"]
     dropdown_list_main_operator_second_sensor = ["and", "or", "=", ">", "<"]
-    dropdown_list_locations                   = GET_ALL_LOCATIONS()
 
     data = {'navigation': 'scheduler'}    
 
@@ -561,7 +560,6 @@ def scheduler():
                                                     dropdown_list_devices=dropdown_list_devices,
                                                     dropdown_list_operators=dropdown_list_operators,
                                                     dropdown_list_main_operator_second_sensor=dropdown_list_main_operator_second_sensor,
-                                                    dropdown_list_locations=dropdown_list_locations,
                                                     success_message_change_settings=success_message_change_settings,
                                                     error_message_change_settings=error_message_change_settings,                         
                                                     success_message_add_scheduler_task=success_message_add_scheduler_task,

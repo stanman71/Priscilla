@@ -274,7 +274,8 @@ class Scheduler_Tasks(db.Model):
     minute                      = db.Column(db.String(50))
     option_sunrise              = db.Column(db.String(50))
     option_sunset               = db.Column(db.String(50))
-    location                    = db.Column(db.String(50))
+    latitude                    = db.Column(db.String(50))
+    longitude                   = db.Column(db.String(50))    
     sunrise                     = db.Column(db.String(50))
     sunset                      = db.Column(db.String(50))    
     device_ieeeAddr_1           = db.Column(db.String(50))
@@ -322,6 +323,7 @@ class System(db.Model):
     id                 = db.Column(db.Integer, primary_key=True, autoincrement = True)   
     ip_address         = db.Column(db.String(50))
     gateway            = db.Column(db.String(50))
+    port               = db.Column(db.String(50), server_default=("80"))    
     dhcp               = db.Column(db.String(50), server_default=("True"))     
     zigbee2mqtt_active = db.Column(db.String(50), server_default=("False"))
     lms_active         = db.Column(db.String(50), server_default=("False"))   
@@ -587,6 +589,7 @@ def GET_ALL_CONTROLLER():
         
 
 def ADD_CONTROLLER(device_ieeeAddr):
+
     # controller exist ?
     if not GET_CONTROLLER_BY_IEEEADDR(device_ieeeAddr):
         
@@ -597,17 +600,13 @@ def ADD_CONTROLLER(device_ieeeAddr):
             else:
                 # add new controller
                 controller = Controller(
-                                        id = i,
+                                        id              = i,
                                         device_ieeeAddr = device_ieeeAddr,
                                         )
                 db.session.add(controller)
                 db.session.commit()
                 
                 UPDATE_CONTROLLER_EVENTS()
-                
-                controller_name = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).name
-
-                WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Controller - " + controller_name + " | Added")  
                 return True
 
 
@@ -2628,7 +2627,7 @@ def ADD_SCHEDULER_TASK():
 def SET_SCHEDULER_TASK(id, name, task,
                        trigger_time, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause, 
                        day, hour, minute, 
-                       option_sunrise, option_sunset, location,
+                       option_sunrise, option_sunset, latitude, longitude,
                        device_ieeeAddr_1, device_name_1, device_input_values_1, sensor_key_1, operator_1, value_1, main_operator_second_sensor,
                        device_ieeeAddr_2, device_name_2, device_input_values_2, sensor_key_2, operator_2, value_2, 
                        option_home, option_away, ip_addresses):
@@ -2641,7 +2640,7 @@ def SET_SCHEDULER_TASK(id, name, task,
         entry.trigger_sun_position != trigger_sun_position or entry.trigger_sensors != trigger_sensors or 
         entry.trigger_position != trigger_position or entry.option_repeat != option_repeat or entry.option_pause != option_pause or 
         entry.day != day or entry.hour != hour or entry.minute != minute or
-        entry.option_sunrise != option_sunrise or entry.option_sunset != option_sunset or entry.location != location or
+        entry.option_sunrise != option_sunrise or entry.option_sunset != option_sunset or entry.latitude != latitude or entry.longitude != longitude or 
         entry.device_ieeeAddr_1 != device_ieeeAddr_1 or entry.sensor_key_1 != sensor_key_1 or 
         entry.operator_1 != operator_1 or entry.value_1 != value_1  or entry.main_operator_second_sensor != main_operator_second_sensor or 
         entry.device_ieeeAddr_2 != device_ieeeAddr_2 or entry.sensor_key_2 != sensor_key_2 or 
@@ -2661,7 +2660,8 @@ def SET_SCHEDULER_TASK(id, name, task,
         entry.minute                      = minute
         entry.option_sunrise              = option_sunrise
         entry.option_sunset               = option_sunset
-        entry.location                    = location        
+        entry.latitude                    = latitude        
+        entry.longitude                   = longitude          
         entry.device_ieeeAddr_1           = device_ieeeAddr_1
         entry.device_name_1               = device_name_1
         entry.device_input_values_1       = device_input_values_1
@@ -3020,14 +3020,15 @@ def GET_SYSTEM_SETTINGS():
     return System.query.filter_by().first()
 
 
-def SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, dhcp):
+def SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, port, dhcp):
     entry = System.query.filter_by().first()
 
     # values changed ?
-    if entry.ip_address != ip_address or entry.gateway != gateway or entry.dhcp != dhcp:   
+    if entry.ip_address != ip_address or entry.gateway != gateway or entry.port != port or entry.dhcp != dhcp:   
      
         entry.ip_address = ip_address
         entry.gateway    = gateway  
+        entry.port       = port          
         entry.dhcp       = dhcp 
         db.session.commit()
         

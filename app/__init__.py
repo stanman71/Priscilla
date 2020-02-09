@@ -33,7 +33,7 @@ else:
 """ ####### """
 
 app = Flask(__name__, static_url_path='/static')
-app.config['SECRET_KEY'] = "random"        #os.urandom(20).hex()
+app.config['SECRET_KEY']                     = "random"        #os.urandom(20).hex()
 app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///' + PATH + '/data/database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SEND_FILE_MAX_AGE_DEFAULT']      = 1
@@ -331,7 +331,7 @@ try:
 except:
     gateway = ""
     
-SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, GET_SYSTEM_SETTINGS().dhcp)
+SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, GET_SYSTEM_SETTINGS().port, GET_SYSTEM_SETTINGS().dhcp)
 
 
 """ ####### """
@@ -364,13 +364,11 @@ def update_sunrise_sunset():
             if task.option_sunrise == "True" or task.option_sunset == "True":
 
                 # get coordinates
-                coordinates = GET_LOCATION_COORDINATES(task.location)
-
-                if coordinates != "None" and coordinates != None: 
+                if task.latitude != "None" and task.latitude != None and task.longitude != "None" and task.longitude:
 
                     # update sunrise / sunset
-                    SET_SCHEDULER_TASK_SUNRISE(task.id, GET_SUNRISE_TIME(float(coordinates[0]), float(coordinates[1])))
-                    SET_SCHEDULER_TASK_SUNSET(task.id, GET_SUNSET_TIME(float(coordinates[0]), float(coordinates[1])))
+                    SET_SCHEDULER_TASK_SUNRISE(task.id, GET_SUNRISE_TIME(float(task.latitude), float(task.longitude)))
+                    SET_SCHEDULER_TASK_SUNSET(task.id, GET_SUNSET_TIME(float(task.latitude), float(task.longitude)))
                             
 
 @scheduler.task('cron', id='scheduler_time', minute='*')
@@ -488,4 +486,4 @@ if GET_SYSTEM_SETTINGS().squeezelite_active != "True":
 PROCESS_MANAGEMENT_THREAD()
 START_REFRESH_SPOTIFY_TOKEN_THREAD()
 
-socketio.run(app, host = GET_SYSTEM_SETTINGS().ip_address, port = 80, debug=False)
+socketio.run(app, host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)
