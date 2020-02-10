@@ -495,32 +495,13 @@ def CHECK_SCHEDULER_TASK_SETTINGS(scheduler_tasks):
 
       if task.trigger_sun_position == "True":
 
-         # check setting sunrise / sunset 
-         if task.option_sunrise != "True" and task.option_sunset != "True":
+         # check coordinates 
+         if task.option_sunrise == "True" or task.option_sunset == "True":
+            if task.latitude == "None" or task.longitude == "None":
+               list_errors.append("Coordinates not complete")
+         else:
             list_errors.append("Missing setting || Sunrise or Sunset")
 
-         if task.latitude == "None":
-            list_errors.append("No latitude coordinates founded")
-         else:
-            try:
-               if type(float(task.latitude)) is not float:
-                  list_errors.append("Invalid latitude coordinates")
-               if not -90.0 <= float(task.latitude) <= 90.0:
-                  list_errors.append("Invalid latitude coordinates")
-            except:
-               list_errors.append("Invalid latitude coordinates")
-
-         if task.longitude == "None":
-            list_errors.append("No longitude coordinates founded")
-         else:
-            try:
-               if type(float(task.longitude)) is not float:
-                  list_errors.append("Invalid longitude coordinates")
-               if not -180.0 <= float(task.longitude) <= 180.0:
-                  list_errors.append("Invalid longitude coordinates")                  
-            except:
-               list_errors.append("Invalid longitude coordinates")
-         
 
       if task.trigger_sensors == "True":
 

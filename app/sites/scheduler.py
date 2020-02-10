@@ -207,27 +207,15 @@ def scheduler():
                 
                 if longitude == "" or longitude == None:           
                     longitude = "None"  
-
-                try:                
-                    # update sunrise / sunset  
-                    if latitude != "None" and longitude != "None":     
-
-                        # valid values ?
-                        if -90.0 <= float(latitude) <= 90.0 and -180.0 <= float(longitude) <= 180.0:       
-                            SET_SCHEDULER_TASK_SUNRISE(i, GET_SUNRISE_TIME(float(latitude), float(longitude)))
-                            SET_SCHEDULER_TASK_SUNSET(i, GET_SUNSET_TIME(float(latitude), float(longitude)))
-
-                        else:
-                            SET_SCHEDULER_TASK_SUNRISE(i, "None")
-                            SET_SCHEDULER_TASK_SUNSET(i, "None")                            
-
-                    else:
-                        SET_SCHEDULER_TASK_SUNRISE(i, "None")
-                        SET_SCHEDULER_TASK_SUNSET(i, "None")       
-
-                except:
+                                                  
+                # update sunrise / sunset  
+                if latitude != "None" and longitude != "None":               
+                    SET_SCHEDULER_TASK_SUNRISE(i, GET_SUNRISE_TIME(float(latitude), float(longitude)))
+                    SET_SCHEDULER_TASK_SUNSET(i, GET_SUNSET_TIME(float(latitude), float(longitude)))
+                            
+                else:
                     SET_SCHEDULER_TASK_SUNRISE(i, "None")
-                    SET_SCHEDULER_TASK_SUNSET(i, "None")                   
+                    SET_SCHEDULER_TASK_SUNSET(i, "None")                        
 
 
                 # ###############
