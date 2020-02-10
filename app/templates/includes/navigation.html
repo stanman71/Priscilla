@@ -10,7 +10,7 @@
           {% endif %} 
             <a href="/dashboard">
               <i class='uil uil-analytics'></i>
-              <p>Dashboard</p>
+              <p><font size="2">Dashboard</font></p>
             </a>
           </li>
 
@@ -23,7 +23,7 @@
             {% endif %} 
               <a href="/scheduler">
                 <i class='uil uil-calendar-alt'></i>
-                <p>Scheduler</p>
+                <p><font size="2">Scheduler</font></p>
               </a>
             </li>  
 
@@ -34,7 +34,7 @@
             {% endif %} 
               <a href="/programs">
                 <i class='uil uil-process'></i>
-                <p>Programs</p>
+                <p><font size="2">Programs</font></p>
               </a>
             </li>            
 
@@ -45,7 +45,7 @@
             {% endif %} 
               <a href="/lighting/scenes">
                 <i class='uil uil-lightbulb-alt'></i>
-                <p>Lighting</p>
+                <p><font size="2">Lighting</font></p>
               </a>
             </li>  
 
@@ -56,7 +56,7 @@
             {% endif %} 
               <a href="/cameras">
                 <i class='uil uil-video'></i>
-                <p>Cameras</p>
+                <p><font size="2">Cameras</font></p>
               </a>
             </li>  
 
@@ -67,7 +67,7 @@
             {% endif %} 
               <a href="/music">
                 <i class='uil uil-music'></i>
-                <p>Music</p>
+                <p><font size="2">Music</font></p>
               </a>
             </li>  
 
@@ -78,7 +78,7 @@
             {% endif %} 
               <a href="/sensordata/jobs">
                 <i class='uil uil-database-alt'></i>
-                <p>Sensordata</p>
+                <p><font size="2">Sensordata</font></p>
               </a>
             </li>  
 
@@ -93,25 +93,33 @@
             {% endif %} 
               <a href="/settings/system">
                 <i class='uil uil-cog'></i>
-                <p>Settings</p>
+                <p><font size="2">Settings</font></p>
               </a>
             </li>  
+
+          {% endif %}
+
+          {% if current_user.role == "user" or current_user.role == "administrator" %}
+
+            <li>
+              <a href="/about">
+                <i class='uil uil-info-circle'></i>
+                <p><font size="2">About</font></p>
+              </a>
+            </li>
 
           {% endif %}
 
           {% if current_user.is_authenticated %}
             <li>
               <a href={{ url_for('logout') }}>
-                <i class='uil uil-sign-out-alt'></i>
-                <p>Logout</p>
+                <i class='uil uil-exit' style="color:red"></i>
+                <p><font color="red" size="2"><strong>Logout</strong></font></p>
               </a>
             </li>
           {% endif %}
 
           <!-- dummies for correct scrolling -->
-          <li>
-            <a href=""></a>
-          </li>    
           <li>
             <a href=""></a>
           </li>    

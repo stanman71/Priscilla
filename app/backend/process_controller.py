@@ -42,18 +42,18 @@ def COMMAND_HOLD_BREAK_LOOP_THREAD():
     while True:
 
         # search for release message
-        for message in GET_MQTT_INCOMING_MESSAGES(3):   
+        for message in GET_MQTT_INCOMING_MESSAGES(1):   
             if "release" in str(message[2]):
                 command_hold_break_loop = True
                 return
 
-        # limit 10 seconds
-        if limit == 50:
+        # limit 3 seconds
+        if limit == 30:
             command_hold_break_loop = True
             return
 
         limit = limit + 1
-        time.sleep(0.2)
+        time.sleep(0.1)
 
 
 """ ################################ """
