@@ -46,32 +46,44 @@ def CHECK_DEVICE_EXCEPTION_SETTINGS(devices):
 """  check ighting groups  """
 """ ###################### """
 
-def CHECK_LIGHTING_GROUP_SETTINGS(settings):
+def CHECK_LIGHTING_GROUP_SETTINGS(lighting_groups):
    list_errors = []
 
    # check setting open light_slots in groups
-   for element in settings:
+   for group in lighting_groups:
       
-      if element.light_ieeeAddr_1 == None or element.light_ieeeAddr_1 == "None":
-          list_errors.append(element.name + " || Missing setting | Light 1")        
-      if element.active_light_2 == "True" and (element.light_ieeeAddr_2 == None or element.light_ieeeAddr_2 == "None"):
-          list_errors.append(element.name + " || Missing setting | Light 2") 
-      if element.active_light_3 == "True" and (element.light_ieeeAddr_3 == None or element.light_ieeeAddr_3 == "None"):
-          list_errors.append(element.name + " || Missing setting | Light 3") 
-      if element.active_light_4 == "True" and (element.light_ieeeAddr_4 == None or element.light_ieeeAddr_4 == "None"):
-          list_errors.append(element.name + " || Missing setting | Light 4") 
-      if element.active_light_5 == "True" and (element.light_ieeeAddr_5 == None or element.light_ieeeAddr_5 == "None"):
-          list_errors.append(element.name + " || Missing setting | Light 5") 
-      if element.active_light_6 == "True" and (element.light_ieeeAddr_6 == None or element.light_ieeeAddr_6 == "None"):
-          list_errors.append(element.name + " || Missing setting | Light 6") 
-      if element.active_light_7 == "True" and (element.light_ieeeAddr_7 == None or element.light_ieeeAddr_7 == "None"):
-          list_errors.append(element.name + " || Missing setting | Light 7") 
-      if element.active_light_8 == "True" and (element.light_ieeeAddr_8 == None or element.light_ieeeAddr_8 == "None"):
-          list_errors.append(element.name + " || Missing setting | Light 8") 
-      if element.active_light_9 == "True" and (element.light_ieeeAddr_9 == None or element.light_ieeeAddr_9 == "None"):
-          list_errors.append(element.name + " || Missing setting | Light 9")   
-          
-   return list_errors
+      if group.light_ieeeAddr_1 == None or group.light_ieeeAddr_1 == "None":
+          list_errors.append("Missing setting || Light 1")        
+      if group.active_light_2 == "True" and (group.light_ieeeAddr_2 == None or group.light_ieeeAddr_2 == "None"):
+          list_errors.append("Missing setting || Light 2") 
+      if group.active_light_3 == "True" and (group.light_ieeeAddr_3 == None or group.light_ieeeAddr_3 == "None"):
+          list_errors.append("Missing setting || Light 3") 
+      if group.active_light_4 == "True" and (group.light_ieeeAddr_4 == None or group.light_ieeeAddr_4 == "None"):
+          list_errors.append("Missing setting || Light 4") 
+      if group.active_light_5 == "True" and (group.light_ieeeAddr_5 == None or group.light_ieeeAddr_5 == "None"):
+          list_errors.append("Missing setting || Light 5") 
+      if group.active_light_6 == "True" and (group.light_ieeeAddr_6 == None or group.light_ieeeAddr_6 == "None"):
+          list_errors.append("Missing setting || Light 6") 
+      if group.active_light_7 == "True" and (group.light_ieeeAddr_7 == None or group.light_ieeeAddr_7 == "None"):
+          list_errors.append("Missing setting || Light 7") 
+      if group.active_light_8 == "True" and (group.light_ieeeAddr_8 == None or group.light_ieeeAddr_8 == "None"):
+          list_errors.append("Missing setting || Light 8") 
+      if group.active_light_9 == "True" and (group.light_ieeeAddr_9 == None or group.light_ieeeAddr_9 == "None"):
+          list_errors.append("Missing setting || Light 9")   
+               
+      if list_errors != []:
+         list_group_errors = ""
+         
+         for error in list_errors:   
+            list_group_errors = list_group_errors + "," + error      
+
+         SET_LIGHTING_GROUP_ERRORS(group.id, list_group_errors[1:]) 
+
+      else:
+         SET_LIGHTING_GROUP_ERRORS(group.id, "") 
+
+      # reset errors
+      list_errors = []      
 
 
 """ ############## """
@@ -379,13 +391,13 @@ def CHECK_PROGRAM_TASKS(program_id):
 """ ######################### """
 
 
-def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks): 
+def CHECK_SCHEDULER_TASK_SETTINGS(scheduler_tasks): 
    list_errors = []  
 
    for task in scheduler_tasks:
 
       if task.trigger_time != "True" and task.trigger_sun_position != "True" and task.trigger_sensors != "True" and task.trigger_position != "True":    
-         list_errors.append(task.name + " || No trigger selected")          
+         list_errors.append("No trigger selected")          
 
 
       if task.trigger_time == "True":
@@ -398,13 +410,13 @@ def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks):
                   days = days.split(",")
                   for element in days:
                      if element.lower() not in ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]:
-                        list_errors.append(task.name + " || Wrong time | Day")
+                        list_errors.append("Invalid Time || Day")
                         break                                 
             else:
                   if task.day.lower() not in ["mon", "tue", "wed", "thu", "fri", "sat", "sun", "*"] and task.day != "*":
-                     list_errors.append(task.name + " || Wrong time | Day") 
+                     list_errors.append("Invalid Time || Day") 
          except:
-            list_errors.append(task.name + " || Wrong time | Day")
+            list_errors.append("Invalid Time | Day")
 
          ### check hour
             
@@ -416,32 +428,32 @@ def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks):
                   for element in hours:
  
                      if len(element) == 1 and element != "*":
-                        list_errors.append(task.name + " || Wrong time | Hour")
+                        list_errors.append("Invalid Time || Hour")
                         break
                     
                      try:
                         if not (0 <= int(element) <= 24):
-                           list_errors.append(task.name + " || Wrong time | Hour")
+                           list_errors.append("Invalid Time || Hour")
                            break
                         
                      except:
-                        list_errors.append(task.name + " || Wrong time | Hour")
+                        list_errors.append("Invalid Time || Hour")
                         break   
             else:
                   
                if len(task.hour) == 1 and task.hour != "*":
-                  list_errors.append(task.name + " || Wrong time | Hour")
+                  list_errors.append("Invalid Time || Hour")
                   break
                 
                try:
                   if not (0 <= int(task.hour) <= 24) and task.hour != "*":
-                     list_errors.append(task.name + " || Wrong time | Hour") 
+                     list_errors.append("Invalid Time || Hour") 
                except:
                   if task.hour != "*":
-                     list_errors.append(task.name + " || Wrong time | Hour")    
+                     list_errors.append("Invalid Time || Hour")    
 
          except:
-            list_errors.append(task.name + " || Wrong time | Hour")
+            list_errors.append("Invalid Time | Hour")
 
          ### check minute
 
@@ -453,75 +465,94 @@ def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks):
                   for element in minutes:
                       
                      if len(element) == 1 and element != "*":
-                        list_errors.append(task.name + " || Wrong time | Minute")
+                        list_errors.append("Invalid Time || Minute")
                         break                      
                       
                      try:
                         if not (0 <= int(element) <= 60):
-                           list_errors.append(task.name + " || Wrong time | Minute") 
+                           list_errors.append("Invalid Time || Minute") 
                            break
                         
                      except:
-                        list_errors.append(task.name + " || Wrong time | Minute") 
+                        list_errors.append("Invalid Time || Minute") 
                         break   
             else:
                 
                if len(task.minute) == 1 and task.minute != "*":
-                  list_errors.append(task.name + " || Wrong time | Minute")
+                  list_errors.append("Invalid Time || Minute")
                   break
                 
                try:
                   if not (0 <= int(task.minute) <= 60) and task.minute != "*":
-                     list_errors.append(task.name + " || Wrong time | Minute") 
+                     list_errors.append("Invalid Time || Minute") 
                except:
                   if task.minute != "*":
-                     list_errors.append(task.name + " || Wrong time | Minute") 
+                     list_errors.append("Invalid Time || Minute") 
       
          except:
-            list_errors.append(task.name + " || Wrong time | Minute") 
+            list_errors.append("Invalid Time || Minute") 
 
 
       if task.trigger_sun_position == "True":
 
-         # check coordinates 
-         if task.option_sunrise == "True" or task.option_sunset == "True":
-            if task.latitude == "None" or task.longitude == "None":
-               list_errors.append(task.name + " || Coordinates not complete")
-         else:
-            list_errors.append(task.name + " || Missing setting | Sunrise or Sunset")
+         # check setting sunrise / sunset 
+         if task.option_sunrise != "True" and task.option_sunset != "True":
+            list_errors.append("Missing setting || Sunrise or Sunset")
 
+         if task.latitude == "None":
+            list_errors.append("No latitude coordinates founded")
+         else:
+            try:
+               if type(float(task.latitude)) is not float:
+                  list_errors.append("Invalid latitude coordinates")
+               if not -90.0 <= float(task.latitude) <= 90.0:
+                  list_errors.append("Invalid latitude coordinates")
+            except:
+               list_errors.append("Invalid latitude coordinates")
+
+         if task.longitude == "None":
+            list_errors.append("No longitude coordinates founded")
+         else:
+            try:
+               if type(float(task.longitude)) is not float:
+                  list_errors.append("Invalid longitude coordinates")
+               if not -180.0 <= float(task.longitude) <= 180.0:
+                  list_errors.append("Invalid longitude coordinates")                  
+            except:
+               list_errors.append("Invalid longitude coordinates")
+         
 
       if task.trigger_sensors == "True":
 
          # check mqtt devices
          if task.device_ieeeAddr_1 == "None" or task.device_ieeeAddr_1 == "" or task.device_ieeeAddr_1 == None:
-            list_errors.append(task.name + " || Missing setting | Device 1") 
+            list_errors.append("Missing setting || Device 1") 
 
          if task.device_ieeeAddr_2 == "None" or task.device_ieeeAddr_2 == "" or task.device_ieeeAddr_2 == None:
             if task.main_operator_second_sensor != "None" and task.main_operator_second_sensor != None:
-               list_errors.append(task.name + " || Missing setting | Device 2") 
+               list_errors.append("Missing setting || Device 2") 
                   
          # check sensors
          if task.sensor_key_1 == "None" or task.sensor_key_1 == None:
-            list_errors.append(task.name + " || Missing setting | Sensor 1") 
+            list_errors.append("Missing setting || Sensor 1") 
             
          if task.main_operator_second_sensor != "None" and task.main_operator_second_sensor != None:
             if task.sensor_key_2 == "None" or task.sensor_key_2 == None:
-               list_errors.append(task.name + " || Missing setting | Sensor 2")  
+               list_errors.append("Missing setting || Sensor 2")  
                
          # check operators
          if task.main_operator_second_sensor != "<" and task.main_operator_second_sensor != ">" and task.main_operator_second_sensor != "=":
             if task.operator_1 == "" or task.operator_1 == "None" or task.operator_1 == None: 
-               list_errors.append(task.name + " || Missing setting | Operator 1")
+               list_errors.append("Missing setting || Operator 1")
          
          if task.main_operator_second_sensor == "and" or task.main_operator_second_sensor == "or":
             if task.operator_2 == "None" or task.operator_2 == "" or task.operator_2 == None: 
-               list_errors.append(task.name + " || Missing setting | Operator 2")  
+               list_errors.append("Missing setting || Operator 2")  
 
          # check values
          if task.main_operator_second_sensor != "<" and task.main_operator_second_sensor != ">" and task.main_operator_second_sensor != "=":   
             if task.value_1 == "" or task.value_1 == "None" or task.value_1 == None: 
-               list_errors.append(task.name + " || Missing setting | Value 1")   
+               list_errors.append("Missing setting || Value 1")   
                   
             elif (task.operator_1 == "<" or task.operator_1 == ">") and not task.value_1.isdigit():
                list_errors.append(task.name + 
@@ -529,7 +560,7 @@ def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks):
 
          if task.main_operator_second_sensor == "and" or task.main_operator_second_sensor == "or":
             if task.value_2 == "" or task.value_2 == "None" or task.value_2 == None:
-               list_errors.append(task.name + " || Missing setting | Value 2")  
+               list_errors.append("Missing setting | Value 2")  
             elif (task.operator_2 == "<" or task.operator_2 == ">") and not task.value_2.isdigit():
                list_errors.append(task.name + 
                " || Invalid input | Value 2 | Only numbers can be used with the selected operator")                 
@@ -539,11 +570,11 @@ def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks):
 
          # check setting choosed
          if task.option_home != "True" and task.option_away != "True":
-            list_errors.append(task.name + " || Missing setting | Home or Away")
+            list_errors.append("Missing setting || Home or Away")
 
          # check setting home / away
          if task.option_home == "True" and task.option_away == "True":
-            list_errors.append(task.name + " || Home or Away can be selected separately only")
+            list_errors.append("Home or Away can be selected separately only")
 
          # check setting ip-addresses
          if task.option_home == "True" or task.option_away == "True":
@@ -553,24 +584,36 @@ def CHECK_SCHEDULER_TASKS_SETTINGS(scheduler_tasks):
                # search for wrong chars
                for element in task.ip_addresses:
                   if not element.isdigit() and element != "." and element != "," and element != " ":
-                     list_errors.append(task.name + " || Invalid IP-Addresses")
+                     list_errors.append("Invalid IP-Addresses")
                      break
 
-   return list_errors
+      if list_errors != []:
+         list_task_setting_errors = ""
+
+         for error in list_errors:   
+            list_task_setting_errors = list_task_setting_errors + "," + error      
+
+         SET_SCHEDULER_TASK_SETTING_ERRORS(task.id, list_task_setting_errors[1:]) 
+
+      else:
+         SET_SCHEDULER_TASK_SETTING_ERRORS(task.id, "") 
+
+      # reset errors
+      list_errors = []
 
 
 """ ################### """
 """     check tasks     """
 """ ################### """
 
-def CHECK_TASKS(tasks, task_type):
-   list_task_errors = []
+def CHECK_TASKS(entities, task_type):
+   list_task_errors = ""
 
    # controller
    
    if task_type == "controller": 
 
-      for controller in tasks:
+      for controller in entities:
 
          name = GET_DEVICE_BY_IEEEADDR(controller.device_ieeeAddr).name
 
@@ -579,155 +622,162 @@ def CHECK_TASKS(tasks, task_type):
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)    
+                  list_task_errors = list_task_errors + "," + error
                
          if controller.command_2 != None and controller.command_2 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_2, name, task_type, controller.command_2)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)        
+                  list_task_errors = list_task_errors + "," + error       
                          
          if controller.command_3 != None and controller.command_3 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_3, name, task_type, controller.command_3)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)                 
+                  list_task_errors = list_task_errors + "," + error               
                
          if controller.command_4 != None and controller.command_4 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_4, name, task_type, controller.command_4)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)       
+                  list_task_errors = list_task_errors + "," + error     
                
          if controller.command_5 != None and controller.command_5 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_5, name, task_type, controller.command_5)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)                     
+                  list_task_errors = list_task_errors + "," + error                   
                
          if controller.command_6 != None and controller.command_6 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_6, name, task_type, controller.command_6)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)       
+                  list_task_errors = list_task_errors + "," + error     
                
          if controller.command_7 != None and controller.command_7 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_7, name, task_type, controller.command_7)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)                   
+                  list_task_errors = list_task_errors + "," + error                  
                
          if controller.command_8 != None and controller.command_8 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_8, name, task_type, controller.command_8)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)                   
+                  list_task_errors = list_task_errors + "," + error                  
                                              
          if controller.command_9 != None and controller.command_9 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_9, name, task_type, controller.command_9)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)            
+                  list_task_errors = list_task_errors + "," + error          
 
          if controller.command_10 != None and controller.command_10 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_10, name, task_type, controller.command_10)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)         
+                  list_task_errors = list_task_errors + "," + error        
 
          if controller.command_11 != None and controller.command_11 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_11, name, task_type, controller.command_11)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)         
+                  list_task_errors = list_task_errors + "," + error      
 
          if controller.command_12 != None and controller.command_12 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_12, name, task_type, controller.command_12)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)         
+                  list_task_errors = list_task_errors + "," + error        
 
          if controller.command_13 != None and controller.command_13 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_13, name, task_type, controller.command_13)
             
             if result != []: 
                for error in result:   
-                  list_task_errors.append(error)         
+                  list_task_errors = list_task_errors + "," + error         
 
          if controller.command_14 != None and controller.command_14 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_14, name, task_type, controller.command_14)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)         
+                  list_task_errors = list_task_errors + "," + error       
 
          if controller.command_15 != None and controller.command_15 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_15, name, task_type, controller.command_15)
             
             if result != []:   
                for error in result:   
-                  list_task_errors.append(error)         
+                  list_task_errors = list_task_errors + "," + error        
 
          if controller.command_16 != None and controller.command_16 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_16, name, task_type, controller.command_16)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)         
+                  list_task_errors = list_task_errors + "," + error       
 
          if controller.command_17 != None and controller.command_17 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_17, name, task_type, controller.command_17)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)         
+                  list_task_errors = list_task_errors + "," + error      
 
          if controller.command_18 != None and controller.command_18 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_18, name, task_type, controller.command_18)
             
             if result != []:
                for error in result:   
-                  list_task_errors.append(error)         
+                  list_task_errors = list_task_errors + "," + error        
 
          if controller.command_19 != None and controller.command_19 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_19, name, task_type, controller.command_19)
             
             if result != []: 
                for error in result:   
-                  list_task_errors.append(error)                                             
+                  list_task_errors = list_task_errors + "," + error                                           
 
          if controller.command_20 != None and controller.command_20 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_20, name, task_type, controller.command_20)
             
             if result != []:    
                for error in result:   
-                  list_task_errors.append(error)         
+                  list_task_errors = list_task_errors + "," + error      
+
+         SET_CONTROLLER_TASK_ERRORS(controller.id, list_task_errors[1:]) 
+
+         # reset errors
+         list_task_errors = ""
 
    # scheduler
 
    if task_type == "scheduler":
 
-      for element in tasks:
-         result = CHECK_TASK_OPERATION(element.task, element.name, task_type)
+      for scheduler_task in entities:
+         result = CHECK_TASK_OPERATION(scheduler_task.task, scheduler_task.name, task_type)
          
          if result != []:
             
             for error in result:   
-               list_task_errors.append(error)
+               list_task_errors = list_task_errors + "," + error      
 
+         SET_SCHEDULER_TASK_ERRORS(scheduler_task.id, list_task_errors[1:]) 
 
-   return list_task_errors
+         # reset errors
+         list_task_errors = ""
 
 
 def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
@@ -753,15 +803,15 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                if GET_LIGHTING_GROUP_BY_NAME(task[2].strip()) == None: 
 
                   if task_type == "controller":
-                     list_task_errors.append(name + " || " + controller_command + " | Group not founded | " + task[2].strip())  
+                     list_task_errors.append(controller_command + " || Group not founded | " + task[2].strip())  
                   else:                               
-                     list_task_errors.append(name + " || Group not founded | " + task[2].strip())  
+                     list_task_errors.append("Group not founded || " + task[2].strip())  
 
             except:
                if task_type == "controller":
-                  list_task_errors.append(name + " || " + controller_command + " | Missing setting | Group")
+                  list_task_errors.append(controller_command + " || Missing setting | Group")
                else:
-                  list_task_errors.append(name + " || Missing setting | Group")
+                  list_task_errors.append("Missing setting || Group")
 
             # check scene setting    
 
@@ -770,16 +820,16 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                if GET_LIGHTING_SCENE_BY_NAME(task[3].strip()) == None: 
 
                   if task_type == "controller":
-                     list_task_errors.append(name + " || " + controller_command + " | Scene not founded | " + task[3].strip())  
+                     list_task_errors.append(controller_command + " || Scene not founded | " + task[3].strip())  
                   else:                               
-                     list_task_errors.append(name + " || Scene not founded | " + task[3].strip())  
+                     list_task_errors.append("Scene not founded || " + task[3].strip())  
                   
             except:
 
                if task_type == "controller":
-                  list_task_errors.append(name + " || " + controller_command + " | Missing setting | Scene")
+                  list_task_errors.append(controller_command + " || Missing setting | Scene")
                else:               
-                  list_task_errors.append(name + " || Missing setting | Scene")
+                  list_task_errors.append("Missing setting || Scene")
 
             # check brightness    
 
@@ -791,16 +841,16 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
                   else:
                      if task_type == "controller":
-                        list_task_errors.append(name + " || " + controller_command + " | Invalid brightness_value")
+                        list_task_errors.append(controller_command + " || Invalid brightness_value")
                      else:                        
-                        list_task_errors.append(name + " || Invalid brightness_value") 
+                        list_task_errors.append("Invalid brightness_value") 
                      return list_task_errors    
 
                else:
                   if task_type == "controller":
-                     list_task_errors.append(name + " || " + controller_command + " | Invalid brightness_value")
+                     list_task_errors.append(controller_command + " || Invalid brightness_value")
                   else:                     
-                     list_task_errors.append(name + " || Invalid brightness_value")
+                     list_task_errors.append("Invalid brightness_value")
                   return list_task_errors
 
             except:
@@ -808,9 +858,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
+               list_task_errors.append(controller_command + " || Invalid formatting")
             else:                
-               list_task_errors.append(name + " || Invalid formatting")
+               list_task_errors.append("Invalid formatting")
             return list_task_errors
      
 
@@ -826,19 +876,19 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             try:
 
                if GET_LIGHTING_GROUP_BY_NAME(task[2].strip()) == None: 
-                  list_task_errors.append(name + " || " + controller_command + " | Group not founded | " + task[2].strip()) 
+                  list_task_errors.append(controller_command + " || Group not founded | " + task[2].strip()) 
                   return list_task_errors 
 
                else:
                   return list_task_errors 
 
             except:
-               list_task_errors.append(name + " || " + controller_command + " | Missing setting | Group")
+               list_task_errors.append(controller_command + " || Missing setting | Group")
                return list_task_errors
 
 
          else:
-            list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
+            list_task_errors.append(controller_command + " || Invalid formatting")
             return list_task_errors    
 
 
@@ -856,10 +906,10 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   pass
                   
                else:
-                  list_task_errors.append(name + " || " + controller_command + " | Group not founded | " + task[2])   
+                  list_task_errors.append(controller_command + " || Group not founded | " + task[2])   
                                     
             except:
-               list_task_errors.append(name + " || " + controller_command + " | Missing setting | Group")      
+               list_task_errors.append(controller_command + " || Missing setting | Group")      
 
             # check brightness setting    
             try:
@@ -867,15 +917,15 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   return list_task_errors
                   
                else:
-                  list_task_errors.append(name + " || " + controller_command + " | TURN_UP or TURN_DOWN ?")
+                  list_task_errors.append(controller_command + " || TURN_UP or TURN_DOWN ?")
                   return list_task_errors
                   
             except:
-               list_task_errors.append(name + " || " + controller_command + " | Missing setting | TURN_UP or TURN_DOWN")    
+               list_task_errors.append(controller_command + " || Missing setting | TURN_UP or TURN_DOWN")    
                return list_task_errors
 
          else:
-            list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
+            list_task_errors.append(controller_command + " || Invalid formatting")
             return list_task_errors
 
 
@@ -896,18 +946,18 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      if GET_LIGHTING_GROUP_BY_NAME(group_name.strip()) == None: 
 
                         if task_type == "controller":
-                           list_task_errors.append(name + " || " + controller_command + " | Group not founded | " + group_name.strip())  
+                           list_task_errors.append(controller_command + " || Group not founded | " + group_name.strip())  
                         else:                               
-                           list_task_errors.append(name + " || Group not founded | " + group_name.strip())  
+                           list_task_errors.append("Group not founded || " + group_name.strip())  
                      
                   return list_task_errors
 
                except:
 
                   if task_type == "controller":
-                     list_task_errors.append(name + " || " + controller_command + " | Missing setting | Group")
+                     list_task_errors.append(controller_command + " || Missing setting | Group")
                   else:                            
-                     list_task_errors.append(name + " || Missing setting | Group")
+                     list_task_errors.append("Missing setting || Group")
                   
                   return list_task_errors
                         
@@ -919,17 +969,17 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
             else:
                if task_type == "controller":
-                  list_task_errors.append(name + " || " + controller_command + " | Invalid Input | 'all' or 'group'")
+                  list_task_errors.append(controller_command + " || Invalid Input | 'all' or 'group'")
                else:                   
-                  list_task_errors.append(name + " || Invalid Input | 'all' or 'group' ?")
+                  list_task_errors.append("Invalid Input || 'all' or 'group' ?")
                return list_task_errors  
 
 
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " || " + controller_command + " | Invalid formatting") 
+               list_task_errors.append(controller_command + " || Invalid formatting") 
             else:                   
-               list_task_errors.append(name + " || Invalid formatting")     
+               list_task_errors.append("Invalid formatting")     
             return list_task_errors
 
 
@@ -950,9 +1000,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   if GET_DEVICE_BY_NAME(device_name.strip()) == None: 
 
                      if task_type == "controller":
-                        list_task_errors.append(name + " || " + controller_command + " | Device no founded | " + device_name)
+                        list_task_errors.append(controller_command + " || Device no founded | " + device_name)
                      else:
-                        list_task_errors.append(name + " || Device no founded | " + device_name)           
+                        list_task_errors.append("Device no founded || " + device_name)           
 
                   # check commands
                   else:
@@ -963,26 +1013,26 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      if setting.lower() not in device.commands_json.lower():
                   
                         if task_type == "controller":
-                           list_task_errors.append(name + " || " + controller_command + " | Invalid command | " + setting)
+                           list_task_errors.append(controller_command + " || Invalid command | " + setting)
                         else:
-                           list_task_errors.append(name + " || Invalid command | " + setting)
+                           list_task_errors.append("Invalid command || " + setting)
                              
                return list_task_errors                  
               
             except:
                
                if task_type == "controller":
-                  list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
+                  list_task_errors.append(controller_command + " || Invalid formatting")
                else:                
-                  list_task_errors.append(name + " || Invalid formatting")       
+                  list_task_errors.append("Invalid formatting")       
 
                return list_task_errors
 
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
+               list_task_errors.append(controller_command + " || Invalid formatting")
             else:                
-               list_task_errors.append(name + " || Invalid formatting")   
+               list_task_errors.append("Invalid formatting")   
 
             return list_task_errors
             
@@ -1002,33 +1052,33 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                if program == None:
                
                   if task_type == "controller":
-                     list_task_errors.append(name + " || " + controller_command + " | Program not founded | " + task[1])
+                     list_task_errors.append(controller_command + " || Program not founded | " + task[1])
                   else:
-                     list_task_errors.append(name + " || " + task[1] + " Program not founded")                  
+                     list_task_errors.append(task[1] + " Program not founded")                  
                   
                if setting != "START" and setting != "STOP":
                   
                   if task_type == "controller":
-                     list_task_errors.append(name + " || " + controller_command + " | Invalid command | " + task[2])
+                     list_task_errors.append(controller_command + " || Invalid command | " + task[2])
                   else:
-                     list_task_errors.append(name + " || Invalid command | " + task[2])
+                     list_task_errors.append("Invalid command || " + task[2])
  
                return list_task_errors
       
       
             except:
                if task_type == "controller":
-                  list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
+                  list_task_errors.append(controller_command + " || Invalid formatting")
                else:
-                  list_task_errors.append(name + " || Invalid formatting")
+                  list_task_errors.append("Invalid formatting")
                return list_task_errors
          
          
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
+               list_task_errors.append(controller_command + " || Invalid formatting")
             else:                
-               list_task_errors.append(name + " || Invalid formatting")
+               list_task_errors.append("Invalid formatting")
             return list_task_errors
          
 
@@ -1080,27 +1130,27 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
                else:
                   if task_type == "controller":
-                     list_task_errors.append(name + " || " + controller_command + " | Job not founded | " + task[1])
+                     list_task_errors.append(controller_command + " || Job not founded | " + task[1])
                   else:
-                     list_task_errors.append(name + " || Job not founded | " + task[1])
+                     list_task_errors.append("Job not founded || " + task[1])
 
                   return list_task_errors   
 
             except:
 
                   if task_type == "controller":
-                     list_task_errors.append(name + " || " + controller_command + " | Missing setting | Job")
+                     list_task_errors.append(controller_command + " || Missing setting | Job")
                   else:
-                     list_task_errors.append(name + " || Missing setting | Job") 
+                     list_task_errors.append("Missing setting || Job") 
 
                   return list_task_errors
 
          else:
 
             if task_type == "controller":
-               list_task_errors.append(name + " || " + controller_command + " | Missing setting | Job")
+               list_task_errors.append(controller_command + " || Missing setting | Job")
             else:
-               list_task_errors.append(name + " || Missing setting | Job") 
+               list_task_errors.append("Missing setting || Job") 
 
             return list_task_errors
 
@@ -1122,6 +1172,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                elif task[1].strip() == "PLAY/STOP":
                   return list_task_errors
 
+               elif task[1].strip() == "ROTATE_PLAYLIST" and task_type == "controller":
+                  return list_task_errors
+
                elif task[1].strip() == "PREVIOUS":
                   return list_task_errors
              
@@ -1141,30 +1194,30 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
              
                   try:
                      if not task[2].isdigit():
-                        list_task_errors.append(name + " || " + task[2] + " | Invalid volume_value") 
+                        list_task_errors.append(task[2] + " || Invalid volume_value") 
                      else:
                         if not 0 <= int(task[2]) <= 100:
-                           list_task_errors.append(name + " || " + task[2] + " | Invalid volume_value")
+                           list_task_errors.append(task[2] + " || Invalid volume_value")
                            
                      return list_task_errors
                            
                   except:
-                     list_task_errors.append(name + " || " + task[2] + " | Invalid volume_value") 
+                     list_task_errors.append(task[2] + " || Invalid volume_value") 
                      return list_task_errors
                   
                elif task[1].strip() == "playlist": 
 
                   try:
                      if not task[4].isdigit():
-                        list_task_errors.append(name + " || " + task[4] + " | Invalid volume_value") 
+                        list_task_errors.append(task[4] + " || Invalid volume_value") 
                      else:
                         if not 0 <= int(task[4]) <= 100:
-                           list_task_errors.append(name + " || " + task[4] + " | Invalid volume_value")
+                           list_task_errors.append(task[4] + " || Invalid volume_value")
                            
                      return list_task_errors
                               
                   except:
-                     list_task_errors.append(name + " || " + task[4] + " | Invalid volume_value") 
+                     list_task_errors.append(task[4] + " || Invalid volume_value") 
                      return list_task_errors
    
                      
@@ -1177,19 +1230,19 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      
                      try:
                         if not task[5].isdigit():
-                           list_task_errors.append(name + " || " + task[5] + " | Invalid volume_value") 
+                           list_task_errors.append(task[5] + " || Invalid volume_value") 
                         else:
                            if not 0 <= int(task[5]) <= 100:
-                              list_task_errors.append(name + " || " + task[5] + " | Invalid volume_value")
+                              list_task_errors.append(task[5] + " || Invalid volume_value")
                               
                         return list_task_errors
                                  
                      except:
-                        list_task_errors.append(name + " || " + task[5] + " | Invalid volume_value") 
+                        list_task_errors.append(task[5] + " || Invalid volume_value") 
                         return list_task_errors
                         
                   except:
-                     list_task_errors.append(name + " || " + str(task) + " | Invalid volume_value") 
+                     list_task_errors.append(str(task) + " || Invalid volume_value") 
                      return list_task_errors  
 
                elif task[1].lower() == "album": 
@@ -1201,42 +1254,42 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      
                      try:
                         if not task[5].isdigit():
-                           list_task_errors.append(name + " || " + task[5] + " | Invalid volume_value") 
+                           list_task_errors.append(task[5] + " || Invalid volume_value") 
                         else:
                            if not 0 <= int(task[5]) <= 100:
-                              list_task_errors.append(name + " || " + task[5] + " | Invalid volume_value")
+                              list_task_errors.append(task[5] + " || Invalid volume_value")
                         
                         return list_task_errors
                                  
                      except:
-                        list_task_errors.append(name + " || " + task[5] + " | Invalid volume_value") 
+                        list_task_errors.append(task[5] + " || Invalid volume_value") 
                         return list_task_errors
                         
                   except:
-                     list_task_errors.append(name + " || " + str(task) + " | Invalid volume_value") 
+                     list_task_errors.append(str(task) + " || Invalid volume_value") 
                      return list_task_errors                   
 
                else:
                   if task_type == "controller":
-                     list_task_errors.append(name + " || " + controller_command + " | Invalid command | " + task[1])
+                     list_task_errors.append(controller_command + " || Invalid command | " + task[1])
                   else:
-                     list_task_errors.append(name + " || " + task[1] + " | Invalid command")
+                     list_task_errors.append(task[1] + " || Invalid command")
                   return list_task_errors
 
 
             except:
                if task_type == "controller":
-                  list_task_errors.append(name + " || " + controller_command + " | Missing setting | Command") 
+                  list_task_errors.append(controller_command + " || Missing setting | Command") 
                else:
-                  list_task_errors.append(name + " || Missing setting | Command") 
+                  list_task_errors.append("Missing setting || Command") 
                return list_task_errors
 
                                
          else:
             if task_type == "controller":
-               list_task_errors.append(name + " || " + controller_command + " | Invalid formatting")
+               list_task_errors.append(controller_command + " || Invalid formatting")
             else:
-               list_task_errors.append(name + " || Invalid formatting")   
+               list_task_errors.append("Invalid formatting")   
             return list_task_errors
             
 
@@ -1260,9 +1313,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       
       
       if task_type == "controller":
-         list_task_errors.append(name + " || " + controller_command + " | Invalid task") 
+         list_task_errors.append(controller_command + " || Invalid task") 
       else:
-         list_task_errors.append(name + " || Invalid task")
+         list_task_errors.append("Invalid task")
          
       return list_task_errors
    
@@ -1288,9 +1341,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # ##########
 
       elif task_type == "controller":
-         list_task_errors.append(name + " || " + controller_command + " | Invalid task")   
+         list_task_errors.append(controller_command + " || Invalid task")   
          return list_task_errors
 
       else:
-         list_task_errors.append(name + " || Invalid task")        
+         list_task_errors.append("Invalid task")        
          return list_task_errors

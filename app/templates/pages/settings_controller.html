@@ -15,19 +15,6 @@
               </div>  
             </div>  
 
-<!-- error message controller tasks -->
-
-{% if error_message_controller_tasks != [] %}
-  <div class="alert alert-danger">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    {% for error in error_message_controller_tasks %}
-      {{ error }} <br>
-    {% endfor %}
-  </div>      
-{% endif %}  
-
 <!------------------------>
 <!--  CONTROLLER TABLE  -->
 <!------------------------>   
@@ -45,6 +32,19 @@
     </button>
     <span>Einstellungen erfolgreich geändert</span>
   </div>
+{% endif %}  
+
+<!-- error message controller tasks -->
+
+{% if entry.task_errors != "" %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in entry.task_errors.split(",") %}
+      {{ error | replace(":",": ") }} <br>
+    {% endfor %}
+  </div>      
 {% endif %}  
 
             <div class="card ">
@@ -552,7 +552,15 @@
                               <div class="col-sm-8"> 
                                 start playing or stop running music
                               </div>                        
-                            </div>                                                                    
+                            </div>       
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                ROTATE_PLAYLIST >> 
+                              </div>
+                              <div class="col-sm-8"> 
+                                rotate playlists of current playing device
+                              </div>                        
+                            </div>                                                                                             
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
                                 PREVIOUS >> 

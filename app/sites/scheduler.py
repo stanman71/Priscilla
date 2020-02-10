@@ -5,7 +5,7 @@ from functools           import wraps
 
 from app                           import app
 from app.backend.database_models   import *
-from app.backend.checks            import CHECK_TASKS, CHECK_SCHEDULER_TASKS_SETTINGS
+from app.backend.checks            import CHECK_TASKS, CHECK_SCHEDULER_TASK_SETTINGS
 from app.backend.process_scheduler import GET_SUNRISE_TIME, GET_SUNSET_TIME
 from app.backend.spotify           import GET_SPOTIFY_TOKEN
 from app.common                    import COMMON, STATUS
@@ -115,7 +115,6 @@ def scheduler():
                     task = request.form.get("set_task_" + str(i)).strip()
                 else:
                     task = GET_SCHEDULER_TASK_BY_ID(i).task
-                    error_message_change_settings.append("No task given")
 
 
                 # #################
@@ -208,15 +207,27 @@ def scheduler():
                 
                 if longitude == "" or longitude == None:           
                     longitude = "None"  
-                                                  
-                # update sunrise / sunset  
-                if latitude != "None" and longitude != "None":               
-                    SET_SCHEDULER_TASK_SUNRISE(i, GET_SUNRISE_TIME(float(latitude), float(longitude)))
-                    SET_SCHEDULER_TASK_SUNSET(i, GET_SUNSET_TIME(float(latitude), float(longitude)))
-                            
-                else:
+
+                try:                
+                    # update sunrise / sunset  
+                    if latitude != "None" and longitude != "None":     
+
+                        # valid values ?
+                        if -90.0 <= float(latitude) <= 90.0 and -180.0 <= float(longitude) <= 180.0:       
+                            SET_SCHEDULER_TASK_SUNRISE(i, GET_SUNRISE_TIME(float(latitude), float(longitude)))
+                            SET_SCHEDULER_TASK_SUNSET(i, GET_SUNSET_TIME(float(latitude), float(longitude)))
+
+                        else:
+                            SET_SCHEDULER_TASK_SUNRISE(i, "None")
+                            SET_SCHEDULER_TASK_SUNSET(i, "None")                            
+
+                    else:
+                        SET_SCHEDULER_TASK_SUNRISE(i, "None")
+                        SET_SCHEDULER_TASK_SUNSET(i, "None")       
+
+                except:
                     SET_SCHEDULER_TASK_SUNRISE(i, "None")
-                    SET_SCHEDULER_TASK_SUNSET(i, "None")                        
+                    SET_SCHEDULER_TASK_SUNSET(i, "None")                   
 
 
                 # ###############
@@ -413,8 +424,8 @@ def scheduler():
         list_spotify_playlists = ""      
 
 
-    error_message_scheduler_tasks_settings = CHECK_SCHEDULER_TASKS_SETTINGS(GET_ALL_SCHEDULER_TASKS())
-    error_message_scheduler_tasks          = CHECK_TASKS(GET_ALL_SCHEDULER_TASKS(), "scheduler")
+    CHECK_SCHEDULER_TASK_SETTINGS(GET_ALL_SCHEDULER_TASKS())
+    CHECK_TASKS(GET_ALL_SCHEDULER_TASKS(), "scheduler")
 
     list_scheduler_tasks = GET_ALL_SCHEDULER_TASKS()
 
@@ -564,8 +575,6 @@ def scheduler():
                                                     error_message_change_settings=error_message_change_settings,                         
                                                     success_message_add_scheduler_task=success_message_add_scheduler_task,
                                                     error_message_add_scheduler_task=error_message_add_scheduler_task,
-                                                    error_message_scheduler_tasks_settings=error_message_scheduler_tasks_settings,
-                                                    error_message_scheduler_tasks=error_message_scheduler_tasks,
                                                     success_message_change_settings_scheduler_task=success_message_change_settings_scheduler_task,
                                                     list_lighting_group_options=list_lighting_group_options,
                                                     list_lighting_scene_options=list_lighting_scene_options,

@@ -303,7 +303,7 @@ def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
 
 
 def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
-    
+
     sp       = spotipy.Spotify(auth=spotify_token)
     sp.trace = False     
 
@@ -321,6 +321,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
                 spotify_device_id = sp.current_playback(market=None)['device']['id']
                 sp.shuffle(True, device_id=spotify_device_id)     
+                sp.next_track(device_id=spotify_device_id) 
 
             except:
                              
@@ -362,6 +363,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
                     sp.shuffle(True, device_id=spotify_device_id)     
+                    sp.next_track(device_id=spotify_device_id) 
 
             except:
                              
@@ -389,6 +391,42 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
                     sp.shuffle(True, device_id=spotify_device_id)  
                     sp.next_track(device_id=spotify_device_id)    
+
+
+        if command == "rotate_playlist":   
+
+            # get playlist name
+            spotify_current_playlist_uri = sp.current_playback(market=None)["context"]["uri"]
+
+            # create list of playlist uris
+            list_playlist_uris = []
+
+            for playlist in sp.current_user_playlists(limit=20)["items"]:
+                list_playlist_uris.append(playlist["uri"])
+
+            # find position of current playlist
+            playlist_position = 0
+
+            for position, playlist_uri in enumerate(list_playlist_uris):
+                if playlist_uri == spotify_current_playlist_uri:
+                    playlist_position = position
+
+            # get next playlist
+            try:
+                # current playlist is not the last playlist
+                next_playlist = list_playlist_uris[playlist_position + 1]
+            except:
+                # current scene is the last scene
+                next_playlist = list_playlist_uris[0]
+
+            # start next playlist
+            spotify_device_id = sp.current_playback(market=None)['device']['id']
+            sp.start_playback(device_id=spotify_device_id, context_uri=next_playlist, uris=None, offset = None)         
+            SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
+
+            spotify_device_id = sp.current_playback(market=None)['device']['id']
+            sp.shuffle(True, device_id=spotify_device_id)     
+            sp.next_track(device_id=spotify_device_id) 
 
 
         if command == "previous":      
@@ -433,7 +471,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                
             SET_MUSIC_VOLUME(spotify_token, volume)   
         
-            
+
     except Exception as e:
         if str(e) == "'NoneType' object is not subscriptable":
             pass                

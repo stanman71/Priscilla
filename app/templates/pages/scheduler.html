@@ -200,32 +200,6 @@
   </div>
 {% endif %}  
 
-<!-- error message scheduler tasks settings -->
-
-{% if error_message_scheduler_tasks_settings != [] %}
-  <div class="alert alert-danger">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    {% for error in error_message_scheduler_tasks_settings %}
-      {{ error }} <br>
-    {% endfor %}
-  </div>      
-{% endif %}  
-
-<!-- error message scheduler tasks -->
-
-{% if error_message_scheduler_tasks != [] %}
-  <div class="alert alert-danger">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    {% for error in error_message_scheduler_tasks %}
-      {{ error }} <br>
-    {% endfor %}
-  </div>      
-{% endif %}  
-
 
 {% for entry in list_scheduler_tasks %}
 
@@ -244,6 +218,25 @@
     </div>
   {% endif %}  
 
+<!-- error message scheduler tasks -->
+
+{% if entry.task_setting_errors != "" or entry.task_errors != "" %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% if entry.task_setting_errors != "" %}
+      {% for error in entry.task_setting_errors.split(",") %}
+        {{ error }} <br>
+      {% endfor %}
+    {% endif %} 
+    {% if entry.task_errors != "" %}
+      {% for error in entry.task_errors.split(",") %}
+        {{ error }} <br>
+      {% endfor %}    
+    {% endif %} 
+  </div>      
+{% endif %}  
 
              <div class="card ">
               <div class="card-header">

@@ -215,7 +215,7 @@ def settings_controller():
         list_spotify_playlists = ""      
 
 
-    error_message_controller_tasks = CHECK_TASKS(GET_ALL_CONTROLLER(), "controller")
+    CHECK_TASKS(GET_ALL_CONTROLLER(), "controller")
         
     list_controller = GET_ALL_CONTROLLER()
 
@@ -227,7 +227,6 @@ def settings_controller():
                             description=page_description,                               
                             content=render_template( 'pages/settings_controller.html', 
                                                     success_message_change_settings_controller=success_message_change_settings_controller,
-                                                    error_message_controller_tasks=error_message_controller_tasks, 
                                                     list_controller=list_controller,
                                                     list_lighting_group_options=list_lighting_group_options,
                                                     list_lighting_scene_options=list_lighting_scene_options,

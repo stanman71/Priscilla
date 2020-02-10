@@ -64,7 +64,8 @@ class Controller(db.Model):
     task_19         = db.Column(db.String(50))       
     command_20      = db.Column(db.String(50))
     task_20         = db.Column(db.String(50))       
-    collapse        = db.Column(db.String(50))        
+    collapse        = db.Column(db.String(50))  
+    task_errors     = db.Column(db.String(50))      
 
 class Devices(db.Model):
     __tablename__ = 'devices'
@@ -141,6 +142,7 @@ class Lighting_Groups(db.Model):
     collapse                = db.Column(db.String(50))    
     current_scene           = db.Column(db.String(50), server_default=("OFF"))
     current_brightness      = db.Column(db.Integer, server_default=("0"))
+    group_errors            = db.Column(db.String(50))    
 
 class Lighting_Scenes(db.Model):
     __tablename__ = 'lighting_scenes'
@@ -295,6 +297,8 @@ class Scheduler_Tasks(db.Model):
     option_away                 = db.Column(db.String(50))
     ip_addresses                = db.Column(db.String(50))
     collapse                    = db.Column(db.String(50))
+    task_errors                 = db.Column(db.String(50))
+    task_setting_errors         = db.Column(db.String(50))    
 
 class Sensordata_Jobs(db.Model):
     __tablename__  = 'sensordata_jobs'
@@ -760,6 +764,14 @@ def SET_CONTROLLER_TASKS(id, task_1  = "", task_2  = "", task_3  = "", task_4  =
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Controller - " + controller_name + " | Changed")  
         return True
+
+
+def SET_CONTROLLER_TASK_ERRORS(id, task_errors):
+    entry = Controller.query.filter_by(id=id).first()
+
+    if entry.task_errors != task_errors:
+        entry.task_errors = task_errors       
+        db.session.commit()     
 
 
 def CHANGE_CONTROLLER_POSITION(id, direction):
@@ -1312,6 +1324,14 @@ def SET_LIGHTING_GROUP(id, name, light_ieeeAddr_1, light_name_1, light_device_ty
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Group - " + name + " | Settings | changed")  
         return True 
+
+
+def SET_LIGHTING_GROUP_ERRORS(id, group_errors):
+    entry = Lighting_Groups.query.filter_by(id=id).first()
+
+    if entry.group_errors != group_errors:
+        entry.group_errors = group_errors       
+        db.session.commit()     
 
 
 def SET_LIGHTING_GROUP_COLLAPSE_OPEN(id):
@@ -2683,6 +2703,22 @@ def SET_SCHEDULER_TASK(id, name, task,
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Task - " + entry.name + " | changed") 
         return True
+
+
+def SET_SCHEDULER_TASK_ERRORS(id, task_errors):
+    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+
+    if entry.task_errors != task_errors:
+        entry.task_errors = task_errors       
+        db.session.commit()     
+
+
+def SET_SCHEDULER_TASK_SETTING_ERRORS(id, task_setting_errors):
+    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+
+    if entry.task_setting_errors != task_setting_errors:
+        entry.task_setting_errors = task_setting_errors       
+        db.session.commit()     
 
 
 def SET_SCHEDULER_TASK_COLLAPSE_OPEN(id):

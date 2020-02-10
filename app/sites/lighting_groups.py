@@ -314,7 +314,7 @@ def lighting_groups():
             else:
                 error_message_change_settings.append(group + " || " + str(result))
 
-    error_message_settings = CHECK_LIGHTING_GROUP_SETTINGS(GET_ALL_LIGHTING_GROUPS())
+    CHECK_LIGHTING_GROUP_SETTINGS(GET_ALL_LIGHTING_GROUPS())
 
     dropdown_list_lights = GET_ALL_DEVICES("light")
     list_lighting_groups = GET_ALL_LIGHTING_GROUPS()
@@ -330,7 +330,6 @@ def lighting_groups():
                                                     error_message_change_settings=error_message_change_settings,
                                                     success_message_change_settings_lighting_group=success_message_change_settings_lighting_group,
                                                     error_message_change_settings_lighting_group=error_message_change_settings_lighting_group,
-                                                    error_message_settings=error_message_settings,
                                                     success_message_add_lighting_group=success_message_add_lighting_group,
                                                     error_message_add_lighting_group=error_message_add_lighting_group,
                                                     list_lighting_groups=list_lighting_groups,

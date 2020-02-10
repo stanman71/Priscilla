@@ -903,44 +903,43 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             
             sp       = spotipy.Spotify(auth=spotify_token)
             sp.trace = False
-            
+
             try:
                 spotify_volume = sp.current_playback(market=None)['device']['volume_percent']
             except:
                 spotify_volume = 50
 
-            try:
-            
-                if task[1].strip() == "PLAY":
-                    SPOTIFY_CONTROL(spotify_token, "play", spotify_volume) 
+            if task[1].strip() == "PLAY":
+                SPOTIFY_CONTROL(spotify_token, "play", spotify_volume) 
 
-                if task[1].strip() == "PLAY/STOP":
-                    SPOTIFY_CONTROL(spotify_token, "play/stop", spotify_volume) 
+            if task[1].strip() == "PLAY/STOP":
+                SPOTIFY_CONTROL(spotify_token, "play/stop", spotify_volume) 
 
-                if task[1].strip()== "PREVIOUS": 
-                    SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
+            if task[1].strip() == "ROTATE_PLAYLIST":    
+                SPOTIFY_CONTROL(spotify_token, "rotate_playlist", spotify_volume)      
 
-                if task[1].strip() == "NEXT":
-                    SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
+            if task[1].strip()== "PREVIOUS": 
+                SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
 
-                if task[1].strip() == "STOP": 
-                    SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)      
+            if task[1].strip() == "NEXT":
+                SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
 
-                if task[1].strip() == "VOLUME_UP":   
-                    device_name = sp.current_playback(market=None)['device']['name']
-                    SPOTIFY_CONTROL(spotify_token, "volume_up", spotify_volume)
+            if task[1].strip() == "STOP": 
+                SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)      
 
-                if task[1].strip() == "VOLUME_DOWN":   
-                    device_name = sp.current_playback(market=None)['device']['name']
-                    SPOTIFY_CONTROL(spotify_token, "volume_down", spotify_volume)                 
+            if task[1].strip() == "VOLUME_UP":   
+                device_name = sp.current_playback(market=None)['device']['name']
+                SPOTIFY_CONTROL(spotify_token, "volume_up", spotify_volume)
 
-                if task[1].strip() == "VOLUME":            
-                    spotify_volume = int(task[2].strip())
-                    SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
+            if task[1].strip() == "VOLUME_DOWN":   
+                device_name = sp.current_playback(market=None)['device']['name']
+                SPOTIFY_CONTROL(spotify_token, "volume_down", spotify_volume)                 
 
-            except:
-                pass
+            if task[1].strip() == "VOLUME":            
+                spotify_volume = int(task[2].strip())
+                SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
 
+   
             # start playlist
                     
             if task[1].lower() == "playlist": 

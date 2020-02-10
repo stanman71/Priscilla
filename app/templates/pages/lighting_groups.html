@@ -55,19 +55,6 @@
 <!--  LIGHTING GROUP TABLE -->
 <!--------------------------->   
 
-<!-- error message settings -->
-
-{% if error_message_settings != [] %}
-  <div class="alert alert-danger">
-    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-      <i class="tim-icons icon-simple-remove"></i>
-    </button>
-    {% for error in error_message_settings %}
-      {{ error }} <br>
-    {% endfor %}
-  </div>      
-{% endif %}  
-
 <!-- success message change settings -->
 
 {% if success_message_change_settings != [] %}
@@ -120,6 +107,19 @@
     </button>
     <span>{{ error_message_change_settings_lighting_group['message'] }}</span>
   </div>
+{% endif %}  
+
+<!-- error message settings -->
+
+{% if entry.group_errors != "" %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in entry.group_errors.split(",") %}
+      {{ error }} <br>
+    {% endfor %}
+  </div>      
 {% endif %}  
 
             <div class="card ">
