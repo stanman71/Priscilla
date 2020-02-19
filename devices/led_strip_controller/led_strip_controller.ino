@@ -330,9 +330,9 @@ void callback (char* topic, byte* payload, unsigned int length) {
         DynamicJsonDocument msg(512);
         
         msg["ieeeAddr"]    = ieeeAddr;
-        msg["model"]       = "led_strip controller 1.2";
+        msg["model"]       = "led_strip_controller 1.2";
         msg["device_type"] = "led_rgb";
-        msg["description"] = "MQTT Client LED Strip";
+        msg["description"] = "MQTT LED Strip Controller";
     
         JsonArray data_inputs = msg.createNestedArray("inputs");
         data_inputs.add("");   

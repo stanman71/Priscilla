@@ -257,7 +257,9 @@ void reconnect() {
             Serial.println("MQTT Connected...");
 
             digitalWrite(BUILTIN_LED, LOW);       
-          
+            digitalWrite(PIN_LED_RED, LOW);
+            digitalWrite(PIN_LED_GREEN, HIGH);            
+ 
         } else {        
             Serial.print("failed, rc=");
             Serial.print(client.state());
@@ -295,7 +297,7 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["device_type"] = "sensor_module";
         msg["description"] = "MQTT Sensor_Module";
     
-        JsonArray data_inputs   = msg.createNestedArray("inputs");
+        JsonArray data_inputs   = msg.createNestedArray("input_values");
         JsonArray data_commands = msg.createNestedArray("commands");
        
         if (channel_1_state != "DISABLED"){

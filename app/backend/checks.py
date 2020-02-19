@@ -755,8 +755,8 @@ def CHECK_TASKS(entities, task_type):
             
             if result != []:    
                for error in result:   
-                  list_task_errors = list_task_errors + "," + error      
-
+                  list_task_errors = list_task_errors + "," + error
+        
          SET_CONTROLLER_TASK_ERRORS(controller.id, list_task_errors[1:]) 
 
          # reset errors

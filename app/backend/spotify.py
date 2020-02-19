@@ -346,53 +346,6 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                     sp.next_track(device_id=spotify_device_id)                    
                          
 
-        if command == "play/stop":    
-            
-            try:
-                spotify_current_playback = sp.current_playback(market=None)
-                spotify_device_id        = sp.current_playback(market=None)['device']['id']
-
-                if str(spotify_current_playback['is_playing']).upper() == "TRUE":
-                    sp.pause_playback(device_id=spotify_device_id)  
-
-                else:             
-                    # start former playlist
-                    context_uri = sp.current_playback(market=None)["context"]["uri"]
-                    sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)      
-                    SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
-
-                    spotify_device_id = sp.current_playback(market=None)['device']['id']
-                    sp.shuffle(True, device_id=spotify_device_id)     
-                    sp.next_track(device_id=spotify_device_id) 
-
-            except:
-                             
-                try:
-                    spotify_current_playback = sp.current_playback(market=None)
-                    spotify_device_id        = sp.current_playback(market=None)['device']['id']
-
-                    if str(spotify_current_playback['is_playing']).upper() == "TRUE":
-                        sp.pause_playback(device_id=spotify_device_id)  
-
-                    else:                      
-                        # start former track
-                        track_uri = sp.current_playback(market=None)['item']['uri']
-                        sp.start_playback(device_id=spotify_device_id, context_uri=None, uris=[track_uri], offset = None)  
-                        SET_MUSIC_VOLUME(spotify_token, spotify_volume)
-
-                except:               
-                    # start default settings
-                    UPDATE_MULTIROOM_DEFAULT_SETTINGS()
-
-                    SPOTIFY_START_PLAYLIST(spotify_token, GET_SPOTIFY_SETTINGS().default_device_id, 
-                                                          GET_SPOTIFY_SETTINGS().default_playlist_uri, 
-                                                          GET_SPOTIFY_SETTINGS().default_volume)
-                    
-                    spotify_device_id = sp.current_playback(market=None)['device']['id']
-                    sp.shuffle(True, device_id=spotify_device_id)  
-                    sp.next_track(device_id=spotify_device_id)    
-
-
         if command == "rotate_playlist":   
 
             # get playlist name

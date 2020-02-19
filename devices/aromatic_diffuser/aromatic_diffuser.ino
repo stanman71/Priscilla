@@ -20,10 +20,7 @@ PubSubClient client(espClient);
 bool shouldSaveConfig = false;   
 
 // OUTPUT
-int CHANNEL_1 = 5;           // D1 
-int CHANNEL_2 = 4;           // D2 
-int CHANNEL_3 = 0;           // D3 
-int CHANNEL_4 = 13;          // D7 
+int PIN_RELAIS = 0;          // D3 
 
 // RESET 
 int PIN_RESET_SETTING = 16;  // D0
@@ -32,10 +29,7 @@ int PIN_RESET_SETTING = 16;  // D0
 int PIN_LED_GREEN = 14;      // D5
 int PIN_LED_RED   = 12;      // D6
 
-String channel_1_state = "DISABLED";    // change to "OFF" to activate
-String channel_2_state = "DISABLED";    // change to "OFF" to activate
-String channel_3_state = "DISABLED";    // change to "OFF" to activate
-String channel_4_state = "DISABLED";    // change to "OFF" to activate
+String state = "OFF";
 
 
 // ############
@@ -292,48 +286,24 @@ void callback (char* topic, byte* payload, unsigned int length) {
         DynamicJsonDocument msg(512);
         
         msg["ieeeAddr"]    = ieeeAddr;
-        msg["model"]       = "sensor_module 1.0";
-        msg["device_type"] = "sensor_module";
-        msg["description"] = "MQTT Sensor_Module";
+        msg["model"]       = "aromatic_diffuser 1.0";
+        msg["device_type"] = "aromatic_diffuser";
+        msg["description"] = "MQTT Aromatic Diffuser";
     
         JsonArray data_inputs   = msg.createNestedArray("input_values");
         JsonArray data_commands = msg.createNestedArray("commands");
-       
-        if (channel_1_state != "DISABLED"){
-            data_commands.add("Channal_1_ON");
-            data_commands.add("Channal_1_OFF");       
-        }
-        if (channel_2_state != "DISABLED"){         
-            data_commands.add("Channal_2_ON");
-            data_commands.add("Channal_2_OFF");     
-        }
-        if (channel_3_state != "DISABLED"){            
-            data_commands.add("Channal_3_ON");
-            data_commands.add("Channal_3_OFF");     
-        }
-        if (channel_4_state != "DISABLED"){        
-            data_commands.add("Channal_4_ON");
-            data_commands.add("Channal_4_OFF");     
-        }
+        data_commands.add("LEVEL_1");
+        data_commands.add("LEVEL_2");      
+        data_commands.add("LEVEL_3");
+        data_commands.add("LEVEL_4");    
+        data_commands.add("OFF");        
 
         JsonArray data_commands_json = msg.createNestedArray("commands_json");
-
-        if (channel_1_state != "DISABLED"){
-            data_commands.add("{'channel_1:'ON'}");     
-            data_commands.add("{'channel_1:'OFF'}");    
-        }
-        if (channel_2_state != "DISABLED"){    
-            data_commands.add("{'channel_2:'ON'}");     
-            data_commands.add("{'channel_2:'OFF'}");    
-        }
-        if (channel_3_state != "DISABLED"){    
-            data_commands.add("{'channel_3:'ON'}");     
-            data_commands.add("{'channel_3:'OFF'}");    
-        }
-        if (channel_4_state != "DISABLED"){                
-            data_commands.add("{'channel_4:'ON'}");     
-            data_commands.add("{'CHANNEL_4:'OFF'}");    
-        }        
+        data_commands_json.add("{'state':'LEVEL_1'}");  
+        data_commands_json.add("{'state':'LEVEL_2'}"); 
+        data_commands_json.add("{'state':'LEVEL_3'}"); 
+        data_commands_json.add("{'state':'LEVEL_4'}");         
+        data_commands_json.add("{'state':'OFF'}");    
 
         // convert msg to char
         char msg_Char[512];
@@ -370,101 +340,94 @@ void callback (char* topic, byte* payload, unsigned int length) {
         DynamicJsonDocument msg_json(128);
         deserializeJson(msg_json, msg);
     
-        // control channel 1
+        // control relais
+     
+        String command = msg_json["state"];
 
-        if (channel_1_state != "DISABLED"){        
-            String channel_1_setting = msg_json["channel_1"];
+        if (command == "LEVEL_1") {
 
-            if (channel_1_setting == "ON") {
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(500);  
+            digitalWrite(PIN_RELAIS, LOW);
 
-                digitalWrite(CHANNEL_1, HIGH);
-                channel_1_state = "ON";
+            state = "LEVEL_1";
 
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_1_ON");
-            }
-
-            if (channel_1_setting == "OFF") {
-
-                digitalWrite(CHANNEL_1, LOW);
-                channel_1_state = "OFF";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_1_OFF");
-            }
+            send_default_mqtt_message(); 
+            Serial.println("LEVEL_1");
         }
 
-        // control channel 2
+        if (command == "LEVEL_2") {
 
-        if (channel_2_state != "DISABLED"){        
-            String channel_2_setting = msg_json["channel_2"];
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(500);  
+            digitalWrite(PIN_RELAIS, LOW);
+            delay(500); 
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(500);  
+            digitalWrite(PIN_RELAIS, LOW);
 
-            if (channel_2_setting == "ON") {
+            state = "LEVEL_2";
 
-                digitalWrite(CHANNEL_2, HIGH);
-                channel_2_state = "ON";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_2_ON");
-            }
-
-            if (channel_2_setting == "OFF") {
-
-                digitalWrite(CHANNEL_2, LOW);
-                channel_2_state = "OFF";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_1_OFF");
-            }
+            send_default_mqtt_message(); 
+            Serial.println("LEVEL_2");
         }
 
-        // control channel 3
+        if (command == "LEVEL_3") {
 
-        if (channel_3_state != "DISABLED"){        
-            String channel_3_setting = msg_json["channel_3"];
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(500);  
+            digitalWrite(PIN_RELAIS, LOW);
+            delay(500); 
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(500);  
+            digitalWrite(PIN_RELAIS, LOW);
+            delay(500);  
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(500);  
+            digitalWrite(PIN_RELAIS, LOW);
 
-            if (channel_3_setting == "ON") {
+            state = "LEVEL_3";
 
-                digitalWrite(CHANNEL_3, HIGH);
-                channel_3_state = "ON";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_3_ON");
-            }
-
-            if (channel_3_setting == "OFF") {
-
-                digitalWrite(CHANNEL_3, LOW);
-                channel_3_state = "OFF";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_3_OFF");
-            }
+            send_default_mqtt_message(); 
+            Serial.println("LEVEL_3");
         }
 
-        // control channel 4
+        if (command == "LEVEL_4") {
 
-        if (channel_4_state != "DISABLED"){        
-            String channel_4_setting = msg_json["channel_4"];
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(500);  
+            digitalWrite(PIN_RELAIS, LOW);
+            delay(500); 
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(500);  
+            digitalWrite(PIN_RELAIS, LOW);
+            delay(500);  
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(500);  
+            digitalWrite(PIN_RELAIS, LOW);
+            delay(500);  
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(500);  
+            digitalWrite(PIN_RELAIS, LOW);
 
-            if (channel_4_setting == "ON") {
+            state = "LEVEL_4";
 
-                digitalWrite(CHANNEL_4, HIGH);
-                channel_4_state = "ON";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_4_ON");
-            }
-
-            if (channel_4_setting == "OFF") {
-
-                digitalWrite(CHANNEL_4, LOW);
-                channel_4_state = "OFF";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_4_OFF");
-            }
+            send_default_mqtt_message(); 
+            Serial.println("LEVEL_4");
         }
+
+        if (command == "OFF") {
+
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(2000);  
+            digitalWrite(PIN_RELAIS, LOW);
+
+            state = "OFF";
+
+            send_default_mqtt_message(); 
+            Serial.println("OFF");
+        }
+
     }     
 }
 
@@ -481,20 +444,8 @@ void send_default_mqtt_message() {
     payload_path.toCharArray( path, 100 );    
  
     // create msg as json
-    DynamicJsonDocument msg(256);
-
-    if (channel_1_state != "DISABLED"){      
-        msg["channel_1"] = channel_1_state;
-    }
-    if (channel_2_state != "DISABLED"){          
-        msg["channel_2"] = channel_2_state;
-    }
-    if (channel_3_state != "DISABLED"){          
-        msg["channel_3"] = channel_3_state;
-    }
-    if (channel_4_state != "DISABLED"){        
-        msg["channel_4"] = channel_4_state;
-    }
+    DynamicJsonDocument msg(256); 
+    msg["state"] = state;
 
     // convert msg to char
     char msg_Char[256];
@@ -523,20 +474,16 @@ void setup() {
     pinMode(PIN_LED_GREEN,OUTPUT);
     pinMode(BUILTIN_LED, OUTPUT);   
     pinMode(PIN_RESET_SETTING,INPUT);
+    pinMode(PIN_RELAIS, OUTPUT); 
 
     digitalWrite(BUILTIN_LED, HIGH); 
     digitalWrite(PIN_LED_RED, HIGH);
     digitalWrite(PIN_LED_GREEN, LOW);
-
-    pinMode(CHANNEL_1, OUTPUT); 
-    pinMode(CHANNEL_2, OUTPUT); 
-    pinMode(CHANNEL_3, OUTPUT); 
-    pinMode(CHANNEL_4, OUTPUT); 
-
-    digitalWrite(CHANNEL_1, LOW);
-    digitalWrite(CHANNEL_2, LOW);
-    digitalWrite(CHANNEL_3, LOW);
-    digitalWrite(CHANNEL_4, LOW);    
+    
+    digitalWrite(PIN_RELAIS, HIGH);
+    delay(2000);  
+    digitalWrite(PIN_RELAIS, LOW);  
+    
 
     Serial.println(digitalRead(PIN_RESET_SETTING));    
 

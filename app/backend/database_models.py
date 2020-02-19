@@ -859,7 +859,9 @@ def GET_ALL_DEVICES(selector):
             if (device.device_type == "power_switch" or
                 device.device_type == "blind" or
                 device.device_type == "heater_thermostat" or
-                device.device_type == "watering_controller"):
+                device.device_type == "aromatic_diffuser" or 
+                device.device_type == "engine_module" or 
+                device.device_type == "relais_module"):
                 
                 device_list.append(device)      
 
@@ -879,8 +881,7 @@ def GET_ALL_DEVICES(selector):
         for device in devices:     
             if (device.device_type == "sensor_passiv" or 
                 device.device_type == "sensor_active" or
-                device.device_type == "heater_thermostat" or
-                device.device_type == "watering_controller"):
+                device.device_type == "heater_thermostat"):
                 
                 device_list.append(device)   
  

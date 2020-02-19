@@ -52,7 +52,7 @@
       <div class="content">
         <div class="row">
           <div class="col-lg-6">
-            <div class="card card-tasks card-tasks-table">
+            <div class="card card-tasks-control-frame card-tasks-control-table">
               <div class="card-body ">
                 <form method="POST">
 
@@ -144,7 +144,7 @@
 
 <!-- programs -->
 
-            <div class="card card-tasks-programs">
+            <div class="card card-tasks-programs-frame">
               <div class="card-body ">
                 <form method="POST">
                   <div class="row justify-content-md-left">
@@ -176,7 +176,7 @@
 
 {% if spotify_token != "" %}  
 
-            <div class="card card-tasks-music">
+            <div class="card card-tasks-music-frame">
               <div class="card-body">
                 <form method="POST"> 
                   <div class="row justify-content-md-center">                                                 
@@ -311,9 +311,18 @@
 
 {% endif %}
 
-<!-- issues table -->
+<!-- system_log table -->
 
-            <div class="card card-tasks card-tasks-issues">
+{% if spotify_token != "" %}  
+
+            <div class="card card-tasks-system_log-frame-reduced card-tasks-system_log-table-reduced">
+
+{% else %}
+
+            <div class="card card-tasks-system_log-frame-full card-tasks-system_log-table-full">
+
+{% endif %}
+
               <div class="card-body ">
                 <div class="table-full-width table-responsive">
                   <table class="table">

@@ -17787,30 +17787,39 @@ Copyright (c) 2015 Daniel Eden
   margin-top: 30px;
 }
 
-.card-tasks {
+.card-tasks-control-frame {
   height: 508px;
 }
 
-.card-tasks-programs {
+.card-tasks-control-table .table-full-width {
+  min-height: 200px;  
+  max-height: 200px;
+  position: relative;
+}
+
+.card-tasks-programs-frame {
   min-height: 80px;
 }
 
-.card-tasks-music {
+.card-tasks-music-frame {
   min-height: 330px;
 }
 
-.card-tasks-issues {
+.card-tasks-system_log-frame-reduced {
   height: 259px;
 }
 
-.card-tasks .table-full-width {
+.card-tasks-system_log-table-reduced .table-full-width {
   max-height: 235px;
   position: relative;
 }
 
-.card-tasks-table .table-full-width {
-  min-height: 200px;  
-  max-height: 200px;
+.card-tasks-system_log-frame-full {
+  height: 618px;
+}
+
+.card-tasks-system_log-table-full .table-full-width {
+  max-height: 596px;
   position: relative;
 }
 

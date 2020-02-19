@@ -111,10 +111,11 @@
           {% endif %}
 
           {% if current_user.is_authenticated %}
+
             <li>
               <a href={{ url_for('logout') }}>
-                <i class='uil uil-exit' style="color:red"></i>
-                <p><font color="red" size="2"><strong>Logout</strong></font></p>
+                <i class='uil uil-exit' style="color:#cc0000"></i>
+                <p><font color="#cc0000" size="2"><strong>Logout</strong></font></p>
               </a>
             </li>
           {% endif %}

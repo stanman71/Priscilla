@@ -19,11 +19,10 @@ PubSubClient client(espClient);
 //wifi manager
 bool shouldSaveConfig = false;   
 
-// OUTPUT
-int CHANNEL_1 = 5;           // D1 
-int CHANNEL_2 = 4;           // D2 
-int CHANNEL_3 = 0;           // D3 
-int CHANNEL_4 = 13;          // D7 
+// INPUT
+int SENSOR_1 = 5;            // D1 
+int SENSOR_2 = 4;            // D2 
+int SENSOR_3 = A0;           // A0 
 
 // RESET 
 int PIN_RESET_SETTING = 16;  // D0
@@ -32,10 +31,10 @@ int PIN_RESET_SETTING = 16;  // D0
 int PIN_LED_GREEN = 14;      // D5
 int PIN_LED_RED   = 12;      // D6
 
-String channel_1_state = "DISABLED";    // change to "OFF" to activate
-String channel_2_state = "DISABLED";    // change to "OFF" to activate
-String channel_3_state = "DISABLED";    // change to "OFF" to activate
-String channel_4_state = "DISABLED";    // change to "OFF" to activate
+
+int sensor_1_last_value = 0;
+int sensor_2_last_value = 0;
+int sensor_3_last_value = 0;
 
 
 // ############
@@ -258,7 +257,6 @@ void reconnect() {
             digitalWrite(PIN_LED_RED, LOW);
             digitalWrite(PIN_LED_GREEN, HIGH);  
 
-          
         } else {        
             Serial.print("failed, rc=");
             Serial.print(client.state());
@@ -293,47 +291,15 @@ void callback (char* topic, byte* payload, unsigned int length) {
         
         msg["ieeeAddr"]    = ieeeAddr;
         msg["model"]       = "sensor_module 1.0";
-        msg["device_type"] = "sensor_module";
-        msg["description"] = "MQTT Sensor_Module";
+        msg["device_type"] = "sensor_passiv";
+        msg["description"] = "MQTT Motion Sensor";
     
-        JsonArray data_inputs   = msg.createNestedArray("input_values");
-        JsonArray data_commands = msg.createNestedArray("commands");
-       
-        if (channel_1_state != "DISABLED"){
-            data_commands.add("Channal_1_ON");
-            data_commands.add("Channal_1_OFF");       
-        }
-        if (channel_2_state != "DISABLED"){         
-            data_commands.add("Channal_2_ON");
-            data_commands.add("Channal_2_OFF");     
-        }
-        if (channel_3_state != "DISABLED"){            
-            data_commands.add("Channal_3_ON");
-            data_commands.add("Channal_3_OFF");     
-        }
-        if (channel_4_state != "DISABLED"){        
-            data_commands.add("Channal_4_ON");
-            data_commands.add("Channal_4_OFF");     
-        }
+        JsonArray data_inputs = msg.createNestedArray("input_values");
+        data_inputs.add("occupancy");        
+        data_inputs.add("illuminance"); 
 
+        JsonArray data_commands      = msg.createNestedArray("commands");
         JsonArray data_commands_json = msg.createNestedArray("commands_json");
-
-        if (channel_1_state != "DISABLED"){
-            data_commands.add("{'channel_1:'ON'}");     
-            data_commands.add("{'channel_1:'OFF'}");    
-        }
-        if (channel_2_state != "DISABLED"){    
-            data_commands.add("{'channel_2:'ON'}");     
-            data_commands.add("{'channel_2:'OFF'}");    
-        }
-        if (channel_3_state != "DISABLED"){    
-            data_commands.add("{'channel_3:'ON'}");     
-            data_commands.add("{'channel_3:'OFF'}");    
-        }
-        if (channel_4_state != "DISABLED"){                
-            data_commands.add("{'channel_4:'ON'}");     
-            data_commands.add("{'CHANNEL_4:'OFF'}");    
-        }        
 
         // convert msg to char
         char msg_Char[512];
@@ -351,121 +317,7 @@ void callback (char* topic, byte* payload, unsigned int length) {
     // get 
     if (check_ieeeAddr == ieeeAddr and check_command == "get"){
         send_default_mqtt_message();    
-    }    
-
-    // set 
-    if (check_ieeeAddr == ieeeAddr and check_command == "set"){
-
-        char msg[length+1];
-  
-        for (int i = 0; i < length; i++) {
-            msg[i] = (char)payload[i];
-        }
-        msg[length] = '\0';
-        
-        Serial.print("msg: ");
-        Serial.println(msg);
-
-        // convert msg to json
-        DynamicJsonDocument msg_json(128);
-        deserializeJson(msg_json, msg);
-    
-        // control channel 1
-
-        if (channel_1_state != "DISABLED"){        
-            String channel_1_setting = msg_json["channel_1"];
-
-            if (channel_1_setting == "ON") {
-
-                digitalWrite(CHANNEL_1, HIGH);
-                channel_1_state = "ON";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_1_ON");
-            }
-
-            if (channel_1_setting == "OFF") {
-
-                digitalWrite(CHANNEL_1, LOW);
-                channel_1_state = "OFF";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_1_OFF");
-            }
-        }
-
-        // control channel 2
-
-        if (channel_2_state != "DISABLED"){        
-            String channel_2_setting = msg_json["channel_2"];
-
-            if (channel_2_setting == "ON") {
-
-                digitalWrite(CHANNEL_2, HIGH);
-                channel_2_state = "ON";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_2_ON");
-            }
-
-            if (channel_2_setting == "OFF") {
-
-                digitalWrite(CHANNEL_2, LOW);
-                channel_2_state = "OFF";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_1_OFF");
-            }
-        }
-
-        // control channel 3
-
-        if (channel_3_state != "DISABLED"){        
-            String channel_3_setting = msg_json["channel_3"];
-
-            if (channel_3_setting == "ON") {
-
-                digitalWrite(CHANNEL_3, HIGH);
-                channel_3_state = "ON";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_3_ON");
-            }
-
-            if (channel_3_setting == "OFF") {
-
-                digitalWrite(CHANNEL_3, LOW);
-                channel_3_state = "OFF";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_3_OFF");
-            }
-        }
-
-        // control channel 4
-
-        if (channel_4_state != "DISABLED"){        
-            String channel_4_setting = msg_json["channel_4"];
-
-            if (channel_4_setting == "ON") {
-
-                digitalWrite(CHANNEL_4, HIGH);
-                channel_4_state = "ON";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_4_ON");
-            }
-
-            if (channel_4_setting == "OFF") {
-
-                digitalWrite(CHANNEL_4, LOW);
-                channel_4_state = "OFF";
-
-                send_default_mqtt_message(); 
-                Serial.println("CHANNEL_4_OFF");
-            }
-        }
-    }     
+    }      
 }
 
 
@@ -481,23 +333,18 @@ void send_default_mqtt_message() {
     payload_path.toCharArray( path, 100 );    
  
     // create msg as json
-    DynamicJsonDocument msg(256);
+    DynamicJsonDocument msg(128);
 
-    if (channel_1_state != "DISABLED"){      
-        msg["channel_1"] = channel_1_state;
+    if (digitalRead(SENSOR_1) == 0 and digitalRead(SENSOR_2) == 0){
+        msg["occupancy"] = "False";
+    } else {
+        msg["occupancy"] = "True";
     }
-    if (channel_2_state != "DISABLED"){          
-        msg["channel_2"] = channel_2_state;
-    }
-    if (channel_3_state != "DISABLED"){          
-        msg["channel_3"] = channel_3_state;
-    }
-    if (channel_4_state != "DISABLED"){        
-        msg["channel_4"] = channel_4_state;
-    }
+
+    msg["illuminance"] = analogRead(SENSOR_3);
 
     // convert msg to char
-    char msg_Char[256];
+    char msg_Char[128];
     serializeJson(msg, msg_Char);
 
     Serial.print("Channel: ");
@@ -528,15 +375,9 @@ void setup() {
     digitalWrite(PIN_LED_RED, HIGH);
     digitalWrite(PIN_LED_GREEN, LOW);
 
-    pinMode(CHANNEL_1, OUTPUT); 
-    pinMode(CHANNEL_2, OUTPUT); 
-    pinMode(CHANNEL_3, OUTPUT); 
-    pinMode(CHANNEL_4, OUTPUT); 
-
-    digitalWrite(CHANNEL_1, LOW);
-    digitalWrite(CHANNEL_2, LOW);
-    digitalWrite(CHANNEL_3, LOW);
-    digitalWrite(CHANNEL_4, LOW);    
+    pinMode(SENSOR_1, INPUT); 
+    pinMode(SENSOR_2, INPUT); 
+    pinMode(SENSOR_3, INPUT); 
 
     Serial.println(digitalRead(PIN_RESET_SETTING));    
 
@@ -565,7 +406,20 @@ void loop() {
     if (!client.connected()) {
         reconnect();
     }
-    
+
+    if (sensor_1_last_value != digitalRead(SENSOR_1)){
+        sensor_1_last_value = digitalRead(SENSOR_1);
+        send_default_mqtt_message();
+    }
+
+    if (sensor_2_last_value != digitalRead(SENSOR_2)){
+        sensor_2_last_value = digitalRead(SENSOR_2);
+        send_default_mqtt_message();
+    }
+
+    Serial.println(digitalRead(SENSOR_1));
+    Serial.println(digitalRead(SENSOR_2));
+
     delay(100);
     client.loop();
 }

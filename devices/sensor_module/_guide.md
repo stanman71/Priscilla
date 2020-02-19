@@ -21,9 +21,9 @@ This project provide customized sensor plattform.
 
        >>> https://www.roboter-bausatz.de/2328/mini-ir-bewegungssensor
 
-- Photoresistor 
+- Photoresistor (PFW551M)
 
-       >>> https://www.ebay.de/itm/10Pcs-innocuous-photoresistor-5mm-5800B-LDR-resistor-light-dependentPDH-B-CL/233385061465?hash=item3656d56c59:g:o2UAAOSwxqpcVAVT
+       >>> https://www.ebay.de/itm/Fotowiderstand-PFW551M-5-mm-5-Stuck/143508793635?epid=1306513876&hash=item2169ca6923:g:qhEAAOSwDIJeJ~x~
 
 
 <a name="1.2 Power Source"></a>

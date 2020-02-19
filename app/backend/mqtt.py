@@ -357,7 +357,7 @@ def MQTT_PUBLISH_THREAD():
             except:
                 print("ERROR: Network | MQTT")
                     
-        time.sleep(0.5)
+        time.sleep(0.1)
 
 
 """ ##################### """
