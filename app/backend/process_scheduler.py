@@ -642,19 +642,21 @@ def START_SCHEDULER_TASK(task_object):
 
                   command_position  = 0
                   list_command_json = device.commands_json.split(",")
+                  list_all_commands = re.findall(r'\w+', device.commands_json.lower())
 
                   # get the json command statement and start process
-                  for command in device.commands.split(","):     
+                  for command in list_all_commands[1::2]:     
                                        
-                        if scheduler_setting in command:
-                           heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                           CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting, 20)      
-                           break
+                     if str(scheduler_setting.lower()) == command.lower():
+                        heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
+                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting, 20)      
+                        continue
 
-                        command_position = command_position + 1
+                     command_position = command_position + 1
 
-                  else:
-                     WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | " + check_result)
+
+               else:
+                  WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | " + check_result)
 
             else:
                   WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Device - " + device_name.strip() + " - not founded")                  

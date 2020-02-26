@@ -2,6 +2,7 @@ from app                         import app
 from app.backend.database_models import *
 
 import datetime
+import re
 
 
 """ ################### """
@@ -213,18 +214,22 @@ def CHECK_PROGRAM_TASKS(program_id):
                # check device names
                for device_name in line_content[1].split(","):
 
-                  if GET_DEVICE_BY_NAME(group_name.strip()) == None: 
+                  if GET_DEVICE_BY_NAME(device_name.strip()) == None: 
                      list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not founded | " + device_name)       
 
                   # check commands
                   else:
                      
-                     device  = GET_DEVICE_BY_NAME(device_name.strip())  
-                     setting = task[2]
+                     device            = GET_DEVICE_BY_NAME(device_name.strip())  
+                     setting           = line_content[2].strip()
+                     list_all_commands = re.findall(r'\w+', device.commands_json.lower())
 
-                     if setting.lower() not in device.commands_json.lower():
+                     if setting == "":
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || No command founded")   
+                        break                     
+
+                     if setting.lower() not in list_all_commands[1::2]:
                         list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid command | " + setting)
-
 
             except:
                list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")

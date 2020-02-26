@@ -895,7 +895,7 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", descriptio
     if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):   
             
         # find a unused id
-        for i in range(1,51):
+        for i in range(1,101):
             
             if Devices.query.filter_by(id=i).first():
                 pass

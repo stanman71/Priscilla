@@ -169,7 +169,7 @@ def settings_devices():
 
         exceptions_collapse_open = True
                 
-        for i in range (1,21):
+        for i in range (1,101):
 
             try:     
                 device = GET_DEVICE_BY_ID(i)
