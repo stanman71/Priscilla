@@ -415,10 +415,11 @@
                                   <select id="selected_sensor_1_{{ entry.id }}" data-size="5" class="form-control" name="set_sensor_1_{{ entry.id }}" style="background-color:#27293D">    
                                     {% if device_id_1 != None and device_id_1 != "None" and entry.device_ieeeAddr_1 != None and entry.device_ieeeAddr_1 != "None" %}
                                       <option value= "{{ entry.sensor_key_1 }}" > {{ entry.sensor_key_1 }} </option>
-                                        {% for each in entry.device_input_values_1.split(',') %}
-                                          <option value= "{{ each }}" > {{ each }} </option>
-                                        {% endfor %}                             
-                                      {% else %}
+                                      <option disabled>------------------</option>
+                                      {% for each in entry.device_input_values_1.split(',') %}
+                                        <option value= "{{ each }}" > {{ each }} </option>
+                                      {% endfor %}                             
+                                    {% else %}
                                       <option value= "" > Sensor 1</option>                         
                                     {% endif %}                                                                                      
                                   </select>                                
@@ -491,10 +492,11 @@
                                   <select id="selected_sensor_2_{{ entry.id }}" data-size="5" class="form-control" name="set_sensor_2_{{ entry.id }}" style="background-color:#27293D">   
                                     {% if device_id_2 != None and device_id_2 != "None" and entry.device_ieeeAddr_2 != None and entry.device_ieeeAddr_2 != "None" %}
                                       <option value= "{{ entry.sensor_key_2 }}" > {{ entry.sensor_key_2 }} </option>
+                                      <option disabled>------------------</option>
                                         {% for each in entry.device_input_values_2.split(',') %}
                                           <option value= "{{ each }}" > {{ each }} </option>
                                         {% endfor %}                             
-                                      {% else %}
+                                    {% else %}
                                       <option value= "" > Sensor 2</option>                         
                                     {% endif %}                                                                                         
                                   </select>    
@@ -609,17 +611,21 @@
               <div class="card-header">
                 <a data-toggle="collapse" href="#collapse_info"><font color="white"><b><i class='uil uil-arrow-down'> Commands </i></b></font></a>
                 <br>
-                <br>
-              </div>                 
+                <br>   
+              </div>              
               <div id="collapse_info" class="collapse">      
                 <div class="card-body"> 
                   <div class="table-responsive">
                     <table class="table tablesorter">
-                      <tbody>                                    
-                        <tr>
+                      <tbody>                                                           
+                        <tr> 
                           <td><h4><p class="text-muted">Lighting</p></h4></td>
                           <td></td>
-                        </tr>                                                                       
+                        </tr>  
+                        <tr>
+                          <td></td>
+                          <td></td>
+                        </tr>                                                                                                
                         <tr>
                           <td>lighting # start_scene # livingroom # relax # 100</td>
                           <td>
@@ -675,7 +681,11 @@
                         <tr>
                           <td><h4><p class="text-muted">Devices</p></h4></td>
                           <td></td>
-                        </tr>                                         
+                        </tr>  
+                        <tr>
+                          <td></td>
+                          <td></td>
+                        </tr>   
                         <tr>
                           <td>device # Power_TV, Power_Server # OFF</td>   
                           <td>
@@ -704,7 +714,11 @@
                         <tr>
                           <td><h4><p class="text-muted">Sensordata</p></h4></td>
                           <td></td>
-                        </tr>                           
+                        </tr>   
+                        <tr>
+                          <td></td>
+                          <td></td>
+                        </tr>                                                   
                         <tr>
                           <td>request_sensordata # sensor_1 </td>
                           <td>
@@ -733,7 +747,11 @@
                         <tr>
                           <td><h4><p class="text-muted">Programs</p></h4></td>
                           <td></td>
-                        </tr>                                         
+                        </tr>  
+                        <tr>
+                          <td></td>
+                          <td></td>
+                        </tr>                                                                  
                         <tr>
                           <td>program # SUNRISE # START</td>
                           <td>
@@ -779,7 +797,11 @@
                         <tr>
                           <td><h4><p class="text-muted">Music</p></h4></td>
                           <td></td>
-                        </tr>                           
+                        </tr>  
+                        <tr>
+                          <td></td>
+                          <td></td>
+                        </tr>                                                    
                         <tr>
                           <td>music # PLAY</td>
                           <td>

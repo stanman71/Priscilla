@@ -616,7 +616,7 @@ def UPDATE_DEVICES(gateway):
 """  check device setting  """
 """ ###################### """
  
-def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, repeats = 10): 
+def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, repeats = 25): 
     Thread = threading.Thread(target=CHECK_DEVICE_SETTING_PROCESS, args=(ieeeAddr, setting, repeats, ))
     Thread.start()   
 
@@ -630,15 +630,15 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):
         if device.gateway == "mqtt":
             result = CHECK_MQTT_SETTING(device.ieeeAddr, setting)
         if device.gateway == "zigbee2mqtt":
-            result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting)    
-    
+            result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting)   
+
         # set previous setting
         if result == True:
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | Setting changed | " + setting)  
             return True
 
         counter = counter + 1
-        time.sleep(1)       
+        time.sleep(0.2)       
 
     # error message
     WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)  
@@ -649,8 +649,8 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):
 def CHECK_MQTT_SETTING(ieeeAddr, setting):     
     setting = setting.lower()    
 
-    for message in GET_MQTT_INCOMING_MESSAGES(10):
-        
+    for message in GET_MQTT_INCOMING_MESSAGES(15):
+
         # search for fitting message in incoming_messages_list
         if message[1] == "smarthome/mqtt/" + ieeeAddr:  
                        
@@ -678,7 +678,7 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
 
     if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
 
-        for message in GET_MQTT_INCOMING_MESSAGES(10):
+        for message in GET_MQTT_INCOMING_MESSAGES(15):
 
             # search for fitting message in incoming_messages_list
             if message[1] == "smarthome/zigbee2mqtt/" + device_name:   

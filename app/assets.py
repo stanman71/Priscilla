@@ -1,4 +1,4 @@
 class Assets:
 
-    BRAND_NAME = 'AppSeed.us'
-    BRAND_INFO = 'React, Vue App Generator'  
+    BRAND_NAME = 'Smarthome'
+    BRAND_INFO = 'Smarthome'  

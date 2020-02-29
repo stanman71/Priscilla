@@ -83,174 +83,205 @@ def CHECK_LIGHTING_GROUP_SETTING_THREAD(group_id, scene_id, scene, brightness, d
     Thread.start()   
 
  
-def CHECK_LIGHTING_GROUP_SETTING_PROCESS(group_id, scene_id, scene, brightness, delay, limit): 
-               
-    if scene == "OFF":
-        setting = "OFF"
-    else:
-        setting = "ON"
-                    
+def CHECK_LIGHTING_GROUP_SETTING_PROCESS(group_id, scene_id, scene_name, brightness, delay, limit): 
+                        
     # check setting 1 try
     time.sleep(delay)                             
-    result = CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting, limit)
+    result = CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, limit)
     
     # set current state
     if result == []:
-        SET_LIGHTING_GROUP_CURRENT_SCENE(group_id, scene)
+        SET_LIGHTING_GROUP_CURRENT_SCENE(group_id, scene_name)
         SET_LIGHTING_GROUP_CURRENT_BRIGHTNESS(group_id, brightness)   
         
     else:
         # check setting 2 try
         time.sleep(delay)                             
-        result = CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting, limit)
+        result = CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, limit)
         
         # set current state 
         if result == []:
-            SET_LIGHTING_GROUP_CURRENT_SCENE(group_id, scene)
+            SET_LIGHTING_GROUP_CURRENT_SCENE(group_id, scene_name)
             SET_LIGHTING_GROUP_CURRENT_BRIGHTNESS(group_id, brightness)  
         
         else:
             # check setting 3 try
             time.sleep(delay)                             
-            result = CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting, limit) 
+            result = CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, limit) 
      
               
     # output
-    SET_LIGHTING_GROUP_CURRENT_SCENE(group_id, scene)
+    SET_LIGHTING_GROUP_CURRENT_SCENE(group_id, scene_name)
     SET_LIGHTING_GROUP_CURRENT_BRIGHTNESS(group_id, brightness)                
                 
     group_name = GET_LIGHTING_GROUP_BY_ID(group_id).name
                 
     if result == []:
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Lighting | Group - " + group_name + " | Setting changed | " + str(scene) + " : "  + str(brightness) + " %") 
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Lighting | Group - " + group_name + " | Setting changed | " + str(scene_name) + " : "  + str(brightness) + " %") 
     else:
-        WRITE_LOGFILE_SYSTEM("WARNING", "Lighting | Group - " + group_name + " | "  + str(scene) + " : "  + str(brightness) + " | " + str(result)) 
-        SEND_EMAIL("WARNING", "Lighting | Group - " + group_name + " | "  + str(scene) + " : "  + str(brightness) + " | " + str(result)) 
+        WRITE_LOGFILE_SYSTEM("WARNING", "Lighting | Group - " + group_name + " | "  + str(scene_name) + " : "  + str(brightness) + " | " + str(result)) 
+        SEND_EMAIL("WARNING", "Lighting | Group - " + group_name + " | "  + str(scene_name) + " : "  + str(brightness) + " | " + str(result)) 
 
     return result     
                                                              
     
-def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, setting, limit):
+def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, limit):
     
     error_list = []
 
     try:      
         group = GET_LIGHTING_GROUP_BY_ID(group_id)
-        
-        # group isn't offline
+
+        # light 1
+        light_1 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_1)
+
+        # get setting for LED 1
         if scene_id != 0:
-            
-            scene = GET_LIGHTING_SCENE_BY_ID(scene_id)
+            if GET_LIGHTING_SCENE_BY_ID(scene_id).brightness_1 != 0:
+                setting = "ON"
+            else:
+                setting = "OFF"
+        else:
+            setting = "OFF"
 
-            # light 1
-            light_1 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_1)
+        if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_1, setting, 10) == False:
+            error_list.append(light_1.name + " >>> Setting not confirmed")
 
-            if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_1, setting, 10) == False:
-                error_list.append(light_1.name + " >>> Setting not confirmed")
+        # light 2
+        light_2 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_2)
+        
+        if group.active_light_2 == "True": 
 
-            # light 2
-            light_2 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_2)
-            
-            if group.active_light_2 == "True": 
-
-                if scene.active_light_2 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_2, setting, 10) == False:
-                        error_list.append(light_2.name + " >>> Setting not confirmed")
-                                
+            # get setting for LED 2
+            if scene_id != 0:
+                if GET_LIGHTING_SCENE_BY_ID(scene_id).active_light_2 == "True" and GET_LIGHTING_SCENE_BY_ID(scene_id).brightness_2 != 0:
+                    setting = "ON"
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_2, "OFF", 10) == False:
-                        error_list.append(light_2.name + " >>> Setting not confirmed")
+                    setting = "OFF"
+            else:
+                setting = "OFF"
 
-            # light 3
-            light_3 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_3)
-            
-            if group.active_light_3 == "True": 
+            if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_2, setting, 10) == False:
+                error_list.append(light_2.name + " >>> Setting not confirmed")
+                            
+        # light 3
+        light_3 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_3)
+        
+        if group.active_light_3 == "True": 
 
-                if scene.active_light_3 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_3, setting, 10) == False:
-                        error_list.append(light_3.name + " >>> Setting not confirmed")
-                                
+            # get setting for LED 3
+            if scene_id != 0:
+                if GET_LIGHTING_SCENE_BY_ID(scene_id).active_light_3 == "True" and GET_LIGHTING_SCENE_BY_ID(scene_id).brightness_3 != 0:
+                    setting = "ON"
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_3, "OFF", 10) == False:
-                        error_list.append(light_3.name + " >>> Setting not confirmed")
+                    setting = "OFF"
+            else:
+                setting = "OFF"
 
-            # light 4
-            light_4 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_4)
-            
-            if group.active_light_4 == "True": 
+            if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_3, setting, 10) == False:
+                error_list.append(light_3.name + " >>> Setting not confirmed")
 
-                if scene.active_light_4 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_4, setting, 10) == False:
-                        error_list.append(light_4.name + " >>> Setting not confirmed")
-                                
+        # light 4
+        light_4 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_4)
+        
+        if group.active_light_4 == "True": 
+
+            # get setting for LED 4
+            if scene_id != 0:
+                if GET_LIGHTING_SCENE_BY_ID(scene_id).active_light_4 == "True" and GET_LIGHTING_SCENE_BY_ID(scene_id).brightness_4 != 0:
+                    setting = "ON"
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_4, "OFF", 10) == False:
-                        error_list.append(light_4.name + " >>> Setting not confirmed")
+                    setting = "OFF"
+            else:
+                setting = "OFF"
 
-            # light 5
-            light_5 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_5)
-            
-            if group.active_light_5 == "True": 
+            if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_4, setting, 10) == False:
+                error_list.append(light_4.name + " >>> Setting not confirmed")
 
-                if scene.active_light_5 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_5, setting, 10) == False:
-                        error_list.append(light_5.name + " >>> Setting not confirmed")
-                                
+        # light 5
+        light_5 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_5)
+        
+        if group.active_light_5 == "True": 
+
+            # get setting for LED 5
+            if scene_id != 0:
+                if GET_LIGHTING_SCENE_BY_ID(scene_id).active_light_5 == "True" and GET_LIGHTING_SCENE_BY_ID(scene_id).brightness_5 != 0:
+                    setting = "ON"
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_5, "OFF", 10) == False:
-                        error_list.append(light_5.name + " >>> Setting not confirmed")
+                    setting = "OFF"
+            else:
+                setting = "OFF"
 
-            # light 6
-            light_6 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_6)
-            
-            if group.active_light_6 == "True": 
+            if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_5, setting, 10) == False:
+                error_list.append(light_5.name + " >>> Setting not confirmed")
 
-                if scene.active_light_6 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_6, setting, 10) == False:
-                        error_list.append(light_6.name + " >>> Setting not confirmed")
-                                
+        # light 6
+        light_6 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_6)
+        
+        if group.active_light_6 == "True": 
+
+            # get setting for LED 6
+            if scene_id != 0:
+                if GET_LIGHTING_SCENE_BY_ID(scene_id).active_light_6 == "True" and GET_LIGHTING_SCENE_BY_ID(scene_id).brightness_6 != 0:
+                    setting = "ON"
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_6, "OFF", 10) == False:
-                        error_list.append(light_6.name + " >>> Setting not confirmed")
+                    setting = "OFF"
+            else:
+                setting = "OFF"
 
-            # light 7
-            light_7 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_7)
-            
-            if group.active_light_7 == "True": 
+            if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_6, setting, 10) == False:
+                error_list.append(light_6.name + " >>> Setting not confirmed")
 
-                if scene.active_light_7 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_7, setting, 10) == False:
-                        error_list.append(light_7.name + " >>> Setting not confirmed")
-                                
+        # light 7
+        light_7 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_7)
+        
+        if group.active_light_7 == "True": 
+
+            # get setting for LED 7
+            if scene_id != 0:
+                if GET_LIGHTING_SCENE_BY_ID(scene_id).active_light_7 == "True" and GET_LIGHTING_SCENE_BY_ID(scene_id).brightness_7 != 0:
+                    setting = "ON"
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_7, "OFF", 10) == False:
-                        error_list.append(light_7.name + " >>> Setting not confirmed")
+                    setting = "OFF"
+            else:
+                setting = "OFF"
 
-            # light 8
-            light_8 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_8)
-            
-            if group.active_light_8 == "True": 
+            if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_7, setting, 10) == False:
+                error_list.append(light_7.name + " >>> Setting not confirmed")
 
-                if scene.active_light_8 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_8, setting, 10) == False:
-                        error_list.append(light_8.name + " >>> Setting not confirmed")
-                                
+        # light 8
+        light_8 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_8)
+        
+        if group.active_light_8 == "True": 
+
+            # get setting for LED 8
+            if scene_id != 0:
+                if GET_LIGHTING_SCENE_BY_ID(scene_id).active_light_8 == "True" and GET_LIGHTING_SCENE_BY_ID(scene_id).brightness_8 != 0:
+                    setting = "ON"
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_8, "OFF", 10) == False:
-                        error_list.append(light_8.name + " >>> Setting not confirmed")
+                    setting = "OFF"
+            else:
+                setting = "OFF"
 
-            # light 9
-            light_9 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_9)
-            
-            if group.active_light_9 == "True": 
+            if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_8, setting, 10) == False:
+                error_list.append(light_8.name + " >>> Setting not confirmed")
 
-                if scene.active_light_9 == "True":
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_9, setting, 10) == False:
-                        error_list.append(light_9.name + " >>> Setting not confirmed")
-                                
+        # light 9
+        light_9 = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_9)
+        
+        if group.active_light_9 == "True": 
+
+            # get setting for LED 9
+            if scene_id != 0:
+                if GET_LIGHTING_SCENE_BY_ID(scene_id).active_light_9 == "True" and GET_LIGHTING_SCENE_BY_ID(scene_id).brightness_9 != 0:
+                    setting = "ON"
                 else:
-                    if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_9, "OFF", 10) == False:
-                        error_list.append(light_9.name + " >>> Setting not confirmed")
+                    setting = "OFF"
+            else:
+                setting = "OFF"
+
+            if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_9, setting, 10) == False:
+                error_list.append(light_9.name + " >>> Setting not confirmed")
 
         return error_list
             
@@ -279,7 +310,7 @@ def SET_LIGHTING_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
         scene = GET_LIGHTING_SCENE_BY_ID(scene_id)
     
         # light 1
-        light_1        = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_1)        
+        light_1      = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_1)        
         brightness_1 = scene.brightness_1*(brightness_global/100)
 
         if light_1.device_type == "led_rgb":
@@ -288,7 +319,7 @@ def SET_LIGHTING_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
             SET_LIGHT_SIMPLE(group.light_ieeeAddr_1, int(brightness_global))   
 
         # light 2
-        light_2        = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_2)           
+        light_2      = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_2)           
         brightness_2 = scene.brightness_2*(brightness_global/100)        
         
         if group.active_light_2 == "True": 
@@ -303,7 +334,7 @@ def SET_LIGHTING_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
                 SET_LIGHT_TURN_OFF(group.light_ieeeAddr_2)
 
         # light 3  
-        light_3        = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_3)           
+        light_3      = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_3)           
         brightness_3 = scene.brightness_3*(brightness_global/100)                
         
         if group.active_light_3 == "True": 
@@ -318,7 +349,7 @@ def SET_LIGHTING_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
                 SET_LIGHT_TURN_OFF(group.light_ieeeAddr_3)
             
         # light 4
-        light_4        = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_4)           
+        light_4      = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_4)           
         brightness_4 = scene.brightness_4*(brightness_global/100)                
         
         if group.active_light_4 == "True": 
@@ -333,7 +364,7 @@ def SET_LIGHTING_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
                 SET_LIGHT_TURN_OFF(group.light_ieeeAddr_4)
             
         # light 5 
-        light_5        = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_5)           
+        light_5      = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_5)           
         brightness_5 = scene.brightness_5*(brightness_global/100)               
         
         if group.active_light_5 == "True": 
@@ -348,7 +379,7 @@ def SET_LIGHTING_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
                 SET_LIGHT_TURN_OFF(group.light_ieeeAddr_5)
                                 
         # light 6    
-        light_6        = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_6)   
+        light_6      = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_6)   
         brightness_6 = scene.brightness_6*(brightness_global/100)           
         
         if group.active_light_6 == "True": 
@@ -363,7 +394,7 @@ def SET_LIGHTING_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
                 SET_LIGHT_TURN_OFF(group.light_ieeeAddr_6)
                                 
         # light 7
-        light_7        = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_7)          
+        light_7      = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_7)          
         brightness_7 = scene.brightness_7*(brightness_global/100)                 
         
         if group.active_light_7 == "True":       
@@ -378,7 +409,7 @@ def SET_LIGHTING_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
                 SET_LIGHT_TURN_OFF(group.light_ieeeAddr_7)
                                 
         # light 8 
-        light_8        = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_8)           
+        light_8      = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_8)           
         brightness_8 = scene.brightness_8*(brightness_global/100)                
         
         if group.active_light_8 == "True": 
@@ -393,7 +424,7 @@ def SET_LIGHTING_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
                 SET_LIGHT_TURN_OFF(group.light_ieeeAddr_8)
                                 
         # light 9  
-        light_9        = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_9)           
+        light_9      = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_9)           
         brightness_9 = scene.brightness_9*(brightness_global/100)              
         
         if group.active_light_9 == "True":   

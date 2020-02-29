@@ -142,7 +142,7 @@ def CHECK_PROGRAM_TASKS(program_id):
                   
             try: 
                line_content = line[1].split(" # ")
-               
+     
                # check delay value            
                if line_content[1].isdigit():
                   continue
@@ -165,13 +165,15 @@ def CHECK_PROGRAM_TASKS(program_id):
                line_content = line[1].split(" # ")
 
                # check scene setting
-               if GET_LIGHTING_GROUP_BY_NAME(line_content[2]) == None: 
+               if GET_LIGHTING_GROUP_BY_NAME(line_content[2].strip()) == None: 
                   list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Group not founded | " + line_content[2])
                
-               if GET_LIGHTING_SCENE_BY_NAME(line_content[3]) == None: 
+               if GET_LIGHTING_SCENE_BY_NAME(line_content[3].strip()) == None: 
                   list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Scene not founded | " + line_content[3])
 
-               if not line_content[4].isdigit() or not (0 <= int(line_content[4]) <= 100):
+               brightness = line_content[4].strip()
+
+               if not brightness.isdigit() or not (0 <= int(brightness) <= 100):
                   list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid brightness_value")
 
             except:

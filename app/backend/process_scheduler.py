@@ -252,12 +252,12 @@ def CHECK_SCHEDULER_SENSORS(task):
             passing = True    
          else:
             passing = False
-      if task.operator_1 == ">" and task.value_1.isdigit():
+      if task.operator_1 == "<" and task.value_1.isdigit():
          if int(sensor_value_1) < int(task.value_1):
             passing = True
          else:
             passing = False
-      if task.operator_1 == "<" and task.value_1.isdigit():
+      if task.operator_1 == ">" and task.value_1.isdigit():
          if int(sensor_value_1) > int(task.value_1):
             passing = True 
          else:
@@ -314,13 +314,13 @@ def CHECK_SCHEDULER_SENSORS(task):
                else:
                   passing = False           
                   
-         if task.main_operator_second_sensor == ">":
+         if task.main_operator_second_sensor == "<":
             if int(sensor_value_1) < int(sensor_value_2):
                passing = True
             else:
                passing = False
                
-         if task.main_operator_second_sensor == "<":
+         if task.main_operator_second_sensor == ">":
             if int(sensor_value_1) > int(sensor_value_2):
                passing = True 
             else:
@@ -353,7 +353,7 @@ def CHECK_SCHEDULER_SENSORS(task):
             pass
             
          try:                   
-            if task.operator_1 == ">" and task.value_1.isdigit():
+            if task.operator_1 == "<" and task.value_1.isdigit():
                if int(sensor_value_1) < int(task.value_1):
                   passing_1 = True
                else:
@@ -362,7 +362,7 @@ def CHECK_SCHEDULER_SENSORS(task):
             pass
             
          try:                       
-            if task.operator_1 == "<" and task.value_1.isdigit():
+            if task.operator_1 == ">" and task.value_1.isdigit():
                if int(sensor_value_1) > int(task.value_1):
                   passing_1 = True 
                else:
@@ -394,7 +394,7 @@ def CHECK_SCHEDULER_SENSORS(task):
             pass
             
          try: 
-            if task.operator_2 == ">" and task.value_2.isdigit():
+            if task.operator_2 == "<" and task.value_2.isdigit():
                if int(sensor_value_2) < int(task.value_2):
                   passing_2 = True
                else:
@@ -403,7 +403,7 @@ def CHECK_SCHEDULER_SENSORS(task):
             pass
             
          try:                                
-            if task.operator_2 == "<" and task.value_2.isdigit():
+            if task.operator_2 == ">" and task.value_2.isdigit():
                if int(sensor_value_2) > int(task.value_2):
                   passing_2 = True 
                else:
