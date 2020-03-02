@@ -626,7 +626,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
     # start lighting scene
     # ####################
 
-    if "lighting" in task and "start_scene" in task:
+    if "lighting" in task and "start_scene" in task and "turn_off" not in task:
 
         task = task.split(" # ")
         
@@ -650,6 +650,47 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
                                      controller_command + " | Scene - " + task[3] + " - not founded")
+
+        else:
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
+                                 controller_command + " | Group - " + task[2] + " - not founded")
+
+
+    # ###############################
+    # start lighting scene / turn off
+    # ###############################
+
+    if "lighting" in task and "start_scene" in task and "turn_off" in task:
+
+        task = task.split(" # ")
+        
+        group = GET_LIGHTING_GROUP_BY_NAME(task[2].strip())
+        scene = GET_LIGHTING_SCENE_BY_NAME(task[3].strip())
+
+        # group existing ?
+        if group != None:
+
+            if group.current_scene != "OFF":
+
+                SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)                      
+
+            else:
+
+                # scene existing ?
+                if scene != None:          
+                        
+                    try:
+                        brightness = int(task[4].strip())
+                    except:
+                        brightness = 100
+                        
+                    SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
+                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+
+                else:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
+                                        controller_command + " | Scene - " + task[3] + " - not founded")
 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +

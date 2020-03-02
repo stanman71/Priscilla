@@ -4833,3 +4833,21 @@ Timestamp,Type,Description
 2020-02-27 17:47:12,SUCCESS,|Music || Spotify Token updated|
 2020-02-27 17:47:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-02-27 17:47:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-02 10:32:59,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-02 10:33:00,SUCCESS,|Music || Spotify Token updated|
+2020-03-02 10:33:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-02 10:33:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-02 10:33:21,DATABASE,|Music || Spotify Default Settings || changed|
+2020-03-02 10:36:41,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-02 10:36:41,SUCCESS,|Music || Spotify Token updated|
+2020-03-02 10:36:42,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-02 10:36:42,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-02 10:36:50,DATABASE,|Music || Spotify Default Settings || changed|
+2020-03-02 10:39:26,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-02 10:39:26,SUCCESS,|Music || Spotify Token updated|
+2020-03-02 10:39:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-02 10:39:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-02 10:39:58,DATABASE,|Music || Spotify Default Settings || changed|
+2020-03-02 10:40:04,DATABASE,|Music || Spotify Default Settings || changed|
+2020-03-02 10:40:09,DATABASE,|Music || Spotify Default Settings || changed|
+2020-03-02 10:40:24,DATABASE,|Music || Spotify Default Settings || changed|

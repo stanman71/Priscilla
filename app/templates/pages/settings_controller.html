@@ -339,18 +339,9 @@
                           <td>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-12"> 
-                                group "livingroom" | scene "relax" | brightness "100%"
+                                start lighting | group "livingroom" | scene "relax" | brightness "100%"
                               </div>
                             </div>  
-                            <br>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                100 >> 
-                              </div>
-                              <div class="col-sm-8"> 
-                                brightness 100 % 
-                              </div>                        
-                            </div>     
                             <br>
                             <div class="row justify-content-md-center">
                               <div class="col-sm-4"> 
@@ -374,6 +365,16 @@
                             </div>                              
                           </td>                                                     
                         </tr>
+                        <tr>
+                          <td>lighting # start_scene/turn_off # livingroom # relax # 100</td>
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                start lighting | group "livingroom" | scene "relax" | brightness "100%" or turn off the lights of group "livingroom"
+                              </div>
+                            </div>                       
+                          </td>                                                     
+                        </tr>                   
                         <tr>
                           <td>lighting # rotate_scene # livingroom</td>
                           <td>
@@ -654,15 +655,15 @@
                         </tr>                                                    
                         <tr>
                           <td>music # playlist # PC # Rock # 50</td>
-                          <td>start | playlist "Rock" | device "PC"</td>
+                          <td>start music | playlist "Rock" | device "PC"</td>
                         </tr>     
                         <tr>
                           <td>music # track # PC # Go Time # Young Mozart # 25</td>
-                          <td>start | track "Go Time" | interprets "Young Mozart" | device "PC" | volume "25%"</td>
+                          <td>start music | track "Go Time" | interprets "Young Mozart" | device "PC" | volume "25%"</td>
                         </tr>     
                         <tr>
                           <td>music # album # PC # Hold On # Nano # 60</td>
-                          <td>start | album "Hold On" | interprets "Nano" | device "PC" | volume "25%"</td>
+                          <td>start music | album "Hold On" | interprets "Nano" | device "PC" | volume "25%"</td>
                         </tr>                                                                                       
                       </tbody>
                     </table>           

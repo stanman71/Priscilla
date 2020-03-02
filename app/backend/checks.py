@@ -871,6 +871,56 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             return list_task_errors
      
 
+      # ####################
+      # start_scene/turn_off
+      # ####################
+      
+      if "lighting" in task and "start_scene/turn_off" in task and task_type == "controller":
+         if " # " in task:
+            task = task.split(" # ") 
+
+            # check group setting 
+
+            try:
+
+               if GET_LIGHTING_GROUP_BY_NAME(task[2].strip()) == None: 
+                  list_task_errors.append(controller_command + " || Group not founded | " + task[2].strip())  
+
+            except:
+               list_task_errors.append(controller_command + " || Missing setting | Group")
+
+            # check scene setting    
+
+            try:
+
+               if GET_LIGHTING_SCENE_BY_NAME(task[3].strip()) == None: 
+                  list_task_errors.append(controller_command + " || Scene not founded | " + task[3].strip())  
+                  
+            except:
+               list_task_errors.append(controller_command + " || Missing setting | Scene")
+
+
+            # check brightness    
+
+            try:
+
+               if task[4].isdigit():
+
+                  if 1 <= int(task[4]) <= 100:
+                     return list_task_errors
+                  else:
+                     list_task_errors.append(controller_command + " || Invalid brightness_value")
+
+               else:
+                  list_task_errors.append(controller_command + " || Invalid brightness_value")
+
+            except:
+               return list_task_errors
+
+         else:
+            list_task_errors.append(controller_command + " || Invalid formatting")
+
+
       # ############
       # rotate_scene
       # ############

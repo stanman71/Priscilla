@@ -96,7 +96,6 @@ def MQTT_RECEIVE_THREAD():
                 if existing_message[1] == channel:
                     
                     # device sends new data ?
-
                     try:
                         existing_data = json.loads(existing_message[2])
                         new_data      = json.loads(msg)

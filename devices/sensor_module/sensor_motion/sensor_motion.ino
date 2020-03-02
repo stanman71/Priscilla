@@ -407,14 +407,16 @@ void loop() {
         reconnect();
     }
 
-    if (sensor_1_last_value != digitalRead(SENSOR_1)){
+    if (digitalRead(SENSOR_1) == 1 or sensor_1_last_value != digitalRead(SENSOR_1)){
         sensor_1_last_value = digitalRead(SENSOR_1);
         send_default_mqtt_message();
+        delay(2000);
     }
 
-    if (sensor_2_last_value != digitalRead(SENSOR_2)){
+    if (digitalRead(SENSOR_2) == 1 or sensor_2_last_value != digitalRead(SENSOR_2)){
         sensor_2_last_value = digitalRead(SENSOR_2);
         send_default_mqtt_message();
+        delay(2000);
     }
 
     Serial.println(digitalRead(SENSOR_1));

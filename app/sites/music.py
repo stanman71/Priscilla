@@ -25,14 +25,14 @@ import heapq
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "user" or current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "user" or current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -263,6 +263,8 @@ def music():
                 spotify_default_playlist_name = playlist['name']      
 
         spotify_default_volume = request.form.get("set_spotify_default_volume") 
+
+        print(spotify_default_device_name)
 
         if SET_SPOTIFY_DEFAULT_SETTINGS(spotify_default_device_id, 
                                         spotify_default_device_name, 

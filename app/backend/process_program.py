@@ -145,61 +145,50 @@ def STOP_PROGRAM_THREAD_BY_ID(thread_id):
     global stop_program_thread_8   
     global stop_program_thread_9   
 
-
-    if thread_id == 1 :
+    if thread_id == 1:
         stop_program_thread_1 = True
         program_name = GET_PROGRAM_THREAD_STATUS_1()[0]
         SET_PROGRAM_THREAD_STATUS_1(program_name,"","","STOPPED")
-        return True
 
-    if thread_id == 2 :
+    if thread_id == 2:
         stop_program_thread_2 = True
         program_name = GET_PROGRAM_THREAD_STATUS_2()[0]
         SET_PROGRAM_THREAD_STATUS_2(program_name,"","","STOPPED")
-        return True
 
-    if thread_id == 3 :
+    if thread_id == 3:
         stop_program_thread_3 = True
         program_name = GET_PROGRAM_THREAD_STATUS_3()[0]
         SET_PROGRAM_THREAD_STATUS_3(program_name,"","","STOPPED")
-        return True
 
-    if thread_id == 4 :
+    if thread_id == 4:
         stop_program_thread_4 = True
         program_name = GET_PROGRAM_THREAD_STATUS_4()[0]
         SET_PROGRAM_THREAD_STATUS_4(program_name,"","","STOPPED")
-        return True
 
-    if thread_id == 5 :
+    if thread_id == 5:
         stop_program_thread_5 = True
         program_name = GET_PROGRAM_THREAD_STATUS_5()[0]
         SET_PROGRAM_THREAD_STATUS_5(program_name,"","","STOPPED")
-        return True
 
-    if thread_id == 6 :
+    if thread_id == 6:
         stop_program_thread_6 = True
         program_name = GET_PROGRAM_THREAD_STATUS_6()[0]
         SET_PROGRAM_THREAD_STATUS_6(program_name,"","","STOPPED")
-        return True
 
-    if thread_id == 7 :
+    if thread_id == 7:
         stop_program_thread_7 = True
         program_name = GET_PROGRAM_THREAD_STATUS_7()[0]
         SET_PROGRAM_THREAD_STATUS_7(program_name,"","","STOPPED")
-        return True
 
-    if thread_id == 8 :
+    if thread_id == 8:
         stop_program_thread_8 = True
         program_name = GET_PROGRAM_THREAD_STATUS_8()[0]
         SET_PROGRAM_THREAD_STATUS_8(program_name,"","","STOPPED")
-        return True
 
-    if thread_id == 9 :
+    if thread_id == 9:
         stop_program_thread_9 = True
         program_name = GET_PROGRAM_THREAD_STATUS_9()[0]
         SET_PROGRAM_THREAD_STATUS_9(program_name,"","","STOPPED")
-        return True
-
 
 
 def STOP_PROGRAM_THREAD_BY_NAME(program_name, thread_id = 0):
@@ -214,69 +203,59 @@ def STOP_PROGRAM_THREAD_BY_NAME(program_name, thread_id = 0):
     global stop_program_thread_9  
 
     try:
-
         if thread_id != 1:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_1()[0].lower():
                 stop_program_thread_1 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_1()[0]
                 SET_PROGRAM_THREAD_STATUS_1(program_name,"","","STOPPED")            
-                return True
 
         if thread_id != 2:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_2()[0].lower():
                 stop_program_thread_2 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_2()[0]
                 SET_PROGRAM_THREAD_STATUS_2(program_name,"","","STOPPED")                   
-                return True
 
         if thread_id != 3:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_3()[0].lower():
                 stop_program_thread_3 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_3()[0]
                 SET_PROGRAM_THREAD_STATUS_3(program_name,"","","STOPPED")                   
-                return True
 
         if thread_id != 4:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_4()[0].lower():
                 stop_program_thread_4 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_4()[0]
                 SET_PROGRAM_THREAD_STATUS_4(program_name,"","","STOPPED")                   
-                return True
 
         if thread_id != 5:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_5()[0].lower():
                 stop_program_thread_5 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_5()[0]
                 SET_PROGRAM_THREAD_STATUS_5(program_name,"","","STOPPED")                   
-                return True
 
         if thread_id != 6:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_6()[0].lower():
                 stop_program_thread_6 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_6()[0]
                 SET_PROGRAM_THREAD_STATUS_6(program_name,"","","STOPPED")                   
-                return True
 
         if thread_id != 7:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_7()[0].lower():
                 stop_program_thread_7 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_7()[0]
                 SET_PROGRAM_THREAD_STATUS_7(program_name,"","","STOPPED")                   
-                return True
 
         if thread_id != 8:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_8()[0].lower():
                 stop_program_thread_8 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_8()[0]
                 SET_PROGRAM_THREAD_STATUS_8(program_name,"","","STOPPED")                   
-                return True
 
         if thread_id != 9:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_9()[0].lower():
                 stop_program_thread_9 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_9()[0]
                 SET_PROGRAM_THREAD_STATUS_9(program_name,"","","STOPPED")                   
-                return True
 
     except:
         pass
@@ -345,63 +324,63 @@ def PROGRAM_THREAD(thread_id, program_id):
                 
                 SET_PROGRAM_THREAD_STATUS_1("None","","","")
                 WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
-                break
+                return
 
             if thread_id == 2 and stop_program_thread_2 == True:
                 stop_program_thread_2 = False  
                 
                 SET_PROGRAM_THREAD_STATUS_2("None","","","")
                 WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
-                break
+                return
 
             if thread_id == 3 and stop_program_thread_3 == True:
                 stop_program_thread_3 = False  
                 
                 SET_PROGRAM_THREAD_STATUS_3("None","","","")
                 WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
-                break
+                return
 
             if thread_id == 4 and stop_program_thread_4 == True:
                 stop_program_thread_4 = False  
                 
                 SET_PROGRAM_THREAD_STATUS_4("None","","","")
                 WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
-                break
+                return
 
             if thread_id == 5 and stop_program_thread_5 == True:
                 stop_program_thread_5 = False  
                 
                 SET_PROGRAM_THREAD_STATUS_5("None","","","")
                 WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
-                break
+                return
 
             if thread_id == 6 and stop_program_thread_6 == True:
                 stop_program_thread_6 = False  
                 
                 SET_PROGRAM_THREAD_STATUS_6("None","","","")
                 WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
-                break
+                return
 
             if thread_id == 7 and stop_program_thread_7 == True:
                 stop_program_thread_7 = False  
                 
                 SET_PROGRAM_THREAD_STATUS_7("None","","","")
                 WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
-                break
+                return
 
             if thread_id == 8 and stop_program_thread_8 == True:
                 stop_program_thread_8 = False  
                 
                 SET_PROGRAM_THREAD_STATUS_8("None","","","")
                 WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
-                break
+                return
 
             if thread_id == 9 and stop_program_thread_9 == True:
                 stop_program_thread_9 = False  
                 
                 SET_PROGRAM_THREAD_STATUS_9("None","","","")
                 WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
-                break            
+                return            
 
 
             # program keep running
