@@ -402,7 +402,7 @@ home
            # MQTT server authentication, uncomment if required:
            # user: <my_user>
            # password: <my_password>
-       
+
            advanced:
              network_key: [network_key]
              log_directory: /home/pi/smarthome/data/logs/zigbee2mqtt/
@@ -516,6 +516,8 @@ https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
 
 - BITRON wireless wall thermostat with relay (AV2010/32)
 - EUROTRONIC heater thermostat (SPZB0001)
+- iCASA Pulse 4S (ICZB-KPD14S)
+- iCASA Pulse 8S (ICZB-KPD18S)
 - IKEA TRADFRI LED white E14 400 lumen (LED1536G5 / LED1649C5)
 - IKEA TRADFRI LED white E14 600 lumen (LED1733G7)
 - IKEA TRADFRI LED color E14/E27 600 lumen (LED1624G9)
@@ -536,6 +538,16 @@ https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
 - IKEA TRADFRI signal repeater (E1746)
 - IKEA TRADFRI remote control (E1524 / E1810)
 - IKEA TRADFRI on/off switch (E1743)
+- IKEA SYMFONISK sound controller (E1744)
+    
+    add zigbee2mqtt device config:
+
+    debounce: 1
+    debounce_ignore:
+      - action   
+       
+    !!! Remove temporary, when adding new zigbee devices !!!
+
 - IKEA TRADFRI open/close remote (E1766)
 - IKEA FYRTUR roller blind (E1757)
 - IKEA KADRILJ roller blind (E1926)

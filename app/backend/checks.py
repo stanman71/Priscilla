@@ -799,7 +799,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # start_scene
       # ###########
       
-      if "lighting" in task and "start_scene" in task:
+      if "lighting" in task and "start_scene" in task and "turn_off" not in task:
          if " # " in task:
             task = task.split(" # ") 
 

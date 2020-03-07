@@ -758,7 +758,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
         if group != None:
 
             # command valid ?
-            if command == "turn_up" or command == "turn_down":
+            if command.lower() == "turn_up" or command.lower() == "turn_down":
                 
                 scene_name = group.current_scene
 
@@ -770,7 +770,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                     # get new brightness_value
                     current_brightness = group.current_brightness
 
-                    if (command == "turn_up") and current_brightness != 100:
+                    if (command.lower() == "turn_up") and current_brightness != 100:
                         target_brightness = int(current_brightness) + 20
 
                         if target_brightness > 100:
@@ -779,7 +779,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                         SET_LIGHTING_GROUP_BRIGHTNESS_DIMMER(group.id, "turn_up")
                         CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, target_brightness, 2, 10)
 
-                    elif (command == "turn_down") and current_brightness != 0:
+                    elif (command.lower() == "turn_down") and current_brightness != 0:
 
                         target_brightness = int(current_brightness) - 20
 

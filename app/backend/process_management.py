@@ -32,7 +32,7 @@ def PROCESS_MANAGEMENT_THREAD():
 def PROCESS_MANAGEMENT():
     
     while True:
-        
+
         try:
             process = heapq.heappop(process_management_queue)[1]
 

@@ -615,7 +615,7 @@ def UPDATE_DEVICES(gateway):
 """  check device setting  """
 """ ###################### """
  
-def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, repeats = 25): 
+def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, repeats = 10): 
     Thread = threading.Thread(target=CHECK_DEVICE_SETTING_PROCESS, args=(ieeeAddr, setting, repeats, ))
     Thread.start()   
 
@@ -624,7 +624,8 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):
     device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
     counter = 1
 
-    while counter != repeats:  
+    # seconds = repeats * 5
+    while counter != (repeats * 5):  
         
         if device.gateway == "mqtt":
             result = CHECK_MQTT_SETTING(device.ieeeAddr, setting)

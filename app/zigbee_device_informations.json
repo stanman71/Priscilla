@@ -31,7 +31,25 @@
 									 "{'current_heating_setpoint':19}","{'current_heating_setpoint':20}","{'current_heating_setpoint':21}",
 									 "{'current_heating_setpoint':22}","{'current_heating_setpoint':23}","{'current_heating_setpoint':24}",
 									 "{'current_heating_setpoint':25}","{'eurotronic_system_mode':32}","{'eurotronic_system_mode':16}"]
-			},			
+			},	
+			{
+				"model"           : "ICZB-KPD14S",
+				"device_type"     : "controller",
+				"description"     : "iCASA Pulse 4S",
+				"input_values"    : [],
+				"input_events"    : ["{'click':'on'}","{'click':'off'}","{'click':1}","{'click':2}"],
+				"commands"        : [],
+				"commands_json"   : []
+			},		
+			{
+				"model"           : "ICZB-KPD18S",
+				"device_type"     : "controller",
+				"description"     : "iCASA Pulse 8S",
+				"input_values"    : [],
+				"input_events"    : ["{'click':'on'}","{'click':'off'}","{'click':1}","{'click':2}","{'click':3}","{'click':4}","{'click':5}","{'click':6}"],
+				"commands"        : [],
+				"commands_json"   : []
+			},								
 			{
 				"model"           : "LED1649C5",
 				"device_type"     : "led_simple",
@@ -256,7 +274,16 @@
 				"input_events"    : [],
 				"commands"        : [],
 				"commands_json"   : []
-			},						
+			},	
+			{
+				"model"           : "E1744",
+				"device_type"     : "controller",
+				"description"     : "IKEA SYMFONISK sound controller",
+				"input_values"    : [],
+				"input_events"    : ["{'action':'play_pause'}","{'action':'rotate_left'}","{'action':'rotate_right'}","{'action':'skip_forward'}","{'action':'skip_backward'}"],
+				"commands"        : [],
+				"commands_json"   : []
+			},									
 			{
 				"model"           : "E1746",
 				"device_type"     : "signal_repeater",
