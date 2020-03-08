@@ -218,7 +218,6 @@ def CHECK_SCHEDULER_SENSORS(task):
    
    passing = False   
 
-
    # #######
    # one row
    # #######
@@ -641,7 +640,9 @@ def START_SCHEDULER_TASK(task_object):
                         channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
                   command_position  = 0
-                  list_command_json = device.commands_json.split(",")
+                  list_command_json = device.commands_json.replace("},{", "};{")                       
+                  list_command_json = list_command_json.split(";")
+                  
                   list_all_commands = re.findall(r'\w+', device.commands_json.lower())
 
                   # get the json command statement and start process

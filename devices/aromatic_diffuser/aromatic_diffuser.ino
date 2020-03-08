@@ -19,6 +19,9 @@ PubSubClient client(espClient);
 //wifi manager
 bool shouldSaveConfig = false;   
 
+// INPUT
+int PIN_SENSOR = A0;         // A0
+
 // OUTPUT
 int PIN_RELAIS = 0;          // D3 
 
@@ -30,7 +33,7 @@ int PIN_LED_GREEN = 14;      // D5
 int PIN_LED_RED   = 12;      // D6
 
 String state = "OFF";
-
+int    level = 0;
 
 // ############
 // split string
@@ -292,18 +295,18 @@ void callback (char* topic, byte* payload, unsigned int length) {
     
         JsonArray data_inputs   = msg.createNestedArray("input_values");
         JsonArray data_commands = msg.createNestedArray("commands");
-        data_commands.add("LEVEL_1");
-        data_commands.add("LEVEL_2");      
-        data_commands.add("LEVEL_3");
-        data_commands.add("LEVEL_4");    
+        data_commands.add("ON;1");
+        data_commands.add("ON;2");      
+        data_commands.add("ON;3");
+        data_commands.add("ON;4");    
         data_commands.add("OFF");        
 
         JsonArray data_commands_json = msg.createNestedArray("commands_json");
-        data_commands_json.add("{'state':'LEVEL_1'}");  
-        data_commands_json.add("{'state':'LEVEL_2'}"); 
-        data_commands_json.add("{'state':'LEVEL_3'}"); 
-        data_commands_json.add("{'state':'LEVEL_4'}");         
-        data_commands_json.add("{'state':'OFF'}");    
+        data_commands_json.add("{'state':'ON','level':1}");  
+        data_commands_json.add("{'state':'ON','level':2}"); 
+        data_commands_json.add("{'state':'ON','level':3}"); 
+        data_commands_json.add("{'state':'ON','level':4}");         
+        data_commands_json.add("{'state':'OFF','level':0}");    
 
         // convert msg to char
         char msg_Char[512];
@@ -341,22 +344,35 @@ void callback (char* topic, byte* payload, unsigned int length) {
         deserializeJson(msg_json, msg);
     
         // control relais
-     
-        String command = msg_json["state"];
+        int set_level = msg_json["level"];
 
-        if (command == "LEVEL_1") {
-
+        if (set_level == 1) {
+          
+            // stop device
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(2000);  
+            digitalWrite(PIN_RELAIS, LOW);
+            delay(1000); 
+            
             digitalWrite(PIN_RELAIS, HIGH);
             delay(500);  
             digitalWrite(PIN_RELAIS, LOW);
 
-            state = "LEVEL_1";
+            state = "ON";
+            level = 1;
 
             send_default_mqtt_message(); 
             Serial.println("LEVEL_1");
+            delay(3000); 
         }
+        
+        if (set_level == 2) {
 
-        if (command == "LEVEL_2") {
+            // stop device
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(2000);  
+            digitalWrite(PIN_RELAIS, LOW);
+            delay(1000); 
 
             digitalWrite(PIN_RELAIS, HIGH);
             delay(500);  
@@ -366,13 +382,21 @@ void callback (char* topic, byte* payload, unsigned int length) {
             delay(500);  
             digitalWrite(PIN_RELAIS, LOW);
 
-            state = "LEVEL_2";
+            state = "ON";
+            level = 2;
 
             send_default_mqtt_message(); 
             Serial.println("LEVEL_2");
+            delay(3000); 
         }
 
-        if (command == "LEVEL_3") {
+        if (set_level == 3) {
+
+            // stop device
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(2000);  
+            digitalWrite(PIN_RELAIS, LOW);
+            delay(1000); 
 
             digitalWrite(PIN_RELAIS, HIGH);
             delay(500);  
@@ -386,13 +410,21 @@ void callback (char* topic, byte* payload, unsigned int length) {
             delay(500);  
             digitalWrite(PIN_RELAIS, LOW);
 
-            state = "LEVEL_3";
+            state = "ON";
+            level = 3;
 
             send_default_mqtt_message(); 
             Serial.println("LEVEL_3");
+            delay(3000); 
         }
 
-        if (command == "LEVEL_4") {
+        if (set_level == 4) {
+
+            // stop device
+            digitalWrite(PIN_RELAIS, HIGH);
+            delay(2000);  
+            digitalWrite(PIN_RELAIS, LOW);
+            delay(1000); 
 
             digitalWrite(PIN_RELAIS, HIGH);
             delay(500);  
@@ -410,22 +442,26 @@ void callback (char* topic, byte* payload, unsigned int length) {
             delay(500);  
             digitalWrite(PIN_RELAIS, LOW);
 
-            state = "LEVEL_4";
+            state = "ON";
+            level = 4;
 
             send_default_mqtt_message(); 
             Serial.println("LEVEL_4");
+            delay(3000); 
         }
 
-        if (command == "OFF") {
+        if (set_level == 0) {
 
             digitalWrite(PIN_RELAIS, HIGH);
             delay(2000);  
             digitalWrite(PIN_RELAIS, LOW);
 
             state = "OFF";
-
+            level = 0;
+            
             send_default_mqtt_message(); 
             Serial.println("OFF");
+            delay(3000); 
         }
 
     }     
@@ -446,6 +482,7 @@ void send_default_mqtt_message() {
     // create msg as json
     DynamicJsonDocument msg(256); 
     msg["state"] = state;
+    msg["level"] = level;
 
     // convert msg to char
     char msg_Char[256];
@@ -476,6 +513,8 @@ void setup() {
     pinMode(PIN_RESET_SETTING,INPUT);
     pinMode(PIN_RELAIS, OUTPUT); 
 
+    pinMode(PIN_SENSOR, INPUT); 
+    
     digitalWrite(BUILTIN_LED, HIGH); 
     digitalWrite(PIN_LED_RED, HIGH);
     digitalWrite(PIN_LED_GREEN, LOW);
@@ -512,7 +551,26 @@ void loop() {
     if (!client.connected()) {
         reconnect();
     }
-    
+
+    int sensor_value = analogRead(PIN_SENSOR);
+
+    // send "ON" message if device start locally
+    if (state == "OFF") {
+        if (sensor_value >= 670) {
+            state = "ON";
+            level = 1;            
+            send_default_mqtt_message();             
+        }
+
+    // send "OFF" message if device shutdown locally    
+    } else {
+        if (sensor_value <= 645) {
+            state = "OFF";
+            level = 0;
+            send_default_mqtt_message();             
+        }
+    }
+
     delay(100);
     client.loop();
 }

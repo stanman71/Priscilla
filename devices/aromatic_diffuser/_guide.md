@@ -5,6 +5,7 @@ This project provide customized aromatic diffuser modification.
    * <a href="#1 Hardware">1 Hardware</a>
       * <a href="#1.1 Aromatic Diffuser">1.1 Aromatic Diffuser</a>
       * <a href="#1.2 Controller">1.2 Controller</a>
+      * <a href="#1.3 Sensor">1.3 Sensor</a>
 
 </br>
 ------------
@@ -32,11 +33,15 @@ This project provide customized aromatic diffuser modification.
 
        >>> https://www.ebay.de/itm/WEMOS-D1-mini-ESP8266-4MB-V3-0-0-WIFI-Internet-of-Things-Based-Development-Board/273170891811
 
-- resistor 10K
+- resistor 3.3M
+
+       >>> https://www.ebay.de/itm/10-Stuck-3-3-M-Ohm-1-4-Watt-5-Metalloxid-Widerstand-Widerstand/183455385692?hash=item2ab6cb085c:g:m-sAAOSwgbhaR5Ye
+
+resistor 10K
 
        >>> https://www.berrybase.de/bauelemente/passive-bauelemente/widerstaende/metallschichtwiderstaende/0-6w-1/10k-953k-ohm/metallschichtwiderstand-10-0k-ohm-0-6w-177-1-0207-axial-durchsteckmontage?c=168
 
-- resistor 470
+- resistor 220
 
        >>> https://www.ebay.de/itm/Widerstand-1Ohm-100-kOhm-Metallfilm-50-Stuck-Auswahl-1-4W-0-25W-1-Widerstande/372813822157?hash=item56cd6f78cd:m:mqtBKZoaux-2gebuzxM_WWg
 
@@ -63,3 +68,12 @@ This project provide customized aromatic diffuser modification.
 - socket strip (3 pin)
 
        >>> https://www.berrybase.de/bauelemente/steckverbinder/stift-buchsenleisten-jumper/buchsenleiste-1x-3-polig-rm-2-54-h-8-4-gerade?c=114
+
+</br>
+
+<a name="1.3 Sensor"></a>
+
+#### 1.3 Sensor
+
+- Connect the sensor to the positive voltage of the aromatic diffuser fan (until 12V)
+- Update the values in aromatic_diffuser.ino (line 559 + 567)

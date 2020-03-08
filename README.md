@@ -546,8 +546,6 @@ https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
     debounce_ignore:
       - action   
        
-    !!! Remove temporary, when adding new zigbee devices !!!
-
 - IKEA TRADFRI open/close remote (E1766)
 - IKEA FYRTUR roller blind (E1757)
 - IKEA KADRILJ roller blind (E1926)

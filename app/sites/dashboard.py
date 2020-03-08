@@ -95,7 +95,8 @@ def dashboard():
                             channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
                         command_position  = 0
-                        list_command_json = device.commands_json.split(",")
+                        list_command_json = device.commands_json.replace("},{", "};{")                       
+                        list_command_json = list_command_json.split(";")
 
                         # get the json command statement and start process
                         for command in device.commands.split(","):     

@@ -64,24 +64,21 @@ def MQTT_RECEIVE_THREAD():
         
             list_devices = GET_ALL_DEVICES("")
         
-            # zigbee2mqtt device
             for device in list_devices:
-                if device.name == device_identity:             
-                    ieeeAddr = device.ieeeAddr
+
+                # mqtt device                       
+                if device.ieeeAddr == device_identity:
+                    ieeeAddr    = device_identity   
+                    device_type = device.device_type            
                     break
-            
-            # mqtt device or no zigbee2mqtt friendly_name exist
-            if ieeeAddr == "": 
-                ieeeAddr = device_identity
-                
-            try:
-                for device in list_devices:
-                    if device.name == device_identity:             
-                        device_type = device.device_type            
-            except:
-                device_type = ""    
-                
-            
+
+                # zigbee2mqtt device
+                if device.name == device_identity:                       
+                    ieeeAddr    = device.ieeeAddr
+                    device_type = device.device_type  
+                    break
+
+
         # message ignore ?
         if (device_type == "led_rgb" or 
             device_type == "led_simple" or 
@@ -96,6 +93,7 @@ def MQTT_RECEIVE_THREAD():
                 if existing_message[1] == channel:
                     
                     # device sends new data ?
+                    
                     try:
                         existing_data = json.loads(existing_message[2])
                         new_data      = json.loads(msg)
@@ -131,7 +129,7 @@ def MQTT_RECEIVE_THREAD():
         # message ignore ?
         if (device_type == "controller"):
     
-            for existing_message in GET_MQTT_INCOMING_MESSAGES(3):              
+            for existing_message in GET_MQTT_INCOMING_MESSAGES(2):              
                 
                 # search for other messages from the same device
                 if existing_message[1] == channel:
@@ -634,35 +632,35 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):
 
         # set previous setting
         if result == True:
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | Setting changed | " + setting)  
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | Setting changed | " + setting.replace(";", ", "))  
             return True
 
         counter = counter + 1
         time.sleep(0.2)       
 
     # error message
-    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)  
-    SEND_EMAIL("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)                
-    return ("Device - " + device.name + " | Setting not confirmed - " + setting) 
+    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting.replace(";", ", "))  
+    SEND_EMAIL("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting.replace(";", ", "))                
+    return ("Device - " + device.name + " | Setting not confirmed - " + setting.replace(";", ", ")) 
                          
 
 def CHECK_MQTT_SETTING(ieeeAddr, setting):     
-    setting = setting.lower()    
-
+    setting = setting.lower()
+    
     for message in GET_MQTT_INCOMING_MESSAGES(15):
 
         # search for fitting message in incoming_messages_list
         if message[1] == "smarthome/mqtt/" + ieeeAddr:  
                        
             # only one setting value
-            if not "," in setting:    
+            if not ";" in setting:    
                 if setting.strip() in message[2].lower():
                     return True
                                                     
             # more then one setting value:
             else:
                 
-                list_settings = setting.split(",")
+                list_settings = setting.split(";")
                 
                 for setting in list_settings:           
                     if not setting.strip() in message[2].lower():
@@ -684,14 +682,14 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
             if message[1] == "smarthome/zigbee2mqtt/" + device_name:   
 
                 # only one setting value
-                if not "," in setting:       
+                if not ";" in setting:       
                     if setting.strip() in message[2].lower():
                         return True
                                     
                 # more then one setting value:
                 else:
                     
-                    list_settings = setting.split(",")
+                    list_settings = setting.split(";")
                     
                     for setting in list_settings:        
                         if not setting.strip() in message[2].lower():
