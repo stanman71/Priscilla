@@ -101,7 +101,7 @@ def dashboard():
                         # get the json command statement and start process
                         for command in device.commands.split(","):     
                                             
-                            if device_setting in command:
+                            if str(device_setting.lower()) == command.lower():    
                                 heapq.heappush(mqtt_message_queue, (1, (channel, list_command_json[command_position])))            
                                 CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting, 30)      
                                 break

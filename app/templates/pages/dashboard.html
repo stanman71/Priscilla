@@ -123,7 +123,7 @@
                                 <option disabled>------------------</option>        
                                 {% if entry.commands != None %}
                                   {% for each in entry.commands.split(',') %}
-                                    <option value= "{{ each }}" > {{ each | replace(";",", ") }} </option>
+                                    <option value= "{{ each }}" > {{ each }} </option>
                                   {% endfor %}     
                                 {% endif %}  
                               </select>                            

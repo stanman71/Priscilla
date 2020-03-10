@@ -632,16 +632,16 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):
 
         # set previous setting
         if result == True:
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | Setting changed | " + setting.replace(";", ", "))  
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | Setting changed | " + setting)  
             return True
 
         counter = counter + 1
         time.sleep(0.2)       
 
     # error message
-    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting.replace(";", ", "))  
-    SEND_EMAIL("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting.replace(";", ", "))                
-    return ("Device - " + device.name + " | Setting not confirmed - " + setting.replace(";", ", ")) 
+    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)  
+    SEND_EMAIL("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)                
+    return ("Device - " + device.name + " | Setting not confirmed - " + setting) 
                          
 
 def CHECK_MQTT_SETTING(ieeeAddr, setting):     

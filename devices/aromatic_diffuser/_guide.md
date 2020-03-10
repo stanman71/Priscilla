@@ -76,4 +76,4 @@ resistor 10K
 #### 1.3 Sensor
 
 - Connect the sensor to the positive voltage of the aromatic diffuser fan (until 12V)
-- Update the values in aromatic_diffuser.ino (line 559 + 567)
+- Update the voltage values in aromatic_diffuser.ino (voltage_online + voltage_offline)

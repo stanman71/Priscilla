@@ -35,6 +35,10 @@ int PIN_LED_RED   = 12;      // D6
 String state = "OFF";
 int    level = 0;
 
+int voltage_online  = 660;
+int voltage_offline = 655;
+
+
 // ############
 // split string
 // ############
@@ -295,10 +299,10 @@ void callback (char* topic, byte* payload, unsigned int length) {
     
         JsonArray data_inputs   = msg.createNestedArray("input_values");
         JsonArray data_commands = msg.createNestedArray("commands");
-        data_commands.add("ON;1");
-        data_commands.add("ON;2");      
-        data_commands.add("ON;3");
-        data_commands.add("ON;4");    
+        data_commands.add("ON; 1");
+        data_commands.add("ON; 2");      
+        data_commands.add("ON; 3");
+        data_commands.add("ON; 4");    
         data_commands.add("OFF");        
 
         JsonArray data_commands_json = msg.createNestedArray("commands_json");
@@ -348,31 +352,56 @@ void callback (char* topic, byte* payload, unsigned int length) {
 
         if (set_level == 1) {
           
-            // stop device
-            digitalWrite(PIN_RELAIS, HIGH);
-            delay(2000);  
-            digitalWrite(PIN_RELAIS, LOW);
-            delay(1000); 
+            if (state != "OFF") {
+                // stop device
+                digitalWrite(PIN_RELAIS, HIGH);
+                delay(2000);  
+                digitalWrite(PIN_RELAIS, LOW);
+                delay(1000); 
+            }
             
             digitalWrite(PIN_RELAIS, HIGH);
             delay(500);  
             digitalWrite(PIN_RELAIS, LOW);
+            delay(1000); 
 
-            state = "ON";
-            level = 1;
+            // get average sensor_value
+            int sensor_value_1 = analogRead(PIN_SENSOR);
+            delay(50);            
+            int sensor_value_2 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_3 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_4 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_5 = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5) / 5);
+
+            if (sensor_value >= voltage_online) {
+                state = "ON";
+                level = 1;     
+                Serial.println("ON");
+            }
+
+            if (sensor_value <= voltage_offline) {
+                state = "OFF";
+                level = 0;  
+                Serial.println("OFF");         
+            }
 
             send_default_mqtt_message(); 
-            Serial.println("LEVEL_1");
-            delay(3000); 
         }
         
         if (set_level == 2) {
 
-            // stop device
-            digitalWrite(PIN_RELAIS, HIGH);
-            delay(2000);  
-            digitalWrite(PIN_RELAIS, LOW);
-            delay(1000); 
+            if (state != "OFF") {
+                // stop device
+                digitalWrite(PIN_RELAIS, HIGH);
+                delay(2000);  
+                digitalWrite(PIN_RELAIS, LOW);
+                delay(1000); 
+            }
 
             digitalWrite(PIN_RELAIS, HIGH);
             delay(500);  
@@ -381,22 +410,45 @@ void callback (char* topic, byte* payload, unsigned int length) {
             digitalWrite(PIN_RELAIS, HIGH);
             delay(500);  
             digitalWrite(PIN_RELAIS, LOW);
+            delay(1000); 
 
-            state = "ON";
-            level = 2;
+            // get average sensor_value
+            int sensor_value_1 = analogRead(PIN_SENSOR);
+            delay(50);            
+            int sensor_value_2 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_3 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_4 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_5 = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5) / 5);
+
+            if (sensor_value >= voltage_online) {
+                state = "ON";
+                level = 1;     
+                Serial.println("ON");
+            }
+
+            if (sensor_value <= voltage_offline) {
+                state = "OFF";
+                level = 0;  
+                Serial.println("OFF");         
+            }
 
             send_default_mqtt_message(); 
-            Serial.println("LEVEL_2");
-            delay(3000); 
         }
 
         if (set_level == 3) {
 
-            // stop device
-            digitalWrite(PIN_RELAIS, HIGH);
-            delay(2000);  
-            digitalWrite(PIN_RELAIS, LOW);
-            delay(1000); 
+            if (state != "OFF") {
+                // stop device
+                digitalWrite(PIN_RELAIS, HIGH);
+                delay(2000);  
+                digitalWrite(PIN_RELAIS, LOW);
+                delay(1000); 
+            }
 
             digitalWrite(PIN_RELAIS, HIGH);
             delay(500);  
@@ -409,22 +461,45 @@ void callback (char* topic, byte* payload, unsigned int length) {
             digitalWrite(PIN_RELAIS, HIGH);
             delay(500);  
             digitalWrite(PIN_RELAIS, LOW);
+            delay(1000); 
 
-            state = "ON";
-            level = 3;
+            // get average sensor_value
+            int sensor_value_1 = analogRead(PIN_SENSOR);
+            delay(50);            
+            int sensor_value_2 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_3 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_4 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_5 = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5) / 5);
+
+            if (sensor_value >= voltage_online) {
+                state = "ON";
+                level = 1;     
+                Serial.println("ON");
+            }
+
+            if (sensor_value <= voltage_offline) {
+                state = "OFF";
+                level = 0;  
+                Serial.println("OFF");         
+            }
 
             send_default_mqtt_message(); 
-            Serial.println("LEVEL_3");
-            delay(3000); 
         }
 
         if (set_level == 4) {
 
-            // stop device
-            digitalWrite(PIN_RELAIS, HIGH);
-            delay(2000);  
-            digitalWrite(PIN_RELAIS, LOW);
-            delay(1000); 
+            if (state != "OFF") {
+                // stop device
+                digitalWrite(PIN_RELAIS, HIGH);
+                delay(2000);  
+                digitalWrite(PIN_RELAIS, LOW);
+                delay(1000); 
+            }
 
             digitalWrite(PIN_RELAIS, HIGH);
             delay(500);  
@@ -441,13 +516,34 @@ void callback (char* topic, byte* payload, unsigned int length) {
             digitalWrite(PIN_RELAIS, HIGH);
             delay(500);  
             digitalWrite(PIN_RELAIS, LOW);
+            delay(1000); 
 
-            state = "ON";
-            level = 4;
+            // get average sensor_value
+            int sensor_value_1 = analogRead(PIN_SENSOR);
+            delay(50);            
+            int sensor_value_2 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_3 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_4 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_5 = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5) / 5);
+
+            if (sensor_value >= voltage_online) {
+                state = "ON";
+                level = 1;     
+                Serial.println("ON");
+            }
+
+            if (sensor_value <= voltage_offline) {
+                state = "OFF";
+                level = 0;  
+                Serial.println("OFF");         
+            }
 
             send_default_mqtt_message(); 
-            Serial.println("LEVEL_4");
-            delay(3000); 
         }
 
         if (set_level == 0) {
@@ -455,15 +551,35 @@ void callback (char* topic, byte* payload, unsigned int length) {
             digitalWrite(PIN_RELAIS, HIGH);
             delay(2000);  
             digitalWrite(PIN_RELAIS, LOW);
+            delay(1000); 
 
-            state = "OFF";
-            level = 0;
-            
+            // get average sensor_value
+            int sensor_value_1 = analogRead(PIN_SENSOR);
+            delay(50);            
+            int sensor_value_2 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_3 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_4 = analogRead(PIN_SENSOR);
+            delay(50);               
+            int sensor_value_5 = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5) / 5);
+
+            if (sensor_value >= voltage_online) {
+                state = "ON";
+                level = 1;     
+                Serial.println("ON");
+            }
+
+            if (sensor_value <= voltage_offline) {
+                state = "OFF";
+                level = 0;  
+                Serial.println("OFF");         
+            }
+
             send_default_mqtt_message(); 
-            Serial.println("OFF");
-            delay(3000); 
         }
-
     }     
 }
 
@@ -552,11 +668,22 @@ void loop() {
         reconnect();
     }
 
-    int sensor_value = analogRead(PIN_SENSOR);
+    // get average sensor_value
+    int sensor_value_1 = analogRead(PIN_SENSOR);
+    delay(10);            
+    int sensor_value_2 = analogRead(PIN_SENSOR);
+    delay(10);               
+    int sensor_value_3 = analogRead(PIN_SENSOR);
+    delay(10);               
+    int sensor_value_4 = analogRead(PIN_SENSOR);
+    delay(10);               
+    int sensor_value_5 = analogRead(PIN_SENSOR);
+    delay(10); 
+    int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5) / 5);
 
     // send "ON" message if device start locally
     if (state == "OFF") {
-        if (sensor_value >= 670) {
+        if (sensor_value >= voltage_online) {
             state = "ON";
             level = 1;            
             send_default_mqtt_message();             
@@ -564,7 +691,7 @@ void loop() {
 
     // send "OFF" message if device shutdown locally    
     } else {
-        if (sensor_value <= 645) {
+        if (sensor_value <= voltage_offline) {
             state = "OFF";
             level = 0;
             send_default_mqtt_message();             

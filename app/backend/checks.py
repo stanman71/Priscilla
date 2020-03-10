@@ -1067,7 +1067,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      device  = GET_DEVICE_BY_NAME(device_name.strip())  
                      setting = task[2]
 
-                     if setting.lower() not in device.commands_json.lower():
+                     if setting.lower() not in device.commands.lower():
                   
                         if task_type == "controller":
                            list_task_errors.append(controller_command + " || Invalid command | " + setting)
@@ -1224,9 +1224,6 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             try:   
                    
                if task[1].strip() == "PLAY":
-                  return list_task_errors
-
-               elif task[1].strip() == "PLAY/STOP":
                   return list_task_errors
 
                elif task[1].strip() == "ROTATE_PLAYLIST" and task_type == "controller":

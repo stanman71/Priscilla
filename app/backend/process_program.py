@@ -561,14 +561,12 @@ def PROGRAM_THREAD(thread_id, program_id):
                                         list_command_json = device.commands_json.replace("},{", "};{")                       
                                         list_command_json = list_command_json.split(";")
 
-                                        list_all_commands = re.findall(r'\w+', device.commands_json.lower())
-
                                         # get the json command statement and start process
-                                        for command in list_all_commands[1::2]:   
-
+                                        for command in device.commands.split(","):     
+                                                                    
                                             if str(program_setting.lower()) == command.lower():
                                                 heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_setting, 20)      
+                                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_setting, 30)      
                                                 continue
 
                                             command_position = command_position + 1
