@@ -413,9 +413,34 @@
                           </td>
                         </tr>  
                         <tr>
+                          <td>lighting # light # LED_FLOOR # 255 0 0 # 100</td>
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                start lighting | light "LED_FLOOR" | rgb "255 0 0" | brightness "100%"
+                              </div>
+                            </div>  
+                            <br>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                Lights >>
+                              </div>
+                              <div class="col-sm-8">   
+                                {% for light in list_light_options %}
+                                  {{ light }} |
+                                {% endfor %}    
+                              </div>  
+                            </div>                              
+                          </td>                                
+                        </tr>                           
+                        <tr>
                           <td>lighting # turn_off # group # kitchen, bathroom</td>
                           <td>turn off the lights of group "bathroom" and "kitchen"</td>
-                        </tr>               
+                        </tr>  
+                        <tr>                        
+                          <td>lighting # turn_off # light # LED_FLOOR</td>
+                          <td>turn off the light "LED_FLOOR"</td>
+                        </tr>                                         
                         <tr>
                           <td>lighting # turn_off # ALL</td>
                           <td>turn off all lights</td>

@@ -178,7 +178,41 @@ def CHECK_PROGRAM_TASKS(program_id):
 
             except:
                list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")               
-                     
+
+
+         # set light
+         elif "lighting" in line[1] and "light" in line[1] and "turn_off" not in line[1]:
+            
+            try:        
+               line_content = line[1].split(" # ")
+
+               # check light name
+               if GET_DEVICE_BY_NAME(line_content[2].strip()) == None: 
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Light not founded | " + line_content[2])
+               
+               # check rgb values
+               try:
+                  rgb_values = re.findall(r'\d+', line_content[3])
+
+                  if not rgb_values[0].isdigit() or not (0 <= int(rgb_values[0]) <= 255):
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid rgb_values")
+                  if not rgb_values[1].isdigit() or not (0 <= int(rgb_values[1]) <= 255):
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid rgb_values")
+                  if not rgb_values[2].isdigit() or not (0 <= int(rgb_values[2]) <= 255):
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid rgb_values")
+
+               except:
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid rgb_values")
+
+               # check brightness
+               brightness = line_content[4].strip()
+
+               if not brightness.isdigit() or not (0 <= int(brightness) <= 100):
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid brightness_value")
+
+            except:
+               list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")                 
+
 
          # turn_off
          elif "lighting" in line[1] and "turn_off" in line[1]:
@@ -192,6 +226,14 @@ def CHECK_PROGRAM_TASKS(program_id):
                   for group_name in line_content[3].split(","):
                      if GET_LIGHTING_GROUP_BY_NAME(group_name.strip()) == None: 
                         list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Group not founded | " + group_name.strip())  
+
+
+               # check turn_off light setting
+               if line_content[2].lower() == "light":
+
+                  if GET_DEVICE_BY_NAME(line_content[3].strip()) == None: 
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Light not founded | " + line_content[3])
+
 
                # check turn_off all setting
                elif line_content[2].lower() == "all":
@@ -806,7 +848,6 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             # check group setting 
 
             try:
-
                if GET_LIGHTING_GROUP_BY_NAME(task[2].strip()) == None: 
 
                   if task_type == "controller":
@@ -823,7 +864,6 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             # check scene setting    
 
             try:
-
                if GET_LIGHTING_SCENE_BY_NAME(task[3].strip()) == None: 
 
                   if task_type == "controller":
@@ -921,6 +961,93 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             list_task_errors.append(controller_command + " || Invalid formatting")
 
 
+      # #########
+      # set_light
+      # #########
+
+      if "lighting" in task and "light" in task and "brightness" not in task and "turn_off" not in task:
+         
+         if " # " in task:
+            task = task.split(" # ") 
+
+            # check light setting 
+
+            try:
+               if GET_DEVICE_BY_NAME(task[2].strip()) == None: 
+
+                  if task_type == "controller":
+                     list_task_errors.append(controller_command + " || Light not founded | " + task[2].strip())  
+                  else:                               
+                     list_task_errors.append("Light not founded || " + task[2].strip())  
+
+            except:
+               if task_type == "controller":
+                  list_task_errors.append(controller_command + " || Missing setting | Light")
+               else:
+                  list_task_errors.append("Missing setting || Light")
+
+            # check rgb_values setting 
+
+            try:
+               rgb_values = re.findall(r'\d+', task[3])
+
+               if not rgb_values[0].isdigit() or not (0 <= int(rgb_values[0]) <= 255): 
+                  if task_type == "controller":
+                     list_task_errors.append(controller_command + " || Invalid rgb_values")
+                  else:                               
+                     list_task_errors.append("Invalid rgb_values || " + task[2].strip())  
+
+               if not rgb_values[1].isdigit() or not (0 <= int(rgb_values[1]) <= 255): 
+                  if task_type == "controller":
+                     list_task_errors.append(controller_command + " || Invalid rgb_values")
+                  else:                               
+                     list_task_errors.append("Invalid rgb_values || " + task[2].strip())  
+
+               if not rgb_values[2].isdigit() or not (0 <= int(rgb_values[2]) <= 255): 
+                  if task_type == "controller":
+                     list_task_errors.append(controller_command + " || Invalid rgb_values")
+                  else:                               
+                     list_task_errors.append("Invalid rgb_values || " + task[2].strip())                       
+
+            except:
+               if task_type == "controller":
+                  list_task_errors.append(controller_command + " || Invalid rgb_values")
+               else:                               
+                  list_task_errors.append("Invalid rgb_values || " + task[2].strip())     
+
+            # check brightness    
+
+            try:
+
+               if task[4].isdigit():
+                  if 1 <= int(task[4]) <= 100:
+                     return list_task_errors
+
+                  else:
+                     if task_type == "controller":
+                        list_task_errors.append(controller_command + " || Invalid brightness_value")
+                     else:                        
+                        list_task_errors.append("Invalid brightness_value") 
+                     return list_task_errors    
+
+               else:
+                  if task_type == "controller":
+                     list_task_errors.append(controller_command + " || Invalid brightness_value")
+                  else:                     
+                     list_task_errors.append("Invalid brightness_value")
+                  return list_task_errors
+
+            except:
+               return list_task_errors
+
+         else:
+            if task_type == "controller":
+               list_task_errors.append(controller_command + " || Invalid formatting")
+            else:                
+               list_task_errors.append("Invalid formatting")
+            return list_task_errors
+      
+
       # ############
       # rotate_scene
       # ############
@@ -991,11 +1118,12 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       # ########
       
       if "lighting" in task and "turn_off" in task:
+
          if " # " in task:
             task = task.split(" # ")
             
             # check turn_off groups
-            if "group" in task[2]:
+            if task[2].lower() == "group": 
 
                try:      
                   # check group names 
@@ -1017,8 +1145,31 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      list_task_errors.append("Missing setting || Group")
                   
                   return list_task_errors
-                        
-   
+
+
+            # check turn_off light setting
+            if task[2].lower() == "light": 
+
+               try:
+                  # check light name
+                  if GET_DEVICE_BY_NAME(task[3].strip()) == None: 
+
+                     if task_type == "controller":
+                        list_task_errors.append(controller_command + " || Light not founded | " + task[3].strip())  
+                     else:                               
+                        list_task_errors.append("Light not founded || " + task[3].strip())  
+
+                  return list_task_errors
+      
+               except:
+                  if task_type == "controller":
+                     list_task_errors.append(controller_command + " || Missing setting | Light")
+                  else:                            
+                     list_task_errors.append("Missing setting || Light")
+                  
+                  return list_task_errors
+
+
             # check turn off all lights
             elif task[2].lower() == "all": 
                return list_task_errors
@@ -1026,9 +1177,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
             else:
                if task_type == "controller":
-                  list_task_errors.append(controller_command + " || Invalid Input | 'all' or 'group'")
+                  list_task_errors.append(controller_command + " || Invalid Input | 'all' / 'group' / 'light'")
                else:                   
-                  list_task_errors.append("Invalid Input || 'all' or 'group' ?")
+                  list_task_errors.append("Invalid Input || 'all' / 'group' / 'light'")
                return list_task_errors  
 
 

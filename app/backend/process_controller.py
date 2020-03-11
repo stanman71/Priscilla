@@ -697,6 +697,40 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                                  controller_command + " | Group - " + task[2] + " - not founded")
 
 
+    # ###########
+    # start light
+    # ###########
+
+    if "lighting" in task and "light" in task and "turn_off" not in task:
+
+        task = task.split(" # ") 
+                  
+        device = GET_DEVICE_BY_NAME(task[2].strip())
+
+        # device existing ?
+        if device != None:
+
+            try:
+                rgb_values = re.findall(r'\d+', task[3])
+            except:
+                rgb_values = []                                        
+
+            try:
+                brightness = int(task[4].strip())
+            except:
+                brightness = 100     
+
+            if rgb_values != []:    
+                SET_LIGHT_RGB_THREAD(device.ieeeAddr, rgb_values[0], rgb_values[1], rgb_values[2], brightness)
+                CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "ON", 10)
+
+            else:
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Invalid settings")  
+
+        else:
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Light - " + task[2] + " - not founded")   
+
+
     # #####################
     # rotate lighting scene
     # #####################
@@ -739,7 +773,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + 
                                  controller_command + " | Group - " + task[2] + " - not founded")
 
 
@@ -840,6 +874,20 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             if group_founded == False:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
                                      controller_command + " | Group - " + input_group_name + " - not founded")
+
+
+        if task[2].lower() == "light":
+
+            device = GET_DEVICE_BY_NAME(task[3].strip())
+
+            # device existing ?
+            if device != None:                            
+               SET_LIGHT_TURN_OFF_THREAD(device.ieeeAddr)
+               CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "OFF", 10)
+
+            else:
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
+                                     controller_command + " | Light - " + task[3].strip() + " - not founded")
 
 
         if task[2].lower() == "all":

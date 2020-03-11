@@ -10,6 +10,10 @@ from app.backend.email            import SEND_EMAIL
 from app.backend.shared_resources import mqtt_message_queue
 
 
+""" ################## """
+"""  lighting threads  """
+""" ################## """
+
 
 def SET_LIGHT_RGB_THREAD(light_ieeeAddr, red, green, blue, brightness):
     device = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr)
@@ -71,9 +75,9 @@ def SET_LIGHT_TURN_OFF_THREAD(light_ieeeAddr):
     time.sleep(1)
     
 
-""" ######################### """
-"""  lighting group functions """
-""" ######################### """
+""" ########################## """
+"""  lighting group functions  """
+""" ########################## """
 
 
 def SET_LIGHTING_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
@@ -169,7 +173,7 @@ def SET_LIGHTING_GROUP_SCENE(group_id, scene_id, brightness_global = 100):
                                 
         # light 6    
         light_6      = GET_DEVICE_BY_IEEEADDR(group.light_ieeeAddr_6)   
-        brightness_6 = scene.brightness_6*(brightness_global/500)           
+        brightness_6 = scene.brightness_6*(brightness_global/100)           
         
         if group.active_light_6 == "True": 
             if scene.active_light_6 == "True":
@@ -398,9 +402,9 @@ def SET_LIGHTING_GROUP_TURN_OFF(group_id):
         return [str(e)]
 
 
-""" ############################ """
-""" lighting group check setting """
-""" ############################ """
+""" ############################## """
+"""  lighting group check setting  """
+""" ############################## """
 
 
 def CHECK_LIGHTING_GROUP_SETTING_THREAD(group_id, scene_id, scene, brightness, delay, limit): 
@@ -446,7 +450,6 @@ def CHECK_LIGHTING_GROUP_SETTING_PROCESS(group_id, scene_id, scene_name, brightn
         WRITE_LOGFILE_SYSTEM("SUCCESS", "Lighting | Group - " + group_name + " | Setting changed | " + str(scene_name) + " : "  + str(brightness) + " %") 
     else:
         WRITE_LOGFILE_SYSTEM("WARNING", "Lighting | Group - " + group_name + " | "  + str(scene_name) + " : "  + str(brightness) + " | " + str(result)) 
-        SEND_EMAIL("WARNING", "Lighting | Group - " + group_name + " | "  + str(scene_name) + " : "  + str(brightness) + " | " + str(result)) 
 
     return result     
                                                              

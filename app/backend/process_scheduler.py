@@ -559,6 +559,45 @@ def START_SCHEDULER_TASK(task_object):
       WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))
 
 
+    # ###########
+    # start light
+    # ###########
+
+   try:
+      if "lighting" in task_object.task and "light" in task_object.task and "turn_off" not in task_object.task:
+
+         task = task_object.task.split(" # ")
+                     
+         device = GET_DEVICE_BY_NAME(task[2].strip())
+
+         # device existing ?
+         if device != None:
+
+               try:
+                  rgb_values = re.findall(r'\d+', task[3])
+               except:
+                  rgb_values = []                                        
+
+               try:
+                  brightness = int(task[4].strip())
+               except:
+                  brightness = 100     
+
+               if rgb_values != []:    
+                  SET_LIGHT_RGB_THREAD(device.ieeeAddr, rgb_values[0], rgb_values[1], rgb_values[2], brightness)
+                  CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "ON", 10)
+
+               else:
+                  WRITE_LOGFILE_SYSTEM("ERROR", "Network | Scheduler | Task - " + task_object.name + " | Invalid settings")  
+
+         else:
+               WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Light - " + task[2] + " - not founded") 
+
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))
+
+
    # #########
    # light off
    # #########
@@ -568,7 +607,7 @@ def START_SCHEDULER_TASK(task_object):
          
          task = task_object.task.split(" # ")
 
-         if task[2] == "group":
+         if task[2].lower() == "group":
 
                # get input group names and lower the letters
                try:
@@ -594,6 +633,19 @@ def START_SCHEDULER_TASK(task_object):
 
                   if group_founded == False:
                      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Group - " + input_group_name + " - not founded")     
+
+
+         if task[2].lower() == "light":
+
+            device = GET_DEVICE_BY_NAME(task[3].strip())
+
+            # device existing ?
+            if device != None:                            
+               SET_LIGHT_TURN_OFF_THREAD(device.ieeeAddr)
+               CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "OFF", 10)
+
+            else:
+               WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | Light - " + task[3].strip() + " - not founded")    
 
 
          if task[2].lower() == "all":

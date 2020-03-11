@@ -483,6 +483,37 @@ def PROGRAM_THREAD(thread_id, program_id):
                             WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
 
 
+                    if "lighting" in line[1] and "light" in line[1] and "turn_off" not in line[1]:
+
+                        line_content = line[1].split(" # ")
+
+                        try:                     
+                            device = GET_DEVICE_BY_NAME(line_content[2].strip())
+
+                            # device existing ?
+                            if device != None:
+
+                                try:
+                                    rgb_values = re.findall(r'\d+', line_content[3])
+                                except:
+                                    rgb_values = []                                        
+
+                                try:
+                                    brightness = int(line_content[4].strip())
+                                except:
+                                    brightness = 100     
+
+                                if rgb_values != []:                                  
+                                    SET_LIGHT_RGB_THREAD(device.ieeeAddr, rgb_values[0], rgb_values[1], rgb_values[2], brightness)
+                                    CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "ON", 10)
+
+                            else:
+                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Device - " + line_content[3] + " - not founded")   
+         
+                        except Exception as e:
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
+
+
                     if "lighting" in line[1] and "turn_off" in line[1]:
 
                         line_content = line[1].split(" # ")
@@ -515,6 +546,20 @@ def PROGRAM_THREAD(thread_id, program_id):
                                 # group not founded
                                 if group_founded == False:
                                     WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + input_group_name + " - not founded")   
+
+
+                            # turn off light
+                            if line_content[2].lower() == "light":
+
+                                device = GET_DEVICE_BY_NAME(line_content[3].strip())
+
+                                # device existing ?
+                                if device != None:                            
+                                    SET_LIGHT_TURN_OFF_THREAD(device.ieeeAddr)
+                                    CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "OFF", 10)
+
+                                else:
+                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Light - " + line_content[3] + " - not founded")   
 
 
                             # turn off all

@@ -182,6 +182,12 @@ def settings_controller():
     for scene in GET_ALL_LIGHTING_SCENES():
         list_lighting_scene_options.append(scene.name)
 
+    # list light options
+    list_light_options = []
+
+    for device in GET_ALL_DEVICES("light"):
+        list_light_options.append(device.name)
+
     # list sensordata job options    
     list_sensordata_job_options = []
 
@@ -230,6 +236,7 @@ def settings_controller():
                                                     list_controller=list_controller,
                                                     list_lighting_group_options=list_lighting_group_options,
                                                     list_lighting_scene_options=list_lighting_scene_options,
+                                                    list_light_options=list_light_options,                                                    
                                                     list_sensordata_job_options=list_sensordata_job_options,
                                                     list_program_options=list_program_options,                                                       
                                                     list_device_command_options=list_device_command_options,
