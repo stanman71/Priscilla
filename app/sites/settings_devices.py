@@ -372,7 +372,7 @@ def settings_devices():
     system_services             = GET_SYSTEM_SETTINGS()  
     
 
-    data = {'navigation': 'settings'}
+    data = {'navigation': 'settings_devices'}
 
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
 

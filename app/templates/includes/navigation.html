@@ -37,17 +37,51 @@
                 <p><font size="2">Programs</font></p>
               </a>
             </li>            
-
-            {% if data.navigation == "lighting" %}
-              <li class="active ">
-            {% else %} 
-              <li>
-            {% endif %} 
-              <a href="/lighting/scenes">
+        
+            <li>
+              <a data-toggle="collapse" href="#lighting" aria-expanded="true">
                 <i class='uil uil-lightbulb-alt'></i>
-                <p><font size="2">Lighting</font></p>
+                  <p><font size="2">Lighting</font></p>
+                <b class="caret mt-2"></b>
               </a>
-            </li>  
+
+              {% if data.navigation == "lighting_scenes" or data.navigation == "lighting_groups" %} 
+                <div class="collapse show" id="lighting">
+              {% else %} 
+                <div class="collapse" id="lighting">
+              {% endif %}
+
+                <ul class="nav pl-4">
+
+                  {% if data.navigation == "lighting_scenes" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/lighting/scenes">
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">Scenes</font></p>     
+                      </div>     
+                    </a>
+                  </li>
+                
+                  {% if data.navigation == "lighting_groups" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/lighting/groups">   
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">Groups</font></p>  
+                      </div>   
+                    </a>
+                  </li>    
+
+                </ul>
+              </div>
+            </li>
 
             {% if data.navigation == "cameras" %}
               <li class="active ">
@@ -71,31 +105,152 @@
               </a>
             </li>  
 
-            {% if data.navigation == "sensordata" %}
-              <li class="active ">
-            {% else %} 
-              <li>
-            {% endif %} 
-              <a href="/sensordata/jobs">
+            <li>
+              <a data-toggle="collapse" href="#sensordata" aria-expanded="true">
                 <i class='uil uil-database-alt'></i>
                 <p><font size="2">Sensordata</font></p>
+                <b class="caret mt-2"></b>
               </a>
-            </li>  
+
+              {% if data.navigation == "sensordata_jobs" or data.navigation == "sensordata_statistics" %} 
+                <div class="collapse show" id="sensordata">
+              {% else %} 
+                <div class="collapse" id="sensordata">
+              {% endif %}
+
+                <ul class="nav pl-4">
+
+                  {% if data.navigation == "sensordata_jobs" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/sensordata/jobs">
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">Jobs</font></p>     
+                      </div>     
+                    </a>
+                  </li>
+                
+                  {% if data.navigation == "sensordata_statistics" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/sensordata/statistics">   
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">Statistics</font></p>  
+                      </div>   
+                    </a>
+                  </li>      
+
+                </ul>
+              </div>
+            </li>
 
           {% endif %}
 
           {% if current_user.role == "administrator" %}         
 
-            {% if data.navigation == "settings" %}
-              <li class="active ">
-            {% else %} 
-              <li>
-            {% endif %} 
-              <a href="/settings/system">
+            <li>
+              <a data-toggle="collapse" href="#settings" aria-expanded="true">
                 <i class='uil uil-cog'></i>
                 <p><font size="2">Settings</font></p>
+                <b class="caret mt-2"></b>
               </a>
-            </li>  
+
+              {% if data.navigation == "settings_system" or data.navigation == "settings_threads" or data.navigation == "settings_devices" or 
+                    data.navigation == "settings_controller" or data.navigation == "settings_users" or data.navigation == "settings_system_log" %} 
+                <div class="collapse show" id="settings">
+              {% else %} 
+                <div class="collapse" id="settings">
+              {% endif %}
+
+                <ul class="nav pl-4">
+
+                  {% if data.navigation == "settings_system" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/settings/system">
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">System</font></p>     
+                      </div>     
+                    </a>
+                  </li>
+                
+                  {% if data.navigation == "settings_threads" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/settings/threads">
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">Threads</font></p>     
+                      </div>     
+                    </a>
+                  </li>
+
+                  {% if data.navigation == "settings_devices" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/settings/devices">
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">Devices</font></p>     
+                      </div>     
+                    </a>
+                  </li>
+                
+                  {% if data.navigation == "settings_controller" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/settings/controller">
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">Controller</font></p>     
+                      </div>     
+                    </a>
+                  </li>
+                
+                  {% if data.navigation == "settings_users" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/settings/users">
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">Users</font></p>     
+                      </div>     
+                    </a>
+                  </li>
+
+                  {% if data.navigation == "settings_system_log" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/settings/system_log">
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">System Log</font></p>     
+                      </div>     
+                    </a>
+                  </li>
+
+                </ul>
+              </div>
+            </li>
 
           {% endif %}
 
@@ -121,6 +276,12 @@
           {% endif %}
 
           <!-- dummies for correct scrolling -->
+          <li>
+            <a href=""></a>
+          </li>    
+          <li>
+            <a href=""></a>
+          </li>    
           <li>
             <a href=""></a>
           </li>    

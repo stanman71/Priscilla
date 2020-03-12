@@ -199,7 +199,7 @@ def settings_users():
 
     list_users = GET_ALL_USERS()
 
-    data = {'navigation': 'settings'}
+    data = {'navigation': 'settings_users'}
 
     return render_template('layouts/default.html',
                             data=data,  

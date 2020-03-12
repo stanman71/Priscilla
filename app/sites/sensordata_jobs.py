@@ -173,7 +173,7 @@ def sensordata_jobs():
     list_sensordata_files = GET_SENSORDATA_FILES()
     list_sensors          = GET_ALL_DEVICES("sensors") 
 
-    data = {'navigation': 'sensordata'}
+    data = {'navigation': 'sensordata_jobs'}
 
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 

@@ -474,16 +474,16 @@ def PROGRAM_THREAD(thread_id, program_id):
                                     CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
                                 else:
-                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Scene - " + line_content[2] + " - not founded")   
+                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Scene - " + line_content[3] + " - not founded")   
 
                             else:
-                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + line_content[3] + " - not founded")   
+                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + line_content[2] + " - not founded")   
          
                         except Exception as e:
                             WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
 
 
-                    if "lighting" in line[1] and "light" in line[1] and "turn_off" not in line[1]:
+                    if "lighting" in line[1] and "light" in line[1] and "start_scene" not in line[1] and "turn_off" not in line[1]:
 
                         line_content = line[1].split(" # ")
 

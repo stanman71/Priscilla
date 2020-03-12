@@ -411,7 +411,7 @@ def settings_system():
     email_settings    = GET_EMAIL_SETTINGS()
     list_backup_files = GET_BACKUP_FILES()
 
-    data = {'navigation': 'settings'}
+    data = {'navigation': 'settings_system'}
 
     return render_template('layouts/default.html',
                             data=data,   

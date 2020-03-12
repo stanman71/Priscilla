@@ -697,40 +697,6 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                                  controller_command + " | Group - " + task[2] + " - not founded")
 
 
-    # ###########
-    # start light
-    # ###########
-
-    if "lighting" in task and "light" in task and "turn_off" not in task:
-
-        task = task.split(" # ") 
-                  
-        device = GET_DEVICE_BY_NAME(task[2].strip())
-
-        # device existing ?
-        if device != None:
-
-            try:
-                rgb_values = re.findall(r'\d+', task[3])
-            except:
-                rgb_values = []                                        
-
-            try:
-                brightness = int(task[4].strip())
-            except:
-                brightness = 100     
-
-            if rgb_values != []:    
-                SET_LIGHT_RGB_THREAD(device.ieeeAddr, rgb_values[0], rgb_values[1], rgb_values[2], brightness)
-                CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "ON", 10)
-
-            else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Invalid settings")  
-
-        else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Light - " + task[2] + " - not founded")   
-
-
     # #####################
     # rotate lighting scene
     # #####################
@@ -838,6 +804,40 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
                                  controller_command + " | Group - " + task[2] + " - not founded")
+
+
+    # ###########
+    # start light
+    # ###########
+
+    if "lighting" in task and "light" in task and "start_scene" not in task and "turn_off" not in task:
+
+        task = task.split(" # ") 
+                  
+        device = GET_DEVICE_BY_NAME(task[2].strip())
+
+        # device existing ?
+        if device != None:
+
+            try:
+                rgb_values = re.findall(r'\d+', task[3])
+            except:
+                rgb_values = []                                        
+
+            try:
+                brightness = int(task[4].strip())
+            except:
+                brightness = 100     
+
+            if rgb_values != []:    
+                SET_LIGHT_RGB_THREAD(device.ieeeAddr, rgb_values[0], rgb_values[1], rgb_values[2], brightness)
+                CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "ON", 10)
+
+            else:
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Invalid settings")  
+
+        else:
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Light - " + task[2] + " - not founded")   
 
 
     # #########

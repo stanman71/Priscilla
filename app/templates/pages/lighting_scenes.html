@@ -1401,13 +1401,10 @@
           <div class="col-md-12">
 
             <div class="card ">
-              <div class="card-footer">    
-                <div class="btn-group flex-wrap" role="group" aria-label="Basic example">
-                  <a href="/lighting/scenes" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Scenes</a>                
-                  <a href="/lighting/groups" class="btn btn-secondary btn-lg" role="button" aria-pressed="true">Groups</a>
-                </div>           
-              </div>  
-            </div>  
+              <div class="card-header">
+                <h4 class="card-title"><b>Lighting - Scenes</b></h4>
+              </div>
+            </div>
 
 <!------------------------>
 <!-- ADD LIGHTING SCENE -->
@@ -1767,6 +1764,10 @@
                           <div class="col-sm-4">      
                             <div class="vertical_center">                        
                               <select class="form-control" data-size="5" name="set_lighting_group_{{entry.id}}" style="background-color:#27293D">  
+                                {% if last_group_tested_id != "" %} 
+                                  <option value="{{last_group_tested_id }}"> {{ last_group_tested_name }} </option>
+                                  <option disabled>------------------</option> 
+                                {% endif %}
                                 {% for each in dropdown_list_lighting_groups %}
                                   <option value="{{each.id }}"> {{ each.name }} </option>
                                 {% endfor %}     

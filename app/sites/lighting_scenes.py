@@ -27,7 +27,7 @@ def permission_required(f):
     return wrap
 
 
-lighting_scenes_rgb_values_array = [[0 for x in range(10)] for y in range(20)] 
+lighting_scenes_rgb_values_array = [[0 for x in range(10)] for y in range(20)]
 
 
 @app.route('/lighting/scenes', methods=['GET', 'POST'])
@@ -46,6 +46,9 @@ def lighting_scenes():
     success_message_add_lighting_scene             = False
     error_message_add_lighting_scene               = []
     name = ""
+
+    last_group_tested_id   = ""
+    last_group_tested_name = ""
 
     RESET_LIGHTING_SCENE_COLLAPSE()
 
@@ -375,6 +378,9 @@ def lighting_scenes():
                 SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
                 CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
+                last_group_tested_id   = group.id
+                last_group_tested_name = group.name
+
 
     """ ####################### """
     """  delete lighting scene  """
@@ -416,7 +422,7 @@ def lighting_scenes():
     list_lighting_scenes          = GET_ALL_LIGHTING_SCENES()
     dropdown_list_lighting_groups = GET_ALL_LIGHTING_GROUPS()
 
-    data = {'navigation': 'lighting'} 
+    data = {'navigation': 'lighting_scenes'} 
 
     return render_template('layouts/default.html',
                             data=data,   
@@ -431,6 +437,8 @@ def lighting_scenes():
                                                     error_message_add_lighting_scene=error_message_add_lighting_scene,
                                                     list_lighting_scenes=list_lighting_scenes,
                                                     dropdown_list_lighting_groups=dropdown_list_lighting_groups,
+                                                    last_group_tested_id=last_group_tested_id,
+                                                    last_group_tested_name=last_group_tested_name,
                                                     scene_1=scene_1,
                                                     scene_2=scene_2,      
                                                     scene_3=scene_3,    

@@ -319,7 +319,7 @@ def lighting_groups():
     dropdown_list_lights = GET_ALL_DEVICES("light")
     list_lighting_groups = GET_ALL_LIGHTING_GROUPS()
 
-    data = {'navigation': 'lighting'}
+    data = {'navigation': 'lighting_groups'}
 
     return render_template('layouts/default.html',
                             data=data,  

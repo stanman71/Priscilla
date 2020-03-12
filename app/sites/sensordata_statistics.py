@@ -222,7 +222,7 @@ def sensordata_statistics():
 
     dropdown_list_sensordata_files = GET_SENSORDATA_FILES() 
 
-    data = {'navigation': 'sensordata'}
+    data = {'navigation': 'sensordata_statistics'}
 
     return render_template('layouts/default.html',
                             data=data,   

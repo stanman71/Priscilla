@@ -225,7 +225,7 @@ def settings_controller():
         
     list_controller = GET_ALL_CONTROLLER()
 
-    data = {'navigation': 'settings'}
+    data = {'navigation': 'settings_controller'}
 
     return render_template('layouts/default.html',
                             data=data,    

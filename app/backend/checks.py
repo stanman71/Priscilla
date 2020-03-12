@@ -181,7 +181,7 @@ def CHECK_PROGRAM_TASKS(program_id):
 
 
          # set light
-         elif "lighting" in line[1] and "light" in line[1] and "turn_off" not in line[1]:
+         elif "lighting" in line[1] and "light" in line[1] and "start_scene" not in line[1] and "turn_off" not in line[1]:
             
             try:        
                line_content = line[1].split(" # ")
@@ -959,13 +959,78 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
          else:
             list_task_errors.append(controller_command + " || Invalid formatting")
+  
+
+      # ############
+      # rotate_scene
+      # ############
+      
+      if "lighting" in task and "rotate_scene" in task and task_type == "controller":
+         if " # " in task:
+            task = task.split(" # ") 
+
+            # check group setting 
+            try:
+
+               if GET_LIGHTING_GROUP_BY_NAME(task[2].strip()) == None: 
+                  list_task_errors.append(controller_command + " || Group not founded | " + task[2].strip()) 
+                  return list_task_errors 
+
+               else:
+                  return list_task_errors 
+
+            except:
+               list_task_errors.append(controller_command + " || Missing setting | Group")
+               return list_task_errors
+
+
+         else:
+            list_task_errors.append(controller_command + " || Invalid formatting")
+            return list_task_errors    
+
+
+      # #################
+      # brightness dimmer
+      # #################
+      
+      if "lighting" in task and "brightness" in task and task_type == "controller":
+         if " # " in task:
+            task = task.split(" # ") 
+
+            # check group setting
+            try:
+               if GET_LIGHTING_GROUP_BY_NAME(task[2]):
+                  pass
+                  
+               else:
+                  list_task_errors.append(controller_command + " || Group not founded | " + task[2])   
+                                    
+            except:
+               list_task_errors.append(controller_command + " || Missing setting | Group")      
+
+            # check brightness setting    
+            try:
+               if task[3].lower() == "turn_up" or task[3].lower() == "turn_down":
+                  return list_task_errors
+                  
+               else:
+                  list_task_errors.append(controller_command + " || TURN_UP or TURN_DOWN ?")
+                  return list_task_errors
+                  
+            except:
+               list_task_errors.append(controller_command + " || Missing setting | TURN_UP or TURN_DOWN")    
+               return list_task_errors
+
+         else:
+            list_task_errors.append(controller_command + " || Invalid formatting")
+            return list_task_errors
 
 
       # #########
       # set_light
       # #########
 
-      if "lighting" in task and "light" in task and "brightness" not in task and "turn_off" not in task:
+      if "lighting" in task and "light" in task and "brightness" not in task and "start_scene" not in task and "turn_off" not in task:
          
          if " # " in task:
             task = task.split(" # ") 
@@ -1045,71 +1110,6 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                list_task_errors.append(controller_command + " || Invalid formatting")
             else:                
                list_task_errors.append("Invalid formatting")
-            return list_task_errors
-      
-
-      # ############
-      # rotate_scene
-      # ############
-      
-      if "lighting" in task and "rotate_scene" in task and task_type == "controller":
-         if " # " in task:
-            task = task.split(" # ") 
-
-            # check group setting 
-            try:
-
-               if GET_LIGHTING_GROUP_BY_NAME(task[2].strip()) == None: 
-                  list_task_errors.append(controller_command + " || Group not founded | " + task[2].strip()) 
-                  return list_task_errors 
-
-               else:
-                  return list_task_errors 
-
-            except:
-               list_task_errors.append(controller_command + " || Missing setting | Group")
-               return list_task_errors
-
-
-         else:
-            list_task_errors.append(controller_command + " || Invalid formatting")
-            return list_task_errors    
-
-
-      # #################
-      # brightness dimmer
-      # #################
-      
-      if "lighting" in task and "brightness" in task and task_type == "controller":
-         if " # " in task:
-            task = task.split(" # ") 
-
-            # check group setting
-            try:
-               if GET_LIGHTING_GROUP_BY_NAME(task[2]):
-                  pass
-                  
-               else:
-                  list_task_errors.append(controller_command + " || Group not founded | " + task[2])   
-                                    
-            except:
-               list_task_errors.append(controller_command + " || Missing setting | Group")      
-
-            # check brightness setting    
-            try:
-               if task[3].lower() == "turn_up" or task[3].lower() == "turn_down":
-                  return list_task_errors
-                  
-               else:
-                  list_task_errors.append(controller_command + " || TURN_UP or TURN_DOWN ?")
-                  return list_task_errors
-                  
-            except:
-               list_task_errors.append(controller_command + " || Missing setting | TURN_UP or TURN_DOWN")    
-               return list_task_errors
-
-         else:
-            list_task_errors.append(controller_command + " || Invalid formatting")
             return list_task_errors
 
 

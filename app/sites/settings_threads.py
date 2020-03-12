@@ -46,7 +46,7 @@ def settings_threads():
         session['program_stop_error'] = None      
 
 
-    data = {'navigation': 'settings'}    
+    data = {'navigation': 'settings_threads'}    
 
     return render_template('layouts/default.html',
                             data=data, 
