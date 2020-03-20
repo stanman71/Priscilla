@@ -89,7 +89,8 @@ class Devices(db.Model):
     exception_sensor_input_values = db.Column(db.String(50), server_default=("None"))     
     exception_value_1             = db.Column(db.String(50), server_default=("None"))
     exception_value_2             = db.Column(db.String(50), server_default=("None"))
-    exception_value_3             = db.Column(db.String(50), server_default=("None"))       
+    exception_value_3             = db.Column(db.String(50), server_default=("None"))
+    update_available              = db.Column(db.String(50))
 
 class eMail(db.Model):
     __tablename__  = 'email'
@@ -951,7 +952,7 @@ def SET_DEVICE_LAST_CONTACT(ieeeAddr):
 
 
 def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
-    
+ 
     try:
         entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
         
@@ -961,6 +962,10 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
         last_values_string = last_values_string.replace(":",": ")
         last_values_string = last_values_string.replace(",",", ")
 
+        # manage device updates
+        if "update_available: true" in last_values_string:
+            last_values_string = last_values_string.replace(", update_available: true","")
+            SET_DEVICE_UPDATE_AVAILABLE(ieeeAddr, "True")
 
         # special case eurotronic heater_thermostat 
         if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "SPZB0001":
@@ -981,7 +986,7 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
             try:
                 # change battery_level scale to max_value = 100
                 data          = json.loads(last_values) 
-                battery_value = int(int(data['battery']) * 5) 
+                battery_value = int(int(data['battery']) * 4) 
 
                 last_values_string = last_values_string_modified + "battery: " + str(battery_value)
 
@@ -1061,6 +1066,12 @@ def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting, exceptio
         WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + entry.name + " | Exception Settings | changed") 
 
         return True
+
+
+def SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(ieeeAddr, update_available):
+    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+    entry.update_available = update_available
+    db.session.commit()       
 
     
 def CHANGE_DEVICE_POSITION(id, direction):

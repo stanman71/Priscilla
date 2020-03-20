@@ -243,6 +243,44 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         if data["type"] == "device_force_removed":
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["message"] + " | deleted (force)")
 
+        # zigbee device update
+        if data["type"] == "ota_update":
+            SET_ZIGBEE_DEVICE_UPDATE_STATUS(data["message"])
+
+            # update started
+
+            if data["meta"]["status"] == "update_in_progress":
+                WRITE_LOGFILE_SYSTEM("EVENT", "Network | Device - " + data["meta"]["device"] + " | Device Update | started")
+
+            # update success
+
+            if data["meta"]["status"] == "update_succeeded":
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["meta"]["device"] + " | Device Update | " + str(data["message"]))
+                time.sleep(10)
+
+                # update update status
+                SET_ZIGBEE_DEVICE_UPDATE_STATUS("No Device Update available")
+
+                for device in GET_ALL_DEVICES(""):
+                    if device.update_available == "True":
+                        SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update founded")
+
+            # update failed
+            
+            if data["meta"]["status"] == "update_failed":
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + data["meta"]["device"] + " | Device Update | " + str(data["message"]))
+                time.sleep(10)                
+
+                # update update status
+                SET_ZIGBEE_DEVICE_UPDATE_STATUS("No Device Update available")
+
+                for device in GET_ALL_DEVICES(""):
+                    if device.update_available == "True":
+                        SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update founded")
+
+                # reset update variable
+                SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(GET_DEVICE_BY_NAME(data["meta"]["device"]).ieeeAddr, "True")
+
 
     # start function networkmap
     if channel == "smarthome/zigbee2mqtt/bridge/networkmap/graphviz":

@@ -234,6 +234,7 @@ def REFRESH_SPOTIFY_TOKEN_THREAD():
                 # restart timer
                 current_timer = 0
 
+
             # check device connections every 30 seconds
             elif (current_timer % 30 == 0):
                 CHECK_CLIENT_MUSIC_CONNECTION()
@@ -241,7 +242,7 @@ def REFRESH_SPOTIFY_TOKEN_THREAD():
 
             else:
                 current_timer = current_timer + 1
-        
+
         time.sleep(1)
 
 
@@ -313,15 +314,21 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             
             try:
                 # start former playlist
-                spotify_device_id = sp.current_playback(market=None)['device']['id']
-                context_uri       = sp.current_playback(market=None)["context"]["uri"]
+                spotify_device_id        = sp.current_playback(market=None)['device']['id']
+                context_uri              = sp.current_playback(market=None)["context"]["uri"]
+                spotify_current_playback = sp.current_playback(market=None)
 
-                sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)         
-                SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
+                if spotify_current_playback['is_playing'] == True:
+                    sp.next_track(device_id=spotify_device_id) 
+                    SET_MUSIC_VOLUME(spotify_token, spotify_volume)     
 
-                spotify_device_id = sp.current_playback(market=None)['device']['id']
-                sp.shuffle(True, device_id=spotify_device_id)     
-                sp.next_track(device_id=spotify_device_id) 
+                else:               
+                    sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)         
+                    SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
+
+                    spotify_device_id = sp.current_playback(market=None)['device']['id']
+                    sp.shuffle(True, device_id=spotify_device_id)     
+                    sp.next_track(device_id=spotify_device_id) 
 
             except:
                              

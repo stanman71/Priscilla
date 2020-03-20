@@ -241,7 +241,7 @@
              <div class="card ">
               <div class="card-header">
                 <a data-toggle="collapse" href="#collapse{{entry.id}}"><font color="white"><b>
-                  <i class='uil uil-arrow-down'> {{entry.name}} {% if entry.trigger_pause == "True" %} (pause) {% endif %}</i></b></font>
+                  <i class='uil uil-arrow-down'> {{entry.name}} {% if entry.option_pause == "True" %} (paused) {% endif %}</i></b></font>
                 </a>
                 <br>
                 <br>
@@ -317,17 +317,17 @@
                             <td colspan="8">
                               <div class="row justify-content-md-center">                                                
                                 <div class="col-sm-4"> 
-                                  <label>Days (Mon, Tue, Wed, Thu, Fri, Sat, Sun)</label>
+                                  <label>Days ( Mon, Tue, Wed, Thu, Fri, Sat, Sun, * )</label>
                                   <input type="text" class="form-control" placeholder="Days" name="set_day_{{ entry.id }}"
                                     value = {% if entry.day != None and entry.day != "None" %}"{{ entry.day }}"{% else %}""{% endif %} /> 
                                 </div>                     
                                 <div class="col-sm-4">   
-                                  <label>Hours (00-23)</label>                                    
+                                  <label>Hours ( 00-23, * )</label>                                    
                                   <input type="text" class="form-control" placeholder="Hours" name="set_hour_{{ entry.id }}"
                                     value = {% if entry.hour != None and entry.hour != "None" %}"{{ entry.hour }}"{% else %}""{% endif %} /> 
                                 </div> 
                                 <div class="col-sm-4">   
-                                  <label>Minutes (00-59)</label>
+                                  <label>Minutes ( 00-59, * )</label>
                                   <input type="text" class="form-control" placeholder="Minutes" name="set_minute_{{ entry.id }}"
                                     value = {% if entry.minute != None and entry.minute != "None" %}"{{ entry.minute }}"{% else %}""{% endif %} /> 
                                 </div>

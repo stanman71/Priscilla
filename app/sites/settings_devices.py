@@ -35,10 +35,15 @@ def permission_required(f):
     return wrap
 
 
+zigbee_device_update_collapse_open = False
+
+
 @app.route('/settings/devices', methods=['GET', 'POST'])
 @login_required
 @permission_required
 def settings_devices():
+    global zigbee_device_update_collapse_open
+
     page_title       = 'Smarthome | Settings | Devices'
     page_description = 'The devices configuration page.'
 
@@ -47,10 +52,12 @@ def settings_devices():
     success_message_change_settings_devices     = []         
     error_message_change_settings_devices       = []    
     success_message_change_settings_exceptions  = False
+    error_message_zigbee_device_update          = False
     success_message_zigbee_pairing              = []
     error_message_zigbee_pairing                = []
     success_message_logfile                     = False
     error_message_logfile                       = ""
+
 
     exceptions_collapse_open = False
 
@@ -70,6 +77,11 @@ def settings_devices():
         error_message_change_settings_devices.append(session.get('delete_device_error'))
         session['delete_device_error'] = None      
 
+    # error zigbee device update
+    if session.get('zigbee_device_update_running', None) != None:
+        error_message_zigbee_device_update = True
+        session['zigbee_device_update_running'] = None
+
     # error download logfile
     if session.get('error_download_log', None) != None:
         error_message_logfile = session.get('error_download_log')
@@ -81,6 +93,8 @@ def settings_devices():
     """ ############### """
 
     if request.form.get("save_device_settings") != None:  
+
+        zigbee_device_update_collapse_open = False
 
         for i in range (1,26):
 
@@ -144,6 +158,8 @@ def settings_devices():
     # update device list
     if request.form.get("update_devices") != None:     
 
+        zigbee_device_update_collapse_open = False
+
         # check mqtt connection
         if GET_DEVICE_CONNECTION_MQTT() == True:  
 
@@ -167,7 +183,8 @@ def settings_devices():
 
     if request.form.get("save_device_exceptions") != None:  
 
-        exceptions_collapse_open = True
+        exceptions_collapse_open           = True
+        zigbee_device_update_collapse_open = False
                 
         for i in range (1,101):
 
@@ -303,6 +320,8 @@ def settings_devices():
     # change pairing setting
     if request.form.get("set_zigbee_pairing") != None: 
 
+        zigbee_device_update_collapse_open = False
+
         # check mqtt connection
         if GET_DEVICE_CONNECTION_MQTT() != True:  
             error_message_zigbee_pairing.append("No MQTT connection")  
@@ -354,6 +373,8 @@ def settings_devices():
     # reset logfile
     if request.form.get("reset_logfile") != None: 
         result = RESET_LOGFILE("log_devices")  
+
+        zigbee_device_update_collapse_open = False
 
         if result:
             success_message_logfile = True 
@@ -517,6 +538,7 @@ def settings_devices():
                                                     error_message_change_settings_devices=error_message_change_settings_devices, 
                                                     success_message_change_settings_exceptions=success_message_change_settings_exceptions,
                                                     error_message_device_exceptions=error_message_device_exceptions,
+                                                    error_message_zigbee_device_update=error_message_zigbee_device_update,
                                                     success_message_zigbee_pairing=success_message_zigbee_pairing,
                                                     error_message_zigbee_pairing=error_message_zigbee_pairing,
                                                     success_message_logfile=success_message_logfile,     
@@ -529,6 +551,7 @@ def settings_devices():
                                                     dropdown_list_operators=dropdown_list_operators,
                                                     zigbee2mqtt_pairing_setting=zigbee2mqtt_pairing_setting,
                                                     timestamp=timestamp,    
+                                                    zigbee_device_update_collapse_open=zigbee_device_update_collapse_open,
                                                     exceptions_collapse_open=exceptions_collapse_open,  
                                                     device_1_input_values=device_1_input_values,
                                                     device_2_input_values=device_2_input_values,
@@ -628,7 +651,30 @@ def remove_device(ieeeAddr):
         return redirect(url_for('settings_devices'))        
 
 
- # download zigbee2mqtt log
+# update zigbee device 
+@app.route('/settings/devices/update/<string:ieeeAddr>')
+@login_required
+@permission_required
+def update_zigbee_device(ieeeAddr):
+    global zigbee_device_update_collapse_open
+
+    if GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "":
+        channel  = "smarthome/zigbee2mqtt/bridge/ota_update/update"
+        msg      = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
+
+        heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
+
+        SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(ieeeAddr, "")
+
+    else:
+        session['zigbee_device_update_running'] = "True"
+
+    zigbee_device_update_collapse_open = True
+
+    return redirect(url_for('settings_devices'))
+
+
+# download zigbee2mqtt log
 @app.route('/settings/devices/download/zigbee2mqtt_log/<path:filepath>')
 @login_required
 @permission_required

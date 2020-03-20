@@ -287,6 +287,21 @@ def background_thread():
                            namespace='/socketIO')                                
 
 
+        # ###########################
+        # zigbee device update status
+        # ###########################
+
+        try:
+            socketio.emit('zigbee_device_update',
+                        {'zigbee_device_update_status': GET_ZIGBEE_DEVICE_UPDATE_STATUS()},                                                               
+                          namespace='/socketIO')
+ 
+        except:
+             socketio.emit('zigbee_device_update',
+                        {'zigbee_device_update_status': "Status Error"},                                                               
+                          namespace='/socketIO')    
+
+
         # ##########################
         # zigbee2mqtt pairing status
         # ##########################
@@ -298,7 +313,7 @@ def background_thread():
  
         except:
              socketio.emit('zigbee2mqtt_pairing',
-                        {'zigbee2mqtt_pairing_status': GET_ZIGBEE2MQTT_PAIRING_STATUS()},                                                               
+                        {'zigbee2mqtt_pairing_status': "Status Error"},                                                               
                           namespace='/socketIO')           
 
 
@@ -332,6 +347,17 @@ except:
     gateway = ""
     
 SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, GET_SYSTEM_SETTINGS().port, GET_SYSTEM_SETTINGS().dhcp)
+
+
+""" ################################## """
+""" update zigbee device update status """
+""" ################################## """
+
+SET_ZIGBEE_DEVICE_UPDATE_STATUS("No Device Update available")
+
+for device in GET_ALL_DEVICES(""):
+    if device.update_available == "True":
+        SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update founded")
 
 
 """ ####### """

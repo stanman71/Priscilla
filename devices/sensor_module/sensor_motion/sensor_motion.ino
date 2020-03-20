@@ -36,6 +36,9 @@ int sensor_1_last_value = 0;
 int sensor_2_last_value = 0;
 int sensor_3_last_value = 0;
 
+// timer für sensor_3
+int disable_sensor_3_timer = 0;
+
 
 // ############
 // split string
@@ -341,7 +344,7 @@ void send_default_mqtt_message() {
         msg["occupancy"] = "True";
     }
 
-    msg["illuminance"] = analogRead(SENSOR_3);
+    msg["illuminance"] = sensor_3_last_value;          
 
     // convert msg to char
     char msg_Char[128];
@@ -394,6 +397,8 @@ void setup() {
     
     client.setServer(mqtt_server, 1884);
     client.setCallback(callback); 
+
+    sensor_3_last_value = analogRead(SENSOR_3);
 }
 
 
@@ -407,21 +412,26 @@ void loop() {
         reconnect();
     }
 
-    if (digitalRead(SENSOR_1) == 1 or sensor_1_last_value != digitalRead(SENSOR_1)){
-        sensor_1_last_value = digitalRead(SENSOR_1);
-        send_default_mqtt_message();
-        delay(2000);
-    }
+    // if occupancy is true, freeze illuminance value for 30 seconds
+    if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
+        disable_sensor_3_timer = 30000;
+    }   
 
-    if (digitalRead(SENSOR_2) == 1 or sensor_2_last_value != digitalRead(SENSOR_2)){
+    disable_sensor_3_timer = disable_sensor_3_timer - 100; 
+    
+    if (disable_sensor_3_timer == 0){
+        sensor_3_last_value = analogRead(SENSOR_3);
+    }         
+    
+    if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1 or 
+        sensor_1_last_value != digitalRead(SENSOR_1) or sensor_2_last_value != digitalRead(SENSOR_2)){
+
+        sensor_1_last_value = digitalRead(SENSOR_1);
         sensor_2_last_value = digitalRead(SENSOR_2);
         send_default_mqtt_message();
         delay(2000);
-    }
-
-    Serial.println(digitalRead(SENSOR_1));
-    Serial.println(digitalRead(SENSOR_2));
-
+    } 
+    
     delay(100);
     client.loop();
 }

@@ -158,6 +158,21 @@ def SET_PROGRAM_THREAD_STATUS_9(program_name, line, lines_total, command):
 	program_thread_status_9 = [program_name, line, lines_total, command]
 
 
+""" ###################### """
+"""  zigbee device update  """
+""" ###################### """
+
+zigbee_device_update_status = ""
+
+def GET_ZIGBEE_DEVICE_UPDATE_STATUS():
+    global zigbee_device_update_status
+    return zigbee_device_update_status 
+
+def SET_ZIGBEE_DEVICE_UPDATE_STATUS(status):
+	global zigbee_device_update_status
+	zigbee_device_update_status = status
+
+
 """ ##################### """
 """  zigbee2mqtt pairing  """
 """ ##################### """
