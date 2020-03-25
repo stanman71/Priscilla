@@ -392,6 +392,10 @@ def settings_devices():
     zigbee2mqtt_pairing_setting = GET_ZIGBEE2MQTT_PAIRING_SETTING()
     system_services             = GET_SYSTEM_SETTINGS()  
     
+    if GET_ZIGBEE_DEVICE_UPDATE_STATUS() != "No Device Update available":
+        show_zigbee_device_updates = True
+    else:
+        show_zigbee_device_updates = False
 
     data = {'navigation': 'settings_devices'}
 
@@ -550,7 +554,8 @@ def settings_devices():
                                                     dropdown_list_exception_options=dropdown_list_exception_options,
                                                     dropdown_list_operators=dropdown_list_operators,
                                                     zigbee2mqtt_pairing_setting=zigbee2mqtt_pairing_setting,
-                                                    timestamp=timestamp,    
+                                                    timestamp=timestamp,  
+                                                    show_zigbee_device_updates=show_zigbee_device_updates,                                                      
                                                     zigbee_device_update_collapse_open=zigbee_device_update_collapse_open,
                                                     exceptions_collapse_open=exceptions_collapse_open,  
                                                     device_1_input_values=device_1_input_values,
@@ -658,13 +663,11 @@ def remove_device(ieeeAddr):
 def update_zigbee_device(ieeeAddr):
     global zigbee_device_update_collapse_open
 
-    if GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "":
+    if GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "" or GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "Device Update founded":
         channel  = "smarthome/zigbee2mqtt/bridge/ota_update/update"
         msg      = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
 
         heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
-
-        SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(ieeeAddr, "")
 
     else:
         session['zigbee_device_update_running'] = "True"

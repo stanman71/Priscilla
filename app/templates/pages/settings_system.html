@@ -47,7 +47,15 @@
                   </div>   
 
                   <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-fill btn-info pull-right" data-toggle="modal" data-target="#shutdown_dialog">SHUTDOWN</button>
+                  {% if request.MOBILE %}
+                    <br>
+                    <br>    
+                    <br>                
+                    <button type="button" class="btn btn-fill btn-info" data-toggle="modal" data-target="#shutdown_dialog">SHUTDOWN</button>                 
+                  {% else %} 
+                    <button type="button" class="btn btn-fill btn-info pull-right" data-toggle="modal" data-target="#shutdown_dialog">SHUTDOWN</button>   
+                  {% endif %} 
+
                   <!-- Modal -->
                   <div class="modal fade" id="shutdown_dialog">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -106,6 +114,7 @@
                   <div class="row"> 
                     <div class="col-md-3">
                       <label>ZigBee</label>
+                      {% if request.MOBILE %}<br><br>{% endif %}   
                     </div>
                     <div class="col-md-9">
                       <div class="custom-control custom-radio custom-control-inline">
@@ -123,6 +132,7 @@
                   <div class="row"> 
                     <div class="col-md-3">
                       <label>Logitech Media Server</label>
+                      {% if request.MOBILE %}<br><br>{% endif %}   
                     </div>
                     <div class="col-md-9">
                       <div class="custom-control custom-radio custom-control-inline">
@@ -140,6 +150,7 @@
                   <div class="row"> 
                     <div class="col-md-3">
                       <label>Squeezelite Player</label>
+                      {% if request.MOBILE %}<br><br>{% endif %}   
                     </div>
                     <div class="col-md-9">
                       <div class="custom-control custom-radio custom-control-inline">

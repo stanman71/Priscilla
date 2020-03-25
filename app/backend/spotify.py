@@ -99,22 +99,22 @@ def GENERATE_SPOTIFY_TOKEN(auth_token):
 
     try:
         SPOTIFY_TOKEN = answer["access_token"]
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Login successful")
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Token received")
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Login | successful")
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Token | received")
         
     except:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Login failed")
-        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Token not received | " + str(answer))
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Login | failed")
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Token | not received | " + str(answer))
         SEND_EMAIL("ERROR", "Music | Spotify Token | not received | " + str(answer))
 
     try:
         SET_SPOTIFY_REFRESH_TOKEN(answer["refresh_token"])
         SPOTIFY_REFRESH_TOKEN = answer["refresh_token"]        
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Refresh Token received") 
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Refresh Token | received") 
         
     except:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Refresh Token not received | " + str(answer))
-        SEND_EMAIL("ERROR", "Music | Spotify Refresh Token not received | " + str(answer))           
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Refresh Token | not received | " + str(answer))
+        SEND_EMAIL("ERROR", "Music | Spotify Refresh Token | not received | " + str(answer))           
 
 
 def GET_SPOTIFY_TOKEN():
@@ -217,16 +217,16 @@ def REFRESH_SPOTIFY_TOKEN_THREAD():
 
                 try:
                     SPOTIFY_TOKEN = answer["access_token"]
-                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Token updated") 
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Token | updated") 
                     
                 except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Token not updated | " + str(e)) 
-                    SEND_EMAIL("ERROR", "Music | Spotify Token not updated | " + str(e)) 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Token | not updated | " + str(e)) 
+                    SEND_EMAIL("ERROR", "Music | Spotify Token | not updated | " + str(e)) 
 
                 try:
                     SET_SPOTIFY_REFRESH_TOKEN(answer["refresh_token"])
                     SPOTIFY_REFRESH_TOKEN = answer["refresh_token"]        
-                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Refresh Token updated")  
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Refresh Token | updated")  
                     
                 except:
                     pass

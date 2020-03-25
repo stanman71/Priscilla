@@ -965,7 +965,9 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
         # manage device updates
         if "update_available: true" in last_values_string:
             last_values_string = last_values_string.replace(", update_available: true","")
-            SET_DEVICE_UPDATE_AVAILABLE(ieeeAddr, "True")
+
+        if "update_available: false" in last_values_string:
+            last_values_string = last_values_string.replace(", update_available: false","")
 
         # special case eurotronic heater_thermostat 
         if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "SPZB0001":

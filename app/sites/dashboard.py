@@ -1,7 +1,8 @@
-from flask               import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
-from flask_login         import current_user, login_required
-from werkzeug.exceptions import HTTPException, NotFound, abort
-from functools           import wraps
+from flask                     import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
+from flask_login               import current_user, login_required
+from werkzeug.exceptions       import HTTPException, NotFound, abort
+from functools                 import wraps
+from flask_mobility.decorators import mobile_template
 
 from app                         import app, socketio
 from app.backend.database_models import *

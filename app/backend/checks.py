@@ -222,18 +222,14 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                # check turn_off group setting
                if line_content[2].lower() == "group":
-
                   for group_name in line_content[3].split(","):
                      if GET_LIGHTING_GROUP_BY_NAME(group_name.strip()) == None: 
                         list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Group not founded | " + group_name.strip())  
 
-
                # check turn_off light setting
-               if line_content[2].lower() == "light":
-
+               elif line_content[2].lower() == "light":
                   if GET_DEVICE_BY_NAME(line_content[3].strip()) == None: 
                      list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Light not founded | " + line_content[3])
-
 
                # check turn_off all setting
                elif line_content[2].lower() == "all":
@@ -1148,7 +1144,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
 
             # check turn_off light setting
-            if task[2].lower() == "light": 
+            elif task[2].lower() == "light": 
 
                try:
                   # check light name

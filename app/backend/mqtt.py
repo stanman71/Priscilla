@@ -57,7 +57,10 @@ def MQTT_RECEIVE_THREAD():
         msg         = str(message.payload.decode("utf-8"))       
 
 
+        # ############################
         # get ieeeAddr and device_type
+        # ############################
+
         device_identity = channel.split("/")[2]
         
         if device_identity not in ["bridge", "devices", "test", "log", "get", "set", "config"]:
@@ -79,7 +82,10 @@ def MQTT_RECEIVE_THREAD():
                     break
 
 
+        # ################
         # message ignore ?
+        # ################
+
         if (device_type == "led_rgb" or 
             device_type == "led_simple" or 
             device_type == "power_switch" or 
@@ -126,7 +132,10 @@ def MQTT_RECEIVE_THREAD():
                         new_message = False     
 
 
+        # ################
         # message ignore ?
+        # ################
+
         if (device_type == "controller"):
     
             for existing_message in GET_MQTT_INCOMING_MESSAGES(2):              
@@ -168,7 +177,10 @@ def MQTT_RECEIVE_THREAD():
                         new_message = False  
 
 
+        # ###############
         # message passing
+        # ###############
+        
         if new_message:
             
             print("message topic: ", channel)       
@@ -214,7 +226,11 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
     if channel == "smarthome/zigbee2mqtt/bridge/log":  
         data = json.loads(msg)
         
+
+        # ################################
         # zigbee2mqtt pairing log messages
+        # ################################
+
         if GET_ZIGBEE2MQTT_PAIRING_SETTING() == "True":
 
             # new device connected
@@ -236,16 +252,30 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                 time.sleep(10)
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
       
+
+        # ##############
         # remove devices
+        # ##############
+
         if data["type"] == "device_removed":
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["meta"]["friendly_name"] + " | deleted")
 
         if data["type"] == "device_force_removed":
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["message"] + " | deleted (force)")
 
-        # zigbee device update
+
+        # #####################
+        # zigbee device updates
+        # #####################
+
         if data["type"] == "ota_update":
             SET_ZIGBEE_DEVICE_UPDATE_STATUS(data["message"])
+            
+            # update founded
+
+            if data["meta"]["status"] == "available":
+                SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(GET_DEVICE_BY_NAME(data["meta"]["device"]).ieeeAddr, "True")
+                SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update founded")
 
             # update started
 
@@ -257,6 +287,8 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             if data["meta"]["status"] == "update_succeeded":
                 WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["meta"]["device"] + " | Device Update | " + str(data["message"]))
                 time.sleep(10)
+          
+                SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(GET_DEVICE_BY_NAME(data["meta"]["device"]).ieeeAddr, "")
 
                 # update update status
                 SET_ZIGBEE_DEVICE_UPDATE_STATUS("No Device Update available")
@@ -282,7 +314,10 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                 SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(GET_DEVICE_BY_NAME(data["meta"]["device"]).ieeeAddr, "True")
 
 
+    # #########################
     # start function networkmap
+    # #########################
+
     if channel == "smarthome/zigbee2mqtt/bridge/networkmap/graphviz":
 
         # generate graphviz diagram
@@ -292,6 +327,10 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         src.render(filename = GET_PATH() + '/app/static/temp/zigbee_topology', format='png', cleanup=True)
         return
 
+
+    # ################
+    # device processes
+    # ################
 
     if ieeeAddr != "":
         
@@ -446,6 +485,10 @@ def MQTT_CONTROL_THREAD():
 
 def UPDATE_DEVICES(gateway):
    
+    # ####
+    # mqtt
+    # ####
+
     if gateway == "mqtt":
         
         heapq.heappush(mqtt_message_queue, (20, ("smarthome/mqtt/devices", "")))
@@ -533,6 +576,10 @@ def UPDATE_DEVICES(gateway):
                 SEND_EMAIL("ERROR", "Network | MQTT | Update")                 
                 return ("Network | MQTT | Update | " + str(e))     
 
+
+    # ###########
+    # zigbee2mqtt
+    # ###########
 
     if gateway == "zigbee2mqtt":
 

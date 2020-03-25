@@ -254,7 +254,6 @@ def music():
             if device['id'] == spotify_default_device_id:
                 spotify_default_device_name = device['name']
 
-
         spotify_default_playlist_uri  = request.form.get("set_spotify_default_playlist_uri") 
         spotify_default_playlist_name = ""
 
@@ -263,8 +262,6 @@ def music():
                 spotify_default_playlist_name = playlist['name']      
 
         spotify_default_volume = request.form.get("set_spotify_default_volume") 
-
-        print(spotify_default_device_name)
 
         if SET_SPOTIFY_DEFAULT_SETTINGS(spotify_default_device_id, 
                                         spotify_default_device_name, 

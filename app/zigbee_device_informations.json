@@ -697,34 +697,34 @@
 				"input_events"    : [],
 				"commands"        : [],
 				"commands_json"   : []
-			},	
-			{
-				"model"           : "WXKG01LM",
-				"device_type"     : "controller",
-				"description"     : "XIAOMI Aqara wireless switch",
-				"input_values"    : [],
-				"input_events"    : ["{'click':'single'}","{'click':'double'}","{'click':'triple'}","{'click':'quadruple'}"],
-				"commands"        : [],
-				"commands_json"   : []
-			},							
+			},						
 			{
 				"model"           : "WXKG11LM",
 				"device_type"     : "controller",
-				"description"     : "XIAOMI Aqara wireless switch",
+				"description"     : "XIAOMI Aqara wireless single switch",
 				"input_values"    : [],
-				"input_events"    : ["{'click':'single'}","{'click':'double'}"],
+				"input_events"    : ["{'click':'single'}"],
 				"commands"        : [],
 				"commands_json"   : []
 			},		
 			{
 				"model"           : "WXKG12LM",
 				"device_type"     : "controller",
-				"description"     : "XIAOMI Aqara wireless switch with gyroscope",
+				"description"     : "XIAOMI Aqara wireless double switch",
 				"input_values"    : [],
-				"input_events"    : ["{'click':'single'}","{'click':'double'}","{'action':'shake'}","{'action':'hold'}"],
+				"input_events"    : ["{'click':'single'}","{'click':'double'}"],
 				"commands"        : [],
 				"commands_json"   : []
-			},				
+			},	
+			{
+				"model"           : "WXKG01LM",
+				"device_type"     : "controller",
+				"description"     : "XIAOMI Aqara wireless quadruple switch",
+				"input_values"    : [],
+				"input_events"    : ["{'click':'single'}","{'click':'double'}","{'click':'triple'}","{'click':'quadruple'}"],
+				"commands"        : [],
+				"commands_json"   : []
+			},								
 			{
 				"model"           : "WXCJKG11LM",
 				"device_type"     : "controller",

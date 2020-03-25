@@ -1756,13 +1756,14 @@
           
                   <div class="card-footer">           
                     <div class="row justify-content-md-left">
-                      <div class="col-sm-2">                            
+                      <div class="col-sm-2">                         
                         <button type="submit" onclick="window.location.href='/lighting/scenes#table_{{entry.id}}'" name="save_lighting_scene_settings" class="btn btn-fill btn-primary">SAVE</button>
                       </div>  
                       <div class="col-sm-7">     
                         <div class="row justify-content-md-left">
                           <div class="col-sm-4">      
-                            <div class="vertical_center">                        
+                            <div class="vertical_center">       
+                              {% if request.MOBILE %}<br>{% endif %}                 
                               <select class="form-control" data-size="5" name="set_lighting_group_{{entry.id}}" style="background-color:#27293D">  
                                 {% if last_group_tested_id != "" %} 
                                   <option value="{{last_group_tested_id }}"> {{ last_group_tested_name }} </option>
@@ -1775,17 +1776,20 @@
                             </div>                        
                           </div>  
                           <div class="col-sm-4">    
-                            <div class="vertical_center">            
+                            <div class="vertical_center">   
+                              {% if request.MOBILE %}<br>{% endif %}         
                               <input id="brightness_slider_lighting_scenes_test_setting_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_test_setting_{{entry.id}}"
                                 name="set_lighting_group_brightness_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100"/> 
                             </div>  
                           </div>   
                           <div class="col-sm-4">    
+                            {% if request.MOBILE %}<br>{% endif %} 
                             <button type="submit" onclick="window.location.href='/lighting/scenes#table_{{entry.id}}'" name="test_lighting_scene" class="btn btn-fill btn-primary">TEST SCENE</button>
                           </div>  
                         </div>  
                       </div>  
-                      <div class="col-sm-3">          
+                      <div class="col-sm-3">      
+                        {% if request.MOBILE %}<br>{% endif %}     
 
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>

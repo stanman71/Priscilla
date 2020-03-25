@@ -417,14 +417,23 @@ void loop() {
         disable_sensor_3_timer = 30000;
     }   
 
-    disable_sensor_3_timer = disable_sensor_3_timer - 100; 
-    
+    // illuminance timer
+    if (disable_sensor_3_timer > 0){
+        disable_sensor_3_timer = disable_sensor_3_timer - 10; 
+    } else {
+        disable_sensor_3_timer = 0;
+    }
+
+    // read illuminance sensor ?    
     if (disable_sensor_3_timer == 0){
         sensor_3_last_value = analogRead(SENSOR_3);
     }         
-    
-    if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1 or 
-        sensor_1_last_value != digitalRead(SENSOR_1) or sensor_2_last_value != digitalRead(SENSOR_2)){
+
+    // send message ?     
+    if (digitalRead(SENSOR_1) == 1 or 
+        digitalRead(SENSOR_2) == 1 or 
+        sensor_1_last_value != digitalRead(SENSOR_1) or 
+        sensor_2_last_value != digitalRead(SENSOR_2)){
 
         sensor_1_last_value = digitalRead(SENSOR_1);
         sensor_2_last_value = digitalRead(SENSOR_2);
@@ -432,6 +441,6 @@ void loop() {
         delay(2000);
     } 
     
-    delay(100);
+    delay(10);
     client.loop();
 }

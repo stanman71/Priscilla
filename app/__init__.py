@@ -5,6 +5,7 @@ from flask_apscheduler import APScheduler
 from threading         import Lock
 from flask             import Flask, render_template, session, request, copy_current_request_context
 from flask_socketio    import SocketIO, emit
+from flask_mobility    import Mobility
 
 # load RES
 from app import assets  
@@ -38,6 +39,7 @@ app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///' + PATH + '/data/data
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SEND_FILE_MAX_AGE_DEFAULT']      = 1
 
+Mobility(app)
 
 # Expose globals to Jinja2 templates
 app.add_template_global(assets     , 'assets')

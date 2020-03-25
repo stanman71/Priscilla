@@ -804,34 +804,32 @@
 
 <!-- card footer -->
 
-                <div class="card-footer">       
-                  <div class="row justify-content-md-left">                                                 
-                    <div class="col-sm-2">    
-                      <button type="submit" onclick="window.location.href='/programs#selected_program'" name="save_program_settings" class="btn btn-fill btn-primary">SAVE</button>
-                    </div>                        
-                    <div class="col-sm-2">    
-                       <div class="vertical_center">                     
-                        <button type="submit" onclick="window.location.href='/programs#selected_program'" name="start_program_{{ selected_program.id }}" class="btn btn-fill btn-info">START</button>
-                      </div>
-                    </div>                       
-                    <div class="col-sm-8">  
+                <div class="card-footer">     
+                  <button type="submit" onclick="window.location.href='/programs#selected_program'" name="save_program_settings" class="btn btn-fill btn-primary">SAVE</button>
+                  
+                  {% if request.MOBILE %} 
+                    <button type="submit" onclick="window.location.href='/programs#selected_program'" name="start_program_{{ selected_program.id }}" class="btn btn-fill btn-info pull-right">START</button>                  
+                  {% else %}     
+                    <button type="submit" onclick="window.location.href='/programs#selected_program'" name="start_program_{{ selected_program.id }}" class="btn btn-fill btn-info">START</button>
+                  {% endif %}
+                 
+                  <!-- Button trigger modal -->
+                  {% if request.MOBILE %} <br><br> {% endif %}
+                  <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{selected_program.id}}">DELETE</button>
+                  {% if request.MOBILE %} <br><br><br> {% endif %}
 
-                      <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{selected_program.id}}">DELETE</button>
-                      <!-- Modal -->
-                      <div class="modal fade" id="delete_dialog_{{selected_program.id}}">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">Delete {{selected_program.name}} ?</h5>
-                            </div>          
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                              <button type="submit" onclick="window.location.href='/programs#'" name="delete_program_{{selected_program.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
-                            </div>
-                          </div>
+                  <!-- Modal -->
+                  <div class="modal fade" id="delete_dialog_{{selected_program.id}}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Delete {{selected_program.name}} ?</h5>
+                        </div>          
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                          <button type="submit" onclick="window.location.href='/programs#'" name="delete_program_{{selected_program.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
                         </div>
-                      </div>                          
+                      </div>                 
                     </div>
                   </div>   
 

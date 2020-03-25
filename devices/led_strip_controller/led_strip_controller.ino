@@ -27,8 +27,8 @@ int PIN_RESET_SETTING = 16;  // D0
 int PIN_LED_GREEN = 14;      // D5
 int PIN_LED_RED   = 12;      // D6
 
-// RELAIS_CONTROL
-int RELAIS_CONTROL = 4;      // D2
+// TRANSISTOR_CONTROL
+int TRANSISTOR_CONTROL = 4;  // D2
 
 // FASTLED
 #define DATA_PIN 5           // D1
@@ -439,14 +439,14 @@ void setup() {
     Serial.begin(115200);
     Serial.println();
         
-    pinMode(RELAIS_CONTROL, OUTPUT);     
+    pinMode(TRANSISTOR_CONTROL, OUTPUT);     
     pinMode(PIN_LED_RED,OUTPUT);
     pinMode(PIN_LED_GREEN,OUTPUT);  
     pinMode(BUILTIN_LED, OUTPUT);     
     pinMode(PIN_RESET_SETTING,INPUT);
 
     digitalWrite(BUILTIN_LED, HIGH); 
-    digitalWrite(RELAIS_CONTROL, LOW);     
+    digitalWrite(TRANSISTOR_CONTROL, LOW);     
 
     digitalWrite(PIN_LED_RED, HIGH);
     digitalWrite(PIN_LED_GREEN, LOW);
@@ -484,7 +484,7 @@ void loop() {
     if (state_changed == true){   
 
         if (brightness != 0){   
-            digitalWrite(RELAIS_CONTROL, HIGH); 
+            digitalWrite(TRANSISTOR_CONTROL, HIGH); 
 
             delay(250);
           
@@ -494,7 +494,7 @@ void loop() {
             FastLED.show();
 
         } else {
-            digitalWrite(RELAIS_CONTROL, LOW);  
+            digitalWrite(TRANSISTOR_CONTROL, LOW);  
         }
     }
 

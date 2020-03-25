@@ -31,7 +31,7 @@ def about():
     page_title       = 'Smarthome | About'
     page_description = 'The information and update page.'
 
-    version = "1.1"
+    version = "1.2"
 
     data = {'navigation': 'about'}
 

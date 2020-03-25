@@ -143,7 +143,7 @@
             </div>
 
 <!-- programs -->
-
+   
             <div class="card card-tasks-programs-frame">
               <div class="card-body ">
                 <form method="POST">
@@ -159,10 +159,17 @@
                         </select>     
                       </div>   
                     </div>
-                    <div class="col-sm-6">  
-                      <div class="text-right">
-                        <button type="submit" onclick="window.location.href='/dashboard#'" name="start_program" class="btn btn-fill btn-info">START</button>                      
-                      </div> 
+                    <div class="col-sm-6"> 
+                      {% if request.MOBILE %} 
+                        <div class="text-center">
+                          <br> 
+                          <button type="submit" onclick="window.location.href='/dashboard#'" name="start_program" class="btn btn-fill btn-info">START</button>                      
+                        </div> 
+                      {% else %}
+                        <div class="text-right">
+                          <button type="submit" onclick="window.location.href='/dashboard#'" name="start_program" class="btn btn-fill btn-info">START</button>                      
+                        </div> 
+                      {% endif %}
                     </div> 
                   </div>                      
                 </div>
@@ -218,6 +225,7 @@
                     </div> 
                     <div class="col-sm-3">   
                       <div class="text-center">   
+                        {% if request.MOBILE %}<br>{% endif %} 
                         <button type="submit" onclick="window.location.href='/dashboard#'" class="btn btn-default" name="spotify_start_playlist" >
                           <i class='uil uil-play'></i>
                         </button>                                                             
@@ -252,6 +260,7 @@
                         </div>
                         <div class="col-sm-6">        
                           <div class="vertical_center">  
+                            {% if request.MOBILE %}<br>{% endif %} 
                             <div class="custom-control custom-checkbox">
                               <input type="checkbox" class="custom-control-input" id="checkbox_shuffle_setting" {% if spotify_shuffle == "True" %} checked="on" {% endif %} name="checkbox_shuffle">
                               <label class="custom-control-label" for="checkbox_shuffle_setting">Shuffle</label>
@@ -260,8 +269,10 @@
                         </div>
                       </div>
                     </div>
+
                     <div class="col-sm-7">
-                      <div class="vertical_center">                    
+                      <div class="vertical_center">       
+                        {% if request.MOBILE %}<br>{% endif %}            
                         <input id="volume_slider_dashboard_music" data-slider-id="volume_slider_dashboard_music" name="slider_spotify_volume" 
                           type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>                  
                       </div>

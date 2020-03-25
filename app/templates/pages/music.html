@@ -125,14 +125,16 @@
                     <div class="col-sm-4">
                       <div class="vertical_center">  
                         <div class="row justify-content-md-center">                                                 
-                          <div class="col-sm-4">           
+                          <div class="col-sm-4">          
+                            {% if request.MOBILE %}<br>{% endif %}  
                             <div class="custom-control custom-checkbox">
                               <input type="checkbox" class="custom-control-input" id="checkbox_shuffle_setting" {% if shuffle == "True" %} checked="on" {% endif %} name="checkbox_shuffle">
                               <label class="custom-control-label" for="checkbox_shuffle_setting">Shuffle</label>                
                             </div>
                           </div>   
                           <div class="col-sm-1"></div>                          
-                          <div class="col-sm-6">                   
+                          <div class="col-sm-6">       
+                            {% if request.MOBILE %}<br>{% endif %}             
                             <input id="volume_slider_music_player" data-slider-id="volume_slider_music_player" name="set_spotify_player_volume" 
                               type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}"/>                                                  
                           </div>
@@ -341,6 +343,7 @@
                         <input type="text" class="form-control" name="set_spotify_search_track" placeholder="Track" value="{{ track_name }}" />
                       </div>           
                       <div class="col-sm-3"> 
+                        {% if request.MOBILE %} <br> {% endif %} 
                         <input type="text" class="form-control" name="set_spotify_search_track_artist" placeholder="Artist" value="{{ track_artist }}" />
                       </div>  
                     </div>    
@@ -349,7 +352,7 @@
                     <br>
                     <br>
                   
-                    {% if list_search_track_results != "" %}
+                    {% if list_search_track_results != "" and list_search_track_results != None %}
                       
                       <div class="table-responsive">
                         <table class="table tablesorter">
@@ -376,15 +379,20 @@
                                 <td>    
                                   <select class="form-control" data-size="5" name="set_spotify_track_device:{{ track[2] }}" style="background-color:#27293D"> 
                                     {% if spotify_devices != "" %}
-                                      {% for device in spotify_devices %}
+                                      {% for device in list_spotify_devices %}                   
                                         {% if device['type'] != "Smartphone" %}
-                                          <option value="{{ device['id'] }}" > {{ device['name'] }} </option>
+                                          {% if "multiroom" in device['name'] %}
+                                            <option value="{{ device['id'] }}" > 
+                                              MULTIROOM | {{ device['name'] | replace("multiroom, ","") | replace(" & multiroom","") | replace("multiroom & ","") | replace("multiroom","") | replace(" & ",", ") }}</option>
+                                          {% else %}
+                                            <option value="{{ device['id'] }}" > {{ device['name'] }} </option>
+                                          {% endif %}
                                         {% endif %}
                                       {% endfor %}
                                     {% else %}
                                       <option value= "" > No devices founded </option>
-                                    {% endif %}
-                                  </select>    
+                                    {% endif %}  
+                                  </select>     
                                 </td>                             
                               
                                 <td>
@@ -411,6 +419,10 @@
                           </tbody>
                         </table>
                       </div>      
+
+                    {% else %} 
+
+                      No Results founded
 
                     {% endif %} 
 
@@ -454,6 +466,7 @@
                         <input type="text" class="form-control" name="set_spotify_search_album" placeholder="Album" value="{{ album_name }}" />
                       </div>           
                       <div class="col-sm-3"> 
+                        {% if request.MOBILE %} <br> {% endif %} 
                         <input type="text" class="form-control" name="set_spotify_search_album_artist" placeholder="Artist" value="{{ album_artist }}" />
                       </div>  
                     </div>
@@ -462,7 +475,7 @@
                     <br>
                     <br>
                   
-                    {% if list_search_album_results != "" %}
+                    {% if list_search_album_results != "" and list_search_album_results != None %}
                       
                       <div class="table-responsive">
                         <table class="table tablesorter">
@@ -489,15 +502,20 @@
                                 <td>    
                                   <select class="form-control" data-size="5" name="set_spotify_album_device:{{ album[2] }}" style="background-color:#27293D"> 
                                     {% if spotify_devices != "" %}
-                                      {% for device in spotify_devices %}
+                                      {% for device in list_spotify_devices %}                   
                                         {% if device['type'] != "Smartphone" %}
-                                          <option value="{{ device['id'] }}" > {{ device['name'] }} </option>
+                                          {% if "multiroom" in device['name'] %}
+                                            <option value="{{ device['id'] }}" > 
+                                              MULTIROOM | {{ device['name'] | replace("multiroom, ","") | replace(" & multiroom","") | replace("multiroom & ","") | replace("multiroom","") | replace(" & ",", ") }}</option>
+                                          {% else %}
+                                            <option value="{{ device['id'] }}" > {{ device['name'] }} </option>
+                                          {% endif %}
                                         {% endif %}
                                       {% endfor %}
                                     {% else %}
                                       <option value= "" > No devices founded </option>
-                                    {% endif %}
-                                  </select>    
+                                    {% endif %}  
+                                  </select>     
                                 </td>                             
                               
                                 <td>
@@ -524,6 +542,10 @@
                           </tbody>
                         </table>
                       </div>      
+
+                    {% else %} 
+
+                      No Results founded
 
                     {% endif %} 
 
@@ -661,7 +683,13 @@
                 </div>  
                 <div class="card-footer">                   
                   <button type="submit" onclick="window.location.href='/music#client_music'" name="save_client_music_settings" class="btn btn-fill btn-primary">SAVE</button>
-                  <button type="submit" onclick="window.location.href='/music#client_music'" name="restart_client_music_services" class="btn btn-fill btn-info pull-right">RESTART SERVICES</button>
+                  {% if request.MOBILE %}
+                    <br>
+                    <br>                    
+                    <button type="submit" onclick="window.location.href='/music#client_music'" name="restart_client_music_services" class="btn btn-fill btn-info">RESTART SERVICES</button>                  
+                  {% else %} 
+                    <button type="submit" onclick="window.location.href='/music#client_music'" name="restart_client_music_services" class="btn btn-fill btn-info pull-right">RESTART SERVICES</button>    
+                  {% endif %} 
                 </div>
               </form>
             </div>

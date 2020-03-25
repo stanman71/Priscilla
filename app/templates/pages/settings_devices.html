@@ -462,7 +462,7 @@
 <!--  ZIGBEE DEVICE UPDATES   -->
 <!------------------------------>
 
-{% if system_services.zigbee2mqtt_active == "True" %}
+{% if system_services.zigbee2mqtt_active == "True" and show_zigbee_device_updates == True %}
 
   <section id="table_zigbee_device_updates"></section>    
 
@@ -579,6 +579,7 @@
                       <label class="custom-control-label" for="radio_zigbee2mqtt_pairing_true">Pairing enabled</label>
                     </div>     
                     <br>  
+                    {% if request.MOBILE %} <br> {% endif %}                    
                     <div class="custom-control custom-radio custom-control-inline">
                       <input type="radio" class="custom-control-input" id="radio_zigbee2mqtt_pairing_false" {% if zigbee2mqtt_pairing_setting == "False" %} checked="on" {% endif %} value="False" name="radio_zigbee2mqtt_pairing_setting">
                       <label class="custom-control-label" for="radio_zigbee2mqtt_pairing_false">Pairing disabled</label>
@@ -598,6 +599,7 @@
                   <div class="card-body">    
                     <a href="/settings/devices/download/zigbee2mqtt_log/log.txt?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE LOG</b></font></a> 
                     <br>
+                    {% if request.MOBILE %} <br> {% endif %}
                     <a href="/settings/devices/download/zigbee2mqtt_topology/zigbee_topology.png?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE TOPOLOGY</b></font></a>  
                   </div>            
                 </form>
@@ -639,7 +641,10 @@
                   <a class="btn btn-default" href="/settings/devices/download/devices_log/log_devices.csv?time={{ timestamp }}" role="button">DOWNLOAD DEVICE LOG</a>                
 
                   <!-- Button trigger modal -->
+                  {% if request.MOBILE %} <br><br> {% endif %}
                   <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#reset_dialog">RESET DEVICE LOG</button>
+                  {% if request.MOBILE %} <br><br> {% endif %}
+
                   <!-- Modal -->
                   <div class="modal fade" id="reset_dialog">
                     <div class="modal-dialog modal-dialog-centered" role="document">
