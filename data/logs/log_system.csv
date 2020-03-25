@@ -5060,3 +5060,7 @@ Timestamp,Type,Description
 2020-03-25 16:47:54,SUCCESS,|Music || Spotify Token || updated|
 2020-03-25 16:47:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-03-25 16:47:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-25 21:01:15,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-25 21:01:16,SUCCESS,|Music || Spotify Token || updated|
+2020-03-25 21:01:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-25 21:01:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
