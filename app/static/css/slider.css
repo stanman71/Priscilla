@@ -4,6 +4,12 @@
 #volume_slider_dashboard_music .slider-handle {
 	background: black;
 }
+#volume_slider_dashboard_music_mobile {
+	width: 300px;
+}
+#volume_slider_dashboard_music_mobile .slider-handle {
+	background: black;
+}
 
 #brightness_slider_lighting_group_dashboard_1 {
 	width: 150px;
@@ -1378,6 +1384,12 @@
 	width: 200px;
 }
 #volume_slider_music_player .slider-handle {
+	background: black;
+}
+#volume_slider_music_player_mobile {
+	width: 300px;
+}
+#volume_slider_music_player_mobile .slider-handle {
 	background: black;
 }
 #volume_slider_music_default {

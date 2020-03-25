@@ -85,14 +85,43 @@ def music():
             sp.trace      = False     
             player_volume = request.form.get("set_spotify_player_volume") 
 
+
+            # ############
+            # account data
+            # ############
+                     
+            spotify_user           = sp.current_user()["display_name"]   
+            list_spotify_devices   = sp.devices()["devices"]        
+            list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]    
+
+
+            # player show ?
+            if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token) != ('', '', '', '', '', [], '', '', ''):
+                show_player = True                             
+
+            # get volume
+            volume = str(GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[3])
+
+            # get shuffle            
+            if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[8] == True:
+                shuffle = "True"
+            else:
+                shuffle = "False"         
+
+
+            # ###############
+            # spotify control
+            # ###############
+
             if "set_spotify_play" in request.form:  
                 SPOTIFY_CONTROL(spotify_token, "play", player_volume)       
 
                 if request.form.get("checkbox_shuffle") == "on":
                     SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
                 else:
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)                         
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)  
 
+                volume = player_volume                  
 
             if "set_spotify_previous" in request.form: 
                 SPOTIFY_CONTROL(spotify_token, "previous", player_volume)   
@@ -102,6 +131,7 @@ def music():
                 else:
                     SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)       
 
+                volume = player_volume   
       
             if "set_spotify_next" in request.form:
                 SPOTIFY_CONTROL(spotify_token, "next", player_volume)     
@@ -111,6 +141,7 @@ def music():
                 else:
                     SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)       
 
+                volume = player_volume   
 
             if "set_spotify_stop" in request.form:  
                 SPOTIFY_CONTROL(spotify_token, "stop", player_volume)   
@@ -120,6 +151,7 @@ def music():
                 else:
                     SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)       
 
+                volume = player_volume   
 
             if "set_spotify_volume" in request.form: 
                 device_name = sp.current_playback(market=None)['device']['name']
@@ -129,6 +161,8 @@ def music():
                     SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
                 else:
                     SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)       
+
+                volume = player_volume   
 
 
             # ##############
@@ -141,6 +175,8 @@ def music():
                 playlist_volume   = request.form.get("set_spotify_playlist_volume")
                 
                 SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume)
+
+                volume = playlist_volume   
 
 
             # ############
@@ -159,7 +195,7 @@ def music():
                 if isinstance(list_search_track_results, str):
                     error_message_search_track = list_search_track_results
                     list_search_track_results  = []  
-                          
+
             if "spotify_track_play" in request.form:       
                 collapse_search_track_open = "True"  
                 
@@ -169,6 +205,7 @@ def music():
                 
                 SPOTIFY_START_TRACK(spotify_token, spotify_device_id, track_uri, track_volume)
 
+                volume = track_volume   
 
             # ############
             # search album
@@ -196,28 +233,7 @@ def music():
                 
                 SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
     
- 
-            # ############
-            # account data
-            # ############
-                     
-            spotify_user           = sp.current_user()["display_name"]   
-            list_spotify_devices   = sp.devices()["devices"]        
-            list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]    
-
-
-            # player show ?
-            if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token) != ('', '', '', '', '', [], '', '', ''):
-                show_player = True                             
-
-            # get volume
-            volume = str(GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[3])
-
-            # get shuffle            
-            if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[8] == True:
-                shuffle = "True"
-            else:
-                shuffle = "False"         
+                volume = album_volume  
 
 
         # login failed

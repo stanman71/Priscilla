@@ -133,10 +133,15 @@
                             </div>
                           </div>   
                           <div class="col-sm-1"></div>                          
-                          <div class="col-sm-6">       
-                            {% if request.MOBILE %}<br>{% endif %}             
-                            <input id="volume_slider_music_player" data-slider-id="volume_slider_music_player" name="set_spotify_player_volume" 
-                              type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}"/>                                                  
+                          <div class="col-sm-6">   
+                            {% if request.MOBILE %}
+                              <br>           
+                              <input id="volume_slider_music_player_mobile" data-slider-id="volume_slider_music_player_mobile" name="set_spotify_player_volume" 
+                                type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}"/>      
+                            {% else %}  
+                              <input id="volume_slider_music_player" data-slider-id="volume_slider_music_player" name="set_spotify_player_volume" 
+                                type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}"/>      
+                            {% endif %}                                              
                           </div>
                           <div class="col-sm-1"></div>
                         </div>     
@@ -420,11 +425,11 @@
                         </table>
                       </div>      
 
-                    {% else %} 
-
-                      No Results founded
-
                     {% endif %} 
+
+                    {% if list_search_album_results == None %}
+                      No Results founded
+                    {% endif %}      
 
                   </div>              
                 </div>           
@@ -543,11 +548,11 @@
                         </table>
                       </div>      
 
-                    {% else %} 
-
-                      No Results founded
-
                     {% endif %} 
+
+                    {% if list_search_album_results == None %}
+                      No Results founded
+                    {% endif %}                     
 
                   </div>              
                 </div>           
