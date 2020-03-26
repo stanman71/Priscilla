@@ -1398,9 +1398,21 @@
 #volume_slider_music_default .slider-handle {
 	background: black;
 }
+#volume_slider_music_default_mobile {
+	width: 300px;
+}
+#volume_slider_music_default_mobile .slider-handle {
+	background: black;
+}
 #volume_slider_music_playlist {
 	width: 200px;
 }
 #volume_slider_music_playlist .slider-handle {
+	background: black;
+}
+#volume_slider_music_playlist_mobile {
+	width: 300px;
+}
+#volume_slider_music_playlist_mobile .slider-handle {
 	background: black;
 }

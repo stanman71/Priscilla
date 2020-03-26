@@ -406,10 +406,12 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
         if command == "shuffle_true":     
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.shuffle(True, device_id=spotify_device_id) 
+            SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
 
         if command == "shuffle_false":     
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.shuffle(False, device_id=spotify_device_id) 
+            SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
 
         if command == "volume":   
             spotify_device_id = sp.current_playback(market=None)['device']['id']  

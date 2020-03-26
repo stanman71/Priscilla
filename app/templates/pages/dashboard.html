@@ -240,6 +240,62 @@
 
                   <div class="border-top my-2"></div>
 
+<!------------------------>
+<!------------------------>
+<!-- START MOBILE ONLY  -->
+<!------------------------>
+<!------------------------>
+
+{% if request.MOBILE %}
+            
+                  <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_play">
+                    <i class='uil uil-play'></i>
+                  </button>     
+                  <div class="pull-right">
+                    <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_previous">
+                      <i class='uil uil-backward'></i>
+                    </button>
+                  </div>
+                  <br>
+                  <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_next">
+                    <i class='uil uil-forward'></i>
+                  </button>
+                  <div class="pull-right">                  
+                    <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_stop">
+                      <i class='uil uil-pause'></i>
+                    </button>
+                  </div>
+                  <br>                  
+                  <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_volume">
+                    <i class='uil uil-volume'></i>
+                  </button>
+                  <div class="pull-right">
+                    <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn {% if spotify_shuffle == "True" %} btn-primary {% else %} btn-secondary {% endif %} " name="set_spotify_shuffle">
+                      <i class="uil uil-arrow-random"></i>
+                    </button>
+                  </div>
+                  <br> 
+                  <br>  
+                  <div class="vertical_center">       
+                    <br>           
+                    <input id="volume_slider_dashboard_music_mobile" data-slider-id="volume_slider_dashboard_music_mobile" name="slider_spotify_volume" 
+                      type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>                               
+                  </div>
+
+<!---------------------->
+<!---------------------->
+<!--  END MOBILE ONLY -->
+<!---------------------->
+<!---------------------->
+
+{% else %}
+
+<!-------------------------->
+<!-------------------------->
+<!--  START DESKTOP ONLY  -->
+<!-------------------------->
+<!-------------------------->
+
                   <div class="row justify-content-md-center">                                                 
                     <div class="col-sm-12">                 
                       <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_play">
@@ -256,38 +312,29 @@
                       </button>
                     </div>
                     <br>
-                    <div class="col-sm-5">
-                      <div class="row justify-content-md-center">                                                 
-                        <div class="col-sm-6">        
-                          <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_volume">
-                            <i class='uil uil-volume'></i>
-                          </button>
-                        </div>
-                        <div class="col-sm-6">        
-                          <div class="vertical_center">  
-                            {% if request.MOBILE %}<br>{% endif %} 
-                            <div class="custom-control custom-checkbox">
-                              <input type="checkbox" class="custom-control-input" id="checkbox_shuffle_setting" {% if spotify_shuffle == "True" %} checked="on" {% endif %} name="checkbox_shuffle">
-                              <label class="custom-control-label" for="checkbox_shuffle_setting">Shuffle</label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    <div class="col-sm-5">  
+                      <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_volume">
+                        <i class='uil uil-volume'></i>
+                      </button>
+                      <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn {% if spotify_shuffle == "True" %} btn-primary {% else %} btn-secondary {% endif %} " name="set_spotify_shuffle">
+                        <i class="uil uil-arrow-random"></i>
+                      </button>
                     </div>
-
                     <div class="col-sm-7">
                       <div class="vertical_center">       
-                        {% if request.MOBILE %}
-                          <br>           
-                          <input id="volume_slider_dashboard_music_mobile" data-slider-id="volume_slider_dashboard_music_mobile" name="slider_spotify_volume" 
-                            type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>    
-                        {% else %}  
-                          <input id="volume_slider_dashboard_music" data-slider-id="volume_slider_dashboard_music" name="slider_spotify_volume" 
-                            type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>   
-                        {% endif %}                             
+                        <input id="volume_slider_dashboard_music" data-slider-id="volume_slider_dashboard_music" name="slider_spotify_volume" 
+                          type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>                              
                       </div>
                     </div> 
                   </div> 
+
+{% endif %} 
+
+<!------------------------>
+<!------------------------>
+<!--  END DESKTOP ONLY  -->
+<!------------------------>
+<!------------------------>
 
                   <div class="border-top my-2"></div>
 
@@ -325,7 +372,42 @@
                     <div class="col-sm-9">                           
                       <div id="current_artists"></div> 
                     </div> 
-                  </div>                                            
+                  </div>         
+
+<!------------------------>
+<!------------------------>
+<!-- START MOBILE ONLY  -->
+<!------------------------>
+<!------------------------>
+
+{% if request.MOBILE %}
+
+                  <div class="row justify-content-md-center">                                                 
+                    <div class="col-sm-3">    
+                      <p><span>Progress</span></p>                        
+                    </div>
+                    <div class="col-sm-9">                           
+                      <div id="current_progress"></div> 
+                    </div> 
+                  </div>   
+
+                  <div class="row justify-content-md-center">                                                 
+                    <div class="col-sm-3">    
+                      <p><span>Playlist</span></p>                        
+                    </div>
+                    <div class="col-sm-9">                           
+                      <div id="current_playlist"></div> 
+                    </div> 
+                  </div>    
+
+{% endif %}
+
+<!---------------------->
+<!---------------------->
+<!-- END MOBILE ONLY  -->
+<!---------------------->
+<!---------------------->
+
                 </div>
               </form>                
             </div>
@@ -334,13 +416,21 @@
 
 <!-- system_log table -->
 
-{% if spotify_token != "" %}  
+{% if request.MOBILE %}
 
-            <div class="card card-tasks-system_log-frame-reduced card-tasks-system_log-table-reduced">
+            <div class="card card-tasks-system_log-frame-full card-tasks-system_log-table-full">
 
 {% else %}
 
-            <div class="card card-tasks-system_log-frame-full card-tasks-system_log-table-full">
+  {% if spotify_token != "" %}  
+
+              <div class="card card-tasks-system_log-frame-reduced card-tasks-system_log-table-reduced">
+
+  {% else %}
+
+              <div class="card card-tasks-system_log-frame-full card-tasks-system_log-table-full">
+
+  {% endif %}
 
 {% endif %}
 

@@ -25,14 +25,14 @@ import heapq
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        try:
-            if current_user.role == "user" or current_user.role == "administrator":
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('logout'))
-        except Exception as e:
-            print(e)
+        #try:
+        if current_user.role == "user" or current_user.role == "administrator":
+            return f(*args, **kwargs)
+        else:
             return redirect(url_for('logout'))
+        #except Exception as e:
+        #    print(e)
+        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -104,65 +104,56 @@ def music():
 
             # get shuffle            
             if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[8] == True:
-                shuffle = "True"
+                spotify_shuffle = "True"
             else:
-                shuffle = "False"         
+                spotify_shuffle = "False"         
 
 
-            # ###############
-            # spotify control
-            # ###############
+            # ##############
+            # player control
+            # ##############
 
             if "set_spotify_play" in request.form:  
+                spotify_volume = request.form.get("slider_spotify_player_volume") 
                 SPOTIFY_CONTROL(spotify_token, "play", player_volume)       
 
-                if request.form.get("checkbox_shuffle") == "on":
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)  
-
-                volume = player_volume                  
+                volume = player_volume 
 
             if "set_spotify_previous" in request.form: 
+                spotify_volume = request.form.get("slider_spotify_player_volume") 
                 SPOTIFY_CONTROL(spotify_token, "previous", player_volume)   
 
-                if request.form.get("checkbox_shuffle") == "on":
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)       
+                volume = player_volume      
 
-                volume = player_volume   
-      
             if "set_spotify_next" in request.form:
+                spotify_volume = request.form.get("slider_spotify_player_volume") 
                 SPOTIFY_CONTROL(spotify_token, "next", player_volume)     
 
-                if request.form.get("checkbox_shuffle") == "on":
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)       
-
-                volume = player_volume   
+                volume = player_volume 
 
             if "set_spotify_stop" in request.form:  
+                spotify_volume = request.form.get("slider_spotify_player_volume") 
                 SPOTIFY_CONTROL(spotify_token, "stop", player_volume)   
 
-                if request.form.get("checkbox_shuffle") == "on":
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)       
+                volume = player_volume 
 
-                volume = player_volume   
+            if "set_spotify_shuffle" in request.form:  
+                spotify_volume = request.form.get("slider_spotify_player_volume") 
+
+                if spotify_shuffle == "True":
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)   
+                    spotify_shuffle = "False" 
+                else:
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)   
+                    spotify_shuffle = "True"                 
+
+                volume = player_volume 
 
             if "set_spotify_volume" in request.form: 
-                device_name = sp.current_playback(market=None)['device']['name']
-                SPOTIFY_CONTROL(spotify_token, "volume", player_volume)                  
-      
-                if request.form.get("checkbox_shuffle") == "on":
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)       
+                spotify_volume = request.form.get("slider_spotify_player_volume") 
+                SPOTIFY_CONTROL(spotify_token, "volume", player_volume)        
 
-                volume = player_volume   
+                volume = player_volume 
 
 
             # ##############
@@ -241,11 +232,11 @@ def music():
             WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
             SEND_EMAIL("ERROR", "Spotify | " + str(e)) 
             
-            spotify_user = ""
+            spotify_user           = ""
             list_spotify_playlists = ""
-            list_spotify_devices = ""
-            volume = 50         
-            shuffle = "False"
+            list_spotify_devices   = ""
+            volume                 = 50         
+            spotify_shuffle        = "False"
 
 
     # not logged in
@@ -254,7 +245,7 @@ def music():
         list_spotify_playlists = ""
         list_spotify_devices   = ""
         volume                 = 50     
-        shuffle                = "False"
+        spotify_shuffle        = "False"
 
 
     """ ################## """
@@ -396,7 +387,7 @@ def music():
                                                     album_name=album_name,
                                                     album_artist=album_artist,   
                                                     volume=volume, 
-                                                    shuffle=shuffle,
+                                                    spotify_shuffle=spotify_shuffle,
                                                     default_settings=default_settings,
                                                     list_client_music=list_client_music,
                                                     collapse_search_track_open=collapse_search_track_open,   

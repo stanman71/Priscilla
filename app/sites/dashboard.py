@@ -138,65 +138,7 @@ def dashboard():
 
             sp             = spotipy.Spotify(auth=spotify_token)
             sp.trace       = False     
-            spotify_volume = request.form.get("slider_spotify_volume") 
-
-            if "set_spotify_play" in request.form:  
-                SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
-
-                if request.form.get("checkbox_shuffle") == "on":
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", spotify_volume)
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", spotify_volume)                         
-
-
-            if "set_spotify_previous" in request.form: 
-                SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
-
-                if request.form.get("checkbox_shuffle") == "on":
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", spotify_volume)
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", spotify_volume)       
-
-      
-            if "set_spotify_next" in request.form:
-                SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
-
-                if request.form.get("checkbox_shuffle") == "on":
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", spotify_volume)
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", spotify_volume)       
-
-
-            if "set_spotify_stop" in request.form:  
-                SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)   
-
-                if request.form.get("checkbox_shuffle") == "on":
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", spotify_volume)
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", spotify_volume)       
-
-
-            if "set_spotify_volume" in request.form: 
-                device_name = sp.current_playback(market=None)['device']['name']
-                SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
             
-                if request.form.get("checkbox_shuffle") == "on":
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", spotify_volume)
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", spotify_volume)       
-
-
-            # ##############
-            # start playlist
-            # ##############
-
-            if "spotify_start_playlist" in request.form:    
-                spotify_device_id = request.form.get("set_spotify_device_id")
-                playlist_uri      = request.form.get("set_spotify_playlist")
-                
-                SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, spotify_volume)
-
-
             # ############
             # account data
             # ############
@@ -211,7 +153,54 @@ def dashboard():
             if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[8] == True:
                 spotify_shuffle = "True"
             else:
-                spotify_shuffle = "False"         
+                spotify_shuffle = "False"     
+
+
+            # ##############
+            # player control
+            # ##############
+
+            if "set_spotify_play" in request.form:  
+                spotify_volume = request.form.get("slider_spotify_volume") 
+                SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
+
+            if "set_spotify_previous" in request.form: 
+                spotify_volume = request.form.get("slider_spotify_volume") 
+                SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
+      
+            if "set_spotify_next" in request.form:
+                spotify_volume = request.form.get("slider_spotify_volume") 
+                SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
+
+            if "set_spotify_stop" in request.form:  
+                spotify_volume = request.form.get("slider_spotify_volume") 
+                SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)   
+
+            if "set_spotify_shuffle" in request.form:  
+                spotify_volume = request.form.get("slider_spotify_volume") 
+
+                if spotify_shuffle == "True":
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", spotify_volume)   
+                    spotify_shuffle = "False" 
+                else:
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", spotify_volume)   
+                    spotify_shuffle = "True"                 
+
+            if "set_spotify_volume" in request.form: 
+                spotify_volume = request.form.get("slider_spotify_volume") 
+                SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
+            
+
+            # ##############
+            # start playlist
+            # ##############
+
+            if "spotify_start_playlist" in request.form:    
+                spotify_device_id = request.form.get("set_spotify_device_id")
+                playlist_uri      = request.form.get("set_spotify_playlist")
+                spotify_volume    = request.form.get("slider_spotify_volume") 
+                
+                SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, spotify_volume)
 
 
         # login failed
