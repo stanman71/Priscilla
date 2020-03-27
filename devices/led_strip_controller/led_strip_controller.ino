@@ -389,7 +389,7 @@ void callback (char* topic, byte* payload, unsigned int length) {
 
         state_changed = true;
 
-        if (state == "ON"){   
+        if (state == "ON" and brightness != 0){   
 
             Serial.print("State: ");
             Serial.print(state); 
@@ -403,7 +403,8 @@ void callback (char* topic, byte* payload, unsigned int length) {
             Serial.println(blue);             
 
         } else {
-                   
+
+            state      = "OFF";
             brightness = 0;
             red        = 0;
             green      = 0;
@@ -411,14 +412,6 @@ void callback (char* topic, byte* payload, unsigned int length) {
 
             Serial.print("State: ");
             Serial.print(state); 
-            Serial.print(" / Brightmess: ");
-            Serial.print(brightness);            
-            Serial.print(" / Red: ");
-            Serial.print(red);            
-            Serial.print(" / Green: ");
-            Serial.print(green);            
-            Serial.print(" / Blue: "); 
-            Serial.println(blue);       
          
         }       
 
@@ -496,6 +489,8 @@ void loop() {
         } else {
             digitalWrite(TRANSISTOR_CONTROL, LOW);  
         }
+
+        state_changed == false;
     }
 
     delay(100);

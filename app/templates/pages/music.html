@@ -46,10 +46,6 @@
               </form>
             </div>
 
-<!-------------------->
-<!-- PLAYER CONTROL -->
-<!-------------------->
-
 {% if spotify_user != "" %}
 
   <!-- error message spotify -->   
@@ -63,21 +59,21 @@
     </div>
   {% endif %}   
 
-<!------------------>
-<!------------------>
-<!--  MOBILE ONLY -->
-<!------------------>
-<!------------------>
+  <!------------------>
+  <!------------------>
+  <!--  MOBILE ONLY -->
+  <!------------------>
+  <!------------------>
 
-{% if request.MOBILE %}
+  {% if request.MOBILE %}
 
-  <!---------------------------->
-  <!-- PLAYER CONTROL MOBILE  -->
-  <!---------------------------->
+    {% if show_player != False %}
 
-  {% if show_player != False %}
+      <!---------------------------->
+      <!-- PLAYER CONTROL MOBILE  -->
+      <!---------------------------->
 
-    <section id="player_control"></section>   
+      <section id="player_control"></section>   
 
             <div class="card">
               <form method="POST">          
@@ -176,19 +172,18 @@
               </form>                
             </div>
 
-  {% endif %} 
+    {% endif %} 
 
-  <!---------------------------->
-  <!-- PLAYLIST TABLE MOBILE  -->
-  <!---------------------------->
+    {% if spotify_devices != "" %}   
 
-  {% if spotify_devices != "" %}   
+    <!---------------------->
+    <!-- PLAYLIST MOBILE  -->
+    <!---------------------->
 
-  <section id="table_playlist"></section> 
-
-  <!-- start playlist mobile -->    
+    <section id="table_playlist"></section> 
 
             <div class="card">
+              <div class="card-header">Start Playlist</div>
               <form method="POST">          
                 <div class="card-body">              
                   <select class="form-control" data-size="5" name="set_spotify_device_id" style="background-color:#27293D"> 
@@ -232,22 +227,27 @@
               </form>                
             </div>
 
-  <section id="table_default_settings"></section> 
+    <!------------------------------>
+    <!-- DEFAULT SETTINGS MOBILE  -->
+    <!------------------------------>
 
-  <!-- success message change default settings -->
+    <section id="table_default_settings"></section> 
 
-  {% if success_message_change_default_settings == True %}
-    <div class="alert alert-success">
-      <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-        <i class="tim-icons icon-simple-remove"></i>
-      </button>
-      <span>Settings successfully changed</span>
-    </div>
-  {% endif %}  
+    <!-- success message change default settings -->
 
-  <!-- default settings mobile -->
+    {% if success_message_change_default_settings == True %}
+      <div class="alert alert-success">
+        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+          <i class="tim-icons icon-simple-remove"></i>
+        </button>
+        <span>Settings successfully changed</span>
+      </div>
+    {% endif %}  
+
+    <!-- default settings mobile -->
 
             <div class="card">
+              <div class="card-header">Default Player Settings</div>
               <form method="POST">          
                 <div class="card-body">    
                   <select class="form-control" data-size="5" name="set_spotify_default_device_id" style="background-color:#27293D"> 
@@ -303,27 +303,27 @@
               </form>                
             </div>
 
-  {% endif %} 
+    {% endif %} 
 
-<!---------------------->
-<!---------------------->
-<!--  END MOBILE ONLY -->
-<!---------------------->
-<!---------------------->
+  <!---------------------->
+  <!---------------------->
+  <!--  END MOBILE ONLY -->
+  <!---------------------->
+  <!---------------------->
 
-{% else %}
+  {% else %}
 
-<!-------------------------->
-<!-------------------------->
-<!--  START DESKTOP ONLY  -->
-<!-------------------------->
-<!-------------------------->
+  <!-------------------------->
+  <!-------------------------->
+  <!--  START DESKTOP ONLY  -->
+  <!-------------------------->
+  <!-------------------------->
 
-  <!---------------------------->
-  <!-- PLAYLIST TABLE DESKTOP -->
-  <!---------------------------->
+    {% if show_player != False %}
 
-  {% if show_player != False %}
+    <!---------------------------->
+    <!-- PLAYER CONTROL DESKTOP -->
+    <!---------------------------->
 
     <section id="player_control"></section>   
 
@@ -401,37 +401,25 @@
                     <div class="col-sm-2"></div>
                   </div>
 
-  {% endif %}
+    {% endif %}
 
                 </div>
               </form>
             </div>
 
-  <!---------------------------->
-  <!-- PLAYLIST TABLE DESKTOP -->
-  <!---------------------------->
+    {% if spotify_devices != "" %}   
 
-  {% if spotify_devices != "" %}   
+    <!---------------------------->
+    <!-- PLAYLIST TABLE DESKTOP -->
+    <!---------------------------->
 
     <section id="table_playlist"></section> 
 
-    <!-- success message change default settings -->
-
-    {% if success_message_change_default_settings == True %}
-      <div class="alert alert-success">
-        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-          <i class="tim-icons icon-simple-remove"></i>
-        </button>
-        <span>Settings successfully changed</span>
-      </div>
-    {% endif %}  
+    <!-- start playlist desktop -->
 
             <div class="card">
               <form method="POST">          
                 <div class="card-body"> 
-
-  <!-- start playlist desktop -->
-
                   <div class="table-responsive">
                     <table class="table tablesorter">
                       <thead>
@@ -490,12 +478,30 @@
                       </tbody>
                     </table>
                   </div>    
-                  <div class="border-top my-2"></div>
-                </form>
+                </div>
+              </form>
+            </div>
 
-  <!-- default settings desktop -->
+    <!------------------------------>
+    <!-- DEFAULT SETTINGS DESKTOP -->
+    <!------------------------------>
 
-                <form method="POST">  
+    <!-- success message change default settings -->
+
+    {% if success_message_change_default_settings == True %}
+      <div class="alert alert-success">
+        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+          <i class="tim-icons icon-simple-remove"></i>
+        </button>
+        <span>Settings successfully changed</span>
+      </div>
+    {% endif %}  
+
+    <!-- default settings desktop -->
+
+            <div class="card">
+              <form method="POST">          
+                <div class="card-body"> 
                   <div class="table-responsive">
                     <table class="table tablesorter">
                       <thead>
@@ -567,15 +573,15 @@
               </form>
             </div>
 
+    {% endif %} 
+
   {% endif %} 
 
-{% endif %} 
-
-<!----------------------->
-<!----------------------->
-<!--  END DESKTOP ONLY -->
-<!----------------------->
-<!----------------------->
+  <!----------------------->
+  <!----------------------->
+  <!--  END DESKTOP ONLY -->
+  <!----------------------->
+  <!----------------------->
 
   <!------------------>
   <!-- search track -->
@@ -594,7 +600,6 @@
     </div>
   {% endif %}  
             
-              
   <!-- search track table -->         
         
             <div class="card ">
@@ -699,7 +704,6 @@
               </form>
             </div>
 
-
   <!------------------>
   <!-- search album -->
   <!------------------>      
@@ -716,8 +720,7 @@
       <span>{{ error_message_search_album }}</span>
     </div>
   {% endif %}   
-            
-              
+                   
   <!-- search album table -->         
       
             <div class="card ">

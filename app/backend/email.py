@@ -46,32 +46,34 @@ def SEND_EMAIL(subject, message):
 
         recipients = GET_EMAIL_ADDRESSES(subject)
 
-        try:
-            with app.app_context():
-                msg = Message(subject    = "SMARTHOME | " + subject + " | " + message,
-                              sender     = app.config.get("MAIL_USERNAME"),
-                              recipients = recipients,
-                              body       = "")
+        if recipients != None and recipients != "None":
+
+            try:
+                with app.app_context():
+                    msg = Message(subject    = "SMARTHOME | " + subject + " | " + message,
+                                sender     = app.config.get("MAIL_USERNAME"),
+                                recipients = recipients,
+                                body       = "")
+                    
+                    """                            
+                    ### attachment ###
+
+                    # pictures
+                    with app.open_resource("/home/pi/SmartHome/app/static/images/background.jpg") as fp:
+                        msg.attach("background.jpg","image/jpg", fp.read())
+                    with app.open_resource("/home/pi/SmartHome/app/static/images/background-panal.jpg") as fp:
+                        msg.attach("background-panal.jpg","image/jpg", fp.read())   
+                    
+                    # text
+                    with app.open_resource("C:/Users/mstan/Downloads/uzt.txt") as fp:
+                        msg.attach("uzt.txt","text/plain", fp.read())   
+                    """
+
+                    mail.send(msg)
+
+                return   
                 
-                """                            
-                ### attachment ###
-
-                # pictures
-                with app.open_resource("/home/pi/SmartHome/app/static/images/background.jpg") as fp:
-                    msg.attach("background.jpg","image/jpg", fp.read())
-                with app.open_resource("/home/pi/SmartHome/app/static/images/background-panal.jpg") as fp:
-                    msg.attach("background-panal.jpg","image/jpg", fp.read())   
-                
-                # text
-                with app.open_resource("C:/Users/mstan/Downloads/uzt.txt") as fp:
-                    msg.attach("uzt.txt","text/plain", fp.read())   
-                """
-
-                mail.send(msg)
-
-            return   
-            
-        except Exception as e:
-            if str(e) != "No recipients have been added":
-                WRITE_LOGFILE_SYSTEM("ERROR", "System | eMail | " + str(recipients) + " | " + subject + " | " + message + " | " + str(e))  
-                return ("ERROR eMail || " + str(e))  
+            except Exception as e:
+                if str(e) != "No recipients have been added":
+                    WRITE_LOGFILE_SYSTEM("ERROR", "System | eMail | " + str(recipients) + " | " + subject + " | " + message + " | " + str(e))  
+                    return ("ERROR eMail || " + str(e))  
