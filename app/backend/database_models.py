@@ -322,6 +322,7 @@ class Spotify_Settings(db.Model):
     default_playlist_uri  = db.Column(db.String(50))   
     default_playlist_name = db.Column(db.String(50))   
     default_volume        = db.Column(db.Integer, server_default=("0"))
+    default_shuffle       = db.Column(db.String(50), server_default=("False"))   
 
 class System(db.Model):
     __tablename__ = 'system'
@@ -507,19 +508,30 @@ def ADD_CAMERA():
 
 
 def SET_CAMERA_SETTINGS(id, name, url, user, password):         
-    entry = Camera.query.filter_by(id=id).first()
-    old_name = entry.name
+    entry         = Camera.query.filter_by(id=id).first()
+    previous_name = entry.name
 
     # values changed ?
     if (entry.name != name or entry.url != url or entry.user != user or entry.password != password):
+
+        changes = ""
+
+        if entry.name != name:
+            changes = changes + " || name || " + str(entry.name) + " | " + str(name)
+        if entry.url != url:
+            changes = changes + " || url || " + str(entry.url) + " | " + str(url)            
+        if entry.user != user:
+            changes = changes + " || user || " + str(entry.user) + " | " + str(user)        
+        if entry.password != password:
+            changes = changes + " || password || " + str(entry.password) + " | " + str(password)       
 
         entry.name     = name
         entry.url      = url
         entry.user     = user     
         entry.password = password                       
         db.session.commit()  
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera - " + old_name + " | changed")
+   
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera - " + str(previous_name) + " | changed" + changes)
 
         return True
 
@@ -570,7 +582,7 @@ def DELETE_CAMERA(id):
     Camera.query.filter_by(id=id).delete()
     db.session.commit() 
     
-    WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera - " + camera_name + " | deleted")   
+    WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera - " + str(camera_name) + " | deleted")   
     return True
 
 
@@ -738,6 +750,49 @@ def SET_CONTROLLER_TASKS(id, task_1  = "", task_2  = "", task_3  = "", task_4  =
         entry.task_11 != task_11 or entry.task_12 != task_12 or entry.task_13 != task_13 or entry.task_14 != task_14 or entry.task_15 != task_15 or 
         entry.task_16 != task_16 or entry.task_17 != task_17 or entry.task_18 != task_18 or entry.task_19 != task_19 or entry.task_20 != task_20):
 
+        changes = ""
+
+        if entry.task_1 != task_1:
+            changes = changes + " || task_1 || " + str(entry.task_1) + " | " + str(task_1)
+        if entry.task_2 != task_2:
+            changes = changes + " || task_2 || " + str(entry.task_2) + " | " + str(task_2)            
+        if entry.task_3 != task_3:
+            changes = changes + " || task_3 || " + str(entry.task_3) + " | " + str(task_3)        
+        if entry.task_4 != task_4:
+            changes = changes + " || task_4 || " + str(entry.task_4) + " | " + str(task_4)       
+        if entry.task_5 != task_5:
+            changes = changes + " || task_5 || " + str(entry.task_5) + " | " + str(task_5)
+        if entry.task_6 != task_6:
+            changes = changes + " || task_6 || " + str(entry.task_6) + " | " + str(task_6)            
+        if entry.task_7 != task_7:
+            changes = changes + " || task_7 || " + str(entry.task_7) + " | " + str(task_7)        
+        if entry.task_8 != task_8:
+            changes = changes + " || task_8 || " + str(entry.task_8) + " | " + str(task_8)       
+        if entry.task_9 != task_9:
+            changes = changes + " || task_9 || " + str(entry.task_9) + " | " + str(task_9)
+        if entry.task_10 != task_10:
+            changes = changes + " || task_10 || " + str(entry.task_10) + " | " + str(task_10)            
+        if entry.task_11 != task_11:
+            changes = changes + " || task_11 || " + str(entry.task_11) + " | " + str(task_11)        
+        if entry.task_12 != task_12:
+            changes = changes + " || task_12 || " + str(entry.task_12) + " | " + str(task_12)       
+        if entry.task_13 != task_13:
+            changes = changes + " || task_13 || " + str(entry.task_13) + " | " + str(task_13)
+        if entry.task_14 != task_14:
+            changes = changes + " || task_14 || " + str(entry.task_14) + " | " + str(task_14)            
+        if entry.task_15 != task_15:
+            changes = changes + " || task_15 || " + str(entry.task_15) + " | " + str(task_15)        
+        if entry.task_16 != task_16:
+            changes = changes + " || task_16 || " + str(entry.task_16) + " | " + str(task_16)       
+        if entry.task_17 != task_17:
+            changes = changes + " || task_17 || " + str(entry.task_17) + " | " + str(task_17)
+        if entry.task_18 != task_18:
+            changes = changes + " || task_18 || " + str(entry.task_18) + " | " + str(task_18)            
+        if entry.task_19 != task_19:
+            changes = changes + " || task_19 || " + str(entry.task_19) + " | " + str(task_19)        
+        if entry.task_20 != task_20:
+            changes = changes + " || task_20 || " + str(entry.task_20) + " | " + str(task_20)       
+
         entry.task_1  = task_1
         entry.task_2  = task_2
         entry.task_3  = task_3   
@@ -763,7 +818,7 @@ def SET_CONTROLLER_TASKS(id, task_1  = "", task_2  = "", task_3  = "", task_4  =
 
         controller_name = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr).name
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Controller - " + controller_name + " | Changed")  
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Controller - " + str(controller_name) + " | changed" + changes)  
         return True
 
 
@@ -896,7 +951,7 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", descriptio
     if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):   
             
         # find a unused id
-        for i in range(1,101):
+        for i in range(1,100):
             
             if Devices.query.filter_by(id=i).first():
                 pass
@@ -929,16 +984,17 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", descriptio
                 
                 return True
 
-        return "Limit reached (100)"                           
+        return "Limit reached (99)"                           
                 
     else:
         SET_DEVICE_LAST_CONTACT(ieeeAddr)  
 
 
 def SET_DEVICE_NAME(ieeeAddr, new_name):
-    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+    entry         = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+    previous_name = entry.name
     
-    WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + entry.name + " | Name changed" + " || Name - " + new_name)
+    WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(previous_name) + " | changed || name || " + str(entry.name) + " | " + str(new_name))
     
     entry.name = new_name
     db.session.commit()       
@@ -1023,7 +1079,7 @@ def UPDATE_DEVICE(id, name, gateway, model, device_type = "", description = "", 
         entry.commands_json = str(commands_json)               
         db.session.commit()    
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + entry.name + " | changed")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(entry.name) + " | updated")
    
         if device_type == "controller":
             ADD_CONTROLLER(GET_DEVICE_BY_ID(id).ieeeAddr)
@@ -1055,7 +1111,24 @@ def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting, exceptio
         entry.exception_sensor_input_values != exception_sensor_input_values or 
         entry.exception_value_1 != exception_value_1 or entry.exception_value_2 != exception_value_2 or 
         entry.exception_value_3 != exception_value_3):              
-                                         
+
+        changes = ""
+
+        if entry.exception_option != exception_option:
+            changes = changes + " || exception_option || " + str(entry.exception_option) + " | " + str(exception_option)
+        if entry.exception_setting != exception_setting:
+            changes = changes + " || exception_setting || " + str(entry.exception_setting) + " | " + str(exception_setting)            
+        if entry.exception_sensor_ieeeAddr != exception_sensor_ieeeAddr:
+            changes = changes + " || exception_sensor_ieeeAddr || " + str(entry.exception_sensor_ieeeAddr) + " | " + str(exception_sensor_ieeeAddr)        
+        if entry.exception_sensor_input_values != exception_sensor_input_values:
+            changes = changes + " || exception_sensor_input_values || " + str(entry.exception_sensor_input_values) + " | " + str(exception_sensor_input_values)       
+        if entry.exception_value_1 != exception_value_1:
+            changes = changes + " || exception_value_1 || " + str(entry.exception_value_1) + " | " + str(exception_value_1)   
+        if entry.exception_value_2 != exception_value_2:
+            changes = changes + " || exception_value_2 || " + str(entry.exception_value_2) + " | " + str(exception_value_2)       
+        if entry.exception_value_3 != exception_value_3:
+            changes = changes + " || exception_value_3 || " + str(entry.exception_value_3) + " | " + str(exception_value_3)   
+
         entry.exception_option              = exception_option
         entry.exception_setting             = exception_setting          
         entry.exception_sensor_ieeeAddr     = exception_sensor_ieeeAddr
@@ -1065,7 +1138,7 @@ def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting, exceptio
         entry.exception_value_3             = exception_value_3            
         db.session.commit()  
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + entry.name + " | Exception Settings | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(entry.name) + " | Exception Settings | changed" + changes) 
 
         return True
 
@@ -1181,7 +1254,7 @@ def DELETE_DEVICE(ieeeAddr):
             Devices.query.filter_by(ieeeAddr=ieeeAddr).delete()
             db.session.commit() 
             
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + device_name + " | deleted")                      
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(device_name) + " | deleted")                      
             return True
 
         except Exception as e:
@@ -1219,6 +1292,19 @@ def SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password
 
     if (entry.server_address != server_address or entry.server_port != server_port or entry.encoding != encoding or entry.username != username or entry.password != password):
 
+        changes = ""
+
+        if entry.server_address != server_address:
+            changes = changes + " || server_address || " + str(entry.server_address) + " | " + str(server_address)
+        if entry.server_port != server_port:
+            changes = changes + " || server_port || " + str(entry.server_port) + " | " + str(server_port)            
+        if entry.encoding != encoding:
+            changes = changes + " || encoding || " + str(entry.encoding) + " | " + str(encoding)        
+        if entry.username != username:
+            changes = changes + " || username || " + str(entry.username) + " | " + str(username)       
+        if entry.password != password:
+            changes = changes + " || password || " + str(entry.password) + " | " + str(password)
+
         entry.server_address = server_address
         entry.server_port    = server_port
         entry.encoding       = encoding
@@ -1226,7 +1312,7 @@ def SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password
         entry.password       = password
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "System | eMail Settings | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | eMail Settings | changed" + changes) 
         return True
 
 
@@ -1292,7 +1378,8 @@ def SET_LIGHTING_GROUP(id, name, light_ieeeAddr_1, light_name_1, light_device_ty
                                  light_ieeeAddr_8, light_name_8, light_device_type_8,
                                  light_ieeeAddr_9, light_name_9, light_device_type_9):
 
-    entry = Lighting_Groups.query.filter_by(id=id).first()
+    entry         = Lighting_Groups.query.filter_by(id=id).first()
+    previous_name = entry.name
 
     if (entry.name != name or
         entry.light_ieeeAddr_1 != light_ieeeAddr_1 or entry.light_name_1 != light_name_1 or entry.light_device_type_1 != light_device_type_1 or 
@@ -1304,6 +1391,29 @@ def SET_LIGHTING_GROUP(id, name, light_ieeeAddr_1, light_name_1, light_device_ty
         entry.light_ieeeAddr_7 != light_ieeeAddr_7 or entry.light_name_7 != light_name_7 or entry.light_device_type_7 != light_device_type_7 or
         entry.light_ieeeAddr_8 != light_ieeeAddr_8 or entry.light_name_8 != light_name_8 or entry.light_device_type_8 != light_device_type_8 or
         entry.light_ieeeAddr_9 != light_ieeeAddr_9 or entry.light_name_9 != light_name_9 or entry.light_device_type_9 != light_device_type_9):
+
+        changes = ""
+
+        if entry.name != name:
+            changes = changes + " || name || " + str(entry.name) + " | " + str(name)
+        if entry.light_name_1 != light_name_1:
+            changes = changes + " || light_name_1 || " + str(entry.light_name_1) + " | " + str(light_name_1)            
+        if entry.light_name_2 != light_name_2:
+            changes = changes + " || light_name_2 || " + str(entry.light_name_2) + " | " + str(light_name_2)        
+        if entry.light_name_3 != light_name_3:
+            changes = changes + " || light_name_3 || " + str(entry.light_name_3) + " | " + str(light_name_3)       
+        if entry.light_name_4 != light_name_4:
+            changes = changes + " || light_name_4 || " + str(entry.light_name_4) + " | " + str(light_name_4)
+        if entry.light_name_5 != light_name_5:
+            changes = changes + " || light_name_5 || " + str(entry.light_name_5) + " | " + str(light_name_5)
+        if entry.light_name_6 != light_name_6:
+            changes = changes + " || light_name_6 || " + str(entry.light_name_6) + " | " + str(light_name_6)           
+        if entry.light_name_7 != light_name_7:
+            changes = changes + " || light_name_7 || " + str(entry.light_name_7) + " | " + str(light_name_7)        
+        if entry.light_name_8 != light_name_8:
+            changes = changes + " || light_name_8 || " + str(entry.light_name_8) + " | " + str(light_name_8)       
+        if entry.light_name_9 != light_name_9:
+            changes = changes + " || light_name_9 || " + str(entry.light_name_9) + " | " + str(light_name_9)
 
         entry.name                = name
         entry.light_ieeeAddr_1    = light_ieeeAddr_1
@@ -1336,7 +1446,7 @@ def SET_LIGHTING_GROUP(id, name, light_ieeeAddr_1, light_name_1, light_device_ty
         
         db.session.commit()  
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Group - " + name + " | Settings | changed")  
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Group - " + str(previous_name) + " | changed" + changes)  
         return True 
 
 
@@ -1588,7 +1698,7 @@ def DELETE_LIGHTING_GROUP(id):
     name = GET_LIGHTING_GROUP_BY_ID(id).name
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Group - " + name + " | deleted")   
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Group - " + str(name) + " | deleted")   
     except:
         pass     
     
@@ -1646,7 +1756,8 @@ def SET_LIGHTING_SCENE(id, name, red_1, green_1, blue_1, brightness_1, red_2, gr
                                  red_4, green_4, blue_4, brightness_4, red_5, green_5, blue_5, brightness_5, red_6, green_6, blue_6, brightness_6, 
                                  red_7, green_7, blue_7, brightness_7, red_8, green_8, blue_8, brightness_8, red_9, green_9, blue_9, brightness_9):
 
-    entry = Lighting_Scenes.query.filter_by(id=id).first()
+    entry         = Lighting_Scenes.query.filter_by(id=id).first()
+    previous_name = entry.name
 
     if (entry.name != name or 
         entry.red_1 != int(red_1) or entry.green_1 != int(green_1) or entry.blue_1 != int(blue_1) or entry.brightness_1 != int(brightness_1) or
@@ -1658,6 +1769,38 @@ def SET_LIGHTING_SCENE(id, name, red_1, green_1, blue_1, brightness_1, red_2, gr
         entry.red_7 != int(red_7) or entry.green_7 != int(green_7) or entry.blue_7 != int(blue_7) or entry.brightness_7 != int(brightness_7) or 
         entry.red_8 != int(red_8) or entry.green_8 != int(green_8) or entry.blue_8 != int(blue_8) or entry.brightness_8 != int(brightness_8) or 
         entry.red_9 != int(red_9) or entry.green_9 != int(green_9) or entry.blue_9 != int(blue_9) or entry.brightness_9 != int(brightness_9)):
+
+        changes = ""
+
+        if entry.name != name:
+            changes = changes + " || name || " + entry.name + " | " + name
+        if entry.red_1 != int(red_1) or entry.green_1 != int(green_1) or entry.blue_1 != int(blue_1) or entry.brightness_1 != int(brightness_1):
+            changes = (changes + " || light_1_settings || " + str(entry.red_1) + "," + str(entry.green_1) + "," + str(entry.blue_1) + " / " + str(entry.brightness_1) + 
+                                 " | " + str(red_1) + "," + str(green_1) + "," + str(blue_1) + " / " + str(brightness_1))
+        if entry.red_2 != int(red_2) or entry.green_2 != int(green_2) or entry.blue_2 != int(blue_2) or entry.brightness_2 != int(brightness_2):
+            changes = (changes + " || light_2_settings || " + str(entry.red_2) + "," + str(entry.green_2) + "," + str(entry.blue_2) + " / " + str(entry.brightness_2) + 
+                                 " | " + str(red_2) + "," + str(green_2) + "," + str(blue_2) + " / " + str(brightness_2))
+        if entry.red_3 != int(red_3) or entry.green_3 != int(green_3) or entry.blue_3 != int(blue_3) or entry.brightness_3 != int(brightness_3):
+            changes = (changes + " || light_3_settings || " + str(entry.red_3) + "," + str(entry.green_3) + "," + str(entry.blue_3) + " / " + str(entry.brightness_3) + 
+                                 " | " + str(red_3) + "," + str(green_3) + "," + str(blue_3) + " / " + str(brightness_3))
+        if entry.red_4 != int(red_4) or entry.green_4 != int(green_4) or entry.blue_4 != int(blue_4) or entry.brightness_4 != int(brightness_4):
+            changes = (changes + " || light_4_settings || " + str(entry.red_4) + "," + str(entry.green_4) + "," + str(entry.blue_4) + " / " + str(entry.brightness_4) + 
+                                 " | " + str(red_4) + "," + str(green_4) + "," + str(blue_4) + " / " + str(brightness_4))
+        if entry.red_5 != int(red_5) or entry.green_5 != int(green_5) or entry.blue_5 != int(blue_5) or entry.brightness_5 != int(brightness_5):
+            changes = (changes + " || light_5_settings || " + str(entry.red_5) + "," + str(entry.green_5) + "," + str(entry.blue_5) + " / " + str(entry.brightness_5) + 
+                                 " | " + str(red_5) + "," + str(green_5) + "," + str(blue_5) + " / " + str(brightness_5))
+        if entry.red_6 != int(red_6) or entry.green_6 != int(green_6) or entry.blue_6 != int(blue_6) or entry.brightness_6 != int(brightness_6):
+            changes = (changes + " || light_6_settings || " + str(entry.red_6) + "," + str(entry.green_6) + "," + str(entry.blue_6) + " / " + str(entry.brightness_6) + 
+                                 " | " + str(red_6) + "," + str(green_6) + "," + str(blue_6) + " / " + str(brightness_6))
+        if entry.red_7 != int(red_7) or entry.green_7 != int(green_7) or entry.blue_7 != int(blue_7) or entry.brightness_7 != int(brightness_7):
+            changes = (changes + " || light_7_settings || " + str(entry.red_7) + "," + str(entry.green_7) + "," + str(entry.blue_7) + " / " + str(entry.brightness_7) + 
+                                 " | " + str(red_7) + "," + str(green_7) + "," + str(blue_7) + " / " + str(brightness_7))
+        if entry.red_8 != int(red_8) or entry.green_8 != int(green_8) or entry.blue_8 != int(blue_8) or entry.brightness_8 != int(brightness_8):
+            changes = (changes + " || light_8_settings || " + str(entry.red_8) + "," + str(entry.green_8) + "," + str(entry.blue_8) + " / " + str(entry.brightness_8) + 
+                                 " | " + str(red_8) + "," + str(green_8) + "," + str(blue_8) + " / " + str(brightness_8))
+        if entry.red_9 != int(red_9) or entry.green_9 != int(green_9) or entry.blue_9 != int(blue_9) or entry.brightness_9 != int(brightness_9):
+            changes = (changes + " || light_9_settings || " + str(entry.red_9) + "," + str(entry.green_9) + "," + str(entry.blue_9) + " / " + str(entry.brightness_9) + 
+                                 " | " + str(red_9) + "," + str(green_9) + "," + str(blue_9) + " / " + str(brightness_9))
 
         entry.name         = name
         entry.red_1        = red_1
@@ -1698,7 +1841,7 @@ def SET_LIGHTING_SCENE(id, name, red_1, green_1, blue_1, brightness_1, red_2, gr
         entry.brightness_9 = brightness_9                       
         db.session.commit()  
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Light | Scene - " + name + " | Settings | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Light | Scene - " + str(previous_name) + " | changed" + changes) 
         return True
 
 
@@ -1915,7 +2058,7 @@ def DELETE_LIGHTING_SCENE(id):
     name = GET_LIGHTING_SCENE_BY_ID(id).name
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Scene - " + name + " | deleted") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Scene - " + str(name) + " | deleted") 
     except:
         pass 
 
@@ -1973,7 +2116,8 @@ def SET_PROGRAM_SETTINGS(id, name, line_content_1,  line_content_2,  line_conten
                                    line_content_21, line_content_22, line_content_23, line_content_24, line_content_25, 
                                    line_content_26, line_content_27, line_content_28, line_content_29, line_content_30): 
 
-    entry = Programs.query.filter_by(id=id).first()
+    entry         = Programs.query.filter_by(id=id).first()
+    previous_name = entry.name
 
     if (entry.name != name  or entry.line_content_1  != line_content_1  or entry.line_content_2  != line_content_2  or 
                                entry.line_content_3  != line_content_3  or entry.line_content_4  != line_content_4  or 
@@ -1990,6 +2134,71 @@ def SET_PROGRAM_SETTINGS(id, name, line_content_1,  line_content_2,  line_conten
                                entry.line_content_25 != line_content_25 or entry.line_content_26 != line_content_26 or
                                entry.line_content_27 != line_content_27 or entry.line_content_28 != line_content_28 or 
                                entry.line_content_29 != line_content_29 or entry.line_content_30 != line_content_30):
+
+        changes = ""
+
+        if entry.name != name:
+            changes = changes + " || previous name || " + str(entry.name) + " | " + str(name)
+        if entry.line_content_1 != line_content_1:
+            changes = changes + " || line_content_1 || " + str(entry.line_content_1) + " | " + str(line_content_1)            
+        if entry.line_content_2 != line_content_2:
+            changes = changes + " || line_content_2 || " + str(entry.line_content_2) + " | " + str(line_content_2)        
+        if entry.line_content_3 != line_content_3:
+            changes = changes + " || line_content_3 || " + str(entry.line_content_3) + " | " + str(line_content_3)       
+        if entry.line_content_4 != line_content_4:
+            changes = changes + " || line_content_4 || " + str(entry.line_content_4) + " | " + str(line_content_4)
+        if entry.line_content_5 != line_content_5:
+            changes = changes + " || line_content_5 || " + str(entry.line_content_5) + " | " + str(line_content_5)
+        if entry.line_content_6 != line_content_6:
+            changes = changes + " || line_content_6 || " + str(entry.line_content_6) + " | " + str(line_content_6)            
+        if entry.line_content_7 != line_content_7:
+            changes = changes + " || line_content_7 || " + str(entry.line_content_7) + " | " + str(line_content_7)        
+        if entry.line_content_8 != line_content_8:
+            changes = changes + " || line_content_8 || " + str(entry.line_content_8) + " | " + str(line_content_8)       
+        if entry.line_content_9 != line_content_9:
+            changes = changes + " || line_content_9 || " + str(entry.line_content_9) + " | " + str(line_content_9)
+        if entry.line_content_10 != line_content_10:
+            changes = changes + " || line_content_10 || " + str(entry.line_content_10) + " | " + str(line_content_10)
+        if entry.line_content_11 != line_content_11:
+            changes = changes + " || line_content_11 || " + str(entry.line_content_11) + " | " + str(line_content_11)            
+        if entry.line_content_12 != line_content_12:
+            changes = changes + " || line_content_12 || " + str(entry.line_content_12) + " | " + str(line_content_12)       
+        if entry.line_content_13 != line_content_13:
+            changes = changes + " || line_content_13 || " + str(entry.line_content_13) + " | " + str(line_content_13)       
+        if entry.line_content_14 != line_content_14:
+            changes = changes + " || line_content_14 || " + str(entry.line_content_14) + " | " + str(line_content_14)
+        if entry.line_content_15 != line_content_15:
+            changes = changes + " || line_content_15 || " + str(entry.line_content_15) + " | " + str(line_content_15)
+        if entry.line_content_16 != line_content_16:
+            changes = changes + " || line_content_16 || " + str(entry.line_content_16) + " | " + str(line_content_16)            
+        if entry.line_content_17 != line_content_17:
+            changes = changes + " || line_content_17 || " + str(entry.line_content_17) + " | " + str(line_content_17)        
+        if entry.line_content_18 != line_content_18:
+            changes = changes + " || line_content_18 || " + str(entry.line_content_18) + " | " + str(line_content_18)       
+        if entry.line_content_19 != line_content_19:
+            changes = changes + " || line_content_19 || " + str(entry.line_content_19) + " | " + str(line_content_19)
+        if entry.line_content_20 != line_content_20:
+            changes = changes + " || line_content_20 || " + str(entry.line_content_20) + " | " + str(line_content_20)
+        if entry.line_content_21 != line_content_21:
+            changes = changes + " || line_content_21 || " + str(entry.line_content_21) + " | " + str(line_content_21)            
+        if entry.line_content_22 != line_content_22:
+            changes = changes + " || line_content_22 || " + str(entry.line_content_22) + " | " + str(line_content_22)        
+        if entry.line_content_23 != line_content_23:
+            changes = changes + " || line_content_23 || " + str(entry.line_content_23) + " | " + str(line_content_23)       
+        if entry.line_content_24 != line_content_24:
+            changes = changes + " || line_content_24 || " + str(entry.line_content_24) + " | " + str(line_content_24)
+        if entry.line_content_25 != line_content_25:
+            changes = changes + " || line_content_25 || " + str(entry.line_content_25) + " | " + str(line_content_25)
+        if entry.line_content_26 != line_content_26:
+            changes = changes + " || line_content_26 || " + str(entry.line_content_26) + " | " + str(line_content_26)           
+        if entry.line_content_27 != line_content_27:
+            changes = changes + " || line_content_27 || " + str(entry.line_content_27) + " | " + str(line_content_27)        
+        if entry.line_content_28 != line_content_28:
+            changes = changes + " || line_content_28 || " + str(entry.line_content_28) + " | " + str(line_content_28)       
+        if entry.line_content_29 != line_content_29:
+            changes = changes + " || line_content_29 || " + str(entry.line_content_29) + " | " + str(line_content_29)
+        if entry.line_content_30 != line_content_30:
+            changes = changes + " || line_content_30 || " + str(entry.line_content_30) + " | " + str(line_content_30)
 
         entry.name            = name 
         entry.line_content_1  = line_content_1 
@@ -2024,7 +2233,7 @@ def SET_PROGRAM_SETTINGS(id, name, line_content_1,  line_content_2,  line_conten
         entry.line_content_30 = line_content_30         
         db.session.commit()
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Program | " + entry.name + " | changed")  
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Program | " + str(previous_name) + " | changed" + changes)  
         return True
 
 
@@ -2604,7 +2813,7 @@ def DELETE_PROGRAM(id):
     name = Programs.query.filter_by(id=id).first().name
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Program | " + name + " | deleted")  
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Program | " + str(name) + " | deleted")  
     except:
         pass 
 
@@ -2666,21 +2875,63 @@ def SET_SCHEDULER_TASK(id, name, task,
                        device_ieeeAddr_2, device_name_2, device_input_values_2, sensor_key_2, operator_2, value_2, 
                        option_home, option_away, ip_addresses):
                              
-    entry = Scheduler_Tasks.query.filter_by(id=id).first()
-    old_name = entry.name
+    entry         = Scheduler_Tasks.query.filter_by(id=id).first()
+    previous_name = entry.name
 
     # values changed ?
     if (entry.name != name or entry.task != task or entry.trigger_time != trigger_time or
         entry.trigger_sun_position != trigger_sun_position or entry.trigger_sensors != trigger_sensors or 
         entry.trigger_position != trigger_position or entry.option_repeat != option_repeat or entry.option_pause != option_pause or 
         entry.day != day or entry.hour != hour or entry.minute != minute or
-        entry.option_sunrise != option_sunrise or entry.option_sunset != option_sunset or entry.latitude != latitude or entry.longitude != longitude or 
+        entry.option_sunrise != option_sunrise or entry.option_sunset != option_sunset or str(entry.latitude) != str(latitude) or str(entry.longitude) != str(longitude) or 
         entry.device_ieeeAddr_1 != device_ieeeAddr_1 or entry.sensor_key_1 != sensor_key_1 or 
-        entry.operator_1 != operator_1 or entry.value_1 != value_1  or entry.main_operator_second_sensor != main_operator_second_sensor or 
+        entry.operator_1 != operator_1 or str(entry.value_1) != str(value_1)  or entry.main_operator_second_sensor != main_operator_second_sensor or 
         entry.device_ieeeAddr_2 != device_ieeeAddr_2 or entry.sensor_key_2 != sensor_key_2 or 
-        entry.operator_2 != operator_2 or entry.value_2 != value_2 or
+        entry.operator_2 != operator_2 or str(entry.value_2) != str(value_2) or
         entry.option_home != option_home or entry.option_away != option_away or entry.ip_addresses != ip_addresses):
+
+        changes = ""
+
+        previous_device_1 = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr_1)
+        previous_device_2 = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr_2)
+
+        new_device_1 = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1)
+        new_device_2 = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_2)
+
+        if entry.name != name:
+            changes = changes + " || name || " + entry.name + " | " + name
+        if entry.task != task:
+            changes = changes + " || task || " + entry.task + " | " + task           
+
+        if entry.trigger_time != trigger_time or entry.trigger_sun_position != trigger_sun_position or entry.trigger_sensors != trigger_sensors or entry.trigger_position != trigger_position:
+            changes = (changes + " || trigger_settings || time: " + str(entry.trigger_time) + ", sun_position: " + str(entry.trigger_sun_position) + ", sensors: " + str(entry.trigger_sensors) + ", position: " + str(entry.trigger_position) + 
+                                 " | time: " + str(trigger_time) + ", sun_position: " + str(trigger_sun_position) + ", sensors: " + str(trigger_sensors) + ", position: " + str(trigger_position)) 
+    
+        if entry.option_repeat != option_repeat or entry.option_pause != option_pause:
+            changes = (changes + " || options_settings || repeat: " + str(entry.option_repeat) + ", pause: " + str(entry.option_pause) +
+                                 " | repeat: " + str(option_repeat) + ", pause: " + str(option_pause)) 
+      
+        if entry.day != day or entry.hour != hour or entry.minute != minute:
+            changes = (changes + " || time_settings || days: " + str(entry.day)  + ", hours: " + str(entry.hour)  + ", minutes: " + str(entry.minute) + 
+                                 " | days: " + str(day)  + ", hours: " + str(hour)  + ", minutes: " + str(minute))
+        
+        if entry.option_sunrise != option_sunrise or entry.option_sunset != option_sunset or str(entry.latitude) != str(latitude) or str(entry.longitude) != str(longitude):
+            changes = (changes + " || sun_position_settings || option_sunrise: " + str(entry.option_sunrise) + ", option_sunset: " + str(entry.option_sunset) + ", latitude: " + str(entry.latitude) + ", longitude: " + str(entry.longitude) +  
+                                 " | option_sunrise: " + str(option_sunrise) + ", option_sunset: " + str(option_sunset) + ", latitude: " + str(latitude) + ", longitude: " + str(longitude))        
+  
+        if (entry.device_ieeeAddr_1 != device_ieeeAddr_1 or entry.sensor_key_1 != sensor_key_1 or entry.operator_1 != operator_1 or str(entry.value_1) != str(value_1) or entry.main_operator_second_sensor != main_operator_second_sensor or
+            entry.device_ieeeAddr_2 != device_ieeeAddr_2 or entry.sensor_key_2 != sensor_key_2 or entry.operator_2 != operator_2 or str(entry.value_2) != str(value_2)):
+
+            changes = (changes + " || sensor_settings || (" + 
+                                 str(previous_device_1.name) + ": " + str(entry.sensor_key_1)  + " " + str(entry.operator_1) + " " + str(entry.value_1) + ") " + str(entry.main_operator_second_sensor) + " (" +
+                                 str(previous_device_2.name) + ": " + str(entry.sensor_key_2)  + " " + str(entry.operator_2) + " " + str(entry.value_2) +
+                                 ") | (" + str(new_device_1.name) + ": " + str(sensor_key_1)  + " " + str(operator_1) + " " + str(value_1) + ") " + str(main_operator_second_sensor) + " (" +
+                                 str(new_device_2.name) + ": " + str(sensor_key_2)  + " " + str(operator_2) + " " + str(value_2) + ")")
             
+        if entry.option_home != option_home or entry.option_away != option_away or entry.ip_addresses != ip_addresses:
+            changes = (changes + " || position_settings || option_home: " + str(entry.option_home)  + ", option_away: " + str(entry.option_away)  + ", ip_addresses: " + str(entry.ip_addresses) + 
+                                 " | option_home: " + str(option_home)  + ", option_away: " + str(option_away)  + ", ip_addresses: " + str(ip_addresses))
+
         entry.name                        = name
         entry.task                        = task      
         entry.trigger_time                = trigger_time    
@@ -2715,7 +2966,7 @@ def SET_SCHEDULER_TASK(id, name, task,
 
         db.session.commit()   
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Task - " + entry.name + " | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Task - " + str(previous_name) + " | changed" + changes) 
         return True
 
 
@@ -2865,7 +3116,7 @@ def DELETE_SCHEDULER_TASK(task_id):
     entry = GET_SCHEDULER_TASK_BY_ID(task_id)
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Task - " + entry.name + " | deleted")   
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Task - " + str(entry.name) + " | deleted")   
     except:
         pass         
     
@@ -2929,12 +3180,23 @@ def ADD_SENSORDATA_JOB():
 
 
 def SET_SENSORDATA_JOB_SETTINGS(id, name, filename, device_ieeeAddr, sensor_key, always_active):        
-    entry = Sensordata_Jobs.query.filter_by(id=id).first()
-    old_name = entry.name
+    entry         = Sensordata_Jobs.query.filter_by(id=id).first()
+    previous_name = entry.name
 
     # values changed?
     if (entry.name != name or entry.filename != filename or entry.device_ieeeAddr != device_ieeeAddr or 
         entry.sensor_key != sensor_key or entry.always_active != always_active):
+
+        changes = ""
+
+        if entry.name != name:
+            changes = changes + " || name || " + str(entry.name) + " | " + str(name)
+        if entry.filename != filename:
+            changes = changes + " || filename || " + str(entry.filename) + " | " + str(filename)            
+        if entry.sensor_key != sensor_key:
+            changes = changes + " || sensor_key || " + str(entry.sensor_key) + " | " + str(sensor_key)        
+        if entry.always_active != always_active:
+            changes = changes + " || always_active || " + str(entry.always_active) + " | " + str(always_active)       
 
         entry.name = name
         entry.filename = filename
@@ -2943,7 +3205,7 @@ def SET_SENSORDATA_JOB_SETTINGS(id, name, filename, device_ieeeAddr, sensor_key,
         entry.always_active = always_active
         db.session.commit()    
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata | Job - " + entry.name + " | changed")   
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata | Job - " + str(previous_name) + " | changed" + changes)   
         return True 
 
 
@@ -2991,7 +3253,7 @@ def DELETE_SENSORDATA_JOB(id):
     entry = GET_SENSORDATA_JOB_BY_ID(id)
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata | Job - " + entry.name + " | deleted")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata | Job - " + str(entry.name) + " | deleted")
     except:
         pass     
  
@@ -3017,11 +3279,18 @@ def SET_SPOTIFY_SETTINGS(client_id, client_secret):
     # values changed ?
     if (entry.client_id != client_id or entry.client_secret != client_secret):    
 
+        changes = ""
+
+        if entry.client_id != client_id:
+            changes = changes + " || client_id || " + str(entry.client_id) + " | " + str(client_id)
+        if entry.client_secret != client_secret:
+            changes = changes + " || client_secret || " + str(entry.client_secret) + " | " + str(client_secret)      
+
         entry.client_id     = client_id
         entry.client_secret = client_secret   
         db.session.commit()
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify Settings | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify Client Settings | changed" + changes) 
         return True
 
 
@@ -3040,22 +3309,34 @@ def SET_SPOTIFY_REFRESH_TOKEN(refresh_token):
         return True
 
 
-def SET_SPOTIFY_DEFAULT_SETTINGS(default_device_id, default_device_name, default_playlist_uri, default_playlist_name, default_volume):
+def SET_SPOTIFY_DEFAULT_SETTINGS(default_device_id, default_device_name, default_playlist_uri, default_playlist_name, default_volume, default_shuffle):
     entry = Spotify_Settings.query.filter_by().first()
 
     # values changed ?
     if (entry.default_device_id != default_device_id or entry.default_device_name != default_device_name or
         entry.default_playlist_uri != default_playlist_uri or entry.default_playlist_name != default_playlist_name or
-        entry.default_volume != default_volume):    
+        int(entry.default_volume) != int(default_volume) or entry.default_shuffle != default_shuffle):    
+
+        changes = ""
+
+        if entry.default_device_name != default_device_name:
+            changes = changes + " || default_device_name || " + str(entry.default_device_name) + " | " + str(default_device_name)
+        if entry.default_playlist_name != default_playlist_name:
+            changes = changes + " || default_playlist_name || " + str(entry.default_playlist_name) + " | " + str(default_playlist_name)            
+        if int(entry.default_volume) != int(default_volume):
+            changes = changes + " || default_volume || " + str(entry.default_volume) + " | " + str(default_volume)        
+        if entry.default_shuffle != default_shuffle:
+            changes = changes + " || default_shuffle || " + str(entry.default_shuffle) + " | " + str(default_shuffle)       
 
         entry.default_device_id     = default_device_id
         entry.default_device_name   = default_device_name
         entry.default_playlist_uri  = default_playlist_uri
         entry.default_playlist_name = default_playlist_name
-        entry.default_volume        = default_volume        
+        entry.default_volume        = default_volume       
+        entry.default_shuffle       = default_shuffle               
         db.session.commit()
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify Default Settings | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify Default Player Settings | changed" + changes) 
         return True
 
 
@@ -3094,12 +3375,21 @@ def SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active, lms_active, squeezelite_acti
     # values changed ?
     if (entry.zigbee2mqtt_active != zigbee2mqtt_active or entry.lms_active != lms_active or entry.squeezelite_active != squeezelite_active):
 
+        changes = ""
+
+        if entry.zigbee2mqtt_active != zigbee2mqtt_active:
+            changes = changes + " || zigbee2mqtt_active_setting || " + str(entry.zigbee2mqtt_active) + " | " + str(zigbee2mqtt_active)
+        if entry.lms_active != lms_active:
+            changes = changes + " || lms_active_setting || " + str(entry.lms_active) + " | " + str(lms_active)            
+        if entry.squeezelite_active != squeezelite_active:
+            changes = changes + " || squeezelite_active_setting || " + str(entry.squeezelite_active) + " | " + str(squeezelite_active)        
+
         entry.zigbee2mqtt_active   = zigbee2mqtt_active    
         entry.lms_active           = lms_active   
         entry.squeezelite_active   = squeezelite_active               
         db.session.commit()   
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "System | Services | changed") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | Services | changed" + changes) 
         return True
 
 
@@ -3150,13 +3440,23 @@ def ADD_USER():
     return "Limit reached (10)"        
 
 
-def UPDATE_USER_SETTINGS(id, name, email, role, email_notification):    
-    
-    entry = User.query.filter_by(id=id).first()
-    old_name = entry.name
+def UPDATE_USER_SETTINGS(id, name, email, role, email_notification):     
+    entry         = User.query.filter_by(id=id).first()
+    previous_name = entry.name
 
     # values changed ?
     if (entry.name != name or entry.email != email or entry.role != role or entry.email_notification != email_notification):
+
+        changes = ""
+
+        if entry.name != name:
+            changes = changes + " || name || " + str(entry.name) + " | " + str(name)
+        if entry.email != email:
+            changes = changes + " || email || " + str(entry.email) + " | " + str(email)            
+        if entry.role != role:
+            changes = changes + " || role || " + str(entry.role) + " | " + str(role)        
+        if entry.email_notification != email_notification:
+            changes = changes + " || email_notification_setting || " + str(entry.email_notification) + " | " + str(email_notification)        
 
         entry.name               = name
         entry.email              = email
@@ -3164,7 +3464,7 @@ def UPDATE_USER_SETTINGS(id, name, email, role, email_notification):
         entry.email_notification = email_notification
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + old_name + " | changed")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + str(previous_name) + " | changed" + changes)
 
         return True
 
@@ -3178,7 +3478,7 @@ def CHANGE_USER_PASSWORD(id, hashed_password):
         entry.password = hashed_password    
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + entry.name + " | Password changed")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + str(entry.name) + " | Password changed")
         return True
     
 
@@ -3188,7 +3488,7 @@ def DELETE_USER(user_id):
     if entry.name != "admin":
 
         try:
-            WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + entry.name + " | deleted")    
+            WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + str(entry.name) + " | deleted")    
             User.query.filter_by(id=user_id).delete()
             db.session.commit()    
             return True

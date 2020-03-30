@@ -137,6 +137,12 @@ def music():
 
                 volume = player_volume 
 
+            if "set_spotify_volume" in request.form: 
+                spotify_volume = request.form.get("slider_spotify_player_volume") 
+                SPOTIFY_CONTROL(spotify_token, "volume", player_volume)        
+
+                volume = player_volume 
+
             if "set_spotify_shuffle" in request.form:  
                 spotify_volume = request.form.get("slider_spotify_player_volume") 
 
@@ -148,13 +154,6 @@ def music():
                     spotify_shuffle = "True"                 
 
                 volume = player_volume 
-
-            if "set_spotify_volume" in request.form: 
-                spotify_volume = request.form.get("slider_spotify_player_volume") 
-                SPOTIFY_CONTROL(spotify_token, "volume", player_volume)        
-
-                volume = player_volume 
-
 
             # ##############
             # start playlist
@@ -270,11 +269,18 @@ def music():
 
         spotify_default_volume = request.form.get("set_spotify_default_volume") 
 
+        if request.form.get("checkbox_default_shuffle_setting") != None:
+            spotify_default_shuffle = "True"
+        else:
+            spotify_default_shuffle = "False"
+            
+
         if SET_SPOTIFY_DEFAULT_SETTINGS(spotify_default_device_id, 
                                         spotify_default_device_name, 
                                         spotify_default_playlist_uri, 
                                         spotify_default_playlist_name, 
-                                        spotify_default_volume):
+                                        spotify_default_volume, 
+                                        spotify_default_shuffle):
 
             success_message_change_default_settings = True  
 

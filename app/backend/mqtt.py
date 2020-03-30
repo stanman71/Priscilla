@@ -703,7 +703,7 @@ def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, repeats = 10):
     Thread.start()   
 
  
-def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):                
+def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats, log_report = True):                
     device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
     counter = 1
 
@@ -717,7 +717,7 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):
 
         # set previous setting
         if result == True:
-            if device.device_type != "led_rgb" and device.device_type != "led_simple":
+            if log_report == True:
                 WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | Setting changed | " + setting)  
 
             return True
@@ -726,7 +726,7 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats):
         time.sleep(0.2)       
 
     # error message
-    if device.device_type != "led_rgb" and device.device_type != "led_simple":
+    if log_report == True:
         WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)  
         SEND_EMAIL("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)          
               

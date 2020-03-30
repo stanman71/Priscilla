@@ -1002,6 +1002,9 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             if task[1].strip() == "PLAY":
                 SPOTIFY_CONTROL(spotify_token, "play", spotify_volume) 
 
+            if task[1].strip() == "PLAY/STOP":
+                SPOTIFY_CONTROL(spotify_token, "play/stop", spotify_volume) 
+
             if task[1].strip() == "ROTATE_PLAYLIST":    
                 SPOTIFY_CONTROL(spotify_token, "rotate_playlist", spotify_volume)      
 

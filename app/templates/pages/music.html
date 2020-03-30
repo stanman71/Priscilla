@@ -423,11 +423,11 @@
                   <div class="table-responsive">
                     <table class="table tablesorter">
                       <thead>
-                        <th scope="col" style="width:30%" class="minwidth_300">Player</th>                               
-                        <th scope="col" style="width:30%" class="minwidth_300">Playlist</th>
-                        <th scope="col" style="width:5%"></th>   
+                        <th scope="col" style="width:22%" class="minwidth_250">Player</th>                               
+                        <th scope="col" style="width:22%" class="minwidth_250">Playlist</th>
+                        <th scope="col" style="width:6%"></th>   
                         <th scope="col" style="width:20%" class="minwidth_100">Volume</th>  
-                        <th scope="col" style="width:15%" class="minwidth_100"></th>                                   
+                        <th scope="col" style="width:30%" class="minwidth_100"></th>          
                       </thead>
                       <tbody> 
                         <tr>                   
@@ -465,14 +465,12 @@
                           <td></td>  
                           <td>
                             <input id="volume_slider_music_playlist" data-slider-id="volume_slider_music_playlist" name="set_spotify_playlist_volume" 
-                              type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}"/>   
+                              type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}"/>    
                           </td>
                           <td>   
-                            <div class="text-center">   
-                              <button type="submit" onclick="window.location.href='/music#table_playlist'" class="btn btn-default pull-right" name="spotify_start_playlist" >
-                                <i class='uil uil-play'></i>
-                              </button>                                                             
-                            </div>                          
+                            <button type="submit" onclick="window.location.href='/music#table_playlist'" class="btn btn-default pull-right" name="spotify_start_playlist" >
+                              <i class='uil uil-play'></i>
+                            </button>                                                                                     
                           </td>  
                         </tr>      
                       </tbody>
@@ -505,11 +503,12 @@
                   <div class="table-responsive">
                     <table class="table tablesorter">
                       <thead>
-                        <th scope="col" style="width:30%" class="minwidth_300">Default Player</th>                               
-                        <th scope="col" style="width:30%" class="minwidth_300">Default Playlist</th>
-                        <th scope="col" style="width:5%"></th>   
+                        <th scope="col" style="width:22%" class="minwidth_250">Default Player</th>                               
+                        <th scope="col" style="width:22%" class="minwidth_250">Default Playlist</th>
+                        <th scope="col" style="width:6%"></th>                         
                         <th scope="col" style="width:20%" class="minwidth_100">Default Volume</th>  
-                        <th scope="col" style="width:15%" class="minwidth_100"></th>                                      
+                        <th scope="col" style="width:10%" class="minwidth_100">Shuffle</th>  
+                        <th scope="col" style="width:20%" class="minwidth_100"></th>                                      
                       </thead>
                       <tbody> 
                         <tr>                   
@@ -561,7 +560,15 @@
                           <td>
                             <input id="volume_slider_music_default" data-slider-id="volume_slider_music_default" name="set_spotify_default_volume" 
                               type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ default_settings.default_volume }}"/>   
-                          </td>                          
+                          </td>    
+                          <td>
+                            <div class="vertical_center"> 
+                              <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="checkbox_default_shuffle" {% if default_settings.default_shuffle == "True" %} checked="on" {% endif %} name="checkbox_default_shuffle_setting">
+                                <label class="custom-control-label" for="checkbox_default_shuffle"></label>
+                              </div>   
+                            </div>                       
+                          </td>                      
                           <td>
                             <button type="submit" onclick="window.location.href='/music#table_playlist'" name="save_default_settings" class="btn btn-fill btn-primary pull-right">SAVE</button>
                           </td>

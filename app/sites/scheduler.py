@@ -125,37 +125,37 @@ def scheduler():
                 if request.form.get("checkbox_trigger_time_" + str(i)):
                     trigger_time = "True"
                 else:
-                    trigger_time = ""  
+                    trigger_time = "False"  
 
                 # set checkbox sun
                 if request.form.get("checkbox_trigger_sun_position_" + str(i)):
                     trigger_sun_position = "True"
                 else:
-                    trigger_sun_position = "" 
+                    trigger_sun_position = "False" 
 
                 # set checkbox sensors
                 if request.form.get("checkbox_trigger_sensors_" + str(i)):
                     trigger_sensors = "True"
                 else:
-                    trigger_sensors = ""  
+                    trigger_sensors = "False"  
 
                 # set checkbox position
                 if request.form.get("checkbox_trigger_position_" + str(i)):
                     trigger_position = "True"
                 else:
-                    trigger_position = ""  
+                    trigger_position = "False"  
                                        
                 # set checkbox repeat
                 if request.form.get("checkbox_option_repeat_" + str(i)):
                     option_repeat = "True"
                 else:
-                    option_repeat = ""  
+                    option_repeat = "False"  
 
                 # set checkbox pause
                 if request.form.get("checkbox_option_pause_" + str(i)):
                     option_pause = "True"
                 else:
-                    option_pause = ""  
+                    option_pause = "False"  
 
 
                 # #############
@@ -189,13 +189,13 @@ def scheduler():
                 if request.form.get("checkbox_option_sunrise_" + str(i)):
                     option_sunrise = "True"
                 else:
-                    option_sunrise = "None"  
+                    option_sunrise = "False"  
 
                 # set option sunset
                 if request.form.get("checkbox_option_sunset_" + str(i)):
                     option_sunset = "True"
                 else:              
-                    option_sunset = "None"  
+                    option_sunset = "False"  
 
                 # set coordinates
                 latitude  = request.form.get("set_latitude_" + str(i))
@@ -329,13 +329,13 @@ def scheduler():
                 if request.form.get("checkbox_option_home_" + str(i)):
                     option_home = "True"
                 else:
-                    option_home = "None"  
+                    option_home = "False"  
 
                 # set option away
                 if request.form.get("checkbox_option_away_" + str(i)):
                     option_away = "True"
                 else:
-                    option_away = "None"  
+                    option_away = "False"  
 
                 # set ip_addresses
                 if request.form.get("set_ip_addresses_" + str(i)) != "" and request.form.get("set_ip_addresses_" + str(i)) != None:
@@ -567,6 +567,376 @@ def scheduler():
         device_25_input_values = device_25_input_values.replace(" ", "")
     except:
         device_25_input_values = ""
+    try:        
+        device_26_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(26).input_values
+        device_26_input_values = device_26_input_values.strip()
+    except:
+        device_26_input_values = ""
+    try:        
+        device_27_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(27).input_values
+        device_27_input_values = device_27_input_values.strip()
+    except:
+        device_27_input_values = ""
+    try:        
+        device_28_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(28).input_values
+        device_28_input_values = device_28_input_values.strip()
+    except:
+        device_28_input_values = ""
+    try:        
+        device_29_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(29).input_values
+        device_29_input_values = device_29_input_values.strip()
+    except:
+        device_29_input_values = ""
+    try:        
+        device_30_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(30).input_values
+        device_30_input_values = device_30_input_values.strip()
+    except:
+        device_30_input_values = ""
+    try:        
+        device_31_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(31).input_values
+        device_31_input_values = device_31_input_values.strip()
+    except:
+        device_31_input_values = ""
+    try:        
+        device_32_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(32).input_values
+        device_32_input_values = device_32_input_values.strip()
+    except:
+        device_32_input_values = ""
+    try:        
+        device_33_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(33).input_values
+        device_33_input_values = device_33_input_values.strip()
+    except:
+        device_33_input_values = ""
+    try:        
+        device_34_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(34).input_values
+        device_34_input_values = device_34_input_values.strip()
+    except:
+        device_34_input_values = ""
+    try:        
+        device_35_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(35).input_values
+        device_35_input_values = device_35_input_values.strip()
+    except:
+        device_35_input_values = ""
+    try:        
+        device_36_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(36).input_values
+        device_36_input_values = device_36_input_values.strip()
+    except:
+        device_36_input_values = ""
+    try:        
+        device_37_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(37).input_values
+        device_37_input_values = device_37_input_values.strip()
+    except:
+        device_37_input_values = ""
+    try:        
+        device_38_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(38).input_values
+        device_38_input_values = device_38_input_values.strip()
+    except:
+        device_38_input_values = ""
+    try:        
+        device_39_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(39).input_values
+        device_39_input_values = device_39_input_values.strip()
+    except:
+        device_39_input_values = ""
+    try:        
+        device_40_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(40).input_values
+        device_40_input_values = device_40_input_values.strip()
+    except:
+        device_40_input_values = ""
+    try:        
+        device_41_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(41).input_values
+        device_41_input_values = device_41_input_values.strip()
+    except:
+        device_41_input_values = ""
+    try:        
+        device_42_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(42).input_values
+        device_42_input_values = device_42_input_values.strip()
+    except:
+        device_42_input_values = ""
+    try:        
+        device_43_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(43).input_values
+        device_43_input_values = device_43_input_values.strip()
+    except:
+        device_43_input_values = ""
+    try:        
+        device_44_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(44).input_values
+        device_44_input_values = device_44_input_values.strip()
+    except:
+        device_44_input_values = ""
+    try:        
+        device_45_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(45).input_values
+        device_45_input_values = device_45_input_values.strip()
+    except:
+        device_45_input_values = ""
+    try:        
+        device_46_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(46).input_values
+        device_46_input_values = device_46_input_values.strip()
+    except:
+        device_46_input_values = ""
+    try:        
+        device_47_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(47).input_values
+        device_47_input_values = device_47_input_values.strip()
+    except:
+        device_47_input_values = ""
+    try:        
+        device_48_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(48).input_values
+        device_48_input_values = device_48_input_values.strip()
+    except:
+        device_48_input_values = ""
+    try:        
+        device_49_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(49).input_values
+        device_49_input_values = device_49_input_values.strip()
+    except:
+        device_49_input_values = ""
+    try:        
+        device_50_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(50).input_values
+        device_50_input_values = device_50_input_values.strip()
+    except:
+        device_50_input_values = ""
+    try:        
+        device_51_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(51).input_values
+        device_51_input_values = device_51_input_values.strip()
+    except:
+        device_51_input_values = ""
+    try:        
+        device_52_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(52).input_values
+        device_52_input_values = device_52_input_values.strip()
+    except:
+        device_52_input_values = ""
+    try:        
+        device_53_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(53).input_values
+        device_53_input_values = device_53_input_values.strip()
+    except:
+        device_53_input_values = ""
+    try:        
+        device_54_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(54).input_values
+        device_54_input_values = device_54_input_values.strip()
+    except:
+        device_54_input_values = ""
+    try:        
+        device_55_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(55).input_values
+        device_55_input_values = device_55_input_values.strip()
+    except:
+        device_55_input_values = ""
+    try:        
+        device_56_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(56).input_values
+        device_56_input_values = device_56_input_values.strip()
+    except:
+        device_56_input_values = ""
+    try:        
+        device_57_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(57).input_values
+        device_57_input_values = device_57_input_values.strip()
+    except:
+        device_57_input_values = ""
+    try:        
+        device_58_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(58).input_values
+        device_58_input_values = device_58_input_values.strip()
+    except:
+        device_58_input_values = ""
+    try:        
+        device_59_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(59).input_values
+        device_59_input_values = device_59_input_values.strip()
+    except:
+        device_59_input_values = ""
+    try:        
+        device_60_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(60).input_values
+        device_60_input_values = device_60_input_values.strip()
+    except:
+        device_60_input_values = ""
+    try:        
+        device_61_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(61).input_values
+        device_61_input_values = device_61_input_values.strip()
+    except:
+        device_61_input_values = ""
+    try:        
+        device_62_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(62).input_values
+        device_62_input_values = device_62_input_values.strip()
+    except:
+        device_62_input_values = ""
+    try:        
+        device_63_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(63).input_values
+        device_63_input_values = device_63_input_values.strip()
+    except:
+        device_63_input_values = ""
+    try:        
+        device_64_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(64).input_values
+        device_64_input_values = device_64_input_values.strip()
+    except:
+        device_64_input_values = ""
+    try:        
+        device_65_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(65).input_values
+        device_65_input_values = device_65_input_values.strip()
+    except:
+        device_65_input_values = ""
+    try:        
+        device_66_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(66).input_values
+        device_66_input_values = device_66_input_values.strip()
+    except:
+        device_66_input_values = ""
+    try:        
+        device_67_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(67).input_values
+        device_67_input_values = device_67_input_values.strip()
+    except:
+        device_67_input_values = ""
+    try:        
+        device_68_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(68).input_values
+        device_68_input_values = device_68_input_values.strip()
+    except:
+        device_68_input_values = ""
+    try:        
+        device_69_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(69).input_values
+        device_69_input_values = device_69_input_values.strip()
+    except:
+        device_69_input_values = ""
+    try:        
+        device_70_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(70).input_values
+        device_70_input_values = device_70_input_values.strip()
+    except:
+        device_70_input_values = ""
+    try:        
+        device_71_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(71).input_values
+        device_71_input_values = device_71_input_values.strip()
+    except:
+        device_71_input_values = ""
+    try:        
+        device_72_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(72).input_values
+        device_72_input_values = device_72_input_values.strip()
+    except:
+        device_72_input_values = ""
+    try:        
+        device_73_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(73).input_values
+        device_73_input_values = device_73_input_values.strip()
+    except:
+        device_73_input_values = ""
+    try:        
+        device_74_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(74).input_values
+        device_74_input_values = device_74_input_values.strip()
+    except:
+        device_74_input_values = ""
+    try:        
+        device_75_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(75).input_values
+        device_75_input_values = device_75_input_values.strip()
+    except:
+        device_75_input_values = ""
+    try:        
+        device_76_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(76).input_values
+        device_76_input_values = device_76_input_values.strip()
+    except:
+        device_76_input_values = ""
+    try:        
+        device_77_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(77).input_values
+        device_77_input_values = device_77_input_values.strip()
+    except:
+        device_77_input_values = ""
+    try:        
+        device_78_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(78).input_values
+        device_78_input_values = device_78_input_values.strip()
+    except:
+        device_78_input_values = ""
+    try:        
+        device_79_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(79).input_values
+        device_79_input_values = device_79_input_values.strip()
+    except:
+        device_79_input_values = ""
+    try:        
+        device_80_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(80).input_values
+        device_80_input_values = device_80_input_values.strip()
+    except:
+        device_80_input_values = ""
+    try:        
+        device_81_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(81).input_values
+        device_81_input_values = device_81_input_values.strip()
+    except:
+        device_81_input_values = ""
+    try:        
+        device_82_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(82).input_values
+        device_82_input_values = device_82_input_values.strip()
+    except:
+        device_82_input_values = ""
+    try:        
+        device_83_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(83).input_values
+        device_83_input_values = device_83_input_values.strip()
+    except:
+        device_83_input_values = ""
+    try:        
+        device_84_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(84).input_values
+        device_84_input_values = device_84_input_values.strip()
+    except:
+        device_84_input_values = ""
+    try:        
+        device_85_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(85).input_values
+        device_85_input_values = device_85_input_values.strip()
+    except:
+        device_85_input_values = ""
+    try:        
+        device_86_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(86).input_values
+        device_86_input_values = device_86_input_values.strip()
+    except:
+        device_86_input_values = ""
+    try:        
+        device_87_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(87).input_values
+        device_87_input_values = device_87_input_values.strip()
+    except:
+        device_87_input_values = ""
+    try:        
+        device_88_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(88).input_values
+        device_88_input_values = device_88_input_values.strip()
+    except:
+        device_88_input_values = ""
+    try:        
+        device_89_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(89).input_values
+        device_89_input_values = device_89_input_values.strip()
+    except:
+        device_89_input_values = ""
+    try:        
+        device_90_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(90).input_values
+        device_90_input_values = device_90_input_values.strip()
+    except:
+        device_90_input_values = ""
+    try:        
+        device_91_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(91).input_values
+        device_91_input_values = device_91_input_values.strip()
+    except:
+        device_91_input_values = ""
+    try:        
+        device_92_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(92).input_values
+        device_92_input_values = device_92_input_values.strip()
+    except:
+        device_92_input_values = ""
+    try:        
+        device_93_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(93).input_values
+        device_93_input_values = device_93_input_values.strip()
+    except:
+        device_93_input_values = ""
+    try:        
+        device_94_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(94).input_values
+        device_94_input_values = device_94_input_values.strip()
+    except:
+        device_94_input_values = ""
+    try:        
+        device_95_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(95).input_values
+        device_95_input_values = device_95_input_values.strip()
+    except:
+        device_95_input_values = ""
+    try:        
+        device_96_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(96).input_values
+        device_96_input_values = device_96_input_values.strip()
+    except:
+        device_96_input_values = ""
+    try:        
+        device_97_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(97).input_values
+        device_97_input_values = device_97_input_values.strip()
+    except:
+        device_97_input_values = ""
+    try:        
+        device_98_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(98).input_values
+        device_98_input_values = device_98_input_values.strip()
+    except:
+        device_98_input_values = ""
+    try:        
+        device_99_input_values = "Sensor,------------------," + GET_DEVICE_BY_ID(99).input_values
+        device_99_input_values = device_99_input_values.strip()
+    except:
+        device_99_input_values = ""        
 
     return render_template('layouts/default.html',
                             data=data,  
@@ -614,7 +984,81 @@ def scheduler():
                                                     device_22_input_values=device_22_input_values,  
                                                     device_23_input_values=device_23_input_values,
                                                     device_24_input_values=device_24_input_values,
-                                                    device_25_input_values=device_25_input_values,                                                        
+                                                    device_25_input_values=device_25_input_values,         
+                                                    device_26_input_values=device_26_input_values,  
+                                                    device_27_input_values=device_27_input_values,  
+                                                    device_28_input_values=device_28_input_values,  
+                                                    device_29_input_values=device_29_input_values,  
+                                                    device_30_input_values=device_30_input_values,     
+                                                    device_31_input_values=device_31_input_values,  
+                                                    device_32_input_values=device_32_input_values,  
+                                                    device_33_input_values=device_33_input_values,  
+                                                    device_34_input_values=device_34_input_values,  
+                                                    device_35_input_values=device_35_input_values,     
+                                                    device_36_input_values=device_36_input_values,  
+                                                    device_37_input_values=device_37_input_values,  
+                                                    device_38_input_values=device_38_input_values,  
+                                                    device_39_input_values=device_39_input_values,          
+                                                    device_40_input_values=device_40_input_values,     
+                                                    device_41_input_values=device_41_input_values,  
+                                                    device_42_input_values=device_42_input_values,  
+                                                    device_43_input_values=device_43_input_values,  
+                                                    device_44_input_values=device_44_input_values,  
+                                                    device_45_input_values=device_45_input_values,     
+                                                    device_46_input_values=device_46_input_values,  
+                                                    device_47_input_values=device_47_input_values,  
+                                                    device_48_input_values=device_48_input_values,  
+                                                    device_49_input_values=device_49_input_values,     
+                                                    device_50_input_values=device_50_input_values,     
+                                                    device_51_input_values=device_51_input_values,  
+                                                    device_52_input_values=device_52_input_values,  
+                                                    device_53_input_values=device_53_input_values,  
+                                                    device_54_input_values=device_54_input_values,  
+                                                    device_55_input_values=device_55_input_values,     
+                                                    device_56_input_values=device_56_input_values,  
+                                                    device_57_input_values=device_57_input_values,  
+                                                    device_58_input_values=device_58_input_values,  
+                                                    device_59_input_values=device_59_input_values,     
+                                                    device_60_input_values=device_60_input_values,     
+                                                    device_61_input_values=device_61_input_values,  
+                                                    device_62_input_values=device_62_input_values,  
+                                                    device_63_input_values=device_63_input_values,  
+                                                    device_64_input_values=device_64_input_values,  
+                                                    device_65_input_values=device_65_input_values,     
+                                                    device_66_input_values=device_66_input_values,  
+                                                    device_67_input_values=device_67_input_values,  
+                                                    device_68_input_values=device_68_input_values,  
+                                                    device_69_input_values=device_69_input_values,     
+                                                    device_70_input_values=device_70_input_values,     
+                                                    device_71_input_values=device_71_input_values,  
+                                                    device_72_input_values=device_72_input_values,  
+                                                    device_73_input_values=device_73_input_values,  
+                                                    device_74_input_values=device_74_input_values,  
+                                                    device_75_input_values=device_75_input_values,     
+                                                    device_76_input_values=device_76_input_values,  
+                                                    device_77_input_values=device_77_input_values,  
+                                                    device_78_input_values=device_78_input_values,  
+                                                    device_79_input_values=device_79_input_values,     
+                                                    device_80_input_values=device_80_input_values,     
+                                                    device_81_input_values=device_81_input_values,  
+                                                    device_82_input_values=device_82_input_values,  
+                                                    device_83_input_values=device_83_input_values,  
+                                                    device_84_input_values=device_84_input_values,  
+                                                    device_85_input_values=device_85_input_values,     
+                                                    device_86_input_values=device_86_input_values,  
+                                                    device_87_input_values=device_87_input_values,  
+                                                    device_88_input_values=device_88_input_values,  
+                                                    device_89_input_values=device_89_input_values,     
+                                                    device_90_input_values=device_90_input_values,     
+                                                    device_91_input_values=device_91_input_values,  
+                                                    device_92_input_values=device_92_input_values,  
+                                                    device_93_input_values=device_93_input_values,  
+                                                    device_94_input_values=device_94_input_values,  
+                                                    device_95_input_values=device_95_input_values,     
+                                                    device_96_input_values=device_96_input_values,  
+                                                    device_97_input_values=device_97_input_values,  
+                                                    device_98_input_values=device_98_input_values,  
+                                                    device_99_input_values=device_99_input_values,                                                                                                            
                                                     ) 
                            )
 

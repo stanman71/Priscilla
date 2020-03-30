@@ -313,27 +313,25 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
         if command == "play":    
             
             try:
-                # start former playlist
-                spotify_device_id        = sp.current_playback(market=None)['device']['id']
-                context_uri              = sp.current_playback(market=None)["context"]["uri"]
                 spotify_current_playback = sp.current_playback(market=None)
 
+                # start previous playlist
                 if spotify_current_playback['is_playing'] == True:
-                    sp.next_track(device_id=spotify_device_id) 
-                    SET_MUSIC_VOLUME(spotify_token, spotify_volume)     
-
-                else:               
-                    sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)         
-                    SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
-
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
-                    sp.shuffle(True, device_id=spotify_device_id)     
-                    sp.next_track(device_id=spotify_device_id) 
+                    context_uri       = sp.current_playback(market=None)["context"]["uri"]
+
+                    sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)    
+
+                    # set shuffle setting
+                    if spotify_current_playback['shuffle_state'] == True:
+                        sp.shuffle(True, device_id=spotify_device_id) 
+                        sp.next_track(device_id=spotify_device_id) 
+                        SET_MUSIC_VOLUME(spotify_token, spotify_volume)     
 
             except:
                              
                 try:                 
-                    # start former track
+                    # start previous track
                     spotify_device_id = sp.current_playback(market=None)['device']['id']                   
                     track_uri         = sp.current_playback(market=None)['item']['uri']
 
@@ -348,10 +346,67 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                                                           GET_SPOTIFY_SETTINGS().default_playlist_uri, 
                                                           GET_SPOTIFY_SETTINGS().default_volume)
                     
+                    # set shuffle setting
+                    if GET_SPOTIFY_SETTINGS().default_shuffle == "True":
+                        spotify_device_id = sp.current_playback(market=None)['device']['id'] 
+                        sp.shuffle(True, device_id=spotify_device_id) 
+                        sp.next_track(device_id=spotify_device_id)                    
+                   
+                    else:
+                        sp.shuffle(False, device_id=spotify_device_id)                                    
+
+
+        if command == "play/stop":    
+
+            try:
+                spotify_current_playback = sp.current_playback(market=None)
+
+                # start previous playlist 
+                if spotify_current_playback['is_playing'] == False:
+
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
-                    sp.shuffle(True, device_id=spotify_device_id) 
-                    sp.next_track(device_id=spotify_device_id)                    
-                         
+                    context_uri       = sp.current_playback(market=None)["context"]["uri"]                    
+
+                    sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)     
+
+                    # set shuffle setting
+                    if spotify_current_playback['shuffle_state'] == True:
+                        sp.shuffle(True, device_id=spotify_device_id) 
+                        sp.next_track(device_id=spotify_device_id) 
+                        SET_MUSIC_VOLUME(spotify_token, spotify_volume)         
+
+                # stop playing
+                if spotify_current_playback['is_playing'] == True:
+                    spotify_device_id = sp.current_playback(market=None)['device']['id']
+                    sp.pause_playback(device_id=spotify_device_id)           
+
+            except:
+                            
+                try:                 
+                    # start previous track
+                    spotify_device_id = sp.current_playback(market=None)['device']['id']                   
+                    track_uri         = sp.current_playback(market=None)['item']['uri']
+
+                    sp.start_playback(device_id=spotify_device_id, context_uri=None, uris=[track_uri], offset = None)  
+                    SET_MUSIC_VOLUME(spotify_token, spotify_volume)
+
+                except:               
+                    # start default settings
+                    UPDATE_MULTIROOM_DEFAULT_SETTINGS()
+
+                    SPOTIFY_START_PLAYLIST(spotify_token, GET_SPOTIFY_SETTINGS().default_device_id, 
+                                                            GET_SPOTIFY_SETTINGS().default_playlist_uri, 
+                                                            GET_SPOTIFY_SETTINGS().default_volume)
+                    
+                    # set shuffle setting
+                    if GET_SPOTIFY_SETTINGS().default_shuffle == "True":
+                        spotify_device_id = sp.current_playback(market=None)['device']['id'] 
+                        sp.shuffle(True, device_id=spotify_device_id) 
+                        sp.next_track(device_id=spotify_device_id)    
+
+                    else:
+                        sp.shuffle(False, device_id=spotify_device_id)                         
+
 
         if command == "rotate_playlist":   
 

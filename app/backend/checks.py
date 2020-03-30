@@ -1372,6 +1372,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                    
                if task[1].strip() == "PLAY":
                   return list_task_errors
+           
+               elif task[1].strip() == "PLAY/STOP" and task_type == "controller":
+                  return list_task_errors
 
                elif task[1].strip() == "ROTATE_PLAYLIST" and task_type == "controller":
                   return list_task_errors
