@@ -5171,3 +5171,420 @@ Timestamp,Type,Description
 2020-03-30 14:54:38,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-03-30 14:54:38,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-03-30 14:57:49,DATABASE,|Network || Camera - Türs || changed |||| name |||| Türs || Tür |||| url |||| 192.168.1.100:8081/11s || 192.168.1.100:8081/11|
+2020-03-31 08:19:10,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:19:11,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:19:11,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:19:11,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:19:56,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:19:57,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:19:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:19:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:21:08,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:21:08,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:21:09,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:21:09,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:23:48,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:23:49,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:23:49,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:23:49,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:25:40,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:25:41,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:25:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:25:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:26:20,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:26:20,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:26:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:26:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:39:00,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:39:00,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:39:01,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:39:01,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:42:43,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:42:43,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:42:44,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:42:44,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:46:10,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:46:10,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:46:11,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:46:11,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:52:59,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:52:59,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:53:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:53:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:53:42,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:53:42,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:53:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:53:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:54:27,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:54:27,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:54:28,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:54:28,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:54:52,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:54:52,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:54:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:54:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:56:04,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:56:04,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:56:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:56:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:57:13,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:57:13,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:57:14,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:57:14,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:58:23,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:58:23,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:58:24,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:58:24,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:59:25,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 08:59:25,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 08:59:26,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 08:59:26,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 09:03:32,DATABASE,|Music || Spotify Default Player Settings || changed |||| default_volume |||| 29 >>> 26|
+2020-03-31 17:13:53,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-03-31 17:13:53,SUCCESS,|Music || Spotify Token || updated|
+2020-03-31 17:13:54,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-03-31 17:13:54,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:26:27,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:26:27,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:26:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:26:28,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:27:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:27:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:27:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:27:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:27:00,DATABASE,|Scheduler || Task - new_scheduler_task_6 || added|
+2020-04-02 20:27:57,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:27:58,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:27:58,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:27:58,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:28:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:28:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:28:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:28:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:29:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:29:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:29:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:29:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:29:15,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:29:15,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:29:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:29:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:30:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:30:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:30:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:30:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:31:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:31:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:31:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:31:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:31:32,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:31:32,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:31:33,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:31:33,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:32:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:32:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:32:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:32:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:32:52,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:32:52,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:32:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:32:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:33:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:33:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:33:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:33:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:34:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:34:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:34:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:34:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:35:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:35:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:35:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:35:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:36:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:36:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:36:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:36:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:37:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:37:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:37:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:37:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:37:41,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:37:42,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:37:42,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:37:42,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:37:48,DATABASE,|Scheduler || Task - LIGHT_CORRIDOR || changed |||| trigger_settings |||| time: , sun_position: , sensors: True, position:  || time: False, sun_position: False, sensors: True, position: False |||| options_settings |||| repeat: True, pause:  || repeat: True, pause: False |||| sensor_settings |||| (SENSOR_MOTION: occupancy = True) and (SENSOR_MOTION: illuminance < 150) || (SENSOR_MOTION: occupancy = True) and (SENSOR_MOTION: occupancy < 150)|
+2020-04-02 20:38:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:38:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:38:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:38:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:38:07,DATABASE,|Scheduler || Task - LIGHT_CORRIDOR || changed |||| sensor_settings |||| (SENSOR_MOTION: occupancy = True) and (SENSOR_MOTION: occupancy < 150) || (SENSOR_MOTION: occupancy = True) and (SENSOR_MOTION: illuminance < 150)|
+2020-04-02 20:38:24,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| task |||| None >>> device # 0x329783 # ON; 1 |||| trigger_settings |||| time: None, sun_position: None, sensors: None, position: None || time: True, sun_position: False, sensors: False, position: False |||| options_settings |||| repeat: True, pause: None || repeat: True, pause: False|
+2020-04-02 20:38:38,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: None, hours: None, minutes: None || days: *, hours: 00-10, minutes: *|
+2020-04-02 20:39:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:39:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:39:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:39:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:39:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:40:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:40:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:40:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:40:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:40:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:41:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:41:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:41:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:41:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:41:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:42:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:42:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:42:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:42:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:42:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:42:38,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:42:38,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:42:39,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:42:39,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:43:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:43:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:43:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:43:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:43:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:44:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:44:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:44:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:44:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:44:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:44:26,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:44:26,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:44:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:44:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:45:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:45:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:45:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:45:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:45:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:45:47,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:45:47,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:45:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:45:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:46:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:46:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:46:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:46:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:46:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:46:50,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:46:50,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:46:51,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:46:51,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:47:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:47:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:47:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:47:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:47:00,ERROR,|System || Process Management || local variable 'position_min' referenced before assignment|
+2020-04-02 20:48:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:48:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:48:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:48:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:48:00,ERROR,|System || Process Management || local variable 'position_min' referenced before assignment|
+2020-04-02 20:49:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:49:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:49:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:49:00,ERROR,|System || Process Management || local variable 'hours' referenced before assignment|
+2020-04-02 20:49:00,ERROR,|System || Process Management || local variable 'position_min' referenced before assignment|
+2020-04-02 20:49:59,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:49:59,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:50:00,ERROR,|System || Process Management || local variable 'position_min' referenced before assignment|
+2020-04-02 20:50:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:50:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:51:02,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:51:02,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:51:03,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 20:51:03,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:51:03,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:52:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 20:53:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 20:53:30,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:53:30,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:53:30,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:53:30,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:54:00,ERROR,|System || Process Management || 'list' object cannot be interpreted as an integer|
+2020-04-02 20:54:48,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:54:48,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:54:49,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:54:49,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:55:00,ERROR,|System || Process Management || list indices must be integers or slices, not tuple|
+2020-04-02 20:56:00,ERROR,|System || Process Management || list indices must be integers or slices, not tuple|
+2020-04-02 20:56:50,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:56:50,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:56:51,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:56:51,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:57:59,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 20:58:00,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 20:58:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 20:58:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:00:00,SUCCESS,|System || Database || Backup created|
+2020-04-02 21:00:00,ERROR,|Scheduler || Task - reset_log_files || [WinError 2] Das System kann die angegebene Datei nicht finden: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Watering_Control/data/logs/zigbee2mqtt/log.txt'|
+2020-04-02 21:10:54,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:10:55,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:10:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:10:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:13:18,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:13:18,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:13:19,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:13:19,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:13:28,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 00-10, minutes: * || days: *, hours: 00, minutes: *|
+2020-04-02 21:13:33,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 00, minutes: * || days: *, hours: 25, minutes: *|
+2020-04-02 21:13:37,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 25, minutes: * || days: *, hours: 24, minutes: *|
+2020-04-02 21:13:47,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 24, minutes: * || days: *, hours: 10-20, minutes: *|
+2020-04-02 21:15:34,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:15:34,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:15:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:15:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:15:41,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 10-20, minutes: * || days: *, hours: 20-20, minutes: *|
+2020-04-02 21:15:46,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 20-20, minutes: * || days: *, hours: 19-20, minutes: *|
+2020-04-02 21:16:42,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 19-20, minutes: * || days: *, hours: 19-20, !20, minutes: *|
+2020-04-02 21:16:49,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 19-20, !20, minutes: * || days: *, hours: 19-20, !25, minutes: *|
+2020-04-02 21:16:58,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 19-20, !25, minutes: * || days: *, hours: 19-20, !24, minutes: *|
+2020-04-02 21:18:50,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:18:50,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:18:51,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:18:51,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:19:01,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 19-20, !24, minutes: * || days: *, hours: 19-20, !20, minutes: *|
+2020-04-02 21:19:07,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 19-20, !20, minutes: * || days: *, hours: 19-21, !20, minutes: *|
+2020-04-02 21:20:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:20:47,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:20:47,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:20:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:20:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:20:49,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 19-21, !20, minutes: * || days: *, hours: 19-21, !20, !10, minutes: *|
+2020-04-02 21:21:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:21:31,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:21:31,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:21:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:21:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:21:53,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:21:54,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:21:54,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:21:54,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:22:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:22:44,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:22:44,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:22:45,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:22:45,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:23:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:23:09,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 19-21, !20, !10, minutes: * || days: *, hours: 19-21, !21, !10, minutes: *|
+2020-04-02 21:27:00,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:27:00,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:27:00,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 19-21, !21, !10, minutes: * || days: *, hours: 21, minutes: *|
+2020-04-02 21:27:01,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:27:01,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:27:01,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:28:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:29:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:30:10,SUCCESS,|Network || MQTT || Update|
+2020-04-02 21:30:15,SUCCESS,|Network || ZigBee2MQTT || Update|
+2020-04-02 21:30:15,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:30:54,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:30:54,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:30:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:30:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:31:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:32:08,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:32:08,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:32:09,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:32:09,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:33:08,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:33:08,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:33:09,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:33:09,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:34:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:35:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:36:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:37:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:38:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:39:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:40:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:41:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:42:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:43:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:44:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:45:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:46:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || Device - 0x329783 - not founded|
+2020-04-02 21:47:03,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:47:03,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:47:04,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:47:04,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:48:10,SUCCESS,|Network || MQTT || Update|
+2020-04-02 21:48:15,SUCCESS,|Network || ZigBee2MQTT || Update|
+2020-04-02 21:49:10,SUCCESS,|Network || MQTT || Update|
+2020-04-02 21:49:15,SUCCESS,|Network || ZigBee2MQTT || Update|
+2020-04-02 21:50:37,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:50:37,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:50:38,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:50:38,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:50:48,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 21, minutes: * || days: *, hours: 21, minutes: 23|
+2020-04-02 21:50:53,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 21, minutes: 23 || days: *, hours: 21, minutes: 23-54|
+2020-04-02 21:50:57,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 21, minutes: 23-54 || days: *, hours: 21, minutes: 23-545|
+2020-04-02 21:51:00,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 21, minutes: 23-545 || days: *, hours: 21, minutes: 23-54|
+2020-04-02 21:51:10,SUCCESS,|Network || MQTT || Update|
+2020-04-02 21:51:15,SUCCESS,|Network || ZigBee2MQTT || Update|
+2020-04-02 21:51:46,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 21, minutes: 23-54 || days: *, hours: 21, minutes: 23-54, h|
+2020-04-02 21:52:10,SUCCESS,|Network || MQTT || Update|
+2020-04-02 21:52:15,SUCCESS,|Network || ZigBee2MQTT || Update|
+2020-04-02 21:53:10,SUCCESS,|Network || MQTT || Update|
+2020-04-02 21:53:15,SUCCESS,|Network || ZigBee2MQTT || Update|
+2020-04-02 21:54:10,SUCCESS,|Network || MQTT || Update|
+2020-04-02 21:54:15,SUCCESS,|Network || ZigBee2MQTT || Update|
+2020-04-02 21:56:04,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-02 21:56:04,SUCCESS,|Music || Spotify Token || updated|
+2020-04-02 21:56:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:56:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-02 21:56:19,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 21, minutes: 23-54, h || days: *, hours: 21, minutes: 23-54, !s|
+2020-04-02 21:56:26,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 21, minutes: 23-54, !s || days: *, hours: 21, minutes: 23-54, !21|
+2020-04-02 21:56:30,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: *, hours: 21, minutes: 23-54, !21 || days: *, hours: 21, minutes: 23-54, !213|
+2020-04-03 08:08:07,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-03 08:08:07,SUCCESS,|Music || Spotify Token || updated|
+2020-04-03 08:08:07,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 08:08:07,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 08:10:05,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-03 08:10:05,SUCCESS,|Music || Spotify Token || updated|
+2020-04-03 08:10:06,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 08:10:06,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 08:15:34,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-03 08:15:34,SUCCESS,|Music || Spotify Token || updated|
+2020-04-03 08:15:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 08:15:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 08:16:52,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-03 08:16:52,SUCCESS,|Music || Spotify Token || updated|
+2020-04-03 08:16:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 08:16:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 08:17:59,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-03 08:17:59,SUCCESS,|Music || Spotify Token || updated|
+2020-04-03 08:18:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 08:18:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 08:18:38,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-03 08:18:39,SUCCESS,|Music || Spotify Token || updated|
+2020-04-03 08:18:39,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 08:18:39,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 08:19:10,SUCCESS,|Network || MQTT || Update|
+2020-04-03 08:19:15,SUCCESS,|Network || ZigBee2MQTT || Update|
+2020-04-03 08:20:10,SUCCESS,|Network || MQTT || Update|
+2020-04-03 08:20:15,SUCCESS,|Network || ZigBee2MQTT || Update|
+2020-04-03 21:14:30,DATABASE,|System || Network || changed|
+2020-04-03 21:14:34,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-03 21:14:34,SUCCESS,|Music || Spotify Token || updated|
+2020-04-03 21:14:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 21:14:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 21:21:52,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-03 21:21:52,SUCCESS,|Music || Spotify Token || updated|
+2020-04-03 21:21:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 21:21:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 21:23:27,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-03 21:23:27,SUCCESS,|Music || Spotify Token || updated|
+2020-04-03 21:23:28,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 21:23:28,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 21:25:24,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-03 21:25:24,SUCCESS,|Music || Spotify Token || updated|
+2020-04-03 21:25:25,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-03 21:25:25,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|

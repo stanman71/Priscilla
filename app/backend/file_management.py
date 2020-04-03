@@ -133,12 +133,18 @@ def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):
 
                 try:
                     if element[1] in selected_log_types:
-                        
-                        if search != "" and search.lower() in element[2].lower():
-                            data_reversed_filtered.append(element)
-                            
+
                         if search == "":
                             data_reversed_filtered.append(element)
+
+                        # search for keywords
+                        else:                       
+                            search_list = search.split(" ")
+                            search_list = map(str.lower, search_list)
+
+                            if all(word in element[2].lower() for word in search_list):
+                                data_reversed_filtered.append(element)
+                            
                 except:
                     pass
 

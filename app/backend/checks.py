@@ -460,82 +460,111 @@ def CHECK_SCHEDULER_TASK_SETTINGS(scheduler_tasks):
             else:
                   if task.day.lower() not in ["mon", "tue", "wed", "thu", "fri", "sat", "sun", "*"] and task.day != "*":
                      list_errors.append("Invalid Time || Day") 
-         except:
-            list_errors.append("Invalid Time | Day")
+
+         except Exception as e:
+            list_errors.append("Invalid Time || Day || " + str(e))
 
          ### check hour
             
          try:
-            if "," in task.hour:
-                  hours = task.hour.replace(" ", "")                
-                  hours = hours.split(",")
-                  
-                  for element in hours:
- 
-                     if len(element) == 1 and element != "*":
-                        list_errors.append("Invalid Time || Hour")
-                        break
-                    
-                     try:
-                        if not (0 <= int(element) <= 24):
-                           list_errors.append("Invalid Time || Hour")
-                           break
-                        
-                     except:
-                        list_errors.append("Invalid Time || Hour")
-                        break   
-            else:
-                  
-               if len(task.hour) == 1 and task.hour != "*":
-                  list_errors.append("Invalid Time || Hour")
-                  break
-                
-               try:
-                  if not (0 <= int(task.hour) <= 24) and task.hour != "*":
-                     list_errors.append("Invalid Time || Hour") 
-               except:
-                  if task.hour != "*":
-                     list_errors.append("Invalid Time || Hour")    
+            hours = task.hour.replace(" ", "")                
+            hours = hours.split(",")
+            
+            for element in hours:
 
-         except:
-            list_errors.append("Invalid Time | Hour")
+               if "!" in element:
+                  if not (0 <= int(element.replace("!","")) < 24):
+                     list_errors.append("Invalid Time || Hour || " + str(element))
+                     break
+
+               elif "-" in element:
+
+                  min_hour = element.split("-")[0]
+                  max_hour = element.split("-")[1] 
+
+                  if not (int(min_hour) < int(max_hour)):
+                     list_errors.append("Invalid Time || Hour || " + str(element))
+                     break    
+
+                  if not (0 <= int(min_hour) < 24):
+                     list_errors.append("Invalid Time || Hour || " + str(element))
+                     break
+
+                  if not (0 <= int(max_hour) < 24):
+                     list_errors.append("Invalid Time || Hour || " + str(element))
+                     break
+
+               elif len(element) == 1 and element == "*":
+                  break        
+
+               elif len(element) == 1 and element != "*":
+                  list_errors.append("Invalid Time || Hour || " + str(element))
+                  break
+               
+               else:
+
+                  try:
+                     if not (0 <= int(element) < 24):
+                        list_errors.append("Invalid Time || Hour || " + str(element))
+                        break
+                     
+                  except:
+                     list_errors.append("Invalid Time || Hour || " + str(element))
+                     break   
+
+         except Exception as e:
+            list_errors.append("Invalid Time | Hour || " + str(e))
 
          ### check minute
 
          try:
-            if "," in task.minute:
-                  minutes = task.minute.replace(" ", "")                 
-                  minutes = minutes.split(",")
-                  
-                  for element in minutes:
-                      
-                     if len(element) == 1 and element != "*":
-                        list_errors.append("Invalid Time || Minute")
-                        break                      
-                      
-                     try:
-                        if not (0 <= int(element) <= 60):
-                           list_errors.append("Invalid Time || Minute") 
-                           break
-                        
-                     except:
-                        list_errors.append("Invalid Time || Minute") 
-                        break   
-            else:
-                
-               if len(task.minute) == 1 and task.minute != "*":
-                  list_errors.append("Invalid Time || Minute")
-                  break
-                
-               try:
-                  if not (0 <= int(task.minute) <= 60) and task.minute != "*":
-                     list_errors.append("Invalid Time || Minute") 
-               except:
-                  if task.minute != "*":
-                     list_errors.append("Invalid Time || Minute") 
-      
-         except:
-            list_errors.append("Invalid Time || Minute") 
+            minutes = task.minute.replace(" ", "")                 
+            minutes = minutes.split(",")
+            
+            for element in minutes:
+
+               if "!" in element:
+                  if not (0 <= int(element.replace("!","")) < 60):
+                     list_errors.append("Invalid Time || Minute || " + str(element))
+                     break
+
+               elif "-" in element:
+
+                  min_minute = element.split("-")[0]
+                  max_minute = element.split("-")[1] 
+              
+                  if not (int(min_minute) < int(max_minute)):
+                     list_errors.append("Invalid Time || Minute || " + str(element))
+                     break
+
+                  if not (0 <= int(min_minute) < 60):
+                     list_errors.append("Invalid Time || Minute || " + str(element))
+                     break
+
+                  if not (0 <= int(max_minute) < 60):
+                     list_errors.append("Invalid Time || Minute || " + str(element))
+                     break                          
+
+               elif len(element) == 1 and element == "*":
+                  break         
+
+               elif len(element) == 1 and element != "*":
+                  list_errors.append("Invalid Time || Minute || " + str(element))
+                  break      
+               
+               else:
+
+                  try:
+                     if not (0 <= int(element) < 60):
+                        list_errors.append("Invalid Time || Minute || " + str(element))
+                        break
+                     
+                  except:
+                     list_errors.append("Invalid Time || Minute || " + str(element))
+                     break   
+
+         except Exception as e:
+            list_errors.append("Invalid Time || Minute || " + str(e))
 
 
       if task.trigger_sun_position == "True":

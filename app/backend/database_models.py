@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
-
+from flask_login      import UserMixin
 
 from app                         import app
 from app.backend.file_management import *
@@ -265,41 +264,41 @@ class Scheduler_Tasks(db.Model):
     id                          = db.Column(db.Integer, primary_key=True, autoincrement = True)
     name                        = db.Column(db.String(50), unique=True)
     task                        = db.Column(db.String(50))
-    visible                     = db.Column(db.String(50))   
-    trigger_time                = db.Column(db.String(50)) 
-    trigger_sun_position        = db.Column(db.String(50))
-    trigger_sensors             = db.Column(db.String(50))
-    trigger_position            = db.Column(db.String(50))
-    option_repeat               = db.Column(db.String(50))
-    option_pause                = db.Column(db.String(50))
-    day                         = db.Column(db.String(50))
-    hour                        = db.Column(db.String(50))
-    minute                      = db.Column(db.String(50))
-    option_sunrise              = db.Column(db.String(50))
-    option_sunset               = db.Column(db.String(50))
-    latitude                    = db.Column(db.String(50))
-    longitude                   = db.Column(db.String(50))    
-    sunrise                     = db.Column(db.String(50))
-    sunset                      = db.Column(db.String(50))    
-    device_ieeeAddr_1           = db.Column(db.String(50))
-    device_name_1               = db.Column(db.String(50))
-    device_input_values_1       = db.Column(db.String(50))
-    sensor_key_1                = db.Column(db.String(50))
-    value_1                     = db.Column(db.String(50))
-    operator_1                  = db.Column(db.String(50))
+    visible                     = db.Column(db.String(50))    
+    trigger_time                = db.Column(db.String(50), server_default=("False"))  
+    trigger_sun_position        = db.Column(db.String(50), server_default=("False")) 
+    trigger_sensors             = db.Column(db.String(50), server_default=("False")) 
+    trigger_position            = db.Column(db.String(50), server_default=("False")) 
+    option_repeat               = db.Column(db.String(50), server_default=("False")) 
+    option_pause                = db.Column(db.String(50), server_default=("False")) 
+    day                         = db.Column(db.String(50), server_default=("None")) 
+    hour                        = db.Column(db.String(50), server_default=("None")) 
+    minute                      = db.Column(db.String(50), server_default=("None")) 
+    option_sunrise              = db.Column(db.String(50), server_default=("False")) 
+    option_sunset               = db.Column(db.String(50), server_default=("False")) 
+    latitude                    = db.Column(db.String(50), server_default=("None")) 
+    longitude                   = db.Column(db.String(50), server_default=("None"))    
+    sunrise                     = db.Column(db.String(50), server_default=("None")) 
+    sunset                      = db.Column(db.String(50), server_default=("None"))     
+    device_ieeeAddr_1           = db.Column(db.String(50), server_default=("None")) 
+    device_name_1               = db.Column(db.String(50), server_default=("None")) 
+    device_input_values_1       = db.Column(db.String(50), server_default=("None")) 
+    sensor_key_1                = db.Column(db.String(50), server_default=("None")) 
+    value_1                     = db.Column(db.String(50), server_default=("None")) 
+    operator_1                  = db.Column(db.String(50), server_default=("None")) 
     main_operator_second_sensor = db.Column(db.String(50), server_default=("None"))
-    device_ieeeAddr_2           = db.Column(db.String(50))
-    device_name_2               = db.Column(db.String(50))
-    device_input_values_2       = db.Column(db.String(50))
-    sensor_key_2                = db.Column(db.String(50))
-    value_2                     = db.Column(db.String(50))
-    operator_2                  = db.Column(db.String(50))
-    option_home                 = db.Column(db.String(50))
-    option_away                 = db.Column(db.String(50))
-    ip_addresses                = db.Column(db.String(50))
-    collapse                    = db.Column(db.String(50))
-    task_errors                 = db.Column(db.String(50))
-    task_setting_errors         = db.Column(db.String(50))    
+    device_ieeeAddr_2           = db.Column(db.String(50), server_default=("None")) 
+    device_name_2               = db.Column(db.String(50), server_default=("None")) 
+    device_input_values_2       = db.Column(db.String(50), server_default=("None")) 
+    sensor_key_2                = db.Column(db.String(50), server_default=("None")) 
+    value_2                     = db.Column(db.String(50), server_default=("None")) 
+    operator_2                  = db.Column(db.String(50), server_default=("None")) 
+    option_home                 = db.Column(db.String(50), server_default=("None")) 
+    option_away                 = db.Column(db.String(50), server_default=("None")) 
+    ip_addresses                = db.Column(db.String(50), server_default=("None")) 
+    collapse                    = db.Column(db.String(50), server_default=("None")) 
+    task_errors                 = db.Column(db.String(50), server_default=("None")) 
+    task_setting_errors         = db.Column(db.String(50), server_default=("None"))     
 
 class Sensordata_Jobs(db.Model):
     __tablename__  = 'sensordata_jobs'
@@ -517,13 +516,13 @@ def SET_CAMERA_SETTINGS(id, name, url, user, password):
         changes = ""
 
         if entry.name != name:
-            changes = changes + " || name || " + str(entry.name) + " | " + str(name)
+            changes = changes + " || name || " + str(entry.name) + " >>> " + str(name)
         if entry.url != url:
-            changes = changes + " || url || " + str(entry.url) + " | " + str(url)            
+            changes = changes + " || url || " + str(entry.url) + " >>> " + str(url)            
         if entry.user != user:
-            changes = changes + " || user || " + str(entry.user) + " | " + str(user)        
+            changes = changes + " || user || " + str(entry.user) + " >>> " + str(user)        
         if entry.password != password:
-            changes = changes + " || password || " + str(entry.password) + " | " + str(password)       
+            changes = changes + " || password || " + str(entry.password) + " >>> " + str(password)       
 
         entry.name     = name
         entry.url      = url
@@ -753,45 +752,45 @@ def SET_CONTROLLER_TASKS(id, task_1  = "", task_2  = "", task_3  = "", task_4  =
         changes = ""
 
         if entry.task_1 != task_1:
-            changes = changes + " || task_1 || " + str(entry.task_1) + " | " + str(task_1)
+            changes = changes + " || task_1 || " + str(entry.task_1) + " >>> " + str(task_1)
         if entry.task_2 != task_2:
-            changes = changes + " || task_2 || " + str(entry.task_2) + " | " + str(task_2)            
+            changes = changes + " || task_2 || " + str(entry.task_2) + " >>> " + str(task_2)            
         if entry.task_3 != task_3:
-            changes = changes + " || task_3 || " + str(entry.task_3) + " | " + str(task_3)        
+            changes = changes + " || task_3 || " + str(entry.task_3) + " >>> " + str(task_3)        
         if entry.task_4 != task_4:
-            changes = changes + " || task_4 || " + str(entry.task_4) + " | " + str(task_4)       
+            changes = changes + " || task_4 || " + str(entry.task_4) + " >>> " + str(task_4)       
         if entry.task_5 != task_5:
-            changes = changes + " || task_5 || " + str(entry.task_5) + " | " + str(task_5)
+            changes = changes + " || task_5 || " + str(entry.task_5) + " >>> " + str(task_5)
         if entry.task_6 != task_6:
-            changes = changes + " || task_6 || " + str(entry.task_6) + " | " + str(task_6)            
+            changes = changes + " || task_6 || " + str(entry.task_6) + " >>> " + str(task_6)            
         if entry.task_7 != task_7:
-            changes = changes + " || task_7 || " + str(entry.task_7) + " | " + str(task_7)        
+            changes = changes + " || task_7 || " + str(entry.task_7) + " >>> " + str(task_7)        
         if entry.task_8 != task_8:
-            changes = changes + " || task_8 || " + str(entry.task_8) + " | " + str(task_8)       
+            changes = changes + " || task_8 || " + str(entry.task_8) + " >>> " + str(task_8)       
         if entry.task_9 != task_9:
-            changes = changes + " || task_9 || " + str(entry.task_9) + " | " + str(task_9)
+            changes = changes + " || task_9 || " + str(entry.task_9) + " >>> " + str(task_9)
         if entry.task_10 != task_10:
-            changes = changes + " || task_10 || " + str(entry.task_10) + " | " + str(task_10)            
+            changes = changes + " || task_10 || " + str(entry.task_10) + " >>> " + str(task_10)            
         if entry.task_11 != task_11:
-            changes = changes + " || task_11 || " + str(entry.task_11) + " | " + str(task_11)        
+            changes = changes + " || task_11 || " + str(entry.task_11) + " >>> " + str(task_11)        
         if entry.task_12 != task_12:
-            changes = changes + " || task_12 || " + str(entry.task_12) + " | " + str(task_12)       
+            changes = changes + " || task_12 || " + str(entry.task_12) + " >>> " + str(task_12)       
         if entry.task_13 != task_13:
-            changes = changes + " || task_13 || " + str(entry.task_13) + " | " + str(task_13)
+            changes = changes + " || task_13 || " + str(entry.task_13) + " >>> " + str(task_13)
         if entry.task_14 != task_14:
-            changes = changes + " || task_14 || " + str(entry.task_14) + " | " + str(task_14)            
+            changes = changes + " || task_14 || " + str(entry.task_14) + " >>> " + str(task_14)            
         if entry.task_15 != task_15:
-            changes = changes + " || task_15 || " + str(entry.task_15) + " | " + str(task_15)        
+            changes = changes + " || task_15 || " + str(entry.task_15) + " >>> " + str(task_15)        
         if entry.task_16 != task_16:
-            changes = changes + " || task_16 || " + str(entry.task_16) + " | " + str(task_16)       
+            changes = changes + " || task_16 || " + str(entry.task_16) + " >>> " + str(task_16)       
         if entry.task_17 != task_17:
-            changes = changes + " || task_17 || " + str(entry.task_17) + " | " + str(task_17)
+            changes = changes + " || task_17 || " + str(entry.task_17) + " >>> " + str(task_17)
         if entry.task_18 != task_18:
-            changes = changes + " || task_18 || " + str(entry.task_18) + " | " + str(task_18)            
+            changes = changes + " || task_18 || " + str(entry.task_18) + " >>> " + str(task_18)            
         if entry.task_19 != task_19:
-            changes = changes + " || task_19 || " + str(entry.task_19) + " | " + str(task_19)        
+            changes = changes + " || task_19 || " + str(entry.task_19) + " >>> " + str(task_19)        
         if entry.task_20 != task_20:
-            changes = changes + " || task_20 || " + str(entry.task_20) + " | " + str(task_20)       
+            changes = changes + " || task_20 || " + str(entry.task_20) + " >>> " + str(task_20)       
 
         entry.task_1  = task_1
         entry.task_2  = task_2
@@ -994,7 +993,7 @@ def SET_DEVICE_NAME(ieeeAddr, new_name):
     entry         = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
     previous_name = entry.name
     
-    WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(previous_name) + " | changed || name || " + str(entry.name) + " | " + str(new_name))
+    WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(previous_name) + " | changed || name || " + str(entry.name) + " >>> " + str(new_name))
     
     entry.name = new_name
     db.session.commit()       
@@ -1115,19 +1114,19 @@ def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting, exceptio
         changes = ""
 
         if entry.exception_option != exception_option:
-            changes = changes + " || exception_option || " + str(entry.exception_option) + " | " + str(exception_option)
+            changes = changes + " || exception_option || " + str(entry.exception_option) + " >>> " + str(exception_option)
         if entry.exception_setting != exception_setting:
-            changes = changes + " || exception_setting || " + str(entry.exception_setting) + " | " + str(exception_setting)            
+            changes = changes + " || exception_setting || " + str(entry.exception_setting) + " >>> " + str(exception_setting)            
         if entry.exception_sensor_ieeeAddr != exception_sensor_ieeeAddr:
-            changes = changes + " || exception_sensor_ieeeAddr || " + str(entry.exception_sensor_ieeeAddr) + " | " + str(exception_sensor_ieeeAddr)        
+            changes = changes + " || exception_sensor_ieeeAddr || " + str(entry.exception_sensor_ieeeAddr) + " >>> " + str(exception_sensor_ieeeAddr)        
         if entry.exception_sensor_input_values != exception_sensor_input_values:
-            changes = changes + " || exception_sensor_input_values || " + str(entry.exception_sensor_input_values) + " | " + str(exception_sensor_input_values)       
+            changes = changes + " || exception_sensor_input_values || " + str(entry.exception_sensor_input_values) + " >>> " + str(exception_sensor_input_values)       
         if entry.exception_value_1 != exception_value_1:
-            changes = changes + " || exception_value_1 || " + str(entry.exception_value_1) + " | " + str(exception_value_1)   
+            changes = changes + " || exception_value_1 || " + str(entry.exception_value_1) + " >>> " + str(exception_value_1)   
         if entry.exception_value_2 != exception_value_2:
-            changes = changes + " || exception_value_2 || " + str(entry.exception_value_2) + " | " + str(exception_value_2)       
+            changes = changes + " || exception_value_2 || " + str(entry.exception_value_2) + " >>> " + str(exception_value_2)       
         if entry.exception_value_3 != exception_value_3:
-            changes = changes + " || exception_value_3 || " + str(entry.exception_value_3) + " | " + str(exception_value_3)   
+            changes = changes + " || exception_value_3 || " + str(entry.exception_value_3) + " >>> " + str(exception_value_3)   
 
         entry.exception_option              = exception_option
         entry.exception_setting             = exception_setting          
@@ -1149,7 +1148,7 @@ def SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(ieeeAddr, update_available):
     db.session.commit()       
 
     
-def CHANGE_DEVICE_POSITION(id, direction):
+def CHANGE_DEVICES_POSITION(id, direction):
     if direction == "up":
         device_list = GET_ALL_DEVICES("")
         device_list = device_list[::-1]
@@ -1164,7 +1163,7 @@ def CHANGE_DEVICE_POSITION(id, direction):
                 device_1 = GET_DEVICE_BY_ID(id)
                 device_2 = GET_DEVICE_BY_ID(new_id)
                 
-                device_1.id = 99
+                device_1.id = 111
                 db.session.commit()
                 
                 device_2.id = id
@@ -1182,7 +1181,7 @@ def CHANGE_DEVICE_POSITION(id, direction):
                 device_1 = GET_DEVICE_BY_ID(id)
                 device_2 = GET_DEVICE_BY_ID(new_id)
                 
-                device_1.id = 99
+                device_1.id = 111
                 db.session.commit()
                 
                 device_2.id = id
@@ -1295,15 +1294,15 @@ def SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password
         changes = ""
 
         if entry.server_address != server_address:
-            changes = changes + " || server_address || " + str(entry.server_address) + " | " + str(server_address)
+            changes = changes + " || server_address || " + str(entry.server_address) + " >>> " + str(server_address)
         if entry.server_port != server_port:
-            changes = changes + " || server_port || " + str(entry.server_port) + " | " + str(server_port)            
+            changes = changes + " || server_port || " + str(entry.server_port) + " >>> " + str(server_port)            
         if entry.encoding != encoding:
-            changes = changes + " || encoding || " + str(entry.encoding) + " | " + str(encoding)        
+            changes = changes + " || encoding || " + str(entry.encoding) + " >>> " + str(encoding)        
         if entry.username != username:
-            changes = changes + " || username || " + str(entry.username) + " | " + str(username)       
+            changes = changes + " || username || " + str(entry.username) + " >>> " + str(username)       
         if entry.password != password:
-            changes = changes + " || password || " + str(entry.password) + " | " + str(password)
+            changes = changes + " || password || " + str(entry.password) + " >>> " + str(password)
 
         entry.server_address = server_address
         entry.server_port    = server_port
@@ -1395,25 +1394,25 @@ def SET_LIGHTING_GROUP(id, name, light_ieeeAddr_1, light_name_1, light_device_ty
         changes = ""
 
         if entry.name != name:
-            changes = changes + " || name || " + str(entry.name) + " | " + str(name)
+            changes = changes + " || name || " + str(entry.name) + " >>> " + str(name)
         if entry.light_name_1 != light_name_1:
-            changes = changes + " || light_name_1 || " + str(entry.light_name_1) + " | " + str(light_name_1)            
+            changes = changes + " || light_name_1 || " + str(entry.light_name_1) + " >>> " + str(light_name_1)            
         if entry.light_name_2 != light_name_2:
-            changes = changes + " || light_name_2 || " + str(entry.light_name_2) + " | " + str(light_name_2)        
+            changes = changes + " || light_name_2 || " + str(entry.light_name_2) + " >>> " + str(light_name_2)        
         if entry.light_name_3 != light_name_3:
-            changes = changes + " || light_name_3 || " + str(entry.light_name_3) + " | " + str(light_name_3)       
+            changes = changes + " || light_name_3 || " + str(entry.light_name_3) + " >>> " + str(light_name_3)       
         if entry.light_name_4 != light_name_4:
-            changes = changes + " || light_name_4 || " + str(entry.light_name_4) + " | " + str(light_name_4)
+            changes = changes + " || light_name_4 || " + str(entry.light_name_4) + " >>> " + str(light_name_4)
         if entry.light_name_5 != light_name_5:
-            changes = changes + " || light_name_5 || " + str(entry.light_name_5) + " | " + str(light_name_5)
+            changes = changes + " || light_name_5 || " + str(entry.light_name_5) + " >>> " + str(light_name_5)
         if entry.light_name_6 != light_name_6:
-            changes = changes + " || light_name_6 || " + str(entry.light_name_6) + " | " + str(light_name_6)           
+            changes = changes + " || light_name_6 || " + str(entry.light_name_6) + " >>> " + str(light_name_6)           
         if entry.light_name_7 != light_name_7:
-            changes = changes + " || light_name_7 || " + str(entry.light_name_7) + " | " + str(light_name_7)        
+            changes = changes + " || light_name_7 || " + str(entry.light_name_7) + " >>> " + str(light_name_7)        
         if entry.light_name_8 != light_name_8:
-            changes = changes + " || light_name_8 || " + str(entry.light_name_8) + " | " + str(light_name_8)       
+            changes = changes + " || light_name_8 || " + str(entry.light_name_8) + " >>> " + str(light_name_8)       
         if entry.light_name_9 != light_name_9:
-            changes = changes + " || light_name_9 || " + str(entry.light_name_9) + " | " + str(light_name_9)
+            changes = changes + " || light_name_9 || " + str(entry.light_name_9) + " >>> " + str(light_name_9)
 
         entry.name                = name
         entry.light_ieeeAddr_1    = light_ieeeAddr_1
@@ -1773,34 +1772,34 @@ def SET_LIGHTING_SCENE(id, name, red_1, green_1, blue_1, brightness_1, red_2, gr
         changes = ""
 
         if entry.name != name:
-            changes = changes + " || name || " + entry.name + " | " + name
+            changes = changes + " || name || " + entry.name + " >>> " + name
         if entry.red_1 != int(red_1) or entry.green_1 != int(green_1) or entry.blue_1 != int(blue_1) or entry.brightness_1 != int(brightness_1):
-            changes = (changes + " || light_1_settings || " + str(entry.red_1) + "," + str(entry.green_1) + "," + str(entry.blue_1) + " / " + str(entry.brightness_1) + 
-                                 " | " + str(red_1) + "," + str(green_1) + "," + str(blue_1) + " / " + str(brightness_1))
+            changes = (changes + " || light_1_settings || " + str(entry.red_1) + "," + str(entry.green_1) + "," + str(entry.blue_1) + "/" + str(entry.brightness_1) + 
+                                 " >>> " + str(red_1) + "," + str(green_1) + "," + str(blue_1) + "/" + str(brightness_1))
         if entry.red_2 != int(red_2) or entry.green_2 != int(green_2) or entry.blue_2 != int(blue_2) or entry.brightness_2 != int(brightness_2):
-            changes = (changes + " || light_2_settings || " + str(entry.red_2) + "," + str(entry.green_2) + "," + str(entry.blue_2) + " / " + str(entry.brightness_2) + 
-                                 " | " + str(red_2) + "," + str(green_2) + "," + str(blue_2) + " / " + str(brightness_2))
+            changes = (changes + " || light_2_settings || " + str(entry.red_2) + "," + str(entry.green_2) + "," + str(entry.blue_2) + "/" + str(entry.brightness_2) + 
+                                 " >>> " + str(red_2) + "," + str(green_2) + "," + str(blue_2) + "/" + str(brightness_2))
         if entry.red_3 != int(red_3) or entry.green_3 != int(green_3) or entry.blue_3 != int(blue_3) or entry.brightness_3 != int(brightness_3):
-            changes = (changes + " || light_3_settings || " + str(entry.red_3) + "," + str(entry.green_3) + "," + str(entry.blue_3) + " / " + str(entry.brightness_3) + 
-                                 " | " + str(red_3) + "," + str(green_3) + "," + str(blue_3) + " / " + str(brightness_3))
+            changes = (changes + " || light_3_settings || " + str(entry.red_3) + "," + str(entry.green_3) + "," + str(entry.blue_3) + "/" + str(entry.brightness_3) + 
+                                 " >>> " + str(red_3) + "," + str(green_3) + "," + str(blue_3) + "/" + str(brightness_3))
         if entry.red_4 != int(red_4) or entry.green_4 != int(green_4) or entry.blue_4 != int(blue_4) or entry.brightness_4 != int(brightness_4):
-            changes = (changes + " || light_4_settings || " + str(entry.red_4) + "," + str(entry.green_4) + "," + str(entry.blue_4) + " / " + str(entry.brightness_4) + 
-                                 " | " + str(red_4) + "," + str(green_4) + "," + str(blue_4) + " / " + str(brightness_4))
+            changes = (changes + " || light_4_settings || " + str(entry.red_4) + "," + str(entry.green_4) + "," + str(entry.blue_4) + "/" + str(entry.brightness_4) + 
+                                 " >>> " + str(red_4) + "," + str(green_4) + "," + str(blue_4) + "/" + str(brightness_4))
         if entry.red_5 != int(red_5) or entry.green_5 != int(green_5) or entry.blue_5 != int(blue_5) or entry.brightness_5 != int(brightness_5):
-            changes = (changes + " || light_5_settings || " + str(entry.red_5) + "," + str(entry.green_5) + "," + str(entry.blue_5) + " / " + str(entry.brightness_5) + 
-                                 " | " + str(red_5) + "," + str(green_5) + "," + str(blue_5) + " / " + str(brightness_5))
+            changes = (changes + " || light_5_settings || " + str(entry.red_5) + "," + str(entry.green_5) + "," + str(entry.blue_5) + "/" + str(entry.brightness_5) + 
+                                 " >>> " + str(red_5) + "," + str(green_5) + "," + str(blue_5) + "/" + str(brightness_5))
         if entry.red_6 != int(red_6) or entry.green_6 != int(green_6) or entry.blue_6 != int(blue_6) or entry.brightness_6 != int(brightness_6):
-            changes = (changes + " || light_6_settings || " + str(entry.red_6) + "," + str(entry.green_6) + "," + str(entry.blue_6) + " / " + str(entry.brightness_6) + 
-                                 " | " + str(red_6) + "," + str(green_6) + "," + str(blue_6) + " / " + str(brightness_6))
+            changes = (changes + " || light_6_settings || " + str(entry.red_6) + "," + str(entry.green_6) + "," + str(entry.blue_6) + "/" + str(entry.brightness_6) + 
+                                 " >>> " + str(red_6) + "," + str(green_6) + "," + str(blue_6) + "/" + str(brightness_6))
         if entry.red_7 != int(red_7) or entry.green_7 != int(green_7) or entry.blue_7 != int(blue_7) or entry.brightness_7 != int(brightness_7):
-            changes = (changes + " || light_7_settings || " + str(entry.red_7) + "," + str(entry.green_7) + "," + str(entry.blue_7) + " / " + str(entry.brightness_7) + 
-                                 " | " + str(red_7) + "," + str(green_7) + "," + str(blue_7) + " / " + str(brightness_7))
+            changes = (changes + " || light_7_settings || " + str(entry.red_7) + "," + str(entry.green_7) + "," + str(entry.blue_7) + "/" + str(entry.brightness_7) + 
+                                 " >>> " + str(red_7) + "," + str(green_7) + "," + str(blue_7) + "/" + str(brightness_7))
         if entry.red_8 != int(red_8) or entry.green_8 != int(green_8) or entry.blue_8 != int(blue_8) or entry.brightness_8 != int(brightness_8):
-            changes = (changes + " || light_8_settings || " + str(entry.red_8) + "," + str(entry.green_8) + "," + str(entry.blue_8) + " / " + str(entry.brightness_8) + 
-                                 " | " + str(red_8) + "," + str(green_8) + "," + str(blue_8) + " / " + str(brightness_8))
+            changes = (changes + " || light_8_settings || " + str(entry.red_8) + "," + str(entry.green_8) + "," + str(entry.blue_8) + "/" + str(entry.brightness_8) + 
+                                 " >>> " + str(red_8) + "," + str(green_8) + "," + str(blue_8) + "/" + str(brightness_8))
         if entry.red_9 != int(red_9) or entry.green_9 != int(green_9) or entry.blue_9 != int(blue_9) or entry.brightness_9 != int(brightness_9):
-            changes = (changes + " || light_9_settings || " + str(entry.red_9) + "," + str(entry.green_9) + "," + str(entry.blue_9) + " / " + str(entry.brightness_9) + 
-                                 " | " + str(red_9) + "," + str(green_9) + "," + str(blue_9) + " / " + str(brightness_9))
+            changes = (changes + " || light_9_settings || " + str(entry.red_9) + "," + str(entry.green_9) + "," + str(entry.blue_9) + "/" + str(entry.brightness_9) + 
+                                 " >>> " + str(red_9) + "," + str(green_9) + "," + str(blue_9) + "/" + str(brightness_9))
 
         entry.name         = name
         entry.red_1        = red_1
@@ -2138,67 +2137,67 @@ def SET_PROGRAM_SETTINGS(id, name, line_content_1,  line_content_2,  line_conten
         changes = ""
 
         if entry.name != name:
-            changes = changes + " || previous name || " + str(entry.name) + " | " + str(name)
+            changes = changes + " || previous name || " + str(entry.name) + " >>> " + str(name)
         if entry.line_content_1 != line_content_1:
-            changes = changes + " || line_content_1 || " + str(entry.line_content_1) + " | " + str(line_content_1)            
+            changes = changes + " || line_content_1 || " + str(entry.line_content_1) + " >>> " + str(line_content_1)            
         if entry.line_content_2 != line_content_2:
-            changes = changes + " || line_content_2 || " + str(entry.line_content_2) + " | " + str(line_content_2)        
+            changes = changes + " || line_content_2 || " + str(entry.line_content_2) + " >>> " + str(line_content_2)        
         if entry.line_content_3 != line_content_3:
-            changes = changes + " || line_content_3 || " + str(entry.line_content_3) + " | " + str(line_content_3)       
+            changes = changes + " || line_content_3 || " + str(entry.line_content_3) + " >>> " + str(line_content_3)       
         if entry.line_content_4 != line_content_4:
-            changes = changes + " || line_content_4 || " + str(entry.line_content_4) + " | " + str(line_content_4)
+            changes = changes + " || line_content_4 || " + str(entry.line_content_4) + " >>> " + str(line_content_4)
         if entry.line_content_5 != line_content_5:
-            changes = changes + " || line_content_5 || " + str(entry.line_content_5) + " | " + str(line_content_5)
+            changes = changes + " || line_content_5 || " + str(entry.line_content_5) + " >>> " + str(line_content_5)
         if entry.line_content_6 != line_content_6:
-            changes = changes + " || line_content_6 || " + str(entry.line_content_6) + " | " + str(line_content_6)            
+            changes = changes + " || line_content_6 || " + str(entry.line_content_6) + " >>> " + str(line_content_6)            
         if entry.line_content_7 != line_content_7:
-            changes = changes + " || line_content_7 || " + str(entry.line_content_7) + " | " + str(line_content_7)        
+            changes = changes + " || line_content_7 || " + str(entry.line_content_7) + " >>> " + str(line_content_7)        
         if entry.line_content_8 != line_content_8:
-            changes = changes + " || line_content_8 || " + str(entry.line_content_8) + " | " + str(line_content_8)       
+            changes = changes + " || line_content_8 || " + str(entry.line_content_8) + " >>> " + str(line_content_8)       
         if entry.line_content_9 != line_content_9:
-            changes = changes + " || line_content_9 || " + str(entry.line_content_9) + " | " + str(line_content_9)
+            changes = changes + " || line_content_9 || " + str(entry.line_content_9) + " >>> " + str(line_content_9)
         if entry.line_content_10 != line_content_10:
-            changes = changes + " || line_content_10 || " + str(entry.line_content_10) + " | " + str(line_content_10)
+            changes = changes + " || line_content_10 || " + str(entry.line_content_10) + " >>> " + str(line_content_10)
         if entry.line_content_11 != line_content_11:
-            changes = changes + " || line_content_11 || " + str(entry.line_content_11) + " | " + str(line_content_11)            
+            changes = changes + " || line_content_11 || " + str(entry.line_content_11) + " >>> " + str(line_content_11)            
         if entry.line_content_12 != line_content_12:
-            changes = changes + " || line_content_12 || " + str(entry.line_content_12) + " | " + str(line_content_12)       
+            changes = changes + " || line_content_12 || " + str(entry.line_content_12) + " >>> " + str(line_content_12)       
         if entry.line_content_13 != line_content_13:
-            changes = changes + " || line_content_13 || " + str(entry.line_content_13) + " | " + str(line_content_13)       
+            changes = changes + " || line_content_13 || " + str(entry.line_content_13) + " >>> " + str(line_content_13)       
         if entry.line_content_14 != line_content_14:
-            changes = changes + " || line_content_14 || " + str(entry.line_content_14) + " | " + str(line_content_14)
+            changes = changes + " || line_content_14 || " + str(entry.line_content_14) + " >>> " + str(line_content_14)
         if entry.line_content_15 != line_content_15:
-            changes = changes + " || line_content_15 || " + str(entry.line_content_15) + " | " + str(line_content_15)
+            changes = changes + " || line_content_15 || " + str(entry.line_content_15) + " >>> " + str(line_content_15)
         if entry.line_content_16 != line_content_16:
-            changes = changes + " || line_content_16 || " + str(entry.line_content_16) + " | " + str(line_content_16)            
+            changes = changes + " || line_content_16 || " + str(entry.line_content_16) + " >>> " + str(line_content_16)            
         if entry.line_content_17 != line_content_17:
-            changes = changes + " || line_content_17 || " + str(entry.line_content_17) + " | " + str(line_content_17)        
+            changes = changes + " || line_content_17 || " + str(entry.line_content_17) + " >>> " + str(line_content_17)        
         if entry.line_content_18 != line_content_18:
-            changes = changes + " || line_content_18 || " + str(entry.line_content_18) + " | " + str(line_content_18)       
+            changes = changes + " || line_content_18 || " + str(entry.line_content_18) + " >>> " + str(line_content_18)       
         if entry.line_content_19 != line_content_19:
-            changes = changes + " || line_content_19 || " + str(entry.line_content_19) + " | " + str(line_content_19)
+            changes = changes + " || line_content_19 || " + str(entry.line_content_19) + " >>> " + str(line_content_19)
         if entry.line_content_20 != line_content_20:
-            changes = changes + " || line_content_20 || " + str(entry.line_content_20) + " | " + str(line_content_20)
+            changes = changes + " || line_content_20 || " + str(entry.line_content_20) + " >>> " + str(line_content_20)
         if entry.line_content_21 != line_content_21:
-            changes = changes + " || line_content_21 || " + str(entry.line_content_21) + " | " + str(line_content_21)            
+            changes = changes + " || line_content_21 || " + str(entry.line_content_21) + " >>> " + str(line_content_21)            
         if entry.line_content_22 != line_content_22:
-            changes = changes + " || line_content_22 || " + str(entry.line_content_22) + " | " + str(line_content_22)        
+            changes = changes + " || line_content_22 || " + str(entry.line_content_22) + " >>> " + str(line_content_22)        
         if entry.line_content_23 != line_content_23:
-            changes = changes + " || line_content_23 || " + str(entry.line_content_23) + " | " + str(line_content_23)       
+            changes = changes + " || line_content_23 || " + str(entry.line_content_23) + " >>> " + str(line_content_23)       
         if entry.line_content_24 != line_content_24:
-            changes = changes + " || line_content_24 || " + str(entry.line_content_24) + " | " + str(line_content_24)
+            changes = changes + " || line_content_24 || " + str(entry.line_content_24) + " >>> " + str(line_content_24)
         if entry.line_content_25 != line_content_25:
-            changes = changes + " || line_content_25 || " + str(entry.line_content_25) + " | " + str(line_content_25)
+            changes = changes + " || line_content_25 || " + str(entry.line_content_25) + " >>> " + str(line_content_25)
         if entry.line_content_26 != line_content_26:
-            changes = changes + " || line_content_26 || " + str(entry.line_content_26) + " | " + str(line_content_26)           
+            changes = changes + " || line_content_26 || " + str(entry.line_content_26) + " >>> " + str(line_content_26)           
         if entry.line_content_27 != line_content_27:
-            changes = changes + " || line_content_27 || " + str(entry.line_content_27) + " | " + str(line_content_27)        
+            changes = changes + " || line_content_27 || " + str(entry.line_content_27) + " >>> " + str(line_content_27)        
         if entry.line_content_28 != line_content_28:
-            changes = changes + " || line_content_28 || " + str(entry.line_content_28) + " | " + str(line_content_28)       
+            changes = changes + " || line_content_28 || " + str(entry.line_content_28) + " >>> " + str(line_content_28)       
         if entry.line_content_29 != line_content_29:
-            changes = changes + " || line_content_29 || " + str(entry.line_content_29) + " | " + str(line_content_29)
+            changes = changes + " || line_content_29 || " + str(entry.line_content_29) + " >>> " + str(line_content_29)
         if entry.line_content_30 != line_content_30:
-            changes = changes + " || line_content_30 || " + str(entry.line_content_30) + " | " + str(line_content_30)
+            changes = changes + " || line_content_30 || " + str(entry.line_content_30) + " >>> " + str(line_content_30)
 
         entry.name            = name 
         entry.line_content_1  = line_content_1 
@@ -2235,6 +2234,48 @@ def SET_PROGRAM_SETTINGS(id, name, line_content_1,  line_content_2,  line_conten
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "Program | " + str(previous_name) + " | changed" + changes)  
         return True
+
+
+def CHANGE_PROGRAMS_POSITION(id, direction):
+    if direction == "up":
+        program_list = GET_ALL_PROGRAMS()
+        program_list = program_list[::-1]
+        
+        for program in program_list:
+            
+            if program.id < id:
+                
+                new_id = program.id
+                
+                # change ids
+                program_1 = GET_PROGRAM_BY_ID(id)
+                program_2 = GET_PROGRAM_BY_ID(new_id)
+                
+                program_1.id = 99
+                db.session.commit()
+                
+                program_2.id = id
+                program_1.id = new_id
+                db.session.commit()       
+                return 
+
+    if direction == "down":
+        for program in GET_ALL_PROGRAMS():
+            if program.id > id:
+                
+                new_id = program.id
+                
+                # change ids
+                program_1 = GET_PROGRAM_BY_ID(id)
+                program_2 = GET_PROGRAM_BY_ID(new_id)
+                
+                program_1.id = 99
+                db.session.commit()
+                
+                program_2.id = id
+                program_1.id = new_id
+                db.session.commit()           
+                return 
 
 
 def ADD_PROGRAM_LINE(id):
@@ -2892,45 +2933,69 @@ def SET_SCHEDULER_TASK(id, name, task,
 
         changes = ""
 
-        previous_device_1 = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr_1)
-        previous_device_2 = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr_2)
-
-        new_device_1 = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1)
-        new_device_2 = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_2)
-
         if entry.name != name:
-            changes = changes + " || name || " + entry.name + " | " + name
+            changes = changes + " || name || " + str(entry.name) + " >>> " + str(name)
         if entry.task != task:
-            changes = changes + " || task || " + entry.task + " | " + task           
+            changes = changes + " || task || " + str(entry.task) + " >>> " + str(task)           
 
         if entry.trigger_time != trigger_time or entry.trigger_sun_position != trigger_sun_position or entry.trigger_sensors != trigger_sensors or entry.trigger_position != trigger_position:
             changes = (changes + " || trigger_settings || time: " + str(entry.trigger_time) + ", sun_position: " + str(entry.trigger_sun_position) + ", sensors: " + str(entry.trigger_sensors) + ", position: " + str(entry.trigger_position) + 
-                                 " | time: " + str(trigger_time) + ", sun_position: " + str(trigger_sun_position) + ", sensors: " + str(trigger_sensors) + ", position: " + str(trigger_position)) 
+                                 " >>> time: " + str(trigger_time) + ", sun_position: " + str(trigger_sun_position) + ", sensors: " + str(trigger_sensors) + ", position: " + str(trigger_position)) 
     
         if entry.option_repeat != option_repeat or entry.option_pause != option_pause:
             changes = (changes + " || options_settings || repeat: " + str(entry.option_repeat) + ", pause: " + str(entry.option_pause) +
-                                 " | repeat: " + str(option_repeat) + ", pause: " + str(option_pause)) 
+                                 " >>> repeat: " + str(option_repeat) + ", pause: " + str(option_pause)) 
       
-        if entry.day != day or entry.hour != hour or entry.minute != minute:
-            changes = (changes + " || time_settings || days: " + str(entry.day)  + ", hours: " + str(entry.hour)  + ", minutes: " + str(entry.minute) + 
-                                 " | days: " + str(day)  + ", hours: " + str(hour)  + ", minutes: " + str(minute))
-        
-        if entry.option_sunrise != option_sunrise or entry.option_sunset != option_sunset or str(entry.latitude) != str(latitude) or str(entry.longitude) != str(longitude):
-            changes = (changes + " || sun_position_settings || option_sunrise: " + str(entry.option_sunrise) + ", option_sunset: " + str(entry.option_sunset) + ", latitude: " + str(entry.latitude) + ", longitude: " + str(entry.longitude) +  
-                                 " | option_sunrise: " + str(option_sunrise) + ", option_sunset: " + str(option_sunset) + ", latitude: " + str(latitude) + ", longitude: " + str(longitude))        
-  
-        if (entry.device_ieeeAddr_1 != device_ieeeAddr_1 or entry.sensor_key_1 != sensor_key_1 or entry.operator_1 != operator_1 or str(entry.value_1) != str(value_1) or entry.main_operator_second_sensor != main_operator_second_sensor or
-            entry.device_ieeeAddr_2 != device_ieeeAddr_2 or entry.sensor_key_2 != sensor_key_2 or entry.operator_2 != operator_2 or str(entry.value_2) != str(value_2)):
+        if trigger_time == "True": 
 
-            changes = (changes + " || sensor_settings || (" + 
-                                 str(previous_device_1.name) + ": " + str(entry.sensor_key_1)  + " " + str(entry.operator_1) + " " + str(entry.value_1) + ") " + str(entry.main_operator_second_sensor) + " (" +
-                                 str(previous_device_2.name) + ": " + str(entry.sensor_key_2)  + " " + str(entry.operator_2) + " " + str(entry.value_2) +
-                                 ") | (" + str(new_device_1.name) + ": " + str(sensor_key_1)  + " " + str(operator_1) + " " + str(value_1) + ") " + str(main_operator_second_sensor) + " (" +
-                                 str(new_device_2.name) + ": " + str(sensor_key_2)  + " " + str(operator_2) + " " + str(value_2) + ")")
-            
-        if entry.option_home != option_home or entry.option_away != option_away or entry.ip_addresses != ip_addresses:
-            changes = (changes + " || position_settings || option_home: " + str(entry.option_home)  + ", option_away: " + str(entry.option_away)  + ", ip_addresses: " + str(entry.ip_addresses) + 
-                                 " | option_home: " + str(option_home)  + ", option_away: " + str(option_away)  + ", ip_addresses: " + str(ip_addresses))
+            if entry.day != day or entry.hour != hour or entry.minute != minute:
+                changes = (changes + " || time_settings || days: " + str(entry.day)  + ", hours: " + str(entry.hour)  + ", minutes: " + str(entry.minute) + 
+                                    " >>> days: " + str(day)  + ", hours: " + str(hour)  + ", minutes: " + str(minute))
+
+        if trigger_sun_position == "True":      
+
+            if entry.option_sunrise != option_sunrise or entry.option_sunset != option_sunset or str(entry.latitude) != str(latitude) or str(entry.longitude) != str(longitude):
+                changes = (changes + " || sun_position_settings || option_sunrise: " + str(entry.option_sunrise) + ", option_sunset: " + str(entry.option_sunset) + ", latitude: " + str(entry.latitude) + ", longitude: " + str(entry.longitude) +  
+                                    " >>> option_sunrise: " + str(option_sunrise) + ", option_sunset: " + str(option_sunset) + ", latitude: " + str(latitude) + ", longitude: " + str(longitude))        
+  
+        if trigger_sensors == "True":
+
+            previous_device_1 = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr_1)
+            previous_device_2 = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr_2)
+
+            try:
+                previous_name_1 = previous_device_1.name
+                previous_name_2 = previous_device_2.name
+
+            except:
+                previous_name_1 = "None"
+                previous_name_2 = "None"               
+
+            new_device_1 = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1)
+            new_device_2 = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_2)
+
+            try:
+                new_name_1 = new_device_1.name
+                new_name_2 = new_device_2.name
+
+            except:
+                new_name_1 = "None"
+                new_name_2 = "None"       
+
+            if (entry.device_ieeeAddr_1 != device_ieeeAddr_1 or entry.sensor_key_1 != sensor_key_1 or entry.operator_1 != operator_1 or str(entry.value_1) != str(value_1) or entry.main_operator_second_sensor != main_operator_second_sensor or
+                entry.device_ieeeAddr_2 != device_ieeeAddr_2 or entry.sensor_key_2 != sensor_key_2 or entry.operator_2 != operator_2 or str(entry.value_2) != str(value_2)):
+
+                changes = (changes + " || sensor_settings || (" + 
+                                    str(previous_name_1) + ": " + str(entry.sensor_key_1)  + " " + str(entry.operator_1) + " " + str(entry.value_1) + ") " + str(entry.main_operator_second_sensor) + " (" +
+                                    str(previous_name_2) + ": " + str(entry.sensor_key_2)  + " " + str(entry.operator_2) + " " + str(entry.value_2) +
+                                    ") >>> (" + str(new_name_1) + ": " + str(sensor_key_1)  + " " + str(operator_1) + " " + str(value_1) + ") " + str(main_operator_second_sensor) + " (" +
+                                    str(new_name_2) + ": " + str(sensor_key_2)  + " " + str(operator_2) + " " + str(value_2) + ")")
+
+        if trigger_position == "True":      
+
+            if entry.option_home != option_home or entry.option_away != option_away or entry.ip_addresses != ip_addresses:
+                changes = (changes + " || position_settings || option_home: " + str(entry.option_home)  + ", option_away: " + str(entry.option_away)  + ", ip_addresses: " + str(entry.ip_addresses) + 
+                                    " >>> option_home: " + str(option_home)  + ", option_away: " + str(option_away)  + ", ip_addresses: " + str(ip_addresses))
 
         entry.name                        = name
         entry.task                        = task      
@@ -3190,13 +3255,13 @@ def SET_SENSORDATA_JOB_SETTINGS(id, name, filename, device_ieeeAddr, sensor_key,
         changes = ""
 
         if entry.name != name:
-            changes = changes + " || name || " + str(entry.name) + " | " + str(name)
+            changes = changes + " || name || " + str(entry.name) + " >>> " + str(name)
         if entry.filename != filename:
-            changes = changes + " || filename || " + str(entry.filename) + " | " + str(filename)            
+            changes = changes + " || filename || " + str(entry.filename) + " >>> " + str(filename)            
         if entry.sensor_key != sensor_key:
-            changes = changes + " || sensor_key || " + str(entry.sensor_key) + " | " + str(sensor_key)        
+            changes = changes + " || sensor_key || " + str(entry.sensor_key) + " >>> " + str(sensor_key)        
         if entry.always_active != always_active:
-            changes = changes + " || always_active || " + str(entry.always_active) + " | " + str(always_active)       
+            changes = changes + " || always_active || " + str(entry.always_active) + " >>> " + str(always_active)       
 
         entry.name = name
         entry.filename = filename
@@ -3282,9 +3347,9 @@ def SET_SPOTIFY_SETTINGS(client_id, client_secret):
         changes = ""
 
         if entry.client_id != client_id:
-            changes = changes + " || client_id || " + str(entry.client_id) + " | " + str(client_id)
+            changes = changes + " || client_id || " + str(entry.client_id) + " >>> " + str(client_id)
         if entry.client_secret != client_secret:
-            changes = changes + " || client_secret || " + str(entry.client_secret) + " | " + str(client_secret)      
+            changes = changes + " || client_secret || " + str(entry.client_secret) + " >>> " + str(client_secret)      
 
         entry.client_id     = client_id
         entry.client_secret = client_secret   
@@ -3320,13 +3385,13 @@ def SET_SPOTIFY_DEFAULT_SETTINGS(default_device_id, default_device_name, default
         changes = ""
 
         if entry.default_device_name != default_device_name:
-            changes = changes + " || default_device_name || " + str(entry.default_device_name) + " | " + str(default_device_name)
+            changes = changes + " || default_device_name || " + str(entry.default_device_name) + " >>> " + str(default_device_name)
         if entry.default_playlist_name != default_playlist_name:
-            changes = changes + " || default_playlist_name || " + str(entry.default_playlist_name) + " | " + str(default_playlist_name)            
+            changes = changes + " || default_playlist_name || " + str(entry.default_playlist_name) + " >>> " + str(default_playlist_name)            
         if int(entry.default_volume) != int(default_volume):
-            changes = changes + " || default_volume || " + str(entry.default_volume) + " | " + str(default_volume)        
+            changes = changes + " || default_volume || " + str(entry.default_volume) + " >>> " + str(default_volume)        
         if entry.default_shuffle != default_shuffle:
-            changes = changes + " || default_shuffle || " + str(entry.default_shuffle) + " | " + str(default_shuffle)       
+            changes = changes + " || default_shuffle || " + str(entry.default_shuffle) + " >>> " + str(default_shuffle)       
 
         entry.default_device_id     = default_device_id
         entry.default_device_name   = default_device_name
@@ -3378,11 +3443,11 @@ def SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active, lms_active, squeezelite_acti
         changes = ""
 
         if entry.zigbee2mqtt_active != zigbee2mqtt_active:
-            changes = changes + " || zigbee2mqtt_active_setting || " + str(entry.zigbee2mqtt_active) + " | " + str(zigbee2mqtt_active)
+            changes = changes + " || zigbee2mqtt_active_setting || " + str(entry.zigbee2mqtt_active) + " >>> " + str(zigbee2mqtt_active)
         if entry.lms_active != lms_active:
-            changes = changes + " || lms_active_setting || " + str(entry.lms_active) + " | " + str(lms_active)            
+            changes = changes + " || lms_active_setting || " + str(entry.lms_active) + " >>> " + str(lms_active)            
         if entry.squeezelite_active != squeezelite_active:
-            changes = changes + " || squeezelite_active_setting || " + str(entry.squeezelite_active) + " | " + str(squeezelite_active)        
+            changes = changes + " || squeezelite_active_setting || " + str(entry.squeezelite_active) + " >>> " + str(squeezelite_active)        
 
         entry.zigbee2mqtt_active   = zigbee2mqtt_active    
         entry.lms_active           = lms_active   
@@ -3450,13 +3515,13 @@ def UPDATE_USER_SETTINGS(id, name, email, role, email_notification):
         changes = ""
 
         if entry.name != name:
-            changes = changes + " || name || " + str(entry.name) + " | " + str(name)
+            changes = changes + " || name || " + str(entry.name) + " >>> " + str(name)
         if entry.email != email:
-            changes = changes + " || email || " + str(entry.email) + " | " + str(email)            
+            changes = changes + " || email || " + str(entry.email) + " >>> " + str(email)            
         if entry.role != role:
-            changes = changes + " || role || " + str(entry.role) + " | " + str(role)        
+            changes = changes + " || role || " + str(entry.role) + " >>> " + str(role)        
         if entry.email_notification != email_notification:
-            changes = changes + " || email_notification_setting || " + str(entry.email_notification) + " | " + str(email_notification)        
+            changes = changes + " || email_notification_setting || " + str(entry.email_notification) + " >>> " + str(email_notification)        
 
         entry.name               = name
         entry.email              = email

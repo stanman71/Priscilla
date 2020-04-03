@@ -400,6 +400,15 @@ def programs():
                            )
 
 
+# change programs position 
+@app.route('/programs/position/<string:direction>/<int:id>')
+@login_required
+@permission_required
+def change_programs_position(id, direction):
+    CHANGE_PROGRAMS_POSITION(id, direction)
+    return redirect(url_for('programs'))
+
+
 # programs option add line / remove line
 @app.route('/programs/<string:option>/<int:id>')
 @login_required

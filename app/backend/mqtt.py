@@ -818,7 +818,7 @@ def CHECK_ZIGBEE2MQTT_AT_STARTUP():
     return False
 
 
-def CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):   
+def CHECK_ZIGBEE2MQTT_NAME_CHANGED(previous_name, new_name):   
     counter = 1
 
     while counter != 10:      
@@ -828,7 +828,7 @@ def CHECK_ZIGBEE2MQTT_NAME_CHANGED(old_name, new_name):
                 try:
                     data = json.loads(message[2])
                     
-                    if data["type"] == "device_renamed" and data["message"]["from"] == old_name and data["message"]["to"] == new_name:
+                    if data["type"] == "device_renamed" and data["message"]["from"] == previous_name and data["message"]["to"] == new_name:
                         return True
 
                 except:

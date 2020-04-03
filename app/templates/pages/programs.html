@@ -584,8 +584,18 @@
                     </div> 
                     <div class="col-sm-3">
                       <input type="text" class="form-control" name="set_name_{{ selected_program.id }}" value="{% if selected_program.name != None %}{{ selected_program.name }}{% endif %}" />                          
-                    </div>
-                    <div class="col-sm-8"></div>    
+                    </div> 
+                    <div class="col-sm-1">            
+                      <div class="row justify-content-md-center">
+                        <div class="col-sm-6">                            
+                          <a href="/programs/position/up/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-up"></i></font></a>     
+                        </div>
+                        <div class="col-sm-6">   
+                          <a href="/programs/position/down/{{ selected_program.id }}#selected_program"><font size="5"><i class="tim-icons icon-minimal-down"></i></font></a> 
+                        </div>
+                      </div>    
+                    </div>                     
+                    <div class="col-sm-7"></div>    
                   </div>   
 
                   <br>

@@ -340,6 +340,15 @@ def settings_devices():
 
                 if CHECK_ZIGBEE2MQTT_PAIRING("True"):             
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing enabled | successful") 
+
+                    # restart zigbee2mqtt
+                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Shutdown Zigbee2MQTT...") 
+                    os.system("sudo systemctl stop zigbee2mqtt")
+                    time.sleep(5)
+                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Starting Zigbee2MQTT...")                     
+                    os.system("sudo systemctl start zigbee2mqtt")
+                    time.sleep(5)       
+
                     SET_ZIGBEE2MQTT_PAIRING_SETTING("True")
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
                     success_message_zigbee_pairing.append("Setting successfully changed")                     
@@ -1030,12 +1039,12 @@ def settings_devices():
                            )
 
 
-# change device position 
+# change devices position 
 @app.route('/settings/devices/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
-def change_device_position(id, direction):
-    CHANGE_DEVICE_POSITION(id, direction)
+def change_devices_position(id, direction):
+    CHANGE_DEVICES_POSITION(id, direction)
     return redirect(url_for('settings_devices'))
 
 

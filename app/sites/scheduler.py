@@ -71,6 +71,7 @@ def scheduler():
         session['set_collapse_open'] = None
 
     if request.form.get("save_scheduler_settings") != None: 
+
         for i in range (1,31):
             
             if request.form.get("set_name_" + str(i)) != None:

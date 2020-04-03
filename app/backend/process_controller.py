@@ -2,6 +2,7 @@ import spotipy
 import re
 import json
 import time
+import threading
 
 from app                          import app
 from app.backend.database_models  import *
@@ -891,8 +892,12 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
 
         if task[2].lower() == "all":
+
+            for light in GET_ALL_DEVICES("light"):
+                Thread = threading.Thread(target=SET_LIGHT_TURN_OFF_THREAD, args=(light.ieeeAddr, ))
+                Thread.start()   
+
             for group in GET_ALL_LIGHTING_GROUPS():
-                SET_LIGHTING_GROUP_TURN_OFF(group.id)
                 CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
 

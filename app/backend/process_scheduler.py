@@ -6,6 +6,7 @@ import requests
 import heapq
 import spotipy
 import re
+import threading
 
 from app                          import app
 from app.backend.database_models  import *
@@ -29,12 +30,12 @@ from difflib import SequenceMatcher
 
 
 def PROCESS_SCHEDULER(task, ieeeAddr):
-   
+
    start_task = False
 
    # check time   
    if task.trigger_time == "True":
-      if not CHECK_SCHEDULER_TIME(task):
+      if CHECK_SCHEDULER_TIME(task) == False:
          return
       else:
          start_task = True
@@ -44,22 +45,25 @@ def PROCESS_SCHEDULER(task, ieeeAddr):
 
       # find sensor jobs with fitting ieeeAddr only
       if (task.device_ieeeAddr_1 == ieeeAddr or task.device_ieeeAddr_2 == ieeeAddr):
-         if not CHECK_SCHEDULER_SENSORS(task):
+         if CHECK_SCHEDULER_SENSORS(task) == False:
             return
          else:
             start_task = True
+
+      else:
+         return
 
    # check sun_position
    if task.trigger_sun_position == "True": 
 
       if task.option_sunrise == "True":
-         if not CHECK_SCHEDULER_SUNRISE(task):
+         if CHECK_SCHEDULER_SUNRISE(task) == False:
             return   
          else:
             start_task = True
 
       if task.option_sunset == "True":
-         if not CHECK_SCHEDULER_SUNSET(task):
+         if CHECK_SCHEDULER_SUNSET(task) == False:
             return     
          else:
             start_task = True
@@ -70,9 +74,9 @@ def PROCESS_SCHEDULER(task, ieeeAddr):
       if task.option_home == "True" or task.option_away == "True":
          ping_result = CHECK_SCHEDULER_PING(task)
   
-         if task.option_home == "True" and ping_result == "False": 
+         if task.option_home == "True" and ping_result == False: 
             return          
-         elif task.option_away == "True" and ping_result == "True":
+         elif task.option_away == "True" and ping_result == True:
             return
          else:
             start_task = True
@@ -98,7 +102,10 @@ def CHECK_SCHEDULER_TIME(task):
 
    passing = False
 
+   # #########
    # check day
+   # #########
+
    if "," in task.day:
        
       days = task.day.replace(" ", "")       
@@ -115,55 +122,152 @@ def CHECK_SCHEDULER_TIME(task):
          passing = True
 
 
-   # check minute
+   # ###########
+   # check hours
+   # ###########
+
    if passing == True:
 
-      if "," in task.hour:
-          
-         hours = task.hour.replace(" ", "")         
-         hours = hours.split(",")
-         
-         for element in hours:
-             
-            if str(element) == str(current_hour):
+      hours = task.hour.replace(" ", "")  
+
+      # without range
+
+      if "-" not in hours:
+
+         list_hours = hours.split(",")
+
+         # find exceptions
+         list_exception_hours = []
+
+         for hour in list_hours:
+            if "!" in hour:
+               list_exception_hours.append(hour[1:])   
+
+         # check passing  
+         for hour in list_hours:
+      
+            if (str(hour) == str(current_hour) or str(hour) == "*") and str(hour) not in list_exception_hours:
+               passing = True
+                     
+            else:
+               passing = False
+
+      # with range
+
+      else:
+
+         list_hours = hours.split(",")
+
+         # find exceptions
+         list_exception_hours = []
+
+         for hour in list_hours:
+            if "!" in hour:
+               list_exception_hours.append(hour[1:])
+
+         # find min_hour and max_hour
+         for hour in list_hours:            
+            if "-" in hour:
+               min_hour = hour.split("-")[0]
+               max_hour = hour.split("-")[1]
+
+         list_hours_all = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", 
+                           "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]      
+
+         # find positions
+         for i, hour in enumerate(list_hours_all):
+            if str(hour) == str(min_hour):
+               position_min = i
+            if str(hour) == str(max_hour):
+               position_max = i   
+
+         # check passing  
+         for element in list_hours_all[position_min:position_max + 1]:
+
+            if str(element) == str(current_hour) and str(element) not in list_exception_hours:
+               passing = True
+               break
+                       
+            else:
+               passing = False        
+
+
+   # ############
+   # check minute
+   # ############
+
+   if passing == True:
+
+      minutes = task.minute.replace(" ", "")  
+
+      # without range
+
+      if "-" not in minutes:
+
+         list_minutes = minutes.split(",")
+
+         # find exceptions
+         list_exception_minutes = []
+
+         for minute in list_minutes:
+            if "!" in minute:
+               list_exception_minutes.append(minute[1:])   
+
+         # check passing  
+         for minute in list_minutes:
+      
+            if (str(minute) == str(current_minute) or str(minute) == "*") and str(minute) not in list_exception_minutes:
                passing = True
                break
             
             else:
                passing = False
+
+      # with range
+
       else:
-          
-         if str(task.hour) == str(current_hour) or str(task.hour) == "*":
-            passing = True
-            
-         else:
-            passing = False              
 
+         list_minutes = minutes.split(",")
 
-   # check minute
-   if passing == True:
+         # find exceptions
+         list_exception_minutes = []
 
-      if "," in task.minute:
-          
-         minutes = task.minute.replace(" ", "")          
-         minutes = minutes.split(",")
-         
-         for element in minutes:
-             
-            if str(element) == str(current_minute):
+         for minute in list_minutes:
+            if "!" in minute:
+               list_exception_minutes.append(minute[1:])
+
+         # find min_minute and max_minute
+         for minute in list_minutes:            
+            if "-" in minute:
+               min_minute = minute.split("-")[0]
+               max_minute = minute.split("-")[1]
+
+         list_minutes_all = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", 
+                             "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", 
+                             "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", 
+                             "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", 
+                             "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"]
+
+         position_min = 0
+         position_max = 0
+
+         # find positions
+         for i, minute in enumerate(list_minutes_all):
+            if str(minute) == str(min_minute):
+               position_min = i 
+            if str(minute) == str(max_minute):
+               position_max = i    
+
+         # check passing  
+         for element in list_minutes_all[position_min:position_max + 1]:
+
+            if str(element) == str(current_minute) and str(element) not in list_exception_minutes:
                passing = True
                break
             
             else:
-               passing = False
-               
-      else:
-          
-         if str(task.minute) == str(current_minute) or str(task.minute) == "*":
-            passing = True
-            
-         else:
-            passing = False  
+               passing = False        
+
 
    return passing
 
@@ -437,10 +541,10 @@ def CHECK_SCHEDULER_PING(task):
 
       for x in range(3):
          if ping(ip_address, timeout=1) != None:    
-            return "True"
+            return True
             break  
      
-   return "False"
+   return False
 
 
 """ ################################ """
@@ -652,8 +756,11 @@ def START_SCHEDULER_TASK(task_object):
 
                WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')
 
+               for light in GET_ALL_DEVICES("light"):
+                  Thread = threading.Thread(target=SET_LIGHT_TURN_OFF_THREAD, args=(light.ieeeAddr, ))
+                  Thread.start()     
+
                for group in GET_ALL_LIGHTING_GROUPS():
-                  SET_LIGHTING_GROUP_TURN_OFF(group.id)
                   CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
                         
 

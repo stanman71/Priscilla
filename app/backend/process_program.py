@@ -8,7 +8,7 @@ from app                          import app
 from app.backend.database_models  import *
 from app.backend.file_management  import *
 from app.backend.shared_resources import *
-from app.backend.mqtt             import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD, REQUEST_SENSORDATA
+from app.backend.mqtt             import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD, REQUEST_SENSORDATA, CHECK_DEVICE_SETTING_PROCESS
 from app.backend.lighting         import *
 from app.backend.spotify          import *
 
@@ -565,8 +565,11 @@ def PROGRAM_THREAD(thread_id, program_id):
                             # turn off all
                             if line_content[2].lower() == "all":
 
+                                for light in GET_ALL_DEVICES("light"):
+                                    Thread = threading.Thread(target=SET_LIGHT_TURN_OFF_THREAD, args=(light.ieeeAddr, ))
+                                    Thread.start()   
+
                                 for group in GET_ALL_LIGHTING_GROUPS():
-                                    SET_LIGHTING_GROUP_TURN_OFF(group.id)
                                     CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
 
