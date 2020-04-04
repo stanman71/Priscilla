@@ -112,7 +112,7 @@ def WRITE_LOGFILE_SYSTEM(log_type, description):
         return (e)
         
     
-def GET_LOGFILE_SYSTEM(selected_log_types, rows, search):   
+def GET_LOGFILE_SYSTEM(selected_log_types, search, rows):   
     
     try:
         # open csv file

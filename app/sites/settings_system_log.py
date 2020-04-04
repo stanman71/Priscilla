@@ -33,14 +33,13 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_system_log():
-    page_title       = 'Smarthome | Settings | SystemLOG'
+    page_title       = 'homatiX | Settings | SystemLOG'
     page_description = 'The system log page.'
 
     success_message_logfile = False
     error_message_logfile   = ""
     
     selected_type_event    = "selected"
-    selected_type_status   = "selected"
     selected_type_database = "selected"    
     selected_type_success  = "selected"   
     selected_type_warning  = "selected"                                                      
@@ -53,13 +52,12 @@ def settings_system_log():
         session['error_download_log'] = None
 
     # create log types list
-    selected_log_types = ["EVENT", "STATUS", "DATABASE", "SUCCESS", "WARNING", "ERROR"]     
+    selected_log_types = ["EVENT", "DATABASE", "SUCCESS", "WARNING", "ERROR"]     
    
     # change log selection 
     if request.form.get("get_log_output") != None:   
    
-        selected_type_event    = ""
-        selected_type_status   = ""    
+        selected_type_event    = "" 
         selected_type_database = ""        
         selected_type_success  = ""   
         selected_type_warning  = ""                                                     
@@ -73,10 +71,7 @@ def settings_system_log():
             
             if element == "EVENT":
                 selected_type_event = "selected"
-                selected_log_types.append("EVENT")
-            if element == "STATUS":
-                selected_type_status = "selected"
-                selected_log_types.append("STATUS")                  
+                selected_log_types.append("EVENT")           
             if element == "DATABASE":
                 selected_type_database = "selected"
                 selected_log_types.append("DATABASE")                               
@@ -103,10 +98,12 @@ def settings_system_log():
             error_message_logfile = "Reset Log || " + str(result)
 
     # get log entries
-    if GET_LOGFILE_SYSTEM(selected_log_types, 50, log_search) != None:
-        data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, 50, log_search)
+    if GET_LOGFILE_SYSTEM(selected_log_types, log_search, 50) != None:
+        data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 50)
     else:
         data_log_system = ""
+
+    data_log_system
 
     # check data_log_system is string ?
     if isinstance(data_log_system, str):   
@@ -124,8 +121,7 @@ def settings_system_log():
                                                     error_message_logfile=error_message_logfile,
                                                     success_message_logfile=success_message_logfile,
                                                     timestamp=timestamp,
-                                                    selected_type_event=selected_type_event,
-                                                    selected_type_status=selected_type_status,                                                
+                                                    selected_type_event=selected_type_event,                                              
                                                     selected_type_database=selected_type_database,                            
                                                     selected_type_success=selected_type_success,    
                                                     selected_type_warning=selected_type_warning,                                                      

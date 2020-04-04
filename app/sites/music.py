@@ -25,14 +25,14 @@ import heapq
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "user" or current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "user" or current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -45,7 +45,7 @@ list_search_album_results = ""
 @login_required
 @permission_required
 def music():    
-    page_title       = 'Smarthome | Music'
+    page_title       = 'homatiX | Music'
     page_description = 'The music configuration page.'
 
     global list_search_track_results

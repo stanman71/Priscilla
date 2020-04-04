@@ -71,12 +71,12 @@ def background_thread():
 
         try:
 
-            selected_log_types = ["EVENT", "STATUS", "DATABASE", "SUCCESS", "WARNING", "ERROR"]
+            selected_log_types = ["EVENT", "DATABASE", "SUCCESS", "WARNING", "ERROR"]
             log_search         = ""
 
             # get log entries
-            if GET_LOGFILE_SYSTEM(selected_log_types, 500, log_search) != None:
-                data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, 500, log_search)
+            if GET_LOGFILE_SYSTEM(selected_log_types, log_search, 10) != None:
+                data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 10)
             else:
                 data_log_system = ""
 

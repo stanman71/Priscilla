@@ -17,12 +17,11 @@
               <div class="card-body">
                 <form method="POST">
                   <div class="row justify-content-md-center">
-                    <div class="col-sm-7">     
+                    <div class="col-sm-6">     
                       <div class="form-group">
                         <label>Selection</label>                               
                         <select class="selectpicker" multiple data-actions-box="true" data-width="100%" name="set_log_types[]">
-                          <option {{ selected_type_event }}> EVENT </option>
-                          <option {{ selected_type_status }}> STATUS </option>                       
+                          <option {{ selected_type_event }}> EVENT </option>                      
                           <option {{ selected_type_database }}> DATABASE </option>                        
                           <option {{ selected_type_success }}> SUCCESS </option>   
                           <option {{ selected_type_warning }}> WARNING </option>
@@ -30,7 +29,7 @@
                         </select>   
                       </div>                            
                     </div>
-                    <div class="col-sm-5">    
+                    <div class="col-sm-6">    
                       <div class="form-group">
                         <label>Search</label>                            
                         <input type="text" class="form-control" name="set_log_search" value="{{ log_search }}" />   
@@ -69,8 +68,7 @@
                           <tr style="border-style:hidden;">
                             <td>{{ entry[0] }}</td> 
                             <td>
-                              {% if entry[1] == "EVENT" %} <font color="white">{{ entry[1] }} </font> {% endif %}
-                              {% if entry[1] == "STATUS" %} <font color="darkKhaki">{{ entry[1] }} </font> {% endif %}                         
+                              {% if entry[1] == "EVENT" %} <font color="white">{{ entry[1] }} </font> {% endif %}                       
                               {% if entry[1] == "DATABASE" %} <font color="lightblue">{{ entry[1] }} </font> {% endif %}
                               {% if entry[1] == "SUCCESS" %} <font color="green">{{ entry[1] }} </font> {% endif %}
                               {% if entry[1] == "WARNING" %} <font color="orange">{{ entry[1] }} </font> {% endif %}

@@ -30,7 +30,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def lighting_groups():
-    page_title       = 'Smarthome | Lighting | Groups'
+    page_title       = 'homatiX | Lighting | Groups'
     page_description = 'The lighting groups configuration page.'
 
     success_message_change_settings                = []

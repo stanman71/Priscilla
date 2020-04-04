@@ -87,7 +87,7 @@ def GENERATE_FRAME(camera_url):
 @login_required
 @permission_required
 def cameras():
-    page_title       = 'Smarthome | Cameras'
+    page_title       = 'homatiX | Cameras'
     page_description = 'The cameras configuration page.'
 
     success_message_change_settings = []      

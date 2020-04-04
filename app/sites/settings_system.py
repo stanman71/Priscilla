@@ -8,7 +8,7 @@ from app                          import app
 from app.backend.database_models  import *
 from app.backend.email            import SEND_EMAIL
 from app.backend.file_management  import UPDATE_NETWORK_SETTINGS_LINUX, GET_BACKUP_FILES, BACKUP_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP, WRITE_LOGFILE_SYSTEM
-from app.backend.shared_resources import SET_ZIGBEE2MQTT_PAIRING_STATUS
+from app.backend.shared_resources import SET_ZIGBEE2MQTT_PAIRING_STATUS, SET_ZIGBEE2MQTT_PAIRING_SETTING
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
@@ -88,7 +88,7 @@ def SYSTEM_SHUTDOWN():
 @login_required
 @permission_required
 def settings_system():
-    page_title       = 'Smarthome | Settings | System'
+    page_title       = 'homatiX | Settings | System'
     page_description = 'The system configuration page.'
 
     success_message_change_settings_services = False    

@@ -38,7 +38,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def dashboard():
-    page_title       = 'Smarthome | Dashboard'
+    page_title       = 'homatiX | Dashboard'
     page_description = 'The main page and Dashboard'
 
 

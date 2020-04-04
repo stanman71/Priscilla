@@ -5588,3 +5588,114 @@ Timestamp,Type,Description
 2020-04-03 21:25:24,SUCCESS,|Music || Spotify Token || updated|
 2020-04-03 21:25:25,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-04-03 21:25:25,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 09:46:02,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-04 09:46:02,SUCCESS,|Music || Spotify Token || updated|
+2020-04-04 09:46:03,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 09:46:03,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 09:46:25,DATABASE,|Scheduler || Task - new_scheduler_task_7 || added|
+2020-04-04 09:46:35,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| task |||| None >>> lighting # start_scene # LIVINGROOM # warm_white # 100 |||| trigger_settings |||| time: False, sun_position: False, sensors: False, position: False >>> time: True, sun_position: False, sensors: False, position: False|
+2020-04-04 09:46:41,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: None, hours: None, minutes: None >>> days: *, hours: *, minutes: *|
+2020-04-04 09:48:08,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-04 09:48:08,SUCCESS,|Music || Spotify Token || updated|
+2020-04-04 09:48:09,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 09:48:09,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 09:48:37,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-04 09:48:37,SUCCESS,|Music || Spotify Token || updated|
+2020-04-04 09:48:38,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 09:48:38,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 09:49:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 09:49:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 09:49:20,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: *, minutes: * >>> days: *, hours: *, !10, minutes: *|
+2020-04-04 09:50:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 09:50:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 09:50:29,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: *, !10, minutes: * >>> days: *, hours: *, !10, minutes: *, !35, !51|
+2020-04-04 09:51:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 09:51:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 09:52:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 09:52:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 09:52:31,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-04 09:52:31,SUCCESS,|Music || Spotify Token || updated|
+2020-04-04 09:52:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 09:52:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 09:53:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 09:53:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 09:53:20,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: *, !10, minutes: *, !35, !51 >>> days: *, hours: *, !10, minutes: 4|
+2020-04-04 09:53:27,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: *, !10, minutes: 4 >>> days: *, hours: *, !10, minutes: *, !35, !54|
+2020-04-04 09:55:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 09:55:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 09:56:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 09:56:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 09:57:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 09:57:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 09:58:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 09:58:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 09:58:42,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-04 09:58:43,SUCCESS,|Music || Spotify Token || updated|
+2020-04-04 09:58:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 09:58:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 09:59:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 09:59:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 09:59:04,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: *, !10, minutes: *, !35, !54 >>> days: *, hours: 10-12, minutes: *, !00, !02|
+2020-04-04 10:01:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 10:01:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 10:03:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 10:03:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 10:03:17,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: 10-12, minutes: *, !00, !02 >>> days: *, hours: *, !10, minutes: *, !00, !02|
+2020-04-04 10:05:09,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: *, !10, minutes: *, !00, !02 >>> days: *, hours: *, !11, minutes: *, !00, !02|
+2020-04-04 10:05:17,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: *, !11, minutes: *, !00, !02 >>> days: *, hours: 09-12, !11, minutes: *, !00, !02|
+2020-04-04 10:06:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 10:06:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 10:06:07,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: 09-12, !11, minutes: *, !00, !02 >>> days: *, hours: 09-12, !10, minutes: *, !00, !02|
+2020-04-04 10:06:19,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: 09-12, !10, minutes: *, !00, !02 >>> days: *, hours: 09-12, !10, minutes: 0-14, !00, !02|
+2020-04-04 10:09:12,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-04 10:09:12,SUCCESS,|Music || Spotify Token || updated|
+2020-04-04 10:09:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 10:09:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 10:09:34,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: 09-12, !10, minutes: 0-14, !00, !02 >>> days: *, hours: 09-12, minutes: 0-14, !00, !02|
+2020-04-04 10:10:00,ERROR,|System || Process Management || invalid literal for int() with base 10: '*'|
+2020-04-04 10:10:00,ERROR,|System || Process Management || invalid literal for int() with base 10: '*'|
+2020-04-04 10:10:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 10:10:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 10:10:14,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: 09-12, minutes: 0-14, !00, !02 >>> days: *, hours: 09-12, minutes: 0-14, !00, !11|
+2020-04-04 10:11:00,ERROR,|System || Process Management || invalid literal for int() with base 10: '*'|
+2020-04-04 10:11:00,ERROR,|System || Process Management || invalid literal for int() with base 10: '*'|
+2020-04-04 10:11:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 10:11:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 10:12:00,ERROR,|System || Process Management || invalid literal for int() with base 10: '*'|
+2020-04-04 10:12:00,ERROR,|System || Process Management || invalid literal for int() with base 10: '*'|
+2020-04-04 10:12:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 10:12:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 10:13:00,ERROR,|System || Process Management || invalid literal for int() with base 10: '*'|
+2020-04-04 10:13:00,ERROR,|System || Process Management || invalid literal for int() with base 10: '*'|
+2020-04-04 10:13:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 10:13:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 10:13:17,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-04 10:13:18,SUCCESS,|Music || Spotify Token || updated|
+2020-04-04 10:13:18,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 10:13:18,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 10:14:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 10:14:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 10:14:49,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: 09-12, minutes: 0-14, !00, !11 >>> days: *, hours: *, minutes: 0-20, !00, !15|
+2020-04-04 10:15:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 10:15:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 10:16:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 10:16:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 10:17:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 10:17:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 10:17:28,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-04 10:17:29,SUCCESS,|Music || Spotify Token || updated|
+2020-04-04 10:17:29,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: *, minutes: 0-20, !00, !15 >>> days: *, hours: *, minutes: 0-20, !00, !18|
+2020-04-04 10:17:29,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 10:17:29,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 10:19:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 10:19:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 10:19:19,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: *, minutes: 0-20, !00, !18 >>> days: *, hours: *, minutes: *, !00, !18|
+2020-04-04 10:19:28,DATABASE,|Scheduler || Task - new_scheduler_task_7 || changed |||| time_settings |||| days: *, hours: *, minutes: *, !00, !18 >>> days: *, hours: *, minutes: *, !0, !18, !20|
+2020-04-04 10:21:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 10:21:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|
+2020-04-04 22:16:31,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-04 22:16:31,SUCCESS,|Music || Spotify Token || updated|
+2020-04-04 22:16:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 22:16:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-04 22:17:00,EVENT,|Scheduler || Task - new_scheduler_task_7 || started|
+2020-04-04 22:17:02,WARNING,|Lighting || Group - LIVINGROOM || warm_white : 100 || Setting not confirmed || MQTT is not avilable|

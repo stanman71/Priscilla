@@ -102,6 +102,7 @@ def CHECK_SCHEDULER_TIME(task):
 
    passing = False
 
+
    # #########
    # check day
    # #########
@@ -134,23 +135,36 @@ def CHECK_SCHEDULER_TIME(task):
 
       if "-" not in hours:
 
-         list_hours = hours.split(",")
+         list_all_hours = hours.split(",")
 
          # find exceptions
          list_exception_hours = []
+         list_valid_hours     = []
 
-         for hour in list_hours:
+         for hour in list_all_hours:
             if "!" in hour:
-               list_exception_hours.append(hour[1:])   
+               list_exception_hours.append(int(hour[1:]))   
+            else:
+               list_valid_hours.append(hour)   
 
          # check passing  
-         for hour in list_hours:
-      
-            if (str(hour) == str(current_hour) or str(hour) == "*") and str(hour) not in list_exception_hours:
-               passing = True
-                     
-            else:
-               passing = False
+         if int(current_hour) not in list_exception_hours:
+
+            for hour in list_valid_hours:
+
+               if str(hour) == "*": 
+                  passing = True
+                  break                  
+               
+               elif int(hour) == int(current_hour):         
+                  passing = True
+                  break
+
+               else:
+                  passing = False
+
+         else:
+            passing = False         
 
       # with range
 
@@ -163,7 +177,7 @@ def CHECK_SCHEDULER_TIME(task):
 
          for hour in list_hours:
             if "!" in hour:
-               list_exception_hours.append(hour[1:])
+               list_exception_hours.append(int(hour[1:]))
 
          # find min_hour and max_hour
          for hour in list_hours:            
@@ -176,20 +190,25 @@ def CHECK_SCHEDULER_TIME(task):
 
          # find positions
          for i, hour in enumerate(list_hours_all):
-            if str(hour) == str(min_hour):
+            if int(hour) == int(min_hour):
                position_min = i
-            if str(hour) == str(max_hour):
+            if int(hour) == int(max_hour):
                position_max = i   
 
          # check passing  
-         for element in list_hours_all[position_min:position_max + 1]:
+         if int(current_hour) not in list_exception_hours:
 
-            if str(element) == str(current_hour) and str(element) not in list_exception_hours:
-               passing = True
-               break
-                       
-            else:
-               passing = False        
+            for hour in list_hours_all[position_min:position_max + 1]:
+               
+               if int(hour) == int(current_hour):         
+                  passing = True
+                  break
+               
+               else:
+                  passing = False
+
+         else:
+            passing = False     
 
 
    # ############
@@ -204,24 +223,36 @@ def CHECK_SCHEDULER_TIME(task):
 
       if "-" not in minutes:
 
-         list_minutes = minutes.split(",")
+         list_all_minutes = minutes.split(",")
 
          # find exceptions
          list_exception_minutes = []
+         list_valid_minutes     = []
 
-         for minute in list_minutes:
+         for minute in list_all_minutes:
             if "!" in minute:
-               list_exception_minutes.append(minute[1:])   
+               list_exception_minutes.append(int(minute[1:]))   
+            else:
+               list_valid_minutes.append(minute)   
 
          # check passing  
-         for minute in list_minutes:
-      
-            if (str(minute) == str(current_minute) or str(minute) == "*") and str(minute) not in list_exception_minutes:
-               passing = True
-               break
-            
-            else:
-               passing = False
+         if int(current_minute) not in list_exception_minutes:
+
+            for minute in list_valid_minutes:
+               
+               if str(minute) == "*": 
+                  passing = True
+                  break                  
+
+               elif int(minute) == int(current_minute):         
+                  passing = True
+                  break
+               
+               else:
+                  passing = False
+
+         else:
+            passing = False         
 
       # with range
 
@@ -234,7 +265,7 @@ def CHECK_SCHEDULER_TIME(task):
 
          for minute in list_minutes:
             if "!" in minute:
-               list_exception_minutes.append(minute[1:])
+               list_exception_minutes.append(int(minute[1:]))
 
          # find min_minute and max_minute
          for minute in list_minutes:            
@@ -253,20 +284,25 @@ def CHECK_SCHEDULER_TIME(task):
 
          # find positions
          for i, minute in enumerate(list_minutes_all):
-            if str(minute) == str(min_minute):
+            if int(minute) == int(min_minute):
                position_min = i 
-            if str(minute) == str(max_minute):
+            if int(minute) == int(max_minute):
                position_max = i    
 
          # check passing  
-         for element in list_minutes_all[position_min:position_max + 1]:
+         if int(current_minute) not in list_exception_minutes:
 
-            if str(element) == str(current_minute) and str(element) not in list_exception_minutes:
-               passing = True
-               break
-            
-            else:
-               passing = False        
+            for minute in list_minutes_all[position_min:position_max + 1]:
+               
+               if int(minute) == int(current_minute):         
+                  passing = True
+                  break
+               
+               else:
+                  passing = False
+
+         else:
+            passing = False         
 
 
    return passing

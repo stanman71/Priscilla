@@ -34,7 +34,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def scheduler():
-    page_title       = 'Smarthome | Scheduler'
+    page_title       = 'homatiX | Scheduler'
     page_description = 'The scheduler configuration page.'
 
     success_message_change_settings                = []

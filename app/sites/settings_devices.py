@@ -44,7 +44,7 @@ zigbee_device_update_collapse_open = False
 def settings_devices():
     global zigbee_device_update_collapse_open
 
-    page_title       = 'Smarthome | Settings | Devices'
+    page_title       = 'homatiX | Settings | Devices'
     page_description = 'The devices configuration page.'
 
     error_message_mqtt_connection               = False

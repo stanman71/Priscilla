@@ -28,7 +28,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def about():
-    page_title       = 'Smarthome | About'
+    page_title       = 'homatiX | About'
     page_description = 'The information and update page.'
 
     version = "1.2"
