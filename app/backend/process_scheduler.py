@@ -942,11 +942,11 @@ def START_SCHEDULER_TASK(task_object):
             RESET_LOGFILE("log_system")
 
          # delete system2mqtt log if size > 5 mb
-         file_size = os.path.getsize(PATH + "/data/logs/zigbee2mqtt/log.txt")
+         file_size = os.path.getsize(PATH + "/data/logs/zigbee2mqtt.txt")
          file_size = round(file_size / 1024 / 1024, 2)   
 
          if file_size > 5:
-            os.remove (PATH + "/data/logs/zigbee2mqtt/log.txt")
+            os.remove (PATH + "/data/logs/zigbee2mqtt.txt")
 
 
    except Exception as e:

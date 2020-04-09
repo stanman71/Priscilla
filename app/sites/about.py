@@ -31,7 +31,7 @@ def about():
     page_title       = 'homatiX | About'
     page_description = 'The information and update page.'
 
-    version = "1.2"
+    version = "2.3"
 
     data = {'navigation': 'about'}
 

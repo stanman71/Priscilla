@@ -153,7 +153,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
 - change folder permissions
 
-       >>> sudo chmod -v -R 070 /home/pi/smarthome
+       >>> sudo chmod -v -R 777 /home/pi/smarthome
 
 - default_login
 
@@ -405,7 +405,10 @@ home
 
            advanced:
              network_key: [network_key]
-             log_directory: /home/pi/smarthome/data/logs/zigbee2mqtt/
+             log_level: info
+             log_directory: /home/pi/smarthome/data/logs/
+             log_file: zigbee2mqtt.txt
+             log_rotation: false             
 
 </br>
 

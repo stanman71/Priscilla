@@ -3355,7 +3355,7 @@ def SET_SPOTIFY_SETTINGS(client_id, client_secret):
         entry.client_secret = client_secret   
         db.session.commit()
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify Client Settings | changed" + changes) 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify | Client Settings | changed" + changes) 
         return True
 
 
@@ -3401,7 +3401,9 @@ def SET_SPOTIFY_DEFAULT_SETTINGS(default_device_id, default_device_name, default
         entry.default_shuffle       = default_shuffle               
         db.session.commit()
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify Default Player Settings | changed" + changes) 
+        if changes != "":
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify | Default Player Settings | changed" + changes) 
+
         return True
 
 

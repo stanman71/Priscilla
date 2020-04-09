@@ -1134,7 +1134,7 @@ def update_zigbee_device(ieeeAddr):
 @login_required
 @permission_required
 def download_zigbee2mqtt_log(filepath): 
-    path = GET_PATH() + "/data/logs/zigbee2mqtt/"
+    path = GET_PATH() + "/data/logs/"
     
     if os.path.isfile(path + filepath) == False:
         return redirect(url_for('settings_devices'))

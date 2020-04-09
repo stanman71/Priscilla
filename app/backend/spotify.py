@@ -99,22 +99,22 @@ def GENERATE_SPOTIFY_TOKEN(auth_token):
 
     try:
         SPOTIFY_TOKEN = answer["access_token"]
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Login | successful")
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Token | received")
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify | Login | successful")
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify | Token | received")
         
     except:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Login | failed")
-        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Token | not received | " + str(answer))
-        SEND_EMAIL("ERROR", "Music | Spotify Token | not received | " + str(answer))
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Login | failed")
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Token | not received | " + str(answer))
+        SEND_EMAIL("ERROR", "Music | Spotify | Token | not received | " + str(answer))
 
     try:
         SET_SPOTIFY_REFRESH_TOKEN(answer["refresh_token"])
         SPOTIFY_REFRESH_TOKEN = answer["refresh_token"]        
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Refresh Token | received") 
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify | Refresh Token | received") 
         
     except:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Refresh Token | not received | " + str(answer))
-        SEND_EMAIL("ERROR", "Music | Spotify Refresh Token | not received | " + str(answer))           
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Refresh Token | not received | " + str(answer))
+        SEND_EMAIL("ERROR", "Music | Spotify | Refresh Token | not received | " + str(answer))           
 
 
 def GET_SPOTIFY_TOKEN():
@@ -217,7 +217,7 @@ def REFRESH_SPOTIFY_TOKEN_THREAD():
 
                 try:
                     SPOTIFY_TOKEN = answer["access_token"]
-                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Token | updated") 
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify | Token | updated") 
                     
                 except Exception as e:
                     WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify Token | not updated | " + str(e)) 
@@ -226,7 +226,7 @@ def REFRESH_SPOTIFY_TOKEN_THREAD():
                 try:
                     SET_SPOTIFY_REFRESH_TOKEN(answer["refresh_token"])
                     SPOTIFY_REFRESH_TOKEN = answer["refresh_token"]        
-                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify Refresh Token | updated")  
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify | Refresh Token | updated")  
                     
                 except:
                     pass
@@ -284,6 +284,7 @@ def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
             list_spotify_devices = sp.devices()["devices"]  
 
             for device in list_spotify_devices:    
+
                 if "multiroom" in device['name']:
                     spotify_default_device_name = device['name']
                     spotify_default_device_id   = device['id']
@@ -292,7 +293,33 @@ def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
                                                  spotify_default_device_name, 
                                                  GET_SPOTIFY_SETTINGS().default_playlist_uri, 
                                                  GET_SPOTIFY_SETTINGS().default_playlist_name, 
-                                                 GET_SPOTIFY_SETTINGS().default_volume)
+                                                 GET_SPOTIFY_SETTINGS().default_volume,
+                                                 GET_SPOTIFY_SETTINGS().default_shuffle)        
+
+        except:
+            pass
+
+    # update single device settings
+    else:
+
+        try:
+            sp                   = spotipy.Spotify(auth=SPOTIFY_TOKEN)
+            sp.trace             = False     
+            list_spotify_devices = sp.devices()["devices"]  
+
+            default_device_name  = GET_SPOTIFY_SETTINGS().default_device_name
+
+            for device in list_spotify_devices:    
+                
+                if default_device_name.lower() == device['name'].lower():
+                    spotify_default_device_id = device['id']
+
+                    SET_SPOTIFY_DEFAULT_SETTINGS(spotify_default_device_id, 
+                                                 GET_SPOTIFY_SETTINGS().default_device_name, 
+                                                 GET_SPOTIFY_SETTINGS().default_playlist_uri, 
+                                                 GET_SPOTIFY_SETTINGS().default_playlist_name, 
+                                                 GET_SPOTIFY_SETTINGS().default_volume,
+                                                 GET_SPOTIFY_SETTINGS().default_shuffle)    
 
         except:
             pass
@@ -318,42 +345,28 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 # start previous playlist
                 if spotify_current_playback['is_playing'] == True:
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
-                    context_uri       = sp.current_playback(market=None)["context"]["uri"]
+                    sp.next_track(device_id=spotify_device_id) 
+                    SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
 
-                    sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)    
+            except:                           
+                # start default settings
+                UPDATE_MULTIROOM_DEFAULT_SETTINGS()
 
-                    # set shuffle setting
-                    if spotify_current_playback['shuffle_state'] == True:
-                        sp.shuffle(True, device_id=spotify_device_id) 
-                        sp.next_track(device_id=spotify_device_id) 
-                        SET_MUSIC_VOLUME(spotify_token, spotify_volume)     
+                sp.start_playback(device_id=GET_SPOTIFY_SETTINGS().default_device_id, 
+                                  context_uri=GET_SPOTIFY_SETTINGS().default_playlist_uri, 
+                                  uris=None, 
+                                  offset = None)    
 
-            except:
-                             
-                try:                 
-                    # start previous track
-                    spotify_device_id = sp.current_playback(market=None)['device']['id']                   
-                    track_uri         = sp.current_playback(market=None)['item']['uri']
-
-                    sp.start_playback(device_id=spotify_device_id, context_uri=None, uris=[track_uri], offset = None)  
-                    SET_MUSIC_VOLUME(spotify_token, spotify_volume)
-
-                except:               
-                    # start default settings
-                    UPDATE_MULTIROOM_DEFAULT_SETTINGS()
-
-                    SPOTIFY_START_PLAYLIST(spotify_token, GET_SPOTIFY_SETTINGS().default_device_id, 
-                                                          GET_SPOTIFY_SETTINGS().default_playlist_uri, 
-                                                          GET_SPOTIFY_SETTINGS().default_volume)
-                    
-                    # set shuffle setting
-                    if GET_SPOTIFY_SETTINGS().default_shuffle == "True":
-                        spotify_device_id = sp.current_playback(market=None)['device']['id'] 
-                        sp.shuffle(True, device_id=spotify_device_id) 
-                        sp.next_track(device_id=spotify_device_id)                    
-                   
-                    else:
-                        sp.shuffle(False, device_id=spotify_device_id)                                    
+                SET_MUSIC_VOLUME(spotify_token, GET_SPOTIFY_SETTINGS().default_volume)
+                
+                # set shuffle setting
+                if GET_SPOTIFY_SETTINGS().default_shuffle == "True":
+                    spotify_device_id = sp.current_playback(market=None)['device']['id'] 
+                    sp.shuffle(True, device_id=spotify_device_id) 
+                    sp.next_track(device_id=spotify_device_id)                    
+                
+                else:
+                    sp.shuffle(False, device_id=spotify_device_id)                                    
 
 
         if command == "play/stop":    
@@ -363,49 +376,35 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
                 # start previous playlist 
                 if spotify_current_playback['is_playing'] == False:
-
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
-                    context_uri       = sp.current_playback(market=None)["context"]["uri"]                    
-
-                    sp.start_playback(device_id=spotify_device_id, context_uri=context_uri, uris=None, offset = None)     
-
-                    # set shuffle setting
-                    if spotify_current_playback['shuffle_state'] == True:
-                        sp.shuffle(True, device_id=spotify_device_id) 
-                        sp.next_track(device_id=spotify_device_id) 
-                        SET_MUSIC_VOLUME(spotify_token, spotify_volume)         
+                    sp.next_track(device_id=spotify_device_id) 
+                    SET_MUSIC_VOLUME(spotify_token, spotify_volume)
 
                 # stop playing
                 if spotify_current_playback['is_playing'] == True:
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
                     sp.pause_playback(device_id=spotify_device_id)           
 
-            except:
-                            
-                try:                 
-                    # start previous track
-                    spotify_device_id = sp.current_playback(market=None)['device']['id']                   
-                    track_uri         = sp.current_playback(market=None)['item']['uri']
+            except:                                
+                # start default settings
+                UPDATE_MULTIROOM_DEFAULT_SETTINGS()
 
-                    sp.start_playback(device_id=spotify_device_id, context_uri=None, uris=[track_uri], offset = None)  
-                    SET_MUSIC_VOLUME(spotify_token, spotify_volume)
+                sp.start_playback(device_id=GET_SPOTIFY_SETTINGS().default_device_id, 
+                                  context_uri=GET_SPOTIFY_SETTINGS().default_playlist_uri, 
+                                  uris=None, 
+                                  offset = None)    
 
-                except:               
-                    # start default settings
-                    UPDATE_MULTIROOM_DEFAULT_SETTINGS()
+                SET_MUSIC_VOLUME(spotify_token, GET_SPOTIFY_SETTINGS().default_volume)
 
-                    SPOTIFY_START_PLAYLIST(spotify_token, GET_SPOTIFY_SETTINGS().default_device_id, 
-                                                            GET_SPOTIFY_SETTINGS().default_playlist_uri, 
-                                                            GET_SPOTIFY_SETTINGS().default_volume)
-                    
-                    # set shuffle setting
-                    if GET_SPOTIFY_SETTINGS().default_shuffle == "True":
-                        spotify_device_id = sp.current_playback(market=None)['device']['id'] 
-                        sp.shuffle(True, device_id=spotify_device_id) 
-                        sp.next_track(device_id=spotify_device_id)    
+                # set shuffle setting
+                if GET_SPOTIFY_SETTINGS().default_shuffle == "True":
+                    spotify_device_id = sp.current_playback(market=None)['device']['id'] 
+                    sp.shuffle(True, device_id=spotify_device_id) 
+                    sp.next_track(device_id=spotify_device_id)    
 
-                    else:
-                        sp.shuffle(False, device_id=spotify_device_id)                         
+                else:
+                    spotify_device_id = sp.current_playback(market=None)['device']['id'] 
+                    sp.shuffle(False, device_id=spotify_device_id)                         
 
 
         if command == "rotate_playlist":   
@@ -548,7 +547,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
         if str(e) == "'NoneType' object is not subscriptable":
             pass                
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
+            WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Control | " + str(e)) 
 
 
 def SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume):
@@ -597,7 +596,6 @@ def GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token):
 
     except:
         spotify_current_playback_device_name = ""
- 
  
     try:
         # get device type
@@ -743,7 +741,7 @@ def SPOTIFY_SEARCH_TRACK(spotify_token, track_name, track_artist, number_results
             return ("No track name given")
                               
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Search Track | " + str(e)) 
         return ("ERROR: " + str(e))  
                         
 
@@ -795,6 +793,6 @@ def SPOTIFY_SEARCH_ALBUM(spotify_token, album_name, album_artist, number_results
 
                               
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Search Album | " + str(e)) 
         return ("ERROR: " + str(e))  
 
