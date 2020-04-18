@@ -43,7 +43,7 @@
             <div class="card"> 
               <form method="POST">        
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/settings/users#add_user'" name="add_user" class="btn btn-fill btn-primary">NEW USER</button>
+                  <button type="submit" onclick="window.location.href='/settings/users#'" name="add_user" class="btn btn-fill btn-primary">NEW USER</button>
                 </div>
               </form>
             </div>
@@ -52,6 +52,8 @@
 <!------------------>
 <!--  USERS TABLE -->
 <!------------------>
+
+<section id="table"></section>      
 
 <!-- message admin password not changed -->
 
@@ -62,6 +64,17 @@
     </button>
     <span>{{ message_admin_password_not_changed }}</span>
   </div>  
+{% endif %}   
+
+{% if error_message_missing_passwords != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_missing_passwords %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
 {% endif %}   
 
 <!-- success message change settings -->
@@ -89,9 +102,6 @@
     {% endfor %}
   </div>
 {% endif %}  
-
-
-<section id="users_table"></section>      
 
             <div class="card "> 
               <form method="POST">         
@@ -140,10 +150,10 @@
                             <td>
                               <div class="row justify-content-md-left">
                                 <div class="col-sm-10">                                    
-                                  <input type="password" class="form-control" name="set_password_{{ entry.id }}" value="" /> 
+                                  <input type="password" class="form-control" name="set_password_{{ entry.id }}" value="" />
                                   <br>
                                   <label>Repeat Password</label>
-                                  <input type="password" class="form-control" name="set_password_repeat_{{ entry.id }}" value="" />  
+                                  <input type="password" class="form-control" name="set_password_repeat_{{ entry.id }}" value="" />
                                 </div>
                               </div>
                             </td> 
@@ -152,12 +162,12 @@
                               {% if entry.name != "admin" %}
 
                                 <div class="custom-control custom-radio custom-control-inline">
-                                  <input type="radio" class="custom-control-input" id="radio_role_dashboard_only_{{ entry.id }}" {% if entry.role == "dashboard_only" %} checked="on" {% endif %} value="dashboard_only" name="radio_role_{{ entry.id }}">
+                                  <input type="radio" class="custom-control-input" id="radio_role_dashboard_only_{{ entry.id }}" {% if entry.role == "dashboard_only" %} checked="on" {% endif %} value="dashboard_only" name="set_radio_role_{{ entry.id }}">
                                   <label class="custom-control-label" for="radio_role_dashboard_only_{{ entry.id }}">Dashboard-Only</label>
                                 </div>     
                                 <br>  
                                 <div class="custom-control custom-radio custom-control-inline">
-                                  <input type="radio" class="custom-control-input" id="radio_role_user_{{ entry.id }}" {% if entry.role == "user" %} checked="on" {% endif %} value="user" name="radio_role_{{ entry.id }}">
+                                  <input type="radio" class="custom-control-input" id="radio_role_user_{{ entry.id }}" {% if entry.role == "user" %} checked="on" {% endif %} value="user" name="set_radio_role_{{ entry.id }}">
                                   <label class="custom-control-label" for="radio_role_user_{{ entry.id }}">User</label>
                                 </div> 
                                 <br>       
@@ -165,13 +175,13 @@
                               {% endif %}
 
                               <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="radio_role_administrator_{{ entry.id }}" {% if entry.role == "administrator" %} checked="on" {% endif %} value="administrator" name="radio_role_{{ entry.id }}">
+                                <input type="radio" class="custom-control-input" id="radio_role_administrator_{{ entry.id }}" {% if entry.role == "administrator" %} checked="on" {% endif %} value="administrator" name="set_radio_role_{{ entry.id }}">
                                 <label class="custom-control-label" for="radio_role_administrator_{{ entry.id }}">Admin</label>
                               </div>  
                               <br>
                               <br>   
                               <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkbox_email_notification_{{ entry.id }}" {% if entry.email_notification == "True" %} checked="on" {% endif %} name="checkbox_email_notification_{{ entry.id }}">
+                                <input type="checkbox" class="custom-control-input" id="checkbox_email_notification_{{ entry.id }}" {% if entry.email_notification == "True" %} checked="on" {% endif %} name="set_checkbox_email_notification_{{ entry.id }}">
                                 <label class="custom-control-label" for="checkbox_email_notification_{{ entry.id }}">Notifications</label>
                               </div>
                             </td>
@@ -206,7 +216,7 @@
                   </div>
                 </div>            
                 <div class="card-footer">                   
-                  <button type="submit" onclick="window.location.href='/settings/users#'" name="save_user_settings" class="btn btn-fill btn-primary">Save</button>
+                  <button type="submit" onclick="window.location.href='/settings/users#table'" name="save_user_settings" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>
             </div>

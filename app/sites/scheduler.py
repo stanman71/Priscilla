@@ -123,37 +123,37 @@ def scheduler():
                 # #################
 
                 # set checkbox time
-                if request.form.get("checkbox_trigger_time_" + str(i)):
+                if request.form.get("set_checkbox_trigger_time_" + str(i)):
                     trigger_time = "True"
                 else:
                     trigger_time = "False"  
 
                 # set checkbox sun
-                if request.form.get("checkbox_trigger_sun_position_" + str(i)):
+                if request.form.get("set_checkbox_trigger_sun_position_" + str(i)):
                     trigger_sun_position = "True"
                 else:
                     trigger_sun_position = "False" 
 
                 # set checkbox sensors
-                if request.form.get("checkbox_trigger_sensors_" + str(i)):
+                if request.form.get("set_checkbox_trigger_sensors_" + str(i)):
                     trigger_sensors = "True"
                 else:
                     trigger_sensors = "False"  
 
                 # set checkbox position
-                if request.form.get("checkbox_trigger_position_" + str(i)):
+                if request.form.get("set_checkbox_trigger_position_" + str(i)):
                     trigger_position = "True"
                 else:
                     trigger_position = "False"  
                                        
                 # set checkbox repeat
-                if request.form.get("checkbox_option_repeat_" + str(i)):
+                if request.form.get("set_checkbox_option_repeat_" + str(i)):
                     option_repeat = "True"
                 else:
                     option_repeat = "False"  
 
                 # set checkbox pause
-                if request.form.get("checkbox_option_pause_" + str(i)):
+                if request.form.get("set_checkbox_option_pause_" + str(i)):
                     option_pause = "True"
                 else:
                     option_pause = "False"  
@@ -187,13 +187,13 @@ def scheduler():
                 # ############
 
                 # set option sunrise
-                if request.form.get("checkbox_option_sunrise_" + str(i)):
+                if request.form.get("set_checkbox_option_sunrise_" + str(i)):
                     option_sunrise = "True"
                 else:
                     option_sunrise = "False"  
 
                 # set option sunset
-                if request.form.get("checkbox_option_sunset_" + str(i)):
+                if request.form.get("set_checkbox_option_sunset_" + str(i)):
                     option_sunset = "True"
                 else:              
                     option_sunset = "False"  
@@ -327,13 +327,13 @@ def scheduler():
                 # #################   
 
                 # set option home
-                if request.form.get("checkbox_option_home_" + str(i)):
+                if request.form.get("set_checkbox_option_home_" + str(i)):
                     option_home = "True"
                 else:
                     option_home = "False"  
 
                 # set option away
-                if request.form.get("checkbox_option_away_" + str(i)):
+                if request.form.get("set_checkbox_option_away_" + str(i)):
                     option_away = "True"
                 else:
                     option_away = "False"  

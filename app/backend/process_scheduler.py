@@ -954,6 +954,34 @@ def START_SCHEDULER_TASK(task_object):
       WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))      
 
 
+   # ############
+   # reset system 
+   # ############
+
+   try:
+      if "reset_system" in task_object.task:
+         WRITE_LOGFILE_SYSTEM("EVENT", "System | Reboot") 
+         os.system("sudo reboot")         
+
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))     
+
+
+   # ###############
+   # shutdown system 
+   # ###############
+
+   try:
+      if "shutdown_system" in task_object.task:
+         WRITE_LOGFILE_SYSTEM("EVENT", "System | Shutdown")     
+         os.system("sudo shutdown")     
+
+   except Exception as e:
+      print(e)
+      WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))     
+
+
    # ##################
    # request sensordata
    # ##################

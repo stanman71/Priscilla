@@ -5,7 +5,7 @@ from functools           import wraps
 
 from app                          import app
 from app.backend.database_models  import *
-from app.backend.file_management  import READ_SENSORDATA_FILE, GET_SENSORDATA_FILES
+from app.backend.file_management  import READ_SENSORDATA_FILE, GET_ALL_SENSORDATA_FILES
 from app.backend.build_graph      import BUILD_GRAPH
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
@@ -220,7 +220,7 @@ def sensordata_statistics():
         except Exception as e:
             error_message_create_graph.append("Data could not be processed || " + str(e))
 
-    dropdown_list_sensordata_files = GET_SENSORDATA_FILES() 
+    dropdown_list_sensordata_files = GET_ALL_SENSORDATA_FILES() 
 
     data = {'navigation': 'sensordata_statistics'}
 

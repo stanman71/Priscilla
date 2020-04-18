@@ -423,13 +423,15 @@
                         <thead> 
                           <td style="display:none" class="minwidth_200"></td>
                           <th scope="col" style="width:3%"></th> 
-                          <th scope="col" style="width:20%" class="minwidth_200">Device</th>                        
-                          <th scope="col" style="width:18%" class="minwidth_200">Address</th> 
-                          <th scope="col" style="width:12%" class="minwidth_100">Modell</th>
-                          <th scope="col" style="width:15%" class="minwidth_150">Device_Type</th> 
-                          <th scope="col" style="width:15%" class="minwidth_150">Description</th>                                             
+                          <th scope="col" style="width:16%" class="minwidth_200">Device</th>                        
+                          <th scope="col" style="width:16%" class="minwidth_200">Address</th> 
+                          <th scope="col" style="width:13%" class="minwidth_100">Device_Model</th>
+                          <th scope="col" style="width:13%" class="minwidth_100">Device_Type</th> 
+                          <th scope="col" style="width:5%"  class="minwidth_50"> Auto Update</th>                              
+                          <th scope="col" style="width:5%"  class="minwidth_50"> Version</th>                           
+                          <th scope="col" style="width:11%" class="minwidth_100">Description</th>                                             
                           <th scope="col" style="width:10%" class="minwidth_100">Last contact</th>     
-                          <th scope="col" style="width:5%"></th>                                                                                
+                          <th scope="col" style="width:8%"></th>                                                                                
                         </thead>
                         <tbody id="table_devices">
                           {% for entry in list_devices %}
@@ -448,13 +450,28 @@
                             </td>      
                             <td>{{ entry.ieeeAddr }}</td>    
                             <td>{{ entry.model }}</td>   
-                            
-                            {% if entry.gateway == mqtt %}
-                              <td><font color="#ccccff">{{ entry.device_type }}</font></td>
-                            {% else %}
-                              <td><font color="#ffffcc">{{ entry.device_type }}</font></td>
-                            {% endif %}
-
+                            <td>                            
+                              {% if entry.gateway == "mqtt" %}
+                                {% if entry.device_type == "client_music" %}
+                                  <font color="#73c6b6">{{ entry.device_type }}</font>
+                                {% else %}
+                                  <font color="#ccccff">{{ entry.device_type }}</font>
+                                {% endif %}
+                              {% else %}
+                                <font color="#ffffcc">{{ entry.device_type }}</font>
+                              {% endif %}
+                            </td>
+                            <td> 
+                              {% if entry.gateway == "mqtt" and entry.device_type != "client_music" %}
+                                <div class="vertical_center"> 
+                                  <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="checkbox_auto_update_{{ entry.id }}" {% if entry.auto_update == "True" %} checked="on" {% endif %} name="set_checkbox_auto_update_{{ entry.id }}">
+                                    <label class="custom-control-label" for="checkbox_auto_update_{{ entry.id }}"></label>
+                                  </div>        
+                                </div>                           
+                              {% endif %}       
+                            </td>     
+                            <td>{% if entry.version != None %}{{ entry.version }}{% endif %}</td>                   
                             <td>{{ entry.description }}</td>                            
                             <td>{{ entry.last_contact }}</td>                       
                             <td>
@@ -678,6 +695,135 @@
               </form>
             </div>
 
+<!---------------------------->
+<!--  MQTT DEVICE UPDATES   -->
+<!---------------------------->
+
+<section id="mqtt_device_updates"></section>    
+
+<!-- error message firmware --> 
+
+{% if error_message_firmware != "" %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {{ error_message_firmware }}
+  </div>
+{% endif %}  
+
+            <div class="card ">
+              <div class="card-header">
+                <a data-toggle="collapse" href="#collapse_mqtt_device_updates"><font color="white"><b><i class='uil uil-arrow-down'> MQTT Device Updates </i></b></font></a>
+                <br>
+                <br>
+              </div>              
+                <div id="collapse_mqtt_device_updates" class="collapse{% if mqtt_device_update_collapse_open == True %}.show{% endif %}">    
+                  <div class="card-body">
+
+                    <!-- success message upload firmware -->
+
+                    {% if success_message_mqtt_firmware_upload != False %}
+                      <div class="alert alert-success">
+                        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                          <i class="tim-icons icon-simple-remove"></i>
+                        </button>
+                        <span>Firmware successfully uploaded</span>
+                      </div>
+                    {% endif %}  
+
+                    <!-- error message upload firmware -->
+
+                    {% if error_message_firmware_upload != "" %}
+                      <div class="alert alert-danger">
+                        <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                          <i class="tim-icons icon-simple-remove"></i>
+                        </button>
+                        <span>{{ error_message_firmware_upload }}</span>
+                      </div>
+                    {% endif %}  
+
+                    <form method=post enctype=multipart/form-data>
+                      <div class="row justify-content-md-left">
+                        <div class="col-sm-6">                       
+                          <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile" name=file>
+                            <label class="custom-file-label" for="customFile">Choose firmware file </label>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+                      <input type=submit onclick="window.location.href='/settings/devices#mqtt_device_updates'" class="btn btn-default" name="upload_mqtt_firmware" value="UPLOAD">
+                    </form>   
+ 
+                    <script>
+                      $(".custom-file-input").on("change", function() {
+                        var fileName = $(this).val().split("\\").pop();
+                        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                      });
+                    </script>
+
+                    <form method="POST">  
+                      <div class="table-responsive">
+                        <table class="table tablesorter">
+                          <tbody> 
+
+                            {% if list_mqtt_firmware_files != "No Files founded" %}
+
+                              <div class="table-responsive">
+                                <table class="table tablesorter"> 
+                                  <thead> 
+                                    <th scope="col" style="width:20%" class="minwidth_200">Device_Model</th>
+                                    <th scope="col" style="width:60%" class="minwidth_100">Version</th>
+                                    <th scope="col" style="width:10%"></th>
+                                    <th scope="col" style="width:10%"></th>
+                                  </thead>                            
+                                  <tbody> 
+                                    {% for entry in list_mqtt_firmware_files %}
+                                    <tr>                          
+                                      <td>{{ entry.rsplit("_", 1)[0] }}</td> 
+                                      <td>{{ entry.rsplit("_", 1)[1] | replace(".bin","") }}</td> 
+                                      <td>
+                                        <a class="btn btn-default pull-left" href="/settings/devices/firmware/download/{{ entry }}?time={{ timestamp }}" role="button">DOWNLOAD</a>
+                                      </td>  
+                                      <td>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_file_dialog_{{ entry.id }}">DELETE</button>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="delete_file_dialog_{{ entry.id }}">
+                                          <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title">Delete {{ entry }} ?</h5>
+                                              </div>          
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                                <a class="btn btn-danger" href="/settings/devices/firmware/delete/{{ entry }}#table_mqtt_device_updates" role="button">DELETE</a>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>                                
+                                      </td> 
+                                    </tr>
+
+                                    {% endfor %} 
+                                    
+                                  </tbody>
+                                </table>
+                              </div>
+
+                            {% else %}
+                              {{ list_firmware_files }}
+                            {% endif %}
+                                    
+                          </tbody>
+                        </table> 
+                      </div>
+                    </form>  
+                  </div>            
+                </div>     
+              </div>
+            </div>
 
 <!------------------------------>
 <!--  ZIGBEE DEVICE UPDATES   -->
@@ -733,7 +879,7 @@
                                         </div>          
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                          <a class="btn btn-info" href="/settings/devices/update/{{ entry.ieeeAddr }}#table_zigbee_device_updates" role="button">UPDATE</a>
+                                          <a class="btn btn-info" href="/settings/devices/firmware/update/{{ entry.ieeeAddr }}#table_zigbee_device_updates" role="button">UPDATE</a>
                                         </div>
                                       </div>
                                     </div>
@@ -815,13 +961,35 @@
                 </form>
               </div>
 
+<!-- error download log --> 
+
+{% if error_download_log_zigbee2mqtt != "" %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {{ error_download_log_zigbee2mqtt }}
+  </div>
+{% endif %}  
+
+<!-- error download topology --> 
+
+{% if error_download_topology_zigbee2mqtt != "" %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {{ error_download_topology_zigbee2mqtt }}
+  </div>
+{% endif %}  
+
               <div class="card">       
                 <form method="POST"> 
                   <div class="card-body">    
-                    <a href="/settings/devices/download/zigbee2mqtt_log/zigbee2mqtt.txt?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE LOG</b></font></a> 
+                    <a href="/settings/devices/log/download/zigbee2mqtt.txt?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE LOG</b></font></a> 
                     <br>
                     {% if request.MOBILE %} <br> {% endif %}
-                    <a href="/settings/devices/download/zigbee2mqtt_topology/zigbee_topology.png?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE TOPOLOGY</b></font></a>  
+                    <a href="/settings/devices/topology/download/zigbee_topology.png?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE TOPOLOGY</b></font></a>  
                   </div>            
                 </form>
               </div>             
@@ -859,7 +1027,7 @@
             <div class="card">
               <div class="card-body">
                 <form method="POST"> 
-                  <a class="btn btn-default" href="/settings/devices/download/devices_log/log_devices.csv?time={{ timestamp }}" role="button">DOWNLOAD DEVICE LOG</a>                
+                  <a class="btn btn-default" href="/settings/devices/log/download/log_devices.csv?time={{ timestamp }}" role="button">DOWNLOAD DEVICE LOG</a>                
 
                   <!-- Button trigger modal -->
                   {% if request.MOBILE %} <br><br> {% endif %}

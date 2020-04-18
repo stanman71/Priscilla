@@ -191,7 +191,7 @@ def UPDATE_NETWORK_SETTINGS_LINUX(dhcp, ip_address, gateway):
 """  backup database  """
 """ ################# """
 
-def GET_BACKUP_FILES():
+def GET_ALL_BACKUP_FILES():
     file_list = []
     for files in os.walk(PATH + '/data/backup/'):  
         file_list.append(files)
@@ -248,11 +248,37 @@ def DELETE_DATABASE_BACKUP(filename):
         return (e)
 
 
+""" ################ """
+"""  mqtt firmwares  """
+""" ################ """
+
+def GET_ALL_MQTT_FIRMWARE_FILES():
+    file_list = []
+    for files in os.walk(PATH + "/firmwares/"):  
+        file_list.append(files)   
+
+    if file_list == []:
+        return ""
+    else:
+        return file_list[0][2]    
+
+
+def DELETE_MQTT_FIRMWARE(filename):
+    try:
+        os.remove (PATH + '/firmwares/' + filename)
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /firmwares/" + filename + " | deleted")
+        return True
+
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /firmwares/" + filename + " | " + str(e))  
+        return ("Delete Firmware || " + str(e)) 
+
+
 """ ############ """
 """  sensordata  """
 """ ############ """
 
-def GET_SENSORDATA_FILES():
+def GET_ALL_SENSORDATA_FILES():
     file_list = []
     for files in os.walk(PATH + "/data/csv/"):  
         file_list.append(files)   
@@ -317,8 +343,11 @@ def DELETE_SENSORDATA_FILE(filename):
     try:
         os.remove (PATH + '/data/csv/' + filename)
         WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/csv/" + filename + " | deleted")
+        return True
+
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filename + " | " + str(e))  
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filename + " | " + str(e)) 
+        return ("Delete Datafile || " + str(e)) 
 
 
 """ ################################# """

@@ -5,7 +5,8 @@ from functools           import wraps
 
 from app                          import app
 from app.backend.database_models  import *
-from app.backend.file_management  import GET_PATH, GET_SENSORDATA_FILES, WRITE_LOGFILE_SYSTEM
+from app.backend.file_management  import GET_PATH, GET_ALL_SENSORDATA_FILES, WRITE_LOGFILE_SYSTEM
+from app.backend.checks           import CHECK_SENSORDATA_JOBS
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
@@ -49,9 +50,9 @@ def sensordata_jobs():
         session['delete_job_error'] = None       
 
     # error download datafile
-    if session.get('error_download_datafile', None) != None:
-        error_message_datafile = session.get('error_download_datafile') 
-        session['error_download_datafile'] = None
+    if session.get('error_datafile', None) != None:
+        error_message_datafile = session.get('error_datafile') 
+        session['error_datafile'] = None
 
 
     """ ######### """
@@ -115,7 +116,6 @@ def sensordata_jobs():
                     filename = request.form.get("set_filename_" + str(i)).strip()   
                 else:
                     filename = GET_SENSORDATA_JOB_BY_ID(i).filename 
-                    error_message_change_settings.append(sensordata_job.name + " || No file given")  
 
 
                 # ##############
@@ -129,7 +129,6 @@ def sensordata_jobs():
                 elif GET_DEVICE_BY_ID(device):
                     device_ieeeAddr = GET_DEVICE_BY_ID(device).ieeeAddr
                 else:
-                    error_message_change_settings.append(sensordata_job.name + " || No device selected") 
                     device_ieeeAddr = ""
                     sensor_key      = ""
   
@@ -139,7 +138,7 @@ def sensordata_jobs():
                 # ##############
 
                 if device_ieeeAddr == "":
-                    error_message_change_settings.append(sensordata_job.name + " || No sensor selected") 
+                    sensor_key = GET_SENSORDATA_JOB_BY_ID(i).sensor_key 
 
                 else:
                     # replace array_position to sensor name 
@@ -159,7 +158,7 @@ def sensordata_jobs():
 
 
                 # input setting
-                always_active = request.form.get("radio_input_setting_" + str(i))
+                always_active = request.form.get("set_radio_input_setting_" + str(i))
 
                 # save settings
                 if error_founded == False: 
@@ -170,8 +169,10 @@ def sensordata_jobs():
 
     list_sensordata_jobs  = GET_ALL_SENSORDATA_JOBS()
     dropdown_list_devices = GET_ALL_DEVICES("sensors") 
-    list_sensordata_files = GET_SENSORDATA_FILES()
+    list_sensordata_files = GET_ALL_SENSORDATA_FILES()
     list_sensors          = GET_ALL_DEVICES("sensors") 
+
+    error_message_settings = CHECK_SENSORDATA_JOBS(GET_ALL_SENSORDATA_JOBS())
 
     data = {'navigation': 'sensordata_jobs'}
 
@@ -683,6 +684,7 @@ def sensordata_jobs():
                                                     error_message_change_settings=error_message_change_settings,   
                                                     success_message_add_job=success_message_add_job,                            
                                                     error_message_add_job=error_message_add_job, 
+                                                    error_message_settings=error_message_settings,
                                                     error_message_datafile=error_message_datafile,    
                                                     list_sensordata_jobs=list_sensordata_jobs,  
                                                     dropdown_list_devices=dropdown_list_devices,
@@ -818,18 +820,18 @@ def delete_sensordata_jobs(id):
 
 
 # download sensordata file
-@app.route('/sensordata/download/file/<path:filepath>')
+@app.route('/sensordata/download/file/<string:filename>')
 @login_required
 @permission_required
-def download_sensordata_file(filepath):
+def download_sensordata_file(filename):
     try:
         path = GET_PATH() + "/data/csv/"     
-        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/csv/" + filepath + " | downloaded")
-        return send_from_directory(path, filepath)
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/csv/" + filename + " | downloaded")
+        return send_from_directory(path, filename)
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filepath + " | " + str(e)) 
-        session['error_download_datafile'] = "Download Datafile || " + str(e)
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filename + " | " + str(e)) 
+        session['error_datafile'] = "Download Datafile || " + str(e)
 
 
 # delete sensordata file
@@ -837,5 +839,9 @@ def download_sensordata_file(filepath):
 @login_required
 @permission_required
 def delete_sensordata_file(filename):
-    DELETE_SENSORDATA_FILE(filename)
+    result = DELETE_SENSORDATA_FILE(filename)
+
+    if result != True:
+        session['error_datafile'] = result
+
     return redirect(url_for('sensordata_jobs'))

@@ -7,7 +7,7 @@ from ping3               import ping
 from app                          import app
 from app.backend.database_models  import *
 from app.backend.email            import SEND_EMAIL
-from app.backend.file_management  import UPDATE_NETWORK_SETTINGS_LINUX, GET_BACKUP_FILES, BACKUP_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP, WRITE_LOGFILE_SYSTEM
+from app.backend.file_management  import UPDATE_NETWORK_SETTINGS_LINUX, GET_ALL_BACKUP_FILES, BACKUP_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP, WRITE_LOGFILE_SYSTEM
 from app.backend.shared_resources import SET_ZIGBEE2MQTT_PAIRING_STATUS, SET_ZIGBEE2MQTT_PAIRING_SETTING
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
@@ -152,20 +152,9 @@ def settings_system():
 
     if request.form.get("update_settings_services") != None:
 
-        if request.form.get("radio_zigbee2mqtt_active") != None:
-            zigbee2mqtt_active = request.form.get("radio_zigbee2mqtt_active")
-        else:
-            zigbee2mqtt_active = "False"        
-
-        if request.form.get("radio_lms_active") != None:
-            lms_active = request.form.get("radio_lms_active")
-        else:
-            zigbee2mqtt_active = "False"       
-
-        if request.form.get("radio_squeezelite_active") != None:
-            squeezelite_active = request.form.get("radio_squeezelite_active")
-        else:
-            zigbee2mqtt_active = "False"           
+        zigbee2mqtt_active = request.form.get("set_radio_zigbee2mqtt_active") 
+        lms_active         = request.form.get("set_radio_lms_active")
+        squeezelite_active = request.form.get("set_radio_squeezelite_active")    
 
         if SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active, lms_active, squeezelite_active):
             success_message_change_settings_services = True
@@ -245,7 +234,7 @@ def settings_system():
                 
     if request.form.get("set_settings_network") != None:
         
-        if request.form.get("checkbox_dhcp"):
+        if request.form.get("set_checkbox_dhcp"):
             dhcp = "True" 
         else:
             dhcp = "False"  
@@ -409,7 +398,7 @@ def settings_system():
     system_settings   = GET_SYSTEM_SETTINGS()     
     spotify_settings  = GET_SPOTIFY_SETTINGS()
     email_settings    = GET_EMAIL_SETTINGS()
-    list_backup_files = GET_BACKUP_FILES()
+    list_backup_files = GET_ALL_BACKUP_FILES()
 
     data = {'navigation': 'settings_system'}
 
@@ -447,7 +436,7 @@ def restore_database_backup(filename):
     if result == True:
         session['restore_database_success'] = filename + " || Successfully restored"
     else:
-        session['restore_database_error'] = filename + " || " + result
+        session['restore_database_error'] = filename + " || " + str(result)
 
     return redirect(url_for('settings_system'))
 
@@ -462,6 +451,6 @@ def delete_database_backup(filename):
     if result == True:
         session['delete_database_success'] = filename + " || Successfully deleted"
     else:
-        session['delete_database_error'] = filename + " || " + result
+        session['delete_database_error'] = filename + " || " + str(result)
 
     return redirect(url_for('settings_system'))

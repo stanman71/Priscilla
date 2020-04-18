@@ -936,7 +936,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                                                 
                         if str(controller_setting.lower()) == command.lower():
                             heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 30)      
+                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 45)      
                             continue
 
                         command_position = command_position + 1
@@ -1022,19 +1022,24 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             if task[1].strip() == "STOP": 
                 SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)      
 
-            if task[1].strip() == "VOLUME_UP":   
-                device_name = sp.current_playback(market=None)['device']['name']
-                SPOTIFY_CONTROL(spotify_token, "volume_up", spotify_volume)
+            try:
 
-            if task[1].strip() == "VOLUME_DOWN":   
-                device_name = sp.current_playback(market=None)['device']['name']
-                SPOTIFY_CONTROL(spotify_token, "volume_down", spotify_volume)                 
+                if task[1].strip() == "VOLUME_UP":   
+                    device_name = sp.current_playback(market=None)['device']['name']
+                    SPOTIFY_CONTROL(spotify_token, "volume_up", spotify_volume)
 
-            if task[1].strip() == "VOLUME":            
-                spotify_volume = int(task[2].strip())
-                SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
+                if task[1].strip() == "VOLUME_DOWN":   
+                    device_name = sp.current_playback(market=None)['device']['name']
+                    SPOTIFY_CONTROL(spotify_token, "volume_down", spotify_volume)                 
 
-   
+                if task[1].strip() == "VOLUME":            
+                    spotify_volume = int(task[2].strip())
+                    SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)   
+
+            except:
+                pass               
+
+
             # start playlist
                     
             if task[1].lower() == "playlist": 

@@ -269,7 +269,7 @@ def music():
 
         spotify_default_volume = request.form.get("set_spotify_default_volume") 
 
-        if request.form.get("checkbox_default_shuffle_setting") != None:
+        if request.form.get("set_checkbox_default_shuffle_setting") != None:
             spotify_default_shuffle = "True"
         else:
             spotify_default_shuffle = "False"
@@ -297,7 +297,7 @@ def music():
 
                 if request.form.get("radio_client_music_interface_" + str(i)) != None:
         
-                    client_music_interface = request.form.get("radio_client_music_interface_" + str(i))
+                    client_music_interface = request.form.get("set_radio_client_music_interface_" + str(i))
                     client_music_volume    = request.form.get("set_client_music_volume_" + str(i))                
                     device                 = GET_DEVICE_BY_ID(i)
 

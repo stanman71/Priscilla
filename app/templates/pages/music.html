@@ -564,7 +564,7 @@
                           <td>
                             <div class="vertical_center"> 
                               <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkbox_default_shuffle" {% if default_settings.default_shuffle == "True" %} checked="on" {% endif %} name="checkbox_default_shuffle_setting">
+                                <input type="checkbox" class="custom-control-input" id="checkbox_default_shuffle" {% if default_settings.default_shuffle == "True" %} checked="on" {% endif %} name="set_checkbox_default_shuffle_setting">
                                 <label class="custom-control-label" for="checkbox_default_shuffle"></label>
                               </div>   
                             </div>                       
@@ -893,12 +893,12 @@
                               {% if entry.last_values_string != None %} 
                                 
                                 <div class="custom-control custom-radio custom-control-inline">
-                                  <input type="radio" class="custom-control-input" id="radio_spotify_{{ entry.id }}" {% if "spotify" in entry.last_values_string %} checked="on" {% endif %} value="spotify" name="radio_client_music_interface_{{ entry.id }}">
+                                  <input type="radio" class="custom-control-input" id="radio_spotify_{{ entry.id }}" {% if "spotify" in entry.last_values_string %} checked="on" {% endif %} value="spotify" name="set_radio_client_music_interface_{{ entry.id }}">
                                   <label class="custom-control-label" for="radio_spotify_{{ entry.id }}">Spotify</label>
                                 </div> 
                                 <br>       
                                 <div class="custom-control custom-radio custom-control-inline">
-                                  <input type="radio" class="custom-control-input" id="radio_multiroom_{{ entry.id }}" {% if "multiroom" in entry.last_values_string %} checked="on" {% endif %} value="multiroom" name="radio_client_music_interface_{{ entry.id }}">
+                                  <input type="radio" class="custom-control-input" id="radio_multiroom_{{ entry.id }}" {% if "multiroom" in entry.last_values_string %} checked="on" {% endif %} value="multiroom" name="set_radio_client_music_interface_{{ entry.id }}">
                                   <label class="custom-control-label" for="radio_multiroom_{{ entry.id }}">Multiroom</label>
                                 </div>
                                 

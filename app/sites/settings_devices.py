@@ -1,6 +1,7 @@
 from flask               import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
 from flask_login         import current_user, login_required
 from werkzeug.exceptions import HTTPException, NotFound, abort
+from werkzeug.utils      import secure_filename
 from functools           import wraps
 
 from app                          import app
@@ -18,6 +19,8 @@ import os
 import heapq
 import time
 import threading
+import urllib.request
+
 
 # access rights
 def permission_required(f):
@@ -35,15 +38,88 @@ def permission_required(f):
     return wrap
 
 
-zigbee_device_update_collapse_open = False
+""" ################# """
+"""  upload firmware  """
+""" ################# """   
+
+def UPLOAD_FIRMWARE(file):
+    ALLOWED_EXTENSIONS = set(['bin'])
+
+    def allowed_file(filename):
+        return '.' in filename and \
+                filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS    
+
+    # check fileformat
+    try:
+        firmware_device_model = str(file.filename.rsplit("_", 1)[0])
+        firmware_version      = float(file.filename.rsplit("_", 1)[1].replace(".bin",""))
+
+    except:
+        firmware_device_model = None
+        firmware_version      = None         
+
+    if file.filename == '':
+        result = "No file founded"
+
+    elif ".bin" not in file.filename:
+        result = "Invalid file ending (only .bin)"
+
+    elif "_" not in file.filename:
+        result = "Invalid filename (Format: [Device_Model]_[Version].bin || NO SPACES)" 
+    
+    elif isinstance(firmware_device_model, str) == False or isinstance(firmware_version, float) == False:
+        result = "Invalid filename (Format: [Device_Model]_[Version].bin || NO SPACES)"      
+
+    elif file.filename in GET_ALL_MQTT_FIRMWARE_FILES():
+        result = "File already exist" 
+
+    elif file and allowed_file(file.filename):
+
+        try:
+            # check existing device_models     
+            device_founded = False
+
+            for device in GET_ALL_DEVICES("mqtt"):  
+
+                if firmware_device_model.lower() == device.model.lower() and device.device_type != "client_music":
+                    device_founded = True 
+            
+            if device_founded == False:
+                result = "Device_Model not founded"   
+                return result    
+
+            # check existing firmwares
+            for firmware in GET_ALL_MQTT_FIRMWARE_FILES():
+                if firmware_device_model in firmware:
+                    
+                    if firmware_version < float(firmware.rsplit("_", 1)[1].replace(".bin","")):
+                        result = "Newer Firmware already exist" 
+                        return result
+
+                    else:
+                        DELETE_MQTT_FIRMWARE(firmware)
+
+        except Exception as e:
+            return ("Error Firmware upload: " + str(e))            
+
+        # upload new file
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        result = True
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /firmwares/" + file.filename + " | uploaded")
+
+    else:
+        result = "File upload error" 
+
+    return result
+
+
 
 
 @app.route('/settings/devices', methods=['GET', 'POST'])
 @login_required
 @permission_required
 def settings_devices():
-    global zigbee_device_update_collapse_open
-
     page_title       = 'homatiX | Settings | Devices'
     page_description = 'The devices configuration page.'
 
@@ -52,14 +128,42 @@ def settings_devices():
     success_message_change_settings_devices     = []         
     error_message_change_settings_devices       = []    
     success_message_change_settings_exceptions  = False
+    success_message_mqtt_firmware_upload        = False
+    error_message_firmware_upload               = ""
     error_message_zigbee_device_update          = False
     success_message_zigbee_pairing              = []
     error_message_zigbee_pairing                = []
     success_message_logfile                     = False
     error_message_logfile                       = ""
+    error_message_firmware                      = ""
+    error_download_log_zigbee2mqtt              = ""
+    error_download_topology_zigbee2mqtt         = ""    
+
+    exceptions_collapse_open                    = False    
+    mqtt_device_update_collapse_open            = False
+    zigbee_device_update_collapse_open          = False
 
 
-    exceptions_collapse_open = False
+    # error firmware
+    if session.get('error_firmware', None) != None:
+        error_message_firmware = session.get('error_firmware') 
+        session['error_firmware'] = None
+
+    # error download log_zigbee2mqtt  
+    if session.get('error_download_log_zigbee2mqtt', None) != None:
+        error_download_log_zigbee2mqtt = session.get('error_download_log_zigbee2mqtt') 
+        session['error_download_log_zigbee2mqtt'] = None
+
+    # error download topology_zigbee2mqtt  
+    if session.get('error_download_topology_zigbee2mqtt', None) != None:
+        error_download_topology_zigbee2mqtt = session.get('error_download_topology_zigbee2mqtt') 
+        session['error_download_topology_zigbee2mqtt'] = None
+
+    # error log_devices  
+    if session.get('error_download_log_devices', None) != None:
+        error_message_logfile = session.get('error_download_log_devices') 
+        session['error_download_log_devices'] = None
+
 
     if GET_DEVICE_CONNECTION_MQTT() == False:
         error_message_mqtt_connection = True
@@ -77,15 +181,17 @@ def settings_devices():
         error_message_change_settings_devices.append(session.get('delete_device_error'))
         session['delete_device_error'] = None      
 
+
+    # zigbee device update started
+    if session.get('zigbee_device_update_started', None) != None:
+        session['zigbee_device_update_started'] = None
+        zigbee_device_update_collapse_open      = True
+
     # error zigbee device update
     if session.get('zigbee_device_update_running', None) != None:
-        error_message_zigbee_device_update = True
+        error_message_zigbee_device_update      = True
         session['zigbee_device_update_running'] = None
-
-    # error download logfile
-    if session.get('error_download_log', None) != None:
-        error_message_logfile = session.get('error_download_log')
-        session['error_download_log'] = None
+        zigbee_device_update_collapse_open      = True
 
 
     """ ############### """
@@ -93,8 +199,6 @@ def settings_devices():
     """ ############### """
 
     if request.form.get("save_device_settings") != None:  
-
-        zigbee_device_update_collapse_open = False
 
         for i in range (1,100):
 
@@ -106,8 +210,8 @@ def settings_devices():
                     device     = GET_DEVICE_BY_ID(i)
                     input_name = request.form.get("set_name_" + str(i)).strip()  
 
-                    if input_name != device.name:  
-
+                    if input_name != device.name: 
+                        
                         # name already exist ?         
                         if not GET_DEVICE_BY_NAME(input_name):  
                             ieeeAddr = device.ieeeAddr   
@@ -115,6 +219,7 @@ def settings_devices():
 
                             # add new name
                             if gateway == "mqtt":
+
                                 SET_DEVICE_NAME(ieeeAddr, input_name)   
                                 success_message_change_settings_devices.append(input_name + " || Settings successfully saved")  
                            
@@ -150,6 +255,15 @@ def settings_devices():
                         error_message_change_settings_devices.append(device.name + " || Invalid input") 
 
 
+                    # auto update setting
+                    if request.form.get("set_checkbox_auto_update_" + str(i)):
+                        auto_update = "True"
+                    else:
+                        auto_update = "False"
+
+                    SET_DEVICE_AUTO_UPDATE(device.ieeeAddr, auto_update)
+
+       
                 else:
                     name = device.name
                     error_message_change_settings_devices.append(name + " || Invalid input | No name given")    
@@ -157,8 +271,6 @@ def settings_devices():
 
     # update device list
     if request.form.get("update_devices") != None:     
-
-        zigbee_device_update_collapse_open = False
 
         # check mqtt connection
         if GET_DEVICE_CONNECTION_MQTT() == True:  
@@ -183,9 +295,8 @@ def settings_devices():
 
     if request.form.get("save_device_exceptions") != None:  
 
-        exceptions_collapse_open           = True
-        zigbee_device_update_collapse_open = False
-                
+        exceptions_collapse_open = True
+
         for i in range (1,100):
 
             try:     
@@ -313,14 +424,34 @@ def settings_devices():
                     print(e)                        
 
 
+    """ ###### """
+    """  mqtt  """
+    """ ###### """
+
+    if request.form.get("upload_mqtt_firmware") != None: 
+        mqtt_device_update_collapse_open = True
+
+        # check if the post request has the file part
+        if "file" not in request.files:
+            error_message_firmware_upload = "No file founded"
+
+        else:
+            file   = request.files['file']
+            result = UPLOAD_FIRMWARE(file)
+
+            if result == True:
+                success_message_mqtt_firmware_upload = True
+
+            else:
+                error_message_firmware_upload = result
+
+
     """ ######## """
     """  zigbee  """
     """ ######## """
 
     # change pairing setting
     if request.form.get("set_zigbee_pairing") != None: 
-
-        zigbee_device_update_collapse_open = False
 
         # check mqtt connection
         if GET_DEVICE_CONNECTION_MQTT() != True:  
@@ -383,8 +514,6 @@ def settings_devices():
     if request.form.get("reset_logfile") != None: 
         result = RESET_LOGFILE("log_devices")  
 
-        zigbee_device_update_collapse_open = False
-
         if result:
             success_message_logfile = True 
         else:
@@ -399,8 +528,9 @@ def settings_devices():
     
     list_devices                = GET_ALL_DEVICES("")
     zigbee2mqtt_pairing_setting = GET_ZIGBEE2MQTT_PAIRING_SETTING()
-    system_services             = GET_SYSTEM_SETTINGS()  
-    
+    system_services             = GET_SYSTEM_SETTINGS()   
+    list_mqtt_firmware_files    = GET_ALL_MQTT_FIRMWARE_FILES()
+
     if GET_ZIGBEE_DEVICE_UPDATE_STATUS() != "No Device Update available":
         show_zigbee_device_updates = True
     else:
@@ -920,21 +1050,28 @@ def settings_devices():
                                                     error_message_change_settings_devices=error_message_change_settings_devices, 
                                                     success_message_change_settings_exceptions=success_message_change_settings_exceptions,
                                                     error_message_device_exceptions=error_message_device_exceptions,
+                                                    success_message_mqtt_firmware_upload=success_message_mqtt_firmware_upload,
+                                                    error_message_firmware_upload=error_message_firmware_upload,
                                                     error_message_zigbee_device_update=error_message_zigbee_device_update,
                                                     success_message_zigbee_pairing=success_message_zigbee_pairing,
                                                     error_message_zigbee_pairing=error_message_zigbee_pairing,
                                                     success_message_logfile=success_message_logfile,     
-                                                    error_message_logfile=error_message_logfile,      
+                                                    error_message_logfile=error_message_logfile,   
+                                                    error_message_firmware=error_message_firmware,  
+                                                    error_download_log_zigbee2mqtt=error_download_log_zigbee2mqtt,
+                                                    error_download_topology_zigbee2mqtt=error_download_topology_zigbee2mqtt,
                                                     system_services=system_services,                                            
                                                     list_devices=list_devices,
                                                     list_exception_devices=list_exception_devices,
                                                     list_exception_sensors=list_exception_sensors,
                                                     dropdown_list_exception_options=dropdown_list_exception_options,
                                                     dropdown_list_operators=dropdown_list_operators,
+                                                    list_mqtt_firmware_files=list_mqtt_firmware_files,
                                                     zigbee2mqtt_pairing_setting=zigbee2mqtt_pairing_setting,
                                                     timestamp=timestamp,  
                                                     show_zigbee_device_updates=show_zigbee_device_updates,                                                      
                                                     zigbee_device_update_collapse_open=zigbee_device_update_collapse_open,
+                                                    mqtt_device_update_collapse_open=mqtt_device_update_collapse_open,
                                                     exceptions_collapse_open=exceptions_collapse_open,  
                                                     device_1_input_values=device_1_input_values,
                                                     device_2_input_values=device_2_input_values,
@@ -1108,69 +1245,109 @@ def remove_device(ieeeAddr):
         return redirect(url_for('settings_devices'))        
 
 
+# download mqtt firmware
+@app.route('/settings/devices/firmware/download/<string:filename>')
+@login_required
+@permission_required
+def download_mqtt_firmware(filename):
+    try:
+        path = GET_PATH() + "/firmwares/"     
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /firmwares/" + filename + " | downloaded")
+        return send_from_directory(path, filename)
+        
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /firmwares/" + filename + " | " + str(e)) 
+        session['error_firmware'] = "Download Firmware || " + str(e)
+
+
+# request mqtt firmware
+@app.route('/settings/devices/firmware/request', methods=['GET', 'POST'])
+def request_mqtt_firmware():
+    try:
+        path = GET_PATH() + "/firmwares/"     
+
+        device_ieeeAddr = request.args.get('device_ieeeAddr', default=None)
+        current_version = request.args.get('current_version', default=None)
+
+        device = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr)
+
+        if device.auto_update == "True":
+
+            # load existing firmware files
+            for firmware in GET_ALL_MQTT_FIRMWARE_FILES():
+                firmware_device_model = str(firmware.rsplit("_", 1)[0])
+                firmware_version      = float(firmware.rsplit("_", 1)[1].replace(".bin",""))
+
+                if device.model.lower() == firmware_device_model.lower() and float(current_version) < firmware_version:     
+                    return send_from_directory(path, firmware, as_attachment=True, mimetype='application/octet-stream', attachment_filename=firmware)
+
+        return 'No update needed', 304
+        
+    except Exception as e:
+        return 'Error: ' + str(e), 400
+
+
+# delete mqtt firmware
+@app.route('/settings/devices/firmware/delete/<string:filename>')
+@login_required
+@permission_required
+def delete_mqtt_firmware(filename):
+    result = DELETE_MQTT_FIRMWARE(filename)
+
+    if result != True:
+        session['error_firmware'] = result
+
+    return redirect(url_for('settings_devices'))
+
+
 # update zigbee device 
-@app.route('/settings/devices/update/<string:ieeeAddr>')
+@app.route('/settings/devices/firmware/update/<string:ieeeAddr>')
 @login_required
 @permission_required
 def update_zigbee_device(ieeeAddr):
-    global zigbee_device_update_collapse_open
-
     if GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "" or GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "Device Update founded":
         channel  = "smarthome/zigbee2mqtt/bridge/ota_update/update"
         msg      = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
 
         heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
+        session['zigbee_device_update_started'] = "True" 
 
     else:
         session['zigbee_device_update_running'] = "True"
 
-    zigbee_device_update_collapse_open = True
-
     return redirect(url_for('settings_devices'))
 
 
-# download zigbee2mqtt log
-@app.route('/settings/devices/download/zigbee2mqtt_log/<path:filepath>')
+# download zigbee topology 
+@app.route('/settings/devices/topology/download/<string:filename>')
 @login_required
 @permission_required
-def download_zigbee2mqtt_log(filepath): 
-    path = GET_PATH() + "/data/logs/"
-    
-    if os.path.isfile(path + filepath) == False:
-        return redirect(url_for('settings_devices'))
-    
-    else:
-        return send_from_directory(path, filepath)
-
-
-# download zigbee2mqtt topology 
-@app.route('/settings/devices/download/zigbee2mqtt_topology/<path:filepath>')
-@login_required
-@permission_required
-def download_zigbee2mqtt_topology(filepath): 
+def download_zigbee_topology(filename): 
     path = GET_PATH() + "/app/static/temp/"
     
-    if os.path.isfile(path + filepath) == False:
+    if os.path.isfile(path + filename) == False:
+        session['error_download_topology_zigbee2mqtt'] = "Download Topology || File not founded" 
         return redirect(url_for('settings_devices'))
     
     else:
-        return send_from_directory(path, filepath)
+        return send_from_directory(path, filename)
 
 
-# download devices logfile
-@app.route('/settings/devices/download/devices_log/<path:filepath>')
+# download logs
+@app.route('/settings/devices/log/download/<string:filename>')
 @login_required
 @permission_required
-def download_devices_logfile(filepath): 
-    path = GET_PATH() + "/data/logs/"  
+def download_logs(filename): 
+    path = GET_PATH() + "/data/logs/"
+    
+    if os.path.isfile(path + filename) == False:
 
-    try:
-        if os.path.isfile(path + filepath) == False:
-            RESET_LOGFILE("log_devices")  
-        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/" + filepath + " | downloaded") 
+        if filename == "zigbee2mqtt.txt":
+            session['error_download_log_zigbee2mqtt'] = "Download Log || File not founded" 
+            return redirect(url_for('settings_devices'))
 
-    except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/logs/" + filepath + " | " + str(e))
-        session['error_download_log'] = "Download Log || " + str(e)
-
-    return send_from_directory(path, filepath)
+        if filename == "log_devices.csv":
+            session['error_download_log_devices'] = "Download Log || File not founded"  
+    
+    else:
+        return send_from_directory(path, filename)

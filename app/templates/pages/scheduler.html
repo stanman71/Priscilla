@@ -495,33 +495,33 @@
                             <td></td>                         
                             <td>
                               <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkbox_trigger_time_{{ entry.id }}" {% if entry.trigger_time == "True" %} checked="on" {% endif %} name="checkbox_trigger_time_{{ entry.id }}" >
+                                <input type="checkbox" class="custom-control-input" id="checkbox_trigger_time_{{ entry.id }}" {% if entry.trigger_time == "True" %} checked="on" {% endif %} name="set_checkbox_trigger_time_{{ entry.id }}" >
                                 <label class="custom-control-label" for="checkbox_trigger_time_{{ entry.id }}">Time</label>
                               </div>     
                               <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkbox_trigger_sun_position_{{ entry.id }}" {% if entry.trigger_sun_position == "True" %} checked="on" {% endif %} name="checkbox_trigger_sun_position_{{ entry.id }}" >
+                                <input type="checkbox" class="custom-control-input" id="checkbox_trigger_sun_position_{{ entry.id }}" {% if entry.trigger_sun_position == "True" %} checked="on" {% endif %} name="set_checkbox_trigger_sun_position_{{ entry.id }}" >
                                 <label class="custom-control-label" for="checkbox_trigger_sun_position_{{ entry.id }}">Sun_Position</label>
                               </div>     
                             </td> 
                             <td></td>       
                             <td>
                               <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkbox_trigger_sensors_{{ entry.id }}" {% if entry.trigger_sensors == "True" %} checked="on" {% endif %} name="checkbox_trigger_sensors_{{ entry.id }}" >
+                                <input type="checkbox" class="custom-control-input" id="checkbox_trigger_sensors_{{ entry.id }}" {% if entry.trigger_sensors == "True" %} checked="on" {% endif %} name="set_checkbox_trigger_sensors_{{ entry.id }}" >
                                 <label class="custom-control-label" for="checkbox_trigger_sensors_{{ entry.id }}">Sensors</label>
                               </div>     
                               <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkbox_trigger_position_{{ entry.id }}" {% if entry.trigger_position == "True" %} checked="on" {% endif %} name="checkbox_trigger_position_{{ entry.id }}" >
+                                <input type="checkbox" class="custom-control-input" id="checkbox_trigger_position_{{ entry.id }}" {% if entry.trigger_position == "True" %} checked="on" {% endif %} name="set_checkbox_trigger_position_{{ entry.id }}" >
                                 <label class="custom-control-label" for="checkbox_trigger_position_{{ entry.id }}">Position</label>
                               </div>     
                             </td>        
                             <td></td>                           
                             <td>
                               <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkbox_option_repeat_{{ entry.id }}" {% if entry.option_repeat == "True" %} checked="on" {% endif %} name="checkbox_option_repeat_{{ entry.id }}" >
+                                <input type="checkbox" class="custom-control-input" id="checkbox_option_repeat_{{ entry.id }}" {% if entry.option_repeat == "True" %} checked="on" {% endif %} name="set_checkbox_option_repeat_{{ entry.id }}" >
                                 <label class="custom-control-label" for="checkbox_option_repeat_{{ entry.id }}">Repeat</label>
                               </div>     
                               <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkbox_option_pause_{{ entry.id }}" {% if entry.option_pause == "True" %} checked="on" {% endif %} name="checkbox_option_pause_{{ entry.id }}" >
+                                <input type="checkbox" class="custom-control-input" id="checkbox_option_pause_{{ entry.id }}" {% if entry.option_pause == "True" %} checked="on" {% endif %} name="set_checkbox_option_pause_{{ entry.id }}" >
                                 <label class="custom-control-label" for="checkbox_option_pause_{{ entry.id }}">Pause</label>
                               </div>     
                             </td>                          
@@ -573,11 +573,11 @@
                               <div class="row justify-content-md-center">                                                
                                 <div class="col-sm-4"> 
                                   <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="checkbox_option_sunrise_{{ entry.id }}" {% if entry.option_sunrise == "True" %} checked="on" {% endif %} name="checkbox_option_sunrise_{{ entry.id }}" >
+                                    <input type="checkbox" class="custom-control-input" id="checkbox_option_sunrise_{{ entry.id }}" {% if entry.option_sunrise == "True" %} checked="on" {% endif %} name="set_checkbox_option_sunrise_{{ entry.id }}" >
                                     <label class="custom-control-label" for="checkbox_option_sunrise_{{ entry.id }}">Sunrise ({{ entry.sunrise }})</label>
                                   </div>     
                                   <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="checkbox_option_sunset_{{ entry.id }}" {% if entry.option_sunset == "True" %} checked="on" {% endif %} name="checkbox_option_sunset_{{ entry.id }}" >
+                                    <input type="checkbox" class="custom-control-input" id="checkbox_option_sunset_{{ entry.id }}" {% if entry.option_sunset == "True" %} checked="on" {% endif %} name="set_checkbox_option_sunset_{{ entry.id }}" >
                                     <label class="custom-control-label" for="checkbox_option_sunset_{{ entry.id }}">Sunset ({{ entry.sunset }})</label>
                                   </div>   
                                 </div>                     
@@ -773,11 +773,11 @@
                               <div class="row justify-content-md-center">                                                
                                 <div class="col-sm-4"> 
                                   <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="checkbox_option_home_{{ entry.id }}" {% if entry.option_home == "True" %} checked="on" {% endif %} name="checkbox_option_home_{{ entry.id }}" >
+                                    <input type="checkbox" class="custom-control-input" id="checkbox_option_home_{{ entry.id }}" {% if entry.option_home == "True" %} checked="on" {% endif %} name="set_checkbox_option_home_{{ entry.id }}" >
                                     <label class="custom-control-label" for="checkbox_option_home_{{ entry.id }}">HOME</label>
                                   </div>     
                                   <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="checkbox_option_away_{{ entry.id }}" {% if entry.option_away == "True" %} checked="on" {% endif %} name="checkbox_option_away_{{ entry.id }}" >
+                                    <input type="checkbox" class="custom-control-input" id="checkbox_option_away_{{ entry.id }}" {% if entry.option_away == "True" %} checked="on" {% endif %} name="set_checkbox_option_away_{{ entry.id }}" >
                                     <label class="custom-control-label" for="checkbox_option_away_{{ entry.id }}">AWAY</label>
                                   </div>   
                                 </div>      

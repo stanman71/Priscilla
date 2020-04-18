@@ -37,6 +37,7 @@ def settings_users():
 
     success_message_add_user           = False
     error_message_add_user             = []
+    error_message_missing_passwords    = []
     success_message_change_settings    = []
     error_message_change_settings      = []
 
@@ -78,9 +79,9 @@ def settings_users():
     if request.form.get("save_user_settings") != None:
         
         for i in range (1,26): 
-            
-            if request.form.get("set_name_" + str(i)) != None:
-                
+
+            if request.form.get("set_email_" + str(i)) != None:
+
                 error_founded       = False
                 hashed_password     = None
 
@@ -90,27 +91,33 @@ def settings_users():
                 # ############
 
                 user       = GET_USER_BY_ID(i)
-                input_name = request.form.get("set_name_" + str(i)).strip()    
-            
-                # add new name
-                if ((input_name != "") and (GET_USER_BY_NAME(input_name) == None)):
-                    name = request.form.get("set_name_" + str(i)) 
-                    
-                # nothing changed 
-                elif input_name == user.name:
-                    name = user.name                        
-                    
-                # name already exist
-                elif ((GET_USER_BY_NAME(input_name) != None) and (user.name != input_name)):
-                    error_message_change_settings.append(user.name + " || Name - " + input_name + " - already taken")  
-                    error_founded = True
-                    name = user.name
 
-                # no input commited
-                else:                          
-                    name = GET_USER_BY_ID(i).name
-                    error_message_change_settings.append(user.name + " || No name given") 
-                    error_founded = True  
+                if user.name != "admin":
+
+                    input_name = request.form.get("set_name_" + str(i)).strip()    
+                
+                    # add new name
+                    if ((input_name != "") and (GET_USER_BY_NAME(input_name) == None)):
+                        name = request.form.get("set_name_" + str(i)) 
+                        
+                    # nothing changed 
+                    elif input_name == user.name:
+                        name = user.name                        
+                        
+                    # name already exist
+                    elif ((GET_USER_BY_NAME(input_name) != None) and (user.name != input_name)):
+                        error_message_change_settings.append(user.name + " || Name - " + input_name + " - already taken")  
+                        error_founded = True
+                        name = user.name
+
+                    # no input commited
+                    else:                          
+                        name = GET_USER_BY_ID(i).name
+                        error_message_change_settings.append(user.name + " || No name given") 
+                        error_founded = True  
+
+                else:
+                    name = user.name   
 
 
                 # #############
@@ -119,26 +126,14 @@ def settings_users():
 
                 input_email = request.form.get("set_email_" + str(i)).strip()                    
 
-                # add new name
+                # add new email
                 if ((input_email != "") and (GET_USER_BY_EMAIL(input_email) == None)):
                     email = request.form.get("set_email_" + str(i)) 
                     
                 # nothing changed 
-                elif input_email == user.email:
+                else:
                     email = user.email                        
                     
-                # email already exist
-                elif ((GET_USER_BY_EMAIL(input_email) != None) and (user.email != input_email)):
-                    error_message_change_settings.append(user.name + " || eMail - " + input_email + " - already taken") 
-                    error_founded = True
-                    email = user.email 
-
-                # no input commited
-                else:                          
-                    email = GET_USER_BY_ID(i).email
-                    error_message_change_settings.append(user.name + " || No eMail given") 
-                    error_founded = True  
-
 
                 # ################
                 # password setting
@@ -162,13 +157,19 @@ def settings_users():
                     except:
                         error_message_change_settings.append(user.name + " || Password must have between 8 and 20 characters")
 
-
                 # role
-                role = request.form.get("radio_role_" + str(i))
+                role = request.form.get("set_radio_role_" + str(i))
 
                 # notification
-                if request.form.get("checkbox_email_notification_" + str(i)) != None:
-                    email_notification = "True"
+                if request.form.get("set_checkbox_email_notification_" + str(i)):
+
+                    if email == "" or email == "None" or email == None:
+                        error_message_change_settings.append(user.name + " || No eMail address founded")
+                        email_notification = "False"
+
+                    else:
+                        email_notification = "True"
+
                 else:
                     email_notification = "False"
 
@@ -189,15 +190,19 @@ def settings_users():
                         success_message_change_settings.append(name + " || Settings successfully saved") 
 
 
-    user_list = GET_ALL_USERS()
+    list_users = GET_ALL_USERS()
 
+    # check passwords
     try:                                        
         if GET_USER_BY_NAME("admin").password == "sha256$OeDkVenT$bc8d974603b713097e69fc3efa1132991bfb425c59ec00f207e4b009b91f4339":
             message_admin_password_not_changed = "admin || Password must be changed"
     except:
         pass
 
-    list_users = GET_ALL_USERS()
+    for user in list_users:
+        if user.password == None or user.password == "None":
+            error_message_missing_passwords.append(user.name + " || No Password founded")
+
 
     data = {'navigation': 'settings_users'}
 
@@ -209,6 +214,7 @@ def settings_users():
                                                      error_message_change_settings=error_message_change_settings,                            
                                                      error_message_add_user=error_message_add_user,
                                                      message_admin_password_not_changed=message_admin_password_not_changed,
+                                                     error_message_missing_passwords=error_message_missing_passwords,
                                                      success_message_change_settings=success_message_change_settings,                                                     
                                                      success_message_add_user=success_message_add_user,                
                                                      list_users=list_users,

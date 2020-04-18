@@ -5,7 +5,8 @@
 #include <WiFiManager.h>          
 #include <ArduinoJson.h>     
 #include <PubSubClient.h>   
-#include <FastLED.h>  
+#include <ESP8266HTTPClient.h>
+#include <ESP8266httpUpdate.h>
 
 // MQTT
 char mqtt_server[40];
@@ -17,23 +18,39 @@ char path[100];
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-//wifi manager
+// WIFI MANAGER
 bool shouldSaveConfig = false;   
+
+// UPDATE
+char message[200];
+
+int update_timer_counter;
+int update_timer_value = 60000;  // 1 minute
+
+int update_report_timer_counter;
+int update_report_timer_value = 6000;  // 10 seconds
 
 // RESET 
 int PIN_RESET_SETTING = 16;  // D0
 
-// LED
+// LED PINS
 int PIN_LED_GREEN = 14;      // D5
 int PIN_LED_RED   = 12;      // D6
 
-// TRANSISTOR_CONTROL
-int TRANSISTOR_CONTROL = 4;  // D2
 
-// FASTLED
-#define DATA_PIN 5           // D1
+// ###############
+// CUSTOM SETTINGS
+// ###############
+
+char model[40]       = "led_strip_controller";
+char device_type[40] = "led_rgb";
+char description[80] = "MQTT LED Strip Controller";
+
+String current_Version = "1.1";
+
+#include <FastLED.h>  
+
 #define NUM_LEDS 300
-
 CRGB leds[NUM_LEDS];
 
 String state   = "OFF";
@@ -43,6 +60,13 @@ int green      = 0;
 int blue       = 0;
 
 boolean state_changed = true;
+
+// TRANSISTOR_CONTROL PIN
+int TRANSISTOR_CONTROL = 4;  // D2
+
+// FASTLED PIN
+#define DATA_PIN 5           // D1
+
 
 // ############
 // split string
@@ -84,44 +108,32 @@ void wifi_manager(boolean reset_setting) {
         SPIFFS.format();                 // reset config.txt
     }    
 
-    // mounting filesystem
+    // read config file
     
-    Serial.print("mounting FS...");
-  
-    if (SPIFFS.begin()) {    
-      
-        Serial.println("successful");
+    if (SPIFFS.exists("/config.json")) {
+        Serial.print("reading config file...");
+        File config_File = SPIFFS.open("/config.json", "r");
 
-        // read config file
-        
-        if (SPIFFS.exists("/config.json")) {
-            Serial.print("reading config file...");
-            File config_File = SPIFFS.open("/config.json", "r");
-
-            if (config_File) {
-              
-                size_t size = config_File.size();
-                std::unique_ptr<char[]> buf(new char[size]);
-                config_File.readBytes(buf.get(), size);
-                
-                DynamicJsonDocument config_json(128);
-                DeserializationError error = deserializeJson(config_json, buf.get());
-                
-                if (!error) {
-                    strcpy(mqtt_server,   config_json["mqtt_server"]);
-                    strcpy(mqtt_username, config_json["mqtt_username"]);
-                    strcpy(mqtt_password, config_json["mqtt_password"]);                                       
-                    Serial.println("successful");
+        if (config_File) {
           
-                } else {
-                    Serial.println("failed");
-                }
-                config_File.close();
-            } 
-        }
-        
-    } else {
-        Serial.println("failed");
+            size_t size = config_File.size();
+            std::unique_ptr<char[]> buf(new char[size]);
+            config_File.readBytes(buf.get(), size);
+            
+            DynamicJsonDocument config_json(128);
+            DeserializationError error = deserializeJson(config_json, buf.get());
+            
+            if (!error) {
+                strcpy(mqtt_server,   config_json["mqtt_server"]);
+                strcpy(mqtt_username, config_json["mqtt_username"]);
+                strcpy(mqtt_password, config_json["mqtt_password"]);                                       
+                Serial.println("successful");
+      
+            } else {
+                Serial.println("failed");
+            }
+            config_File.close();
+        } 
     }
 
     WiFiManagerParameter custom_mqtt_server  ("server",   "mqtt server",   mqtt_server, 40);
@@ -173,65 +185,56 @@ void wifi_manager(boolean reset_setting) {
 // ########
 
 void get_ieeeAddr() {
-    Serial.print("mounting FS...");
-  
-    if (SPIFFS.begin()) {    
-      
-        Serial.println("successful");
 
-        // read ieeeAddr file
-        
-        if (SPIFFS.exists("/ieeeAddr.json")) {
-            Serial.print("reading ieeeAddr file...");
-            File ieeeAddr_File = SPIFFS.open("/ieeeAddr.json", "r");
-
-            if (ieeeAddr_File) {
-                size_t size = ieeeAddr_File.size();
-                std::unique_ptr<char[]> buf(new char[size]);
-                ieeeAddr_File.readBytes(buf.get(), size);
-                
-                DynamicJsonDocument ieeeAddr_json(128);
-                DeserializationError error = deserializeJson(ieeeAddr_json, buf.get());
-                
-                if (!error) {
-                    strcpy(ieeeAddr, ieeeAddr_json["ieeeAddr"]);
-                    Serial.println("successful");
-          
-                } else {
-                    Serial.println("failed");
-                }
-                ieeeAddr_File.close();
-            } 
-
-        // ieeeAddr file not exist, generate new ieeeAddr + file
-            
-        } else {
-
-            Serial.print("generate new ieeeAddr...");
-
-            int randNumber            = random(100000, 999999);
-            String ieeeAddr_generated = "0x" + String(randNumber); 
-            
-            ieeeAddr_generated.toCharArray(ieeeAddr,40); 
-
-            DynamicJsonDocument ieeeAddr_json(128);
-            ieeeAddr_json["ieeeAddr"] = ieeeAddr_generated;
-        
-            File ieeeAddr_File = SPIFFS.open("/ieeeAddr.json", "w");
-            
-            if (!ieeeAddr_File) {
-                Serial.println("failed to open ieeeAddr file for writing");
-            }
+    // read ieeeAddr file
     
-            serializeJson(ieeeAddr_json, Serial);
-            Serial.println();
-            serializeJson(ieeeAddr_json, ieeeAddr_File);
+    if (SPIFFS.exists("/ieeeAddr.json")) {
+        Serial.print("reading ieeeAddr file...");
+        File ieeeAddr_File = SPIFFS.open("/ieeeAddr.json", "r");
+
+        if (ieeeAddr_File) {
+            size_t size = ieeeAddr_File.size();
+            std::unique_ptr<char[]> buf(new char[size]);
+            ieeeAddr_File.readBytes(buf.get(), size);
+            
+            DynamicJsonDocument ieeeAddr_json(128);
+            DeserializationError error = deserializeJson(ieeeAddr_json, buf.get());
+            
+            if (!error) {
+                strcpy(ieeeAddr, ieeeAddr_json["ieeeAddr"]);
+                Serial.println("successful");
+      
+            } else {
+                Serial.println("failed");
+            }
             ieeeAddr_File.close();
-            Serial.println("new ieeeAddr file saved");
+        } 
+
+    // ieeeAddr file not exist, generate new ieeeAddr + file
+        
+    } else {
+
+        Serial.print("generate new ieeeAddr...");
+
+        int randNumber            = random(100000, 999999);
+        String ieeeAddr_generated = "0x" + String(randNumber); 
+        
+        ieeeAddr_generated.toCharArray(ieeeAddr,40); 
+
+        DynamicJsonDocument ieeeAddr_json(128);
+        ieeeAddr_json["ieeeAddr"] = ieeeAddr_generated;
+    
+        File ieeeAddr_File = SPIFFS.open("/ieeeAddr.json", "w");
+        
+        if (!ieeeAddr_File) {
+            Serial.println("failed to open ieeeAddr file for writing");
         }
 
-    } else {
-        Serial.println("failed");
+        serializeJson(ieeeAddr_json, Serial);
+        Serial.println();
+        serializeJson(ieeeAddr_json, ieeeAddr_File);
+        ieeeAddr_File.close();
+        Serial.println("new ieeeAddr file saved");
     }
 }
 
@@ -274,42 +277,9 @@ void reconnect() {
 }
 
 
-// ####################
-// mqtt default message
-// ####################
-
-void default_mqtt_message() {
-
-    // create channel  
-    String payload_path = "smarthome/mqtt/" + String(ieeeAddr);      
-    char attributes[100];
-    payload_path.toCharArray( path, 100 );    
- 
-    // create msg as json
-    DynamicJsonDocument msg(128);
-
-    msg["state"]      = state;
-    msg["brightness"] = brightness;
-    msg["color"]["r"] = red;
-    msg["color"]["g"] = green;
-    msg["color"]["b"] = blue;
- 
-    // convert msg to char
-    char msg_Char[128];
-    serializeJson(msg, msg_Char);
-
-    Serial.print("Channel: ");
-    Serial.println(path);
-    Serial.print("Publish message: ");
-    Serial.println(msg_Char);
-    Serial.println();
-    
-    client.publish(path, msg_Char);    
-}
-
-// #############
-// MQTT messages
-// #############
+// ######################
+// MQTT control functions
+// ######################
 
 void callback (char* topic, byte* payload, unsigned int length) {
 
@@ -330,9 +300,10 @@ void callback (char* topic, byte* payload, unsigned int length) {
         DynamicJsonDocument msg(512);
         
         msg["ieeeAddr"]    = ieeeAddr;
-        msg["model"]       = "led_strip_controller 1.2";
-        msg["device_type"] = "led_rgb";
-        msg["description"] = "MQTT LED Strip Controller";
+        msg["model"]       = model;
+        msg["device_type"] = device_type;
+        msg["version"]     = current_Version;        
+        msg["description"] = description;
     
         JsonArray data_inputs = msg.createNestedArray("inputs");
         data_inputs.add("");   
@@ -423,6 +394,41 @@ void callback (char* topic, byte* payload, unsigned int length) {
     }     
 }
 
+
+// ####################
+// MQTT default message
+// ####################
+
+void default_mqtt_message() {
+
+    // create channel  
+    String payload_path = "smarthome/mqtt/" + String(ieeeAddr);      
+    char attributes[100];
+    payload_path.toCharArray( path, 100 );    
+ 
+    // create msg as json
+    DynamicJsonDocument msg(128);
+
+    msg["state"]      = state;
+    msg["brightness"] = brightness;
+    msg["color"]["r"] = red;
+    msg["color"]["g"] = green;
+    msg["color"]["b"] = blue;
+
+    // convert msg to char
+    char msg_Char[128];
+    serializeJson(msg, msg_Char);
+
+    Serial.print("Channel: ");
+    Serial.println(path);
+    Serial.print("Publish message: ");
+    Serial.println(msg_Char);
+    Serial.println();
+    
+    client.publish(path, msg_Char);    
+}
+
+
 // #####
 // setup
 // #####
@@ -445,6 +451,16 @@ void setup() {
     digitalWrite(PIN_LED_GREEN, LOW);
 
     Serial.println(digitalRead(PIN_RESET_SETTING));    
+
+    // mounting filesystem
+    
+    if (SPIFFS.begin()) {      
+        Serial.println("mounting FS...successful");
+    } else {
+        Serial.println("mounting FS...failed");
+    }
+
+    // check reset settings
 
     if (digitalRead(PIN_RESET_SETTING) == 1) {
         wifi_manager(true);  // reset settings
@@ -493,6 +509,173 @@ void loop() {
         state_changed == false;
     }
 
+    // update timer 
+    if (update_timer_counter > update_timer_value){
+        checkForUpdates();
+        update_timer_counter = 0;
+    } 
+
+    // update report timer
+    if (update_report_timer_counter > update_report_timer_value){
+        send_update_report();
+        update_report_timer_counter = 0;
+    } 
+    
+    update_timer_counter        = update_timer_counter + 100;
+    update_report_timer_counter = update_report_timer_counter + 100;
+
     delay(100);
     client.loop();
+}
+
+
+// ###############
+// update firmware
+// ###############
+
+void checkForUpdates() {
+
+    String checkUrl = "/settings/devices/firmware/request";
+
+    String str_mqtt_server(mqtt_server);
+    
+    checkUrl.concat( "?device_ieeeAddr=" + String(ieeeAddr) );  
+    checkUrl.concat( "&current_version=" + String(current_Version) );
+  
+    Serial.println("Checking for updates at URL: " + str_mqtt_server + String( checkUrl ) );
+
+    save_update_report("success");
+  
+    t_httpUpdate_return ret = ESPhttpUpdate.update(str_mqtt_server, 80, checkUrl);
+  
+    switch (ret) {
+ 
+        default:
+        case HTTP_UPDATE_FAILED: {
+            String error_number      = String(ESPhttpUpdate.getLastError());
+            String error_description = ESPhttpUpdate.getLastErrorString().c_str();
+  
+            Serial.println("HTTP_UPDATE_FAILED || Error (" + error_number + "): " + error_description);
+            save_update_report("HTTP_UPDATE_FAILED || Error (" + error_number + "): " + error_description);
+            delay(500);
+            ESP.reset();
+            break;
+        }
+    
+        case HTTP_UPDATE_NO_UPDATES: {
+            Serial.println("HTTP_UPDATE_NO_UPDATES");
+            delete_update_report();
+            break;
+        }
+    
+        case HTTP_UPDATE_OK: {
+            Serial.println("HTTP_UPDATE_OK");
+            break;
+        }
+    }
+}
+
+
+// ##################
+// save update_report
+// ##################
+
+void save_update_report(String message) {
+
+    DynamicJsonDocument json_data(512);
+    json_data["message"] = message;
+
+    File update_report_File = SPIFFS.open("/update_report.json", "w");
+    
+    if (!update_report_File) {
+        Serial.println("failed to open ieeeAddr file for writing");
+    }
+
+    serializeJson(json_data, Serial);
+    Serial.println();
+    serializeJson(json_data, update_report_File);
+    update_report_File.close();
+    Serial.println("update_report file saved");
+}
+
+
+// ##################
+// send update_report
+// ##################
+
+void send_update_report() {
+
+    // read update_report file   
+    
+    if (SPIFFS.exists("/update_report.json")) {
+        Serial.print("reading update_report file...");
+        File update_report_File = SPIFFS.open("/update_report.json", "r");
+
+        if (update_report_File) {
+            size_t size = update_report_File.size();
+            std::unique_ptr<char[]> buf(new char[size]);
+            update_report_File.readBytes(buf.get(), size);
+            
+            DynamicJsonDocument json_data(512);
+            DeserializationError error = deserializeJson(json_data, buf.get());
+            
+            if (!error) {
+                strcpy(message, json_data["message"]);
+                Serial.println("successful");
+
+                // create channel  
+                String payload_path = "smarthome/mqtt/update";      
+                char attributes[100];
+                payload_path.toCharArray( path, 100 );   
+            
+                // create msg as json
+                DynamicJsonDocument msg(512);
+            
+                msg["device_ieeeAddr"] = ieeeAddr; 
+                msg["message"]         = message;
+                msg["version"]         = current_Version;    
+            
+                // convert msg to char
+                char msg_Char[512];
+                serializeJson(msg, msg_Char);
+            
+                Serial.print("Channel: ");
+                Serial.println(path);
+                Serial.print("Publish message: ");
+                Serial.println(msg_Char);
+                Serial.println();
+                
+                client.publish(path, msg_Char);    
+
+                // delete file
+                Serial.println("delete update file...");      
+                SPIFFS.remove("/update_report.json");   
+               
+            } else {
+                Serial.println("failed");
+            }
+            
+            update_report_File.close();
+            
+        } 
+        
+    } else {
+        Serial.println("no update report founded");               
+    }
+}
+
+
+// ####################
+// delete update_report
+// ####################
+
+void delete_update_report() {
+
+    // search update_report file   
+    if (SPIFFS.exists("/update_report.json")) {
+
+        // delete file
+        Serial.println("delete update report");      
+        SPIFFS.remove("/update_report.json");
+    }    
 }

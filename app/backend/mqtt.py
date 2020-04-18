@@ -62,8 +62,8 @@ def MQTT_RECEIVE_THREAD():
         # ############################
 
         device_identity = channel.split("/")[2]
-        
-        if device_identity not in ["bridge", "devices", "test", "log", "get", "set", "config"]:
+
+        if device_identity not in ["bridge", "devices", "test", "log", "get", "set", "config", "update"]:
         
             list_devices = GET_ALL_DEVICES("")
         
@@ -328,6 +328,30 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         return
 
 
+    # ############
+    # mqtt updates
+    # ############
+
+    if channel == "smarthome/mqtt/update":
+
+        try:
+            data = json.loads(msg)
+
+            if data["message"] == "success":
+                device = GET_DEVICE_BY_IEEEADDR(data["device_ieeeAddr"])
+
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | updated || Version || " + device.version + " >>> " + str(data["version"]))
+                UPDATE_MQTT_DEVICE_VERSION(device.ieeeAddr, data["version"])
+
+            else:
+                device = GET_DEVICE_BY_IEEEADDR(data["device_ieeeAddr"])
+
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " || " + str(data["message"]))                
+
+        except:
+            pass
+
+
     # ################
     # device processes
     # ################
@@ -512,7 +536,12 @@ def UPDATE_DEVICES(gateway):
                         device_type  = data['device_type']
                     except:
                         device_type  = ""                 
-                      
+
+                    try:
+                        version      = data['version']
+                    except:
+                        version      = ""  
+
                     try:
                         description  = data['description']
                     except:
@@ -550,7 +579,7 @@ def UPDATE_DEVICES(gateway):
                     # add new device
 
                     if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):
-                        ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, description, input_values, input_events, commands, commands_json)
+                        ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, version, description, input_values, input_events, commands, commands_json)
                       
                     # update existing device
 
@@ -558,7 +587,7 @@ def UPDATE_DEVICES(gateway):
                         id   = GET_DEVICE_BY_IEEEADDR(ieeeAddr).id
                         name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
                                         
-                        UPDATE_DEVICE(id, name, gateway, model, device_type, description, input_values, input_events, commands, commands_json)
+                        UPDATE_DEVICE(id, name, gateway, model, device_type, version, description, input_values, input_events, commands, commands_json)
                         SET_DEVICE_LAST_CONTACT(ieeeAddr)
                       
                     # update input values
@@ -628,13 +657,14 @@ def UPDATE_DEVICES(gateway):
                                                 new_device = ["", "", "", "", "", ""]
                                                 
                                             device_type   = new_device[0]
+                                            version       = ""                                            
                                             description   = new_device[1]
                                             input_values  = new_device[2]
                                             input_events  = new_device[3]  
                                             commands      = new_device[4]                                
                                             commands_json = new_device[5] 
 
-                                            ADD_DEVICE(name, gateway, ieeeAddr, new_model, device_type, description, input_values, input_events, commands, commands_json)
+                                            ADD_DEVICE(name, gateway, ieeeAddr, new_model, device_type, version, description, input_values, input_events, commands, commands_json)
 
                                         # update device informations
                                     
@@ -651,7 +681,8 @@ def UPDATE_DEVICES(gateway):
                                                 existing_device = GET_DEVICE_INFORMATIONS(existing_model)
                                                 
                                                 device_type   = existing_device[0]
-                                                description   = existing_device[1]
+                                                version       = ""                                                
+                                                description   = existing_device[1]                                            
                                                 input_values  = existing_device[2]
                                                 input_events  = existing_device[3]  
                                                 commands      = existing_device[4]  
@@ -659,7 +690,8 @@ def UPDATE_DEVICES(gateway):
 
                                             except Exception as e:
                                                 device_type   = device_data.device_type
-                                                description   = device_data.description 
+                                                version       = ""                                                
+                                                description   = device_data.description                                             
                                                 input_values  = device_data.input_values
                                                 input_events  = device_data.input_events
                                                 commands      = device_data.commands 
@@ -667,7 +699,7 @@ def UPDATE_DEVICES(gateway):
                                         
                                                 error = "Error | " + str(existing_model) + " not founded | " + str(e)
                                                                         
-                                            UPDATE_DEVICE(id, name, gateway, existing_model, device_type, description, input_values, input_events, commands, commands_json)
+                                            UPDATE_DEVICE(id, name, gateway, existing_model, device_type, version, description, input_values, input_events, commands, commands_json)
 
                                 except:
                                     pass

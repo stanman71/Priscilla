@@ -36,9 +36,15 @@ def settings_system_log():
     page_title       = 'homatiX | Settings | SystemLOG'
     page_description = 'The system log page.'
 
-    success_message_logfile = False
-    error_message_logfile   = ""
-    
+    success_message_logfile   = False
+    error_message_logfile     = ""
+
+    # error log system
+    if session.get('error_download_log_system', None) != None:
+        error_message_logfile = session.get('error_download_log_system') 
+        session['error_download_log_system'] = None
+
+
     selected_type_event    = "selected"
     selected_type_database = "selected"    
     selected_type_success  = "selected"   
@@ -46,10 +52,6 @@ def settings_system_log():
     selected_type_error    = "selected"
     log_search             = ""    
 
-    # error download logfile
-    if session.get('error_download_log', None) != None:
-        error_message_logfile = session.get('error_download_log')
-        session['error_download_log'] = None
 
     # create log types list
     selected_log_types = ["EVENT", "DATABASE", "SUCCESS", "WARNING", "ERROR"]     
@@ -118,8 +120,8 @@ def settings_system_log():
                             title=page_title,        
                             description=page_description,                                
                             content=render_template( 'pages/settings_system_log.html', 
-                                                    error_message_logfile=error_message_logfile,
-                                                    success_message_logfile=success_message_logfile,
+                                                    success_message_logfile=success_message_logfile,                                 
+                                                    error_message_logfile=error_message_logfile,                                           
                                                     timestamp=timestamp,
                                                     selected_type_event=selected_type_event,                                              
                                                     selected_type_database=selected_type_database,                            
@@ -133,20 +135,15 @@ def settings_system_log():
 
 
 # download system logfile
-@app.route('/settings/system_log/download/system_log/<path:filepath>')
+@app.route('/settings/system_log/download/<string:filename>')
 @login_required
 @permission_required
-def download_system_log(filepath): 
+def download_system_log(filename): 
     path = GET_PATH() + "/data/logs/"  
 
-    try:
-        if os.path.isfile(path + filepath) is False:
-            RESET_LOGFILE("log_system")  
-            
-        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /logs/" + filepath + " | downloaded") 
-
-    except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /logs/" + filepath + " | " + str(e))
-        session['error_download_log'] = "Download Log || " + str(e)
-
-    return send_from_directory(path, filepath)
+    if os.path.isfile(path + filename) == False:
+        session['error_download_log_system'] = "Download Log || File not founded" 
+        return redirect(url_for('settings_system_log'))
+    
+    else:
+        return send_from_directory(path, filename)

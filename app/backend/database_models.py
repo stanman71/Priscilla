@@ -74,7 +74,9 @@ class Devices(db.Model):
     ieeeAddr                      = db.Column(db.String(50), unique=True)  
     model                         = db.Column(db.String(50))
     device_type                   = db.Column(db.String(50))
-    description                   = db.Column(db.String(200))
+    version                       = db.Column(db.String(50))       
+    description                   = db.Column(db.String(200)) 
+    auto_update                   = db.Column(db.String(50), server_default=("False")) 
     input_values                  = db.Column(db.String(200))
     input_events                  = db.Column(db.String(200))
     commands                      = db.Column(db.String(200))    
@@ -89,7 +91,7 @@ class Devices(db.Model):
     exception_value_1             = db.Column(db.String(50), server_default=("None"))
     exception_value_2             = db.Column(db.String(50), server_default=("None"))
     exception_value_3             = db.Column(db.String(50), server_default=("None"))
-    update_available              = db.Column(db.String(50))
+    update_available              = db.Column(db.String(50), server_default=("False")) 
 
 class eMail(db.Model):
     __tablename__  = 'email'
@@ -369,9 +371,10 @@ if eMail.query.filter_by().first() == None:
 # scheduler tasks
 # ###############
 
-update_devices_founded       = False
-backup_database_founded      = False
-reset_log_files_founded      = False
+update_devices_founded  = False
+backup_database_founded = False
+reset_log_files_founded = False
+reset_system_founded    = False
 
 for task in Scheduler_Tasks.query.all():
     if task.name.lower() == "update_devices":
@@ -380,7 +383,8 @@ for task in Scheduler_Tasks.query.all():
         backup_database_founded = True
     if task.name.lower() == "reset_log_files":
         reset_log_files_founded = True
-
+    if task.name.lower() == "reset_system":
+        reset_system_founded = True
 
 if update_devices_founded == False:
     scheduler_task_update_devices = Scheduler_Tasks(
@@ -424,6 +428,19 @@ if reset_log_files_founded == False:
     db.session.add(scheduler_task_reset_log_files)
     db.session.commit()
 
+if reset_system_founded == False:
+    scheduler_task_reset_system = Scheduler_Tasks(
+        name          = "reset_system",
+        task          = "reset_system",
+        visible       = "False",        
+        trigger_time  = "True",
+        option_repeat = "True",
+        day           = "*",        
+        hour          = "05",
+        minute        = "00",        
+    )
+    db.session.add(scheduler_task_reset_system)
+    db.session.commit()
 
 # #######
 # spotify
@@ -453,7 +470,7 @@ if System.query.filter_by().first() == None:
 
 if User.query.filter_by(name='admin').first() is None:
     user = User(
-        id                 = 0,
+        id                 = 1,
         name               = "admin",
         email              = "member@example.com",
         role               = "administrator",
@@ -904,6 +921,11 @@ def GET_ALL_DEVICES(selector):
         for device in devices:      
             device_list.append(device)     
 
+    if selector == "mqtt":
+        for device in devices:   
+            if device.gateway == "mqtt":               
+                device_list.append(device)     
+
     if selector == "controller":
         for device in devices:
             if device.device_type == "controller":        
@@ -989,14 +1011,29 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", descriptio
         SET_DEVICE_LAST_CONTACT(ieeeAddr)  
 
 
-def SET_DEVICE_NAME(ieeeAddr, new_name):
+def SET_DEVICE_NAME(ieeeAddr, name):
     entry         = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
     previous_name = entry.name
-    
-    WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(previous_name) + " | changed || name || " + str(entry.name) + " >>> " + str(new_name))
-    
-    entry.name = new_name
-    db.session.commit()       
+
+    # values changed ?
+    if entry.name != name:    
+
+        entry.name = name    
+        db.session.commit()    
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(previous_name) + " | changed || name || " + str(name) + " >>> " + str(entry.name))
+
+
+def SET_DEVICE_AUTO_UPDATE(ieeeAddr, auto_update):
+    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+
+    # values changed ?
+    if entry.auto_update != auto_update:    
+
+        entry.auto_update = auto_update        
+        db.session.commit()    
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(entry.name) + " | changed || auto_update || " + str(auto_update) + " >>> " + str(entry.auto_update))
 
 
 def SET_DEVICE_LAST_CONTACT(ieeeAddr):
@@ -1061,16 +1098,17 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
         pass
 
 
-def UPDATE_DEVICE(id, name, gateway, model, device_type = "", description = "", input_values = "", input_events = "", commands = "", commands_json = ""):
+def UPDATE_DEVICE(id, name, gateway, model, device_type = "", version = "", description = "", input_values = "", input_events = "", commands = "", commands_json = ""):
     entry = Devices.query.filter_by(id=id).first()
 
     # values changed ?
-    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.description != description or entry.input_values != input_values or 
-        entry.input_events != input_events or entry.commands != commands or entry.commands_json != commands_json):
+    if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.version != version or entry.description != description or
+        entry.input_values != input_values or entry.input_events != input_events or entry.commands != commands or entry.commands_json != commands_json):
         
         entry.name          = name
         entry.model         = model
         entry.device_type   = device_type
+        entry.version       = version        
         entry.description   = description
         entry.input_values  = str(input_values)
         entry.input_events  = str(input_events)
@@ -1098,6 +1136,12 @@ def UPDATE_DEVICE_EXCEPTION_SENSOR_NAMES():
     except:
         pass
 
+
+def UPDATE_MQTT_DEVICE_VERSION(ieeeAddr, version):
+    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+    entry.version = version
+    db.session.commit()    
+    
 
 def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting, exception_sensor_ieeeAddr, 
                          exception_sensor_input_values, exception_value_1, exception_value_2, exception_value_3):

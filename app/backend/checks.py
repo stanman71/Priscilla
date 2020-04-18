@@ -1347,6 +1347,22 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
          return list_task_errors
 
 
+      # ############
+      # reset_system
+      # ############
+      
+      if task == "reset_system" and task_type == "scheduler":
+         return list_task_errors
+
+
+      # ###############
+      # shutdown_system
+      # ###############
+      
+      if task == "shutdown_system" and task_type == "scheduler":
+         return list_task_errors
+
+
       # ##################
       # request_sensordata
       # ##################
@@ -1580,3 +1596,22 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
       else:
          list_task_errors.append("Invalid task")        
          return list_task_errors
+
+
+""" ################### """
+"""  device exceptions  """
+""" ################### """
+
+def CHECK_SENSORDATA_JOBS(jobs): 
+   error_message_settings = []
+
+   for job in jobs:
+
+      if job.filename == None or job.filename == "None":
+         error_message_settings.append(job.name + " || Missing setting | Filename") 
+      if job.device_ieeeAddr == None or job.device_ieeeAddr == "None":
+         error_message_settings.append(job.name + " || Missing setting | Device") 
+      if job.sensor_key == None or job.sensor_key == "None":
+         error_message_settings.append(job.name + " || Missing setting | Sensor") 
+                  
+   return error_message_settings

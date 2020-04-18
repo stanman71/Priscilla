@@ -375,6 +375,19 @@
 
 <section id="table_sensordata_jobs"></section>    
 
+<!-- error message settings -->
+
+{% if error_message_settings != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_settings %}
+      {{ error }} <br>
+    {% endfor %}
+  </div>      
+{% endif %}  
+
 <!-- success message change settings -->
 
 {% if success_message_change_settings != [] %}
@@ -400,7 +413,6 @@
     {% endfor %}
   </div>
 {% endif %}  
-
 
             <div class="card ">
               <form method="POST">          
@@ -463,7 +475,7 @@
                           <td></td>
                           <td>
                             <div class="custom-control custom-radio custom-control-inline">
-                              <input type="radio" class="custom-control-input" id="radio_always_active_{{ entry.id }}" {% if entry.always_active == "True" %} checked="on" {% endif %} value="True" name="radio_input_setting_{{ entry.id }}">
+                              <input type="radio" class="custom-control-input" id="radio_always_active_{{ entry.id }}" {% if entry.always_active == "True" %} checked="on" {% endif %} value="True" name="set_radio_input_setting_{{ entry.id }}">
                               <label class="custom-control-label" for="radio_always_active_{{ entry.id }}">save everything</label>
                             </div> 
 
@@ -471,7 +483,7 @@
 
                               <br>       
                               <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="radio_request_only_{{ entry.id }}" {% if entry.always_active == "False" %} checked="on" {% endif %} value="False" name="radio_input_setting_{{ entry.id }}">
+                                <input type="radio" class="custom-control-input" id="radio_request_only_{{ entry.id }}" {% if entry.always_active == "False" %} checked="on" {% endif %} value="False" name="set_radio_input_setting_{{ entry.id }}">
                                 <label class="custom-control-label" for="radio_request_only_{{ entry.id }}">save requests only</label>
                               </div> 
 
@@ -562,11 +574,13 @@
 
             <div class="card ">   
               <div class="card-body"> 
+
                 {% if list_plants_datafiles != "No Files founded" %}
+
                   <div class="table-responsive">
                     <table class="table tablesorter"> 
                       <thead> 
-                        <th scope="col" style="width:77%" class="minwidth_200">Files</th>
+                        <th scope="col" style="width:80%" class="minwidth_200">Files</th>
                         <th scope="col" style="width:10%"></th>
                         <th scope="col" style="width:10%"></th>
                       </thead>                            
@@ -579,13 +593,13 @@
                           </td>  
                           <td>
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_file_dialog_{{entry.id}}">DELETE</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_file_dialog_{{ entry.id }}">DELETE</button>
                             <!-- Modal -->
-                            <div class="modal fade" id="delete_file_dialog_{{entry.id}}">
+                            <div class="modal fade" id="delete_file_dialog_{{ entry.id }}">
                               <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                   <div class="modal-header">
-                                    <h5 class="modal-title">Delete {{entry}} ?</h5>
+                                    <h5 class="modal-title">Delete {{ entry }} ?</h5>
                                   </div>          
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
@@ -596,13 +610,17 @@
                             </div>                                
                           </td> 
                         </tr>
+
                         {% endfor %} 
+
                       </tbody>
                     </table>
                   </div>
+
                 {% else %}
                   {{ list_sensordata_files }}
                 {% endif %}
+
               </div>            
             </div>
 
