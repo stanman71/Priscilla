@@ -395,7 +395,7 @@ if update_devices_founded == False:
         option_repeat  = "True",
         day            = "*",        
         hour           = "00",
-        minute         = "15",       
+        minute         = "00",       
     )
     db.session.add(scheduler_task_update_devices)
     db.session.commit()
@@ -409,7 +409,7 @@ if backup_database_founded == False:
         option_repeat = "True",
         day           = "*",        
         hour          = "00",
-        minute        = "00",        
+        minute        = "15",        
     )
     db.session.add(scheduler_task_backup_database)
     db.session.commit()
