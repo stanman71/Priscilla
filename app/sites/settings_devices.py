@@ -115,7 +115,6 @@ def UPLOAD_FIRMWARE(file):
 
 
 
-
 @app.route('/settings/devices', methods=['GET', 'POST'])
 @login_required
 @permission_required

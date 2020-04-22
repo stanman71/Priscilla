@@ -392,3 +392,11 @@ Timestamp,Type,Description
 2020-04-17 00:53:20,DATABASE,|Network || Device - CON_BED || changed |||| auto_update |||| False >>> False|
 2020-04-17 00:53:20,DATABASE,|Network || Device - LED_STRIP_KITCHEN || changed |||| auto_update |||| False >>> False|
 2020-04-17 00:53:20,DATABASE,|Network || Device - CON_LIGHT_LIVINGROOM || changed |||| auto_update |||| False >>> False|
+2020-04-22 09:01:39,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-22 09:01:39,SUCCESS,|Music || Spotify || Token || updated|
+2020-04-22 09:01:40,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-22 09:01:40,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-22 09:03:06,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-04-22 09:03:06,SUCCESS,|Music || Spotify || Token || updated|
+2020-04-22 09:03:07,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-04-22 09:03:07,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|

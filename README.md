@@ -1,4 +1,4 @@
-# homatix
+# homatiX
 
 This project creates a smarthome environment.
 
