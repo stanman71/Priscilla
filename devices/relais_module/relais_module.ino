@@ -332,7 +332,7 @@ void callback (char* topic, byte* payload, unsigned int length) {
         }
         if (channel_4_state != "DISABLED"){                
             data_commands.add("{'channel_4:'ON'}");     
-            data_commands.add("{'CHANNEL_4:'OFF'}");    
+            data_commands.add("{'channel_4:'OFF'}");    
         }        
 
         // convert msg to char

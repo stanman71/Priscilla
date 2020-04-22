@@ -71,9 +71,9 @@ https://diyi0t.com/servo-motor-tutorial-for-arduino-and-esp8266/
 
 #### 1.4 Controller
 
-- Wemos D1 Mini v3 (China only)
+- Wemos D1 Mini v3
 
-       >>> https://www.ebay.de/itm/WEMOS-D1-mini-ESP8266-4MB-V3-0-0-WIFI-Internet-of-Things-Based-Development-Board/273170891811
+       >>> https://www.berrybase.de/raspberry-pi-co/esp8266-esp32/d1-mini-esp8266-entwicklungsboard
 
 - voltage regulator L7805
 

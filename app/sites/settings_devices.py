@@ -472,14 +472,6 @@ def settings_devices():
                 if CHECK_ZIGBEE2MQTT_PAIRING("True"):             
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing enabled | successful") 
 
-                    # restart zigbee2mqtt
-                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Shutdown Zigbee2MQTT...") 
-                    os.system("sudo systemctl stop zigbee2mqtt")
-                    time.sleep(5)
-                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Starting Zigbee2MQTT...")                     
-                    os.system("sudo systemctl start zigbee2mqtt")
-                    time.sleep(5)       
-
                     SET_ZIGBEE2MQTT_PAIRING_SETTING("True")
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
                     success_message_zigbee_pairing.append("Setting successfully changed")                     

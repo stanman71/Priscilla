@@ -41,28 +41,22 @@ int PIN_LED_RED   = 12;               // D6
 // CUSTOM SETTINGS
 // ###############
 
-int TRANSISTOR_CONTROL = 4;           // D2
+int SENSOR_1 = 5;                     // D1 
+int SENSOR_2 = 4;                     // D2 
+int SENSOR_3 = A0;                    // A0 
 
-char model[40]       = "led_strip_controller";
-char device_type[40] = "led_rgb";
-char description[80] = "MQTT LED Strip Controller";
+char model[40]       = "sensor_motion2_light";
+char device_type[40] = "sensor_passiv";
+char description[80] = "MQTT Motion Sensor";
 
-String current_Version = "1.8";
+String current_Version = "1.0";
 
-#include <FastLED.h>  
+int sensor_1_last_value = 0;
+int sensor_2_last_value = 0;
+int sensor_3_last_value = 0;
 
-#define NUM_LEDS 300
-CRGB leds[NUM_LEDS];
+int disable_sensor_3_timer = 0;
 
-String state   = "OFF";
-int brightness = 0;
-int red        = 0;
-int green      = 0;
-int blue       = 0;
-
-boolean state_changed = true;
-
-#define DATA_PIN 5                    // D1
 
 // ############
 // split string
@@ -303,14 +297,12 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["version"]     = current_Version;        
         msg["description"] = description;
     
-        JsonArray data_inputs = msg.createNestedArray("inputs");
-        data_inputs.add("");   
+        JsonArray data_inputs = msg.createNestedArray("input_values");
+        data_inputs.add("occupancy");        
+        data_inputs.add("illuminance"); 
 
-        JsonArray data_commands = msg.createNestedArray("commands");
-        data_commands.add("");     
-
+        JsonArray data_commands      = msg.createNestedArray("commands");
         JsonArray data_commands_json = msg.createNestedArray("commands_json");
-        data_commands_json.add("");     
 
         // convert msg to char
         char msg_Char[512];
@@ -329,68 +321,7 @@ void callback (char* topic, byte* payload, unsigned int length) {
     
     if (check_ieeeAddr == ieeeAddr and check_command == "get"){
         send_default_mqtt_message();    
-    }    
-
-    // set 
-    
-    if (check_ieeeAddr == ieeeAddr and check_command == "set"){
-
-        char msg[length+1];
-  
-        for (int i = 0; i < length; i++) {
-            msg[i] = (char)payload[i];
-        }
-        msg[length] = '\0';
-        
-        Serial.print("msg: ");
-        Serial.println(msg);
-
-        // convert msg to json
-        DynamicJsonDocument msg_json(128);
-        deserializeJson(msg_json, msg);
-
-        String temp_state = msg_json["state"];
-        
-        state      = temp_state;    
-        brightness = msg_json["brightness"];
-        red        = msg_json["color"]["r"];
-        green      = msg_json["color"]["g"];
-        blue       = msg_json["color"]["b"];
-
-        state_changed = true;
-
-        if (state == "ON" and brightness != 0){   
-
-            Serial.print("State: ");
-            Serial.print(state); 
-            Serial.print(" / Brightmess: ");
-            Serial.print(brightness);            
-            Serial.print(" / Red: ");
-            Serial.print(red);            
-            Serial.print(" / Green: ");
-            Serial.print(green);            
-            Serial.print(" / Blue: "); 
-            Serial.println(blue);             
-
-        } else {
-
-            state      = "OFF";
-            brightness = 0;
-            red        = 0;
-            green      = 0;
-            blue       = 0;
-
-            Serial.print("State: ");
-            Serial.print(state); 
-         
-        }       
-
-        while (!client.connected()) {
-            reconnect();
-        }
-        
-        send_default_mqtt_message();                          
-    }     
+    }      
 }
 
 
@@ -408,11 +339,13 @@ void send_default_mqtt_message() {
     // create msg as json
     DynamicJsonDocument msg(128);
 
-    msg["state"]      = state;
-    msg["brightness"] = brightness;
-    msg["color"]["r"] = red;
-    msg["color"]["g"] = green;
-    msg["color"]["b"] = blue;
+    if (digitalRead(SENSOR_1) == 0 and digitalRead(SENSOR_2) == 0){
+        msg["occupancy"] = "False";
+    } else {
+        msg["occupancy"] = "True";
+    }
+
+    msg["illuminance"] = sensor_3_last_value;          
 
     // convert msg to char
     char msg_Char[128];
@@ -424,7 +357,7 @@ void send_default_mqtt_message() {
     Serial.println(msg_Char);
     Serial.println();
     
-    client.publish(path, msg_Char);    
+    client.publish(path, msg_Char);      
 }
 
 
@@ -475,10 +408,11 @@ void setup() {
 
     // custom settings
     
-    pinMode(TRANSISTOR_CONTROL, OUTPUT);  
-    digitalWrite(TRANSISTOR_CONTROL, LOW);   
+    pinMode(SENSOR_1, INPUT); 
+    pinMode(SENSOR_2, INPUT); 
+    pinMode(SENSOR_3, INPUT); 
     
-    FastLED.addLeds<WS2813, DATA_PIN, RGB>(leds, NUM_LEDS);
+    sensor_3_last_value = analogRead(SENSOR_3);
 }
 
 
@@ -508,26 +442,36 @@ void loop() {
 
     // custom settings
 
-    if (state_changed == true){   
+    // if occupancy is true, freeze illuminance value for 30 seconds
+    if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
+        disable_sensor_3_timer = 30000;
+    }   
 
-        if (brightness != 0){   
-            digitalWrite(TRANSISTOR_CONTROL, HIGH); 
-
-            delay(250);
-          
-            FastLED.clear();
-            fill_solid( leds, NUM_LEDS, CRGB(green, red, blue));
-            FastLED.setBrightness(brightness);
-            FastLED.show();
-
-        } else {
-            digitalWrite(TRANSISTOR_CONTROL, LOW);  
-        }
-
-        state_changed == false;
+    // illuminance timer
+    if (disable_sensor_3_timer > 0){
+        disable_sensor_3_timer = disable_sensor_3_timer - 10; 
+    } else {
+        disable_sensor_3_timer = 0;
     }
 
-    delay(100);
+    // read illuminance sensor ?    
+    if (disable_sensor_3_timer == 0){
+        sensor_3_last_value = analogRead(SENSOR_3);
+    }         
+
+    // send message ?     
+    if (digitalRead(SENSOR_1) == 1 or 
+        digitalRead(SENSOR_2) == 1 or 
+        sensor_1_last_value != digitalRead(SENSOR_1) or 
+        sensor_2_last_value != digitalRead(SENSOR_2)){
+
+        sensor_1_last_value = digitalRead(SENSOR_1);
+        sensor_2_last_value = digitalRead(SENSOR_2);
+        send_default_mqtt_message();
+        delay(2000);
+    } 
+
+    delay(10);
     client.loop();
 }
 

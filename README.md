@@ -7,7 +7,7 @@ This project creates a smarthome environment.
       * <a href="#2.1 Installation">2.1 Installation</a>
       * <a href="#2.2 Autostart">2.2 Autostart</a>      
       * <a href="#2.3 Manually Control">2.3 Manually Control</a>
-   * <a href="#3 NQTT Broker Mosquitto">3 MQTT Broker Mosquitto</a>
+   * <a href="#3 MQTT Broker Mosquitto">3 MQTT Broker Mosquitto</a>
       * <a href="#3.1 Installation">3.1 Installation</a>   
       * <a href="#3.2 Autostart">3.2 Autostart</a>           
       * <a href="#3.3 Authentification">3.3 Authentification</a>            
@@ -40,21 +40,19 @@ This project creates a smarthome environment.
 - user management and user rights
 - smartphone view
 
-</br>
+<br>
 ------------
-</br>
+<br>
 
 <a name="1 Prepare Raspian"></a>
 
 ### 1 Prepare Raspian 
 
-https://domoticproject.com/extending-life-raspberry-pi-sd-card/
-</br>
-https://www.antary.de/2018/12/28/raspberry-pi-ein-blick-auf-den-stromverbrauch/
-</br>
+https://domoticproject.com/extending-life-raspberry-pi-sd-card/ <br>
+https://www.antary.de/2018/12/28/raspberry-pi-ein-blick-auf-den-stromverbrauch/ <br>
 https://scribles.net/disabling-bluetooth-on-raspberry-pi/
-</br>
-</br>
+<br>
+<br>
 
 - activate ssh on your raspberry pi
 
@@ -99,9 +97,9 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
 
        >>> sudo timedatectl set-timezone Europe/Berlin
 
-</br>
+<br>
 ------------
-</br>
+<br>
 
 <a name="2 Smarthome"></a>
 
@@ -160,7 +158,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
        >>> admin
        >>> qwer1234
 
-</br>
+<br>
 
 <a name="2.2 Autostart"></a>
 
@@ -196,7 +194,7 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
        >>> systemctl status smarthome.service
        >>> journalctl -u smarthome
 
-</br>
+<br>
 
 <a name="2.3 Manually Control"></a>
 
@@ -215,21 +213,21 @@ https://scribles.net/disabling-bluetooth-on-raspberry-pi/
        >>> sudo killall python3
 
 
-</br>
+<br>
 ------------
-</br>
+<br>
 
-<a name="3 NQTT Broker Mosquitto"></a>
+<a name="3 MQTT Broker Mosquitto"></a>
 
-### 3 NQTT Broker Mosquitto
+### 3 MQTT Broker Mosquitto
 
 https://mosquitto.org/
-</br>
+<br>
 https://github.com/eclipse/mosquitto
-</br>
+<br>
 https://xperimentia.com/2015/08/20/installing-mosquitto-mqtt-broker-on-raspberry-pi-with-websockets/
-</br>
-</br>
+<br>
+<br>
 
 <a name="3.1 Installation"></a>
 
@@ -246,15 +244,15 @@ https://xperimentia.com/2015/08/20/installing-mosquitto-mqtt-broker-on-raspberry
        >>> sudo apt-get install mosquitto-clients -y
 
 
-</br>
+<br>
 
 <a name="3.2 Autostart"></a>
 
 #### 3.2 Autostart
 
 https://forum-raspberrypi.de/forum/thread/31959-mosquitto-autostart/
-</br>
-</br>
+<br>
+<br>
 
 - create an autostart-file
 
@@ -286,15 +284,15 @@ https://forum-raspberrypi.de/forum/thread/31959-mosquitto-autostart/
        >>> journalctl -u mosquitto
        >>> sudo cat /var/log/mosquitto/mosquitto.log
 
-</br>
+<br>
 
 <a name="3.3 Authentification"></a>
 
 #### 3.3 Authentification
 
 https://medium.com/@eranda/setting-up-authentication-on-mosquitto-mqtt-broker-de5df2e29afc
-</br>
-</br>
+<br>
+<br>
 
 - create an user
 
@@ -321,21 +319,21 @@ https://medium.com/@eranda/setting-up-authentication-on-mosquitto-mqtt-broker-de
        >>> mosquitto_sub -h localhost -p 1883 -t "test_channel" 
        >>> mosquitto_sub -h localhost -p 1884 -t "test_channel" -u <user_name> -P <password> 
 
-</br>
+<br>
 ------------
-</br>
+<br>
 
 <a name="4 ZigBee2MQTT"></a>
 
 ### 4 ZigBee2MQTT
 
 https://gadget-freakz.com/diy-zigbee-gateway/
-</br>
+<br>
 https://www.zigbee2mqtt.io/
-</br>
+<br>
 https://github.com/Koenkk/zigbee2mqtt
-</br>
-</br>
+<br>
+<br>
 
 <a name="4.1 Installation"></a>
 
@@ -370,7 +368,7 @@ https://github.com/Koenkk/zigbee2mqtt
 
        >>> https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
 
-</br>
+<br>
 
 <a name="4.2 Configuration"></a>
 
@@ -410,7 +408,7 @@ home
              log_file: zigbee2mqtt.txt
              log_rotation: false             
 
-</br>
+<br>
 
 <a name="4.3 Manually Control"></a>
 
@@ -433,7 +431,7 @@ home
 
        >>> cp -R data data-backup
 
-</br>
+<br>
 
 <a name="4.4 Pairing"></a>
 
@@ -444,7 +442,7 @@ home
 - zigbee2mqtt setting to allow joining: {permit_join: true}
 - if you remove devices from your network and don't change your network_key, they can rejoin, even without the permission
 
-</br>
+<br>
 
 <a name="4.5 Autostart"></a>
 
@@ -482,15 +480,15 @@ home
        >>> systemctl status zigbee2mqtt.service
        >>> journalctl -u zigbee2mqtt
 
-</br>
+<br>
 
 <a name="4.6 Update"></a>
 
 #### 4.6 Update
 
 https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
-</br>
-</br>
+<br>
+<br>
 
 - run the follwing commands to install the latest zigbee2mqtt version
 
@@ -505,9 +503,9 @@ https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
        >>> sudo rm -rf data-backup
        >>> sudo systemctl start zigbee2mqtt
 
-</br>
+<br>
 ------------
-</br>
+<br>
 
 <a name="5 Zigbee Devices"></a>
 
@@ -561,6 +559,10 @@ https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
 - PHILIPS Hue white GU10 (9290018195 / LWG004)
 - PHILIPS Hue white ambiance GU10 (8718696598283 / 929001953301)
 - PHILIPS Hue white & color ambiance GU10 (929001953101 / 8718696485880)
+
+    > joining conflict with IKEA SYMFONISK sound controller 
+    > temporary remove the IKEA device 
+
 - PHILIPS Hue Bloom (7299760PH)
 - PHILIPS Hue Go (7146060PH / 7602031P7)
 - PHILIPS Hue white & color ambiance LightStrip (915005106701)
@@ -593,7 +595,7 @@ https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
 - XIAOMI Aqara wireless relay controller (LLKZMK11LM)
 - XIAOMI Aqara curtain motor (ZNCLDJ11LM / ZNCLDJ12LM)
 
-</br>
+<br>
 
 <a name="5.2 Add new Devices"></a>
 
@@ -610,19 +612,19 @@ https://www.zigbee2mqtt.io/getting_started/running_zigbee2mqtt.html
        >>> /home/pi/smarthome/data/zigbee_device_informations.json
 
 
-</br>
+<br>
 ------------
-</br>
+<br>
 
 <a name="6 Logitech Media Server (LMS)"></a>
 
 ### 6 Logitech Media Server (LMS)
 
 https://www.hagensieker.com/wordpress/2018/06/12/302/
-</br>
+<br>
 http://downloads.slimdevices.com/nightly/7.9/sc/
-</br>
-</br>
+<br>
+<br>
 
 <a name="6.1 Installation"></a>
 
@@ -640,7 +642,7 @@ http://downloads.slimdevices.com/nightly/7.9/sc/
 
        >>> sudo systemctl enable logitechmediaserver
 
-</br>
+<br>
 
 <a name="6.2 Squeezelite Player"></a>
 
@@ -669,7 +671,7 @@ http://downloads.slimdevices.com/nightly/7.9/sc/
 
        >>> sudo systemctl enable squeezelite
 
-</br>
+<br>
 
 <a name="6.3 LMS Configuration"></a>
 

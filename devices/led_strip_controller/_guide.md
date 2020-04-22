@@ -68,9 +68,9 @@ http://www.thesmarthomehookup.com/the-complete-guide-to-selecting-individually-a
 
 #### 1.3 Controller
 
-- Wemos D1 Mini v3 (China only)
+- Wemos D1 Mini v3 
 
-       >>> https://www.ebay.de/itm/WEMOS-D1-mini-ESP8266-4MB-V3-0-0-WIFI-Internet-of-Things-Based-Development-Board/273170891811
+       >>> https://www.berrybase.de/raspberry-pi-co/esp8266-esp32/d1-mini-esp8266-entwicklungsboard
 
 - voltage regulator L7805
 
