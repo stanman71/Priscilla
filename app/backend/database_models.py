@@ -1025,7 +1025,8 @@ def SET_DEVICE_NAME(ieeeAddr, name):
 
 
 def SET_DEVICE_AUTO_UPDATE(ieeeAddr, auto_update):
-    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+    entry            = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
+    previous_setting = entry.auto_update
 
     # values changed ?
     if entry.auto_update != auto_update:    
@@ -1033,7 +1034,7 @@ def SET_DEVICE_AUTO_UPDATE(ieeeAddr, auto_update):
         entry.auto_update = auto_update        
         db.session.commit()    
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(entry.name) + " | changed || auto_update || " + str(auto_update) + " >>> " + str(entry.auto_update))
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(entry.name) + " | changed || auto_update || " + str(previous_setting) + " >>> " + str(entry.auto_update))
 
 
 def SET_DEVICE_LAST_CONTACT(ieeeAddr):
