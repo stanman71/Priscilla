@@ -7,8 +7,9 @@ from ping3               import ping
 from app                          import app
 from app.backend.database_models  import *
 from app.backend.email            import SEND_EMAIL
+from app.backend.mqtt             import CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.file_management  import UPDATE_NETWORK_SETTINGS_LINUX, GET_ALL_BACKUP_FILES, BACKUP_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP, WRITE_LOGFILE_SYSTEM
-from app.backend.shared_resources import SET_ZIGBEE2MQTT_PAIRING_STATUS, SET_ZIGBEE2MQTT_PAIRING_SETTING
+from app.backend.shared_resources import *
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
@@ -17,6 +18,7 @@ import datetime
 import os
 import time
 import threading
+import heapq
 
 
 # access rights
@@ -168,6 +170,45 @@ def settings_system():
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")  
                     print("System | Services | ZigBee2MQTT | enabled") 
                     time.sleep(1)
+
+                    # check mqtt connection
+                    if GET_MQTT_CONNECTION_STATUS() == True:  
+
+                        # check zigbee2mqtt connection      
+                        if CHECK_ZIGBEE2MQTT_STARTED():  
+                            print("Network | ZigBee2MQTT | connected") 
+                            
+                            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | connected")
+
+                            START_DISABLE_ZIGBEE_PAIRING_THREAD()
+
+                            # deactivate pairing at startup
+                            if not CHECK_ZIGBEE2MQTT_PAIRING("False"):   
+
+                                heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "false")))    
+
+                                if CHECK_ZIGBEE2MQTT_PAIRING("False"):             
+                                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
+                                    SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
+                                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled") 
+                                else:             
+                                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
+                                    SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
+                                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
+
+                        else:
+                            print("ERROR: Network | ZigBee2MQTT | No Connection") 
+                            
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")        
+                            SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | No Connection")  
+                            SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
+                            SET_ZIGBEE2MQTT_PAIRING_STATUS("No Zigbee2MQTT Connection")        
+
+                    else:
+                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | No MQTT connection") 
+                        SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
+                        SET_ZIGBEE2MQTT_PAIRING_STATUS("No MQTT connection")                  
+
                 except Exception as e:
                     WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | ZigBee2MQTT | " + str(e)) 
                     print("ERROR: System | Services | ZigBee2MQTT | " + str(e))      

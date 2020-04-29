@@ -222,7 +222,7 @@ def DISABLE_ZIGBEE_PAIRING_THREAD():
 	while True:
 
 		# check mqtt connection
-		if GET_DEVICE_CONNECTION_MQTT() == True:  
+		if GET_MQTT_CONNECTION_STATUS() == True:  
 
 			try:
 
@@ -276,21 +276,21 @@ def DISABLE_ZIGBEE_PAIRING_THREAD():
 """  system messages  """
 """ ################# """
 
-device_connetion_mqtt        = False
-device_connetion_zigbee2mqtt = False
+mqtt_connetion_status        = False
+zigbee2mqtt_connetion_status = False
 
-def GET_DEVICE_CONNECTION_MQTT():
-    global device_connetion_mqtt
-    return device_connetion_mqtt 
+def GET_MQTT_CONNECTION_STATUS():
+    global mqtt_connetion_status
+    return mqtt_connetion_status 
 
-def SET_DEVICE_CONNECTION_MQTT(value):
-	global device_connetion_mqtt
-	device_connetion_mqtt = value
+def SET_MQTT_CONNECTION_STATUS(value):
+	global mqtt_connetion_status
+	mqtt_connetion_status = value
 
-def GET_DEVICE_CONNECTION_ZIGBEE2MQTT():
-    global device_connetion_zigbee2mqtt
-    return device_connetion_zigbee2mqtt	
+def GET_ZIGBEE2MQTT_CONNECTION_STATUS():
+    global zigbee2mqtt_connetion_status
+    return zigbee2mqtt_connetion_status	
 
-def SET_DEVICE_CONNECTION_ZIGBEE2MQTT(value):
-	global device_connetion_zigbee2mqtt
-	device_connetion_zigbee2mqtt = value	
+def SET_ZIGBEE2MQTT_CONNECTION_STATUS(value):
+	global zigbee2mqtt_connetion_status
+	zigbee2mqtt_connetion_status = value	

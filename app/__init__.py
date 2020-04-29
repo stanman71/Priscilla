@@ -370,7 +370,7 @@ for device in GET_ALL_DEVICES(""):
 
 from app.sites                      import index, about, dashboard, scheduler, programs, lighting_scenes, lighting_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_threads, settings_devices, settings_controller, settings_users, settings_system_log, errors
 from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
-from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_AT_STARTUP, CHECK_ZIGBEE2MQTT_PAIRING
+from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.email              import SEND_EMAIL
 from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
 from app.backend.spotify            import START_REFRESH_SPOTIFY_TOKEN_THREAD
@@ -440,9 +440,10 @@ except Exception as e:
 if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
 
     # check mqtt connection
-    if GET_DEVICE_CONNECTION_MQTT() == True:  
+    if GET_MQTT_CONNECTION_STATUS() == True:  
 
-        if CHECK_ZIGBEE2MQTT_AT_STARTUP():  
+        # check zigbee2mqtt connection      
+        if CHECK_ZIGBEE2MQTT_STARTED():  
             print("Network | ZigBee2MQTT | connected") 
             
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | connected")

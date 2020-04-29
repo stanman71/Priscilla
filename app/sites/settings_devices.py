@@ -164,11 +164,11 @@ def settings_devices():
         session['error_download_log_devices'] = None
 
 
-    if GET_DEVICE_CONNECTION_MQTT() == False:
+    if GET_MQTT_CONNECTION_STATUS() == False:
         error_message_mqtt_connection = True
 
     if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
-        if GET_DEVICE_CONNECTION_ZIGBEE2MQTT() == False:
+        if GET_ZIGBEE2MQTT_CONNECTION_STATUS() == False:
             error_message_zigbee2mqtt_connection = True
 
     # delete message
@@ -225,7 +225,7 @@ def settings_devices():
                             if gateway == "zigbee2mqtt":
 
                                 # check mqtt connection
-                                if GET_DEVICE_CONNECTION_MQTT() == True:
+                                if GET_MQTT_CONNECTION_STATUS() == True:
 
                                     # check zigbee service
                                     if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":                                     
@@ -272,7 +272,7 @@ def settings_devices():
     if request.form.get("update_devices") != None:     
 
         # check mqtt connection
-        if GET_DEVICE_CONNECTION_MQTT() == True:  
+        if GET_MQTT_CONNECTION_STATUS() == True:  
 
             result_mqtt        = UPDATE_DEVICES("mqtt")
             result_zigbee2mqtt = UPDATE_DEVICES("zigbee2mqtt")
@@ -453,7 +453,7 @@ def settings_devices():
     if request.form.get("set_zigbee_pairing") != None: 
 
         # check mqtt connection
-        if GET_DEVICE_CONNECTION_MQTT() != True:  
+        if GET_MQTT_CONNECTION_STATUS() != True:  
             error_message_zigbee_pairing.append("No MQTT connection")  
 
         # check zigbee service

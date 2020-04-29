@@ -62,7 +62,7 @@ SHOW_DIALOG_bool      = True
 SHOW_DIALOG_str       = str(SHOW_DIALOG_bool).lower()
 
 #  Client Tokens
-SPOTIFY_TOKEN         = ''
+SPOTIFY_TOKEN         = ""
 SPOTIFY_REFRESH_TOKEN = GET_SPOTIFY_REFRESH_TOKEN()
 
 
@@ -195,7 +195,7 @@ def REFRESH_SPOTIFY_TOKEN_THREAD():
         try:
 
             # check spotify login 
-            if SPOTIFY_REFRESH_TOKEN != "":
+            if SPOTIFY_TOKEN != "":
 
                 if current_timer == 3000:
 

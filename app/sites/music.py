@@ -6,7 +6,7 @@ from functools           import wraps
 from app                          import app
 from app.backend.database_models  import *
 from app.backend.spotify          import *
-from app.backend.shared_resources import mqtt_message_queue, GET_MQTT_INCOMING_MESSAGES, GET_DEVICE_CONNECTION_MQTT
+from app.backend.shared_resources import mqtt_message_queue, GET_MQTT_INCOMING_MESSAGES, GET_MQTT_CONNECTION_STATUS
 from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
 from app.common                   import COMMON, STATUS
@@ -289,7 +289,7 @@ def music():
     """  table client_music  """
     """ #################### """   
 
-    if GET_DEVICE_CONNECTION_MQTT() == True:
+    if GET_MQTT_CONNECTION_STATUS() == True:
 
         if request.form.get("save_client_music_settings") != None:
             

@@ -36,14 +36,14 @@ def MQTT_RECEIVE_THREAD():
             print("ERROR: Network | MQTT | Returned Code = " + str(rc)) 
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | Returned Code = " + str(rc))         
         
-            SET_DEVICE_CONNECTION_MQTT(False)   
+            SET_MQTT_CONNECTION_STATUS(False)   
         
         else:
             client.subscribe("smarthome/#")
   
             print("Network | MQTT | connected") 
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | MQTT | connected")
-            SET_DEVICE_CONNECTION_MQTT(True)
+            SET_MQTT_CONNECTION_STATUS(True)
 
 
     def on_message(client, userdata, message):     
@@ -214,7 +214,7 @@ def MQTT_RECEIVE_THREAD():
     except Exception as e:
         print("ERROR: Network | MQTT | " + str(e)) 
         WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | " + str(e))        
-        SET_DEVICE_CONNECTION_MQTT(False)    
+        SET_MQTT_CONNECTION_STATUS(False)    
 
 
 """ ############## """
@@ -421,10 +421,10 @@ def MQTT_PUBLISH_THREAD():
         if rc != 0:
             print("ERROR: Network | MQTT | Returned Code = " + str(rc)) 
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | Returned Code = " + str(rc))         
-            SET_DEVICE_CONNECTION_MQTT(False)   
+            SET_MQTT_CONNECTION_STATUS(False)   
         
         else:
-            SET_DEVICE_CONNECTION_MQTT(True)
+            SET_MQTT_CONNECTION_STATUS(True)
 
     try:
         client = mqtt.Client()
@@ -435,13 +435,13 @@ def MQTT_PUBLISH_THREAD():
     except Exception as e:
         print("ERROR: Network | MQTT | " + str(e)) 
         WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | " + str(e))    
-        SET_DEVICE_CONNECTION_MQTT(False)        
+        SET_MQTT_CONNECTION_STATUS(False)        
 
 
     while True:
         try:  
             # check mqtt connection
-            if GET_DEVICE_CONNECTION_MQTT() == True:              
+            if GET_MQTT_CONNECTION_STATUS() == True:              
                 mqtt_message = heapq.heappop(mqtt_message_queue)[1]      
                 client.publish(mqtt_message[0],mqtt_message[1])        
 
@@ -477,10 +477,10 @@ def MQTT_CONTROL_THREAD():
     
     def on_connect(client, userdata, flags, rc):
         if rc != 0:    
-            SET_DEVICE_CONNECTION_MQTT(False)   
+            SET_MQTT_CONNECTION_STATUS(False)   
         
         else:
-            SET_DEVICE_CONNECTION_MQTT(True)
+            SET_MQTT_CONNECTION_STATUS(True)
 
     while True:
 
@@ -491,7 +491,7 @@ def MQTT_CONTROL_THREAD():
             check_client.disconnect()
     
         except Exception as e:
-            SET_DEVICE_CONNECTION_MQTT(False)        
+            SET_MQTT_CONNECTION_STATUS(False)        
                     
         time.sleep(10)
 
@@ -739,8 +739,8 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats, log_report = True):
     device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
     counter = 1
 
-    # seconds = repeats * 5
-    while counter != (repeats * 5):  
+    # 10 seconds
+    while counter < 50:  
         
         if device.gateway == "mqtt":
             result = CHECK_MQTT_SETTING(device.ieeeAddr, setting)
@@ -828,32 +828,34 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
 """  check functions  """
 """ ################# """
  
-def CHECK_ZIGBEE2MQTT_AT_STARTUP():    
+def CHECK_ZIGBEE2MQTT_STARTED():    
     counter = 1
 
-    while counter != 5:      
+    # 10 seconds
+    while counter < 50:      
         for message in GET_MQTT_INCOMING_MESSAGES(10):          
             if message[1] == "smarthome/zigbee2mqtt/bridge/state":
             
                 try:
                     if message[2] == "online":
-                        SET_DEVICE_CONNECTION_ZIGBEE2MQTT(True)
+                        SET_ZIGBEE2MQTT_CONNECTION_STATUS(True)
                         return True
 
                 except:
                     pass
 
         counter = counter + 1
-        time.sleep(1)
+        time.sleep(0.2)
 
-    SET_DEVICE_CONNECTION_ZIGBEE2MQTT(False)     
+    SET_ZIGBEE2MQTT_CONNECTION_STATUS(False)     
     return False
 
 
 def CHECK_ZIGBEE2MQTT_NAME_CHANGED(previous_name, new_name):   
     counter = 1
 
-    while counter != 10:      
+    # 10 seconds
+    while counter < 50:      
         for message in GET_MQTT_INCOMING_MESSAGES(10):      
             if message[1] == "smarthome/zigbee2mqtt/bridge/log":
             
@@ -867,7 +869,7 @@ def CHECK_ZIGBEE2MQTT_NAME_CHANGED(previous_name, new_name):
                     pass
 
         counter = counter + 1
-        time.sleep(1)
+        time.sleep(0.2)
                 
     return False
 
@@ -875,7 +877,8 @@ def CHECK_ZIGBEE2MQTT_NAME_CHANGED(previous_name, new_name):
 def CHECK_ZIGBEE2MQTT_PAIRING(pairing_setting):    
     counter = 1
 
-    while counter != 10:       
+    # 10 seconds
+    while counter < 50:       
         for message in GET_MQTT_INCOMING_MESSAGES(15):
             if message[1] == "smarthome/zigbee2mqtt/bridge/config":
             
@@ -894,7 +897,7 @@ def CHECK_ZIGBEE2MQTT_PAIRING(pairing_setting):
                     pass
 
         counter = counter + 1
-        time.sleep(1)
+        time.sleep(0.2)
                     
     return False
 
@@ -902,7 +905,8 @@ def CHECK_ZIGBEE2MQTT_PAIRING(pairing_setting):
 def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):        
     counter = 1
 
-    while counter != 15:       
+    # 15 seconds
+    while counter < 75:       
         for message in GET_MQTT_INCOMING_MESSAGES(15):
             if message[1] == "smarthome/zigbee2mqtt/bridge/log":
             
@@ -919,7 +923,7 @@ def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
                     pass
 
         counter = counter + 1
-        time.sleep(1)
+        time.sleep(0.2)
                     
     return False 
 
