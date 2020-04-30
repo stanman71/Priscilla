@@ -317,7 +317,7 @@ class Spotify_Settings(db.Model):
     id                    = db.Column(db.Integer, primary_key=True, autoincrement = True)
     client_id             = db.Column(db.String(50))
     client_secret         = db.Column(db.String(50))   
-    refresh_token         = db.Column(db.String(50))   
+    refresh_token         = db.Column(db.String(50), server_default=(""))   
     default_device_id     = db.Column(db.String(50))   
     default_device_name   = db.Column(db.String(50))       
     default_playlist_uri  = db.Column(db.String(50))   

@@ -19,6 +19,7 @@ from app.backend.database_models  import *
 from app.backend.file_management  import *
 from app.backend.email            import SEND_EMAIL
 from app.backend.shared_resources import mqtt_message_queue
+from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS
 
 import requests
 import json
@@ -195,7 +196,7 @@ def REFRESH_SPOTIFY_TOKEN_THREAD():
         try:
 
             # check spotify login 
-            if SPOTIFY_TOKEN != "":
+            if SPOTIFY_REFRESH_TOKEN != "":
 
                 if current_timer == 3000:
 
@@ -333,7 +334,6 @@ def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
 """ ################# """
 """  spotify control  """
 """ ################# """
-
 
 def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
@@ -699,6 +699,81 @@ def GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token):
     return tupel_current_playback
 
 
+""" ################### """
+"""  spotify device id  """
+""" ################### """
+
+def GET_SPOTIFY_DEVICE_ID(spotify_token, device_name):       
+
+    sp                = spotipy.Spotify(auth=spotify_token)
+    sp.trace          = False                                 
+    spotify_device_id = 0
+    timer             = 0
+
+    try:
+
+        # check current device interface
+        if device_name.lower() != "multiroom":
+            device = GET_DEVICE_BY_NAME(device_name)
+            data   = json.loads(device.last_values_json)
+
+            if str(data["interface"]).lower() == "multiroom":
+                heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify","volume":' + str(data["volume"]) + '}')))     
+
+                CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "spotify" + '; ' + str(data["volume"]), 45)     
+                
+        # get device spotify id
+        while spotify_device_id == 0 and timer < 30:
+
+            for device in sp.devices()["devices"]:
+
+                # spotify client
+                if device['name'].lower() == device_name.lower():
+                    spotify_device_id = device['id']  
+                    continue      
+
+                # select multiroom group
+                if device_name.lower() == "multiroom":
+                    if "multiroom" in device['name'].lower():
+                        spotify_device_id = device['id'] 
+                        continue    
+
+            timer = timer + 1
+            time.sleep(1)     
+
+        return spotify_device_id
+
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Get Device ID | " + str(e)) 
+        return ("ERROR: " + str(e))          
+
+
+""" ################## """
+"""  spotify playlist  """
+""" ################## """
+
+def GET_SPOTIFY_PLAYLIST(spotify_token, playlist_name, number_results):
+
+    sp           = spotipy.Spotify(auth=spotify_token)
+    sp.trace     = False         
+    playlist_uri = ""
+
+    try:
+
+        list_spotify_playlists = sp.current_user_playlists(limit=number_results)["items"]
+        
+        for playlist in list_spotify_playlists:
+            if playlist['name'].lower() == playlist_name.lower():
+                playlist_uri = playlist['uri']
+                continue
+
+        return playlist_uri
+
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Get Playlist URI | " + str(e)) 
+        return ("ERROR: " + str(e))      
+
+
 """ ############## """
 """  search track  """
 """ ############## """
@@ -727,7 +802,6 @@ def SPOTIFY_SEARCH_TRACK(spotify_token, track_name, track_artist, number_results
                                                           
                     return list_search_track_results
                     
-
             else:
 
                 results = sp.search(q=' track:' + track_name, limit = number_results, type='track')
@@ -739,8 +813,7 @@ def SPOTIFY_SEARCH_TRACK(spotify_token, track_name, track_artist, number_results
                                                           results['tracks']['items'][i]['artists'][0]['name'],
                                                           results['tracks']['items'][i]['uri']))
                                                           
-                    return list_search_track_results
-                    
+                    return list_search_track_results             
                     
         else:
             return ("No track name given")
@@ -778,7 +851,6 @@ def SPOTIFY_SEARCH_ALBUM(spotify_token, album_name, album_artist, number_results
                     
                     return list_search_album_results                                      
                 
-
             else:
 
                 results = sp.search(q=' album:' + album_name, limit = number_results, type='album')
@@ -791,12 +863,10 @@ def SPOTIFY_SEARCH_ALBUM(spotify_token, album_name, album_artist, number_results
                                                           results['albums']['items'][i]['uri']))
                                                           
                     return list_search_album_results
-                    
-                         
+                                      
         else:
             return ("No album name given")
-
-                              
+                      
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Search Album | " + str(e)) 
         return ("ERROR: " + str(e))  

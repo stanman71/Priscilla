@@ -295,7 +295,7 @@ def music():
             
             for i in range (1,26):
 
-                if request.form.get("radio_client_music_interface_" + str(i)) != None:
+                if request.form.get("set_radio_client_music_interface_" + str(i)) != None:
         
                     client_music_interface = request.form.get("set_radio_client_music_interface_" + str(i))
                     client_music_volume    = request.form.get("set_client_music_volume_" + str(i))                
@@ -313,7 +313,7 @@ def music():
 
                             heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')))     
 
-                            result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, client_music_interface + ', ' + str(client_music_volume), 20)
+                            result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, client_music_interface + '; ' + str(client_music_volume), 45)
                             
                             if result != True:
                                 error_message_change_settings_client_music.append(result)
@@ -337,7 +337,7 @@ def music():
 
                         heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"' + client_music_interface + '","volume":' + str(client_music_volume) + '}')))     
 
-                        result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, client_music_interface + ', ' + str(client_music_volume), 20)
+                        result = CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, client_music_interface + '; ' + str(client_music_volume), 45)
                         
                         if result != True:
                             error_message_change_settings_client_music.append(result)
