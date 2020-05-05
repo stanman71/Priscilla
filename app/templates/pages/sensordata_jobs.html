@@ -585,31 +585,35 @@
                         <th scope="col" style="width:10%"></th>
                       </thead>                            
                       <tbody> 
+                        {% set counter = [1] %}
+
                         {% for entry in list_sensordata_files %}
-                        <tr>                          
-                          <td>{{ entry }}</td> 
-                          <td>
-                            <a class="btn btn-default pull-left" href="/sensordata/download/file/{{ entry }}?time={{ timestamp }}" role="button">DOWNLOAD</a>
-                          </td>  
-                          <td>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_file_dialog_{{ entry.id }}">DELETE</button>
-                            <!-- Modal -->
-                            <div class="modal fade" id="delete_file_dialog_{{ entry.id }}">
-                              <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title">Delete {{ entry }} ?</h5>
-                                  </div>          
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                    <a class="btn btn-danger" href="/sensordata/delete/{{ entry }}#table_sensordata_files" role="button">DELETE</a>
+                          <tr>                          
+                            <td>{{ entry }}</td> 
+                            <td>
+                              <a class="btn btn-default pull-left" href="/sensordata/download/file/{{ entry }}?time={{ timestamp }}" role="button">DOWNLOAD</a>
+                            </td>  
+                            <td>
+                              <!-- Button trigger modal -->
+                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_file_dialog_{{ counter[0] }}">DELETE</button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="delete_file_dialog_{{ counter[0] }}">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title">Delete {{ entry }} ?</h5>
+                                    </div>          
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                      <a class="btn btn-danger" href="/sensordata/delete/{{ entry }}#table_sensordata_files" role="button">DELETE</a>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div>                                
-                          </td> 
-                        </tr>
+                              </div>                                
+                            </td> 
+                          </tr>
+
+                          {% if counter.append(counter.pop() + 1) %}{% endif %}
 
                         {% endfor %} 
 

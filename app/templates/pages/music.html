@@ -644,18 +644,17 @@
                             <th scope="col" style="width:10%" class="minwidth_100"></th>                                   
                           </thead>
                           <tbody> 
-                            
+                            {% set counter = [1] %}       
+
                             {% for track in list_search_track_results %}
                             
                               <tr>
                                 <td>
                                   {{ track[0] }}
-                                </td>
-                                
+                                </td>                          
                                 <td>
                                   {{ track[1] }}
-                                </td>     
-                                
+                                </td>                
                                 <td>    
                                   <select class="form-control" data-size="5" name="set_spotify_track_device:{{ track[2] }}" style="background-color:#27293D"> 
                                     {% if spotify_devices != "" %}
@@ -673,16 +672,11 @@
                                       <option value= "" > No devices founded </option>
                                     {% endif %}  
                                   </select>     
-                                </td>                             
-                              
+                                </td>                              
                                 <td>
-                                  <div class="slidecontainer"> 
-                                    <div class="col-md-10 text-center"> 
-                                      <input type="range" class="slider" name="set_spotify_track_volume:{{ track[2] }}" min="0" max="100" value="{{ volume }}" />
-                                    </div> 
-                                  </div> 
+                                  <input id="volume_slider_track_volume_{{ counter[0] }}" data-slider-id="volume_slider_track_volume_{{ counter[0] }}" name="set_spotify_track_volume:{{ track[2] }}" 
+                                    type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}" />   
                                 </td>
-        
                                 <td>    
                                   <div class="row justify-content-md-left">
                                     <div class="col-sm-2">     
@@ -693,7 +687,9 @@
                                   </div>                          
                                 </td>    
                               </tr>
-                              
+
+                              {% if counter.append(counter.pop() + 1) %}{% endif %}      
+
                             {% endfor %}                    
 
                           </tbody>
@@ -765,18 +761,17 @@
                             <th scope="col" style="width:10%" class="minwidth_100"></th>                                   
                           </thead>
                           <tbody> 
-                            
+                            {% set counter = [1] %}          
+
                             {% for album in list_search_album_results %}
                             
                               <tr>
                                 <td>
                                   {{ album[0] }}
-                                </td>
-                                
+                                </td>                        
                                 <td>
                                   {{ album[1] }}
-                                </td>     
-                                
+                                </td>                      
                                 <td>    
                                   <select class="form-control" data-size="5" name="set_spotify_album_device:{{ album[2] }}" style="background-color:#27293D"> 
                                     {% if spotify_devices != "" %}
@@ -794,16 +789,11 @@
                                       <option value= "" > No devices founded </option>
                                     {% endif %}  
                                   </select>     
-                                </td>                             
-                              
+                                </td>                                                       
                                 <td>
-                                  <div class="slidecontainer"> 
-                                    <div class="col-md-10 text-center"> 
-                                      <input type="range" class="slider" name="set_spotify_album_volume:{{ album[2] }}" min="0" max="100" value="{{ volume }}" />
-                                    </div> 
-                                  </div> 
-                                </td>
-        
+                                  <input id="volume_slider_album_volume_{{ counter[0] }}" data-slider-id="volume_slider_album_volume_{{ counter[0] }}" name="set_spotify_album_volume:{{ album[2] }}" 
+                                    type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}" />   
+                                </td>       
                                 <td>    
                                   <div class="row justify-content-md-left">
                                     <div class="col-sm-2">     
@@ -815,6 +805,8 @@
                                 </td>    
                               </tr>
                               
+                              {% if counter.append(counter.pop() + 1) %}{% endif %}            
+
                             {% endfor %}                    
 
                           </tbody>
@@ -882,7 +874,8 @@
                         <th scope="col" style="width:15%" class="minwidth_150">Last Contact</th>                       
                       </thead>
                       <tbody> 
-                        
+                        {% set counter = [1] %}
+
                         {% for entry in list_client_music %}
                         
                           <tr>
@@ -924,13 +917,10 @@
                               {% if entry.model != "hifiberry_miniAMP" %}
 
                                 {% if entry.last_values_json != None %}
-                                
-                                  <div class="slidecontainer"> 
-                                    <div class="col-md-10 text-center"> 
-                                      <input type="range" class="slider" name="set_client_music_volume_{{ entry.id }}" min="100" max="207" value="{{ entry.last_values_json.split(':')[2] | replace('}', '') }}" />
-                                    </div> 
-                                  </div>
 
+                                  <input id="volume_slider_music_client_{{ counter[0] }}" data-slider-id="volume_slider_music_client_{{ counter[0] }}" name="set_client_music_volume_{{ entry.id }}" 
+                                    type="text" data-slider-min="100" data-slider-max="207" data-slider-step="1" data-slider-value="{{ entry.last_values_json.split(':')[2] | replace('}', '') }}" />   
+  
                                 <!-- no values founded -->         
 
                                 {% else %}
@@ -952,7 +942,9 @@
                               {{ entry.last_contact }}                  
                             </td>
                           </tr>
-                          
+
+                          {% if counter.append(counter.pop() + 1) %}{% endif %}                       
+
                         {% endfor %}    
                                   
                       </tbody>

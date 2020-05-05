@@ -462,46 +462,51 @@
                     <div class="table-responsive">
                       <table class="table tablesorter">             
                         <tbody> 
+                          {% set counter = [1] %}
+
                           {% for entry in list_backup_files %}
-                          <tr>
-                            <td style="width:80%">{{ entry }}</td> 
-                            <td style="width:10%">
-                              <!-- Button trigger modal -->
-                              <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#restore_database_dialog_{{entry.id}}">RESTORE</button>
-                              <!-- Modal -->
-                              <div class="modal fade" id="restore_database_dialog_{{entry.id}}">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title">Restore {{entry}} ?</h5>
-                                    </div>          
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                      <a class="btn btn-warning" href="/settings/system/backup_database/restore/{{ entry }}#backup" role="button">RESTORE</a>
+                            <tr>
+                              <td style="width:80%">{{ entry }}</td> 
+                              <td style="width:10%">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#restore_database_dialog_{{ counter[0] }}">RESTORE</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="restore_database_dialog_{{ counter[0] }}">
+                                  <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title">Restore {{entry}} ?</h5>
+                                      </div>          
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                        <a class="btn btn-warning" href="/settings/system/backup_database/restore/{{ entry }}#backup" role="button">RESTORE</a>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              </div>       
-                            </td>  
-                            <td style="width:10%">
-                              <!-- Button trigger modal -->
-                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_backup_dialog_{{entry.id}}">DELETE</button>
-                              <!-- Modal -->
-                              <div class="modal fade" id="delete_backup_dialog_{{entry.id}}">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title">Delete {{entry}} ?</h5>
-                                    </div>          
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                      <a class="btn btn-danger" href="/settings/system/backup_database/delete/{{ entry }}#backup" role="button">DELETE</a>
+                                </div>       
+                              </td>  
+                              <td style="width:10%">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_backup_dialog_{{ counter[0] }}">DELETE</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="delete_backup_dialog_{{ counter[0] }}">
+                                  <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title">Delete {{entry}} ?</h5>
+                                      </div>          
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                        <a class="btn btn-danger" href="/settings/system/backup_database/delete/{{ entry }}#backup" role="button">DELETE</a>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              </div>       
-                            </td>
-                          </tr>
+                                </div>       
+                              </td>
+                            </tr>
+
+                            {% if counter.append(counter.pop() + 1) %}{% endif %}
+
                           {% endfor %} 
                         </tbody>
                       </table>  
