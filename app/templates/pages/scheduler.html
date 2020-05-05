@@ -604,20 +604,20 @@
                           <tr>
                             <td colspan="10"></td>
                           </tr>            
-                          <tr>
-                            <td colspan="1"></td>
+                          <tr>               
                             <td colspan="1">
                               <div class="row justify-content-md-center">                                                 
-                                <div class="col-sm-2">                             
-                                  <a href="/scheduler/add_sensor/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-add"></i></font></a>                                                                                                                                    
-                                </div>                             
-                                <div class="col-sm-2">                                 
-                                  <a href="/scheduler/remove_sensor/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-delete"></i></font></a>    
-                                </div>                             
-                                <div class="col-sm-8"> 
-                                </div> 
+                                <div class="col-sm-2">      
+                                  {% if entry.main_operator_second_sensor != "None" and entry.main_operator_second_sensor != None %}                                                     
+                                    <a href="/scheduler/remove_sensor/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-delete"></i></font></a>  
+                                  {% else %}                                  
+                                    <a href="/scheduler/add_sensor/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-add"></i></font></a>
+                                  {% endif %}
+                                </div>                                                       
+                                <div class="col-sm-10"></div> 
                               </div>                         
-                            </td>                 
+                            </td>     
+                            <td colspan="1"></td>
                             <td colspan="8">    
                               <div class="row justify-content-md-center">                                                 
                                 <div class="col-sm-4"> 

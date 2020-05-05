@@ -38,7 +38,7 @@ def load_user(user_id):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    page_title       = 'homatiX | Login'
+    page_title       = 'HiddenHomeControl | Login'
     page_description = 'The login page'    
 
     # define login form here

@@ -34,7 +34,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def programs():
-    page_title       = 'homatiX | Programs'
+    page_title       = 'HiddenHomeControl | Programs'
     page_description = 'The programs configuration page.'
 
     success_message_add_program             = False       

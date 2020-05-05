@@ -614,7 +614,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                                                     
                                             if str(program_setting.lower()) == command.lower():
                                                 heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_setting, 30)      
+                                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_setting, 60)      
                                                 continue
 
                                             command_position = command_position + 1

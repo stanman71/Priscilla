@@ -843,7 +843,7 @@ def START_SCHEDULER_TASK(task_object):
                                               
                      if str(scheduler_setting.lower()) == command.lower():
                         heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting, 30)      
+                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting, 60)      
                         continue
 
                      command_position = command_position + 1

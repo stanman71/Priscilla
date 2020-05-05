@@ -78,7 +78,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             try:                                                                                    
                 if str(controller.command_1)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -105,7 +105,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_2)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
 
@@ -132,7 +132,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_3)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
 
@@ -159,7 +159,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_4)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -186,7 +186,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_5)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -213,7 +213,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_6)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -240,7 +240,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
            
                 if str(controller.command_7)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -267,7 +267,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                                                 
                 if str(controller.command_8)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -294,7 +294,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_9)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -321,7 +321,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                                             
                 if str(controller.command_10)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -348,7 +348,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                                                                        
                 if str(controller.command_11)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -375,7 +375,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_12)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -402,7 +402,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_13)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -429,7 +429,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_14)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -456,7 +456,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_15)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -483,7 +483,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_16)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -510,7 +510,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_17)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -537,7 +537,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_18)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -564,8 +564,8 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_19)[1:-1] in str(msg):
 
-                    # special case "hold" command
-                    if "hold" in str(msg):                       
+                    # special case "hold" command (Xiaomi Opple)
+                    if "hold" in str(msg):                        
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
                         while command_hold_break_loop == False:     
@@ -591,7 +591,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
                 if str(controller.command_20)[1:-1] in str(msg):
 
-                    # special case "hold" command
+                    # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
                         START_COMMAND_HOLD_BREAK_LOOP_THREAD()
                          
@@ -936,7 +936,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                                                 
                         if str(controller_setting.lower()) == command.lower():
                             heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 45)      
+                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 60)      
                             continue
 
                         command_position = command_position + 1

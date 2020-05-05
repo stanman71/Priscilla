@@ -167,6 +167,7 @@
                   <input type="text" class="form-control" name="set_name_{{ selected_program.id }}" value="{% if selected_program.name != None %}{{ selected_program.name }}{% endif %}" />
 
                   <a href="/programs/add_line/{{ selected_program.id }}#selected_program"><font size="6"><i class="tim-icons icon-simple-add"></i></font></a>  
+
                   <div class="pull-right">
                     <a href="/programs/remove_line/{{ selected_program.id }}#selected_program"><font size="6"><i class="tim-icons icon-simple-delete"></i></font></a> 
                   </div>
@@ -178,6 +179,7 @@
                   <div class="pull-right">
                     <a href="/programs/position/down/1/{{ selected_program.id }}#selected_program"><font size="6"><i class="tim-icons icon-minimal-down"></i></font></a>  
                   </div>
+                  
                   <input type="text" class="form-control" name="set_line_content_1_{{ selected_program.id }}"
                     value = {% if selected_program.line_content_1 != None and selected_program.line_content_1 != "None" %}"{{ selected_program.line_content_1 }}"{% endif %} />
 

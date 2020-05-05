@@ -773,7 +773,7 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting):
         # search for fitting message in incoming_messages_list
         if message[1] == "smarthome/mqtt/" + ieeeAddr:  
                        
-            # only one setting value
+            # only one setting value ("," = separator between commands || ";" = separator between command arguments)
             if not ";" in setting:    
                 if str(setting.strip()) in str(message[2].lower()):
                     return True
@@ -802,7 +802,7 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
             # search for fitting message in incoming_messages_list
             if message[1] == "smarthome/zigbee2mqtt/" + device_name:   
 
-                # only one setting value
+                # only one setting value ("," = separator between commands || ";" = separator between command arguments)
                 if not ";" in setting:       
                     if str(setting.strip()) in str(message[2].lower()):
                         return True

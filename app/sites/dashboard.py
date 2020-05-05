@@ -38,7 +38,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def dashboard():
-    page_title       = 'homatiX | Dashboard'
+    page_title       = 'HiddenHomeControl | Dashboard'
     page_description = 'The main page and Dashboard'
 
 
@@ -104,7 +104,7 @@ def dashboard():
                                             
                             if str(device_setting.lower()) == command.lower():    
                                 heapq.heappush(mqtt_message_queue, (1, (channel, list_command_json[command_position])))            
-                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting, 45)      
+                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting, 60)      
                                 break
 
                             command_position = command_position + 1
@@ -115,7 +115,7 @@ def dashboard():
             except:
                 pass        
 
-        time.sleep(5)
+        time.sleep(3)
 
 
     """ ########## """

@@ -24,7 +24,7 @@ def http_err(err_code):
 
 @app.errorhandler(400)
 def e400(e):
-    page_title       = 'homatiX | Error'
+    page_title       = 'HiddenHomeControl | Error'
     page_description = 'error 400'
 
     data          = {'navigation': 'None'}

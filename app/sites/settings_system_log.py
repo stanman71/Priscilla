@@ -33,7 +33,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_system_log():
-    page_title       = 'homatiX | Settings | SystemLOG'
+    page_title       = 'HiddenHomeControl | Settings | SystemLOG'
     page_description = 'The system log page.'
 
     success_message_logfile   = False

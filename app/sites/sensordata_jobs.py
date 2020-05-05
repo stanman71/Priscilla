@@ -31,7 +31,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def sensordata_jobs():
-    page_title       = 'homatiX | Sensordata | Jobs'
+    page_title       = 'HiddenHomeControl | Sensordata | Jobs'
     page_description = 'The sensordata jobs configuration page.'
 
     success_message_change_settings = []      
@@ -112,10 +112,19 @@ def sensordata_jobs():
                 # filename setting
                 # ################
 
+                # add new filename
                 if request.form.get("set_filename_" + str(i)) != "":
                     filename = request.form.get("set_filename_" + str(i)).strip()   
+
+                # no input commited
+                elif request.form.get("set_filename_" + str(i)) == "":                         
+                    error_message_change_settings.append(sensordata_job.name + " || No filename given") 
+                    error_founded = True  
+                    filename = sensordata_job.filename 
+
+                # nothing changed 
                 else:
-                    filename = GET_SENSORDATA_JOB_BY_ID(i).filename 
+                    filename = sensordata_job.filename 
 
 
                 # ##############
@@ -129,18 +138,17 @@ def sensordata_jobs():
                 elif GET_DEVICE_BY_ID(device):
                     device_ieeeAddr = GET_DEVICE_BY_ID(device).ieeeAddr
                 else:
-                    device_ieeeAddr = ""
-                    sensor_key      = ""
+                    device_ieeeAddr = "None"
+                    sensor_key      = "None"
   
 
                 # ##############
                 # sensor setting
                 # ##############
 
-                if device_ieeeAddr == "":
-                    sensor_key = GET_SENSORDATA_JOB_BY_ID(i).sensor_key 
+                # add new sensor
+                if device_ieeeAddr != "None":
 
-                else:
                     # replace array_position to sensor name 
                     sensor_key = request.form.get("set_sensor_" + str(i))
                     sensor_key = sensor_key.replace(" ", "")
@@ -157,8 +165,13 @@ def sensordata_jobs():
                             sensor_key  = sensor_list[int(sensor_key)-2]
 
 
+                # #############
+                # input setting
+                # #############
+
                 # input setting
                 always_active = request.form.get("set_radio_input_setting_" + str(i))
+
 
                 # save settings
                 if error_founded == False: 

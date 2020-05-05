@@ -32,7 +32,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_users():
-    page_title       = 'homatiX | Settings | Users'
+    page_title       = 'HiddenHomeControl | Settings | Users'
     page_description = 'The users configuration page.'
 
     success_message_add_user           = False
@@ -127,13 +127,19 @@ def settings_users():
                 input_email = request.form.get("set_email_" + str(i)).strip()                    
 
                 # add new email
-                if ((input_email != "") and (GET_USER_BY_EMAIL(input_email) == None)):
+                if GET_USER_BY_EMAIL(input_email) == None:
                     email = request.form.get("set_email_" + str(i)) 
                     
                 # nothing changed 
-                else:
+                elif input_email == user.email:
                     email = user.email                        
                     
+                # email already exist
+                else:
+                    error_message_change_settings.append(user.name + " || eMail - " + input_email + " - already taken")  
+                    error_founded = True
+                    email = user.email
+
 
                 # ################
                 # password setting
@@ -163,8 +169,8 @@ def settings_users():
                 # notification
                 if request.form.get("set_checkbox_email_notification_" + str(i)):
 
-                    if email == "" or email == "None" or email == None:
-                        error_message_change_settings.append(user.name + " || No eMail address founded")
+                    if email == "":
+                        error_message_change_settings.append(user.name + " || No eMail address founded >>> Deactivate Notifications")
                         email_notification = "False"
 
                     else:

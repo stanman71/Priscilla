@@ -320,13 +320,13 @@ def CHECK_PROGRAM_TASKS(program_id):
                line_content = line[1].split(" # ")       
                
                if (line_content[1].strip() != "PLAY" and
-                     line_content[1].strip() != "PREVIOUS" and
-                     line_content[1].strip() != "NEXT" and
-                     line_content[1].strip() != "STOP" and
-                     line_content[1].strip() != "VOLUME" and
-                     line_content[1].strip() != "playlist" and
-                     line_content[1].strip() != "track" and
-                     line_content[1].strip() != "album"):
+                   line_content[1].strip() != "PREVIOUS" and
+                   line_content[1].strip() != "NEXT" and
+                   line_content[1].strip() != "STOP" and
+                   line_content[1].strip() != "VOLUME" and
+                   line_content[1].strip() != "playlist" and
+                   line_content[1].strip() != "track" and
+                   line_content[1].strip() != "album"):
 
                   list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid Command")
 
@@ -350,9 +350,12 @@ def CHECK_PROGRAM_TASKS(program_id):
                if line_content[1].strip() == "playlist": 
                   
                   try:
-                     device_name   = line_content[2]                                    
-                     playlist_name = line_content[3]
-                     
+                     device_name = line_content[2].strip()                                    
+
+                     if device_name.lower() != "multiroom":
+                        if GET_DEVICE_BY_NAME(device_name) == None: 
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not founded | " + device_name)                
+
                      try:
                         if not line_content[4].isdigit():
                            list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
@@ -365,17 +368,19 @@ def CHECK_PROGRAM_TASKS(program_id):
                         list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
 
                   except:
-                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
 
                # track
                      
                if line_content[1].strip() == "track": 
                   
                   try:
-                     device_name  = line_content[2]                                    
-                     track_title  = line_content[3]
-                     track_artist = line_content[4]
-                     
+                     device_name = line_content[2].strip()                                    
+
+                     if device_name.lower() != "multiroom":
+                        if GET_DEVICE_BY_NAME(device_name) == None: 
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not founded | " + device_name)        
+
                      try:
                         if not line_content[5].isdigit():
                            list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
@@ -388,17 +393,19 @@ def CHECK_PROGRAM_TASKS(program_id):
                         list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
 
                   except:
-                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
 
                # album
 
                if line_content[1].strip() == "album": 
                   
                   try:
-                     device_name  = line_content[2]                                    
-                     album_title  = line_content[3]
-                     album_artist = line_content[4]
-                     
+                     device_name = line_content[2].strip()                                    
+
+                     if device_name.lower() != "multiroom":
+                        if GET_DEVICE_BY_NAME(device_name) == None: 
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not founded | " + device_name)              
+
                      try:
                         if not line_content[5].isdigit():
                            list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
@@ -411,7 +418,7 @@ def CHECK_PROGRAM_TASKS(program_id):
                         list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
 
                   except:
-                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
 
             except:
                list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
@@ -691,140 +698,140 @@ def CHECK_TASKS(entities, task_type):
 
          name = GET_DEVICE_BY_IEEEADDR(controller.device_ieeeAddr).name
 
-         if controller.command_1 != None and controller.command_1 != "None": 
+         if controller.command_1 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_1, name, task_type, controller.command_1)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error
                
-         if controller.command_2 != None and controller.command_2 != "None": 
+         if controller.command_2 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_2, name, task_type, controller.command_2)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error       
                          
-         if controller.command_3 != None and controller.command_3 != "None": 
+         if controller.command_3 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_3, name, task_type, controller.command_3)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error               
                
-         if controller.command_4 != None and controller.command_4 != "None": 
+         if controller.command_4 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_4, name, task_type, controller.command_4)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error     
                
-         if controller.command_5 != None and controller.command_5 != "None": 
+         if controller.command_5 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_5, name, task_type, controller.command_5)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error                   
                
-         if controller.command_6 != None and controller.command_6 != "None": 
+         if controller.command_6 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_6, name, task_type, controller.command_6)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error     
                
-         if controller.command_7 != None and controller.command_7 != "None": 
+         if controller.command_7 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_7, name, task_type, controller.command_7)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error                  
                
-         if controller.command_8 != None and controller.command_8 != "None": 
+         if controller.command_8 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_8, name, task_type, controller.command_8)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error                  
                                              
-         if controller.command_9 != None and controller.command_9 != "None": 
+         if controller.command_9 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_9, name, task_type, controller.command_9)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error          
 
-         if controller.command_10 != None and controller.command_10 != "None": 
+         if controller.command_10 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_10, name, task_type, controller.command_10)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error        
 
-         if controller.command_11 != None and controller.command_11 != "None": 
+         if controller.command_11 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_11, name, task_type, controller.command_11)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error      
 
-         if controller.command_12 != None and controller.command_12 != "None": 
+         if controller.command_12 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_12, name, task_type, controller.command_12)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error        
 
-         if controller.command_13 != None and controller.command_13 != "None": 
+         if controller.command_13 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_13, name, task_type, controller.command_13)
             
             if result != []: 
                for error in result:   
                   list_task_errors = list_task_errors + "," + error         
 
-         if controller.command_14 != None and controller.command_14 != "None": 
+         if controller.command_14 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_14, name, task_type, controller.command_14)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error       
 
-         if controller.command_15 != None and controller.command_15 != "None": 
+         if controller.command_15 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_15, name, task_type, controller.command_15)
             
             if result != []:   
                for error in result:   
                   list_task_errors = list_task_errors + "," + error        
 
-         if controller.command_16 != None and controller.command_16 != "None": 
+         if controller.command_16 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_16, name, task_type, controller.command_16)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error       
 
-         if controller.command_17 != None and controller.command_17 != "None": 
+         if controller.command_17 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_17, name, task_type, controller.command_17)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error      
 
-         if controller.command_18 != None and controller.command_18 != "None": 
+         if controller.command_18 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_18, name, task_type, controller.command_18)
             
             if result != []:
                for error in result:   
                   list_task_errors = list_task_errors + "," + error        
 
-         if controller.command_19 != None and controller.command_19 != "None": 
+         if controller.command_19 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_19, name, task_type, controller.command_19)
             
             if result != []: 
                for error in result:   
                   list_task_errors = list_task_errors + "," + error                                           
 
-         if controller.command_20 != None and controller.command_20 != "None": 
+         if controller.command_20 != "None": 
             result = CHECK_TASK_OPERATION(controller.task_20, name, task_type, controller.command_20)
             
             if result != []:    
@@ -1453,30 +1460,46 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   except:
                      list_task_errors.append(task[2] + " || Invalid volume_value") 
                      return list_task_errors
-                  
+
+               # playlist
+
                elif task[1].strip() == "playlist": 
 
                   try:
-                     if not task[4].isdigit():
-                        list_task_errors.append(task[4] + " || Invalid volume_value") 
-                     else:
-                        if not 0 <= int(task[4]) <= 100:
-                           list_task_errors.append(task[4] + " || Invalid volume_value")
-                           
-                     return list_task_errors
+                     device_name = task[2].strip()                                    
+
+                     if device_name.lower() != "multiroom":
+                        if GET_DEVICE_BY_NAME(device_name) == None: 
+                           list_task_errors.append(task[5] + " || Device not founded | " + device_name)        
+
+                     try:
+                        if not task[4].isdigit():
+                           list_task_errors.append(task[4] + " || Invalid volume_value") 
+                        else:
+                           if not 0 <= int(task[4]) <= 100:
+                              list_task_errors.append(task[4] + " || Invalid volume_value")
                               
-                  except:
-                     list_task_errors.append(task[4] + " || Invalid volume_value") 
-                     return list_task_errors
+                        return list_task_errors
+                                 
+                     except:
+                        list_task_errors.append(task[4] + " || Invalid volume_value") 
+                        return list_task_errors
    
-                     
+                  except:
+                     list_task_errors.append(str(task) + " || Invalid formatting") 
+                     return list_task_errors  
+
+               # track
+
                elif task[1].lower() == "track": 
                   
                   try:
-                     device_name  = task[2]                                    
-                     track_title  = task[3]
-                     track_artist = task[4]
-                     
+                     device_name = task[2].strip()                                    
+
+                     if device_name.lower() != "multiroom":
+                        if GET_DEVICE_BY_NAME(device_name) == None: 
+                           list_task_errors.append(task[5] + " || Device not founded | " + device_name)            
+
                      try:
                         if not task[5].isdigit():
                            list_task_errors.append(task[5] + " || Invalid volume_value") 
@@ -1491,16 +1514,20 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                         return list_task_errors
                         
                   except:
-                     list_task_errors.append(str(task) + " || Invalid volume_value") 
+                     list_task_errors.append(str(task) + " || Invalid formatting") 
                      return list_task_errors  
+
+               # album
 
                elif task[1].lower() == "album": 
                   
                   try:
-                     device_name  = task[2]                                    
-                     album_title  = task[3]
-                     album_artist = task[4]
-                     
+                     device_name = task[2].strip()                                    
+
+                     if device_name.lower() != "multiroom":
+                        if GET_DEVICE_BY_NAME(device_name) == None: 
+                           list_task_errors.append(task[5] + " || Device not founded | " + device_name)                  
+
                      try:
                         if not task[5].isdigit():
                            list_task_errors.append(task[5] + " || Invalid volume_value") 
@@ -1515,8 +1542,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                         return list_task_errors
                         
                   except:
-                     list_task_errors.append(str(task) + " || Invalid volume_value") 
+                     list_task_errors.append(str(task) + " || Invalid formatting") 
                      return list_task_errors                   
+
 
                else:
                   if task_type == "controller":
@@ -1598,16 +1626,16 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
          return list_task_errors
 
 
-""" ################### """
-"""  device exceptions  """
-""" ################### """
+""" ################# """
+"""  sensordata jobs  """
+""" ################# """
 
 def CHECK_SENSORDATA_JOBS(jobs): 
    error_message_settings = []
 
    for job in jobs:
 
-      if job.filename == None or job.filename == "None":
+      if job.filename == "":
          error_message_settings.append(job.name + " || Missing setting | Filename") 
       if job.device_ieeeAddr == None or job.device_ieeeAddr == "None":
          error_message_settings.append(job.name + " || Missing setting | Device") 

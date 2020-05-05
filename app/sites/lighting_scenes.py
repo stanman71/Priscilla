@@ -34,7 +34,7 @@ lighting_scenes_rgb_values_array = [[0 for x in range(10)] for y in range(20)]
 @login_required
 @permission_required
 def lighting_scenes():
-    page_title       = 'homatiX | Lighting | Scenes'
+    page_title       = 'HiddenHomeControl | Lighting | Scenes'
     page_description = 'The lighting scenes configuration page.'
 
     global lighting_scenes_rgb_values_array
@@ -126,9 +126,9 @@ def lighting_scenes():
                     blue_1  = rgb_1[2]      
                 
                 except:
-                    red_1   = 0
-                    green_1 = 0
-                    blue_1  = 0 
+                    red_1   = 255
+                    green_1 = 255
+                    blue_1  = 255 
 
                 brightness_1 = request.form.get("set_brightness_1_" + str(i)) 
                                 
@@ -148,17 +148,17 @@ def lighting_scenes():
                         blue_2  = rgb_2[2]    
 
                     except:
-                        red_2   = 0
-                        green_2 = 0
-                        blue_2  = 0 
+                        red_2   = 255
+                        green_2 = 255
+                        blue_2  = 255 
 
                     brightness_2 = request.form.get("set_brightness_2_" + str(i)) 
 
                 else:
-                    red_2        = 0
-                    green_2      = 0
-                    blue_2       = 0
-                    brightness_2 = 0
+                    red_2        = 255
+                    green_2      = 255
+                    blue_2       = 255
+                    brightness_2 = 255
 
                 #######
                 ## 3 ##
@@ -176,17 +176,17 @@ def lighting_scenes():
                         blue_3  = rgb_3[2]      
 
                     except:
-                        red_3   = 0
-                        green_3 = 0
-                        blue_3  = 0 
+                        red_3   = 255
+                        green_3 = 255
+                        blue_3  = 255 
 
                     brightness_3 = request.form.get("set_brightness_3_" + str(i)) 
 
                 else:
-                    red_3        = 0
-                    green_3      = 0
-                    blue_3       = 0
-                    brightness_3 = 0
+                    red_3        = 255
+                    green_3      = 255
+                    blue_3       = 255
+                    brightness_3 = 255
 
                 #######
                 ## 4 ##
@@ -204,17 +204,17 @@ def lighting_scenes():
                         blue_4  = rgb_4[2]      
 
                     except:
-                        red_4   = 0
-                        green_4 = 0
-                        blue_4  = 0 
+                        red_4   = 255
+                        green_4 = 255
+                        blue_4  = 255 
 
                     brightness_4 = request.form.get("set_brightness_4_" + str(i)) 
 
                 else:
-                    red_4        = 0
-                    green_4      = 0
-                    blue_4       = 0
-                    brightness_4 = 0
+                    red_4        = 255
+                    green_4      = 255
+                    blue_4       = 255
+                    brightness_4 = 255
 
                 #######
                 ## 5 ##
@@ -232,17 +232,17 @@ def lighting_scenes():
                         blue_5  = rgb_5[2]      
 
                     except:
-                        red_5   = 0
-                        green_5 = 0
-                        blue_5  = 0 
+                        red_5   = 255
+                        green_5 = 255
+                        blue_5  = 255 
 
                     brightness_5 = request.form.get("set_brightness_5_" + str(i)) 
 
                 else:
-                    red_5        = 0
-                    green_5      = 0
-                    blue_5       = 0
-                    brightness_5 = 0
+                    red_5        = 255
+                    green_5      = 255
+                    blue_5       = 255
+                    brightness_5 = 255
 
                 #######
                 ## 6 ##
@@ -260,17 +260,17 @@ def lighting_scenes():
                         blue_6  = rgb_6[2]    
 
                     except:
-                        red_6   = 0
-                        green_6 = 0
-                        blue_6  = 0 
+                        red_6   = 255
+                        green_6 = 255
+                        blue_6  = 255
 
                     brightness_6 = request.form.get("set_brightness_6_" + str(i)) 
 
                 else:
-                    red_6        = 0
-                    green_6      = 0
-                    blue_6       = 0
-                    brightness_6 = 0
+                    red_6        = 255
+                    green_6      = 255
+                    blue_6       = 255
+                    brightness_6 = 255
 
                 #######
                 ## 7 ##
@@ -288,17 +288,17 @@ def lighting_scenes():
                         blue_7  = rgb_7[2]  
                             
                     except:
-                        red_7   = 0
-                        green_7 = 0
-                        blue_7  = 0 
+                        red_7   = 255
+                        green_7 = 255
+                        blue_7  = 255 
 
                     brightness_7 = request.form.get("set_brightness_7_" + str(i)) 
 
                 else:
-                    red_7        = 0
-                    green_7      = 0
-                    blue_7       = 0
-                    brightness_7 = 0
+                    red_7        = 255
+                    green_7      = 255
+                    blue_7       = 255
+                    brightness_7 = 255
 
                 #######
                 ## 8 ##
@@ -316,17 +316,17 @@ def lighting_scenes():
                         blue_8  = rgb_8[2]  
 
                     except:
-                        red_8   = 0
-                        green_8 = 0
-                        blue_8  = 0 
+                        red_8   = 255
+                        green_8 = 255
+                        blue_8  = 255 
 
                     brightness_8 = request.form.get("set_brightness_8_" + str(i)) 
 
                 else:
-                    red_8        = 0
-                    green_8      = 0
-                    blue_8       = 0
-                    brightness_8 = 0
+                    red_8        = 255
+                    green_8      = 255
+                    blue_8       = 255
+                    brightness_8 = 255
 
                 #######
                 ## 9 ##
@@ -344,17 +344,17 @@ def lighting_scenes():
                         blue_9  = rgb_9[2]  
 
                     except:
-                        red_9   = 0
-                        green_9 = 0
-                        blue_9  = 0 
+                        red_9   = 255
+                        green_9 = 255
+                        blue_9  = 255 
 
                     brightness_9 = request.form.get("set_brightness_9_" + str(i)) 
 
                 else:
-                    red_9        = 0
-                    green_9      = 0
-                    blue_9       = 0
-                    brightness_9 = 0
+                    red_9        = 255
+                    green_9      = 255
+                    blue_9       = 255
+                    brightness_9 = 255
 
 
                 if SET_LIGHTING_SCENE(i, name, red_1, green_1, blue_1, brightness_1, red_2, green_2, blue_2, brightness_2, red_3, green_3, blue_3, brightness_3, 

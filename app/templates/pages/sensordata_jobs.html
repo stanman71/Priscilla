@@ -465,7 +465,7 @@
                                 <option value= "None" > Sensor </option> 
                               {% endif %}                
                               <option disabled>------------------</option>
-                              {% if entry.device_ieeeAddr != None and entry.device_ieeeAddr != "" %}
+                              {% if entry.device_ieeeAddr != "None" %}
                                 {% for each in entry.device.input_values.split(',') %}
                                   <option value= "{{ each }}" > {{ each }} </option>
                                 {% endfor %}     
