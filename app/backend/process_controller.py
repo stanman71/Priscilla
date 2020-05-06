@@ -999,30 +999,36 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             sp       = spotipy.Spotify(auth=spotify_token)
             sp.trace = False
 
-            try:
-                spotify_volume = sp.current_playback(market=None)['device']['volume_percent']
-            except:
-                spotify_volume = 50
+            # basic control 
 
-            if task[1].strip() == "PLAY":
-                SPOTIFY_CONTROL(spotify_token, "play", spotify_volume) 
+            if (task[1].strip() == "PLAY" or
+                task[1].strip() == "PLAY/STOP" or            
+                task[1].strip() == "PREVIOUS" or
+                task[1].strip() == "NEXT" or
+                task[1].strip() == "STOP" or
+                task[1].strip() == "VOLUME_UP" or
+                task[1].strip() == "VOLUME_DOWN" or                
+                task[1].strip() == "VOLUME"):
+            
+                try: 
+                    spotify_volume = sp.current_playback(market=None)['device']['volume_percent']
+                except:
+                    spotify_volume = GET_SPOTIFY_SETTINGS().default_volume
 
-            if task[1].strip() == "PLAY/STOP":
-                SPOTIFY_CONTROL(spotify_token, "play/stop", spotify_volume) 
+                if task[1].strip() == "PLAY":
+                    SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
+    
+                if task[1].strip() == "PLAY/STOP":
+                    SPOTIFY_CONTROL(spotify_token, "play/stop", spotify_volume)       
 
-            if task[1].strip() == "ROTATE_PLAYLIST":    
-                SPOTIFY_CONTROL(spotify_token, "rotate_playlist", spotify_volume)      
+                if task[1].strip() == "PREVIOUS":
+                    SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
 
-            if task[1].strip()== "PREVIOUS": 
-                SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
+                if task[1].strip() == "NEXT":
+                    SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
 
-            if task[1].strip() == "NEXT":
-                SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
-
-            if task[1].strip() == "STOP": 
-                SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)      
-
-            try:
+                if task[1].strip() == "STOP": 
+                    SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)   
 
                 if task[1].strip() == "VOLUME_UP":   
                     device_name = sp.current_playback(market=None)['device']['name']
@@ -1030,19 +1036,15 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
                 if task[1].strip() == "VOLUME_DOWN":   
                     device_name = sp.current_playback(market=None)['device']['name']
-                    SPOTIFY_CONTROL(spotify_token, "volume_down", spotify_volume)                 
+                    SPOTIFY_CONTROL(spotify_token, "volume_down", spotify_volume)         
 
                 if task[1].strip() == "VOLUME":            
-                    spotify_volume = int(task[2].strip())
-                    SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)   
-
-            except:
-                pass               
-
+                    spotify_volume = int(task[2])
+                    SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
 
             # start playlist
                     
-            if task[1].lower() == "playlist": 
+            if task[1].strip() == "playlist": 
                 
                 spotify_device_id = GET_SPOTIFY_DEVICE_ID(spotify_token, task[2].strip()) 
                 playlist_uri      = GET_SPOTIFY_PLAYLIST(spotify_token, task[3].strip(), 20)
@@ -1052,7 +1054,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
         
             # start track
                     
-            if task[1].lower() == "track": 
+            if task[1].strip() == "track": 
 
                 spotify_device_id = GET_SPOTIFY_DEVICE_ID(spotify_token, task[2].strip())                  
                 track_uri         = SPOTIFY_SEARCH_TRACK(spotify_token, task[3].strip(), task[4].strip(), 1) [0][2]
@@ -1062,7 +1064,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
             # start album
                     
-            if task[1].lower() == "album": 
+            if task[1].strip() == "album": 
                               
                 spotify_device_id = GET_SPOTIFY_DEVICE_ID(spotify_token, task[2].strip())                        
                 album_uri         = SPOTIFY_SEARCH_ALBUM(spotify_token, task[3].strip(), task[4].strip(), 1) [0][2]

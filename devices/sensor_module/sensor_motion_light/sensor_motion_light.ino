@@ -443,9 +443,13 @@ void loop() {
     // custom settings
 
     // if occupancy is true, freeze illuminance value for 30 seconds
-    if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
+    if (digitalRead(SENSOR_1) == 1){
         disable_sensor_3_timer = 30000;
     }   
+
+    //if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
+    //    disable_sensor_3_timer = 30000;
+    //}   
 
     // illuminance timer
     if (disable_sensor_3_timer > 0){
@@ -460,18 +464,25 @@ void loop() {
     }           
 
     // send message ?     
-    if (digitalRead(SENSOR_1) == 1 or 
-        digitalRead(SENSOR_2) == 1 or 
-        sensor_1_last_value != digitalRead(SENSOR_1) or 
-        sensor_2_last_value != digitalRead(SENSOR_2)){
-
+    if (digitalRead(SENSOR_1) == 1 or sensor_1_last_value != digitalRead(SENSOR_1)){
         sensor_1_last_value = digitalRead(SENSOR_1);
-        sensor_2_last_value = digitalRead(SENSOR_2);
         send_default_mqtt_message();
         delay(2000);
     } 
 
-    delay(10);
+    // send message ?     
+    //if (digitalRead(SENSOR_1) == 1 or 
+    //    digitalRead(SENSOR_2) == 1 or 
+    //    sensor_1_last_value != digitalRead(SENSOR_1) or 
+    //    sensor_2_last_value != digitalRead(SENSOR_2)){
+
+    //    sensor_1_last_value = digitalRead(SENSOR_1);
+    //    sensor_2_last_value = digitalRead(SENSOR_2);
+    //    send_default_mqtt_message();
+    //    delay(2000);
+    //} 
+
+    delay(100);
     client.loop();
 }
 

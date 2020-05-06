@@ -480,7 +480,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + line_content[2] + " - not founded")   
          
                         except Exception as e:
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
 
 
                     if "lighting" in line[1] and "light" in line[1] and "start_scene" not in line[1] and "turn_off" not in line[1]:
@@ -511,7 +511,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Device - " + line_content[3] + " - not founded")   
          
                         except Exception as e:
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
 
 
                     if "lighting" in line[1] and "turn_off" in line[1]:
@@ -574,7 +574,7 @@ def PROGRAM_THREAD(thread_id, program_id):
 
 
                         except Exception as e:
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
 
 
                     # ######    
@@ -626,7 +626,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                     WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Device - " + device_name.strip() + " - not founded")     
              
                         except Exception as e:
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
 
 
                     # ##################
@@ -641,7 +641,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                             REQUEST_SENSORDATA(line_content[1].strip())              
 
                         except Exception as e:
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
 
 
                     # ########
@@ -663,10 +663,10 @@ def PROGRAM_THREAD(thread_id, program_id):
                                 STOP_PROGRAM_THREAD_BY_NAME(program.name, thread_id)
 
                             else:
-                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | Invalid command")
+                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | Invalid command")
 
                         else:
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | Program - " + program + " - not founded")
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | Program - " + program + " - not founded")
 
 
                     # #####
@@ -690,13 +690,18 @@ def PROGRAM_THREAD(thread_id, program_id):
                                 sp       = spotipy.Spotify(auth=spotify_token)
                                 sp.trace = False
 
+                                # basic control 
 
-                                # basic control
-                                
-                                try:
-                                
-                                    spotify_device_id = sp.current_playback(market=None)['device']['id']
-                                    spotify_volume    = sp.current_playback(market=None)['device']['volume_percent']
+                                if (line_content[1].strip() == "PLAY" or
+                                    line_content[1].strip() == "PREVIOUS" or
+                                    line_content[1].strip() == "NEXT" or
+                                    line_content[1].strip() == "STOP" or
+                                    line_content[1].strip() == "VOLUME"):
+                                                    
+                                    try: 
+                                        spotify_volume = sp.current_playback(market=None)['device']['volume_percent']
+                                    except:
+                                        spotify_volume = GET_SPOTIFY_SETTINGS().default_volume
 
                                     if line_content[1].strip() == "PLAY":
                                         SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
@@ -710,14 +715,10 @@ def PROGRAM_THREAD(thread_id, program_id):
                                     if line_content[1].strip() == "STOP": 
                                         SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)   
 
-                                    if line_content[1].strip() == "VOLUME":          
+                                    if line_content[1].strip() == "VOLUME":            
                                         spotify_volume = int(line_content[2])
                                         SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
-
-                                except:
-                                    pass
-                                                                        
-                                
+                                                                                            
                                 # start playlist
                                         
                                 if line_content[1].strip() == "playlist":             
@@ -750,7 +751,7 @@ def PROGRAM_THREAD(thread_id, program_id):
 
 
                             except Exception as e:
-                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Zeile - " + line[1] + " | " + str(e))
+                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
         
                                         
                         else:

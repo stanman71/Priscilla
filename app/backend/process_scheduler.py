@@ -1014,15 +1014,20 @@ def START_SCHEDULER_TASK(task_object):
                
                sp       = spotipy.Spotify(auth=spotify_token)
                sp.trace = False
-               
-               
-               # basic control
-               
-               try:
-               
-                  spotify_device_id = sp.current_playback(market=None)['device']['id']
-                  spotify_volume    = sp.current_playback(market=None)['device']['volume_percent']
+                          
+               # basic control 
 
+               if (task[1].strip() == "PLAY" or
+                   task[1].strip() == "PREVIOUS" or
+                   task[1].strip() == "NEXT" or
+                   task[1].strip() == "STOP" or
+                   task[1].strip() == "VOLUME"):
+              
+                  try: 
+                     spotify_volume = sp.current_playback(market=None)['device']['volume_percent']
+                  except:
+                     spotify_volume = GET_SPOTIFY_SETTINGS().default_volume
+                  
                   if task[1].strip() == "PLAY":
                      SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
          
@@ -1039,10 +1044,6 @@ def START_SCHEDULER_TASK(task_object):
                      spotify_volume = int(task[2])
                      SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
 
-               except:
-                  pass
-                  
-                  
                # start playlist
                      
                if task[1].strip() == "playlist": 

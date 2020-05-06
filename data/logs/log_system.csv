@@ -639,3 +639,13 @@ Timestamp,Type,Description
 2020-05-05 20:55:24,SUCCESS,|Music || Spotify || Token || updated|
 2020-05-05 20:55:25,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-05-05 20:55:25,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-05 21:40:02,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-05-05 21:40:02,SUCCESS,|Music || Spotify || Token || updated|
+2020-05-05 21:40:03,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-05 21:40:03,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-06 01:48:41,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-05-06 01:48:41,SUCCESS,|Music || Spotify || Token || updated|
+2020-05-06 01:48:42,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-06 01:48:42,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-06 01:49:23,EVENT,|Program - WakeUp_Stop || started|
+2020-05-06 01:49:36,ERROR,|Network || Device - LED_BED || Setting not confirmed || OFF|
