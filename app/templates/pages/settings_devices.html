@@ -549,7 +549,7 @@
                               <option value= {{ device_model }} > {{ device_model }} </option>
                             {% endfor %}
                           {% else %}
-                            <option value= "" > No device models founded </option>
+                            <option value= "" > No device models found </option>
                           {% endif %}                      
                         </select>  
                       </div>
@@ -659,7 +659,7 @@
                                 <option value= {{ device.ieeeAddr }} > {{ device.name }} </option>
                               {% endfor %}
                             {% else %}
-                              <option value= "" > No devices founded </option>
+                              <option value= "" > No devices found </option>
                             {% endif %}                      
                           </select>  
                         </div>
@@ -926,7 +926,7 @@
                         <table class="table tablesorter">
                           <tbody> 
 
-                            {% if list_mqtt_firmware_files != "No Files founded" %}
+                            {% if list_mqtt_firmware_files != "No Files found" %}
 
                               <div class="table-responsive">
                                 <table class="table tablesorter"> 

@@ -162,7 +162,7 @@ def SET_PROGRAM_THREAD_STATUS_9(program_name, line, lines_total, command):
 """  zigbee device update  """
 """ ###################### """
 
-zigbee_device_update_status = ""
+zigbee_device_update_status = "No Device Update available"
 
 def GET_ZIGBEE_DEVICE_UPDATE_STATUS():
     global zigbee_device_update_status

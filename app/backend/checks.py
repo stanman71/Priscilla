@@ -171,10 +171,10 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                # check scene setting
                if GET_LIGHTING_GROUP_BY_NAME(line_content[2].strip()) == None: 
-                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Group not founded | " + line_content[2])
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Group not found | " + line_content[2])
                
                if GET_LIGHTING_SCENE_BY_NAME(line_content[3].strip()) == None: 
-                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Scene not founded | " + line_content[3])
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Scene not found | " + line_content[3])
 
                brightness = line_content[4].strip()
 
@@ -193,7 +193,7 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                # check light name
                if GET_DEVICE_BY_NAME(line_content[2].strip()) == None: 
-                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Light not founded | " + line_content[2])
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Light not found | " + line_content[2])
                
                # check rgb values
                try:
@@ -229,12 +229,12 @@ def CHECK_PROGRAM_TASKS(program_id):
                if line_content[2].lower() == "group":
                   for group_name in line_content[3].split(","):
                      if GET_LIGHTING_GROUP_BY_NAME(group_name.strip()) == None: 
-                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Group not founded | " + group_name.strip())  
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Group not found | " + group_name.strip())  
 
                # check turn_off light setting
                elif line_content[2].lower() == "light":
                   if GET_DEVICE_BY_NAME(line_content[3].strip()) == None: 
-                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Light not founded | " + line_content[3])
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Light not found | " + line_content[3])
 
                # check turn_off all setting
                elif line_content[2].lower() == "all":
@@ -260,7 +260,7 @@ def CHECK_PROGRAM_TASKS(program_id):
                for device_name in line_content[1].split(","):
 
                   if GET_DEVICE_BY_NAME(device_name.strip()) == None: 
-                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not founded | " + device_name)       
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not found | " + device_name)       
 
                   # check commands
                   else:
@@ -270,7 +270,7 @@ def CHECK_PROGRAM_TASKS(program_id):
                      list_all_commands = re.findall(r'\w+', device.commands_json.lower())
 
                      if setting == "":
-                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || No command founded")   
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || No command found")   
                         break                     
 
                      if setting.lower() not in list_all_commands[1::2]:
@@ -290,7 +290,7 @@ def CHECK_PROGRAM_TASKS(program_id):
                line_content = line[1].split(" # ")     
 
                if not GET_SENSORDATA_JOB_BY_NAME(line_content[1]):
-                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Job not founded")
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Job not found")
 
             except:        
                list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
@@ -306,7 +306,7 @@ def CHECK_PROGRAM_TASKS(program_id):
                line_content = line[1].split(" # ")     
 
                if not GET_PROGRAM_BY_NAME(line_content[1].lower()):
-                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Program not founded")
+                  list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Program not found")
 
                if line_content[2].strip() != "START" and line_content[2].strip() != "STOP":
                   list_errors.append("Line " + str(line_number) + " - " + line[1] + " | Invalid command")
@@ -359,7 +359,7 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
-                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not founded | " + device_name)                
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not found | " + device_name)                
 
                      try:
                         if not line_content[4].isdigit():
@@ -384,7 +384,7 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
-                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not founded | " + device_name)        
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not found | " + device_name)        
 
                      try:
                         if not line_content[5].isdigit():
@@ -409,7 +409,7 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
-                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not founded | " + device_name)              
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not found | " + device_name)              
 
                      try:
                         if not line_content[5].isdigit():
@@ -586,7 +586,7 @@ def CHECK_SCHEDULER_TASK_SETTINGS(scheduler_tasks):
             list_errors.append("Missing setting || Sunrise or Sunset")
 
          if task.latitude == "None":
-            list_errors.append("No latitude coordinates founded")
+            list_errors.append("No latitude coordinates found")
          else:
             try:
                if type(float(task.latitude)) is not float:
@@ -597,7 +597,7 @@ def CHECK_SCHEDULER_TASK_SETTINGS(scheduler_tasks):
                list_errors.append("Invalid latitude coordinates")
 
          if task.longitude == "None":
-            list_errors.append("No longitude coordinates founded")
+            list_errors.append("No longitude coordinates found")
          else:
             try:
                if type(float(task.longitude)) is not float:
@@ -888,9 +888,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                if GET_LIGHTING_GROUP_BY_NAME(task[2].strip()) == None: 
 
                   if task_type == "controller":
-                     list_task_errors.append(controller_command + " || Group not founded | " + task[2].strip())  
+                     list_task_errors.append(controller_command + " || Group not found | " + task[2].strip())  
                   else:                               
-                     list_task_errors.append("Group not founded || " + task[2].strip())  
+                     list_task_errors.append("Group not found || " + task[2].strip())  
 
             except:
                if task_type == "controller":
@@ -904,9 +904,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                if GET_LIGHTING_SCENE_BY_NAME(task[3].strip()) == None: 
 
                   if task_type == "controller":
-                     list_task_errors.append(controller_command + " || Scene not founded | " + task[3].strip())  
+                     list_task_errors.append(controller_command + " || Scene not found | " + task[3].strip())  
                   else:                               
-                     list_task_errors.append("Scene not founded || " + task[3].strip())  
+                     list_task_errors.append("Scene not found || " + task[3].strip())  
                   
             except:
 
@@ -961,7 +961,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             try:
 
                if GET_LIGHTING_GROUP_BY_NAME(task[2].strip()) == None: 
-                  list_task_errors.append(controller_command + " || Group not founded | " + task[2].strip())  
+                  list_task_errors.append(controller_command + " || Group not found | " + task[2].strip())  
 
             except:
                list_task_errors.append(controller_command + " || Missing setting | Group")
@@ -971,7 +971,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             try:
 
                if GET_LIGHTING_SCENE_BY_NAME(task[3].strip()) == None: 
-                  list_task_errors.append(controller_command + " || Scene not founded | " + task[3].strip())  
+                  list_task_errors.append(controller_command + " || Scene not found | " + task[3].strip())  
                   
             except:
                list_task_errors.append(controller_command + " || Missing setting | Scene")
@@ -1010,7 +1010,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
             try:
 
                if GET_LIGHTING_GROUP_BY_NAME(task[2].strip()) == None: 
-                  list_task_errors.append(controller_command + " || Group not founded | " + task[2].strip()) 
+                  list_task_errors.append(controller_command + " || Group not found | " + task[2].strip()) 
                   return list_task_errors 
 
                else:
@@ -1040,7 +1040,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   pass
                   
                else:
-                  list_task_errors.append(controller_command + " || Group not founded | " + task[2])   
+                  list_task_errors.append(controller_command + " || Group not found | " + task[2])   
                                     
             except:
                list_task_errors.append(controller_command + " || Missing setting | Group")      
@@ -1078,9 +1078,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                if GET_DEVICE_BY_NAME(task[2].strip()) == None: 
 
                   if task_type == "controller":
-                     list_task_errors.append(controller_command + " || Light not founded | " + task[2].strip())  
+                     list_task_errors.append(controller_command + " || Light not found | " + task[2].strip())  
                   else:                               
-                     list_task_errors.append("Light not founded || " + task[2].strip())  
+                     list_task_errors.append("Light not found || " + task[2].strip())  
 
             except:
                if task_type == "controller":
@@ -1168,9 +1168,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                      if GET_LIGHTING_GROUP_BY_NAME(group_name.strip()) == None: 
 
                         if task_type == "controller":
-                           list_task_errors.append(controller_command + " || Group not founded | " + group_name.strip())  
+                           list_task_errors.append(controller_command + " || Group not found | " + group_name.strip())  
                         else:                               
-                           list_task_errors.append("Group not founded || " + group_name.strip())  
+                           list_task_errors.append("Group not found || " + group_name.strip())  
                      
                   return list_task_errors
 
@@ -1192,9 +1192,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   if GET_DEVICE_BY_NAME(task[3].strip()) == None: 
 
                      if task_type == "controller":
-                        list_task_errors.append(controller_command + " || Light not founded | " + task[3].strip())  
+                        list_task_errors.append(controller_command + " || Light not found | " + task[3].strip())  
                      else:                               
-                        list_task_errors.append("Light not founded || " + task[3].strip())  
+                        list_task_errors.append("Light not found || " + task[3].strip())  
 
                   return list_task_errors
       
@@ -1245,9 +1245,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                   if GET_DEVICE_BY_NAME(device_name.strip()) == None: 
 
                      if task_type == "controller":
-                        list_task_errors.append(controller_command + " || Device no founded | " + device_name)
+                        list_task_errors.append(controller_command + " || Device no found | " + device_name)
                      else:
-                        list_task_errors.append("Device no founded || " + device_name)           
+                        list_task_errors.append("Device no found || " + device_name)           
 
                   # check commands
                   else:
@@ -1297,9 +1297,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
                if program == None:
                
                   if task_type == "controller":
-                     list_task_errors.append(controller_command + " || Program not founded | " + task[1])
+                     list_task_errors.append(controller_command + " || Program not found | " + task[1])
                   else:
-                     list_task_errors.append(task[1] + " Program not founded")                  
+                     list_task_errors.append(task[1] + " Program not found")                  
                   
                if setting != "START" and setting != "STOP":
                   
@@ -1391,9 +1391,9 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
                else:
                   if task_type == "controller":
-                     list_task_errors.append(controller_command + " || Job not founded | " + task[1])
+                     list_task_errors.append(controller_command + " || Job not found | " + task[1])
                   else:
-                     list_task_errors.append("Job not founded || " + task[1])
+                     list_task_errors.append("Job not found || " + task[1])
 
                   return list_task_errors   
 
@@ -1475,7 +1475,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
-                           list_task_errors.append(task[5] + " || Device not founded | " + device_name)        
+                           list_task_errors.append(task[5] + " || Device not found | " + device_name)        
 
                      try:
                         if not task[4].isdigit():
@@ -1503,7 +1503,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
-                           list_task_errors.append(task[5] + " || Device not founded | " + device_name)            
+                           list_task_errors.append(task[5] + " || Device not found | " + device_name)            
 
                      try:
                         if not task[5].isdigit():
@@ -1531,7 +1531,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
-                           list_task_errors.append(task[5] + " || Device not founded | " + device_name)                  
+                           list_task_errors.append(task[5] + " || Device not found | " + device_name)                  
 
                      try:
                         if not task[5].isdigit():

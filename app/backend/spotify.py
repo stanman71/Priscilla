@@ -141,22 +141,22 @@ def CHECK_CLIENT_MUSIC_CONNECTION():
         list_spotify_devices = sp.devices()["devices"]  
 
         for client_music in GET_ALL_DEVICES("client_music"):
-            device_founded = False
+            device_found = False
 
             # check device connected to spotify
             if "spotify" in client_music.last_values_string:
                 for element in list_spotify_devices:
                     if client_music.name.lower() == element["name"].lower():
-                        device_founded = True
+                        device_found = True
 
             # find multiroom group and check device connected lms
             if "multiroom" in client_music.last_values_string:
                 for element in list_spotify_devices:
                     if "multiroom" in element["name"].lower() and client_music.name.lower() in element["name"].lower():
-                        device_founded = True                        
+                        device_found = True                        
 
-            # if no connection founded, restart services
-            if device_founded == False:
+            # if no connection found, restart services
+            if device_found == False:
 
                 try:
                     heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  

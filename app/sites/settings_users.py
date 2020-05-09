@@ -82,7 +82,7 @@ def settings_users():
 
             if request.form.get("set_email_" + str(i)) != None:
 
-                error_founded       = False
+                error_found       = False
                 hashed_password     = None
 
 
@@ -107,14 +107,14 @@ def settings_users():
                     # name already exist
                     elif ((GET_USER_BY_NAME(input_name) != None) and (user.name != input_name)):
                         error_message_change_settings.append(user.name + " || Name - " + input_name + " - already taken")  
-                        error_founded = True
+                        error_found = True
                         name = user.name
 
                     # no input commited
                     else:                          
                         name = GET_USER_BY_ID(i).name
                         error_message_change_settings.append(user.name + " || No name given") 
-                        error_founded = True  
+                        error_found = True  
 
                 else:
                     name = user.name   
@@ -137,7 +137,7 @@ def settings_users():
                 # email already exist
                 else:
                     error_message_change_settings.append(user.name + " || eMail - " + input_email + " - already taken")  
-                    error_founded = True
+                    error_found = True
                     email = user.email
 
 
@@ -170,7 +170,7 @@ def settings_users():
                 if request.form.get("set_checkbox_email_notification_" + str(i)):
 
                     if email == "":
-                        error_message_change_settings.append(user.name + " || No eMail address founded >>> Deactivate Notifications")
+                        error_message_change_settings.append(user.name + " || No eMail address found >>> Deactivate Notifications")
                         email_notification = "False"
 
                     else:
@@ -181,7 +181,7 @@ def settings_users():
 
 
                 # save settings
-                if error_founded == False: 
+                if error_found == False: 
 
                     changes_saved = False
 
@@ -207,7 +207,7 @@ def settings_users():
 
     for user in list_users:
         if user.password == None or user.password == "None":
-            error_message_missing_passwords.append(user.name + " || No Password founded")
+            error_message_missing_passwords.append(user.name + " || No Password found")
 
 
     data = {'navigation': 'settings_users'}

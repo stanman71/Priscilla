@@ -59,7 +59,7 @@ def UPLOAD_FIRMWARE(file):
         firmware_version      = None         
 
     if file.filename == '':
-        result = "No file founded"
+        result = "No file found"
 
     elif ".bin" not in file.filename:
         result = "Invalid file ending (only .bin)"
@@ -77,15 +77,15 @@ def UPLOAD_FIRMWARE(file):
 
         try:
             # check existing device_models     
-            device_founded = False
+            device_found = False
 
             for device in GET_ALL_DEVICES("mqtt"):  
 
                 if firmware_device_model.lower() == device.model.lower() and device.device_type != "client_music":
-                    device_founded = True 
+                    device_found = True 
             
-            if device_founded == False:
-                result = "Device_Model not founded"   
+            if device_found == False:
+                result = "Device_Model not found"   
                 return result    
 
             # check existing firmwares
@@ -345,7 +345,7 @@ def settings_devices():
                 error_message_mqtt_manually_adding = "Invalid input | ieeeAddr - " + ieeeAddr + " - already taken"
 
         else:
-            error_message_mqtt_manually_adding = "Invalid input | No ieeeAddr founded"
+            error_message_mqtt_manually_adding = "Invalid input | No ieeeAddr found"
 
 
     """ ######################### """
@@ -379,9 +379,9 @@ def settings_devices():
 
             if request.form.get("set_exception_option_" + str(i)) != None:
                 
-                # ####################
-                #   Exception Options
-                # ####################
+                # #################
+                # Exception Options
+                # #################
 
                 exception_option  = request.form.get("set_exception_option_" + str(i))
                 exception_option  = exception_option.replace(" ","")
@@ -489,7 +489,7 @@ def settings_devices():
 
         # check if the post request has the file part
         if "file" not in request.files:
-            error_message_mqtt_firmware_upload = "No file founded"
+            error_message_mqtt_firmware_upload = "No file found"
 
         else:
             file   = request.files['file']
@@ -1393,7 +1393,7 @@ def delete_mqtt_firmware(filename):
 @login_required
 @permission_required
 def update_zigbee_device(ieeeAddr):
-    if GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "" or GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "Device Update founded":
+    if GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "" or GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "Device Update found":
         channel  = "smarthome/zigbee2mqtt/bridge/ota_update/update"
         msg      = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
 
@@ -1414,7 +1414,7 @@ def download_zigbee_topology(filename):
     path = GET_PATH() + "/app/static/temp/"
     
     if os.path.isfile(path + filename) == False:
-        session['error_download_topology_zigbee2mqtt'] = "Download Topology || File not founded" 
+        session['error_download_topology_zigbee2mqtt'] = "Download Topology || File not found" 
         return redirect(url_for('settings_devices'))
     
     else:
@@ -1431,11 +1431,11 @@ def download_logs(filename):
     if os.path.isfile(path + filename) == False:
 
         if filename == "zigbee2mqtt.txt":
-            session['error_download_log_zigbee2mqtt'] = "Download Log || File not founded" 
+            session['error_download_log_zigbee2mqtt'] = "Download Log || File not found" 
             return redirect(url_for('settings_devices'))
 
         if filename == "log_devices.csv":
-            session['error_download_log_devices'] = "Download Log || File not founded"  
+            session['error_download_log_devices'] = "Download Log || File not found"  
     
     else:
         return send_from_directory(path, filename)

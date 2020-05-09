@@ -87,7 +87,7 @@ def programs():
 
             if request.form.get("set_name_" + str(i)) != None:
 
-                error_founded = False   
+                error_found = False   
 
                 # ############
                 # name setting
@@ -108,13 +108,13 @@ def programs():
                 elif ((GET_PROGRAM_BY_NAME(input_name) != None) and (selected_program.name != input_name)):
                     error_message_change_settings_program.append(selected_program.name + " || Name - " + input_name + " - already taken")  
                     name = selected_program.name
-                    error_founded = True  
+                    error_found = True  
 
                 # no input commited
                 else:                          
                     name = GET_PROGRAM_BY_ID(i).name
                     error_message_change_settings_program.append(selected_program.name + " || No name given") 
-                    error_founded = True  
+                    error_found = True  
 
                 try:
                     line_content_1  = request.form.get("set_line_content_1_"  + str(i)).strip()
@@ -267,7 +267,7 @@ def programs():
                     line_content_30 = "None"
 
 
-                if error_founded == False:           
+                if error_found == False:           
 
                     if SET_PROGRAM_SETTINGS(i, name, line_content_1,line_content_2, line_content_3, line_content_4, line_content_5, 
                                                      line_content_6, line_content_7, line_content_8, line_content_9, line_content_10,

@@ -377,22 +377,22 @@ if eMail.query.filter_by().first() == None:
 # scheduler tasks
 # ###############
 
-update_devices_founded  = False
-backup_database_founded = False
-reset_log_files_founded = False
-reset_system_founded    = False
+update_devices_found  = False
+backup_database_found = False
+reset_log_files_found = False
+reset_system_found    = False
 
 for task in Scheduler_Tasks.query.all():
     if task.name.lower() == "update_devices":
-        update_devices_founded = True
+        update_devices_found = True
     if task.name.lower() == "backup_database":
-        backup_database_founded = True
+        backup_database_found = True
     if task.name.lower() == "reset_log_files":
-        reset_log_files_founded = True
+        reset_log_files_found = True
     if task.name.lower() == "reset_system":
-        reset_system_founded = True
+        reset_system_found = True
 
-if update_devices_founded == False:
+if update_devices_found == False:
     scheduler_task_update_devices = Scheduler_Tasks(
         name           = "update_devices",
         task           = "update_devices",
@@ -406,7 +406,7 @@ if update_devices_founded == False:
     db.session.add(scheduler_task_update_devices)
     db.session.commit()
 
-if backup_database_founded == False:
+if backup_database_found == False:
     scheduler_task_backup_database = Scheduler_Tasks(
         name          = "backup_database",
         task          = "backup_database",
@@ -420,7 +420,7 @@ if backup_database_founded == False:
     db.session.add(scheduler_task_backup_database)
     db.session.commit()
     
-if reset_log_files_founded == False:
+if reset_log_files_found == False:
     scheduler_task_reset_log_files = Scheduler_Tasks(
         name          = "reset_log_files",
         task          = "reset_log_files",
@@ -434,7 +434,7 @@ if reset_log_files_founded == False:
     db.session.add(scheduler_task_reset_log_files)
     db.session.commit()
 
-if reset_system_founded == False:
+if reset_system_found == False:
     scheduler_task_reset_system = Scheduler_Tasks(
         name          = "reset_system",
         task          = "reset_system",

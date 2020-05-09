@@ -128,7 +128,7 @@ def START_PROGRAM_THREAD(program_id):
             return True            
 
         else:
-            return ("No empty program tread founded")
+            return ("No empty program tread found")
 
     except Exception as e:
         return e
@@ -474,10 +474,10 @@ def PROGRAM_THREAD(thread_id, program_id):
                                     CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
                                 else:
-                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Scene - " + line_content[3] + " - not founded")   
+                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Scene - " + line_content[3] + " - not found")   
 
                             else:
-                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + line_content[2] + " - not founded")   
+                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + line_content[2] + " - not found")   
          
                         except Exception as e:
                             WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
@@ -508,7 +508,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                     CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "ON", 10)
 
                             else:
-                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Device - " + line_content[3] + " - not founded")   
+                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Device - " + line_content[3] + " - not found")   
          
                         except Exception as e:
                             WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
@@ -532,20 +532,20 @@ def PROGRAM_THREAD(thread_id, program_id):
                                 for input_group_name in list_groups:
                                     input_group_name = input_group_name.strip()
 
-                                    group_founded = False
+                                    group_found = False
 
                                 # get exist group names
                                 for group in GET_ALL_LIGHTING_GROUPS():
 
                                     if input_group_name.lower() == group.name.lower():
-                                        group_founded = True
+                                        group_found = True
 
                                         SET_LIGHTING_GROUP_TURN_OFF(group.id)
                                         CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
-                                # group not founded
-                                if group_founded == False:
-                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + input_group_name + " - not founded")   
+                                # group not found
+                                if group_found == False:
+                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + input_group_name + " - not found")   
 
 
                             # turn off light
@@ -559,7 +559,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                     CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "OFF", 10)
 
                                 else:
-                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Light - " + line_content[3] + " - not founded")   
+                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Light - " + line_content[3] + " - not found")   
 
 
                             # turn off all
@@ -591,7 +591,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                             for device_name in line_content[1].split(","): 
                                 device = GET_DEVICE_BY_NAME(device_name.strip())
                                 
-                                # device founded ?
+                                # device found ?
                                 if device != None:
                                     program_command = line_content[2]
 
@@ -635,7 +635,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                         WRITE_LOGFILE_SYSTEM("WARNING", "Program - " + program_name + " | " + check_result)
 
                                 else:
-                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Device - " + device_name.strip() + " - not founded")     
+                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Device - " + device_name.strip() + " - not found")     
              
                         except Exception as e:
                             WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
@@ -678,7 +678,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | Invalid command")
 
                         else:
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | Program - " + program + " - not founded")
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | Program - " + program + " - not found")
 
 
                     # #####
@@ -767,7 +767,7 @@ def PROGRAM_THREAD(thread_id, program_id):
         
                                         
                         else:
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Programm - " + GET_PROGRAM_BY_ID(program_id).name + " | No Spotify Token founded")   
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Programm - " + GET_PROGRAM_BY_ID(program_id).name + " | No Spotify Token found")   
 
                         
                     line_number = line_number + 1

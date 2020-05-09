@@ -197,7 +197,7 @@ def GET_ALL_BACKUP_FILES():
         file_list.append(files)
 
     if file_list == []:
-        return "No Files founded"
+        return "No Files found"
     else:
         file_list = file_list[0][2]
         file_list = sorted(file_list, reverse=True)

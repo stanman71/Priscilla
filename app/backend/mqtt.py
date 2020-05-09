@@ -235,7 +235,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
             # new device connected
             if data["type"] == "pairing" and data["message"] == "interview_started":
-                SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device founded - " + data["meta"]["friendly_name"])   
+                SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device found - " + data["meta"]["friendly_name"])   
 
             # device successful added
             if data["type"] == "pairing" and data["message"] == "interview_successful":
@@ -271,11 +271,11 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         if data["type"] == "ota_update":
             SET_ZIGBEE_DEVICE_UPDATE_STATUS(data["message"])
             
-            # update founded
+            # update found
 
             if data["meta"]["status"] == "available":
                 SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(GET_DEVICE_BY_NAME(data["meta"]["device"]).ieeeAddr, "True")
-                SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update founded")
+                SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update found")
 
             # update started
 
@@ -295,7 +295,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
                 for device in GET_ALL_DEVICES(""):
                     if device.update_available == "True":
-                        SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update founded")
+                        SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update found")
 
             # update failed
             
@@ -308,7 +308,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
                 for device in GET_ALL_DEVICES(""):
                     if device.update_available == "True":
-                        SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update founded")
+                        SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update found")
 
                 # reset update variable
                 SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(GET_DEVICE_BY_NAME(data["meta"]["device"]).ieeeAddr, "True")
@@ -698,7 +698,7 @@ def UPDATE_DEVICES(gateway):
                                                 commands      = device_data.commands 
                                                 commands_json = device_data.commands_json 
                                         
-                                                error = "Error | " + str(existing_model) + " not founded | " + str(e)
+                                                error = "Error | " + str(existing_model) + " not found | " + str(e)
                                                                         
                                             UPDATE_DEVICE(id, name, gateway, existing_model, device_type, version, description, input_values, input_events, commands, commands_json)
 
@@ -1053,8 +1053,8 @@ def REQUEST_SENSORDATA(job_name):
             except:
                 pass
 
-    WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job - " + job_name + " | No Data founded") 
-    SEND_EMAIL("ERROR", "Sensordata | Job - " + job_name + " | No Data founded")       
+    WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job - " + job_name + " | No Data found") 
+    SEND_EMAIL("ERROR", "Sensordata | Job - " + job_name + " | No Data found")       
 
    
 def SAVE_SENSORDATA(job_id):

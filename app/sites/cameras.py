@@ -159,7 +159,7 @@ def cameras():
 
             if request.form.get("set_name_" + str(i)) != None:
 
-                error_founded = False
+                error_found = False
         
                 # ############
                 # name setting
@@ -179,14 +179,14 @@ def cameras():
                 # name already exist
                 elif ((GET_CAMERA_BY_NAME(input_name) != None) and (camera.name != input_name)):
                     error_message_change_settings.append(camera.name + " || Name - " + input_name + " - already taken")  
-                    error_founded = True
+                    error_found = True
                     name = camera.name
 
                 # no input commited
                 else:                          
                     name = GET_CAMERA_BY_ID(i).name
                     error_message_change_settings.append(camera.name + " || No name given") 
-                    error_founded = True  
+                    error_found = True  
 
 
                 # ###########
@@ -206,14 +206,14 @@ def cameras():
                 # url already exist
                 elif ((GET_CAMERA_BY_URL(input_url) != None) and (camera.url != input_url)):
                     error_message_change_settings.append(camera.name + " || URL already taken")  
-                    error_founded = True
+                    error_found = True
                     url = camera.url
 
                 # no input commited
                 else:                          
                     url = GET_CAMERA_BY_ID(i).url
                     error_message_change_settings.append(camera.name + " || No URL given") 
-                    error_founded = True  
+                    error_found = True  
 
             
                 # ##################
@@ -225,7 +225,7 @@ def cameras():
 
 
                 # save settings
-                if error_founded == False: 
+                if error_found == False: 
                     if SET_CAMERA_SETTINGS(i, name, url, user, password):
                         success_message_change_settings.append(name + " || Settings successfully saved - System restart nessessary") 
 

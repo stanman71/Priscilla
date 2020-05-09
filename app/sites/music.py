@@ -181,7 +181,7 @@ def music():
                 
                 list_search_track_results = SPOTIFY_SEARCH_TRACK(spotify_token, track_name, track_artist, 10)
             
-                # check results founded ?
+                # check results found ?
                 if isinstance(list_search_track_results, str):
                     error_message_search_track = list_search_track_results
                     list_search_track_results  = []  
@@ -209,7 +209,7 @@ def music():
 
                 list_search_album_results = SPOTIFY_SEARCH_ALBUM(spotify_token, album_name, album_artist, 5)  
     
-                # check results founded ?
+                # check results found ?
                 if isinstance(list_search_album_results, str):
                     error_message_search_album = list_search_album_results 
                     list_search_album_results  = []  
@@ -305,7 +305,7 @@ def music():
                     if client_music_volume == None:
                         client_music_volume = 0 
 
-                    # last values founded
+                    # last values found
                     try:
                         data = json.loads(device.last_values_json)
                         

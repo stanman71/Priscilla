@@ -319,7 +319,7 @@ def settings_system():
                         save_settings_lan = False
                         
                     if CHECK_IP_ADDRESS(gateway) == True and PING_IP_ADDRESS(gateway) == False:
-                        error_message_change_settings_network.append("Network || Gateway not founded")
+                        error_message_change_settings_network.append("Network || Gateway not found")
                         save_settings_lan = False
 
                 else:

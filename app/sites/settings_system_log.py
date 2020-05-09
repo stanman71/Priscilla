@@ -142,7 +142,7 @@ def download_system_log(filename):
     path = GET_PATH() + "/data/logs/"  
 
     if os.path.isfile(path + filename) == False:
-        session['error_download_log_system'] = "Download Log || File not founded" 
+        session['error_download_log_system'] = "Download Log || File not found" 
         return redirect(url_for('settings_system_log'))
     
     else:

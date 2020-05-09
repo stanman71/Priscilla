@@ -198,7 +198,7 @@
                         {% endif %}
                       {% endfor %}
                     {% else %}
-                      <option value= "" > No devices founded </option>
+                      <option value= "" > No devices found </option>
                     {% endif %}  
                   </select>       
                   <br>
@@ -210,7 +210,7 @@
                         {% endif %}
                       {% endfor %}
                     {% else %}
-                      <option value= "" > No playlists founded </option>
+                      <option value= "" > No playlists found </option>
                     {% endif %}  
                   </select>     
                   <br>                 
@@ -270,7 +270,7 @@
                         {% endif %}
                       {% endfor %}
                     {% else %}
-                      <option value= "" > No devices founded </option>
+                      <option value= "" > No devices found </option>
                     {% endif %}  
                     <option disabled>------------------</option>  
                     <option value="None"> None </option> 
@@ -286,7 +286,7 @@
                         {% endif %}
                       {% endfor %}
                     {% else %}
-                      <option value= "" > No playlists founded </option>
+                      <option value= "" > No playlists found </option>
                     {% endif %}  
                     <option disabled>------------------</option>  
                     <option value="None"> None </option> 
@@ -445,7 +445,7 @@
                                   {% endif %}
                                 {% endfor %}
                               {% else %}
-                                <option value= "" > No devices founded </option>
+                                <option value= "" > No devices found </option>
                               {% endif %}  
                             </select>                                    
                           </td>     
@@ -458,7 +458,7 @@
                                   {% endif %}
                                 {% endfor %}
                               {% else %}
-                                <option value= "" > No playlists founded </option>
+                                <option value= "" > No playlists found </option>
                               {% endif %}  
                             </select>    
                           </td>   
@@ -533,7 +533,7 @@
                                   {% endif %}
                                 {% endfor %}
                               {% else %}
-                                <option value= "" > No devices founded </option>
+                                <option value= "" > No devices found </option>
                               {% endif %}  
                               <option disabled>------------------</option>  
                               <option value="None"> None </option> 
@@ -550,7 +550,7 @@
                                   {% endif %}
                                 {% endfor %}
                               {% else %}
-                                <option value= "" > No playlists founded </option>
+                                <option value= "" > No playlists found </option>
                               {% endif %}  
                               <option disabled>------------------</option>  
                               <option value="None"> None </option> 
@@ -669,7 +669,7 @@
                                         {% endif %}
                                       {% endfor %}
                                     {% else %}
-                                      <option value= "" > No devices founded </option>
+                                      <option value= "" > No devices found </option>
                                     {% endif %}  
                                   </select>     
                                 </td>                              
@@ -699,7 +699,7 @@
                     {% endif %} 
 
                     {% if list_search_track_results == None %}
-                      No Results founded
+                      No Results found
                     {% endif %}      
 
                   </div>              
@@ -786,7 +786,7 @@
                                         {% endif %}
                                       {% endfor %}
                                     {% else %}
-                                      <option value= "" > No devices founded </option>
+                                      <option value= "" > No devices found </option>
                                     {% endif %}  
                                   </select>     
                                 </td>                                                       
@@ -816,7 +816,7 @@
                     {% endif %} 
 
                     {% if list_search_album_results == None %}
-                      No Results founded
+                      No Results found
                     {% endif %}                     
 
                   </div>              
@@ -895,7 +895,7 @@
                                   <label class="custom-control-label" for="radio_multiroom_{{ entry.id }}">Multiroom</label>
                                 </div>
                                 
-                              <!-- no values founded -->
+                              <!-- no values found -->
 
                               {% else %}
 
@@ -921,7 +921,7 @@
                                   <input id="volume_slider_music_client_{{ counter[0] }}" data-slider-id="volume_slider_music_client_{{ counter[0] }}" name="set_client_music_volume_{{ entry.id }}" 
                                     type="text" data-slider-min="100" data-slider-max="207" data-slider-step="1" data-slider-value="{{ entry.last_values_json.split(':')[2] | replace('}', '') }}" />   
   
-                                <!-- no values founded -->         
+                                <!-- no values found -->         
 
                                 {% else %}
                                 

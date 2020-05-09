@@ -78,7 +78,7 @@ def sensordata_jobs():
 
             if request.form.get("set_name_" + str(i)) != None:
 
-                error_founded = False            
+                error_found = False            
 
                 # ############
                 # name setting
@@ -98,14 +98,14 @@ def sensordata_jobs():
                 # name already exist
                 elif ((GET_SENSORDATA_JOB_BY_NAME(input_name) != None) and (sensordata_job.name != input_name)):
                     error_message_change_settings.append(sensordata_job.name + " || Name - " + input_name + " - already taken")  
-                    error_founded = True
+                    error_found = True
                     name = sensordata_job.name
 
                 # no input commited
                 else:                          
                     name = GET_SENSORDATA_JOB_BY_ID(i).name
                     error_message_change_settings.append(sensordata_job.name + " || No name given") 
-                    error_founded = True  
+                    error_found = True  
 
 
                 # ################
@@ -119,7 +119,7 @@ def sensordata_jobs():
                 # no input commited
                 elif request.form.get("set_filename_" + str(i)) == "":                         
                     error_message_change_settings.append(sensordata_job.name + " || No filename given") 
-                    error_founded = True  
+                    error_found = True  
                     filename = sensordata_job.filename 
 
                 # nothing changed 
@@ -174,7 +174,7 @@ def sensordata_jobs():
 
 
                 # save settings
-                if error_founded == False: 
+                if error_found == False: 
 
                     if SET_SENSORDATA_JOB_SETTINGS(i, name, filename, device_ieeeAddr, sensor_key, always_active):
                         success_message_change_settings.append(name + " || Settings successfully saved") 

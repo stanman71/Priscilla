@@ -78,7 +78,7 @@ def scheduler():
                 
                 SET_SCHEDULER_TASK_COLLAPSE_OPEN(i)    
 
-                error_founded = False          
+                error_found = False          
 
                 # ############
                 # name setting
@@ -98,14 +98,14 @@ def scheduler():
                 # name already exist
                 elif ((GET_SCHEDULER_TASK_BY_NAME(input_name) != None) and (scheduler_task.name != input_name)):
                     error_message_change_settings.append(scheduler_task.name + " || Name - " + input_name + " - already taken")  
-                    error_founded = True
+                    error_found = True
                     name = scheduler_task.name
 
                 # no input commited
                 else:                          
                     name = GET_SCHEDULER_TASK_BY_ID(i).name
                     error_message_change_settings.append(scheduler_task.name + " || No name given") 
-                    error_founded = True  
+                    error_found = True  
 
 
                 # ############
@@ -345,7 +345,7 @@ def scheduler():
                     ip_addresses = "None"
 
 
-                if error_founded == False: 
+                if error_found == False: 
 
                     if SET_SCHEDULER_TASK(i, name, task, 
                                             trigger_time, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause,

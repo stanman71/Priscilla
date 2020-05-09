@@ -650,11 +650,11 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                     controller_command + " | Scene - " + task[3] + " - not founded")
+                                     controller_command + " | Scene - " + task[3] + " - not found")
 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                 controller_command + " | Group - " + task[2] + " - not founded")
+                                 controller_command + " | Group - " + task[2] + " - not found")
 
 
     # ###############################
@@ -691,11 +691,11 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
                 else:
                     WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                        controller_command + " | Scene - " + task[3] + " - not founded")
+                                        controller_command + " | Scene - " + task[3] + " - not found")
 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                 controller_command + " | Group - " + task[2] + " - not founded")
+                                 controller_command + " | Group - " + task[2] + " - not found")
 
 
     # #####################
@@ -741,7 +741,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + 
-                                 controller_command + " | Group - " + task[2] + " - not founded")
+                                 controller_command + " | Group - " + task[2] + " - not found")
 
 
     # #################
@@ -804,7 +804,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                 controller_command + " | Group - " + task[2] + " - not founded")
+                                 controller_command + " | Group - " + task[2] + " - not found")
 
 
     # ###########
@@ -838,7 +838,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Invalid settings")  
 
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Light - " + task[2] + " - not founded")   
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Light - " + task[2] + " - not found")   
 
 
     # #########
@@ -860,21 +860,21 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             for input_group_name in list_groups:
                 input_group_name = input_group_name.strip()
 
-                group_founded = False
+                group_found = False
 
             # get exist group names
             for group in GET_ALL_LIGHTING_GROUPS():
 
                 if input_group_name.lower() == group.name.lower():
-                    group_founded = True
+                    group_found = True
 
                     SET_LIGHTING_GROUP_TURN_OFF(group.id)
                     CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
-            # group not founded
-            if group_founded == False:
+            # group not found
+            if group_found == False:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                     controller_command + " | Group - " + input_group_name + " - not founded")
+                                     controller_command + " | Group - " + input_group_name + " - not found")
 
 
         if task[2].lower() == "light":
@@ -888,7 +888,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                     controller_command + " | Light - " + task[3].strip() + " - not founded")
+                                     controller_command + " | Light - " + task[3].strip() + " - not found")
 
 
         if task[2].lower() == "all":
@@ -913,7 +913,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
         for device_name in task[1].split(","): 
             device = GET_DEVICE_BY_NAME(device_name.strip())
 
-            # device founded ?
+            # device found ?
             if device != None:
                 controller_command = task[2].strip()
                 
@@ -957,7 +957,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                     WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | " + check_result)
                                     
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Gerät - " + task[1] + " - not founded")        
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Gerät - " + task[1] + " - not found")        
     
 
     # ##################
@@ -993,7 +993,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Invalid command")
 
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Program - " + program + " - not founded")
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Program - " + program + " - not found")
 
 
     # #####
@@ -1085,4 +1085,4 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
    
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | No Spotify Token founded")
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | No Spotify Token found")
