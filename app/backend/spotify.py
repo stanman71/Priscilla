@@ -281,10 +281,11 @@ def SET_MUSIC_VOLUME(spotify_token, volume):
 
 def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
 
-    # update multiroom settings
-    if "multiroom" in GET_SPOTIFY_SETTINGS().default_device_name:
-        
-        try:
+    try:
+
+        # update multiroom settings
+        if "multiroom" in GET_SPOTIFY_SETTINGS().default_device_name:
+
             sp                   = spotipy.Spotify(auth=SPOTIFY_TOKEN)
             sp.trace             = False     
             list_spotify_devices = sp.devices()["devices"]  
@@ -296,39 +297,36 @@ def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
                     spotify_default_device_id   = device['id']
 
                     SET_SPOTIFY_DEFAULT_SETTINGS(spotify_default_device_id, 
-                                                 spotify_default_device_name, 
-                                                 GET_SPOTIFY_SETTINGS().default_playlist_uri, 
-                                                 GET_SPOTIFY_SETTINGS().default_playlist_name, 
-                                                 GET_SPOTIFY_SETTINGS().default_volume,
-                                                 GET_SPOTIFY_SETTINGS().default_shuffle)        
+                                                    spotify_default_device_name, 
+                                                    GET_SPOTIFY_SETTINGS().default_playlist_uri, 
+                                                    GET_SPOTIFY_SETTINGS().default_playlist_name, 
+                                                    GET_SPOTIFY_SETTINGS().default_volume,
+                                                    GET_SPOTIFY_SETTINGS().default_shuffle)        
 
-        except:
-            pass
 
-    # update single device settings
-    else:
+        # update single device settings
+        else:
 
-        try:
-            sp                   = spotipy.Spotify(auth=SPOTIFY_TOKEN)
-            sp.trace             = False     
-            list_spotify_devices = sp.devices()["devices"]  
+                sp                   = spotipy.Spotify(auth=SPOTIFY_TOKEN)
+                sp.trace             = False     
+                list_spotify_devices = sp.devices()["devices"]  
 
-            default_device_name  = GET_SPOTIFY_SETTINGS().default_device_name
+                default_device_name  = GET_SPOTIFY_SETTINGS().default_device_name
 
-            for device in list_spotify_devices:    
-                
-                if default_device_name.lower() == device['name'].lower():
-                    spotify_default_device_id = device['id']
+                for device in list_spotify_devices:    
+                    
+                    if default_device_name.lower() == device['name'].lower():
+                        spotify_default_device_id = device['id']
 
-                    SET_SPOTIFY_DEFAULT_SETTINGS(spotify_default_device_id, 
-                                                 GET_SPOTIFY_SETTINGS().default_device_name, 
-                                                 GET_SPOTIFY_SETTINGS().default_playlist_uri, 
-                                                 GET_SPOTIFY_SETTINGS().default_playlist_name, 
-                                                 GET_SPOTIFY_SETTINGS().default_volume,
-                                                 GET_SPOTIFY_SETTINGS().default_shuffle)    
+                        SET_SPOTIFY_DEFAULT_SETTINGS(spotify_default_device_id, 
+                                                    GET_SPOTIFY_SETTINGS().default_device_name, 
+                                                    GET_SPOTIFY_SETTINGS().default_playlist_uri, 
+                                                    GET_SPOTIFY_SETTINGS().default_playlist_name, 
+                                                    GET_SPOTIFY_SETTINGS().default_volume,
+                                                    GET_SPOTIFY_SETTINGS().default_shuffle)    
 
-        except:
-            pass
+    except:
+        pass
 
 
 """ ################# """
