@@ -640,8 +640,9 @@
                             <th scope="col" style="width:25%" class="minwidth_200">Track</th>   
                             <th scope="col" style="width:25%" class="minwidth_200">Interprets</th> 
                             <th scope="col" style="width:20%" class="minwidth_150">Device</th>   
-                            <th scope="col" style="width:20%" class="minwidth_150">Volume</th>                                 
-                            <th scope="col" style="width:10%" class="minwidth_100"></th>                                   
+                            <th scope="col" style="width:3%"></th>  
+                            <th scope="col" style="width:22%" class="minwidth_150">Volume</th>                                 
+                            <th scope="col" style="width:5%"  class="minwidth_50"></th>                                   
                           </thead>
                           <tbody> 
                             {% set counter = [1] %}       
@@ -672,7 +673,8 @@
                                       <option value= "" > No devices found </option>
                                     {% endif %}  
                                   </select>     
-                                </td>                              
+                                </td>     
+                                <td></td>                         
                                 <td>
                                   <input id="volume_slider_track_volume_{{ counter[0] }}" data-slider-id="volume_slider_track_volume_{{ counter[0] }}" name="set_spotify_track_volume:{{ track[2] }}" 
                                     type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}" />   
@@ -757,8 +759,9 @@
                             <th scope="col" style="width:25%" class="minwidth_200">Album</th>   
                             <th scope="col" style="width:25%" class="minwidth_200">Interprets</th> 
                             <th scope="col" style="width:20%" class="minwidth_150">Device</th>   
-                            <th scope="col" style="width:20%" class="minwidth_150">Volume</th>                                 
-                            <th scope="col" style="width:10%" class="minwidth_100"></th>                                   
+                            <th scope="col" style="width:3%"></th>                              
+                            <th scope="col" style="width:22%" class="minwidth_150">Volume</th>                                 
+                            <th scope="col" style="width:5%"  class="minwidth_100"></th>                                   
                           </thead>
                           <tbody> 
                             {% set counter = [1] %}          
@@ -789,7 +792,8 @@
                                       <option value= "" > No devices found </option>
                                     {% endif %}  
                                   </select>     
-                                </td>                                                       
+                                </td>    
+                                <td></td>                                                      
                                 <td>
                                   <input id="volume_slider_album_volume_{{ counter[0] }}" data-slider-id="volume_slider_album_volume_{{ counter[0] }}" name="set_spotify_album_volume:{{ album[2] }}" 
                                     type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}" />   
