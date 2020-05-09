@@ -9,36 +9,41 @@ import re
 """  device exceptions  """
 """ ################### """
 
-def CHECK_DEVICE_EXCEPTION_SETTINGS(devices): 
+def CHECK_DEVICE_EXCEPTION_SETTINGS(device_exceptions): 
    error_message_settings = []
 
-   for device in devices:
+   for exception in device_exceptions:
 
-      if device.exception_option != "None":
+      device = GET_DEVICE_BY_IEEEADDR(exception.device_ieeeAddr)
 
-         if device.exception_setting == "None" or device.exception_setting == None:
-            error_message_settings.append(device.name + " || No task selected")         
+      # exception command
+      if exception.exception_command == "None":
+         error_message_settings.append(device.name + " || Invalid Command")
 
-         # exception setting ip_address
-         if device.exception_option == "IP-Address":
+      # exception setting 
+      if exception.exception_option == "None":
+         error_message_settings.append(device.name + " || Invalid Option")
 
-            # search for wrong chars
-            for element in device.exception_value_1:
-               if not element.isdigit() and element != "." and element != "," and element != " ":
-                  error_message_settings.append(device.name + " || Invalid IP-Address")
-                  break
-               
-         # exception setting sensor
-         if device.exception_option != "IP-Address": 
+      # exception setting ip_address
+      elif exception.exception_option == "IP-Address":
+
+         # search for wrong chars
+         for element in exception.exception_value_1:
+            if not element.isdigit() and element != "." and element != "," and element != " ":
+               error_message_settings.append(device.name + " || Invalid IP-Address")
+               break
             
-            if device.exception_value_1 == "None" or device.exception_value_1 == None:
-               error_message_settings.append(device.name + " || No Sensor selected")
+      # exception setting sensor
+      else: 
+         
+         if exception.exception_value_1 == "None" or exception.exception_value_1 == None:
+            error_message_settings.append(device.name + " || No Sensor selected")
 
-            if device.exception_value_2 == "None" or device.exception_value_2 == None:
-               error_message_settings.append(device.name + " || No Operator (<, >, =) selected")
+         if exception.exception_value_2 == "None" or exception.exception_value_2 == None:
+            error_message_settings.append(device.name + " || No Operator (<, >, =) selected")
 
-            if device.exception_value_3 == "None" or device.exception_value_3 == None:
-               error_message_settings.append(device.name + " || No check_value selected")
+         if exception.exception_value_3 == "None" or exception.exception_value_3 == None:
+            error_message_settings.append(device.name + " || No check_value selected")
                   
    return error_message_settings
 

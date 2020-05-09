@@ -820,34 +820,45 @@ def START_SCHEDULER_TASK(task_object):
 
             # device founded ?
             if device != None:
-               scheduler_setting = task[2].strip()
+               scheduler_command = task[2].strip()
                
                # check device exception
-               check_result = CHECK_DEVICE_EXCEPTIONS(device.id, scheduler_setting)
+               check_result = CHECK_DEVICE_EXCEPTIONS(device.ieeeAddr, scheduler_command)
                            
                if check_result == True:           
 
                   WRITE_LOGFILE_SYSTEM("EVENT", 'Scheduler | Task - ' + task_object.name + ' | started')    
 
                   if device.gateway == "mqtt":
+
+                     # special case roborock s50
+                     if device.model == "roborock_s50":
+                        channel = "smarthome/mqtt/" + device.ieeeAddr + "/command"  
+                     else:
                         channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+                            
                   if device.gateway == "zigbee2mqtt":   
                         channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
                   command_position  = 0
-                  list_command_json = device.commands_json.replace("},{", "};{")                       
-                  list_command_json = list_command_json.split(";")
+
+                  # special case roborock s50
+                  if device.model == "roborock_s50":
+                     list_command_json = device.commands_json.split(",")
+
+                  else:
+                     list_command_json = device.commands_json.replace("},{", "};{")                       
+                     list_command_json = list_command_json.split(";")
                   
                   # get the json command statement and start process
                   for command in device.commands.split(","):     
                                               
-                     if str(scheduler_setting.lower()) == command.lower():
+                     if str(scheduler_command.lower()) == command.lower():
                         heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_setting, 60)      
+                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, scheduler_command, 60)      
                         continue
 
                      command_position = command_position + 1
-
 
                else:
                   WRITE_LOGFILE_SYSTEM("WARNING", "Scheduler | Task - " + task_object.name + " | " + check_result)

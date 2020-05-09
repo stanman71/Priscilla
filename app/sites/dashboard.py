@@ -80,31 +80,43 @@ def dashboard():
 
             try:    
 
-                device         = GET_DEVICE_BY_ID(i)
-                device_setting = request.form.get("set_command_" + str(i))
+                device            = GET_DEVICE_BY_ID(i)
+                dashboard_command = request.form.get("set_command_" + str(i))
 
-                if device_setting != None and device_setting != "None":
+                if dashboard_command != None and dashboard_command != "None":
 
                     # check device exception
-                    check_result = CHECK_DEVICE_EXCEPTIONS(device.id, device_setting)
-                        
+                    check_result = CHECK_DEVICE_EXCEPTIONS(device.ieeeAddr, dashboard_command)
+
                     if check_result == True:               
 
                         if device.gateway == "mqtt":
-                            channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+
+                            # special case roborock s50
+                            if device.model == "roborock_s50":
+                                channel = "smarthome/mqtt/" + device.ieeeAddr + "/command"  
+                            else:
+                                channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+
                         if device.gateway == "zigbee2mqtt":   
                             channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
                         command_position  = 0
-                        list_command_json = device.commands_json.replace("},{", "};{")                       
-                        list_command_json = list_command_json.split(";")
+
+                        # special case roborock s50
+                        if device.model == "roborock_s50":
+                            list_command_json = device.commands_json.split(",")
+
+                        else:
+                            list_command_json = device.commands_json.replace("},{", "};{")                       
+                            list_command_json = list_command_json.split(";")
 
                         # get the json command statement and start process
                         for command in device.commands.split(","):     
                                             
-                            if str(device_setting.lower()) == command.lower():    
+                            if str(dashboard_command.lower()) == command.lower():    
                                 heapq.heappush(mqtt_message_queue, (1, (channel, list_command_json[command_position])))            
-                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, device_setting, 60)      
+                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 60)      
                                 break
 
                             command_position = command_position + 1

@@ -915,28 +915,40 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
             # device founded ?
             if device != None:
-                controller_setting = task[2].strip()
+                controller_command = task[2].strip()
                 
                 # check device exception
-                check_result = CHECK_DEVICE_EXCEPTIONS(device.id, controller_setting)
+                check_result = CHECK_DEVICE_EXCEPTIONS(device.ieeeAddr, controller_command)
                             
                 if check_result == True:           
 
                     if device.gateway == "mqtt":
-                        channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+
+                        # special case roborock s50
+                        if device.model == "roborock_s50": 
+                            channel = "smarthome/mqtt/" + device.ieeeAddr + "/command"  
+                        else:
+                            channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+
                     if device.gateway == "zigbee2mqtt":   
                         channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
                     command_position  = 0
-                    list_command_json = device.commands_json.replace("},{", "};{")                       
-                    list_command_json = list_command_json.split(";")
+
+                    # special case roborock s50
+                    if device.model == "roborock_s50":
+                        list_command_json = device.commands_json.split(",")
+
+                    else:
+                        list_command_json = device.commands_json.replace("},{", "};{")                       
+                        list_command_json = list_command_json.split(";")
 
                     # get the json command statement and start process
                     for command in device.commands.split(","):     
                                                 
-                        if str(controller_setting.lower()) == command.lower():
+                        if str(controller_command.lower()) == command.lower():
                             heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_setting, 60)      
+                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_command, 60)      
                             continue
 
                         command_position = command_position + 1

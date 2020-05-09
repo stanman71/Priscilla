@@ -651,7 +651,7 @@ def UPDATE_DEVICES(gateway):
 
                                             try:
                                                 new_model  = device['model']
-                                                new_device = GET_DEVICE_INFORMATIONS(new_model)
+                                                new_device = GET_ZIGBEE_DEVICE_INFORMATIONS(new_model)
                                             except:
                                                 new_model  = ""
                                                 new_device = ["", "", "", "", "", ""]
@@ -666,6 +666,7 @@ def UPDATE_DEVICES(gateway):
 
                                             ADD_DEVICE(name, gateway, ieeeAddr, new_model, device_type, version, description, input_values, input_events, commands, commands_json)
 
+
                                         # update device informations
                                     
                                         else:
@@ -678,7 +679,7 @@ def UPDATE_DEVICES(gateway):
                                             gateway        = "zigbee2mqtt"
 
                                             try:                           
-                                                existing_device = GET_DEVICE_INFORMATIONS(existing_model)
+                                                existing_device = GET_ZIGBEE_DEVICE_INFORMATIONS(existing_model)
                                                 
                                                 device_type   = existing_device[0]
                                                 version       = ""                                                
@@ -730,17 +731,30 @@ def UPDATE_DEVICES(gateway):
 """  check device setting  """
 """ ###################### """
  
-def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, repeats = 10): 
-    Thread = threading.Thread(target=CHECK_DEVICE_SETTING_PROCESS, args=(ieeeAddr, setting, repeats, ))
+def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, seconds = 10): 
+    repeats = seconds * 5
+    Thread  = threading.Thread(target=CHECK_DEVICE_SETTING_PROCESS, args=(ieeeAddr, setting, repeats, ))
     Thread.start()   
 
  
 def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats, log_report = True):                
-    device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-    timer = 1
+    device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+    timer  = 1
 
-    # 10 seconds
-    while timer < 50:  
+    # special case roborock s50
+    if device.model == "roborock_s50":
+        if setting.lower() == "start":
+            setting = "cleaning"
+        if setting.lower() == "stop":
+            setting = "idle"        
+        if setting.lower() == "pause":
+            setting = "paused"
+        if setting.lower() == "return_to_base":
+            setting = "returning"
+        if setting.lower() == "locate":
+            return True
+
+    while timer < repeats:  
         
         if device.gateway == "mqtt":
             result = CHECK_MQTT_SETTING(device.ieeeAddr, setting)
@@ -768,11 +782,11 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats, log_report = True):
 def CHECK_MQTT_SETTING(ieeeAddr, setting):     
     setting = setting.lower()
     
-    for message in GET_MQTT_INCOMING_MESSAGES(15):
+    for message in GET_MQTT_INCOMING_MESSAGES(5):
 
         # search for fitting message in incoming_messages_list
-        if message[1] == "smarthome/mqtt/" + ieeeAddr:  
-                       
+        if message[1] == "smarthome/mqtt/" + ieeeAddr or message[1] == "smarthome/mqtt/" + ieeeAddr + "/state":
+
             # only one setting value ("," = separator between commands || ";" = separator between command arguments)
             if not ";" in setting:    
                 if str(setting.strip()) in str(message[2].lower()):
@@ -783,7 +797,7 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting):
                 
                 list_settings = setting.split(";")
                 
-                for setting in list_settings:           
+                for setting in list_settings:      
                     if not str(setting.strip()) in str(message[2].lower()):
                         return False    
                         
@@ -797,7 +811,7 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
 
     if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
 
-        for message in GET_MQTT_INCOMING_MESSAGES(15):
+        for message in GET_MQTT_INCOMING_MESSAGES(5):
 
             # search for fitting message in incoming_messages_list
             if message[1] == "smarthome/zigbee2mqtt/" + device_name:   
@@ -933,84 +947,76 @@ def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
 """ ######################### """
 
 
-def CHECK_DEVICE_EXCEPTIONS(id, setting):
-    device = GET_DEVICE_BY_ID(id)
+def CHECK_DEVICE_EXCEPTIONS(ieeeAddr, command):
 
-    try:
+    for exception in GET_ALL_DEVICE_EXCEPTIONS():
+
+        if exception.device_ieeeAddr == ieeeAddr:
+
+            try:
+                                
+                # ####################
+                # exception ip_address 
+                # ####################
+                
+                exception_command = exception.exception_command.strip()
+
+                if exception.exception_option == "IP-Address" and exception_command.lower() == command.lower():
+
+                    for x in range(3):
+                        if ping(exception.exception_value_1, timeout=1) != None:    
+                            return (exception.device.name + " | Device running")
+                            break
+            
+
+                # ################
+                # exception sensor
+                # ################
+                
+                if exception.exception_sensor_ieeeAddr != "None" and exception_command.lower() == command.lower():
+                    
+                    sensor_ieeeAddr = exception.exception_sensor_ieeeAddr
+                    sensor_key      = exception.exception_value_1   
+                    operator        = exception.exception_value_2
+                    value           = exception.exception_value_3
+
+                    try:
+                        value = str(value).lower()
+                    except:
+                        pass
+                            
+                    
+                    # get sensordata 
+                    data         = json.loads(GET_DEVICE_BY_IEEEADDR(exception.exception_sensor_ieeeAddr).last_values_json)
+                    sensor_value = data[sensor_key]
+                    
+                    try:
+                        sensor_value = str(sensor_value).lower()
+                    except:
+                        pass
+                    
                         
-        # ####################
-        # exception ip_address 
-        # ####################
-        
-        exception_setting = device.exception_setting.replace(" ", "")
+                    # compare conditions
+                    if operator == "=" and value.isdigit():
+                        if int(sensor_value) == int(value):
+                            return (exception.device.name + " | Sensor passing failed")   
+                          
+                    if operator == "=" and not value.isdigit():
+                        if str(sensor_value) == str(value):
+                            return (exception.device.name + " | Sensor passing failed")  
+                            
+                    if operator == "<" and value.isdigit():
+                        if int(sensor_value) < int(value):
+                            return (exception.device.name + " | Sensor passing failed")  
+                            
+                    if operator == ">" and value.isdigit():
+                        if int(sensor_value) > int(value):
+                            return (exception.device.name + " | Sensor passing failed")  
+                        
+            except Exception as e:
+                return (exception.device.name + " | Error Exception Check || " + str(e))  
 
-        if device.exception_option == "IP-Address" and exception_setting == setting:
-
-            for x in range(3):
-                if ping(device.exception_value_1, timeout=1) != None:    
-                    return (device.name + " | Device running")
-                    break
-    
-            else:
-                return True
-
-
-        # ################
-        # exception sensor
-        # ################
-        
-        if device.exception_sensor_ieeeAddr != "None" and exception_setting == setting:
-            
-            sensor_ieeeAddr = device.exception_sensor_ieeeAddr
-            sensor_key      = device.exception_value_1   
-            operator        = device.exception_value_2
-            value           = device.exception_value_3
-
-            try:
-                value = str(value).lower()
-            except:
-                pass
-                    
-            
-            # get sensordata 
-            data         = json.loads(GET_DEVICE_BY_IEEEADDR(device.exception_sensor_ieeeAddr).last_values_json)
-            sensor_value = data[sensor_key]
-            
-            try:
-                sensor_value = str(sensor_value).lower()
-            except:
-                pass
-            
-                
-            # compare conditions
-            if operator == "=" and value.isdigit():
-                if int(sensor_value) == int(value):
-                    return (device.name + " | Sensor passing failed")   
-                else:
-                    return True
-                    
-            if operator == "=" and not value.isdigit():
-                if str(sensor_value) == str(value):
-                    return (device.name + " | Sensor passing failed")  
-                else:
-                    return True
-                    
-            if operator == "<" and value.isdigit():
-                if int(sensor_value) < int(value):
-                    return (device.name + " | Sensor passing failed")  
-                else:
-                    return True
-                    
-            if operator == ">" and value.isdigit():
-                if int(sensor_value) > int(value):
-                    return (device.name + " | Sensor passing failed")  
-                else:
-                    return True
-                
-        return True
-
-    except:
-        return True
+    return True
 
 
 """ ############ """

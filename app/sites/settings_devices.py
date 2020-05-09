@@ -26,14 +26,14 @@ import urllib.request
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        try:
-            if current_user.role == "administrator":
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('logout'))
-        except Exception as e:
-            print(e)
+        #try:
+        if current_user.role == "administrator":
+            return f(*args, **kwargs)
+        else:
             return redirect(url_for('logout'))
+        #except Exception as e:
+        #    print(e)
+        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -124,29 +124,34 @@ def settings_devices():
 
     error_message_mqtt_connection               = False
     error_message_zigbee2mqtt_connection        = False    
-    success_message_change_settings_devices     = []         
+    success_message_change_settings_devices     = []     
     error_message_change_settings_devices       = []    
-    success_message_change_settings_exceptions  = False
+    success_message_add_device_exception        = False
+    error_message_add_device_exception          = []        
+    success_message_change_device_exceptions    = []
+    error_message_change_device_exceptions      = []
+    success_message_mqtt_manually_adding        = False
+    error_message_mqtt_manually_adding          = ""
     success_message_mqtt_firmware_upload        = False
-    error_message_firmware_upload               = ""
+    error_message_mqtt_firmware_upload          = ""
     error_message_zigbee_device_update          = False
     success_message_zigbee_pairing              = []
     error_message_zigbee_pairing                = []
     success_message_logfile                     = False
     error_message_logfile                       = ""
-    error_message_firmware                      = ""
+    error_message_mqtt_firmware                 = ""
     error_download_log_zigbee2mqtt              = ""
     error_download_topology_zigbee2mqtt         = ""    
 
-    exceptions_collapse_open                    = False    
+    device_exceptions_collapse_open             = False    
     mqtt_device_update_collapse_open            = False
     zigbee_device_update_collapse_open          = False
 
 
     # error firmware
-    if session.get('error_firmware', None) != None:
-        error_message_firmware = session.get('error_firmware') 
-        session['error_firmware'] = None
+    if session.get('error_mqtt_firmware', None) != None:
+        error_message_mqtt_firmware = session.get('error_mqtt_firmware') 
+        session['error_mqtt_firmware'] = None
 
     # error download log_zigbee2mqtt  
     if session.get('error_download_log_zigbee2mqtt', None) != None:
@@ -171,7 +176,7 @@ def settings_devices():
         if GET_ZIGBEE2MQTT_CONNECTION_STATUS() == False:
             error_message_zigbee2mqtt_connection = True
 
-    # delete message
+    # delete device message
     if session.get('delete_device_success', None) != None:
         success_message_change_settings_devices.append(session.get('delete_device_success'))
         session['delete_device_success'] = None
@@ -180,6 +185,14 @@ def settings_devices():
         error_message_change_settings_devices.append(session.get('delete_device_error'))
         session['delete_device_error'] = None      
 
+    # delete device exception message
+    if session.get('delete_device_exception_success', None) != None:
+        success_message_change_device_exceptions.append(session.get('delete_device_exception_success'))
+        session['delete_device_exception_success'] = None
+        
+    if session.get('delete_device_exception_error', None) != None:
+        error_message_change_settings_devices.append(session.get('delete_device_exception_error'))
+        session['delete_device_exception_error'] = None      
 
     # zigbee device update started
     if session.get('zigbee_device_update_started', None) != None:
@@ -288,151 +301,194 @@ def settings_devices():
                 error_message_change_settings_devices.append(result_zigbee2mqtt)
 
 
-    """ ################## """
-    """  table exceptions  """
-    """ ################## """
+    """ ########################## """
+    """  add mqtt device manually  """
+    """ ########################## """
+
+    if request.form.get("add_mqtt_device_manually") != None: 
+
+        ieeeAddr = request.form.get("set_mqtt_device_ieeeAddr_manually_adding")
+
+        if ieeeAddr != "":          
+
+            if GET_DEVICE_BY_IEEEADDR(ieeeAddr) == None:
+
+                model = request.form.get("set_mqtt_device_model_manually_adding")
+
+                if model != "":
+
+                    new_device = GET_MQTT_DEVICE_MANUALLY_ADDING_INFORMATIONS(model)
+                
+                    name          = ieeeAddr
+                    gateway       = "mqtt"
+                    device_type   = new_device[0]
+                    version       = ""                                            
+                    description   = new_device[1]
+                    input_values  = new_device[2]
+                    input_events  = new_device[3]  
+                    commands      = new_device[4]                                
+                    commands_json = new_device[5] 
+
+                    result = ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, version, description, input_values, input_events, commands, commands_json) 
+
+                    if result:
+                        success_message_mqtt_manually_adding = True
+                    else:
+                        error_message_mqtt_manually_adding = result
+
+                else:
+                    error_message_mqtt_manually_adding = "Invalid input | No Device Model selected"                
+
+            else:
+                error_message_mqtt_manually_adding = "Invalid input | ieeeAddr - " + ieeeAddr + " - already taken"
+
+        else:
+            error_message_mqtt_manually_adding = "Invalid input | No ieeeAddr founded"
+
+
+    """ ######################### """
+    """  table device exceptions  """
+    """ ######################### """
+
+    if request.form.get("add_device_exception") != None:  
+
+        device_exceptions_collapse_open = True
+
+        ieeeAddr = request.form.get("set_mqtt_device_exception_ieeeAddr")
+
+        if ieeeAddr != "":    
+
+            result = ADD_DEVICE_EXCEPTION(ieeeAddr)
+
+            if result:
+                success_message_add_device_exception = True
+            else:
+                error_message_add_device_exception = result
+
+        else:
+            error_message_add_device_exception = "Invalid input | No Device selected"                        
+
 
     if request.form.get("save_device_exceptions") != None:  
 
-        exceptions_collapse_open = True
+        device_exceptions_collapse_open = True
 
-        for i in range (1,100):
+        for i in range (1,26):
 
-            try:     
-                device = GET_DEVICE_BY_ID(i)
+            if request.form.get("set_exception_option_" + str(i)) != None:
                 
-                if device in GET_ALL_DEVICES("devices"):
-                    
-                    
-                    # ####################
-                    #   Exception Options
-                    # ####################
+                # ####################
+                #   Exception Options
+                # ####################
 
-                    exception_option  = request.form.get("set_exception_option_" + str(i))
-                    exception_option  = exception_option.replace(" ","")
-                    exception_setting = request.form.get("set_exception_setting_" + str(i))
-                                            
-                    if exception_setting == "" or exception_setting == None:
-                        exception_setting = "None"  
-        
-                    # ######
-                    # Sensor
-                    # ######
-
-                    if GET_DEVICE_BY_NAME(exception_option) or exception_option.isdigit(): 
-
-                        if exception_option.isdigit():        
-                            exception_sensor_ieeeAddr     = GET_DEVICE_BY_ID(exception_option).ieeeAddr
-                            exception_sensor_input_values = GET_DEVICE_BY_ID(exception_option).input_values       
-                            exception_option              = GET_DEVICE_BY_ID(exception_option).name
-                            
-                        else:
-                            exception_sensor_ieeeAddr     = GET_DEVICE_BY_NAME(exception_option).ieeeAddr
-                            exception_sensor_input_values = GET_DEVICE_BY_NAME(exception_option).input_values                                  
-                    
-                        # set device exception value 1
-                        if device.exception_option == "IP-Address":
-                            exception_value_1 = "None" 
-                    
-                        else:
-                            exception_value_1 = request.form.get("set_exception_value_1_" + str(i))
-
-                            if exception_value_1 != None:                  
-                                exception_value_1 = exception_value_1.replace(" ", "")
-
-                                # replace array_position to sensor name 
-                                if exception_value_1.isdigit():
-                                    
-                                    # first two array elements are no sensors
-                                    if exception_value_1 == "0" or exception_value_1 == "1":
-                                        exception_value_1 = "None"
+                exception_option  = request.form.get("set_exception_option_" + str(i))
+                exception_option  = exception_option.replace(" ","")
+                exception_command = request.form.get("set_exception_command_" + str(i))
                                         
-                                    else:           
-                                        sensor_list       = GET_DEVICE_BY_IEEEADDR(exception_sensor_ieeeAddr).input_values
-                                        sensor_list       = sensor_list.split(",")
-                                        exception_value_1 = sensor_list[int(exception_value_1)-2]
-                                        
-                            else:
-                                exception_value_1 = "None" 
+                if exception_command == "" or exception_command == None:
+                    exception_command = "None"  
 
+                # ######
+                # Sensor
+                # ######
 
-                        # set device exception value 2
-                        exception_value_2 = request.form.get("set_exception_value_2_" + str(i))
-                        
-                        if exception_value_2 == "" or exception_value_2 == None:
-                            exception_value_2 = "None"       
-                        
-                        
-                        # set device exception value 3
-                        exception_value_3 = request.form.get("set_exception_value_3_" + str(i))
-                        
-                        if exception_value_3 == "" or exception_value_3 == None:
-                            exception_value_3 = "None"       
+                if GET_DEVICE_BY_NAME(exception_option) or exception_option.isdigit(): 
 
-
-                    # ##########
-                    # IP Address
-                    # ##########
-
-                    elif exception_option == "IP-Address":
+                    if exception_option.isdigit():        
+                        exception_sensor_ieeeAddr     = GET_DEVICE_BY_ID(exception_option).ieeeAddr
+                        exception_sensor_input_values = GET_DEVICE_BY_ID(exception_option).input_values       
+                        exception_option              = GET_DEVICE_BY_ID(exception_option).name
                         
-                        # set device exception value 1
-                        try:
-                            exception_value_1 = request.form.get("set_exception_value_1_" + str(i)).strip()  
-                        except:
-                            exception_value_1 = "None" 
-                                
-                        exception_sensor_ieeeAddr     = "None"
-                        exception_sensor_input_values = "None"
-                        exception_value_2             = "None"                        
-                        exception_value_3             = "None"   
-            
-                                                            
                     else:
-                        
-                        exception_option              = "None" 
-                        exception_value_1             = "None" 
-                        exception_value_2             = "None"  
-                        exception_value_3             = "None"  
-                        exception_sensor_ieeeAddr     = "None"
-                        exception_sensor_input_values = "None"                                                            
+                        exception_sensor_ieeeAddr     = GET_DEVICE_BY_NAME(exception_option).ieeeAddr
+                        exception_sensor_input_values = GET_DEVICE_BY_NAME(exception_option).input_values                                  
+                
+                    # set device exception value 1
+                    if device.exception_option == "IP-Address":
+                        exception_value_1 = "None" 
+                
+                    else:
+                        exception_value_1 = request.form.get("set_exception_value_1_" + str(i))
 
-                    if SET_DEVICE_EXCEPTION(device.ieeeAddr, exception_option, exception_setting,
-                                            exception_sensor_ieeeAddr, exception_sensor_input_values,
-                                            exception_value_1, exception_value_2, exception_value_3):
-                        
-                        success_message_change_settings_exceptions = True  
-                
-                
+                        if exception_value_1 != None:                  
+                            exception_value_1 = exception_value_1.replace(" ", "")
+
+                            # replace array_position to sensor name 
+                            if exception_value_1.isdigit():
+                                
+                                # first two array elements are no sensors
+                                if exception_value_1 == "0" or exception_value_1 == "1":
+                                    exception_value_1 = "None"
+                                    
+                                else:           
+                                    sensor_list       = GET_DEVICE_BY_IEEEADDR(exception_sensor_ieeeAddr).input_values
+                                    sensor_list       = sensor_list.split(",")
+                                    exception_value_1 = sensor_list[int(exception_value_1)-2]
+                                    
+                        else:
+                            exception_value_1 = "None" 
+
+
+                    # set device exception value 2
+                    exception_value_2 = request.form.get("set_exception_value_2_" + str(i))
+                    
+                    if exception_value_2 == "" or exception_value_2 == None:
+                        exception_value_2 = "None"       
+                    
+                    
+                    # set device exception value 3
+                    exception_value_3 = request.form.get("set_exception_value_3_" + str(i))
+                    
+                    if exception_value_3 == "" or exception_value_3 == None:
+                        exception_value_3 = "None"       
+
+
+                # ##########
+                # IP Address
+                # ##########
+
+                elif exception_option == "IP-Address":
+                    
+                    # set device exception value 1
+                    try:
+                        exception_value_1 = request.form.get("set_exception_value_1_" + str(i)).strip()  
+                    except:
+                        exception_value_1 = "None" 
+                            
+                    exception_sensor_ieeeAddr     = "None"
+                    exception_sensor_input_values = "None"
+                    exception_value_2             = "None"                        
+                    exception_value_3             = "None"   
+        
+                                                        
                 else:
                     
-                    if exception_option == "None":
+                    exception_option              = "None" 
+                    exception_value_1             = "None" 
+                    exception_value_2             = "None"  
+                    exception_value_3             = "None"  
+                    exception_sensor_ieeeAddr     = "None"
+                    exception_sensor_input_values = "None"                                                            
+
+                if UPDATE_DEVICE_EXCEPTION(i, exception_option, exception_command,
+                                           exception_sensor_ieeeAddr, exception_sensor_input_values,
+                                           exception_value_1, exception_value_2, exception_value_3):
                     
-                        exception_setting             = "None" 
-                        exception_value_1             = "None" 
-                        exception_value_2             = "None"  
-                        exception_value_3             = "None"  
-                        exception_sensor_ieeeAddr     = "None"
-                        exception_sensor_input_values = "None"                                                            
+                    device_exception = GET_DEVICE_EXCEPTION_BY_ID(i)
 
-                        SET_DEVICE_EXCEPTION(device.ieeeAddr, exception_option, exception_setting, exception_sensor_ieeeAddr,
-                                             exception_sensor_input_values, exception_value_1, exception_value_2, exception_value_3)                   
-            
-            except Exception as e:
-                if "NoneType" not in str(e):
-                    print(e)                        
+                    success_message_change_device_exceptions.append(device_exception.device.name + " || Settings successfully saved") 
+                
 
-
-    """ ###### """
-    """  mqtt  """
-    """ ###### """
+    """ ###################### """
+    """  mqtt firmware update  """
+    """ ###################### """
 
     if request.form.get("upload_mqtt_firmware") != None: 
         mqtt_device_update_collapse_open = True
 
         # check if the post request has the file part
         if "file" not in request.files:
-            error_message_firmware_upload = "No file founded"
+            error_message_mqtt_firmware_upload = "No file founded"
 
         else:
             file   = request.files['file']
@@ -442,12 +498,12 @@ def settings_devices():
                 success_message_mqtt_firmware_upload = True
 
             else:
-                error_message_firmware_upload = result
+                error_message_mqtt_firmware_upload = result
 
 
-    """ ######## """
-    """  zigbee  """
-    """ ######## """
+    """ ################ """
+    """  zigbee pairing  """
+    """ ################ """
 
     # change pairing setting
     if request.form.get("set_zigbee_pairing") != None: 
@@ -510,13 +566,15 @@ def settings_devices():
         else:
             error_message_logfile = "Reset Log || " + str(result)
 
+    list_device_exceptions        = GET_ALL_DEVICE_EXCEPTIONS()
+    list_exception_sensors        = GET_ALL_DEVICES("sensors")    
 
-    list_exception_devices = GET_ALL_DEVICES("devices")
-    list_exception_sensors = GET_ALL_DEVICES("sensors")    
-
+    dropdown_list_exception_devices = GET_ALL_DEVICES("devices")    
     dropdown_list_exception_options = ["IP-Address"] 
     dropdown_list_operators         = ["=", ">", "<"]
     
+    list_manually_adding_device_models = GET_ALL_MQTT_DEVICES_MANUALLY_ADDING()
+
     list_devices                = GET_ALL_DEVICES("")
     zigbee2mqtt_pairing_setting = GET_ZIGBEE2MQTT_PAIRING_SETTING()
     system_services             = GET_SYSTEM_SETTINGS()   
@@ -531,7 +589,7 @@ def settings_devices():
 
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
 
-    error_message_device_exceptions = CHECK_DEVICE_EXCEPTION_SETTINGS(GET_ALL_DEVICES("devices")) 
+    error_message_device_exception_settings = CHECK_DEVICE_EXCEPTION_SETTINGS(GET_ALL_DEVICE_EXCEPTIONS()) 
 
     # get sensor list
     try:
@@ -1039,31 +1097,38 @@ def settings_devices():
                                                     error_message_zigbee2mqtt_connection=error_message_zigbee2mqtt_connection,
                                                     success_message_change_settings_devices=success_message_change_settings_devices,
                                                     error_message_change_settings_devices=error_message_change_settings_devices, 
-                                                    success_message_change_settings_exceptions=success_message_change_settings_exceptions,
-                                                    error_message_device_exceptions=error_message_device_exceptions,
+                                                    success_message_add_device_exception=success_message_add_device_exception,
+                                                    error_message_add_device_exception=error_message_add_device_exception,      
+                                                    success_message_change_device_exceptions=success_message_change_device_exceptions,
+                                                    error_message_change_device_exceptions=error_message_change_device_exceptions,
+                                                    error_message_device_exception_settings=error_message_device_exception_settings,
+                                                    success_message_mqtt_manually_adding=success_message_mqtt_manually_adding,
+                                                    error_message_mqtt_manually_adding=error_message_mqtt_manually_adding,
                                                     success_message_mqtt_firmware_upload=success_message_mqtt_firmware_upload,
-                                                    error_message_firmware_upload=error_message_firmware_upload,
+                                                    error_message_mqtt_firmware_upload=error_message_mqtt_firmware_upload,
                                                     error_message_zigbee_device_update=error_message_zigbee_device_update,
                                                     success_message_zigbee_pairing=success_message_zigbee_pairing,
                                                     error_message_zigbee_pairing=error_message_zigbee_pairing,
                                                     success_message_logfile=success_message_logfile,     
                                                     error_message_logfile=error_message_logfile,   
-                                                    error_message_firmware=error_message_firmware,  
+                                                    error_message_mqtt_firmware=error_message_mqtt_firmware,  
                                                     error_download_log_zigbee2mqtt=error_download_log_zigbee2mqtt,
                                                     error_download_topology_zigbee2mqtt=error_download_topology_zigbee2mqtt,
                                                     system_services=system_services,                                            
                                                     list_devices=list_devices,
-                                                    list_exception_devices=list_exception_devices,
+                                                    list_device_exceptions=list_device_exceptions,
                                                     list_exception_sensors=list_exception_sensors,
+                                                    dropdown_list_exception_devices=dropdown_list_exception_devices,
                                                     dropdown_list_exception_options=dropdown_list_exception_options,
                                                     dropdown_list_operators=dropdown_list_operators,
+                                                    list_manually_adding_device_models=list_manually_adding_device_models,
                                                     list_mqtt_firmware_files=list_mqtt_firmware_files,
                                                     zigbee2mqtt_pairing_setting=zigbee2mqtt_pairing_setting,
                                                     timestamp=timestamp,  
                                                     show_zigbee_device_updates=show_zigbee_device_updates,                                                      
                                                     zigbee_device_update_collapse_open=zigbee_device_update_collapse_open,
                                                     mqtt_device_update_collapse_open=mqtt_device_update_collapse_open,
-                                                    exceptions_collapse_open=exceptions_collapse_open,  
+                                                    device_exceptions_collapse_open=device_exceptions_collapse_open,  
                                                     device_1_input_values=device_1_input_values,
                                                     device_2_input_values=device_2_input_values,
                                                     device_3_input_values=device_3_input_values,
@@ -1177,7 +1242,7 @@ def change_devices_position(id, direction):
 
 
 # remove device
-@app.route('/settings/devices/delete/<string:ieeeAddr>')
+@app.route('/settings/devices/device/delete/<string:ieeeAddr>')
 @login_required
 @permission_required
 def remove_device(ieeeAddr):
@@ -1236,6 +1301,28 @@ def remove_device(ieeeAddr):
         return redirect(url_for('settings_devices'))        
 
 
+# remove device exception
+@app.route('/settings/devices/device_exception/delete/<int:id>')
+@login_required
+@permission_required
+def remove_device_exception(id):
+
+    try:
+        result = DELETE_DEVICE_EXCEPTION(id)
+
+        if result:
+            session['delete_device_exception_success'] = "Device Exception successfully deleted"       
+        else:
+            session['delete_device_exception_error'] = "Device Exception || Deletion not confirmed"      
+
+        return redirect(url_for('settings_devices'))
+
+
+    except Exception as e:
+        session['delete_device_exception_error'] = "Device Exception || Error | + " + str(e)            
+        return redirect(url_for('settings_devices'))        
+
+
 # download mqtt firmware
 @app.route('/settings/devices/firmware/download/<string:filename>')
 @login_required
@@ -1248,7 +1335,7 @@ def download_mqtt_firmware(filename):
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /firmwares/" + filename + " | " + str(e)) 
-        session['error_firmware'] = "Download Firmware || " + str(e)
+        session['error_mqtt_firmware'] = "Download Firmware || " + str(e)
 
 
 # request mqtt firmware
@@ -1286,7 +1373,7 @@ def delete_mqtt_firmware(filename):
     result = DELETE_MQTT_FIRMWARE(filename)
 
     if result != True:
-        session['error_firmware'] = result
+        session['error_mqtt_firmware'] = result
 
     return redirect(url_for('settings_devices'))
 

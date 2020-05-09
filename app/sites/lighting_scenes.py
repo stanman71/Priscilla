@@ -488,6 +488,7 @@ def change_lighting_scenes_options(id, option):
     return redirect(url_for('lighting_scenes'))
 
 
+# translate rgb color values
 @app.route("/lighting/scenes/data/rgb_values" ,methods=['POST'])
 def data_rgb_values():
     global lighting_scenes_rgb_values_array

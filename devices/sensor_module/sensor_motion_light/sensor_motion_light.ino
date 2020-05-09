@@ -41,15 +41,15 @@ int PIN_LED_RED   = 12;               // D6
 // CUSTOM SETTINGS
 // ###############
 
-int SENSOR_1 = 5;                     // D1 
-int SENSOR_2 = 4;                     // D2 
+int SENSOR_1 = 4;                     // D2 
+int SENSOR_2 = 0;                     // D3 
 int SENSOR_3 = A0;                    // A0 
 
 char model[40]       = "sensor_motion_light";
 char device_type[40] = "sensor_passiv";
 char description[80] = "MQTT Motion Sensor";
 
-String current_Version = "1.3";
+String current_Version = "1.4";
 
 int sensor_1_last_value = 0;
 int sensor_2_last_value = 0;
@@ -443,13 +443,9 @@ void loop() {
     // custom settings
 
     // if occupancy is true, freeze illuminance value for 30 seconds
-    if (digitalRead(SENSOR_1) == 1){
+    if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
         disable_sensor_3_timer = 30000;
     }   
-
-    //if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
-    //    disable_sensor_3_timer = 30000;
-    //}   
 
     // illuminance timer
     if (disable_sensor_3_timer > 0){
@@ -464,24 +460,19 @@ void loop() {
     }           
 
     // send message ?     
-    if (digitalRead(SENSOR_1) == 1 or sensor_1_last_value != digitalRead(SENSOR_1)){
+    if (digitalRead(SENSOR_1) == 1 or 
+        digitalRead(SENSOR_2) == 1 or 
+        sensor_1_last_value != digitalRead(SENSOR_1) or 
+        sensor_2_last_value != digitalRead(SENSOR_2)){
+
         sensor_1_last_value = digitalRead(SENSOR_1);
+        sensor_2_last_value = digitalRead(SENSOR_2);
         send_default_mqtt_message();
-        delay(2000);
+        delay(1000);
     } 
 
-    // send message ?     
-    //if (digitalRead(SENSOR_1) == 1 or 
-    //    digitalRead(SENSOR_2) == 1 or 
-    //    sensor_1_last_value != digitalRead(SENSOR_1) or 
-    //    sensor_2_last_value != digitalRead(SENSOR_2)){
-
-    //    sensor_1_last_value = digitalRead(SENSOR_1);
-    //    sensor_2_last_value = digitalRead(SENSOR_2);
-    //    send_default_mqtt_message();
-    //    delay(2000);
-    //} 
-
+    Serial.println(digitalRead(SENSOR_1));
+    Serial.println(digitalRead(SENSOR_2));   
     delay(100);
     client.loop();
 }

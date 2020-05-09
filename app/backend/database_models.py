@@ -68,30 +68,36 @@ class Controller(db.Model):
 
 class Devices(db.Model):
     __tablename__ = 'devices'
+    id                 = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name               = db.Column(db.String(50), unique=True)
+    gateway            = db.Column(db.String(50)) 
+    ieeeAddr           = db.Column(db.String(50), unique=True)  
+    model              = db.Column(db.String(50))
+    device_type        = db.Column(db.String(50))
+    version            = db.Column(db.String(50))       
+    description        = db.Column(db.String(200)) 
+    auto_update        = db.Column(db.String(50), server_default=("False")) 
+    input_values       = db.Column(db.String(200))
+    input_events       = db.Column(db.String(200))
+    commands           = db.Column(db.String(200))    
+    commands_json      = db.Column(db.String(200))     
+    last_contact       = db.Column(db.String(50))
+    last_values_json   = db.Column(db.String(200))  
+    last_values_string = db.Column(db.String(200)) 
+    update_available   = db.Column(db.String(50), server_default=("False")) 
+
+class Device_Exceptions(db.Model):
+    __tablename__ = 'device_exceptions'
     id                            = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    name                          = db.Column(db.String(50), unique=True)
-    gateway                       = db.Column(db.String(50)) 
-    ieeeAddr                      = db.Column(db.String(50), unique=True)  
-    model                         = db.Column(db.String(50))
-    device_type                   = db.Column(db.String(50))
-    version                       = db.Column(db.String(50))       
-    description                   = db.Column(db.String(200)) 
-    auto_update                   = db.Column(db.String(50), server_default=("False")) 
-    input_values                  = db.Column(db.String(200))
-    input_events                  = db.Column(db.String(200))
-    commands                      = db.Column(db.String(200))    
-    commands_json                 = db.Column(db.String(200))     
-    last_contact                  = db.Column(db.String(50))
-    last_values_json              = db.Column(db.String(200))  
-    last_values_string            = db.Column(db.String(200)) 
+    device_ieeeAddr               = db.Column(db.String(50), db.ForeignKey('devices.ieeeAddr')) 
+    device                        = db.relationship('Devices') 
     exception_option              = db.Column(db.String(50), server_default=("None")) 
-    exception_setting             = db.Column(db.String(50), server_default=("None"))     
+    exception_command             = db.Column(db.String(50), server_default=("None"))     
     exception_sensor_ieeeAddr     = db.Column(db.String(50), server_default=("None"))   
     exception_sensor_input_values = db.Column(db.String(50), server_default=("None"))     
     exception_value_1             = db.Column(db.String(50), server_default=("None"))
     exception_value_2             = db.Column(db.String(50), server_default=("None"))
     exception_value_3             = db.Column(db.String(50), server_default=("None"))
-    update_available              = db.Column(db.String(50), server_default=("False")) 
 
 class eMail(db.Model):
     __tablename__  = 'email'
@@ -935,6 +941,7 @@ def GET_ALL_DEVICES(selector):
         for device in devices:
             if (device.device_type == "power_switch" or
                 device.device_type == "blind" or
+                device.device_type == "vacuum_cleaner" or                
                 device.device_type == "heater_thermostat" or
                 device.device_type == "aromatic_diffuser" or 
                 device.device_type == "engine_module" or 
@@ -965,8 +972,8 @@ def GET_ALL_DEVICES(selector):
     return device_list    
         
 
-def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", description = "", input_values = "", 
-               input_events = "", commands = "", commands_json = "", last_contact = ""):
+def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", version = "", description = "", 
+               input_values = "", input_events = "", commands = "", commands_json = "", last_contact = ""):
         
     # path exist ?
     if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):   
@@ -986,13 +993,13 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", descriptio
                         ieeeAddr         = ieeeAddr,
                         model            = model,
                         device_type      = device_type,
+                        version          = version,
                         description      = description,
                         input_values     = str(input_values),
                         input_events     = str(input_events),
                         commands         = str(commands),   
                         commands_json    = str(commands_json),                                           
                         last_contact     = last_contact,
-                        exception_option = "None"
                         )
                         
                 db.session.add(device)
@@ -1002,6 +1009,8 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", descriptio
 
                 if device_type == "controller":
                     ADD_CONTROLLER(ieeeAddr)
+
+                WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(name) + " | added")     
                 
                 return True
 
@@ -1021,7 +1030,7 @@ def SET_DEVICE_NAME(ieeeAddr, name):
         entry.name = name    
         db.session.commit()    
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(previous_name) + " | changed || name || " + str(name) + " >>> " + str(entry.name))
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(previous_name) + " | changed || name || " + str(previous_name) + " >>> " + str(entry.name))
 
 
 def SET_DEVICE_AUTO_UPDATE(ieeeAddr, auto_update):
@@ -1144,49 +1153,6 @@ def UPDATE_MQTT_DEVICE_VERSION(ieeeAddr, version):
     db.session.commit()    
     
 
-def SET_DEVICE_EXCEPTION(ieeeAddr, exception_option, exception_setting, exception_sensor_ieeeAddr, 
-                         exception_sensor_input_values, exception_value_1, exception_value_2, exception_value_3):
-              
-    entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
-             
-    # values changed ?
-    if (entry.exception_option != exception_option or entry.exception_setting != exception_setting or
-        entry.exception_sensor_ieeeAddr != exception_sensor_ieeeAddr or 
-        entry.exception_sensor_input_values != exception_sensor_input_values or 
-        entry.exception_value_1 != exception_value_1 or entry.exception_value_2 != exception_value_2 or 
-        entry.exception_value_3 != exception_value_3):              
-
-        changes = ""
-
-        if entry.exception_option != exception_option:
-            changes = changes + " || exception_option || " + str(entry.exception_option) + " >>> " + str(exception_option)
-        if entry.exception_setting != exception_setting:
-            changes = changes + " || exception_setting || " + str(entry.exception_setting) + " >>> " + str(exception_setting)            
-        if entry.exception_sensor_ieeeAddr != exception_sensor_ieeeAddr:
-            changes = changes + " || exception_sensor_ieeeAddr || " + str(entry.exception_sensor_ieeeAddr) + " >>> " + str(exception_sensor_ieeeAddr)        
-        if entry.exception_sensor_input_values != exception_sensor_input_values:
-            changes = changes + " || exception_sensor_input_values || " + str(entry.exception_sensor_input_values) + " >>> " + str(exception_sensor_input_values)       
-        if entry.exception_value_1 != exception_value_1:
-            changes = changes + " || exception_value_1 || " + str(entry.exception_value_1) + " >>> " + str(exception_value_1)   
-        if entry.exception_value_2 != exception_value_2:
-            changes = changes + " || exception_value_2 || " + str(entry.exception_value_2) + " >>> " + str(exception_value_2)       
-        if entry.exception_value_3 != exception_value_3:
-            changes = changes + " || exception_value_3 || " + str(entry.exception_value_3) + " >>> " + str(exception_value_3)   
-
-        entry.exception_option              = exception_option
-        entry.exception_setting             = exception_setting          
-        entry.exception_sensor_ieeeAddr     = exception_sensor_ieeeAddr
-        entry.exception_sensor_input_values = exception_sensor_input_values
-        entry.exception_value_1             = exception_value_1
-        entry.exception_value_2             = exception_value_2 
-        entry.exception_value_3             = exception_value_3            
-        db.session.commit()  
-        
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(entry.name) + " | Exception Settings | changed" + changes) 
-
-        return True
-
-
 def SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(ieeeAddr, update_available):
     entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
     entry.update_available = update_available
@@ -1303,6 +1269,102 @@ def DELETE_DEVICE(ieeeAddr):
 
         except Exception as e:
             return str(e)
+
+
+""" ################### """
+""" ################### """
+"""  device exceptions  """
+""" ################### """
+""" ################### """
+
+
+def GET_DEVICE_EXCEPTION_BY_ID(id):
+    return Device_Exceptions.query.filter_by(id=id).first()   
+
+
+def GET_DEVICE_EXCEPTION_BY_IEEEADDR(device_ieeeAddr):
+    return Device_Exceptions.query.filter_by(device_ieeeAddr=device_ieeeAddr).first()   
+
+
+def GET_ALL_DEVICE_EXCEPTIONS():   
+    return Device_Exceptions.query.all()
+
+
+def ADD_DEVICE_EXCEPTION(device_ieeeAddr):
+    for i in range(1,26):
+        if Device_Exceptions.query.filter_by(id=i).first():
+            pass
+        else:
+            # add the new device exception
+            device_exception = Device_Exceptions(
+                    id              = i,
+                    device_ieeeAddr = device_ieeeAddr,           
+                )
+            db.session.add(device_exception)
+            db.session.commit()
+
+            device = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr)
+
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(device.name) + " | Exception | added")                   
+            return True
+
+    return "Limit reached (25)"
+
+
+def UPDATE_DEVICE_EXCEPTION(id, exception_option, exception_command, exception_sensor_ieeeAddr, 
+                            exception_sensor_input_values, exception_value_1, exception_value_2, exception_value_3):
+              
+    entry = Device_Exceptions.query.filter_by(id=id).first()
+             
+    # values changed ?
+    if (entry.exception_option != exception_option or entry.exception_command != exception_command or
+        entry.exception_sensor_ieeeAddr != exception_sensor_ieeeAddr or 
+        entry.exception_sensor_input_values != exception_sensor_input_values or 
+        entry.exception_value_1 != exception_value_1 or entry.exception_value_2 != exception_value_2 or 
+        entry.exception_value_3 != exception_value_3):              
+
+        changes = ""
+
+        if entry.exception_option != exception_option:
+            changes = changes + " || exception_option || " + str(entry.exception_option) + " >>> " + str(exception_option)
+        if entry.exception_command != exception_command:
+            changes = changes + " || exception_command || " + str(entry.exception_command) + " >>> " + str(exception_command)            
+        if entry.exception_sensor_ieeeAddr != exception_sensor_ieeeAddr:
+            changes = changes + " || exception_sensor_ieeeAddr || " + str(entry.exception_sensor_ieeeAddr) + " >>> " + str(exception_sensor_ieeeAddr)        
+        if entry.exception_sensor_input_values != exception_sensor_input_values:
+            changes = changes + " || exception_sensor_input_values || " + str(entry.exception_sensor_input_values) + " >>> " + str(exception_sensor_input_values)       
+        if entry.exception_value_1 != exception_value_1:
+            changes = changes + " || exception_value_1 || " + str(entry.exception_value_1) + " >>> " + str(exception_value_1)   
+        if entry.exception_value_2 != exception_value_2:
+            changes = changes + " || exception_value_2 || " + str(entry.exception_value_2) + " >>> " + str(exception_value_2)       
+        if entry.exception_value_3 != exception_value_3:
+            changes = changes + " || exception_value_3 || " + str(entry.exception_value_3) + " >>> " + str(exception_value_3)   
+
+        entry.exception_option              = exception_option
+        entry.exception_command             = exception_command       
+        entry.exception_sensor_ieeeAddr     = exception_sensor_ieeeAddr
+        entry.exception_sensor_input_values = exception_sensor_input_values
+        entry.exception_value_1             = exception_value_1
+        entry.exception_value_2             = exception_value_2 
+        entry.exception_value_3             = exception_value_3            
+        db.session.commit()  
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(entry.device.name) + " | Exception | changed" + changes) 
+
+        return True
+
+
+def DELETE_DEVICE_EXCEPTION(id):
+    entry = Device_Exceptions.query.filter_by(id=id).first()
+
+    try:
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(entry.device.name) + " | Exception | deleted")   
+    except:
+        pass         
+    
+    Device_Exceptions.query.filter_by(id=id).delete()
+    db.session.commit()
+    return True
 
 
 """ ################## """

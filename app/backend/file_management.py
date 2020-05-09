@@ -350,11 +350,95 @@ def DELETE_SENSORDATA_FILE(filename):
         return ("Delete Datafile || " + str(e)) 
 
 
+""" ########################## """
+"""  file mqtt manually adding  """
+""" ########################## """
+
+def GET_ALL_MQTT_DEVICES_MANUALLY_ADDING():
+
+    try:
+        list_device_models = []    
+
+        with open(PATH + "/app/mqtt_manually_adding.json", 'r') as data_file:
+            data_loaded = json.load(data_file)
+
+        for device in data_loaded["data"]:
+
+            try:
+                device_model = device['model']
+            except:
+                device_model = ""                 
+                
+            list_device_models.append(device_model)
+           
+        return list_device_models 
+        
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /app/mqtt_manually_adding.json | " + str(e))   
+
+
+def GET_MQTT_DEVICE_MANUALLY_ADDING_INFORMATIONS(model):
+
+    try:
+        with open(PATH + "/app/mqtt_manually_adding.json", 'r') as data_file:
+            data_loaded = json.load(data_file)
+
+        for device in data_loaded["data"]:
+
+            if str(device["model"]) == str(model):
+
+                try:
+                    device_type   = device['device_type']
+                except:
+                    device_type   = ""                 
+                  
+                try:
+                    description   = device['description']
+                except:
+                    description   = ""
+
+                try:
+                    input_values  = device['input_values']
+                    input_values  = ','.join(input_values)   
+                    input_values  = input_values.replace("'", '"')
+                except:
+                    input_values  = ""
+                  
+                try:
+                    input_events  = device['input_events']
+                    input_events  = ','.join(input_events)
+                    input_events  = input_events.replace("'", '"')     
+                except:
+                    input_events  = ""
+                    
+                try:
+                    commands      = device['commands']   
+                    commands      = ','.join(commands)
+                    commands      = commands.replace("'", '"')                              
+                except:
+                    commands      = ""
+
+                try:
+                    commands_json = device['commands_json']   
+                    commands_json = ','.join(commands_json)
+                    commands_json = commands_json.replace("'", '"')                             
+                except:
+                    commands_json = "" 
+
+
+                return (device_type, description, input_values, input_events, commands, commands_json)
+                
+        return ("", "", "", "", "", "")   
+        
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /app/mqtt_manually_adding.json | " + str(e))   
+
+
 """ ################################# """
 """  file zigbee device informations  """
 """ ################################# """
 
-def GET_DEVICE_INFORMATIONS(model):
+def GET_ZIGBEE_DEVICE_INFORMATIONS(model):
     
     try:
         with open(PATH + "/app/zigbee_device_informations.json", 'r') as data_file:
