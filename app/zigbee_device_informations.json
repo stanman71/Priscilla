@@ -258,6 +258,15 @@
 				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]
 			},	
 			{
+				"model"           : "AC10691",
+				"device_type"     : "power_switch",
+				"description"     : "LEDvance Power Switch",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : ["ON","OFF"],				
+				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]
+			},				
+			{
 				"model"           : "E1702",
 				"device_type"     : "power_switch",
 				"description"     : "IKEA TRADFRI control outlet",

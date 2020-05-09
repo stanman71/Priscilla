@@ -461,8 +461,7 @@ def settings_devices():
                     exception_sensor_input_values = "None"
                     exception_value_2             = "None"                        
                     exception_value_3             = "None"   
-        
-                                                        
+                                             
                 else:
                     
                     exception_option              = "None" 
