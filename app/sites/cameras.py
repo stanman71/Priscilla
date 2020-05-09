@@ -287,12 +287,12 @@ def cameras():
                            )
 
 
-# change cameras position 
+# change camera position 
 @app.route('/cameras/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
-def change_cameras_position(id, direction):
-    CHANGE_CAMERAS_POSITION(id, direction)
+def change_camera_position(id, direction):
+    CHANGE_CAMERA_POSITION(id, direction)
     return redirect(url_for('cameras'))
 
 

@@ -338,20 +338,20 @@ def lighting_groups():
                            )
 
 
-# change lighting_groups position 
+# change lighting_group position 
 @app.route('/lighting/groups/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
-def change_lighting_groups_position(id, direction):
-    CHANGE_LIGHTING_GROUPS_POSITION(id, direction)
+def change_lighting_group_position(id, direction):
+    CHANGE_LIGHTING_GROUP_POSITION(id, direction)
     return redirect(url_for('lighting_groups'))
 
 
-# lighting groups option add / remove light
+# lighting group option add / remove light
 @app.route('/lighting/groups/<string:option>/<int:id>')
 @login_required
 @permission_required
-def change_lighting_groups_options(id, option):
+def change_lighting_group_options(id, option):
     if option == "add_light":
         ADD_LIGHTING_GROUP_OBJECT(id)
         session['set_collapse_open'] = id

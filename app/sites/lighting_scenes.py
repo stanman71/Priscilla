@@ -463,12 +463,12 @@ def lighting_scenes():
                            )
 
 
-# change lighting scenes position 
+# change lighting scene position 
 @app.route('/lighting/scenes/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
-def change_lighting_scenes_position(id, direction):
-    CHANGE_LIGHTING_SCENES_POSITION(id, direction)
+def change_lighting_scene_position(id, direction):
+    CHANGE_LIGHTING_SCENE_POSITION(id, direction)
     return redirect(url_for('lighting_scenes'))
 
 

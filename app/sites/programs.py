@@ -400,12 +400,12 @@ def programs():
                            )
 
 
-# change programs position 
+# change program position 
 @app.route('/programs/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
-def change_programs_position(id, direction):
-    CHANGE_PROGRAMS_POSITION(id, direction)
+def change_program_position(id, direction):
+    CHANGE_PROGRAM_POSITION(id, direction)
     return redirect(url_for('programs'))
 
 
@@ -425,12 +425,12 @@ def change_programs_options(id, option):
     return redirect(url_for('programs'))
 
 
-# change lines position 
-@app.route('/programs/position/<string:direction>/<int:line>/<int:id>')
+# change program line position 
+@app.route('/programs/line_position/<string:direction>/<int:line>/<int:id>')
 @login_required
 @permission_required
-def change_programs_line_position(id, line, direction):
-    CHANGE_PROGRAMS_LINE_POSITION(id, line, direction)
+def change_program_line_position(id, line, direction):
+    CHANGE_PROGRAM_LINE_POSITION(id, line, direction)
     session['selected_program_id'] = id
 
     return redirect(url_for('programs'))

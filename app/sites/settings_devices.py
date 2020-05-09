@@ -187,10 +187,12 @@ def settings_devices():
 
     # delete device exception message
     if session.get('delete_device_exception_success', None) != None:
+        device_exceptions_collapse_open = True
         success_message_change_device_exceptions.append(session.get('delete_device_exception_success'))
         session['delete_device_exception_success'] = None
         
     if session.get('delete_device_exception_error', None) != None:
+        device_exceptions_collapse_open = True
         error_message_change_settings_devices.append(session.get('delete_device_exception_error'))
         session['delete_device_exception_error'] = None      
 
@@ -1232,12 +1234,12 @@ def settings_devices():
                            )
 
 
-# change devices position 
-@app.route('/settings/devices/position/<string:direction>/<int:id>')
+# change device position 
+@app.route('/settings/devices/device/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
-def change_devices_position(id, direction):
-    CHANGE_DEVICES_POSITION(id, direction)
+def change_device_position(id, direction):
+    CHANGE_DEVICE_POSITION(id, direction)
     return redirect(url_for('settings_devices'))
 
 
@@ -1299,6 +1301,15 @@ def remove_device(ieeeAddr):
     except Exception as e:
         session['delete_device_error'] = device_name + " || Error | + " + str(e)            
         return redirect(url_for('settings_devices'))        
+
+
+# change device exception position 
+@app.route('/settings/devices/device_exception/position/<string:direction>/<int:id>')
+@login_required
+@permission_required
+def change_device_exception_position(id, direction):
+    CHANGE_DEVICE_EXCEPTION_POSITION(id, direction)
+    return redirect(url_for('settings_devices'))
 
 
 # remove device exception

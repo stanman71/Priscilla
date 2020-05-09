@@ -1064,12 +1064,12 @@ def scheduler():
                            )
 
 
-# change scheduler tasks position 
+# change scheduler task position 
 @app.route('/scheduler/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
-def change_scheduler_tasks_position(id, direction):
-    CHANGE_SCHEDULER_TASKS_POSITION(id, direction)
+def change_scheduler_task_position(id, direction):
+    CHANGE_SCHEDULER_TASK_POSITION(id, direction)
     return redirect(url_for('scheduler'))
 
 

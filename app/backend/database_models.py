@@ -558,7 +558,7 @@ def SET_CAMERA_SETTINGS(id, name, url, user, password):
         return True
 
 
-def CHANGE_CAMERAS_POSITION(id, direction): 
+def CHANGE_CAMERA_POSITION(id, direction): 
     if direction == "up":
         camera_list = GET_ALL_CAMERAS()
         camera_list = camera_list[::-1]
@@ -1159,7 +1159,7 @@ def SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(ieeeAddr, update_available):
     db.session.commit()       
 
     
-def CHANGE_DEVICES_POSITION(id, direction):
+def CHANGE_DEVICE_POSITION(id, direction):
     if direction == "up":
         device_list = GET_ALL_DEVICES("")
         device_list = device_list[::-1]
@@ -1352,6 +1352,48 @@ def UPDATE_DEVICE_EXCEPTION(id, exception_option, exception_command, exception_s
         WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(entry.device.name) + " | Exception | changed" + changes) 
 
         return True
+
+
+def CHANGE_DEVICE_EXCEPTION_POSITION(id, direction):
+    if direction == "up":
+        device_exception_list = GET_ALL_DEVICE_EXCEPTIONS()
+        device_exception_list = device_exception_list[::-1]
+        
+        for device_exception in device_exception_list:
+            
+            if device_exception.id < id:
+                
+                new_id = device_exception.id
+                
+                # change ids
+                device_exception_1 = GET_DEVICE_EXCEPTION_BY_ID(id)
+                device_exception_2 = GET_DEVICE_EXCEPTION_BY_ID(new_id)
+                
+                device_exception_1.id = 111
+                db.session.commit()
+                
+                device_exception_2.id = id
+                device_exception_1.id = new_id
+                db.session.commit()       
+                return 
+
+    if direction == "down":
+        for device_exception in GET_ALL_DEVICE_EXCEPTIONS():
+            if device_exception.id > id:
+                
+                new_id = device_exception.id
+                
+                # change ids
+                device_exception_1 = GET_DEVICE_EXCEPTION_BY_ID(id)
+                device_exception_2 = GET_DEVICE_EXCEPTION_BY_ID(new_id)
+                
+                device_exception_1.id = 111
+                db.session.commit()
+                
+                device_exception_2.id = id
+                device_exception_1.id = new_id
+                db.session.commit()           
+                return 
 
 
 def DELETE_DEVICE_EXCEPTION(id):
@@ -1760,7 +1802,7 @@ def REMOVE_LIGHTING_GROUP_OBJECT(id):
         return 
 
 
-def CHANGE_LIGHTING_GROUPS_POSITION(id, direction):
+def CHANGE_LIGHTING_GROUP_POSITION(id, direction):
     if direction == "up":
         groups_list = GET_ALL_LIGHTING_GROUPS()
         groups_list = groups_list[::-1]
@@ -2120,7 +2162,7 @@ def RESET_LIGHTING_SCENE_COLLAPSE():
         db.session.commit()   
 
 
-def CHANGE_LIGHTING_SCENES_POSITION(id, direction):
+def CHANGE_LIGHTING_SCENE_POSITION(id, direction):
     if direction == "up":
         scenes_list = GET_ALL_LIGHTING_SCENES()
         scenes_list = scenes_list[::-1]
@@ -2343,7 +2385,7 @@ def SET_PROGRAM_SETTINGS(id, name, line_content_1,  line_content_2,  line_conten
         return True
 
 
-def CHANGE_PROGRAMS_POSITION(id, direction):
+def CHANGE_PROGRAM_POSITION(id, direction):
     if direction == "up":
         program_list = GET_ALL_PROGRAMS()
         program_list = program_list[::-1]
@@ -2657,7 +2699,7 @@ def REMOVE_PROGRAM_LINE(id):
         return 
 
 
-def CHANGE_PROGRAMS_LINE_POSITION(id, line, direction):
+def CHANGE_PROGRAM_LINE_POSITION(id, line, direction):
     entry = Programs.query.filter_by(id=id).first()
 
     if direction == "up":
@@ -3219,7 +3261,7 @@ def REMOVE_SCHEDULER_TASK_SECOND_SENSOR(id):
     db.session.commit()
 
 
-def CHANGE_SCHEDULER_TASKS_POSITION(id, direction):
+def CHANGE_SCHEDULER_TASK_POSITION(id, direction):
     
     list_scheduler_tasks = Scheduler_Tasks.query.all() 
     
@@ -3380,7 +3422,7 @@ def SET_SENSORDATA_JOB_SETTINGS(id, name, filename, device_ieeeAddr, sensor_key,
         return True 
 
 
-def CHANGE_SENSORDATA_JOBS_POSITION(id, direction): 
+def CHANGE_SENSORDATA_JOB_POSITION(id, direction): 
     if direction == "up":
         sensordata_jobs_list = GET_ALL_SENSORDATA_JOBS()
         sensordata_jobs_list = sensordata_jobs_list[::-1]

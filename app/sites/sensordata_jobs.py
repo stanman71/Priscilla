@@ -807,12 +807,12 @@ def sensordata_jobs():
                            )
 
 
-# change jobs position 
+# change job position 
 @app.route('/sensordata/jobs/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
-def change_sensordata_jobs_position(id, direction):
-    CHANGE_SENSORDATA_JOBS_POSITION(id, direction)
+def change_sensordata_job_position(id, direction):
+    CHANGE_SENSORDATA_JOB_POSITION(id, direction)
     return redirect(url_for('sensordata_jobs'))
 
 
