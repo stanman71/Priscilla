@@ -18,11 +18,11 @@ def CHECK_DEVICE_EXCEPTION_SETTINGS(device_exceptions):
 
       # exception command
       if exception.exception_command == "None":
-         error_message_settings.append(device.name + " || Invalid Command")
+         error_message_settings.append(device.name + " || No Command selected")
 
       # exception setting 
       if exception.exception_option == "None":
-         error_message_settings.append(device.name + " || Invalid Option")
+         error_message_settings.append(device.name + " || No Option selected")
 
       # exception setting ip_address
       elif exception.exception_option == "IP-Address":
