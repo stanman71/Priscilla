@@ -879,3 +879,7 @@ Timestamp,Type,Description
 2020-05-09 17:48:01,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-05-09 17:48:07,DATABASE,|Network || Device - POWER_PC || Exception || changed |||| exception_option |||| None >>> SENSOR_MOTION |||| exception_sensor_ieeeAddr |||| None >>> 0x380384 |||| exception_sensor_input_values |||| None >>> occupancy,illuminance|
 2020-05-09 17:48:32,DATABASE,|Network || Device - POWER_PC || Exception || deleted|
+2020-05-09 18:10:56,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-05-09 18:10:57,SUCCESS,|Music || Spotify || Token || updated|
+2020-05-09 18:10:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-09 18:10:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
