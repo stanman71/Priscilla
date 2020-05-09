@@ -368,7 +368,7 @@ def settings_devices():
                 error_message_add_device_exception = result
 
         else:
-            error_message_add_device_exception = "Invalid input | No Device selected"                        
+            error_message_add_device_exception = ["Invalid input | No Device selected"]                        
 
 
     if request.form.get("save_device_exceptions") != None:  
@@ -383,8 +383,7 @@ def settings_devices():
                 # Exception Options
                 # #################
 
-                exception_option  = request.form.get("set_exception_option_" + str(i))
-                exception_option  = exception_option.replace(" ","")
+                exception_option  = request.form.get("set_exception_option_" + str(i)).strip()
                 exception_command = request.form.get("set_exception_command_" + str(i))
                                         
                 if exception_command == "" or exception_command == None:
@@ -406,7 +405,7 @@ def settings_devices():
                         exception_sensor_input_values = GET_DEVICE_BY_NAME(exception_option).input_values                                  
                 
                     # set device exception value 1
-                    if device.exception_option == "IP-Address":
+                    if exception_option == "IP-Address":
                         exception_value_1 = "None" 
                 
                     else:

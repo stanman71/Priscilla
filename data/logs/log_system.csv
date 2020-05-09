@@ -864,3 +864,18 @@ Timestamp,Type,Description
 2020-05-09 11:19:59,DATABASE,|Network || Device - POWER_SERVER || Exception || added|
 2020-05-09 11:20:09,DATABASE,|Network || Device - POWER_SERVER || Exception || deleted|
 2020-05-09 11:20:14,DATABASE,|Network || Device - AROMA_LIVINGROOM || Exception || deleted|
+2020-05-09 17:46:07,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-05-09 17:46:07,SUCCESS,|Music || Spotify || Token || updated|
+2020-05-09 17:46:08,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-09 17:46:08,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-09 17:46:28,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-05-09 17:46:28,SUCCESS,|Music || Spotify || Token || updated|
+2020-05-09 17:46:29,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-09 17:46:29,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-09 17:46:47,DATABASE,|Network || Device - POWER_PC || Exception || added|
+2020-05-09 17:48:00,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-05-09 17:48:01,SUCCESS,|Music || Spotify || Token || updated|
+2020-05-09 17:48:01,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-09 17:48:01,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-09 17:48:07,DATABASE,|Network || Device - POWER_PC || Exception || changed |||| exception_option |||| None >>> SENSOR_MOTION |||| exception_sensor_ieeeAddr |||| None >>> 0x380384 |||| exception_sensor_input_values |||| None >>> occupancy,illuminance|
+2020-05-09 17:48:32,DATABASE,|Network || Device - POWER_PC || Exception || deleted|
