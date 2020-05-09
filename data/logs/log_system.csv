@@ -857,3 +857,10 @@ Timestamp,Type,Description
 2020-05-09 11:16:54,DATABASE,|Network || Device - AROMA_LIVINGROOM || Exception || added|
 2020-05-09 11:17:01,DATABASE,|Network || Device - AROMA_LIVINGROOM || Exception || deleted|
 2020-05-09 11:17:11,DATABASE,|Network || Device - POWER_PC || Exception || deleted|
+2020-05-09 11:19:53,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-05-09 11:19:53,SUCCESS,|Music || Spotify || Token || updated|
+2020-05-09 11:19:54,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-09 11:19:54,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-09 11:19:59,DATABASE,|Network || Device - POWER_SERVER || Exception || added|
+2020-05-09 11:20:09,DATABASE,|Network || Device - POWER_SERVER || Exception || deleted|
+2020-05-09 11:20:14,DATABASE,|Network || Device - AROMA_LIVINGROOM || Exception || deleted|
