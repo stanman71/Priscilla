@@ -883,3 +883,12 @@ Timestamp,Type,Description
 2020-05-09 18:10:57,SUCCESS,|Music || Spotify || Token || updated|
 2020-05-09 18:10:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-05-09 18:10:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-09 18:30:43,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-05-09 18:30:43,SUCCESS,|Music || Spotify || Token || updated|
+2020-05-09 18:30:44,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-09 18:30:44,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-05-09 18:41:42,SUCCESS,|Music || Spotify || Logout|
+2020-05-09 18:41:46,SUCCESS,|Music || Spotify || Login || successful|
+2020-05-09 18:41:46,SUCCESS,|Music || Spotify || Token || received|
+2020-05-09 18:41:46,SUCCESS,|Music || Spotify || Refresh Token || received|
+2020-05-09 18:41:49,SUCCESS,|Music || Spotify || Logout|

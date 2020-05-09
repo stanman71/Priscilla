@@ -25,14 +25,14 @@ import heapq
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        try:
-            if current_user.role == "user" or current_user.role == "administrator":
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('logout'))
-        except Exception as e:
-            print(e)
+        #try:
+        if current_user.role == "user" or current_user.role == "administrator":
+            return f(*args, **kwargs)
+        else:
             return redirect(url_for('logout'))
+        #except Exception as e:
+        #    print(e)
+        #    return redirect(url_for('logout'))
         
     return wrap
 

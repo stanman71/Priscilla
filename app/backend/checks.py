@@ -467,11 +467,11 @@ def CHECK_SCHEDULER_TASK_SETTINGS(scheduler_tasks):
                   days = days.split(",")
                   for element in days:
                      if element.lower() not in ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]:
-                        list_errors.append("Invalid Time || Day")
+                        list_errors.append("Invalid Time || Day || " + str(element)) 
                         break                                 
             else:
                   if task.day.lower() not in ["mon", "tue", "wed", "thu", "fri", "sat", "sun", "*"] and task.day != "*":
-                     list_errors.append("Invalid Time || Day") 
+                     list_errors.append("Invalid Time || Day || " + str(task.day)) 
 
          except Exception as e:
             list_errors.append("Invalid Time || Day || " + str(e))
