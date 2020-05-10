@@ -185,6 +185,7 @@ def sensordata_jobs():
     list_sensordata_files = GET_ALL_SENSORDATA_FILES()
     list_sensors          = GET_ALL_DEVICES("sensors") 
 
+
     error_message_settings = CHECK_SENSORDATA_JOBS(GET_ALL_SENSORDATA_JOBS())
 
     data = {'navigation': 'sensordata_jobs'}

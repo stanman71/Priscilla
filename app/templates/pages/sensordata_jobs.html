@@ -433,92 +433,89 @@
                         </thead>
                         <tbody> 
                           {% for entry in list_sensordata_jobs %}
-                          <tr>
-                            <td>
-                              <a href="/sensordata/jobs/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
-                              <a href="/sensordata/jobs/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>                            
-                            </td>                     
-                            <td>
-                              <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                    
-                            </td> 
-                            <td>
-                              <input type="text" class="form-control" name="set_filename_{{ entry.id }}" 
-                                value= {% if entry.filename != None and entry.filename != "None" %}"{{ entry.filename }}"{% else %}""{% endif %} />                 
-                            </td> 
-                            <td>
-                              <select id="device_{{ entry.id }}" class="form-control" onchange="Choose_Sensor('{{ entry.id }}')" name="set_device_{{ entry.id }}" style="background-color:#27293D"> 
-                                {% if entry.device_ieeeAddr != "None" and entry.device_ieeeAddr != None and entry.device_ieeeAddr != "" %}
-                                  <option value = "{{ entry.device_ieeeAddr }}" > {{ entry.device.name }} </option>
-                                {% else %}   
-                                  <option value = "None" > Device </option> 
-                                {% endif %}    
-                                <option disabled>------------------</option>
-                                {% for each in dropdown_list_devices %}
-                                  <option value="{{ each.id }}"> {{ each.name }} </option>
-                                {% endfor %}
-                              </select>                           
-                            </td>
-                            <td>       
-                              <select id="selected_sensor_{{ entry.id }}" class="form-control" name="set_sensor_{{ entry.id }}" style="background-color:#27293D"> 
-                                {% if entry.sensor_key != "None" and entry.sensor_key != None and entry.sensor_key != "" %}
-                                  <option value= "{{ entry.sensor_key }}" > {{ entry.sensor_key }} </option>                     
-                                {% else %}                         
-                                  <option value= "None" > Sensor </option> 
-                                {% endif %}                
-                                <option disabled>------------------</option>
-                                {% if entry.device_ieeeAddr != None %}
-                                  {% for each in entry.device.input_values.split(',') %}
-                                    <option value= "{{ each }}" > {{ each }} </option>
-                                  {% endfor %}     
-                                {% endif %} 
-                              </select>                    
-                            </td> 
-                            <td></td>
-                            <td>
-                              <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="radio_always_active_{{ entry.id }}" {% if entry.always_active == "True" %} checked="on" {% endif %} value="True" name="set_radio_input_setting_{{ entry.id }}">
-                                <label class="custom-control-label" for="radio_always_active_{{ entry.id }}">save everything</label>
-                              </div> 
-
-                              {% if entry.device.device_type == "sensor_active" %}
-
-                                <br>       
+                            <tr>
+                              <td>
+                                <a href="/sensordata/jobs/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                                <a href="/sensordata/jobs/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>                            
+                              </td>                     
+                              <td>
+                                <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                    
+                              </td> 
+                              <td>
+                                <input type="text" class="form-control" name="set_filename_{{ entry.id }}" 
+                                  value= {% if entry.filename != None and entry.filename != "None" %}"{{ entry.filename }}"{% else %}""{% endif %} />                 
+                              </td> 
+                              <td>
+                                <select id="device_{{ entry.id }}" class="form-control" onchange="Choose_Sensor('{{ entry.id }}')" name="set_device_{{ entry.id }}" style="background-color:#27293D"> 
+                                  {% if entry.device_ieeeAddr != "None" and entry.device_ieeeAddr != None and entry.device_ieeeAddr != "" %}
+                                    <option value = "{{ entry.device_ieeeAddr }}" > {{ entry.device.name }} </option>
+                                  {% else %}   
+                                    <option value = "None" > Device </option> 
+                                  {% endif %}    
+                                  <option disabled>------------------</option>
+                                  {% for each in dropdown_list_devices %}
+                                    <option value="{{ each.id }}"> {{ each.name }} </option>
+                                  {% endfor %}
+                                </select>                           
+                              </td>
+                              <td>       
+                                <select id="selected_sensor_{{ entry.id }}" class="form-control" name="set_sensor_{{ entry.id }}" style="background-color:#27293D"> 
+                                  {% if entry.sensor_key != "None" and entry.sensor_key != None and entry.sensor_key != "" %}
+                                    <option value= "{{ entry.sensor_key }}" > {{ entry.sensor_key }} </option>                     
+                                  {% else %}                         
+                                    <option value= "None" > Sensor </option> 
+                                  {% endif %}                
+                                  <option disabled>------------------</option>
+                                  {% if entry.device_ieeeAddr != None %}
+                                    {% for each in entry.device.input_values.split(',') %}
+                                      <option value= "{{ each }}" > {{ each }} </option>
+                                    {% endfor %}     
+                                  {% endif %} 
+                                </select>                    
+                              </td> 
+                              <td></td>
+                              <td>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                  <input type="radio" class="custom-control-input" id="radio_request_only_{{ entry.id }}" {% if entry.always_active == "False" %} checked="on" {% endif %} value="False" name="set_radio_input_setting_{{ entry.id }}">
-                                  <label class="custom-control-label" for="radio_request_only_{{ entry.id }}">save requests only</label>
+                                  <input type="radio" class="custom-control-input" id="radio_always_active_{{ entry.id }}" {% if entry.always_active == "True" %} checked="on" {% endif %} value="True" name="set_radio_input_setting_{{ entry.id }}">
+                                  <label class="custom-control-label" for="radio_always_active_{{ entry.id }}">save everything</label>
                                 </div> 
 
-                              {% endif %}
+                                {% if entry.device.device_type == "sensor_active" %}
 
-                            </td>     
-                            <td>   
-                              <!-- Button trigger modal -->
-                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>
-                              <!-- Modal -->
-                              <div class="modal fade" id="delete_dialog_{{entry.id}}">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title">Delete {{entry.name}} ?</h5>                              
-                                    </div>          
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                      <a class="btn btn-danger" href="/sensordata/jobs/delete/{{ entry.id }}#table" role="button">DELETE</a>
+                                  <br>       
+                                  <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" class="custom-control-input" id="radio_request_only_{{ entry.id }}" {% if entry.always_active == "False" %} checked="on" {% endif %} value="False" name="set_radio_input_setting_{{ entry.id }}">
+                                    <label class="custom-control-label" for="radio_request_only_{{ entry.id }}">save requests only</label>
+                                  </div> 
+
+                                {% endif %}
+
+                              </td>     
+                              <td>   
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="delete_dialog_{{entry.id}}">
+                                  <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title">Delete {{entry.name}} ?</h5>                              
+                                      </div>          
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                        <a class="btn btn-danger" href="/sensordata/jobs/delete/{{ entry.id }}#table" role="button">DELETE</a>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              </div>                          
-                            </td>   
-                          </tr>
+                                </div>                          
+                              </td>   
+                            </tr>
+                            
                           {% endfor %}
+
                         </tbody>
                       </table>               
                     </div>
-
-                  {% endif %}
-
-                  </div>            
-                  <div class="card-footer">                   
                     <button type="submit" onclick="window.location.href='/sensordata/jobs#table_sensordata_jobs'" name="save_sensordata_jobs_settings" class="btn btn-fill btn-primary">SAVE</button>
                   </div>
                 </form>
@@ -578,11 +575,10 @@
   </div>
 {% endif %}  
 
-            <div class="card ">   
-              <div class="card-body"> 
+            {% if list_sensordata_files != [] %}
 
-                {% if list_plants_datafiles != "No Files found" %}
-
+              <div class="card ">   
+                <div class="card-body"> 
                   <div class="table-responsive">
                     <table class="table tablesorter"> 
                       <thead> 
@@ -626,13 +622,10 @@
                       </tbody>
                     </table>
                   </div>
+                </div>            
+              </div>
 
-                {% else %}
-                  {{ list_sensordata_files }}
-                {% endif %}
-
-              </div>            
-            </div>
+            {% endif %}
 
           </div>
         </div>

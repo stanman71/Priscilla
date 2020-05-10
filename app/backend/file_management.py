@@ -284,7 +284,7 @@ def GET_ALL_SENSORDATA_FILES():
         file_list.append(files)   
 
     if file_list == []:
-        return ""
+        return []
     else:
         return file_list[0][2]    
 
