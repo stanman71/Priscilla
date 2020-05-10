@@ -1098,7 +1098,7 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
 
         # special case roborock s50 >>> ignore attributes messages
         if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "roborock_s50":
-            if "attributes" in last_values_string:
+            if "cleanTime" in last_values_string:
                 return
 
         timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))

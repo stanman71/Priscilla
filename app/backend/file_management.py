@@ -5,12 +5,16 @@ import csv
 import json
 import pandas as pd
 import yaml
+import time
+import threading
+
 
 from flask          import send_from_directory
 from werkzeug.utils import secure_filename
 
 from app import app
 
+sensordata_messages_list = []
 
 """ ###### """
 """  path  """
@@ -310,9 +314,51 @@ def CREATE_SENSORDATA_FILE(filename):
         return True
 
 
+def START_BLOCK_SENSORDATA_THREAD():
+	try:
+		Thread = threading.Thread(target=BLOCK_SENSORDATA_THREAD)
+		Thread.start()  
+		
+	except Exception as e:
+		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Block Sensordata | " + str(e)) 
+
+
+def BLOCK_SENSORDATA_THREAD(): 
+
+	while True:
+        
+		try:
+			# get the time check value
+			time_check = datetime.datetime.now() - datetime.timedelta(seconds=5)
+			time_check = time_check.strftime("%Y-%m-%d %H:%M:%S")
+
+			for message in sensordata_messages_list:
+
+				time_message = datetime.datetime.strptime(message[0],"%Y-%m-%d %H:%M:%S")   
+				time_limit   = datetime.datetime.strptime(time_check, "%Y-%m-%d %H:%M:%S")
+
+				# remove saved message after 5 seconnds
+				if time_message <= time_limit:
+					sensordata_messages_list.remove(message)
+
+		except Exception as e:
+			print(e)
+			
+		time.sleep(1)
+
+
 def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
+
     if os.path.isfile(PATH + "/data/csv/" + filename + ".csv") is False:
         CREATE_SENSORDATA_FILE(filename)
+
+    # block existing message
+    for message in sensordata_messages_list:   
+        if [device, sensor, value] == message:
+            return
+
+    # add message to block list, will be removed after 5 seconds
+    sensordata_messages_list.append([device, sensor, value])
 
     try:
         # open csv file

@@ -374,6 +374,7 @@ from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT
 from app.backend.email              import SEND_EMAIL
 from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
 from app.backend.spotify            import START_REFRESH_SPOTIFY_TOKEN_THREAD
+from app.backend.file_management    import START_BLOCK_SENSORDATA_THREAD
 
 
 """ ######### """
@@ -516,5 +517,6 @@ if GET_SYSTEM_SETTINGS().squeezelite_active != "True":
 
 PROCESS_MANAGEMENT_THREAD()
 START_REFRESH_SPOTIFY_TOKEN_THREAD()
+START_BLOCK_SENSORDATA_THREAD()
 
 socketio.run(app, host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)
