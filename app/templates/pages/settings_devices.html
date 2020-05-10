@@ -785,7 +785,7 @@
                                             <option value = "None" > Command </option> 
                                           {% endif %}                           
                                           <option disabled>------------------</option>
-                                          {% if entry.device.commands != None %}
+                                          {% if entry.device != None and entry.device != "None" %}
                                             {% for each in entry.device.commands.split(',') %}
                                               <option value= "{{ each }}" > {{ each }} </option>
                                             {% endfor %}     

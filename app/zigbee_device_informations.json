@@ -600,6 +600,15 @@
 				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]
 			},	
 			{
+				"model"           : "AC10691",
+				"device_type"     : "power_switch",
+				"description"     : "LEDVANCE PowerSwitch",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : ["ON","OFF"],				
+				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]
+			},				
+			{
 				"model"           : "9290012607",
 				"device_type"     : "sensor_passiv",
 				"description"     : "PHILIPS Hue motion sensor",

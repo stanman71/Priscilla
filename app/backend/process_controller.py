@@ -947,9 +947,19 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                     for command in device.commands.split(","):     
                                                 
                         if str(controller_command.lower()) == command.lower():
-                            heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                            CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_command, 60)      
-                            continue
+
+                            # special case roborock s50
+                            if device.model == "roborock_s50" and controller_command.lower() == "return_to_base":
+                                heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
+                                time.sleep(5)
+                                heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
+                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_command, 60)  
+                                continue    
+
+                            else:
+                                heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
+                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_command, 60)      
+                                continue
 
                         command_position = command_position + 1
       

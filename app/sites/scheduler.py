@@ -402,7 +402,8 @@ def scheduler():
     list_sensordata_job_options = []
 
     for job in GET_ALL_SENSORDATA_JOBS():
-        list_sensordata_job_options.append(job.name)
+        if job.device.model == "sensor_active": 
+            list_sensordata_job_options.append(job.name)
 
     # list program options    
     list_program_options = []

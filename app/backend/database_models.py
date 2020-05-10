@@ -1071,10 +1071,9 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
         if "update_available: false" in last_values_string:
             last_values_string = last_values_string.replace(", update_available: false","")
 
-        # special case eurotronic heater_thermostat 
+        # special case eurotronic heater_thermostat >>> reduce string statement 
         if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "SPZB0001":
 
-            # reduce string statement 
             last_values_string_modified = ""
 
             for element in last_values_string.split(","):
@@ -1097,8 +1096,13 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
             except:
                 last_values_string = last_values_string_modified
 
-        
+        # special case roborock s50 >>> ignore attributes messages
+        if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "roborock_s50":
+            if "attributes" in last_values_string:
+                return
+
         timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+
         entry.last_values_json   = last_values
         entry.last_values_string = last_values_string
         entry.last_contact       = timestamp

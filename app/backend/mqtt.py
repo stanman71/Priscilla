@@ -733,15 +733,16 @@ def UPDATE_DEVICES(gateway):
  
 def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, seconds = 10): 
     repeats = seconds * 5
-    Thread  = threading.Thread(target=CHECK_DEVICE_SETTING_PROCESS, args=(ieeeAddr, setting, repeats, ))
+    Thread  = threading.Thread(target=CHECK_DEVICE_SETTING_PROCESS, args=(ieeeAddr, setting, seconds, ))
     Thread.start()   
 
  
-def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, repeats, log_report = True):                
-    device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-    timer  = 1
+def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, seconds, log_report = True):  
+    repeats = seconds * 5                  
+    device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
+    timer   = 1
 
-    # special case roborock s50
+    # special case roborock s50 >>> change setting words
     if device.model == "roborock_s50":
         if setting.lower() == "start":
             setting = "cleaning"

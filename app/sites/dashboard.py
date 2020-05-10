@@ -114,10 +114,20 @@ def dashboard():
                         # get the json command statement and start process
                         for command in device.commands.split(","):     
                                             
-                            if str(dashboard_command.lower()) == command.lower():    
-                                heapq.heappush(mqtt_message_queue, (1, (channel, list_command_json[command_position])))            
-                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 60)      
-                                break
+                            if str(dashboard_command.lower()) == command.lower():
+
+                                # special case roborock s50
+                                if device.model == "roborock_s50" and dashboard_command.lower() == "return_to_base":
+                                    heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
+                                    time.sleep(5)
+                                    heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
+                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 60)  
+                                    continue    
+
+                                else:
+                                    heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
+                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 60)      
+                                    continue
 
                             command_position = command_position + 1
 

@@ -623,11 +623,21 @@ def PROGRAM_THREAD(thread_id, program_id):
 
                                         # get the json command statement and start process
                                         for command in device.commands.split(","):     
-                                                                    
+
                                             if str(program_command.lower()) == command.lower():
-                                                heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                                                CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_command, 60)      
-                                                continue
+
+                                                # special case roborock s50
+                                                if device.model == "roborock_s50" and program_command.lower() == "return_to_base":
+                                                    heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
+                                                    time.sleep(5)
+                                                    heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
+                                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_command, 60)  
+                                                    continue    
+
+                                                else:
+                                                    heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
+                                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, program_command, 60)      
+                                                    continue
 
                                             command_position = command_position + 1
 
