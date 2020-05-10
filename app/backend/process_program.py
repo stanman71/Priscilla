@@ -462,22 +462,28 @@ def PROGRAM_THREAD(thread_id, program_id):
                             # group existing ?
                             if group != None:
 
-                                # scene existing ?
-                                if scene != None:
+                                # group not empty ?
+                                if group.light_ieeeAddr_1 != "None":
 
-                                    try:
-                                        brightness = int(line_content[4].strip())
-                                    except:
-                                        brightness = 100           
-                                    
-                                    SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
-                                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+                                    # scene existing ?
+                                    if scene != None:
+
+                                        try:
+                                            brightness = int(line_content[4].strip())
+                                        except:
+                                            brightness = 100           
+                                        
+                                        SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
+                                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+
+                                    else:
+                                        WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Scene - " + line_content[3] + " | missing")   
 
                                 else:
-                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Scene - " + line_content[3] + " - not found")   
+                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + line_content[2] + " | empty")   
 
                             else:
-                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + line_content[2] + " - not found")   
+                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + line_content[2] + " | missing")   
          
                         except Exception as e:
                             WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
@@ -508,7 +514,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                     CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "ON", 10)
 
                             else:
-                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Device - " + line_content[3] + " - not found")   
+                                WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Device - " + line_content[3] + " | missing")   
          
                         except Exception as e:
                             WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
@@ -540,12 +546,18 @@ def PROGRAM_THREAD(thread_id, program_id):
                                     if input_group_name.lower() == group.name.lower():
                                         group_found = True
 
-                                        SET_LIGHTING_GROUP_TURN_OFF(group.id)
-                                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
+                                        # group not empty ?
+                                        if group.light_ieeeAddr_1 != "None":
+
+                                            SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                                            CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
+
+                                    else:
+                                        WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + input_group_name + " | empty")   
 
                                 # group not found
                                 if group_found == False:
-                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + input_group_name + " - not found")   
+                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + input_group_name + " | missing")   
 
 
                             # turn off light
@@ -559,7 +571,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                     CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "OFF", 10)
 
                                 else:
-                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Light - " + line_content[3] + " - not found")   
+                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Light - " + line_content[3] + " | missing")   
 
 
                             # turn off all
@@ -570,8 +582,14 @@ def PROGRAM_THREAD(thread_id, program_id):
                                     Thread.start()   
 
                                 for group in GET_ALL_LIGHTING_GROUPS():
-                                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
+                                    # group not empty ?
+                                    if group.light_ieeeAddr_1 != "None":
+
+                                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
+
+                                    else:
+                                        WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Group - " + group.name + " | empty")   
 
                         except Exception as e:
                             WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
@@ -645,7 +663,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                         WRITE_LOGFILE_SYSTEM("WARNING", "Program - " + program_name + " | " + check_result)
 
                                 else:
-                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Device - " + device_name.strip() + " - not found")     
+                                    WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Device - " + device_name.strip() + " | missing")     
              
                         except Exception as e:
                             WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
@@ -688,7 +706,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | Invalid command")
 
                         else:
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | Program - " + program + " - not found")
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | Program - " + program + " | missing")
 
 
                     # #####

@@ -677,24 +677,31 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
         # group existing ?
         if group != None:
 
-            # scene existing ?
-            if scene != None:
+            # group not empty ?
+            if group.light_ieeeAddr_1 != "None":
 
-                try:
-                    brightness = int(task[4].strip())
-                except:
-                    brightness = 100
-                    
-                SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
-                CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+                # scene existing ?
+                if scene != None:
+
+                    try:
+                        brightness = int(task[4].strip())
+                    except:
+                        brightness = 100
+                        
+                    SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
+                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+
+                else:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
+                                        controller_command + " | Scene - " + task[3] + " | missing")
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                     controller_command + " | Scene - " + task[3] + " - not found")
-
+                                    controller_command + " | Group - " + task[2] + " | empty")             
+              
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                 controller_command + " | Group - " + task[2] + " - not found")
+                                 controller_command + " | Group - " + task[2] + " | missing")
 
 
     # ###############################
@@ -711,31 +718,38 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
         # group existing ?
         if group != None:
 
-            if group.current_scene != "OFF":
+            # group not empty ?
+            if group.light_ieeeAddr_1 != "None":
 
-                SET_LIGHTING_GROUP_TURN_OFF(group.id)
-                CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)                      
+                if group.current_scene != "OFF":
 
-            else:
-
-                # scene existing ?
-                if scene != None:          
-                        
-                    try:
-                        brightness = int(task[4].strip())
-                    except:
-                        brightness = 100
-                        
-                    SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
-                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+                    SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)                      
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                        controller_command + " | Scene - " + task[3] + " - not found")
+
+                    # scene existing ?
+                    if scene != None:          
+                            
+                        try:
+                            brightness = int(task[4].strip())
+                        except:
+                            brightness = 100
+                            
+                        SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
+                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+
+                    else:
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
+                                            controller_command + " | Scene - " + task[3] + " | missing")
+
+            else:
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
+                                    controller_command + " | Group - " + task[2] + " | empty")                        
 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                 controller_command + " | Group - " + task[2] + " - not found")
+                                 controller_command + " | Group - " + task[2] + " | missing")
 
 
     # #####################
@@ -751,37 +765,44 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
         # group existing ?
         if group != None:
 
-            # create list of scene names
-            list_scene_names = []
+            # group not empty ?
+            if group.light_ieeeAddr_1 != "None":
 
-            for scene in GET_ALL_LIGHTING_SCENES():
-                list_scene_names.append(scene.name)
+                # create list of scene names
+                list_scene_names = []
 
-            # find position of current scene
-            scene_position = 0
+                for scene in GET_ALL_LIGHTING_SCENES():
+                    list_scene_names.append(scene.name)
 
-            for position, scene_name in enumerate(list_scene_names):
-                if scene_name == group.current_scene:
-                    scene_position = position
+                # find position of current scene
+                scene_position = 0
 
-            # get next scene
-            try:
-                # current scene is not the last scene
-                next_scene = list_scene_names[scene_position + 1]
-            except:
-                # current scene is the last scene
-                next_scene = list_scene_names[0]
+                for position, scene_name in enumerate(list_scene_names):
+                    if scene_name == group.current_scene:
+                        scene_position = position
+
+                # get next scene
+                try:
+                    # current scene is not the last scene
+                    next_scene = list_scene_names[scene_position + 1]
+                except:
+                    # current scene is the last scene
+                    next_scene = list_scene_names[0]
 
 
-            scene      = GET_LIGHTING_SCENE_BY_NAME(next_scene)    
-            brightness = group.current_brightness
-                    
-            SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
-            CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+                scene      = GET_LIGHTING_SCENE_BY_NAME(next_scene)    
+                brightness = group.current_brightness
+                        
+                SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
+                CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+
+            else:
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
+                                    controller_command + " | Group - " + task[2] + " | empty")            
 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + 
-                                 controller_command + " | Group - " + task[2] + " - not found")
+                                 controller_command + " | Group - " + task[2] + " | missing")
 
 
     # #################
@@ -798,53 +819,60 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
         # group existing ?
         if group != None:
 
-            # command valid ?
-            if command.lower() == "turn_up" or command.lower() == "turn_down":
-                
-                scene_name = group.current_scene
+            # group not empty ?
+            if group.light_ieeeAddr_1 != "None":
 
-                # lighting_group off ?
-                if scene_name != "off":
+                # command valid ?
+                if command.lower() == "turn_up" or command.lower() == "turn_down":
                     
-                    scene = GET_LIGHTING_SCENE_BY_NAME(scene_name)
+                    scene_name = group.current_scene
 
-                    # get new brightness_value
-                    current_brightness = group.current_brightness
+                    # lighting_group off ?
+                    if scene_name != "off":
+                        
+                        scene = GET_LIGHTING_SCENE_BY_NAME(scene_name)
 
-                    if (command.lower() == "turn_up") and current_brightness != 100:
-                        target_brightness = int(current_brightness) + 20
+                        # get new brightness_value
+                        current_brightness = group.current_brightness
 
-                        if target_brightness > 100:
-                            target_brightness = 100
+                        if (command.lower() == "turn_up") and current_brightness != 100:
+                            target_brightness = int(current_brightness) + 20
 
-                        SET_LIGHTING_GROUP_BRIGHTNESS_DIMMER(group.id, "turn_up")
-                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, target_brightness, 2, 10)
+                            if target_brightness > 100:
+                                target_brightness = 100
 
-                    elif (command.lower() == "turn_down") and current_brightness != 0:
+                            SET_LIGHTING_GROUP_BRIGHTNESS_DIMMER(group.id, "turn_up")
+                            CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, target_brightness, 2, 10)
 
-                        target_brightness = int(current_brightness) - 20
+                        elif (command.lower() == "turn_down") and current_brightness != 0:
 
-                        if target_brightness < 0:
-                            target_brightness = 0
+                            target_brightness = int(current_brightness) - 20
 
-                        SET_LIGHTING_GROUP_BRIGHTNESS_DIMMER(group.id, "turn_down")
-                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, target_brightness, 2, 10)
+                            if target_brightness < 0:
+                                target_brightness = 0
+
+                            SET_LIGHTING_GROUP_BRIGHTNESS_DIMMER(group.id, "turn_down")
+                            CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, target_brightness, 2, 10)
+
+                        else:
+                            WRITE_LOGFILE_SYSTEM("STATUS", "Light | Group - " + group.name +
+                                                " | " + scene_name + " : " + str(current_brightness) + " %")
 
                     else:
-                        WRITE_LOGFILE_SYSTEM("STATUS", "Light | Group - " + group.name +
-                                             " | " + scene_name + " : " + str(current_brightness) + " %")
+                        WRITE_LOGFILE_SYSTEM("WARNING", "Light | Group - " +
+                                            group.name + " | OFF : 0 %")
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("WARNING", "Light | Group - " +
-                                         group.name + " | OFF : 0 %")
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
+                                        controller_command + " | Command - " + task[3] + " | invalid")
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                     controller_command + " | Command - " + task[3] + " - invalid")
+                                    controller_command + " | Group - " + task[2] + " | empty")            
 
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                 controller_command + " | Group - " + task[2] + " - not found")
+                                 controller_command + " | Group - " + task[2] + " | missing")
 
 
     # ###########
@@ -878,7 +906,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Invalid settings")  
 
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Light - " + task[2] + " - not found")   
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Light - " + task[2] + " | missing")   
 
 
     # #########
@@ -908,13 +936,20 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 if input_group_name.lower() == group.name.lower():
                     group_found = True
 
-                    SET_LIGHTING_GROUP_TURN_OFF(group.id)
-                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
+                    # group not empty ?
+                    if group.light_ieeeAddr_1 != "None":               
+
+                        SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
+
+                    else:
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
+                                             controller_command + " | Group - " + input_group_name + " | empty")            
 
             # group not found
             if group_found == False:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                     controller_command + " | Group - " + input_group_name + " - not found")
+                                     controller_command + " | Group - " + input_group_name + " | missing")
 
 
         if task[2].lower() == "light":
@@ -928,7 +963,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
-                                     controller_command + " | Light - " + task[3].strip() + " - not found")
+                                     controller_command + " | Light - " + task[3].strip() + " | missing")
 
 
         if task[2].lower() == "all":
@@ -938,7 +973,15 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 Thread.start()   
 
             for group in GET_ALL_LIGHTING_GROUPS():
-                CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
+
+                # group not empty ?
+                if group.light_ieeeAddr_1 != "None":  
+
+                    CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
+
+                else:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " +
+                                         controller_command + " | Group - " + group.name + " | empty")        
 
 
     # ######
@@ -1007,7 +1050,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                     WRITE_LOGFILE_SYSTEM("WARNING", "Network | Controller - " + controller_name + " | " + check_result)
                                     
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Gerät - " + task[1] + " - not found")        
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Gerät - " + task[1] + " | missing")        
     
 
     # ##################
@@ -1043,7 +1086,7 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Invalid command")
 
         else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Program - " + program + " - not found")
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | Program - " + program + " | missing")
 
 
     # #####

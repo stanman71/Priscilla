@@ -344,7 +344,7 @@ def BLOCK_SENSORDATA_THREAD():
 		except Exception as e:
 			print(e)
 			
-		time.sleep(1)
+		time.sleep(0.1)
 
 
 def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
@@ -359,6 +359,8 @@ def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
 
     # add message to block list, will be removed after 5 seconds
     sensordata_messages_list.append([device, sensor, value])
+
+    WRITE_LOGFILE_SYSTEM("ERROR", sensordata_messages_list)
 
     try:
         # open csv file

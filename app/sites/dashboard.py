@@ -55,20 +55,26 @@ def dashboard():
             # ########
 
             try:
-                group      = GET_LIGHTING_GROUP_BY_ID(i)
-                scene_name = str(request.form.get("set_lighting_group_scene_" + str(i)))
-                brightness = request.form.get("set_lighting_group_brightness_" + str(i))
-                scene      = GET_LIGHTING_SCENE_BY_NAME(scene_name)
+                group = GET_LIGHTING_GROUP_BY_ID(i)
 
-                if scene_name == "OFF":
-                    if group.current_scene != "OFF":
-                        SET_LIGHTING_GROUP_TURN_OFF(group.id)
-                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 2, 10)
+                if group.light_ieeeAddr_1 != "None":
+
+                    scene_name = str(request.form.get("set_lighting_group_scene_" + str(i)))
+                    brightness = request.form.get("set_lighting_group_brightness_" + str(i))
+                    scene      = GET_LIGHTING_SCENE_BY_NAME(scene_name)
+
+                    if scene_name == "OFF":
+                        if group.current_scene != "OFF":
+                            SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                            CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 2, 10)
+
+                    else:
+                        if group.current_scene != scene_name or int(group.current_brightness) != int(brightness):
+                            SET_LIGHTING_GROUP_SCENE(group.id, scene.id, int(brightness))
+                            CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, int(brightness), 2, 10)
 
                 else:
-                    if group.current_scene != scene_name or int(group.current_brightness) != int(brightness):
-                        SET_LIGHTING_GROUP_SCENE(group.id, scene.id, int(brightness))
-                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, int(brightness), 2, 10)
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Lighting | Start_Scene | Group - " + str(group.name) + " | empty")
 
             except:
                 pass
