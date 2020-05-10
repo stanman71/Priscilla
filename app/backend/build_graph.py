@@ -109,7 +109,7 @@ def BUILD_GRAPH(df_sensors):
 
 		plt.gcf().autofmt_xdate()
 				
-		plt.savefig(GET_PATH() + '/app/data/images/graph.png', transparent=True)
+		plt.savefig(GET_PATH() + '/app/static/temp/graph.png', transparent=True)
 		plt.close()
 		return True   
 	

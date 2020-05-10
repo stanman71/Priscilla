@@ -1410,7 +1410,7 @@ def update_zigbee_device(ieeeAddr):
 @login_required
 @permission_required
 def download_zigbee_topology(filename): 
-    path = GET_PATH() + "/app/data/images/"
+    path = GET_PATH() + "/app/static/temp/"
     
     if os.path.isfile(path + filename) == False:
         session['error_download_topology_zigbee2mqtt'] = "Download Topology || File not found" 

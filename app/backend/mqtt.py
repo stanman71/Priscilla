@@ -320,19 +320,17 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
     if channel == "smarthome/zigbee2mqtt/bridge/networkmap/graphviz":
 
-        WRITE_LOGFILE_SYSTEM("ERROR", "Network | GRAPHVIZ")    
-
         try:
 
             # generate graphviz diagram
             from graphviz import Source, render
 
             src = Source(msg)
-            src.render(filename = GET_PATH() + '/app/data/images/zigbee_topology', format='png', cleanup=True)
+            src.render(filename = GET_PATH() + '/app/static/temp/zigbee_topology', format='png', cleanup=True)
             return
 
         except Exception as e:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Zigbee Topology | " + str(e))         
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | Zigbee Topology | " + str)         
 
 
     # ############
