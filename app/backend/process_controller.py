@@ -92,10 +92,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
           
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_1[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
             # command_2
@@ -119,10 +121,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
                           
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_2[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
             # command_3
@@ -146,10 +150,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
 
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_3[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
                                            
             # #########
             # command_4
@@ -173,10 +179,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
                             
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_4[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
             # command_5
@@ -200,10 +208,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
                             
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_5[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
             # command_6
@@ -227,10 +237,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
                                
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_6[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
             # command_7
@@ -254,10 +266,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return                  
            
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_7[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
             # command_8
@@ -281,10 +295,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
                             
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_8[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
                                
             # #########
             # command_9
@@ -308,10 +324,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
            
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_9[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))     
 
             # ##########
             # command_10
@@ -335,10 +353,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
         
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_10[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
 
             # ##########
             # command_11
@@ -362,10 +382,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
            
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_11[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
 
             # ##########
             # command_12
@@ -389,10 +411,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
            
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_12[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))     
 
             # ##########
             # command_13
@@ -416,10 +440,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
            
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_13[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
 
             # ##########
             # command_14
@@ -443,10 +469,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
            
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_14[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
 
             # ##########
             # command_15
@@ -470,10 +498,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
            
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_15[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
 
             # ##########
             # command_16
@@ -497,10 +527,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
            
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_16[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))     
 
             # ##########
             # command_17
@@ -524,10 +556,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
            
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_17[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))     
 
             # ##########
             # command_18
@@ -551,10 +585,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
            
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_18[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))    
 
             # ##########
             # command_19
@@ -578,10 +614,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
            
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_19[1:-1].replace('"','') + " | " + str(e))    
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))     
 
             # ##########
             # command_20
@@ -605,10 +643,12 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
                         return
            
             except Exception as e:
-                if "list index out of range" not in str(e) and "Expecting value: line 1 column 1 (char 0)" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):
-                    print(e)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + 
-                                         controller.command_20[1:-1].replace('"','') + " | " + str(e))                                             
+                if ("list index out of range" not in str(e) and 
+                    "Expecting value: line 1 column 1 (char 0)" not in str(e) and                 
+                    "'NoneType' object is not subscriptable" not in str(e) and 
+                    "argument of type 'NoneType' is not iterable" not in str(e)):
+                   
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller.device.name + " | Command - " + controller.command_2[1:-1].replace('"','') + " | " + str(e))                                            
 
 
 """ ################################ """
@@ -1087,12 +1127,13 @@ def START_CONTROLLER_TASK(task, controller_name, controller_command):
             # start album
                     
             if task[1].strip() == "album": 
-                              
+                            
                 spotify_device_id = GET_SPOTIFY_DEVICE_ID(spotify_token, task[2].strip())                        
                 album_uri         = SPOTIFY_SEARCH_ALBUM(spotify_token, task[3].strip(), task[4].strip(), 1) [0][2]
                 album_volume      = int(task[5].strip())
                 
                 SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
-   
+    
+
         else:
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Controller - " + controller_name + " | Command - " + controller_command + " | No Spotify Token found")

@@ -1062,20 +1062,39 @@ def SAVE_SENSORDATA(job_id):
     sensordata_job  = GET_SENSORDATA_JOB_BY_ID(job_id)
     device_gateway  = sensordata_job.device.gateway
     device_ieeeAddr = sensordata_job.device.ieeeAddr 
-     
+    device_name     = sensordata_job.device.name     
+
     sensor_key = sensordata_job.sensor_key
     sensor_key = sensor_key.replace(" ", "")
     
     for message in GET_MQTT_INCOMING_MESSAGES(10):
-        
-        if (message[1] == "smarthome/" + device_gateway + "/" + device_ieeeAddr):
-                                
-            try:
-                data     = json.loads(message[2])
-                filename = sensordata_job.filename
-    
-                WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
-                return True
 
-            except:
-                pass
+        # mqtt
+        if device_gateway == "mqtt":
+        
+            if (message[1] == "smarthome/" + device_gateway + "/" + device_ieeeAddr):
+                                    
+                try:
+                    data     = json.loads(message[2])
+                    filename = sensordata_job.filename
+        
+                    WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
+                    return True
+
+                except:
+                    pass
+
+        # zigbee2mqtt           
+        if device_gateway == "zigbee2mqtt":
+        
+            if (message[1] == "smarthome/" + device_gateway + "/" + device_name):
+                                    
+                try:
+                    data     = json.loads(message[2])
+                    filename = sensordata_job.filename
+        
+                    WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
+                    return True
+
+                except:
+                    pass

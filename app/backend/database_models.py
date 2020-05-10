@@ -1262,12 +1262,18 @@ def DELETE_DEVICE(ieeeAddr):
             device      = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
             device_name = device.name
             
+            # delete controller entries
             if device.device_type == "controller":
                 DELETE_CONTROLLER(ieeeAddr)
 
+            # delete device exceptions
+            for exception in GET_ALL_DEVICE_EXCEPTIONS():
+                if exception.device_ieeeAddr == ieeeAddr:
+                    DELETE_DEVICE_EXCEPTION(exception.id)
+
             Devices.query.filter_by(ieeeAddr=ieeeAddr).delete()
             db.session.commit() 
-            
+      
             WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(device_name) + " | deleted")                      
             return True
 

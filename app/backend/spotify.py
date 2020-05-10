@@ -417,7 +417,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
 
         if command == "rotate_playlist":   
-
+            
             # get playlist name
             spotify_current_playlist_uri = sp.current_playback(market=None)["context"]["uri"]
 
@@ -451,7 +451,6 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             sp.shuffle(True, device_id=spotify_device_id)     
             sp.next_track(device_id=spotify_device_id) 
 
-
         if command == "previous":      
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.previous_track(device_id=spotify_device_id)     
@@ -471,7 +470,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             sp.shuffle(True, device_id=spotify_device_id) 
             SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
 
-        if command == "shuffle_false":     
+        if command == "shuffle_false":              
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.shuffle(False, device_id=spotify_device_id) 
             SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
@@ -481,6 +480,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             SET_MUSIC_VOLUME(spotify_token, spotify_volume)    
 
         if command == "volume_up":   
+
             spotify_device_name = sp.current_playback(market=None)['device']['name']
 
             try:
@@ -504,7 +504,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                         volume = 100
                     
                     SET_MUSIC_VOLUME(spotify_token, volume)                   
-               
+            
             except:
 
                 # case default
@@ -514,16 +514,17 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                     volume = 100
                 
                 SET_MUSIC_VOLUME(spotify_token, volume)
-                        
+                    
 
         if command == "volume_down":   
+
             spotify_device_name = sp.current_playback(market=None)['device']['name']
 
             try:
 
                 # case hifiberry_AMP2                
                 if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_AMP2":
-             
+            
                     if spotify_volume > 3:
                         volume = spotify_volume - 3       
                     else:
@@ -540,7 +541,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                         volume = 1
 
                     SET_MUSIC_VOLUME(spotify_token, volume) 
-               
+            
             except:
 
                 # case default                   
@@ -553,10 +554,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
         
 
     except Exception as e:
-        if str(e) == "'NoneType' object is not subscriptable":
-            pass     
-        else:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Control | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Control | " + str(e)) 
 
 
 def SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume):
