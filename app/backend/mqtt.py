@@ -61,17 +61,24 @@ def MQTT_RECEIVE_THREAD():
         # get ieeeAddr and device_type
         # ############################
 
-        device_identity = channel.split("/")[2]
+        if ("bridge" not in channel and
+            "devices" not in channel and
+            "test" not in channel and
+            "log" not in channel and
+            "get" not in channel and
+            "set" not in channel and
+            "config" not in channel and
+            "update" not in channel and
+            "command" not in channel):
 
-        if device_identity not in ["bridge", "devices", "test", "log", "get", "set", "config", "update"]:
-        
-            list_devices = GET_ALL_DEVICES("")
+            device_identity = channel.split("/")[2]
+            list_devices    = GET_ALL_DEVICES("")
         
             for device in list_devices:
 
                 # mqtt device                       
                 if device.ieeeAddr == device_identity:
-                    ieeeAddr    = device_identity   
+                    ieeeAddr    = device.ieeeAddr   
                     device_type = device.device_type            
                     break
 
@@ -201,7 +208,6 @@ def MQTT_RECEIVE_THREAD():
                 except Exception as e:
                     WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | MQTT Message | " + str(e)) 
                     SEND_EMAIL("ERROR", "System | Thread | MQTT Message | " + str(e))                    
-                    print(e)
 
 
     try:
@@ -385,6 +391,17 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             pass               
 
 
+        # check link quality
+        try:
+            data = json.loads(msg)
+            
+            if int(data["linkquality"]) < 20:
+                WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Bad Linkquality")
+       
+        except:
+            pass   
+
+
     if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "heater_thermostat" or device_type == "watering_controller":
         
         # save sensor data of passive devices
@@ -392,7 +409,17 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             list_jobs = FIND_SENSORDATA_JOB_INPUT(ieeeAddr)
 
             for job in list_jobs:   
-                SAVE_SENSORDATA(job) 
+                sensor_key = job.sensor_key.split()
+                
+                try:
+                    data     = json.loads(msg)
+                    filename = job.filename
+        
+                    WRITE_SENSORDATA_FILE(filename, ieeeAddr, sensor_key, data[sensor_key])
+                    return True
+
+                except:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job - " + job.name + " | " + str(e))
 
         # start schedular job 
         for task in GET_ALL_SCHEDULER_TASKS():
@@ -1038,68 +1065,49 @@ def REQUEST_SENSORDATA(job_name):
     sensor_key = sensordata_job.sensor_key
     sensor_key = sensor_key.replace(" ", "")
  
-    channel = "smarthome/" + device_gateway + "/" + device_ieeeAddr + "/get"
+    if device_gateway == "mqtt":
+        channel = "smarthome/" + device_gateway + "/" + device_ieeeAddr + "/get" 
+
+    if device_gateway == "zigbee2mqtt":
+        channel = "smarthome/" + device_gateway + "/" + device_name + "/get"
  
     heapq.heappush(mqtt_message_queue, (20, (channel, "")))        
     time.sleep(2) 
   
     for message in GET_MQTT_INCOMING_MESSAGES(5):
         
-        if message[1] == "smarthome/" + device_gateway + "/" + device_ieeeAddr:
-                
-            try:
-
-                data     = json.loads(message[2])
-                filename = sensordata_job.filename
-    
-                WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Sensordata | Job - " + job_name + " | Data saved")  
-                return True
-                
-            except:
-                pass
-
-    WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job - " + job_name + " | No Data found") 
-    SEND_EMAIL("ERROR", "Sensordata | Job - " + job_name + " | No Data found")       
-
-   
-def SAVE_SENSORDATA(job_id):
-    sensordata_job  = GET_SENSORDATA_JOB_BY_ID(job_id)
-    device_gateway  = sensordata_job.device.gateway
-    device_ieeeAddr = sensordata_job.device.ieeeAddr 
-    device_name     = sensordata_job.device.name     
-
-    sensor_key = sensordata_job.sensor_key
-    sensor_key = sensor_key.replace(" ", "")
-    
-    for message in GET_MQTT_INCOMING_MESSAGES(10):
-
         # mqtt
         if device_gateway == "mqtt":
-        
-            if (message[1] == "smarthome/" + device_gateway + "/" + device_ieeeAddr):
-                                    
+
+            if message[1] == "smarthome/" + device_gateway + "/" + device_ieeeAddr:
+                    
                 try:
+
                     data     = json.loads(message[2])
                     filename = sensordata_job.filename
         
                     WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Sensordata | Job - " + job_name + " | Data saved")  
                     return True
-
+                    
                 except:
                     pass
 
-        # zigbee2mqtt           
+        # zigbee2mqtt                
         if device_gateway == "zigbee2mqtt":
-        
-            if (message[1] == "smarthome/" + device_gateway + "/" + device_name):
-                                    
+
+            if message[1] == "smarthome/" + device_gateway + "/" + device_name:
+                    
                 try:
+
                     data     = json.loads(message[2])
                     filename = sensordata_job.filename
         
                     WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Sensordata | Job - " + job_name + " | Data saved")  
                     return True
-
+                    
                 except:
                     pass
+
+    WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job - " + job_name + " | No Data found") 

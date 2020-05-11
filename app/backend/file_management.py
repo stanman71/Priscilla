@@ -112,10 +112,9 @@ def WRITE_LOGFILE_SYSTEM(log_type, description):
             return True
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/logs/log_system.csv | " + str(e))
-        return (e)
-        
-    
+        return(e)
+
+
 def GET_LOGFILE_SYSTEM(selected_log_types, search, rows):   
     
     try:
@@ -155,8 +154,8 @@ def GET_LOGFILE_SYSTEM(selected_log_types, search, rows):
             return data_reversed_filtered[0:rows]
             
     except Exception as e:
+        RESET_LOGFILE("log_system")
         WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/logs/log_system.csv | " + str(e)) 
-        return (e)   
 
 
 """ ###################### """
@@ -188,7 +187,6 @@ def UPDATE_NETWORK_SETTINGS_LINUX(dhcp, ip_address, gateway):
 
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /etc/network/interfaces | " + str(e))  
-        return(e)
 
 
 """ ################# """
@@ -226,7 +224,6 @@ def BACKUP_DATABASE():
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | Database | " + str(e)) 
-        return (e)
 
 
 def RESTORE_DATABASE(filename):
@@ -341,8 +338,8 @@ def BLOCK_SENSORDATA_THREAD():
 				if time_message <= time_limit:
 					sensordata_messages_list.remove(message)
 
-		except Exception as e:
-			print(e)
+		except:
+			pass
 			
 		time.sleep(0.1)
 
@@ -357,10 +354,8 @@ def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
         if [device, sensor, value] == message:
             return
 
-    # add message to block list, will be removed after 5 seconds
+    # add message to block list
     sensordata_messages_list.append([device, sensor, value])
-
-    WRITE_LOGFILE_SYSTEM("ERROR", sensordata_messages_list)
 
     try:
         # open csv file
