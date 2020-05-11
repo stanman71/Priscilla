@@ -3371,18 +3371,6 @@ def GET_ALL_SENSORDATA_JOBS():
     return Sensordata_Jobs.query.all()
     
 
-def FIND_SENSORDATA_JOB_INPUT(incoming_ieeeAddr):
-    entries = Sensordata_Jobs.query.all()
-    
-    list_jobs = []
-
-    for entry in entries:
-        if entry.device.ieeeAddr == incoming_ieeeAddr and entry.always_active == "True":
-            list_jobs.append(entry.id)
-
-    return list_jobs
-
-
 def ADD_SENSORDATA_JOB():
     for i in range(1,26):
         if Sensordata_Jobs.query.filter_by(id=i).first():

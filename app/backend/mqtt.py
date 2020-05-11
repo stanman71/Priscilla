@@ -403,12 +403,10 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
 
     if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "heater_thermostat" or device_type == "watering_controller":
-        
-        # save sensor data of passive devices
-        if FIND_SENSORDATA_JOB_INPUT(ieeeAddr) != "":
-            list_jobs = FIND_SENSORDATA_JOB_INPUT(ieeeAddr)
 
-            for job in list_jobs:   
+        for job in GET_ALL_SENSORDATA_JOBS():
+            if job.device_ieeeAddr == ieeeAddr and job.always_active == "True":
+
                 sensor_key = job.sensor_key.split()
                 
                 try:
@@ -480,9 +478,8 @@ def MQTT_PUBLISH_THREAD():
         except Exception as e:         
             try:   
                 if "index out of range" not in str(e):
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT Publish | " + str(e))  
-                    SEND_EMAIL("ERROR", "Network | MQTT Publish | " + str(e))               
-                    print(str(e))
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT Publish | " + str(e))               
+                    print("ERROR: Network | MQTT | " + str(e))
                     
             except:
                 print("ERROR: Network | MQTT")

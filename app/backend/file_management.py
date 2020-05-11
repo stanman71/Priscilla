@@ -378,7 +378,6 @@ def READ_SENSORDATA_FILE(filename):
 
     except Exception as e:
         if "Error tokenizing data. C error: Calling read(nbytes) on source failed. Try engine='python'." not in str(e):
-            print(e)
             WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filename + " | " + str(e))    
 
 
