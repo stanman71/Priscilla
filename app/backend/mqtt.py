@@ -395,25 +395,33 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         # check battery
         try:
 
+            device_blocked = False
+
             # block existing device ?
             for device in list_battery_low_devices:   
                 if device == ieeeAddr:
-                    return
+                    device_blocked = True
+                    continue
+                    
+            if device_blocked == False:
+                data = json.loads(msg)
+            
+                # special case eurotronic heater_thermostat
+                if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "SPZB0001":
+                    if int(data["battery"]) < 5:
+                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")    
 
-            # add device to block list
-            list_battery_low_devices.append(ieeeAddr)
-            START_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
+                        # add device to block list
+                        list_battery_low_devices.append(ieeeAddr)
+                        START_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
+                        
+                else:
+                    if int(data["battery"]) < 25:
+                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")           
 
-            data = json.loads(msg)
-        
-            # special case eurotronic heater_thermostat
-            if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "SPZB0001":
-                if int(data["battery"]) < 5:
-                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")                  
-                
-            else:
-                if int(data["battery"]) < 25:
-                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")           
+                        # add device to block list
+                        list_battery_low_devices.append(ieeeAddr)
+                        START_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
 
         except:
             pass               
