@@ -311,37 +311,20 @@ def CREATE_SENSORDATA_FILE(filename):
         return True
 
 
-def START_BLOCK_SENSORDATA_THREAD():
+sensordata_messages_list = []
+
+def START_BLOCK_SENSORDATA_THREAD(message):
 	try:
-		Thread = threading.Thread(target=BLOCK_SENSORDATA_THREAD)
+		Thread = threading.Thread(target=BLOCK_SENSORDATA_THREAD, args=(message, ))
 		Thread.start()  
-		
+
 	except Exception as e:
 		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Block Sensordata | " + str(e)) 
 
 
-def BLOCK_SENSORDATA_THREAD(): 
-
-	while True:
-        
-		try:
-			# get the time check value
-			time_check = datetime.datetime.now() - datetime.timedelta(seconds=5)
-			time_check = time_check.strftime("%Y-%m-%d %H:%M:%S")
-
-			for message in sensordata_messages_list:
-
-				time_message = datetime.datetime.strptime(message[0],"%Y-%m-%d %H:%M:%S")   
-				time_limit   = datetime.datetime.strptime(time_check, "%Y-%m-%d %H:%M:%S")
-
-				# remove saved message after 5 seconnds
-				if time_message <= time_limit:
-					sensordata_messages_list.remove(message)
-
-		except:
-			pass
-			
-		time.sleep(0.1)
+def BLOCK_SENSORDATA_THREAD(message): 
+    time.sleep(3)
+    sensordata_messages_list.remove(message)
 
 
 def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
@@ -351,11 +334,12 @@ def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
 
     # block existing message
     for message in sensordata_messages_list:   
-        if [device, sensor, value] == message:
+        if message == [device, sensor, value]:
             return
 
     # add message to block list
     sensordata_messages_list.append([device, sensor, value])
+    START_BLOCK_SENSORDATA_THREAD([device, sensor, value])
 
     try:
         # open csv file

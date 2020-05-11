@@ -14,6 +14,26 @@ from app.backend.email            import SEND_EMAIL
 from ping3 import ping
 
 
+""" ########################### """
+"""  block battery low message  """
+""" ########################### """
+
+list_battery_low_devices = []
+
+def START_BLOCK_BATTERY_LOW_DEVICES_THREAD(device):
+	try:
+		Thread = threading.Thread(target=BLOCK_BATTERY_LOW_DEVICES_THREAD, args=(device, ))
+		Thread.start()  
+
+	except Exception as e:
+		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Block 'Battery Low' Devices | " + str(e)) 
+
+
+def BLOCK_BATTERY_LOW_DEVICES_THREAD(device): 
+    time.sleep(3600)
+    list_battery_low_devices.remove(device)
+
+
 """ ###################### """
 """  mqtt receive message  """
 """ ###################### """
@@ -374,18 +394,26 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         
         # check battery
         try:
+
+            # block existing device ?
+            for device in list_battery_low_devices:   
+                if device == ieeeAddr:
+                    return
+
+            # add device to block list
+            list_battery_low_devices.append(ieeeAddr)
+            START_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
+
             data = json.loads(msg)
-            
+        
             # special case eurotronic heater_thermostat
             if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "SPZB0001":
                 if int(data["battery"]) < 5:
-                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")
-                    SEND_EMAIL("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")                    
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")                  
                 
             else:
                 if int(data["battery"]) < 25:
-                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")
-                    SEND_EMAIL("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")             
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")           
 
         except:
             pass               
@@ -402,8 +430,9 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             pass   
 
 
-    if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "heater_thermostat" or device_type == "watering_controller":
+    if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "heater_thermostat":
 
+        # save sensordata
         for job in GET_ALL_SENSORDATA_JOBS():
             if job.device_ieeeAddr == ieeeAddr and job.always_active == "True":
 
