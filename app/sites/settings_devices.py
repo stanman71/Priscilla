@@ -315,7 +315,7 @@ def settings_devices():
 
             if GET_DEVICE_BY_IEEEADDR(ieeeAddr) == None:
 
-                model = request.form.get("set_mqtt_device_model_manually_adding")
+                model = request.form.get("set_mqtt_device_manually_adding")
 
                 if model != "":
 
@@ -339,7 +339,7 @@ def settings_devices():
                         error_message_mqtt_manually_adding = result
 
                 else:
-                    error_message_mqtt_manually_adding = "Invalid input | No Device Model selected"                
+                    error_message_mqtt_manually_adding = "Invalid input | No Device selected"                
 
             else:
                 error_message_mqtt_manually_adding = "Invalid input | ieeeAddr - " + ieeeAddr + " - already taken"
@@ -573,7 +573,7 @@ def settings_devices():
     dropdown_list_exception_options = ["IP-Address"] 
     dropdown_list_operators         = ["=", ">", "<"]
     
-    list_manually_adding_device_models = GET_ALL_MQTT_DEVICES_MANUALLY_ADDING()
+    list_manually_adding_devices = GET_ALL_MQTT_DEVICES_MANUALLY_ADDING()
 
     list_devices                = GET_ALL_DEVICES("")
     zigbee2mqtt_pairing_setting = GET_ZIGBEE2MQTT_PAIRING_SETTING()
@@ -1121,7 +1121,7 @@ def settings_devices():
                                                     dropdown_list_exception_devices=dropdown_list_exception_devices,
                                                     dropdown_list_exception_options=dropdown_list_exception_options,
                                                     dropdown_list_operators=dropdown_list_operators,
-                                                    list_manually_adding_device_models=list_manually_adding_device_models,
+                                                    list_manually_adding_devices=list_manually_adding_devices,
                                                     list_mqtt_firmware_files=list_mqtt_firmware_files,
                                                     zigbee2mqtt_pairing_setting=zigbee2mqtt_pairing_setting,
                                                     timestamp=timestamp,  

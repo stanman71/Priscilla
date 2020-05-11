@@ -323,7 +323,7 @@ def START_BLOCK_SENSORDATA_THREAD(message):
 
 
 def BLOCK_SENSORDATA_THREAD(message): 
-    time.sleep(600)
+    time.sleep(10)
     sensordata_messages_list.remove(message)
 
 
@@ -334,12 +334,12 @@ def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
 
     # block existing message
     for message in sensordata_messages_list:   
-        if message == [device, sensor, value]:
+        if message == [filename, device, sensor, value]:
             return
 
     # add message to block list
-    sensordata_messages_list.append([device, sensor, value])
-    START_BLOCK_SENSORDATA_THREAD([device, sensor, value])
+    sensordata_messages_list.append([filename, device, sensor, value])
+    START_BLOCK_SENSORDATA_THREAD([filename, device, sensor, value])
 
     try:
         # open csv file
@@ -383,7 +383,7 @@ def DELETE_SENSORDATA_FILE(filename):
 def GET_ALL_MQTT_DEVICES_MANUALLY_ADDING():
 
     try:
-        list_device_models = []    
+        list_devices = []    
 
         with open(PATH + "/app/mqtt_manually_adding.json", 'r') as data_file:
             data_loaded = json.load(data_file)
@@ -391,13 +391,15 @@ def GET_ALL_MQTT_DEVICES_MANUALLY_ADDING():
         for device in data_loaded["data"]:
 
             try:
-                device_model = device['model']
+                device_model       = device['model']                
+                device_description = device['description']
             except:
-                device_model = ""                 
+                device_model       = ""                   
+                device_description = ""                  
                 
-            list_device_models.append(device_model)
+            list_devices.append([device_model,device_description])
            
-        return list_device_models 
+        return list_devices 
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /app/mqtt_manually_adding.json | " + str(e))   

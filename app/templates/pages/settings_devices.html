@@ -498,7 +498,8 @@
                       </table>
                     </div>
                   </div> 
-                  <br>      
+                  <br>   
+                  <br>    
                   <button type="submit" onclick="window.location.href='/settings/devices#table_devices'" name="save_device_settings" class="btn btn-fill btn-primary">SAVE</button>
                   <button type="submit" onclick="window.location.href='/settings/devices#table_devices'" name="update_devices" class="btn btn-fill btn-info pull-right">UPDATE</button>
                 </div>
@@ -540,14 +541,14 @@
                   <div class="row justify-content-md-center">                                                 
                     <div class="col-sm-3">    
                       <div class="vertical_center"> 
-                        <select class="form-control" data-size="5" name="set_mqtt_device_model_manually_adding" style="background-color:#27293D"> 
-                          {% if list_manually_adding_device_models != [] %}
-                            <option value= "" > Select Device Model </option>
-                            {% for device_model in list_manually_adding_device_models %}                   
-                              <option value= {{ device_model }} > {{ device_model }} </option>
+                        <select class="form-control" data-size="5" name="set_mqtt_device_manually_adding" style="background-color:#27293D"> 
+                          {% if list_manually_adding_devices != [] %}
+                            <option value= "" > Select Device </option>
+                            {% for device_informations in list_manually_adding_devices %}                   
+                              <option value= {{ device_informations[0] }} > {{ device_informations[1] }} </option>
                             {% endfor %}
                           {% else %}
-                            <option value= "" > No device models found </option>
+                            <option value= "" > No Devices found </option>
                           {% endif %}                      
                         </select>  
                       </div>

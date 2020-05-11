@@ -431,7 +431,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         try:
             data = json.loads(msg)
             
-            if int(data["linkquality"]) < 20:
+            if int(data["linkquality"]) < 10:
                 WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Bad Linkquality")
        
         except:
@@ -448,7 +448,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                     sensor_key = job.sensor_key.strip()
                     data       = json.loads(msg)
                     filename   = job.filename
-        
+
                     WRITE_SENSORDATA_FILE(filename, ieeeAddr, sensor_key, data[sensor_key])
                     
                 except Exception as e:
