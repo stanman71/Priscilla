@@ -323,7 +323,7 @@ def START_BLOCK_SENSORDATA_THREAD(message):
 
 
 def BLOCK_SENSORDATA_THREAD(message): 
-    time.sleep(3)
+    time.sleep(600)
     sensordata_messages_list.remove(message)
 
 
