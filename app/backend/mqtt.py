@@ -407,16 +407,14 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         for job in GET_ALL_SENSORDATA_JOBS():
             if job.device_ieeeAddr == ieeeAddr and job.always_active == "True":
 
-                sensor_key = job.sensor_key.split()
-                
                 try:
-                    data     = json.loads(msg)
-                    filename = job.filename
+                    sensor_key = job.sensor_key.strip()
+                    data       = json.loads(msg)
+                    filename   = job.filename
         
                     WRITE_SENSORDATA_FILE(filename, ieeeAddr, sensor_key, data[sensor_key])
-                    return True
-
-                except:
+                    
+                except Exception as e:
                     WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job - " + job.name + " | " + str(e))
 
         # start schedular job 
