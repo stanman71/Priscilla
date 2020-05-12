@@ -467,14 +467,14 @@ def CHECK_SCHEDULER_TASK_SETTINGS(scheduler_tasks):
                   days = days.split(",")
                   for element in days:
                      if element.lower() not in ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]:
-                        list_errors.append("Invalid Time || Day || " + str(element)) 
+                        list_errors.append("Invalid Time || Day || " + str(element) + " >>> Options || Mon; Tue; Wed; Thu; Fri; Sat; Sun || *") 
                         break                                 
             else:
                   if task.day.lower() not in ["mon", "tue", "wed", "thu", "fri", "sat", "sun", "*"] and task.day != "*":
-                     list_errors.append("Invalid Time || Day || " + str(task.day)) 
+                     list_errors.append("Invalid Time || Day || " + str(task.day) + " >>> Options || Mon; Tue; Wed; Thu; Fri; Sat; Sun || *") 
 
          except Exception as e:
-            list_errors.append("Invalid Time || Day || " + str(e))
+            list_errors.append("Invalid Time || Day || " + str(e) + " >>> Options || Mon; Tue; Wed; Thu; Fri; Sat; Sun || *") 
 
          ### check hour
             
@@ -486,7 +486,7 @@ def CHECK_SCHEDULER_TASK_SETTINGS(scheduler_tasks):
 
                if "!" in element:
                   if not (0 <= int(element.replace("!","")) < 24):
-                     list_errors.append("Invalid Time || Hour || " + str(element))
+                     list_errors.append("Invalid Time || Hour || " + str(element) + " >>> Options || 12; 16; ... || 00-23 || * || !20")
                      break
 
                elif "-" in element:
@@ -495,33 +495,33 @@ def CHECK_SCHEDULER_TASK_SETTINGS(scheduler_tasks):
                   max_hour = element.split("-")[1] 
 
                   if not (int(min_hour) < int(max_hour)):
-                     list_errors.append("Invalid Time || Hour || " + str(element))
+                     list_errors.append("Invalid Time || Hour || " + str(element) + " >>> Options || 12; 16; ... || 00-23 || * || !20")
                      break    
 
                   if not (0 <= int(min_hour) < 24):
-                     list_errors.append("Invalid Time || Hour || " + str(element))
+                     list_errors.append("Invalid Time || Hour || " + str(element) + " >>> Options || 12; 16; ... || 00-23 || * || !20")
                      break
 
                   if not (0 <= int(max_hour) < 24):
-                     list_errors.append("Invalid Time || Hour || " + str(element))
+                     list_errors.append("Invalid Time || Hour || " + str(element) + " >>> Options || 12; 16; ... || 00-23 || * || !20")
                      break
 
                elif len(element) == 1 and element == "*":
                   break        
 
                elif len(element) == 1 and element != "*":
-                  list_errors.append("Invalid Time || Hour || " + str(element))
+                  list_errors.append("Invalid Time || Hour || " + str(element) + " >>> Options || 12; 16; ... || 00-23 || * || !20")
                   break
                
                else:
 
                   try:
                      if not (0 <= int(element) < 24):
-                        list_errors.append("Invalid Time || Hour || " + str(element))
+                        list_errors.append("Invalid Time || Hour || " + str(element) + " >>> Options || 12; 16; ... || 00-23 || * || !20")
                         break
                      
                   except:
-                     list_errors.append("Invalid Time || Hour || " + str(element))
+                     list_errors.append("Invalid Time || Hour || " + str(element) + " >>> Options || 12; 16; ... || 00-23 || * || !20")
                      break   
 
          except Exception as e:
@@ -537,7 +537,7 @@ def CHECK_SCHEDULER_TASK_SETTINGS(scheduler_tasks):
 
                if "!" in element:
                   if not (0 <= int(element.replace("!","")) < 60):
-                     list_errors.append("Invalid Time || Minute || " + str(element))
+                     list_errors.append("Invalid Time || Minute || " + str(element) + " >>> Options || 12; 16; ... || 00-59 || * || !20")
                      break
 
                elif "-" in element:
@@ -546,37 +546,37 @@ def CHECK_SCHEDULER_TASK_SETTINGS(scheduler_tasks):
                   max_minute = element.split("-")[1] 
               
                   if not (int(min_minute) < int(max_minute)):
-                     list_errors.append("Invalid Time || Minute || " + str(element))
+                     list_errors.append("Invalid Time || Minute || " + str(element) + " >>> Options || 12; 16; ... || 00-59 || * || !20")
                      break
 
                   if not (0 <= int(min_minute) < 60):
-                     list_errors.append("Invalid Time || Minute || " + str(element))
+                     list_errors.append("Invalid Time || Minute || " + str(element) + " >>> Options || 12; 16; ... || 00-59 || * || !20")
                      break
 
                   if not (0 <= int(max_minute) < 60):
-                     list_errors.append("Invalid Time || Minute || " + str(element))
+                     list_errors.append("Invalid Time || Minute || " + str(element) + " >>> Options || 12; 16; ... || 00-59 || * || !20")
                      break                          
 
                elif len(element) == 1 and element == "*":
                   break         
 
                elif len(element) == 1 and element != "*":
-                  list_errors.append("Invalid Time || Minute || " + str(element))
+                  list_errors.append("Invalid Time || Minute || " + str(element) + " >>> Options || 12; 16; ... || 00-59 || * || !20")
                   break      
                
                else:
 
                   try:
                      if not (0 <= int(element) < 60):
-                        list_errors.append("Invalid Time || Minute || " + str(element))
+                        list_errors.append("Invalid Time || Minute || " + str(element) + " >>> Options || 12; 16; ... || 00-59 || * || !20")
                         break
                      
                   except:
-                     list_errors.append("Invalid Time || Minute || " + str(element))
+                     list_errors.append("Invalid Time || Minute || " + str(element) + " >>> Options || 12; 16; ... || 00-59 || * || !20")
                      break   
 
          except Exception as e:
-            list_errors.append("Invalid Time || Minute || " + str(e))
+            list_errors.append("Invalid Time || Minute || " + str(e) + " >>> Options || 12; 16; ... || 00-59 || * || !20")
 
 
       if task.trigger_sun_position == "True":

@@ -101,13 +101,14 @@ def CHECK_SCHEDULER_TIME(task):
 
     passing = False
 
+
     # #########
     # check day
     # #########
 
-    if "," in task.day:
+    days = task.day.replace(" ","")
 
-        days = task.day.strip()
+    if "," in task.day:
         days = days.split(",")
 
         for element in days:
@@ -115,10 +116,12 @@ def CHECK_SCHEDULER_TIME(task):
             if element.lower() == current_day.lower():
                 passing = True
                 break
+    
     else:
 
-        if task.day.lower() == current_day.lower() or task.day == "*":
+        if days.lower() == current_day.lower() or days == "*":
             passing = True
+
 
     # ###########
     # check hours
@@ -126,12 +129,11 @@ def CHECK_SCHEDULER_TIME(task):
 
     if passing == True:
 
-        hours = task.hour.strip()
+        hours = task.hour.replace(" ","")
 
         # without range
 
         if "-" not in hours:
-
             list_all_hours = hours.split(",")
 
             # find exceptions
@@ -139,6 +141,7 @@ def CHECK_SCHEDULER_TIME(task):
             list_valid_hours     = []
 
             for hour in list_all_hours:
+
                 if "!" in hour:
                     list_exception_hours.append(int(hour[1:]))
                 else:
@@ -173,11 +176,13 @@ def CHECK_SCHEDULER_TIME(task):
             list_exception_hours = []
 
             for hour in list_hours:
+
                 if "!" in hour:
                     list_exception_hours.append(int(hour[1:]))
 
             # find min_hour and max_hour
             for hour in list_hours:
+
                 if "-" in hour:
                     min_hour = hour.split("-")[0]
                     max_hour = hour.split("-")[1]
@@ -207,13 +212,14 @@ def CHECK_SCHEDULER_TIME(task):
             else:
                 passing = False
 
+
     # ############
     # check minute
     # ############
 
     if passing == True:
 
-        minutes = task.minute.strip()
+        minutes = task.minute.replace(" ","")
 
         # without range
 
@@ -226,6 +232,7 @@ def CHECK_SCHEDULER_TIME(task):
             list_valid_minutes     = []
 
             for minute in list_all_minutes:
+
                 if "!" in minute:
                     list_exception_minutes.append(int(minute[1:]))
                 else:
@@ -260,11 +267,13 @@ def CHECK_SCHEDULER_TIME(task):
             list_exception_minutes = []
 
             for minute in list_minutes:
+
                 if "!" in minute:
                     list_exception_minutes.append(int(minute[1:]))
 
             # find min_minute and max_minute
             for minute in list_minutes:
+
                 if "-" in minute:
                     min_minute = minute.split("-")[0]
                     max_minute = minute.split("-")[1]

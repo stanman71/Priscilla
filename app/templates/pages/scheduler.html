@@ -448,8 +448,8 @@
       <i class="tim-icons icon-simple-remove"></i>
     </button>
     {% if entry.task_setting_errors != "" %}
-      {% for error in entry.task_setting_errors.split(",") %}
-        {{ error }} <br>
+      {% for error in entry.task_setting_errors.split(",")  %}
+        {{ error | replace(';', ',') }} <br>
       {% endfor %}
     {% endif %} 
     {% if entry.task_errors != "" %}
