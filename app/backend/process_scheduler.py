@@ -373,7 +373,7 @@ def CHECK_SCHEDULER_SENSORS(task):
         ##################
 
         device_ieeeAddr_1 = task.device_ieeeAddr_1
-        sensor_key_1      = task.sensor_key_1.replace(" ", "")
+        sensor_key_1      = task.sensor_key_1.strip()
         data_1            = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1).last_values_json)
         sensor_value_1    = data_1[sensor_key_1]
 
@@ -417,23 +417,26 @@ def CHECK_SCHEDULER_SENSORS(task):
 
     if task.main_operator_second_sensor != "None" and task.main_operator_second_sensor != None:
 
+
         ##################
         # get sensordata 1
         ##################
 
         device_ieeeAddr_1 = task.device_ieeeAddr_1
-        sensor_key_1      = task.sensor_key_1.replace(" ", "")
+        sensor_key_1      = task.sensor_key_1.strip()
         data_1            = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_1).last_values_json)
         sensor_value_1    = data_1[sensor_key_1]
+
 
         ##################
         # get sensordata 2
         ##################
 
         device_ieeeAddr_2 = task.device_ieeeAddr_2
-        sensor_key_2      = task.sensor_key_2.replace(" ", "")
+        sensor_key_2      = task.sensor_key_2.strip()
         data_2            = json.loads(GET_DEVICE_BY_IEEEADDR(device_ieeeAddr_2).last_values_json)
         sensor_value_2    = data_2[sensor_key_2]
+
 
         ####################
         # compare conditions
@@ -580,6 +583,9 @@ def CHECK_SCHEDULER_SENSORS(task):
                     passing = True
                 else:
                     passing = False
+
+
+    print(passing)
 
     # Options ended
     return passing

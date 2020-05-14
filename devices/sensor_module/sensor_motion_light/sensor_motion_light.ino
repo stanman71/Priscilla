@@ -41,15 +41,19 @@ int PIN_LED_RED   = 12;               // D6
 // CUSTOM SETTINGS
 // ###############
 
-int SENSOR_1 = 4;                     // D2 
-int SENSOR_2 = 0;                     // D3 
+int SENSOR_1 = 5;                     // D1 
+int SENSOR_2 = 4;                     // D2 
 int SENSOR_3 = A0;                    // A0 
+
+// int SENSOR_4  = 0                  // D3
+// int SENSOR_13 = 0                  // D7
+
 
 char model[40]       = "sensor_motion_light";
 char device_type[40] = "sensor_passiv";
 char description[80] = "MQTT Motion Sensor";
 
-String current_Version = "1.4";
+String current_Version = "1.5";
 
 int sensor_1_last_value = 0;
 int sensor_2_last_value = 0;
@@ -471,9 +475,7 @@ void loop() {
         delay(1000);
     } 
 
-    Serial.println(digitalRead(SENSOR_1));
-    Serial.println(digitalRead(SENSOR_2));   
-    delay(100);
+    delay(10);
     client.loop();
 }
 

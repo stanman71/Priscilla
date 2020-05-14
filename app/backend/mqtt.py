@@ -414,7 +414,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                         # add device to block list
                         list_battery_low_devices.append(ieeeAddr)
                         START_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
-                        
+
                 else:
                     if int(data["battery"]) < 25:
                         WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")           
@@ -804,7 +804,7 @@ def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, seconds = 10):
 def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, seconds, log_report = True):  
     repeats = seconds * 5                  
     device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-    timer   = 1
+    counter = 1
 
     # special case roborock s50 >>> change setting words
     if device.model == "roborock_s50":
@@ -819,7 +819,7 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, seconds, log_report = True):
         if setting.lower() == "locate":
             return True
 
-    while timer < repeats:  
+    while counter < repeats:  
         
         if device.gateway == "mqtt":
             result = CHECK_MQTT_SETTING(device.ieeeAddr, setting)
@@ -833,7 +833,7 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, seconds, log_report = True):
 
             return True
 
-        timer = timer + 1
+        counter = counter + 1
         time.sleep(0.2)       
 
     # error message
@@ -847,17 +847,17 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, seconds, log_report = True):
 def CHECK_MQTT_SETTING(ieeeAddr, setting):     
     setting = setting.lower()
     
-    for message in GET_MQTT_INCOMING_MESSAGES(5):
+    for message in GET_MQTT_INCOMING_MESSAGES(20):
 
         # search for fitting message in incoming_messages_list
         if message[1] == "smarthome/mqtt/" + ieeeAddr or message[1] == "smarthome/mqtt/" + ieeeAddr + "/state":
 
-            # only one setting value ("," = separator between commands || ";" = separator between command arguments)
+            # only one setting value ( "," = separator between command entities || ";" = separator between command values )
             if not ";" in setting:    
                 if str(setting.strip()) in str(message[2].lower()):
                     return True
                                                     
-            # more then one setting value:
+            # more then one command values:
             else:
                 
                 list_settings = setting.split(";")
@@ -876,17 +876,17 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
 
     if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
 
-        for message in GET_MQTT_INCOMING_MESSAGES(5):
+        for message in GET_MQTT_INCOMING_MESSAGES(20):
 
             # search for fitting message in incoming_messages_list
             if message[1] == "smarthome/zigbee2mqtt/" + device_name:   
 
-                # only one setting value ("," = separator between commands || ";" = separator between command arguments)
+                # only one setting value ( "," = separator between command entities || ";" = separator between command values )
                 if not ";" in setting:       
                     if str(setting.strip()) in str(message[2].lower()):
                         return True
                                     
-                # more then one setting value:
+                # more then one command value:
                 else:
                     
                     list_settings = setting.split(";")
@@ -908,10 +908,10 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
 """ ################# """
  
 def CHECK_ZIGBEE2MQTT_STARTED():    
-    timer = 1
+    counter = 1
 
     # 10 seconds
-    while timer < 50:      
+    while counter < 50:      
         for message in GET_MQTT_INCOMING_MESSAGES(10):          
             if message[1] == "smarthome/zigbee2mqtt/bridge/state":
             
@@ -923,7 +923,7 @@ def CHECK_ZIGBEE2MQTT_STARTED():
                 except:
                     pass
 
-        timer = timer + 1
+        counter = counter + 1
         time.sleep(0.2)
 
     SET_ZIGBEE2MQTT_CONNECTION_STATUS(False)     
@@ -931,10 +931,10 @@ def CHECK_ZIGBEE2MQTT_STARTED():
 
 
 def CHECK_ZIGBEE2MQTT_NAME_CHANGED(previous_name, new_name):   
-    timer = 1
+    counter = 1
 
     # 10 seconds
-    while timer < 50:      
+    while counter < 50:      
         for message in GET_MQTT_INCOMING_MESSAGES(10):      
             if message[1] == "smarthome/zigbee2mqtt/bridge/log":
             
@@ -947,17 +947,17 @@ def CHECK_ZIGBEE2MQTT_NAME_CHANGED(previous_name, new_name):
                 except:
                     pass
 
-        timer = timer + 1
+        counter = counter + 1
         time.sleep(0.2)
                 
     return False
 
 
 def CHECK_ZIGBEE2MQTT_PAIRING(pairing_setting):    
-    timer = 1
+    counter = 1
 
     # 10 seconds
-    while timer < 50:       
+    while counter < 50:       
         for message in GET_MQTT_INCOMING_MESSAGES(15):
             if message[1] == "smarthome/zigbee2mqtt/bridge/config":
             
@@ -975,17 +975,17 @@ def CHECK_ZIGBEE2MQTT_PAIRING(pairing_setting):
                 except:
                     pass
 
-        timer = timer + 1
+        counter = counter + 1
         time.sleep(0.2)
                     
     return False
 
 
 def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):        
-    timer = 1
+    counter = 1
 
     # 15 seconds
-    while timer < 75:       
+    while counter < 100:       
         for message in GET_MQTT_INCOMING_MESSAGES(15):
             if message[1] == "smarthome/zigbee2mqtt/bridge/log":
             
@@ -1001,7 +1001,7 @@ def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
                 except:
                     pass
 
-        timer = timer + 1
+        counter = counter + 1
         time.sleep(0.2)
                     
     return False 

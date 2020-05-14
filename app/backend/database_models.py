@@ -1091,6 +1091,9 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
                 data          = json.loads(last_values) 
                 battery_value = int(int(data['battery']) * 4) 
 
+                if battery_value > 100:
+                    battery_value = 100
+
                 last_values_string = last_values_string_modified + "battery: " + str(battery_value)
 
             except:
