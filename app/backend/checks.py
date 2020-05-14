@@ -1648,3 +1648,18 @@ def CHECK_SENSORDATA_JOBS(jobs):
          error_message_settings.append(job.name + " || Missing setting | Sensor") 
                   
    return error_message_settings
+
+
+""" ############### """
+"""  user settings  """
+""" ############### """
+
+def CHECK_USERS(users): 
+   error_message_settings = []
+
+   for user in users:
+
+      if user.password == "":
+         error_message_settings.append(user.name + " || Missing setting | Password") 
+        
+   return error_message_settings

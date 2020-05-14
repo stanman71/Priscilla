@@ -481,7 +481,7 @@ if User.query.filter_by(name='admin').first() is None:
         email              = "admin@example.com",
         role               = "administrator",
         password           = "sha256$OeDkVenT$bc8d974603b713097e69fc3efa1132991bfb425c59ec00f207e4b009b91f4339",    
-        email_notification = "True"
+        email_notification = "False"
     )           
     db.session.add(user)
     db.session.commit()

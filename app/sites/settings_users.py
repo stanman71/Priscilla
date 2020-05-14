@@ -6,6 +6,7 @@ from functools           import wraps
 
 from app                         import app
 from app.backend.database_models import *
+from app.backend.checks          import CHECK_USERS
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
@@ -205,10 +206,7 @@ def settings_users():
     except:
         pass
 
-    for user in list_users:
-        if user.password == None or user.password == "None":
-            error_message_missing_passwords.append(user.name + " || No Password found")
-
+    error_message_settings = CHECK_USERS(GET_ALL_USERS())
 
     data = {'navigation': 'settings_users'}
 
@@ -220,9 +218,9 @@ def settings_users():
                                                      error_message_change_settings=error_message_change_settings,                            
                                                      error_message_add_user=error_message_add_user,
                                                      message_admin_password_not_changed=message_admin_password_not_changed,
-                                                     error_message_missing_passwords=error_message_missing_passwords,
                                                      success_message_change_settings=success_message_change_settings,                                                     
-                                                     success_message_add_user=success_message_add_user,                
+                                                     success_message_add_user=success_message_add_user,    
+                                                     error_message_settings=error_message_settings,            
                                                      list_users=list_users,
                                                     ) 
                            )

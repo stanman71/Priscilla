@@ -66,16 +66,18 @@
   </div>  
 {% endif %}   
 
-{% if error_message_missing_passwords != [] %}
+<!-- error message settings -->
+
+{% if error_message_settings != [] %}
   <div class="alert alert-danger">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    {% for error in error_message_missing_passwords %}
-      <span data-notify="message">{{ error }}</span>
+    {% for error in error_message_settings %}
+      {{ error }} <br>
     {% endfor %}
-  </div>
-{% endif %}   
+  </div>      
+{% endif %}  
 
 <!-- success message change settings -->
 
