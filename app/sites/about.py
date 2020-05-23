@@ -31,7 +31,7 @@ def about():
     page_title       = 'HiddenHomeControl | About'
     page_description = 'The information and update page.'
 
-    version = "2.3"
+    version = "2.5"
 
     data = {'navigation': 'about'}
 
