@@ -25,29 +25,32 @@ bool shouldSaveConfig = false;
 char message[200];
 
 int update_timer_counter;
-int update_timer_value = 3600000;     // 60 minutes
+int update_timer_value = 3600000;                // 60 minutes
+
+int mqtt_connetion_fails_timer_counter;
+int mqtt_connetion_fails_timer_value = 3600000;  // 60 minutes
 
 bool send_update_report = true;
 
 // RESET 
-int PIN_RESET_SETTING = 16;           // D0
+int PIN_RESET_SETTING = 16;                      // D0
 
 // LED PINS
-int PIN_LED_GREEN = 14;               // D5
-int PIN_LED_RED   = 12;               // D6
+int PIN_LED_GREEN = 14;                          // D5
+int PIN_LED_RED   = 12;                          // D6
 
 
 // ###############
 // CUSTOM SETTINGS
 // ###############
 
-int TRANSISTOR_CONTROL = 4;           // D2
+int TRANSISTOR_CONTROL = 4;                      // D2
 
 char model[40]       = "led_strip_controller";
 char device_type[40] = "led_rgb";
 char description[80] = "MQTT LED Strip Controller";
 
-String current_Version = "1.8";
+String current_Version = "2.0";
 
 #include <FastLED.h>  
 
@@ -264,10 +267,37 @@ void reconnect() {
             digitalWrite(PIN_LED_GREEN, HIGH);            
 
         } else {        
-            Serial.print("failed, rc=");
+            Serial.print("failed, rc=");  
             Serial.print(client.state());
-            Serial.println(" try again in 5 seconds");       
-            delay(5000);
+            Serial.print(", timer=");  
+            Serial.println(mqtt_connetion_fails_timer_counter);            
+            Serial.println("try again in 5 seconds");      
+
+            // led switch between green and red
+            digitalWrite(PIN_LED_RED, LOW);
+            digitalWrite(PIN_LED_GREEN, HIGH);                             
+            delay(1000);
+            digitalWrite(PIN_LED_RED, HIGH);
+            digitalWrite(PIN_LED_GREEN, LOW);      
+            delay(1000);              
+            digitalWrite(PIN_LED_RED, LOW);
+            digitalWrite(PIN_LED_GREEN, HIGH);                 
+            delay(1000);     
+            digitalWrite(PIN_LED_RED, HIGH);
+            digitalWrite(PIN_LED_GREEN, LOW);      
+            delay(1000);              
+            digitalWrite(PIN_LED_RED, LOW);
+            digitalWrite(PIN_LED_GREEN, HIGH);                 
+            delay(1000);     
+            digitalWrite(PIN_LED_RED, HIGH);
+            digitalWrite(PIN_LED_GREEN, LOW);          
+
+            mqtt_connetion_fails_timer_counter = mqtt_connetion_fails_timer_counter + 5000;
+
+            // reset settings after 60 minutes without mqtt connetion
+            if (mqtt_connetion_fails_timer_value < mqtt_connetion_fails_timer_counter){
+                wifi_manager(true);  
+            }      
         }
     }
 }
