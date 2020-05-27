@@ -15,6 +15,8 @@ char mqtt_password[40];
 char ieeeAddr[40];
 char path[100];
 
+String mqtt_initial_check = "False";
+
 WiFiClient espClient;
 PubSubClient client(espClient);
 
@@ -25,10 +27,7 @@ bool shouldSaveConfig = false;
 char message[200];
 
 int update_timer_counter;
-int update_timer_value = 3600000;                // 60 minutes
-
-int mqtt_connetion_fails_timer_counter;
-int mqtt_connetion_fails_timer_value = 3600000;  // 60 minutes
+int update_timer_value = 3600000;                // 60 minutes (in milliseconds)
 
 bool send_update_report = true;
 
@@ -56,7 +55,7 @@ char model[40]       = "sensor_motion2_light";
 char device_type[40] = "sensor_passiv";
 char description[80] = "MQTT Motion Sensor";
 
-String current_Version = "1.7";
+String current_Version = "1.9";
 
 int sensor_1_last_value = 0;
 int sensor_2_last_value = 0;
@@ -123,7 +122,7 @@ void wifi_manager(boolean reset_setting) {
             if (!error) {
                 strcpy(mqtt_server,   config_json["mqtt_server"]);
                 strcpy(mqtt_username, config_json["mqtt_username"]);
-                strcpy(mqtt_password, config_json["mqtt_password"]);                                       
+                strcpy(mqtt_password, config_json["mqtt_password"]);                                                   
                 Serial.println("successful");
       
             } else {
@@ -161,7 +160,7 @@ void wifi_manager(boolean reset_setting) {
         json_data["mqtt_server"]   = mqtt_server;
         json_data["mqtt_username"] = mqtt_username;
         json_data["mqtt_password"] = mqtt_password;
-    
+
         File configFile = SPIFFS.open("/config.json", "w");
         
         if (!configFile) {
@@ -173,6 +172,8 @@ void wifi_manager(boolean reset_setting) {
         serializeJson(json_data, configFile);
         configFile.close();
         Serial.println("new config file saved");
+        
+        mqtt_initial_check = "True";
     }
 }
 
@@ -265,13 +266,12 @@ void reconnect() {
             digitalWrite(PIN_LED_GREEN, HIGH);            
 
         } else {        
+          
             Serial.print("failed, rc=");  
-            Serial.print(client.state());
-            Serial.print(", timer=");  
-            Serial.println(mqtt_connetion_fails_timer_counter);            
-            Serial.println("try again in 5 seconds");      
+            Serial.print(client.state());        
+            Serial.println("try again in 5 seconds");           
 
-            // led switch between green and red
+            // led switch between green, orange and red
             digitalWrite(PIN_LED_RED, LOW);
             digitalWrite(PIN_LED_GREEN, HIGH);                             
             delay(1000);
@@ -290,12 +290,10 @@ void reconnect() {
             digitalWrite(PIN_LED_RED, HIGH);
             digitalWrite(PIN_LED_GREEN, LOW);          
 
-            mqtt_connetion_fails_timer_counter = mqtt_connetion_fails_timer_counter + 5000;
-
-            // reset settings after 60 minutes without mqtt connetion
-            if (mqtt_connetion_fails_timer_value < mqtt_connetion_fails_timer_counter){
-                wifi_manager(true);  
-            }                                     
+            // reset setting, if initial check failed
+            if (mqtt_initial_check == "True"){
+                wifi_manager(true);
+            }                                         
         }
     }
 }

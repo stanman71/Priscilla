@@ -15,6 +15,8 @@ char mqtt_password[40];
 char ieeeAddr[40];
 char path[100];
 
+String mqtt_initial_check = "False";
+
 WiFiClient espClient;
 PubSubClient client(espClient);
 
@@ -25,10 +27,7 @@ bool shouldSaveConfig = false;
 char message[200];
 
 int update_timer_counter;   
-int update_timer_value = 3600000;                // 60 minutes
-
-int mqtt_connetion_fails_timer_counter;
-int mqtt_connetion_fails_timer_value = 3600000;  // 60 minutes
+int update_timer_value = 3600000;                // 60 minutes (in milliseconds)
 
 bool send_update_report = true;
 
@@ -51,7 +50,7 @@ char model[40]       = "infinitoo_300ml";
 char device_type[40] = "aromatic_diffuser";
 char description[80] = "MQTT Aromatic Diffuser";
 
-String current_Version = "1.5";
+String current_Version = "1.8";
 
 String state = "OFF";
 int level    = 0;
@@ -168,6 +167,8 @@ void wifi_manager(boolean reset_setting) {
         serializeJson(json_data, configFile);
         configFile.close();
         Serial.println("new config file saved");
+
+        mqtt_initial_check = "True";        
     }
 }
 
@@ -261,9 +262,7 @@ void reconnect() {
 
         } else {        
             Serial.print("failed, rc=");  
-            Serial.print(client.state());
-            Serial.print(", timer=");  
-            Serial.println(mqtt_connetion_fails_timer_counter);            
+            Serial.print(client.state());    
             Serial.println("try again in 5 seconds");      
 
             // led switch between green and red
@@ -285,12 +284,10 @@ void reconnect() {
             digitalWrite(PIN_LED_RED, HIGH);
             digitalWrite(PIN_LED_GREEN, LOW);          
 
-            mqtt_connetion_fails_timer_counter = mqtt_connetion_fails_timer_counter + 5000;
-
-            // reset settings after 60 minutes without mqtt connetion
-            if (mqtt_connetion_fails_timer_value < mqtt_connetion_fails_timer_counter){
-                wifi_manager(true);  
-            }      
+            // reset setting, if initial check failed
+            if (mqtt_initial_check == "True"){
+                wifi_manager(true);
+            }     
         }
     }
 }

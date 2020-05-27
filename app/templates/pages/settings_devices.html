@@ -1116,6 +1116,68 @@
                 </form>
               </div>
 
+<!------------------------>
+<!--  ZIGBEE TOUCHLINK  -->
+<!------------------------>
+
+{% if system_services.zigbee2mqtt_active == "True" %}
+
+  <section id="zigbee_touchlink"></section>    
+
+  <!-- success message zigbee touchlink -->
+
+  {% if success_message_zigbee_touchlink == True %}
+    <div class="alert alert-success">
+      <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="tim-icons icon-simple-remove"></i>
+      </button>
+      <span>Touchlink successfully activating</span>
+    </div>
+  {% endif %}  
+
+  <!-- error message zigbee touchlink --> 
+
+  {% if error_message_zigbee_touchlink != [] %}
+    <div class="alert alert-danger">
+      <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="tim-icons icon-simple-remove"></i>
+      </button>
+      {% for error in error_message_zigbee_touchlink %}
+        <span data-notify="message">{{ error }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}   
+
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="title">ZigBee Touchlink</h5>
+                </div>            
+                <form method="POST"> 
+                  <div class="card-body">    
+                    <div class="row justify-content-md-left">
+                      <div class="col-sm-9">        
+                        Factory reset for nearby zigbee devices through Touchlink 
+                        <br>
+                        <br>
+                        - max 10 cm distance to your coordinator
+                        <br>
+                        - your zigbee network cannot be used during this scan (up to 1 minute)
+                      </div>
+                      <div class="col-sm-3">                        
+                        <button type="submit" onclick="window.location.href='/settings/devices#zigbee_touchlink'" name="activate_zigbee_touchlink" class="btn btn-fill pull-right btn-info">ACTIVATE</button>
+                      </div>  
+                    </div>
+                  </div>                
+                </form>              
+              </div>
+          
+{% endif %} 
+
+
+<!------------------------>
+<!--  ZIGBEE DOWNLOADS  -->
+<!------------------------>
+
 <!-- error download log --> 
 
 {% if error_download_log_zigbee2mqtt != "" %}
@@ -1150,6 +1212,7 @@
               </div>             
               
 {% endif %} 
+
 
 <!---------------------->
 <!-- DEVICES LOGFILE  -->
