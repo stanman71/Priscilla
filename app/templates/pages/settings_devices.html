@@ -526,12 +526,14 @@
 
 <!-- error message mqtt device manually adding --> 
 
-{% if error_message_mqtt_manually_adding != "" %}
+{% if error_message_mqtt_manually_adding != [] %}
   <div class="alert alert-danger">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    {{ error_message_mqtt_manually_adding }}
+    {% for error in error_message_mqtt_manually_adding %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
   </div>
 {% endif %}  
 
@@ -541,7 +543,7 @@
                   <div class="row justify-content-md-center">                                                 
                     <div class="col-sm-3">    
                       <div class="vertical_center"> 
-                        <select class="form-control" data-size="5" name="set_mqtt_device_manually_adding" style="background-color:#27293D"> 
+                        <select class="form-control" data-size="5" name="set_mqtt_device_model_manually_adding" style="background-color:#27293D"> 
                           {% if list_manually_adding_devices != [] %}
                             <option value= "" > Select Device </option>
                             {% for device_informations in list_manually_adding_devices %}                   

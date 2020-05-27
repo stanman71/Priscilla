@@ -343,15 +343,16 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
         if command == "play":    
             
             try:
-                spotify_current_playback = sp.current_playback(market=None)
 
                 # start previous playlist
-                if spotify_current_playback['is_playing'] == True:
-                    spotify_device_id = sp.current_playback(market=None)['device']['id']
-                    sp.next_track(device_id=spotify_device_id) 
-                    SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
+                spotify_current_playback = sp.current_playback(market=None)
+                spotify_device_id        = sp.current_playback(market=None)['device']['id']
+                
+                sp.next_track(device_id=spotify_device_id) 
+                SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
 
-            except:                           
+            except:      
+
                 # start default settings
                 UPDATE_MULTIROOM_DEFAULT_SETTINGS()
 

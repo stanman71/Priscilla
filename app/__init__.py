@@ -361,7 +361,7 @@ SET_ZIGBEE_DEVICE_UPDATE_STATUS("No Device Update available")
 
 for device in GET_ALL_DEVICES(""):
     if device.update_available == "True":
-        SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update founded")
+        SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update found")
 
 
 """ ####### """

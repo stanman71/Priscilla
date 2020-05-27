@@ -131,7 +131,7 @@ def settings_devices():
     success_message_change_device_exceptions    = []
     error_message_change_device_exceptions      = []
     success_message_mqtt_manually_adding        = False
-    error_message_mqtt_manually_adding          = ""
+    error_message_mqtt_manually_adding          = []
     success_message_mqtt_firmware_upload        = False
     error_message_mqtt_firmware_upload          = ""
     error_message_zigbee_device_update          = False
@@ -313,43 +313,42 @@ def settings_devices():
     if request.form.get("add_mqtt_device_manually") != None: 
 
         ieeeAddr = request.form.get("set_mqtt_device_ieeeAddr_manually_adding")
+        model    = request.form.get("set_mqtt_device_model_manually_adding")
 
-        if ieeeAddr != "":          
+        # no ieeeAddr found        
+        if ieeeAddr == "":  
+            error_message_mqtt_manually_adding.append("Invalid input | No ieeeAddr found")
+           
+        # ieeeAddr already taken
+        if GET_DEVICE_BY_IEEEADDR(ieeeAddr) != None:
+            error_message_mqtt_manually_adding.append("Invalid input | ieeeAddr - " + ieeeAddr + " - already taken")
 
-            if GET_DEVICE_BY_IEEEADDR(ieeeAddr) == None:
+        # no model selected
+        if model == "":
+            error_message_mqtt_manually_adding.append("Invalid input | No Device selected")   
 
-                model = request.form.get("set_mqtt_device_manually_adding")
+        # no errors found
+        if error_message_mqtt_manually_adding == []:
 
-                if model != "":
+            new_device = GET_MQTT_DEVICE_MANUALLY_ADDING_INFORMATIONS(model)
+        
+            name          = ieeeAddr
+            gateway       = "mqtt"
+            device_type   = new_device[0]
+            version       = ""                                            
+            description   = new_device[1]
+            input_values  = new_device[2]
+            input_events  = new_device[3]  
+            commands      = new_device[4]                                
+            commands_json = new_device[5] 
 
-                    new_device = GET_MQTT_DEVICE_MANUALLY_ADDING_INFORMATIONS(model)
-                
-                    name          = ieeeAddr
-                    gateway       = "mqtt"
-                    device_type   = new_device[0]
-                    version       = ""                                            
-                    description   = new_device[1]
-                    input_values  = new_device[2]
-                    input_events  = new_device[3]  
-                    commands      = new_device[4]                                
-                    commands_json = new_device[5] 
+            result = ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, version, description, input_values, input_events, commands, commands_json) 
 
-                    result = ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, version, description, input_values, input_events, commands, commands_json) 
-
-                    if result:
-                        success_message_mqtt_manually_adding = True
-                    else:
-                        error_message_mqtt_manually_adding = result
-
-                else:
-                    error_message_mqtt_manually_adding = "Invalid input | No Device selected"                
-
+            if result:
+                success_message_mqtt_manually_adding = True
             else:
-                error_message_mqtt_manually_adding = "Invalid input | ieeeAddr - " + ieeeAddr + " - already taken"
-
-        else:
-            error_message_mqtt_manually_adding = "Invalid input | No ieeeAddr found"
-
+                error_message_mqtt_manually_adding.append(result)
+        
 
     """ ######################### """
     """  table device exceptions  """
