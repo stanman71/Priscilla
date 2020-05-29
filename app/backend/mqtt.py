@@ -265,17 +265,43 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
             # device successful added
             if data["type"] == "pairing" and data["message"] == "interview_successful":
-                time.sleep(5)
-                UPDATE_DEVICES("zigbee2mqtt")
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["meta"]["friendly_name"] + " | added")   
-                SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device added - " + data["meta"]["friendly_name"])   
-                time.sleep(10)      
+
+                try:
+
+                    ieeeAddr = data["meta"]["friendly_name"]      
+                    model    = data["meta"]["model"]               
+
+                    # add new device
+            
+                    if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):
+
+                        new_device    = GET_ZIGBEE_DEVICE_INFORMATIONS(model)
+                            
+                        device_type   = new_device[0]
+                        version       = ""                                            
+                        description   = new_device[1]
+                        input_values  = new_device[2]
+                        input_events  = new_device[3]  
+                        commands      = new_device[4]                                
+                        commands_json = new_device[5] 
+
+                        ADD_DEVICE(ieeeAddr, "zigbee2mqtt", ieeeAddr, model, device_type, version, description, input_values, input_events, commands, commands_json)
+
+                        SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device added - " + data["meta"]["friendly_name"]) 
+                        WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["meta"]["friendly_name"] + " | added")    
+                        time.sleep(5) 
+
+                except Exception as e:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + data["meta"]["friendly_name"] + " | " + str(e))
+                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Error: " + str(e) + " | Update Devices manually")  
+                    time.sleep(5)
+
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
 
             # device connection failed
             if data["type"] == "pairing" and data["message"] == "interview_failed":
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Device adding failed - " + data["meta"]["friendly_name"])   
-                time.sleep(10)
+                time.sleep(5)
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
       
 
@@ -644,6 +670,7 @@ def UPDATE_DEVICES(gateway):
 
                     if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):
                         ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, version, description, input_values, input_events, commands, commands_json)
+                        WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + name + " | added")   
                       
                     # update existing device
 
@@ -665,8 +692,7 @@ def UPDATE_DEVICES(gateway):
 
         except Exception as e:
             if str(e) == "string index out of range":
-                WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | Update") 
-                SEND_EMAIL("ERROR", "Network | MQTT | Update")                 
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | Update")            
                 return ("Network | MQTT | Update | " + str(e))     
 
 
@@ -729,7 +755,7 @@ def UPDATE_DEVICES(gateway):
                                             commands_json = new_device[5] 
 
                                             ADD_DEVICE(name, gateway, ieeeAddr, new_model, device_type, version, description, input_values, input_events, commands, commands_json)
-
+                                            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + name + " | added")    
 
                                         # update device informations
                                     
@@ -771,8 +797,7 @@ def UPDATE_DEVICES(gateway):
 
         
                 if error != "":
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Update | " + str(error))
-                    SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | Update | " + str(error))                 
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Update | " + str(error))                
                     return ("Network | ZigBee2MQTT | Update | " + str(error)) 
                 else:
                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Update")

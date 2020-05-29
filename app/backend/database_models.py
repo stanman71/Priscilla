@@ -1010,8 +1010,6 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", version = 
                 if device_type == "controller":
                     ADD_CONTROLLER(ieeeAddr)
 
-                WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(name) + " | added")     
-                
                 return True
 
         return "Limit reached (99)"                           
