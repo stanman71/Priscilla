@@ -573,7 +573,7 @@ def settings_devices():
         else:         
             heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/touchlink/factory_reset", "")))   
             success_message_zigbee_touchlink = True
-                    
+        
 
     """ ############ """
     """  device log  """

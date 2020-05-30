@@ -1158,15 +1158,32 @@
                   <div class="card-body">    
                     <div class="row justify-content-md-left">
                       <div class="col-sm-9">        
-                        Factory reset for nearby zigbee devices through Touchlink 
+                        Factory reset for nearby zigbee devices through Touchlink (Philips / IKEA)
                         <br>
                         <br>
                         - max 10 cm distance to your coordinator
                         <br>
-                        - your zigbee network cannot be used during this scan (up to 1 minute)
+                        - your zigbee network cannot be used during this scan (up to 1 minute)                    
                       </div>
-                      <div class="col-sm-3">                        
-                        <button type="submit" onclick="window.location.href='/settings/devices#zigbee_touchlink'" name="activate_zigbee_touchlink" class="btn btn-fill pull-right btn-info">ACTIVATE</button>
+                      <div class="col-sm-3">       
+
+                        <button type="button" class="btn btn-fill btn-info pull-right" data-toggle="modal" data-target="#touchlink_dialog">ACTIVATE</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="touchlink_dialog">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title">Activate Touchlink ?</h5>                              
+                              </div>          
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                <button type="submit" onclick="window.location.href='/settings/devices#zigbee_touchlink'" name="activate_zigbee_touchlink" class="btn btn-fill pull-right btn-info">ACTIVATE</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>    
+
                       </div>  
                     </div>
                   </div>                
