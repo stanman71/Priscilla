@@ -195,7 +195,7 @@ def UPDATE_NETWORK_SETTINGS_LINUX(dhcp, ip_address, gateway):
 
 def GET_ALL_BACKUP_FILES():
     file_list = []
-    for files in os.walk(PATH + '/data/backup/'):  
+    for files in os.walk(PATH + '/data/backup_database/'):  
         file_list.append(files)
 
     if file_list == []:
@@ -209,13 +209,13 @@ def GET_ALL_BACKUP_FILES():
 def BACKUP_DATABASE():  
     try:
         shutil.copyfile(PATH + '/data/database.db', 
-                        PATH + '/data/backup/' + str(datetime.datetime.now().date()) + '_database.db')
+                        PATH + '/data/backup_database/' + str(datetime.datetime.now().date()) + '_database.db')
                 
         # if more then 10 backups saved, delete oldest backup file
-        list_of_files = os.listdir(PATH + '/data/backup/')    
-        full_path     = [PATH + '/data/backup/' + '{0}'.format(x) for x in list_of_files]
+        list_of_files = os.listdir(PATH + '/data/backup_database/')    
+        full_path     = [PATH + '/data/backup_database/' + '{0}'.format(x) for x in list_of_files]
 
-        if len([name for name in list_of_files]) > 7:
+        if len([name for name in list_of_files]) > 10:
             oldest_file = min(full_path, key=os.path.getctime)
             os.remove(oldest_file)        
         
@@ -229,7 +229,7 @@ def BACKUP_DATABASE():
 def RESTORE_DATABASE(filename):
     try:
         if filename.split("_")[1] == "database.db":
-            shutil.copyfile(PATH + '/data/backup/' + filename, PATH + '/data/database.db')
+            shutil.copyfile(PATH + '/data/backup_database/' + filename, PATH + '/data/database.db')
             WRITE_LOGFILE_SYSTEM("SUCCESS", "System | Database_Backup | " + filename + " | restored")
             return True
             
@@ -240,13 +240,36 @@ def RESTORE_DATABASE(filename):
         
 def DELETE_DATABASE_BACKUP(filename):
     try:
-        os.remove (PATH + '/data/backup/' + filename)
-        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/backup/" + filename + " | deleted")
+        os.remove (PATH + '/data/backup_database/' + filename)
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/backup_database/" + filename + " | deleted")
         return True
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/backup/" + filename + " | " + str(e))  
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/backup_database/" + filename + " | " + str(e))  
         return (e)
+
+
+""" ############### """
+"""  backup zigbee  """
+""" ############### """
+
+def BACKUP_ZIGBEE():  
+    try:
+        os.system("sudo zip -r " + PATH + '/data/backup_zigbee/' + str(datetime.datetime.now().date()) + ".zip /opt/zigbee2mqtt/data/")
+             
+        # if more then 10 backups saved, delete oldest backup file
+        list_of_files = os.listdir(PATH + '/data/backup_zigbee/')    
+        full_path     = [PATH + '/data/backup_zigbee/' + '{0}'.format(x) for x in list_of_files]
+
+        if len([name for name in list_of_files]) > 10:
+            oldest_file = min(full_path, key=os.path.getctime)
+            os.remove(oldest_file)        
+        
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "System | Zigbee | Backup created")
+        return True
+        
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | Zigbee | " + str(e)) 
 
 
 """ ################ """

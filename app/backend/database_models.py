@@ -379,6 +379,7 @@ if eMail.query.filter_by().first() == None:
 
 update_devices_found  = False
 backup_database_found = False
+backup_zigbee_found   = False
 reset_log_files_found = False
 reset_system_found    = False
 
@@ -387,6 +388,8 @@ for task in Scheduler_Tasks.query.all():
         update_devices_found = True
     if task.name.lower() == "backup_database":
         backup_database_found = True
+    if task.name.lower() == "backup_zigbee":
+        backup_zigbee_found = True        
     if task.name.lower() == "reset_log_files":
         reset_log_files_found = True
     if task.name.lower() == "reset_system":
@@ -419,7 +422,21 @@ if backup_database_found == False:
     )
     db.session.add(scheduler_task_backup_database)
     db.session.commit()
-    
+
+if backup_zigbee_found == False:
+    scheduler_task_backup_zigbee = Scheduler_Tasks(
+        name          = "backup_zigbee",
+        task          = "backup_zigbee",
+        visible       = "False",        
+        trigger_time  = "True",
+        option_repeat = "True",
+        day           = "*",        
+        hour          = "00",
+        minute        = "20",        
+    )
+    db.session.add(scheduler_task_backup_zigbee)
+    db.session.commit()
+
 if reset_log_files_found == False:
     scheduler_task_reset_log_files = Scheduler_Tasks(
         name          = "reset_log_files",

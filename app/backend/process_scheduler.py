@@ -947,6 +947,17 @@ def START_SCHEDULER_TASK(task_object):
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))
 
+    # #############
+    # backup zigbee
+    # #############
+
+    try:
+        if "backup_zigbee" in task_object.task:
+            BACKUP_ZIGBEE()
+
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Task - " + task_object.name + " | " + str(e))
+
     # ##############
     # update devices
     # ##############

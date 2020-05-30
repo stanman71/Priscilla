@@ -4,6 +4,8 @@ import threading
 import json
 import datetime
 import time
+import os
+import yaml
 
 from app                          import app
 from app.backend.database_models  import *
@@ -11,7 +13,9 @@ from app.backend.file_management  import *
 from app.backend.shared_resources import *
 from app.backend.email            import SEND_EMAIL
 
-from ping3 import ping
+from ping3       import ping
+from ruamel.yaml import YAML
+from pathlib     import Path
 
 
 """ ########################### """
@@ -289,19 +293,42 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
                         SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device added - " + data["meta"]["friendly_name"]) 
                         WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["meta"]["friendly_name"] + " | added")    
-                        time.sleep(5) 
+
+                        # add device config for IKEA SYMFONISK sound controller
+                        if model == "E1744":
+           
+                            try:
+
+                                yaml = YAML()
+                                path = Path('/opt/zigbee2mqtt/data/configuration.yaml')
+
+                                data   = yaml.load(path)
+                                device = data['devices'][ieeeAddr]
+
+                                device['debounce']        = 1
+                                device['debounce_ignore'] = ['action']
+                                yaml.dump(data, path)
+
+                                os.system("sudo systemctl restart zigbee2mqtt")    
+
+                            except Exception as e:
+                                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + data["meta"]["friendly_name"] + " | " + str(e))
+
+                        time.sleep(10) 
+
 
                 except Exception as e:
                     WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + data["meta"]["friendly_name"] + " | " + str(e))
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Error: " + str(e) + " | Update Devices manually")  
-                    time.sleep(5)
+                    time.sleep(10)
 
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
 
             # device connection failed
             if data["type"] == "pairing" and data["message"] == "interview_failed":
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + data["meta"]["friendly_name"] + " | adding failed")
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Device adding failed - " + data["meta"]["friendly_name"])   
-                time.sleep(5)
+                time.sleep(10)
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
       
 

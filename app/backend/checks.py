@@ -1335,6 +1335,14 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
          return list_task_errors
 
 
+      # #############
+      # backup_zigbee 
+      # #############  
+       
+      if task == "backup_zigbee" and task_type == "scheduler":
+         return list_task_errors
+
+
       # ##############
       # update_devices
       # ##############
