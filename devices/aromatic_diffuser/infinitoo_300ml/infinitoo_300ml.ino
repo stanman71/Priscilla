@@ -50,13 +50,13 @@ char model[40]       = "infinitoo_300ml";
 char device_type[40] = "aromatic_diffuser";
 char description[80] = "MQTT Aromatic Diffuser";
 
-String current_Version = "1.8";
+String current_Version = "2.1";
 
 String state = "OFF";
 int level    = 0;
 
-int voltage_online  = 665;
-int voltage_offline = 650;
+int voltage_online  = 670;
+int voltage_offline = 655;
 
 
 // ############
@@ -394,17 +394,28 @@ void callback (char* topic, byte* payload, unsigned int length) {
             delay(1000); 
 
             // get average sensor_value
-            int sensor_value_1 = analogRead(PIN_SENSOR);
+            int sensor_value_1  = analogRead(PIN_SENSOR);
             delay(50);            
-            int sensor_value_2 = analogRead(PIN_SENSOR);
+            int sensor_value_2  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_3 = analogRead(PIN_SENSOR);
+            int sensor_value_3  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_4 = analogRead(PIN_SENSOR);
+            int sensor_value_4  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_5 = analogRead(PIN_SENSOR);
+            int sensor_value_5  = analogRead(PIN_SENSOR);
             delay(50); 
-            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5) / 5);
+            int sensor_value_6  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_7  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_8  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_9  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_10 = analogRead(PIN_SENSOR);
+
+            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5 +
+                                 sensor_value_6 + sensor_value_7 + sensor_value_8 + sensor_value_9 + sensor_value_10) / 10);
 
             if (sensor_value >= voltage_online) {
                 state = "ON";
@@ -441,17 +452,28 @@ void callback (char* topic, byte* payload, unsigned int length) {
             delay(1000); 
 
             // get average sensor_value
-            int sensor_value_1 = analogRead(PIN_SENSOR);
+            int sensor_value_1  = analogRead(PIN_SENSOR);
             delay(50);            
-            int sensor_value_2 = analogRead(PIN_SENSOR);
+            int sensor_value_2  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_3 = analogRead(PIN_SENSOR);
+            int sensor_value_3  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_4 = analogRead(PIN_SENSOR);
+            int sensor_value_4  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_5 = analogRead(PIN_SENSOR);
+            int sensor_value_5  = analogRead(PIN_SENSOR);
+            delay(50);  
+            int sensor_value_6  = analogRead(PIN_SENSOR);
             delay(50); 
-            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5) / 5);
+            int sensor_value_7  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_8  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_9  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_10 = analogRead(PIN_SENSOR);
+                   
+            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5 +
+                                 sensor_value_6 + sensor_value_7 + sensor_value_8 + sensor_value_9 + sensor_value_10) / 10);
 
             if (sensor_value >= voltage_online) {
                 state = "ON";
@@ -492,17 +514,28 @@ void callback (char* topic, byte* payload, unsigned int length) {
             delay(1000); 
 
             // get average sensor_value
-            int sensor_value_1 = analogRead(PIN_SENSOR);
+            int sensor_value_1  = analogRead(PIN_SENSOR);
             delay(50);            
-            int sensor_value_2 = analogRead(PIN_SENSOR);
+            int sensor_value_2  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_3 = analogRead(PIN_SENSOR);
+            int sensor_value_3  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_4 = analogRead(PIN_SENSOR);
+            int sensor_value_4  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_5 = analogRead(PIN_SENSOR);
+            int sensor_value_5  = analogRead(PIN_SENSOR);
             delay(50); 
-            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5) / 5);
+            int sensor_value_6  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_7  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_8  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_9  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_10 = analogRead(PIN_SENSOR);
+
+            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5 +
+                                 sensor_value_6 + sensor_value_7 + sensor_value_8 + sensor_value_9 + sensor_value_10) / 10);
 
             if (sensor_value >= voltage_online) {
                 state = "ON";
@@ -547,18 +580,29 @@ void callback (char* topic, byte* payload, unsigned int length) {
             delay(1000); 
 
             // get average sensor_value
-            int sensor_value_1 = analogRead(PIN_SENSOR);
+            int sensor_value_1  = analogRead(PIN_SENSOR);
             delay(50);            
-            int sensor_value_2 = analogRead(PIN_SENSOR);
+            int sensor_value_2  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_3 = analogRead(PIN_SENSOR);
+            int sensor_value_3  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_4 = analogRead(PIN_SENSOR);
+            int sensor_value_4  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_5 = analogRead(PIN_SENSOR);
+            int sensor_value_5  = analogRead(PIN_SENSOR);
             delay(50); 
-            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5) / 5);
-
+            int sensor_value_6  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_7  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_8  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_9  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_10 = analogRead(PIN_SENSOR);
+                   
+            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5 +
+                                 sensor_value_6 + sensor_value_7 + sensor_value_8 + sensor_value_9 + sensor_value_10) / 10);
+           
             if (sensor_value >= voltage_online) {
                 state = "ON";
                 level = 4;     
@@ -582,17 +626,28 @@ void callback (char* topic, byte* payload, unsigned int length) {
             delay(1000); 
 
             // get average sensor_value
-            int sensor_value_1 = analogRead(PIN_SENSOR);
+            int sensor_value_1  = analogRead(PIN_SENSOR);
             delay(50);            
-            int sensor_value_2 = analogRead(PIN_SENSOR);
+            int sensor_value_2  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_3 = analogRead(PIN_SENSOR);
+            int sensor_value_3  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_4 = analogRead(PIN_SENSOR);
+            int sensor_value_4  = analogRead(PIN_SENSOR);
             delay(50);               
-            int sensor_value_5 = analogRead(PIN_SENSOR);
+            int sensor_value_5  = analogRead(PIN_SENSOR);
             delay(50); 
-            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5) / 5);
+            int sensor_value_6  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_7  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_8  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_9  = analogRead(PIN_SENSOR);
+            delay(50); 
+            int sensor_value_10 = analogRead(PIN_SENSOR);
+
+            int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5 +
+                                 sensor_value_6 + sensor_value_7 + sensor_value_8 + sensor_value_9 + sensor_value_10) / 10);
 
             if (sensor_value >= voltage_online) {
                 state = "ON";
@@ -726,18 +781,29 @@ void loop() {
     // custom settings
 
     // get average sensor_value
-    int sensor_value_1 = analogRead(PIN_SENSOR);
-    delay(10);            
-    int sensor_value_2 = analogRead(PIN_SENSOR);
-    delay(10);               
-    int sensor_value_3 = analogRead(PIN_SENSOR);
-    delay(10);               
-    int sensor_value_4 = analogRead(PIN_SENSOR);
-    delay(10);               
-    int sensor_value_5 = analogRead(PIN_SENSOR);
-    delay(10); 
-    int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5) / 5);
-
+    int sensor_value_1  = analogRead(PIN_SENSOR);
+    delay(50);            
+    int sensor_value_2  = analogRead(PIN_SENSOR);
+    delay(50);               
+    int sensor_value_3  = analogRead(PIN_SENSOR);
+    delay(50);               
+    int sensor_value_4  = analogRead(PIN_SENSOR);
+    delay(50);               
+    int sensor_value_5  = analogRead(PIN_SENSOR);
+    delay(50); 
+    int sensor_value_6  = analogRead(PIN_SENSOR);
+    delay(50); 
+    int sensor_value_7  = analogRead(PIN_SENSOR);
+    delay(50); 
+    int sensor_value_8  = analogRead(PIN_SENSOR);
+    delay(50); 
+    int sensor_value_9  = analogRead(PIN_SENSOR);
+    delay(50); 
+    int sensor_value_10 = analogRead(PIN_SENSOR);
+           
+    int sensor_value = ((sensor_value_1 + sensor_value_2 + sensor_value_3 + sensor_value_4 + sensor_value_5 +
+                         sensor_value_6 + sensor_value_7 + sensor_value_8 + sensor_value_9 + sensor_value_10) / 10);
+ 
     // send "ON" message if device start locally
     if (state == "OFF") {
         if (sensor_value >= voltage_online) {

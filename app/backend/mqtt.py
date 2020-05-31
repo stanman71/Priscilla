@@ -117,12 +117,7 @@ def MQTT_RECEIVE_THREAD():
         # message ignore ?
         # ################
 
-        if (device_type == "led_rgb" or 
-            device_type == "led_simple" or 
-            device_type == "power_switch" or 
-            device_type == "heater_thermostat" or    
-            device_type == "blind" or      
-            device_type == "sensor_passiv"):
+        if device_type != "":
     
             for existing_message in GET_MQTT_INCOMING_MESSAGES(3):              
                 
@@ -147,39 +142,6 @@ def MQTT_RECEIVE_THREAD():
                         except:
                             pass
 
-                        # special case IKEA blinds   
-                        try:                     
-                            if existing_data["position"] != new_data["position"]:
-                                new_message = True
-                                break
-                                
-                            else:
-                                new_message = False
-
-                        except:
-                            pass
-                                
-                    except:
-                        new_message = False     
-
-
-        # ################
-        # message ignore ?
-        # ################
-
-        if (device_type == "controller"):
-    
-            for existing_message in GET_MQTT_INCOMING_MESSAGES(2):              
-                
-                # search for other messages from the same device
-                if existing_message[1] == channel:
-                    
-                    # controller sends new data ?
-
-                    try:
-                        existing_data = json.loads(existing_message[2])
-                        new_data      = json.loads(msg)
-
                         # command "action"
                         try:
                             if existing_data["action"] != new_data["action"]:
@@ -202,10 +164,22 @@ def MQTT_RECEIVE_THREAD():
                                 new_message = False       
 
                         except:
-                            pass                 
-                            
+                            pass        
+
+                        # special case IKEA blinds   
+                        try:                     
+                            if existing_data["position"] != new_data["position"]:
+                                new_message = True
+                                break
+                                
+                            else:
+                                new_message = False
+
+                        except:
+                            pass
+                                
                     except:
-                        new_message = False  
+                        new_message = False     
 
 
         # ###############
