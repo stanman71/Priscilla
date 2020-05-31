@@ -417,8 +417,8 @@ if backup_database_found == False:
         trigger_time  = "True",
         option_repeat = "True",
         day           = "*",        
-        hour          = "00",
-        minute        = "15",        
+        hour          = "22",
+        minute        = "00",        
     )
     db.session.add(scheduler_task_backup_database)
     db.session.commit()
@@ -431,8 +431,8 @@ if backup_zigbee_found == False:
         trigger_time  = "True",
         option_repeat = "True",
         day           = "*",        
-        hour          = "00",
-        minute        = "20",        
+        hour          = "22",
+        minute        = "30",        
     )
     db.session.add(scheduler_task_backup_zigbee)
     db.session.commit()
