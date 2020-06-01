@@ -83,3 +83,19 @@ Timestamp,Type,Description
 2020-06-01 16:51:03,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-06-01 16:51:03,EVENT,|System || Services || Squeezelie Player || disabled|
 2020-06-01 16:51:04,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-01 20:04:58,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-01 20:04:58,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-01 20:04:59,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-01 20:04:59,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-01 20:04:59,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-01 20:05:00,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-01 20:05:21,DATABASE,|Scheduler || Task - new_scheduler_task_6 || added|
+2020-06-01 20:05:23,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| task |||| None >>> start music || playlist "Rock" || device "PC"|
+2020-06-01 20:05:35,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| trigger_settings |||| time: False, sun_position: False, sensors: False, position: False >>> time: True, sun_position: False, sensors: False, position: False|
+2020-06-01 20:05:40,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| time_settings |||| days: None, hours: None, minutes: None >>> days: *, hours: *, minutes: *|
+2020-06-01 20:06:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || list index out of range|
+2020-06-01 20:06:00,EVENT,|Scheduler || Task - new_scheduler_task_6 || started|
+2020-06-01 20:06:00,ERROR,|Scheduler || Task - new_scheduler_task_6 || list index out of range|
+2020-06-01 20:06:08,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| task |||| start music || playlist "Rock" || device "PC" >>> music # playlist # PC # Rock # 50|
+2020-06-01 20:06:21,DATABASE,|Scheduler || Task - new_scheduler_task_6 || changed |||| task |||| music # playlist # PC # Rock # 50 >>> music # playlist # PC # Rock # 500|
+2020-06-01 20:06:28,DATABASE,|Scheduler || Task - new_scheduler_task_6 || deleted|

@@ -331,7 +331,8 @@ def CHECK_PROGRAM_TASKS(program_id):
                    line_content[1].strip() != "VOLUME" and
                    line_content[1].strip() != "playlist" and
                    line_content[1].strip() != "track" and
-                   line_content[1].strip() != "album"):
+                   line_content[1].strip() != "album" and
+                   line_content[1].strip() != "interface"):
 
                   list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid Command")
 
@@ -359,7 +360,7 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
-                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not found | " + device_name)                
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not found")                   
 
                      try:
                         if not line_content[4].isdigit():
@@ -384,7 +385,7 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
-                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not found | " + device_name)        
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not found")             
 
                      try:
                         if not line_content[5].isdigit():
@@ -409,7 +410,7 @@ def CHECK_PROGRAM_TASKS(program_id):
 
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
-                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not found | " + device_name)              
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not found")                   
 
                      try:
                         if not line_content[5].isdigit():
@@ -418,6 +419,37 @@ def CHECK_PROGRAM_TASKS(program_id):
                         else:
                            if not 0 <= int(line_content[5]) <= 100:
                               list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (0 - 100)")
+
+                     except:
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
+
+                  except:
+                     list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid formatting")
+
+               # interface
+
+               if line_content[1].strip() == "interface": 
+                  
+                  try:
+                     device_name = line_content[2].strip()                                    
+
+                     if device_name.lower() != "multiroom":
+                        if GET_DEVICE_BY_NAME(device_name) == None: 
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Device not found")              
+
+                     if device_name.lower() == "multiroom":
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid Device")                          
+
+                     if line_content[3].strip() != "spotify" and line_content[3].strip() != "multiroom":
+                        list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid interface")      
+
+                     try:
+                        if not line_content[4].isdigit():
+                           list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid device_volume")
+
+                        else:
+                           if not 100 <= int(line_content[4]) <= 200:
+                              list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value (100 - 200)")
 
                      except:
                         list_errors.append("Line " + str(line_number) + " - " + line[1] + " || Invalid volume_value")
@@ -1483,7 +1515,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
-                           list_task_errors.append(task[5] + " || Device not found | " + device_name)        
+                           list_task_errors.append(device_name + " || Device not found")      
 
                      try:
                         if not task[4].isdigit():
@@ -1511,7 +1543,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
-                           list_task_errors.append(task[5] + " || Device not found | " + device_name)            
+                           list_task_errors.append(device_name + " || Device not found")           
 
                      try:
                         if not task[5].isdigit():
@@ -1539,7 +1571,7 @@ def CHECK_TASK_OPERATION(task, name, task_type, controller_command_json = ""):
 
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
-                           list_task_errors.append(task[5] + " || Device not found | " + device_name)                  
+                           list_task_errors.append(device_name + " || Device not found")                  
 
                      try:
                         if not task[5].isdigit():

@@ -789,7 +789,27 @@ def PROGRAM_THREAD(thread_id, program_id):
                                     
                                     SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
 
+                                # change interface
+                                        
+                                if line_content[1].strip() == "interface": 
 
+                                    device = GET_DEVICE_BY_NAME(line_content[2].strip())
+
+                                    # device found ?
+                                    if device != None:
+
+                                        interface = line_content[3].strip()
+                                        volume    = line_content[4].strip()
+
+                                        channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+                                        message = '{"interface":"' + interface + '","volume":' + str(volume) + '}'
+
+                                        heapq.heappush(mqtt_message_queue, (10, (channel, message)))            
+                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, interface + '; ' + str(volume), 60)      
+
+                                    else:
+                                        WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | Device - " + device_name.strip() + " | not found")     
+                
                             except Exception as e:
                                 WRITE_LOGFILE_SYSTEM("ERROR", "Program - " + program_name + " | Line - " + line[1] + " | " + str(e))
         

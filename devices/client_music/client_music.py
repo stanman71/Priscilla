@@ -303,7 +303,7 @@ def on_message(client, userdata, message):
             pass     
 
 
-        # volume
+        # volume changed
 
         try:
             if str(data["volume"]) != str(current_volume):
@@ -320,6 +320,15 @@ def on_message(client, userdata, message):
         
         except:
             pass   
+
+
+        # nothing changed
+
+        if data["interface"] == "spotify" and current_interface == "spotify" and str(data["volume"]) == str(current_volume):
+            MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + '}')
+
+        if data["interface"] == "multiroom" and current_interface == "multiroom" and str(data["volume"]) == str(current_volume):
+            MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + '}')
 
 
     # ###
