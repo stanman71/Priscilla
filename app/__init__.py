@@ -59,10 +59,12 @@ from app.backend.shared_resources import *
 
 async_mode      = None
 socketio        = SocketIO(app, async_mode=async_mode)
+
 thread_log      = None
 thread_music    = None
 thread_programs = None
 thread_zigbee   = None
+
 thread_lock = Lock()
  
 # ############################
@@ -152,9 +154,9 @@ def background_thread_music():
                            namespace='/socketIO')                 
 
 
-# #####################################
-# background thread programs and zigbee
-# #####################################
+# ##########################
+# background thread programs
+# ##########################
 
 def background_thread_programs():
 
@@ -337,7 +339,7 @@ def background_thread_zigbee():
 
 
 @socketio.on('connect', namespace='/socketIO')
-def connect_system_log():
+def start_socketIO():
     global thread_log
     global thread_music
     global thread_programs
