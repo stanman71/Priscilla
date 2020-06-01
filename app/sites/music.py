@@ -81,7 +81,7 @@ def music():
 
         try:
 
-            sp            = spotipy.Spotify(auth=spotify_token,requests_timeout=2)
+            sp            = spotipy.Spotify(auth=spotify_token,requests_timeout=3)
             sp.trace      = False     
             player_volume = request.form.get("set_spotify_player_volume") 
 

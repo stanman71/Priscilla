@@ -587,8 +587,9 @@ def settings_devices():
         else:
             error_message_logfile = "Reset Log || " + str(result)
 
-    list_device_exceptions        = GET_ALL_DEVICE_EXCEPTIONS()
-    list_exception_sensors        = GET_ALL_DEVICES("sensors")    
+
+    list_device_exceptions = GET_ALL_DEVICE_EXCEPTIONS()
+    list_exception_sensors = GET_ALL_DEVICES("sensors")    
 
     dropdown_list_exception_devices = GET_ALL_DEVICES("devices")    
     dropdown_list_exception_options = ["IP-Address"] 

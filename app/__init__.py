@@ -57,19 +57,22 @@ from app.backend.shared_resources import *
 """ socket IO """
 """ ######### """
 
-async_mode  = None
-socketio    = SocketIO(app, async_mode=async_mode)
-thread      = None
+async_mode      = None
+socketio        = SocketIO(app, async_mode=async_mode)
+thread_log      = None
+thread_music    = None
+thread_programs = None
+thread_zigbee   = None
 thread_lock = Lock()
+ 
+# ############################
+# background thread system_log
+# ############################
 
-def background_thread():
+def background_thread_log():
     
     while True:
-        socketio.sleep(0.5)
-
-        # ##########
-        # system_log
-        # ##########
+        socketio.sleep(1)
 
         try:
 
@@ -107,11 +110,17 @@ def background_thread():
                           'data_7_title': "" + " ||| " + "", 'data_7_content': "", 
                           'data_8_title': "" + " ||| " + "", 'data_8_content': "", 
                           'data_9_title': "" + " ||| " + "", 'data_9_content': ""},                                                    
-                          namespace='/socketIO')            
+                          namespace='/socketIO')           
 
-        # #####
-        # music
-        # #####
+
+# #######################
+# background thread music
+# #######################
+
+def background_thread_music():
+
+    while True:
+        socketio.sleep(0.5)
 
         try:
             spotify_token = GET_SPOTIFY_TOKEN()
@@ -142,9 +151,15 @@ def background_thread():
                          {'current_device': "", 'current_state': "", 'current_track': "", 'current_artists': "", 'current_progress': "", 'current_playlist': ""},                                                               
                            namespace='/socketIO')                 
 
-        # ########
-        # programs
-        # ########
+
+# #####################################
+# background thread programs and zigbee
+# #####################################
+
+def background_thread_programs():
+
+    while True:
+        socketio.sleep(1)
 
         try:
             socketio.emit('program_thread_1',
@@ -291,9 +306,14 @@ def background_thread():
                            namespace='/socketIO')                                
 
 
-        # ###########################
-        # zigbee device update status
-        # ###########################
+# ########################
+# background thread zigbee 
+# ########################
+
+def background_thread_zigbee():
+
+    while True:
+        socketio.sleep(1)
 
         try:
             socketio.emit('zigbee_device_update',
@@ -304,11 +324,6 @@ def background_thread():
              socketio.emit('zigbee_device_update',
                         {'zigbee_device_update_status': "Status Error"},                                                               
                           namespace='/socketIO')    
-
-
-        # ##########################
-        # zigbee2mqtt pairing status
-        # ##########################
 
         try:
             socketio.emit('zigbee2mqtt_pairing',
@@ -323,10 +338,20 @@ def background_thread():
 
 @socketio.on('connect', namespace='/socketIO')
 def connect_system_log():
-    global thread
+    global thread_log
+    global thread_music
+    global thread_programs
+    global thread_zigbee
+
     with thread_lock:
-        if thread is None:
-            thread = socketio.start_background_task(background_thread)
+        if thread_log is None:
+            thread_log = socketio.start_background_task(background_thread_log)
+        if thread_music is None:            
+            thread_music = socketio.start_background_task(background_thread_music)
+        if thread_programs is None:               
+            thread_programs = socketio.start_background_task(background_thread_programs)
+        if thread_zigbee is None:               
+            thread_zigbee = socketio.start_background_task(background_thread_zigbee)
 
 
 """ ################## """
