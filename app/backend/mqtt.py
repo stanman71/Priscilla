@@ -96,9 +96,8 @@ def MQTT_RECEIVE_THREAD():
             "command" not in channel):
 
             device_identity = channel.split("/")[2]
-            list_devices    = GET_ALL_DEVICES("")
-        
-            for device in list_devices:
+
+            for device in GET_ALL_DEVICES(""):
 
                 # mqtt device                       
                 if device.ieeeAddr == device_identity:
@@ -118,68 +117,15 @@ def MQTT_RECEIVE_THREAD():
         # ################
 
         if device_type != "":
+
+            new_message = True
     
             for existing_message in GET_MQTT_INCOMING_MESSAGES(3):              
                 
                 # search for other messages from the same device
-                if existing_message[1] == channel:
-                    
-                    # device sends new data ?
-                    
-                    try:
-                        existing_data = json.loads(existing_message[2])
-                        new_data      = json.loads(msg)
-
-                        # default case 
-                        try:
-                            if existing_data["state"] != new_data["state"]:
-                                new_message = True
-                                break
-                                
-                            else:
-                                new_message = False
-
-                        except:
-                            pass
-
-                        # command "action"
-                        try:
-                            if existing_data["action"] != new_data["action"]:
-                                new_message = True
-                                break
-                                
-                            else:
-                                new_message = False
-
-                        except:
-                            pass
-                                
-                        # command "click"
-                        try:
-                            if existing_data["click"] != new_data["click"]:
-                                new_message = True
-                                break
-                                
-                            else:
-                                new_message = False       
-
-                        except:
-                            pass        
-
-                        # special case IKEA blinds   
-                        try:                     
-                            if existing_data["position"] != new_data["position"]:
-                                new_message = True
-                                break
-                                
-                            else:
-                                new_message = False
-
-                        except:
-                            pass
-                                
-                    except:
-                        new_message = False     
+                if existing_message[1] == channel and existing_message[2] == msg:
+                    new_message = False  
+                    break
 
 
         # ###############

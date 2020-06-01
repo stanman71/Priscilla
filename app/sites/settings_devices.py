@@ -119,7 +119,7 @@ def UPLOAD_FIRMWARE(file):
 @login_required
 @permission_required
 def settings_devices():
-    page_title       = 'HiddenHomeControl | Settings | Devices'
+    page_title       = 'Callisto | Settings | Devices'
     page_description = 'The devices configuration page.'
 
     error_message_mqtt_connection               = False
@@ -145,11 +145,10 @@ def settings_devices():
     error_download_log_zigbee2mqtt              = ""
     error_download_topology_zigbee2mqtt         = ""    
 
-
     device_exceptions_collapse_open             = False    
     mqtt_device_update_collapse_open            = False
     zigbee_device_update_collapse_open          = False
-
+    zigbee_topology_exist                       = False
 
     # error firmware
     if session.get('error_mqtt_firmware', None) != None:
@@ -606,6 +605,10 @@ def settings_devices():
         show_zigbee_device_updates = True
     else:
         show_zigbee_device_updates = False
+
+    # check zigbee topology exist
+    if os.path.isfile(GET_PATH() + "/app/static/temp/zigbee_topology.png"):
+        zigbee_topology_exist = True
 
     data = {'navigation': 'settings_devices'}
 
@@ -1153,6 +1156,7 @@ def settings_devices():
                                                     zigbee_device_update_collapse_open=zigbee_device_update_collapse_open,
                                                     mqtt_device_update_collapse_open=mqtt_device_update_collapse_open,
                                                     device_exceptions_collapse_open=device_exceptions_collapse_open,  
+                                                    zigbee_topology_exist=zigbee_topology_exist,
                                                     device_1_input_values=device_1_input_values,
                                                     device_2_input_values=device_2_input_values,
                                                     device_3_input_values=device_3_input_values,

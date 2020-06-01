@@ -102,11 +102,11 @@ class Device_Exceptions(db.Model):
 class eMail(db.Model):
     __tablename__  = 'email'
     id             = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    server_address = db.Column(db.String(50))
+    server_address = db.Column(db.String(50), server_default=("None"))
     server_port    = db.Column(db.Integer)
-    encoding       = db.Column(db.String(50))
-    username       = db.Column(db.String(50))
-    password       = db.Column(db.String(50)) 
+    encoding       = db.Column(db.String(50), server_default=("None"))
+    username       = db.Column(db.String(50), server_default=("None"))
+    password       = db.Column(db.String(50), server_default=("None"))
 
 class Lighting_Groups(db.Model):
     __tablename__         = 'lighting_groups'
@@ -324,18 +324,18 @@ class Spotify_Settings(db.Model):
     client_id             = db.Column(db.String(50), server_default=("120de7bdb90e4c139546f0f55919f8c0"))
     client_secret         = db.Column(db.String(50), server_default=("8454b2fcaf134dff99e582507f0ad428"))   
     refresh_token         = db.Column(db.String(50), server_default=(""))   
-    default_device_id     = db.Column(db.String(50))   
-    default_device_name   = db.Column(db.String(50))       
-    default_playlist_uri  = db.Column(db.String(50))   
-    default_playlist_name = db.Column(db.String(50))   
+    default_device_id     = db.Column(db.String(50), server_default=(""))   
+    default_device_name   = db.Column(db.String(50), server_default=("None"))       
+    default_playlist_uri  = db.Column(db.String(50), server_default=(""))   
+    default_playlist_name = db.Column(db.String(50), server_default=("None"))   
     default_volume        = db.Column(db.Integer, server_default=("0"))
     default_shuffle       = db.Column(db.String(50), server_default=("False"))   
 
 class System(db.Model):
     __tablename__ = 'system'
     id                 = db.Column(db.Integer, primary_key=True, autoincrement = True)   
-    ip_address         = db.Column(db.String(50))
-    gateway            = db.Column(db.String(50))
+    ip_address         = db.Column(db.String(50), server_default=(""))
+    gateway            = db.Column(db.String(50), server_default=(""))
     port               = db.Column(db.String(50), server_default=("80"))    
     dhcp               = db.Column(db.String(50), server_default=("True"))     
     zigbee2mqtt_active = db.Column(db.String(50), server_default=("False"))

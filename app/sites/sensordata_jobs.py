@@ -31,7 +31,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def sensordata_jobs():
-    page_title       = 'HiddenHomeControl | Sensordata | Jobs'
+    page_title       = 'Callisto | Sensordata | Jobs'
     page_description = 'The sensordata jobs configuration page.'
 
     success_message_change_settings = []      

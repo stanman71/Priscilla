@@ -72,7 +72,7 @@ def GET_SPOTIFY_AUTHORIZATION():
         "response_type": "code",
         "redirect_uri": REDIRECT_URI,
         "scope": SCOPE,
-        "client_id": CLIENT_ID
+        "client_id": CLIENT_ID      
     }    
     
     url_args = "&".join(["{}={}".format(key, quote(val)) for key, val in auth_query_parameters.items()])

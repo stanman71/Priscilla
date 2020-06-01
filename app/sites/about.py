@@ -28,7 +28,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def about():
-    page_title       = 'HiddenHomeControl | About'
+    page_title       = 'Callisto | About'
     page_description = 'The information and update page.'
 
     version = "2.5"

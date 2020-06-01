@@ -50,12 +50,12 @@ char model[40]       = "infinitoo_300ml";
 char device_type[40] = "aromatic_diffuser";
 char description[80] = "MQTT Aromatic Diffuser";
 
-String current_Version = "2.1";
+String current_Version = "2.3";
 
 String state = "OFF";
 int level    = 0;
 
-int voltage_online  = 670;
+int voltage_online  = 667;
 int voltage_offline = 655;
 
 

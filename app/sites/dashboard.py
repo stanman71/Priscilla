@@ -38,7 +38,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def dashboard():
-    page_title       = 'HiddenHomeControl | Dashboard'
+    page_title       = 'Callisto | Dashboard'
     page_description = 'The main page and Dashboard'
 
 
@@ -164,7 +164,7 @@ def dashboard():
 
         try:
 
-            sp             = spotipy.Spotify(auth=spotify_token)
+            sp             = spotipy.Spotify(auth=spotify_token,requests_timeout=2)
             sp.trace       = False     
             
             # ############

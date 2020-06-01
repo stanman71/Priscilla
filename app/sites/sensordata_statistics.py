@@ -38,7 +38,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def sensordata_statistics():
-    page_title       = 'HiddenHomeControl | Sensordata | Statistics'
+    page_title       = 'Callisto | Sensordata | Statistics'
     page_description = 'The sensordata statistics page.'
 
     global dropdown_list_dates_temp

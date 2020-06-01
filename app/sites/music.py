@@ -45,7 +45,7 @@ list_search_album_results = ""
 @login_required
 @permission_required
 def music():    
-    page_title       = 'HiddenHomeControl | Music'
+    page_title       = 'Callisto | Music'
     page_description = 'The music configuration page.'
 
     global list_search_track_results
@@ -81,7 +81,7 @@ def music():
 
         try:
 
-            sp            = spotipy.Spotify(auth=spotify_token)
+            sp            = spotipy.Spotify(auth=spotify_token,requests_timeout=2)
             sp.trace      = False     
             player_volume = request.form.get("set_spotify_player_volume") 
 

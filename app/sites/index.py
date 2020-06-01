@@ -38,7 +38,7 @@ def load_user(user_id):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    page_title       = 'HiddenHomeControl | Login'
+    page_title       = 'Callisto | Login'
     page_description = 'The login page'    
 
     # define login form here

@@ -33,7 +33,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_users():
-    page_title       = 'HiddenHomeControl | Settings | Users'
+    page_title       = 'Callisto | Settings | Users'
     page_description = 'The users configuration page.'
 
     success_message_add_user           = False

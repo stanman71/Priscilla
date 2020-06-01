@@ -1223,10 +1223,14 @@
                 <form method="POST"> 
                   <div class="card-body">    
                     <a href="/settings/devices/log/download/zigbee2mqtt.txt?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE LOG</b></font></a> 
-                    <br>
-                    {% if request.MOBILE %} <br> {% endif %}
-                    <a href="/settings/devices/topology/download/zigbee_topology.png?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE TOPOLOGY</b></font></a>  
-                  </div>            
+
+                    {% if zigbee_topology_exist == True %}
+                      <br>
+                      {% if request.MOBILE %} <br> {% endif %}
+                      <a href="/settings/devices/topology/download/zigbee_topology.png?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE TOPOLOGY</b></font></a>  
+                    {% endif %} 
+
+                  </div>             
                 </form>
               </div>             
               
