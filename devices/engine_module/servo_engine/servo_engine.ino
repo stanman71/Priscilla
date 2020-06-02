@@ -7,6 +7,7 @@
 #include <PubSubClient.h>   
 #include <ESP8266HTTPClient.h>
 #include <ESP8266httpUpdate.h>
+#include <Servo.h>  
 
 // MQTT
 char mqtt_server[40];
@@ -43,25 +44,20 @@ int PIN_LED_RED   = 12;                          // D6
 // CUSTOM SETTINGS
 // ###############
 
-int SENSOR_1 = 5;                                // D1 
-int SENSOR_2 = 4;                                // D2 
-int SENSOR_3 = A0;                               // A0 
+Servo servo_1; 
+Servo servo_2; 
 
-// int SENSOR_4  = 0                             // D3
-// int SENSOR_13 = 0                             // D7
+int SERVO_1 = 4;                                 // D1 
+int SERVO_2 = 5;                                 // D2 
 
+char model[40]       = "servo_engine";
+char device_type[40] = "engine_module";
+char description[80] = "MQTT Engine Module";
 
-char model[40]       = "sensor_motion2_light";
-char device_type[40] = "sensor_passiv";
-char description[80] = "MQTT Motion Sensor";
+String current_Version = "1.0";
 
-String current_Version = "1.9";
-
-int sensor_1_last_value = 0;
-int sensor_2_last_value = 0;
-int sensor_3_last_value = 0;
-
-int disable_sensor_3_timer = 0;
+int servo_1_position = 0;
+int servo_2_position = 0;
 
 
 // ############
@@ -298,7 +294,6 @@ void reconnect() {
     }
 }
 
-
 // #########################
 // MQTT send default message
 // #########################
@@ -312,14 +307,8 @@ void send_default_mqtt_message() {
  
     // create msg as json
     DynamicJsonDocument msg(128);
-
-    if (digitalRead(SENSOR_1) == 0 and digitalRead(SENSOR_2) == 0){
-        msg["occupancy"] = "False";
-    } else {
-        msg["occupancy"] = "True";
-    }
-
-    msg["illuminance"] = sensor_3_last_value;          
+    msg["servo_1_position"] = servo_1_position;
+    msg["servo_2_position"] = servo_2_position;
 
     // convert msg to char
     char msg_Char[128];
@@ -333,7 +322,6 @@ void send_default_mqtt_message() {
     
     client.publish(path, msg_Char);      
 }
-
 
 // ######################
 // MQTT control functions
@@ -365,12 +353,16 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["version"]     = current_Version;        
         msg["description"] = description;
     
-        JsonArray data_inputs = msg.createNestedArray("input_values");
-        data_inputs.add("occupancy");        
-        data_inputs.add("illuminance"); 
-
+        JsonArray data_inputs        = msg.createNestedArray("input_values");
         JsonArray data_commands      = msg.createNestedArray("commands");
+        data_commands.add("15; 0");
+        data_commands.add("90; 0");     
+        data_commands.add("180; 0");
+          
         JsonArray data_commands_json = msg.createNestedArray("commands_json");
+        data_commands_json.add("{'servo_1_position':'15','servo_2_position':0}");              
+        data_commands_json.add("{'servo_1_position':'90','servo_2_position':0}");  
+        data_commands_json.add("{'servo_1_position':'180','servo_2_position':0}");   
 
         // convert msg to char
         char msg_Char[512];
@@ -389,9 +381,39 @@ void callback (char* topic, byte* payload, unsigned int length) {
     
     if (check_ieeeAddr == ieeeAddr and check_command == "get"){
         send_default_mqtt_message();    
-    }      
-}
+    }    
 
+    // set 
+
+    if (check_ieeeAddr == ieeeAddr and check_command == "set"){
+
+        char msg[length+1];
+  
+        for (int i = 0; i < length; i++) {
+            msg[i] = (char)payload[i];
+        }
+        msg[length] = '\0';
+        
+        Serial.print("msg: ");
+        Serial.println(msg);
+
+        // convert msg to json
+        DynamicJsonDocument msg_json(128);
+        deserializeJson(msg_json, msg);
+    
+        // control engine
+        int set_servo_1_position = msg_json["servo_1_position"];
+        int set_servo_2_position = msg_json["servo_2_position"];
+
+        servo_1.write(set_servo_1_position); 
+        servo_2.write(set_servo_2_position); 
+
+        servo_1_position = set_servo_1_position;
+        servo_2_position = set_servo_2_position;
+        
+        send_default_mqtt_message(); 
+    }            
+}
 
 // #####
 // setup
@@ -440,11 +462,8 @@ void setup() {
 
     // custom settings
     
-    pinMode(SENSOR_1, INPUT); 
-    pinMode(SENSOR_2, INPUT); 
-    pinMode(SENSOR_3, INPUT); 
-    
-    sensor_3_last_value = analogRead(SENSOR_3);
+    servo_1.attach(SERVO_1);
+    servo_2.attach(SERVO_2);    
 }
 
 
@@ -470,40 +489,9 @@ void loop() {
         send_update_report = false;
     } 
     
-    update_timer_counter = update_timer_counter + 10;
+    update_timer_counter = update_timer_counter + 100;
 
-    // custom settings
-
-    // if occupancy is true, freeze illuminance value for 30 seconds
-    if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
-        disable_sensor_3_timer = 30000;
-    }   
-
-    // illuminance timer
-    if (disable_sensor_3_timer > 0){
-        disable_sensor_3_timer = disable_sensor_3_timer - 10; 
-    } else {
-        disable_sensor_3_timer = 0;
-    }
-
-    // read illuminance sensor ?    
-    if (disable_sensor_3_timer == 0){
-        sensor_3_last_value = analogRead(SENSOR_3);
-    }           
-
-    // send message ?     
-    if (digitalRead(SENSOR_1) == 1 or 
-        digitalRead(SENSOR_2) == 1 or 
-        sensor_1_last_value != digitalRead(SENSOR_1) or 
-        sensor_2_last_value != digitalRead(SENSOR_2)){
-
-        sensor_1_last_value = digitalRead(SENSOR_1);
-        sensor_2_last_value = digitalRead(SENSOR_2);
-        send_default_mqtt_message();
-        delay(1000);
-    } 
-
-    delay(10);
+    delay(100);
     client.loop();
 }
 

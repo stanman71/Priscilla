@@ -158,115 +158,135 @@ def settings_system():
         lms_active         = request.form.get("set_radio_lms_active")
         squeezelite_active = request.form.get("set_radio_squeezelite_active")    
 
-        if SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active, lms_active, squeezelite_active):
-            success_message_change_settings_services = True
 
-            # zigbee
+        ########
+        # zigbee
+        ########
 
-            if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
-                try:
-                    os.system("sudo systemctl start zigbee2mqtt")
-                    WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | ZigBee2MQTT | enabled")       
-                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")  
-                    print("System | Services | ZigBee2MQTT | enabled") 
-                    time.sleep(1)
+        if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "False" and zigbee2mqtt_active == "True":
 
-                    # check mqtt connection
-                    if GET_MQTT_CONNECTION_STATUS() == True:  
+            try:
+                os.system("sudo systemctl start zigbee2mqtt")
+                WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | ZigBee2MQTT | enabled")       
+                SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")  
+                print("System | Services | ZigBee2MQTT | enabled") 
+                time.sleep(1)
 
-                        # check zigbee2mqtt connection      
-                        if CHECK_ZIGBEE2MQTT_STARTED():  
-                            print("Network | ZigBee2MQTT | connected") 
-                            
-                            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | connected")
+                # check mqtt connection
+                if GET_MQTT_CONNECTION_STATUS() == True:  
 
-                            START_DISABLE_ZIGBEE_PAIRING_THREAD()
+                    # check zigbee2mqtt connection      
+                    if CHECK_ZIGBEE2MQTT_STARTED():  
+                        print("Network | ZigBee2MQTT | connected") 
+                        
+                        WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | connected")
 
-                            # deactivate pairing at startup
-                            if not CHECK_ZIGBEE2MQTT_PAIRING("False"):   
+                        START_DISABLE_ZIGBEE_PAIRING_THREAD()
 
-                                heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "false")))    
+                        # deactivate pairing at startup
+                        if not CHECK_ZIGBEE2MQTT_PAIRING("False"):   
 
-                                if CHECK_ZIGBEE2MQTT_PAIRING("False"):             
-                                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
-                                    SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
-                                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled") 
-                                else:             
-                                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
-                                    SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
-                                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
+                            heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "false")))    
 
-                        else:
-                            print("ERROR: Network | ZigBee2MQTT | No Connection") 
-                            
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")        
-                            SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | No Connection")  
-                            SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
-                            SET_ZIGBEE2MQTT_PAIRING_STATUS("No Zigbee2MQTT Connection")        
+                            if CHECK_ZIGBEE2MQTT_PAIRING("False"):             
+                                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | Pairing disabled | successful") 
+                                SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
+                                SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled") 
+                            else:             
+                                WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | Setting not confirmed")  
+                                SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
+                                SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
 
                     else:
-                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | No MQTT connection") 
+                        print("ERROR: Network | ZigBee2MQTT | No Connection") 
+                        
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")        
+                        SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | No Connection")  
                         SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
-                        SET_ZIGBEE2MQTT_PAIRING_STATUS("No MQTT connection")                  
+                        SET_ZIGBEE2MQTT_PAIRING_STATUS("No Zigbee2MQTT Connection")        
 
-                except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | ZigBee2MQTT | " + str(e)) 
-                    print("ERROR: System | Services | ZigBee2MQTT | " + str(e))      
+                else:
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | No MQTT connection") 
+                    SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
+                    SET_ZIGBEE2MQTT_PAIRING_STATUS("No MQTT connection")                  
 
-            else:
-                try:
-                    os.system("sudo systemctl stop zigbee2mqtt")
-                    WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | ZigBee2MQTT | disabled")
-                    SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
-                    print("System | Services | ZigBee2MQTT | disabled") 
-                    time.sleep(1)
-                except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | ZigBee2MQTT | " + str(e)) 
-                    print("ERROR: System | Services | ZigBee2MQTT | " + str(e)) 
-        
-            # logitech media server
+            except Exception as e:
+                WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | ZigBee2MQTT | " + str(e)) 
+                print("ERROR: System | Services | ZigBee2MQTT | " + str(e))      
 
-            if GET_SYSTEM_SETTINGS().lms_active == "True":
-                try:
-                    os.system("sudo systemctl start logitechmediaserver")
-                    WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Logitech Media Server | enabled")
-                    print("System | Services | Logitech Media Server | enabled") 
-                    time.sleep(1)
-                except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
-                    print("ERROR: System | Services | Logitech Media Server | " + str(e))       
+        if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True" and zigbee2mqtt_active == "False":
 
-            else: 
-                try:
-                    os.system("sudo systemctl stop logitechmediaserver")
-                    WRITE_LOGFILE_SYSTEM("EVENT", "System | Services |Logitech Media Server | disabled")
-                    print("System | Services | Logitech Media Server | disabled") 
-                    time.sleep(1)
-                except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
-                    print("ERROR: System | Services | Logitech Media Server | " + str(e)) 
+            try:
+                os.system("sudo systemctl stop zigbee2mqtt")
+                WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | ZigBee2MQTT | disabled")
+                SET_ZIGBEE2MQTT_PAIRING_SETTING("False")
+                print("System | Services | ZigBee2MQTT | disabled") 
+                time.sleep(1)
+            except Exception as e:
+                WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | ZigBee2MQTT | " + str(e)) 
+                print("ERROR: System | Services | ZigBee2MQTT | " + str(e)) 
+    
 
-            # squeezelite player
+        #######################
+        # logitech media server
+        #######################
 
-            if GET_SYSTEM_SETTINGS().squeezelite_active == "True":
-                try:
-                    os.system("sudo systemctl start squeezelite")
-                    WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | enabled")
-                    print("System | Services | Squeezelie Player | enabled") 
-                    time.sleep(1)
-                except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
-                    print("ERROR: System | Services | Squeezelie Player | " + str(e))     
+        if GET_SYSTEM_SETTINGS().lms_active == "False" and lms_active == "True":
 
-            else:
-                try:
-                    os.system("sudo systemctl stop squeezelite")
-                    WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | disabled")
-                    print("System | Services | Squeezelie Player | disabled") 
-                    time.sleep(1)
-                except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
-                    print("ERROR: System | Services | Squeezelie Player | " + str(e)) 
+            try:
+                os.system("sudo systemctl start logitechmediaserver")
+                WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Logitech Media Server | enabled")
+                print("System | Services | Logitech Media Server | enabled") 
+                time.sleep(1)
+            except Exception as e:
+                WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
+                print("ERROR: System | Services | Logitech Media Server | " + str(e))       
+
+        if GET_SYSTEM_SETTINGS().lms_active == "True" and lms_active == "False":
+
+            try:
+                os.system("sudo systemctl stop logitechmediaserver")
+                WRITE_LOGFILE_SYSTEM("EVENT", "System | Services |Logitech Media Server | disabled")
+                print("System | Services | Logitech Media Server | disabled") 
+                time.sleep(1)
+            except Exception as e:
+                WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
+                print("ERROR: System | Services | Logitech Media Server | " + str(e)) 
+
+
+        ####################
+        # squeezelite player
+        ####################
+
+        if GET_SYSTEM_SETTINGS().squeezelite_active == "False" and squeezelite_active == "True":
+
+            try:
+                os.system("sudo systemctl start squeezelite")
+                WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | enabled")
+                print("System | Services | Squeezelie Player | enabled") 
+                time.sleep(1)
+            except Exception as e:
+                WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
+                print("ERROR: System | Services | Squeezelie Player | " + str(e))     
+
+        if GET_SYSTEM_SETTINGS().squeezelite_active == "True" and squeezelite_active == "False":
+
+            try:
+                os.system("sudo systemctl stop squeezelite")
+                WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | disabled")
+                print("System | Services | Squeezelie Player | disabled") 
+                time.sleep(1)
+            except Exception as e:
+                WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
+                print("ERROR: System | Services | Squeezelie Player | " + str(e)) 
+
+
+        ###############
+        # save settings
+        ###############
+
+        if SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active, lms_active, squeezelite_active):
+            success_message_change_settings_services = True
 
 
     """ ################## """

@@ -43,26 +43,18 @@ int PIN_LED_RED   = 12;                          // D6
 // CUSTOM SETTINGS
 // ###############
 
-int SENSOR_1 = 5;                                // D1 
-int SENSOR_2 = 4;                                // D2 
-int SENSOR_3 = A0;                               // A0 
+int DIRECTION      = 5;                          // D1 
+int STEP           = 4;                          // D2 
+int RELAIS_CONTROL = 0;                          // D3
 
-// int SENSOR_4  = 0                             // D3
-// int SENSOR_13 = 0                             // D7
+char model[40]       = "stepper_engine";
+char device_type[40] = "engine_module";
+char description[80] = "MQTT Engine Module";
 
+String current_Version = "1.0";
 
-char model[40]       = "sensor_motion2_light";
-char device_type[40] = "sensor_passiv";
-char description[80] = "MQTT Motion Sensor";
-
-String current_Version = "1.9";
-
-int sensor_1_last_value = 0;
-int sensor_2_last_value = 0;
-int sensor_3_last_value = 0;
-
-int disable_sensor_3_timer = 0;
-
+String engine_direction = "OFF";
+int engine_steps        = 0;
 
 // ############
 // split string
@@ -298,7 +290,6 @@ void reconnect() {
     }
 }
 
-
 // #########################
 // MQTT send default message
 // #########################
@@ -312,15 +303,9 @@ void send_default_mqtt_message() {
  
     // create msg as json
     DynamicJsonDocument msg(128);
-
-    if (digitalRead(SENSOR_1) == 0 and digitalRead(SENSOR_2) == 0){
-        msg["occupancy"] = "False";
-    } else {
-        msg["occupancy"] = "True";
-    }
-
-    msg["illuminance"] = sensor_3_last_value;          
-
+    msg["direction"] = engine_direction;
+    msg["steps"]     = engine_steps;
+    
     // convert msg to char
     char msg_Char[128];
     serializeJson(msg, msg_Char);
@@ -333,7 +318,6 @@ void send_default_mqtt_message() {
     
     client.publish(path, msg_Char);      
 }
-
 
 // ######################
 // MQTT control functions
@@ -365,12 +349,20 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["version"]     = current_Version;        
         msg["description"] = description;
     
-        JsonArray data_inputs = msg.createNestedArray("input_values");
-        data_inputs.add("occupancy");        
-        data_inputs.add("illuminance"); 
-
+        JsonArray data_inputs        = msg.createNestedArray("input_values");
         JsonArray data_commands      = msg.createNestedArray("commands");
+        data_commands.add("LEFT; 10000");
+        data_commands.add("LEFT; 20000");     
+        data_commands.add("RIGHT; 10000");
+        data_commands.add("RIGHT; 20000");   
+        data_commands.add("OFF"); 
+          
         JsonArray data_commands_json = msg.createNestedArray("commands_json");
+        data_commands_json.add("{'direction':'LEFT','steps':10000}");  
+        data_commands_json.add("{'direction':'LEFT','steps':20000}");  
+        data_commands_json.add("{'direction':'RIGHT','steps':10000}");   
+        data_commands_json.add("{'direction':'RIGHT','steps':20000}");  
+        data_commands_json.add("{'direction':'OFF','steps':0}");
 
         // convert msg to char
         char msg_Char[512];
@@ -389,9 +381,69 @@ void callback (char* topic, byte* payload, unsigned int length) {
     
     if (check_ieeeAddr == ieeeAddr and check_command == "get"){
         send_default_mqtt_message();    
-    }      
-}
+    }    
 
+    // set 
+
+    if (check_ieeeAddr == ieeeAddr and check_command == "set"){
+
+        char msg[length+1];
+  
+        for (int i = 0; i < length; i++) {
+            msg[i] = (char)payload[i];
+        }
+        msg[length] = '\0';
+        
+        Serial.print("msg: ");
+        Serial.println(msg);
+
+        // convert msg to json
+        DynamicJsonDocument msg_json(128);
+        deserializeJson(msg_json, msg);
+    
+        // control engine
+        String set_engine_direction = msg_json["direction"];
+        int set_engine_steps        = msg_json["steps"];
+
+        if (set_engine_direction == "LEFT" or set_engine_direction == "RIGHT") {
+
+            // activate relais
+            digitalWrite(RELAIS_CONTROL, HIGH); 
+
+            // set direction
+            if (set_engine_direction == "LEFT") {
+                digitalWrite(DIRECTION, LOW);
+            } else {
+                digitalWrite(DIRECTION, HIGH);           
+            }
+
+            engine_direction = set_engine_direction;
+            engine_steps     = set_engine_steps;
+            
+            send_default_mqtt_message(); 
+
+            // start engine
+            for (int i = 0; i <= set_engine_steps; i++){
+                digitalWrite(STEP, HIGH);
+                delay(1);         
+                digitalWrite(STEP, LOW);
+                delay(1);   
+            } 
+
+            engine_direction = "OFF";  
+            engine_steps     = 0;
+
+            send_default_mqtt_message();            
+   
+        } else {
+            digitalWrite(RELAIS_CONTROL, LOW); 
+            engine_direction = "OFF";  
+            engine_steps     = 0;
+
+            send_default_mqtt_message();        
+        }
+    }            
+}
 
 // #####
 // setup
@@ -440,11 +492,13 @@ void setup() {
 
     // custom settings
     
-    pinMode(SENSOR_1, INPUT); 
-    pinMode(SENSOR_2, INPUT); 
-    pinMode(SENSOR_3, INPUT); 
-    
-    sensor_3_last_value = analogRead(SENSOR_3);
+    pinMode(DIRECTION, OUTPUT); 
+    pinMode(STEP, OUTPUT); 
+    pinMode(RELAIS_CONTROL, OUTPUT);  
+
+    digitalWrite(DIRECTION, LOW);
+    digitalWrite(STEP, LOW);
+    digitalWrite(RELAIS_CONTROL, LOW);   
 }
 
 
@@ -470,40 +524,9 @@ void loop() {
         send_update_report = false;
     } 
     
-    update_timer_counter = update_timer_counter + 10;
+    update_timer_counter = update_timer_counter + 100;
 
-    // custom settings
-
-    // if occupancy is true, freeze illuminance value for 30 seconds
-    if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
-        disable_sensor_3_timer = 30000;
-    }   
-
-    // illuminance timer
-    if (disable_sensor_3_timer > 0){
-        disable_sensor_3_timer = disable_sensor_3_timer - 10; 
-    } else {
-        disable_sensor_3_timer = 0;
-    }
-
-    // read illuminance sensor ?    
-    if (disable_sensor_3_timer == 0){
-        sensor_3_last_value = analogRead(SENSOR_3);
-    }           
-
-    // send message ?     
-    if (digitalRead(SENSOR_1) == 1 or 
-        digitalRead(SENSOR_2) == 1 or 
-        sensor_1_last_value != digitalRead(SENSOR_1) or 
-        sensor_2_last_value != digitalRead(SENSOR_2)){
-
-        sensor_1_last_value = digitalRead(SENSOR_1);
-        sensor_2_last_value = digitalRead(SENSOR_2);
-        send_default_mqtt_message();
-        delay(1000);
-    } 
-
-    delay(10);
+    delay(100);
     client.loop();
 }
 

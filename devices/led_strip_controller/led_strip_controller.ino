@@ -43,7 +43,7 @@ int PIN_LED_RED   = 12;                          // D6
 // CUSTOM SETTINGS
 // ###############
 
-int TRANSISTOR_CONTROL = 4;                      // D2
+int RELAIS_CONTROL = 4;                          // D2
 
 char model[40]       = "led_strip_controller";
 char device_type[40] = "led_rgb";
@@ -239,6 +239,40 @@ void get_ieeeAddr() {
 }
 
 
+// #########################
+// MQTT send default message
+// #########################
+
+void send_default_mqtt_message() {
+
+    // create channel  
+    String payload_path = "smarthome/mqtt/" + String(ieeeAddr);      
+    char attributes[100];
+    payload_path.toCharArray( path, 100 );    
+ 
+    // create msg as json
+    DynamicJsonDocument msg(128);
+
+    msg["state"]      = state;
+    msg["brightness"] = brightness;
+    msg["color"]["r"] = red;
+    msg["color"]["g"] = green;
+    msg["color"]["b"] = blue;
+
+    // convert msg to char
+    char msg_Char[128];
+    serializeJson(msg, msg_Char);
+
+    Serial.print("Channel: ");
+    Serial.println(path);
+    Serial.print("Publish message: ");
+    Serial.println(msg_Char);
+    Serial.println();
+    
+    client.publish(path, msg_Char);    
+}
+
+
 // ###########
 // MQTT server
 // ###########
@@ -421,40 +455,6 @@ void callback (char* topic, byte* payload, unsigned int length) {
 }
 
 
-// #########################
-// MQTT send default message
-// #########################
-
-void send_default_mqtt_message() {
-
-    // create channel  
-    String payload_path = "smarthome/mqtt/" + String(ieeeAddr);      
-    char attributes[100];
-    payload_path.toCharArray( path, 100 );    
- 
-    // create msg as json
-    DynamicJsonDocument msg(128);
-
-    msg["state"]      = state;
-    msg["brightness"] = brightness;
-    msg["color"]["r"] = red;
-    msg["color"]["g"] = green;
-    msg["color"]["b"] = blue;
-
-    // convert msg to char
-    char msg_Char[128];
-    serializeJson(msg, msg_Char);
-
-    Serial.print("Channel: ");
-    Serial.println(path);
-    Serial.print("Publish message: ");
-    Serial.println(msg_Char);
-    Serial.println();
-    
-    client.publish(path, msg_Char);    
-}
-
-
 // #####
 // setup
 // #####
@@ -502,8 +502,8 @@ void setup() {
 
     // custom settings
     
-    pinMode(TRANSISTOR_CONTROL, OUTPUT);  
-    digitalWrite(TRANSISTOR_CONTROL, LOW);   
+    pinMode(RELAIS_CONTROL, OUTPUT);  
+    digitalWrite(RELAIS_CONTROL, LOW);   
     
     FastLED.addLeds<WS2813, DATA_PIN, RGB>(leds, NUM_LEDS);
 }
@@ -538,7 +538,7 @@ void loop() {
     if (state_changed == true){   
 
         if (brightness != 0){   
-            digitalWrite(TRANSISTOR_CONTROL, HIGH); 
+            digitalWrite(RELAIS_CONTROL, HIGH); 
 
             delay(250);
           
@@ -548,7 +548,7 @@ void loop() {
             FastLED.show();
 
         } else {
-            digitalWrite(TRANSISTOR_CONTROL, LOW);  
+            digitalWrite(RELAIS_CONTROL, LOW);  
         }
 
         state_changed == false;

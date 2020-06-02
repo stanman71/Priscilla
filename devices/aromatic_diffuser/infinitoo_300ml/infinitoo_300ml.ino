@@ -293,6 +293,36 @@ void reconnect() {
 }
 
 
+// #########################
+// MQTT send default message
+// #########################
+
+void send_default_mqtt_message() {
+
+    // create channel  
+    String payload_path = "smarthome/mqtt/" + String(ieeeAddr);      
+    char attributes[100];
+    payload_path.toCharArray( path, 100 );    
+ 
+    // create msg as json
+    DynamicJsonDocument msg(256); 
+    msg["state"] = state;
+    msg["level"] = level;
+
+    // convert msg to char
+    char msg_Char[256];
+    serializeJson(msg, msg_Char);
+
+    Serial.print("Channel: ");
+    Serial.println(path);
+    Serial.print("Publish message: ");
+    Serial.println(msg_Char);
+    Serial.println();
+    
+    client.publish(path, msg_Char);    
+}
+
+
 // ######################
 // MQTT control functions
 // ######################
@@ -664,36 +694,6 @@ void callback (char* topic, byte* payload, unsigned int length) {
             send_default_mqtt_message(); 
         }
     }     
-}
-
-
-// #########################
-// MQTT send default message
-// #########################
-
-void send_default_mqtt_message() {
-
-    // create channel  
-    String payload_path = "smarthome/mqtt/" + String(ieeeAddr);      
-    char attributes[100];
-    payload_path.toCharArray( path, 100 );    
- 
-    // create msg as json
-    DynamicJsonDocument msg(256); 
-    msg["state"] = state;
-    msg["level"] = level;
-
-    // convert msg to char
-    char msg_Char[256];
-    serializeJson(msg, msg_Char);
-
-    Serial.print("Channel: ");
-    Serial.println(path);
-    Serial.print("Publish message: ");
-    Serial.println(msg_Char);
-    Serial.println();
-    
-    client.publish(path, msg_Char);    
 }
 
 
