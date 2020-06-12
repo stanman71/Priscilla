@@ -267,8 +267,8 @@ class Programs(db.Model):
     line_active_30    = db.Column(db.String(50), server_default=(""))
     line_content_30   = db.Column(db.String(50), server_default=(""))    
 
-class Scheduler_Tasks(db.Model):
-    __tablename__ = 'scheduler_tasks'
+class Scheduler_Jobs(db.Model):
+    __tablename__ = 'scheduler_jobs'
     id                          = db.Column(db.Integer, primary_key=True, autoincrement = True)
     name                        = db.Column(db.String(50), unique=True)
     task                        = db.Column(db.String(50))
@@ -305,8 +305,8 @@ class Scheduler_Tasks(db.Model):
     option_away                 = db.Column(db.String(50), server_default=("None")) 
     ip_addresses                = db.Column(db.String(50), server_default=("None")) 
     collapse                    = db.Column(db.String(50)) 
-    task_errors                 = db.Column(db.String(50)) 
-    task_setting_errors         = db.Column(db.String(50))     
+    job_errors                  = db.Column(db.String(50)) 
+    job_setting_errors          = db.Column(db.String(50))     
 
 class Sensordata_Jobs(db.Model):
     __tablename__  = 'sensordata_jobs'
@@ -374,7 +374,7 @@ if eMail.query.filter_by().first() == None:
     db.session.commit()
    
 # ###############
-# scheduler tasks
+# scheduler jobs
 # ###############
 
 update_devices_found  = False
@@ -383,20 +383,20 @@ backup_zigbee_found   = False
 reset_log_files_found = False
 reset_system_found    = False
 
-for task in Scheduler_Tasks.query.all():
-    if task.name.lower() == "update_devices":
+for job in Scheduler_Jobs.query.all():
+    if job.name.lower() == "update_devices":
         update_devices_found = True
-    if task.name.lower() == "backup_database":
+    if job.name.lower() == "backup_database":
         backup_database_found = True
-    if task.name.lower() == "backup_zigbee":
+    if job.name.lower() == "backup_zigbee":
         backup_zigbee_found = True        
-    if task.name.lower() == "reset_log_files":
+    if job.name.lower() == "reset_log_files":
         reset_log_files_found = True
-    if task.name.lower() == "reset_system":
+    if job.name.lower() == "reset_system":
         reset_system_found = True
 
 if update_devices_found == False:
-    scheduler_task_update_devices = Scheduler_Tasks(
+    scheduler_job_update_devices = Scheduler_Jobs(
         name           = "update_devices",
         task           = "update_devices",
         visible        = "False",
@@ -406,11 +406,11 @@ if update_devices_found == False:
         hour           = "00",
         minute         = "00",       
     )
-    db.session.add(scheduler_task_update_devices)
+    db.session.add(scheduler_job_update_devices)
     db.session.commit()
 
 if backup_database_found == False:
-    scheduler_task_backup_database = Scheduler_Tasks(
+    scheduler_job_backup_database = Scheduler_Jobs(
         name          = "backup_database",
         task          = "backup_database",
         visible       = "False",        
@@ -420,11 +420,11 @@ if backup_database_found == False:
         hour          = "22",
         minute        = "00",        
     )
-    db.session.add(scheduler_task_backup_database)
+    db.session.add(scheduler_job_backup_database)
     db.session.commit()
 
 if backup_zigbee_found == False:
-    scheduler_task_backup_zigbee = Scheduler_Tasks(
+    scheduler_job_backup_zigbee = Scheduler_Jobs(
         name          = "backup_zigbee",
         task          = "backup_zigbee",
         visible       = "False",        
@@ -434,11 +434,11 @@ if backup_zigbee_found == False:
         hour          = "22",
         minute        = "30",        
     )
-    db.session.add(scheduler_task_backup_zigbee)
+    db.session.add(scheduler_job_backup_zigbee)
     db.session.commit()
 
 if reset_log_files_found == False:
-    scheduler_task_reset_log_files = Scheduler_Tasks(
+    scheduler_job_reset_log_files = Scheduler_Jobs(
         name          = "reset_log_files",
         task          = "reset_log_files",
         visible       = "False",        
@@ -448,11 +448,11 @@ if reset_log_files_found == False:
         hour          = "00",
         minute        = "30",        
     )
-    db.session.add(scheduler_task_reset_log_files)
+    db.session.add(scheduler_job_reset_log_files)
     db.session.commit()
 
 if reset_system_found == False:
-    scheduler_task_reset_system = Scheduler_Tasks(
+    scheduler_job_reset_system = Scheduler_Jobs(
         name          = "reset_system",
         task          = "reset_system",
         visible       = "False",        
@@ -462,7 +462,7 @@ if reset_system_found == False:
         hour          = "05",
         minute        = "00",        
     )
-    db.session.add(scheduler_task_reset_system)
+    db.session.add(scheduler_job_reset_system)
     db.session.commit()
 
 # #######
@@ -1227,7 +1227,7 @@ def DELETE_DEVICE(ieeeAddr):
     error_list = ""
 
     # check scheduler sensor
-    entries = GET_ALL_SCHEDULER_TASKS()
+    entries = GET_ALL_SCHEDULER_JOBS()
     for entry in entries:
         if (entry.device_ieeeAddr_1 == ieeeAddr) or (entry.device_ieeeAddr_2 == ieeeAddr):
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
@@ -3047,53 +3047,53 @@ def DELETE_PROGRAM(id):
 """ ################## """
 
 
-def GET_SCHEDULER_TASK_BY_ID(id):
-    return Scheduler_Tasks.query.filter_by(id=id).first()
+def GET_SCHEDULER_JOB_BY_ID(id):
+    return Scheduler_Jobs.query.filter_by(id=id).first()
 
 
-def GET_SCHEDULER_TASK_BY_NAME(name):
-    for task in Scheduler_Tasks.query.all():
+def GET_SCHEDULER_JOB_BY_NAME(name):
+    for job in Scheduler_Jobs.query.all():
         
-        if task.name.lower() == name.lower():
-            return task    
+        if job.name.lower() == name.lower():
+            return job    
     
 
-def GET_ALL_SCHEDULER_TASKS():
-    return Scheduler_Tasks.query.all()    
+def GET_ALL_SCHEDULER_JOBS():
+    return Scheduler_Jobs.query.all()    
 
 
-def ADD_SCHEDULER_TASK():
+def ADD_SCHEDULER_JOB():
     for i in range(1,31):
-        if Scheduler_Tasks.query.filter_by(id=i).first():
+        if Scheduler_Jobs.query.filter_by(id=i).first():
             pass
         else:
-            # add the new task
-            new_task = Scheduler_Tasks(
+            # add the new job
+            new_job = Scheduler_Jobs(
                     id            = i,
-                    name          = "new_scheduler_task_" + str(i),
+                    name          = "new_scheduler_job_" + str(i),
                     visible       = "True",
                     option_repeat = "True",
                 )
-            db.session.add(new_task)
+            db.session.add(new_job)
             db.session.commit()
 
-            SET_SCHEDULER_TASK_COLLAPSE_OPEN(i)
+            SET_SCHEDULER_JOB_COLLAPSE_OPEN(i)
         
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Task - " + "new_scheduler_task_" + str(i) + " | added")             
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Job - " + "new_scheduler_job_" + str(i) + " | added")             
             return True
 
     return "Limit reached (30)"
 
 
-def SET_SCHEDULER_TASK(id, name, task,
-                       trigger_time, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause, 
-                       day, hour, minute, 
-                       option_sunrise, option_sunset, latitude, longitude,
-                       device_ieeeAddr_1, device_name_1, device_input_values_1, sensor_key_1, operator_1, value_1, main_operator_second_sensor,
-                       device_ieeeAddr_2, device_name_2, device_input_values_2, sensor_key_2, operator_2, value_2, 
-                       option_home, option_away, ip_addresses):
+def SET_SCHEDULER_JOB(id, name, task,
+                      trigger_time, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause, 
+                      day, hour, minute, 
+                      option_sunrise, option_sunset, latitude, longitude,
+                      device_ieeeAddr_1, device_name_1, device_input_values_1, sensor_key_1, operator_1, value_1, main_operator_second_sensor,
+                      device_ieeeAddr_2, device_name_2, device_input_values_2, sensor_key_2, operator_2, value_2, 
+                      option_home, option_away, ip_addresses):
                              
-    entry         = Scheduler_Tasks.query.filter_by(id=id).first()
+    entry         = Scheduler_Jobs.query.filter_by(id=id).first()
     previous_name = entry.name
 
     # values changed ?
@@ -3208,71 +3208,71 @@ def SET_SCHEDULER_TASK(id, name, task,
 
         db.session.commit()   
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Task - " + str(previous_name) + " | changed" + changes) 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Job - " + str(previous_name) + " | changed" + changes) 
         return True
 
 
-def SET_SCHEDULER_TASK_ERRORS(id, task_errors):
-    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+def SET_SCHEDULER_JOB_ERRORS(id, job_errors):
+    entry = Scheduler_Jobs.query.filter_by(id=id).first()
 
-    if entry.task_errors != task_errors:
-        entry.task_errors = task_errors       
+    if entry.job_errors != job_errors:
+        entry.job_errors = job_errors       
         db.session.commit()     
 
 
-def SET_SCHEDULER_TASK_SETTING_ERRORS(id, task_setting_errors):
-    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+def SET_SCHEDULER_JOB_SETTING_ERRORS(id, job_setting_errors):
+    entry = Scheduler_Jobs.query.filter_by(id=id).first()
 
-    if entry.task_setting_errors != task_setting_errors:
-        entry.task_setting_errors = task_setting_errors       
+    if entry.job_setting_errors != job_setting_errors:
+        entry.job_setting_errors = job_setting_errors       
         db.session.commit()     
 
 
-def SET_SCHEDULER_TASK_COLLAPSE_OPEN(id):
-    list_scheduler_tasks = Scheduler_Tasks.query.all()
+def SET_SCHEDULER_JOB_COLLAPSE_OPEN(id):
+    list_scheduler_jobs = Scheduler_Jobs.query.all()
     
-    for scheduler_task in list_scheduler_tasks:
-        scheduler_task.collapse = ""
+    for scheduler_job in list_scheduler_jobs:
+        scheduler_job.collapse = ""
         db.session.commit()   
   
-    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+    entry = Scheduler_Jobs.query.filter_by(id=id).first()
     
     entry.collapse = "True"
     db.session.commit()       
  
  
-def RESET_SCHEDULER_TASK_COLLAPSE():
-    list_scheduler_tasks = Scheduler_Tasks.query.all()
+def RESET_SCHEDULER_JOB_COLLAPSE():
+    list_scheduler_jobs = Scheduler_Jobs.query.all()
     
-    for scheduler_task in list_scheduler_tasks:
-        scheduler_task.collapse = ""
+    for scheduler_job in list_scheduler_jobs:
+        scheduler_job.collapse = ""
         db.session.commit()   
   
 
-def GET_SCHEDULER_TASK_SUNRISE(id):    
-    return (Scheduler_Tasks.query.filter_by(id=id).first().sunrise)
+def GET_SCHEDULER_JOB_SUNRISE(id):    
+    return (Scheduler_Jobs.query.filter_by(id=id).first().sunrise)
     
 
-def SET_SCHEDULER_TASK_SUNRISE(id, sunrise):    
-    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+def SET_SCHEDULER_JOB_SUNRISE(id, sunrise):    
+    entry = Scheduler_Jobs.query.filter_by(id=id).first()
 
     entry.sunrise = sunrise
     db.session.commit()   
 
 
-def GET_SCHEDULER_TASK_SUNSET(id):    
-    return (Scheduler_Tasks.query.filter_by(id=id).first().sunset)
+def GET_SCHEDULER_JOB_SUNSET(id):    
+    return (Scheduler_Jobs.query.filter_by(id=id).first().sunset)
 
 
-def SET_SCHEDULER_TASK_SUNSET(id, sunset):    
-    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+def SET_SCHEDULER_JOB_SUNSET(id, sunset):    
+    entry = Scheduler_Jobs.query.filter_by(id=id).first()
 
     entry.sunset = sunset
     db.session.commit()   
 
 
-def ADD_SCHEDULER_TASK_SECOND_SENSOR(id):
-    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+def ADD_SCHEDULER_JOB_SECOND_SENSOR(id):
+    entry = Scheduler_Jobs.query.filter_by(id=id).first()
 
     if entry.main_operator_second_sensor == "None" or entry.main_operator_second_sensor == None:
         entry.main_operator_second_sensor = "and"
@@ -3280,8 +3280,8 @@ def ADD_SCHEDULER_TASK_SECOND_SENSOR(id):
     db.session.commit()
 
 
-def REMOVE_SCHEDULER_TASK_SECOND_SENSOR(id):
-    entry = Scheduler_Tasks.query.filter_by(id=id).first()
+def REMOVE_SCHEDULER_JOB_SECOND_SENSOR(id):
+    entry = Scheduler_Jobs.query.filter_by(id=id).first()
     
     if entry.main_operator_second_sensor != "None":
         entry.main_operator_second_sensor = "None"
@@ -3289,56 +3289,56 @@ def REMOVE_SCHEDULER_TASK_SECOND_SENSOR(id):
     db.session.commit()
 
 
-def CHANGE_SCHEDULER_TASK_POSITION(id, direction):
+def CHANGE_SCHEDULER_JOB_POSITION(id, direction):
     
-    list_scheduler_tasks = Scheduler_Tasks.query.all() 
+    list_scheduler_jobs = Scheduler_Jobs.query.all() 
     
     if direction == "up":
         
-        # reverse task list
-        task_list = list_scheduler_tasks[::-1]
+        # reverse job list
+        job_list = list_scheduler_jobs[::-1]
         
-        for task in task_list:  
-            if task.id < id:
+        for job in job_list:  
+            if job.id < id:
                 
-                new_id = task.id
+                new_id = job.id
                 
                 # change ids
-                task_1 = GET_SCHEDULER_TASK_BY_ID(id)
-                task_2 = GET_SCHEDULER_TASK_BY_ID(new_id)
+                job_1 = GET_SCHEDULER_JOB_BY_ID(id)
+                job_2 = GET_SCHEDULER_JOB_BY_ID(new_id)
                 
-                task_1.id = 99
+                job_1.id = 99
                 db.session.commit()
                 
-                task_2.id = id
-                task_1.id = new_id
+                job_2.id = id
+                job_1.id = new_id
                 db.session.commit()         
                 return 
 
     if direction == "down":
-        for task in list_scheduler_tasks:
-            if task.id > id:       
-                new_id = task.id
+        for job in list_scheduler_jobs:
+            if job.id > id:       
+                new_id = job.id
                 
                 # change ids
-                task_1 = GET_SCHEDULER_TASK_BY_ID(id)
-                task_2 = GET_SCHEDULER_TASK_BY_ID(new_id)
+                job_1 = GET_SCHEDULER_JOB_BY_ID(id)
+                job_2 = GET_SCHEDULER_JOB_BY_ID(new_id)
                 
-                task_1.id = 99
+                job_1.id = 99
                 db.session.commit()
                 
-                task_2.id = id
-                task_1.id = new_id
+                job_2.id = id
+                job_1.id = new_id
                 db.session.commit()      
                 return 
        
        
-def UPDATE_SCHEDULER_TASKS_DEVICE_NAMES():
-    tasks = GET_ALL_SCHEDULER_TASKS()
+def UPDATE_SCHEDULER_JOBS_DEVICE_NAMES():
+    jobs = GET_ALL_SCHEDULER_JOBS()
     
-    for task in tasks:
+    for job in jobs:
         
-        entry = Scheduler_Tasks.query.filter_by(id=task.id).first()
+        entry = Scheduler_Jobs.query.filter_by(id=job.id).first()
         
         try:
             entry.device_name_1         = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr_1).name
@@ -3354,15 +3354,15 @@ def UPDATE_SCHEDULER_TASKS_DEVICE_NAMES():
     db.session.commit()
             
 
-def DELETE_SCHEDULER_TASK(task_id):
-    entry = GET_SCHEDULER_TASK_BY_ID(task_id)
+def DELETE_SCHEDULER_JOB(job_id):
+    entry = GET_SCHEDULER_JOB_BY_ID(job_id)
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Task - " + str(entry.name) + " | deleted")   
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Job - " + str(entry.name) + " | deleted")   
     except:
         pass         
     
-    Scheduler_Tasks.query.filter_by(id=task_id).delete()
+    Scheduler_Jobs.query.filter_by(id=job_id).delete()
     db.session.commit()
     return True
 

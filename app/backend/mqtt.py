@@ -428,7 +428,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                     WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job - " + job.name + " | " + str(e))
 
         # start schedular job 
-        for task in GET_ALL_SCHEDULER_TASKS():
+        for task in GET_ALL_SCHEDULER_JOBS():
             if task.trigger_sensors == "True" and task.option_pause != "True":
                 heapq.heappush(process_management_queue, (10, ("scheduler", task.id, ieeeAddr)))
 

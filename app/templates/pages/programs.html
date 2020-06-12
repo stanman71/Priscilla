@@ -139,16 +139,17 @@
 
 <!-- error message program tasks -->
 
-{% if error_message_program_tasks != [] %}
+{% if error_message_program_tasks != "" %}
   <div class="alert alert-danger">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    {% for error in error_message_program_tasks %}
+    {% for error in error_message_program_tasks.split(",") %}
       {{ error }} <br>
-    {% endfor %}
+    {% endfor %}    
   </div>      
 {% endif %}  
+
 
             <div class="card ">         
               <form method="POST">                  
@@ -1408,6 +1409,33 @@
                             </div>                              
                           </td>                                
                         </tr>
+                        <tr>
+                          <td>lighting # brightness # bedroom # TURN_UP</td>
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                increase brightness in "bedroom" by 20%
+                              </div>
+                            </div>  
+                            <br>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                TURN_UP >>
+                              </div>
+                              <div class="col-sm-8"> 
+                                increase brightness
+                              </div>                        
+                            </div>                                            
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                TURN_DOWN >> 
+                              </div>
+                              <div class="col-sm-8"> 
+                                decrease brightness
+                              </div>                        
+                            </div>
+                          </td>
+                        </tr>                          
                         <tr>
                           <td>lighting # light # LED_FLOOR # 255 0 0 # 100</td>
                           <td>

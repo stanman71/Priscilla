@@ -6,7 +6,7 @@ from functools           import wraps
 from app                         import app
 from app.backend.database_models import *
 from app.backend.process_program import * 
-from app.backend.checks          import CHECK_PROGRAM_TASKS
+from app.backend.checks          import CHECK_TASKS
 from app.backend.spotify         import GET_SPOTIFY_TOKEN
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
@@ -18,14 +18,14 @@ import spotipy
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        try:
-            if current_user.role == "user" or current_user.role == "administrator":
-                return f(*args, **kwargs)
-            else:
-                return redirect(url_for('logout'))
-        except Exception as e:
-            print(e)
+        #try:
+        if current_user.role == "user" or current_user.role == "administrator":
+            return f(*args, **kwargs)
+        else:
             return redirect(url_for('logout'))
+        #except Exception as e:
+        #    print(e)
+        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -369,7 +369,7 @@ def programs():
     dropdown_list_programs = GET_ALL_PROGRAMS()
 
     if selected_program != "":
-        error_message_program_tasks = CHECK_PROGRAM_TASKS(selected_program.id)        
+        error_message_program_tasks = CHECK_TASKS(selected_program.id, "program")        
     else:
         error_message_program_tasks = []
 

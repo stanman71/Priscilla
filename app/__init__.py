@@ -34,7 +34,7 @@ else:
 """ ####### """
 
 app = Flask(__name__, static_url_path='/static')
-app.config['SECRET_KEY']                     = os.urandom(20).hex()
+app.config['SECRET_KEY']                     = "randon" #os.urandom(20).hex()
 app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///' + PATH + '/data/database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SEND_FILE_MAX_AGE_DEFAULT']      = 1
@@ -415,31 +415,31 @@ scheduler.start()
 
 @scheduler.task('cron', id='update_sunrise_sunset', hour='*')
 def update_sunrise_sunset():
-    for task in GET_ALL_SCHEDULER_TASKS():
+    for job in GET_ALL_SCHEDULER_JOBS():
 
-        if task.trigger_sun_position == "True":
-            if task.option_sunrise == "True" or task.option_sunset == "True":
+        if job.trigger_sun_position == "True":
+            if job.option_sunrise == "True" or job.option_sunset == "True":
 
                 # get coordinates
-                if task.latitude != "None" and task.latitude != None and task.longitude != "None" and task.longitude:
+                if job.latitude != "None" and job.latitude != None and job.longitude != "None" and job.longitude:
 
                     # update sunrise / sunset
-                    SET_SCHEDULER_TASK_SUNRISE(task.id, GET_SUNRISE_TIME(float(task.latitude), float(task.longitude)))
-                    SET_SCHEDULER_TASK_SUNSET(task.id, GET_SUNSET_TIME(float(task.latitude), float(task.longitude)))
+                    SET_SCHEDULER_JOB_SUNRISE(job.id, GET_SUNRISE_TIME(float(job.latitude), float(job.longitude)))
+                    SET_SCHEDULER_JOB_SUNSET(job.id, GET_SUNSET_TIME(float(job.latitude), float(job.longitude)))
                             
 
 @scheduler.task('cron', id='scheduler_time', minute='*')
 def scheduler_time():
-    for task in GET_ALL_SCHEDULER_TASKS():
-        if (task.trigger_time == "True" or task.trigger_sun_position == "True") and task.option_pause != "True":
-            heapq.heappush(process_management_queue, (20, ("scheduler", task.id, "")))         
+    for job in GET_ALL_SCHEDULER_JOBS():
+        if (job.trigger_time == "True" or job.trigger_sun_position == "True") and job.option_pause != "True":
+            heapq.heappush(process_management_queue, (20, ("scheduler", job.id, "")))         
     
 
 @scheduler.task('cron', id='scheduler_ping', second='0, 15, 30, 45')
 def scheduler_ping(): 
-    for task in GET_ALL_SCHEDULER_TASKS():
-        if task.trigger_position == "True" and task.option_pause != "True":
-            heapq.heappush(process_management_queue, (20, ("scheduler", task.id, "")))
+    for job in GET_ALL_SCHEDULER_JOBS():
+        if job.trigger_position == "True" and job.option_pause != "True":
+            heapq.heappush(process_management_queue, (20, ("scheduler", job.id, "")))
 
 
 """ #### """

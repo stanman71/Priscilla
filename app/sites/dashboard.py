@@ -4,15 +4,15 @@ from werkzeug.exceptions       import HTTPException, NotFound, abort
 from functools                 import wraps
 from flask_mobility.decorators import mobile_template
 
-from app                         import app, socketio
-from app.backend.database_models import *
-from app.backend.lighting        import *
-from app.backend.spotify         import *
-from app.backend.mqtt            import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD
-from app.backend.process_program import *
-from app.backend.file_management import WRITE_LOGFILE_SYSTEM
-from app.common                  import COMMON, STATUS
-from app.assets                  import *
+from app                          import app, socketio
+from app.backend.database_models  import *
+from app.backend.lighting         import *
+from app.backend.spotify          import *
+from app.backend.mqtt             import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD
+from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
+from app.backend.shared_resources import *
+from app.common                   import COMMON, STATUS
+from app.assets                   import *
 
 
 import os, shutil, re, cgi
@@ -151,7 +151,8 @@ def dashboard():
     """ ########## """   
 
     if request.form.get("start_program") != None:
-        START_PROGRAM_THREAD(request.form.get("select_program"))
+        program_id = request.form.get("select_program")
+        heapq.heappush(process_management_queue, (10, ("program", program_id, "start"))) 
 
 
     """ ####### """

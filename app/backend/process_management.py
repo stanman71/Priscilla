@@ -1,5 +1,4 @@
 import heapq
-import re
 import threading
 import time
 
@@ -9,6 +8,7 @@ from app.backend.file_management    import WRITE_LOGFILE_SYSTEM
 from app.backend.email              import SEND_EMAIL
 from app.backend.shared_resources   import process_management_queue
 from app.backend.process_controller import PROCESS_CONTROLLER
+from app.backend.process_program    import PROCESS_PROGRAM
 from app.backend.process_scheduler  import PROCESS_SCHEDULER
 
 
@@ -47,18 +47,28 @@ def PROCESS_MANAGEMENT():
                 PROCESS_CONTROLLER(ieeeAddr, msg)           
 
 
+            # #######
+            # program
+            # #######
+                                    
+            if process[0] == "program": 
+                program = process[1]     
+                command = process[2]
+
+                PROCESS_PROGRAM(program, command) 
+
+
             # #########
             # scheduler
             # #########
                                     
-            if process[0] == "scheduler":
-                
-                task     = GET_SCHEDULER_TASK_BY_ID(process[1])
+            if process[0] == "scheduler":         
+                task     = GET_SCHEDULER_JOB_BY_ID(process[1])
                 ieeeAddr = process[2]
                 
                 PROCESS_SCHEDULER(task, ieeeAddr)
-            
-  
+
+
         except Exception as e:         
             try:   
                 if "index out of range" not in str(e) and "argument of type 'NoneType' is not iterable" not in str(e):

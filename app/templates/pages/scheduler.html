@@ -353,30 +353,30 @@
             </div>
 
 
-<!------------------------>
-<!-- ADD SCHEDULER TASK -->
-<!------------------------>
+<!----------------------->
+<!-- ADD SCHEDULER JOB -->
+<!----------------------->
 
-<!-- success message add scheduler task -->
+<!-- success message add scheduler job -->
 
-{% if success_message_add_scheduler_task == True %}
+{% if success_message_add_scheduler_job == True %}
   <div class="alert alert-success">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    <span>Task successfully added</span>
+    <span>Job successfully added</span>
   </div>
 {% endif %}  
 
-<!-- error message add scheduler task --> 
+<!-- error message add scheduler job --> 
 
-{% if error_message_add_scheduler_task != [] %}
+{% if error_message_add_scheduler_job != [] %}
   <div class="alert alert-info alert-with-icon" data-notify="container">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
     <span data-notify="icon" class="tim-icons icon-bell-55"></span>
-    {% for error in error_message_add_scheduler_task %}
+    {% for error in error_message_add_scheduler_job %}
       <span data-notify="message">{{ error }}</span>
     {% endfor %}
   </div>
@@ -386,15 +386,15 @@
             <div class="card">
               <form method="POST">         
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/scheduler#'" name="add_scheduler_task" class="btn btn-fill btn-primary">NEW SCHEDULER TASK</button>
+                  <button type="submit" onclick="window.location.href='/scheduler#'" name="add_scheduler_job" class="btn btn-fill btn-primary">NEW SCHEDULER JOB</button>
                 </div>
               </form>
             </div>
 
 
-<!---------------------------->
-<!-- SCHEDULER TASKS TABLE  -->
-<!---------------------------->   
+<!--------------------------->
+<!-- SCHEDULER JOBS TABLE  -->
+<!--------------------------->   
 
 <!-- success message change settings -->
 
@@ -423,15 +423,15 @@
 {% endif %}  
 
 
-{% for entry in list_scheduler_tasks %}
+{% for entry in list_scheduler_jobs %}
 
   {% if entry.visible == "True" %}
 
   <section id="table_{{entry.id}}"></section>  
 
-  <!-- success message change settings scheduler task -->
+  <!-- success message change settings scheduler job -->
 
-  {% if success_message_change_settings_scheduler_task == entry.id %}
+  {% if success_message_change_settings_scheduler_job == entry.id %}
     <div class="alert alert-success">
       <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
         <i class="tim-icons icon-simple-remove"></i>
@@ -440,20 +440,20 @@
     </div>
   {% endif %}  
 
-<!-- error message scheduler tasks -->
+<!-- error message scheduler jobs -->
 
-{% if entry.task_setting_errors != "" or entry.task_errors != "" %}
+{% if entry.job_setting_errors != "" or entry.job_errors != "" %}
   <div class="alert alert-danger">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    {% if entry.task_setting_errors != "" %}
-      {% for error in entry.task_setting_errors.split(",")  %}
+    {% if entry.job_setting_errors != "" %}
+      {% for error in entry.job_setting_errors.split(",")  %}
         {{ error | replace(';', ',') }} <br>
       {% endfor %}
     {% endif %} 
-    {% if entry.task_errors != "" %}
-      {% for error in entry.task_errors.split(",") %}
+    {% if entry.job_errors != "" %}
+      {% for error in entry.job_errors.split(",") %}
         {{ error }} <br>
       {% endfor %}    
     {% endif %} 
@@ -809,7 +809,7 @@
                           </div>          
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                            <button type="submit" onclick="window.location.href='/scheduler#'" name="delete_scheduler_task_{{entry.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
+                            <button type="submit" onclick="window.location.href='/scheduler#'" name="delete_scheduler_job_{{entry.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
                           </div>
                         </div>
                       </div>
@@ -825,7 +825,7 @@
 {% endfor %}
 
 <!------------------------------>
-<!-- SCHEDULER TASKS OPTIONS  -->
+<!-- SCHEDULER JOBS OPTIONS   -->
 <!------------------------------>   
 
             <div class="card">
@@ -903,6 +903,33 @@
                           <td>lighting # turn_off # group # kitchen, bathroom</td>
                           <td>turn off the lights of group "bathroom" and "kitchen"</td>
                         </tr>  
+                        <tr>
+                          <td>lighting # brightness # bedroom # TURN_UP</td>
+                          <td>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-12"> 
+                                increase brightness in "bedroom" by 20%
+                              </div>
+                            </div>  
+                            <br>
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                TURN_UP >>
+                              </div>
+                              <div class="col-sm-8"> 
+                                increase brightness
+                              </div>                        
+                            </div>                                            
+                            <div class="row justify-content-md-center">
+                              <div class="col-sm-4"> 
+                                TURN_DOWN >> 
+                              </div>
+                              <div class="col-sm-8"> 
+                                decrease brightness
+                              </div>                        
+                            </div>
+                          </td>
+                        </tr>                          
                         <tr>                        
                           <td>lighting # turn_off # light # LED_FLOOR</td>
                           <td>turn off the light "LED_FLOOR"</td>

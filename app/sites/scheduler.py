@@ -5,7 +5,7 @@ from functools           import wraps
 
 from app                           import app
 from app.backend.database_models   import *
-from app.backend.checks            import CHECK_TASKS, CHECK_SCHEDULER_TASK_SETTINGS
+from app.backend.checks            import CHECK_TASKS, CHECK_SCHEDULER_JOB_SETTINGS
 from app.backend.process_scheduler import GET_SUNRISE_TIME, GET_SUNSET_TIME
 from app.backend.spotify           import GET_SPOTIFY_TOKEN
 from app.common                    import COMMON, STATUS
@@ -37,37 +37,37 @@ def scheduler():
     page_title       = 'Callisto | Scheduler'
     page_description = 'The scheduler configuration page.'
 
-    success_message_change_settings                = []
-    error_message_change_settings                  = []       
-    success_message_add_scheduler_task             = []
-    error_message_add_scheduler_task               = []
-    success_message_change_settings_scheduler_task = "" 
+    success_message_change_settings               = []
+    error_message_change_settings                 = []       
+    success_message_add_scheduler_job             = []
+    error_message_add_scheduler_job               = []
+    success_message_change_settings_scheduler_job = "" 
 
-    RESET_SCHEDULER_TASK_COLLAPSE()
-    UPDATE_SCHEDULER_TASKS_DEVICE_NAMES()
+    RESET_SCHEDULER_JOB_COLLAPSE()
+    UPDATE_SCHEDULER_JOBS_DEVICE_NAMES()
 
 
-    """ #################### """
-    """  add scheduler task  """
-    """ #################### """   
+    """ ################### """
+    """  add scheduler job  """
+    """ ################### """   
 
-    if request.form.get("add_scheduler_task") != None: 
-        result = ADD_SCHEDULER_TASK()   
+    if request.form.get("add_scheduler_job") != None: 
+        result = ADD_SCHEDULER_JOB()   
         if result != True: 
-            error_message_add_scheduler_task.append(result)         
+            error_message_add_scheduler_job.append(result)         
 
         else:       
-            success_message_add_scheduler_task = True
+            success_message_add_scheduler_job = True
 
 
 
-    """ ####################### """
-    """  table scheduler tasks  """
-    """ ####################### """   
+    """ ###################### """
+    """  table scheduler jobs  """
+    """ ###################### """   
 
     # set collapse open 
     if session.get("set_collapse_open", None) != None:
-        SET_SCHEDULER_TASK_COLLAPSE_OPEN(session.get('set_collapse_open'))
+        SET_SCHEDULER_JOB_COLLAPSE_OPEN(session.get('set_collapse_open'))
         session['set_collapse_open'] = None
 
     if request.form.get("save_scheduler_settings") != None: 
@@ -76,7 +76,7 @@ def scheduler():
             
             if request.form.get("set_name_" + str(i)) != None:
                 
-                SET_SCHEDULER_TASK_COLLAPSE_OPEN(i)    
+                SET_SCHEDULER_JOB_COLLAPSE_OPEN(i)    
 
                 error_found = False          
 
@@ -84,27 +84,27 @@ def scheduler():
                 # name setting
                 # ############
 
-                scheduler_task = GET_SCHEDULER_TASK_BY_ID(i)
-                input_name     = request.form.get("set_name_" + str(i)).strip()                    
+                scheduler_job = GET_SCHEDULER_JOB_BY_ID(i)
+                input_name    = request.form.get("set_name_" + str(i)).strip()                    
 
                 # add new name
-                if ((input_name != "") and (GET_SCHEDULER_TASK_BY_NAME(input_name) == None)):
+                if ((input_name != "") and (GET_SCHEDULER_JOB_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 
-                elif input_name == scheduler_task.name:
-                    name = scheduler_task.name                        
+                elif input_name == scheduler_job.name:
+                    name = scheduler_job.name                        
                     
                 # name already exist
-                elif ((GET_SCHEDULER_TASK_BY_NAME(input_name) != None) and (scheduler_task.name != input_name)):
-                    error_message_change_settings.append(scheduler_task.name + " || Name - " + input_name + " - already taken")  
+                elif ((GET_SCHEDULER_JOB_BY_NAME(input_name) != None) and (scheduler_job.name != input_name)):
+                    error_message_change_settings.append(scheduler_job.name + " || Name - " + input_name + " - already taken")  
                     error_found = True
-                    name = scheduler_task.name
+                    name = scheduler_job.name
 
                 # no input commited
                 else:                          
-                    name = GET_SCHEDULER_TASK_BY_ID(i).name
-                    error_message_change_settings.append(scheduler_task.name + " || No name given") 
+                    name = GET_SCHEDULER_JOB_BY_ID(i).name
+                    error_message_change_settings.append(scheduler_job.name + " || No name given") 
                     error_found = True  
 
 
@@ -115,7 +115,7 @@ def scheduler():
                 if request.form.get("set_task_" + str(i)) != "":                   
                     task = request.form.get("set_task_" + str(i)).strip()
                 else:
-                    task = GET_SCHEDULER_TASK_BY_ID(i).task
+                    task = GET_SCHEDULER_JOB_BY_ID(i).task
 
 
                 # #################
@@ -167,19 +167,19 @@ def scheduler():
                 if request.form.get("set_day_" + str(i)) != "" and request.form.get("set_day_" + str(i)) != None:
                     day = request.form.get("set_day_" + str(i)).strip()
                 else:
-                    day = GET_SCHEDULER_TASK_BY_ID(i).day
+                    day = GET_SCHEDULER_JOB_BY_ID(i).day
 
                 # set hour
                 if request.form.get("set_hour_" + str(i)) != "" and request.form.get("set_hour_" + str(i)) != None:
                     hour = request.form.get("set_hour_" + str(i)).strip()
                 else:
-                    hour = GET_SCHEDULER_TASK_BY_ID(i).hour
+                    hour = GET_SCHEDULER_JOB_BY_ID(i).hour
 
                 # set minute
                 if request.form.get("set_minute_" + str(i)) != "" and request.form.get("set_minute_" + str(i)) != None:
                     minute = request.form.get("set_minute_" + str(i)).strip()
                 else:
-                    minute = GET_SCHEDULER_TASK_BY_ID(i).minute 
+                    minute = GET_SCHEDULER_JOB_BY_ID(i).minute 
 
 
                 # ############
@@ -215,20 +215,20 @@ def scheduler():
 
                         # valid values ?
                         if -90.0 <= float(latitude) <= 90.0 and -180.0 <= float(longitude) <= 180.0:       
-                            SET_SCHEDULER_TASK_SUNRISE(i, GET_SUNRISE_TIME(float(latitude), float(longitude)))
-                            SET_SCHEDULER_TASK_SUNSET(i, GET_SUNSET_TIME(float(latitude), float(longitude)))
+                            SET_SCHEDULER_JOB_SUNRISE(i, GET_SUNRISE_TIME(float(latitude), float(longitude)))
+                            SET_SCHEDULER_JOB_SUNSET(i, GET_SUNSET_TIME(float(latitude), float(longitude)))
 
                         else:
-                            SET_SCHEDULER_TASK_SUNRISE(i, "None")
-                            SET_SCHEDULER_TASK_SUNSET(i, "None")                            
+                            SET_SCHEDULER_JOB_SUNRISE(i, "None")
+                            SET_SCHEDULER_JOB_SUNSET(i, "None")                            
 
                     else:
-                        SET_SCHEDULER_TASK_SUNRISE(i, "None")
-                        SET_SCHEDULER_TASK_SUNSET(i, "None")       
+                        SET_SCHEDULER_JOB_SUNRISE(i, "None")
+                        SET_SCHEDULER_JOB_SUNSET(i, "None")       
 
                 except:
-                    SET_SCHEDULER_TASK_SUNRISE(i, "None")
-                    SET_SCHEDULER_TASK_SUNSET(i, "None")                   
+                    SET_SCHEDULER_JOB_SUNRISE(i, "None")
+                    SET_SCHEDULER_JOB_SUNSET(i, "None")                   
 
 
                 # ###############
@@ -347,38 +347,38 @@ def scheduler():
 
                 if error_found == False: 
 
-                    if SET_SCHEDULER_TASK(i, name, task, 
-                                            trigger_time, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause,
-                                            day, hour, minute,
-                                            option_sunrise, option_sunset, latitude, longitude,
-                                            device_ieeeAddr_1, device_name_1, device_input_values_1, 
-                                            sensor_key_1, operator_1, value_1, main_operator_second_sensor,
-                                            device_ieeeAddr_2, device_name_2, device_input_values_2, 
-                                            sensor_key_2, operator_2, value_2, 
-                                            option_home, option_away, ip_addresses):
+                    if SET_SCHEDULER_JOB(i, name, task, 
+                                         trigger_time, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause,
+                                         day, hour, minute,
+                                         option_sunrise, option_sunset, latitude, longitude,
+                                         device_ieeeAddr_1, device_name_1, device_input_values_1, 
+                                         sensor_key_1, operator_1, value_1, main_operator_second_sensor,
+                                         device_ieeeAddr_2, device_name_2, device_input_values_2, 
+                                         sensor_key_2, operator_2, value_2, 
+                                         option_home, option_away, ip_addresses):
 
-                        success_message_change_settings_scheduler_task = i
+                        success_message_change_settings_scheduler_job = i
 
 
-    """ ####################### """
-    """  delete scheduler task  """
-    """ ####################### """   
+    """ ###################### """
+    """  delete scheduler job  """
+    """ ###################### """   
 
     for i in range (1,31):
 
-        if request.form.get("delete_scheduler_task_" + str(i)) != None:
-            scene  = GET_SCHEDULER_TASK_BY_ID(i).name  
-            result = DELETE_SCHEDULER_TASK(i)            
+        if request.form.get("delete_scheduler_job_" + str(i)) != None:
+            scene  = GET_SCHEDULER_JOB_BY_ID(i).name  
+            result = DELETE_SCHEDULER_JOB(i)            
 
             if result:
-                success_message_change_settings.append(scene + " || Task successfully deleted") 
+                success_message_change_settings.append(scene + " || Job successfully deleted") 
             else:
                 error_message_change_settings.append(scene + " || " + str(result))
 
 
-    """ ######################## """
-    """  scheduler task options  """
-    """ ######################## """   
+    """ ####################### """
+    """  scheduler job options  """
+    """ ####################### """   
 
     # list lighting group options    
     list_lighting_group_options = []
@@ -432,10 +432,10 @@ def scheduler():
         list_spotify_playlists = ""      
 
 
-    CHECK_SCHEDULER_TASK_SETTINGS(GET_ALL_SCHEDULER_TASKS())
-    CHECK_TASKS(GET_ALL_SCHEDULER_TASKS(), "scheduler")
+    CHECK_SCHEDULER_JOB_SETTINGS(GET_ALL_SCHEDULER_JOBS())
+    CHECK_TASKS(GET_ALL_SCHEDULER_JOBS(), "scheduler")
 
-    list_scheduler_tasks = GET_ALL_SCHEDULER_TASKS()
+    list_scheduler_jobs = GET_ALL_SCHEDULER_JOBS()
 
     dropdown_list_devices                     = GET_ALL_DEVICES("sensors")
     dropdown_list_operators                   = ["=", ">", "<"]
@@ -945,15 +945,15 @@ def scheduler():
                             title=page_title,        
                             description=page_description,                                 
                             content=render_template( 'pages/scheduler.html',
-                                                    list_scheduler_tasks=list_scheduler_tasks,
+                                                    list_scheduler_jobs=list_scheduler_jobs,
                                                     dropdown_list_devices=dropdown_list_devices,
                                                     dropdown_list_operators=dropdown_list_operators,
                                                     dropdown_list_main_operator_second_sensor=dropdown_list_main_operator_second_sensor,
                                                     success_message_change_settings=success_message_change_settings,
                                                     error_message_change_settings=error_message_change_settings,                         
-                                                    success_message_add_scheduler_task=success_message_add_scheduler_task,
-                                                    error_message_add_scheduler_task=error_message_add_scheduler_task,
-                                                    success_message_change_settings_scheduler_task=success_message_change_settings_scheduler_task,
+                                                    success_message_add_scheduler_job=success_message_add_scheduler_job,
+                                                    error_message_add_scheduler_job=error_message_add_scheduler_job,
+                                                    success_message_change_settings_scheduler_job=success_message_change_settings_scheduler_job,
                                                     list_lighting_group_options=list_lighting_group_options,
                                                     list_lighting_scene_options=list_lighting_scene_options,
                                                     list_light_options=list_light_options,                                                    
@@ -1065,26 +1065,26 @@ def scheduler():
                            )
 
 
-# change scheduler task position 
+# change scheduler job position 
 @app.route('/scheduler/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
-def change_scheduler_task_position(id, direction):
-    CHANGE_SCHEDULER_TASK_POSITION(id, direction)
+def change_scheduler_job_position(id, direction):
+    CHANGE_SCHEDULER_JOB_POSITION(id, direction)
     return redirect(url_for('scheduler'))
 
 
-# scheduler tasks option add sensor / remove sensor
+# scheduler jobs option add sensor / remove sensor
 @app.route('/scheduler/<string:option>/<int:id>')
 @login_required
 @permission_required
-def change_scheduler_task_options(id, option):
+def change_scheduler_job_options(id, option):
     if option == "add_sensor":
-        ADD_SCHEDULER_TASK_SECOND_SENSOR(id)
+        ADD_SCHEDULER_JOB_SECOND_SENSOR(id)
         session['set_collapse_open'] = id
         
     if option == "remove_sensor":
-        REMOVE_SCHEDULER_TASK_SECOND_SENSOR(id)
+        REMOVE_SCHEDULER_JOB_SECOND_SENSOR(id)
         session['set_collapse_open'] = id
 
     return redirect(url_for('scheduler'))
