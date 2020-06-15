@@ -33,7 +33,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_controller():
-    page_title       = 'Callisto | Settings | Controller'
+    page_title       = 'Bianca | Settings | Controller'
     page_description = 'The controller configuration page.'
 
     success_message_change_settings_controller = False

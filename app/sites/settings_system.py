@@ -90,7 +90,7 @@ def SYSTEM_SHUTDOWN():
 @login_required
 @permission_required
 def settings_system():
-    page_title       = 'Callisto | Settings | System'
+    page_title       = 'Bianca | Settings | System'
     page_description = 'The system configuration page.'
 
     success_message_change_settings_services = False    

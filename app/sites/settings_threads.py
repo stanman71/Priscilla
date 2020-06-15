@@ -30,7 +30,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_threads():
-    page_title       = 'Callisto | Settings | Threads'
+    page_title       = 'Bianca | Settings | Threads'
     page_description = 'The threads overview page.'
 
     success_message_program_stop = "" 
@@ -64,58 +64,74 @@ def settings_threads():
 @login_required
 @permission_required
 def stop_program(id):
-    if id == 1 and GET_PROGRAM_THREAD_STATUS_1()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 1 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 1 not stopped"
+    timer = 0
 
-    if id == 2 and GET_PROGRAM_THREAD_STATUS_2()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 2 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 2 not stopped"
+    while timer < 5:
 
-    if id == 3 and GET_PROGRAM_THREAD_STATUS_3()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 3 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 3 not stopped"
+        if id == 1 and GET_PROGRAM_THREAD_STATUS_1()[0] != "None":
+            if STOP_PROGRAM_THREAD_BY_ID(id): 
+                session['program_stop_success'] = "Thread 1 successfully stopped"
+                break
+            else:
+                session['program_stop_error'] = "Thread 1 not stopped"
 
-    if id == 4 and GET_PROGRAM_THREAD_STATUS_4()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 4 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 4 not stopped"
+        if id == 2 and GET_PROGRAM_THREAD_STATUS_2()[0] != "None":
+            if STOP_PROGRAM_THREAD_BY_ID(id): 
+                session['program_stop_success'] = "Thread 2 successfully stopped"
+                break
+            else:
+                session['program_stop_error'] = "Thread 2 not stopped"
 
-    if id == 5 and GET_PROGRAM_THREAD_STATUS_5()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 5 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 5 not stopped"
+        if id == 3 and GET_PROGRAM_THREAD_STATUS_3()[0] != "None":
+            if STOP_PROGRAM_THREAD_BY_ID(id): 
+                session['program_stop_success'] = "Thread 3 successfully stopped"
+                break
+            else:
+                session['program_stop_error'] = "Thread 3 not stopped"
 
-    if id == 6 and GET_PROGRAM_THREAD_STATUS_6()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 6 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 6 not stopped"
+        if id == 4 and GET_PROGRAM_THREAD_STATUS_4()[0] != "None":
+            if STOP_PROGRAM_THREAD_BY_ID(id): 
+                session['program_stop_success'] = "Thread 4 successfully stopped"
+                break
+            else:
+                session['program_stop_error'] = "Thread 4 not stopped"
 
-    if id == 7 and GET_PROGRAM_THREAD_STATUS_7()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 7 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 7 not stopped"
+        if id == 5 and GET_PROGRAM_THREAD_STATUS_5()[0] != "None":
+            if STOP_PROGRAM_THREAD_BY_ID(id): 
+                session['program_stop_success'] = "Thread 5 successfully stopped"
+                break
+            else:
+                session['program_stop_error'] = "Thread 5 not stopped"
 
-    if id == 8 and GET_PROGRAM_THREAD_STATUS_8()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 8 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 8 not stopped"     
+        if id == 6 and GET_PROGRAM_THREAD_STATUS_6()[0] != "None":
+            if STOP_PROGRAM_THREAD_BY_ID(id): 
+                session['program_stop_success'] = "Thread 6 successfully stopped"
+                break
+            else:
+                session['program_stop_error'] = "Thread 6 not stopped"
 
-    if id == 9 and GET_PROGRAM_THREAD_STATUS_9()[0] != "None":
-        if STOP_PROGRAM_THREAD_BY_ID(id): 
-            session['program_stop_success'] = "Thread 9 successfully stopped"
-        else:
-            session['program_stop_error'] = "Thread 9 not stopped"
+        if id == 7 and GET_PROGRAM_THREAD_STATUS_7()[0] != "None":
+            if STOP_PROGRAM_THREAD_BY_ID(id): 
+                session['program_stop_success'] = "Thread 7 successfully stopped"
+                break
+            else:
+                session['program_stop_error'] = "Thread 7 not stopped"
+
+        if id == 8 and GET_PROGRAM_THREAD_STATUS_8()[0] != "None":
+            if STOP_PROGRAM_THREAD_BY_ID(id): 
+                session['program_stop_success'] = "Thread 8 successfully stopped"
+                break
+            else:
+                session['program_stop_error'] = "Thread 8 not stopped"     
+
+        if id == 9 and GET_PROGRAM_THREAD_STATUS_9()[0] != "None":
+            if STOP_PROGRAM_THREAD_BY_ID(id): 
+                session['program_stop_success'] = "Thread 9 successfully stopped"
+                break
+            else:
+                session['program_stop_error'] = "Thread 9 not stopped"
+
+        time.sleep(1)
+        timer = timer + 1
 
     return redirect(url_for('settings_threads'))

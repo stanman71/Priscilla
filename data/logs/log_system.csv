@@ -190,3 +190,10 @@ Timestamp,Type,Description
 2020-06-12 13:13:50,DATABASE,|Program || new_program_1 || changed |||| line_content_2 |||| break # a >>> break #|
 2020-06-12 13:13:54,DATABASE,|Program || new_program_1 || changed |||| line_content_2 |||| break # >>> break # 12|
 2020-06-12 13:14:01,DATABASE,|Program || new_program_1 || deleted|
+2020-06-12 17:44:54,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-12 17:44:54,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-12 17:44:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-12 17:44:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-12 17:44:55,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-12 17:44:56,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-12 17:45:04,EVENT,|System || File || /data/csv/music.csv || created|

@@ -22,13 +22,13 @@ stop_program_thread_9 = False
 """  process program  """
 """ ################# """
 
-def PROCESS_PROGRAM(program, command):
+def PROCESS_PROGRAM(command, program, blocked_program_thread_id = 0):
 
     if command == "start":
         START_PROGRAM_THREAD(program)
 
     if command == "stop":
-        STOP_PROGRAM_THREAD_BY_NAME(program)
+        STOP_PROGRAM_THREAD_BY_NAME(program, blocked_program_thread_id)
 
 
 """ ###################### """
@@ -204,6 +204,7 @@ def PROGRAM_THREAD(thread_id, program_id):
             if line[0] == "True":
                 lines_total = lines_total + 1
 
+
         for line in list_lines:
 
             # program stopped
@@ -334,7 +335,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                                 break       
 
                     else: 
-                        START_TASK(line[1], "Program", program_name)
+                        START_TASK(line[1], "Program", program_name, thread_id)
 
 
                     line_number = line_number + 1
@@ -412,53 +413,62 @@ def STOP_PROGRAM_THREAD_BY_ID(thread_id):
         stop_program_thread_1 = True
         program_name = GET_PROGRAM_THREAD_STATUS_1()[0]
         SET_PROGRAM_THREAD_STATUS_1(program_name,"","","STOPPED")
+        return True
 
     if thread_id == 2:
         stop_program_thread_2 = True
         program_name = GET_PROGRAM_THREAD_STATUS_2()[0]
         SET_PROGRAM_THREAD_STATUS_2(program_name,"","","STOPPED")
+        return True
 
     if thread_id == 3:
         stop_program_thread_3 = True
         program_name = GET_PROGRAM_THREAD_STATUS_3()[0]
         SET_PROGRAM_THREAD_STATUS_3(program_name,"","","STOPPED")
+        return True
 
     if thread_id == 4:
         stop_program_thread_4 = True
         program_name = GET_PROGRAM_THREAD_STATUS_4()[0]
         SET_PROGRAM_THREAD_STATUS_4(program_name,"","","STOPPED")
+        return True
 
     if thread_id == 5:
         stop_program_thread_5 = True
         program_name = GET_PROGRAM_THREAD_STATUS_5()[0]
         SET_PROGRAM_THREAD_STATUS_5(program_name,"","","STOPPED")
+        return True
 
     if thread_id == 6:
         stop_program_thread_6 = True
         program_name = GET_PROGRAM_THREAD_STATUS_6()[0]
         SET_PROGRAM_THREAD_STATUS_6(program_name,"","","STOPPED")
+        return True
 
     if thread_id == 7:
         stop_program_thread_7 = True
         program_name = GET_PROGRAM_THREAD_STATUS_7()[0]
         SET_PROGRAM_THREAD_STATUS_7(program_name,"","","STOPPED")
+        return True
 
     if thread_id == 8:
         stop_program_thread_8 = True
         program_name = GET_PROGRAM_THREAD_STATUS_8()[0]
         SET_PROGRAM_THREAD_STATUS_8(program_name,"","","STOPPED")
+        return True
 
     if thread_id == 9:
         stop_program_thread_9 = True
         program_name = GET_PROGRAM_THREAD_STATUS_9()[0]
         SET_PROGRAM_THREAD_STATUS_9(program_name,"","","STOPPED")
+        return True
 
 
 """ ###################### """
 """  stop program by name  """
 """ ###################### """
 
-def STOP_PROGRAM_THREAD_BY_NAME(program_name, thread_id = 0):
+def STOP_PROGRAM_THREAD_BY_NAME(program_name, blocked_program_thread_id = 0):
     global stop_program_thread_1
     global stop_program_thread_2
     global stop_program_thread_3
@@ -470,55 +480,55 @@ def STOP_PROGRAM_THREAD_BY_NAME(program_name, thread_id = 0):
     global stop_program_thread_9   
 
     try:
-        if thread_id != 1:
+        if blocked_program_thread_id != 1:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_1()[0].lower():
                 stop_program_thread_1 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_1()[0]
                 SET_PROGRAM_THREAD_STATUS_1(program_name,"","","STOPPED")            
 
-        if thread_id != 2:
+        if blocked_program_thread_id != 2:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_2()[0].lower():
                 stop_program_thread_2 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_2()[0]
                 SET_PROGRAM_THREAD_STATUS_2(program_name,"","","STOPPED")                   
 
-        if thread_id != 3:
+        if blocked_program_thread_id != 3:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_3()[0].lower():
                 stop_program_thread_3 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_3()[0]
                 SET_PROGRAM_THREAD_STATUS_3(program_name,"","","STOPPED")                   
 
-        if thread_id != 4:
+        if blocked_program_thread_id != 4:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_4()[0].lower():
                 stop_program_thread_4 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_4()[0]
                 SET_PROGRAM_THREAD_STATUS_4(program_name,"","","STOPPED")                   
 
-        if thread_id != 5:
+        if blocked_program_thread_id != 5:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_5()[0].lower():
                 stop_program_thread_5 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_5()[0]
                 SET_PROGRAM_THREAD_STATUS_5(program_name,"","","STOPPED")                   
 
-        if thread_id != 6:
+        if blocked_program_thread_id != 6:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_6()[0].lower():
                 stop_program_thread_6 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_6()[0]
                 SET_PROGRAM_THREAD_STATUS_6(program_name,"","","STOPPED")                   
 
-        if thread_id != 7:
+        if blocked_program_thread_id != 7:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_7()[0].lower():
                 stop_program_thread_7 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_7()[0]
                 SET_PROGRAM_THREAD_STATUS_7(program_name,"","","STOPPED")                   
 
-        if thread_id != 8:
+        if blocked_program_thread_id != 8:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_8()[0].lower():
                 stop_program_thread_8 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_8()[0]
                 SET_PROGRAM_THREAD_STATUS_8(program_name,"","","STOPPED")                   
 
-        if thread_id != 9:
+        if blocked_program_thread_id != 9:
             if program_name.lower() == GET_PROGRAM_THREAD_STATUS_9()[0].lower():
                 stop_program_thread_9 = True
                 program_name = GET_PROGRAM_THREAD_STATUS_9()[0]

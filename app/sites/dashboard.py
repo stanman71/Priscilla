@@ -38,7 +38,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def dashboard():
-    page_title       = 'Callisto | Dashboard'
+    page_title       = 'Bianca | Dashboard'
     page_description = 'The main page and Dashboard'
 
 
@@ -152,7 +152,7 @@ def dashboard():
 
     if request.form.get("start_program") != None:
         program_id = request.form.get("select_program")
-        heapq.heappush(process_management_queue, (10, ("program", program_id, "start"))) 
+        heapq.heappush(process_management_queue, (10, ("program", "start", program_id))) 
 
 
     """ ####### """

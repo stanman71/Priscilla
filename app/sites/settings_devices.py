@@ -119,7 +119,7 @@ def UPLOAD_FIRMWARE(file):
 @login_required
 @permission_required
 def settings_devices():
-    page_title       = 'Callisto | Settings | Devices'
+    page_title       = 'Bianca | Settings | Devices'
     page_description = 'The devices configuration page.'
 
     error_message_mqtt_connection               = False

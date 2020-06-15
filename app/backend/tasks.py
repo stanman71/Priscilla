@@ -10,7 +10,7 @@ from app.backend.file_management  import BACKUP_DATABASE
 from app.backend.shared_resources import *
 
 
-def START_TASK(task, source, details):
+def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
     try:
     
@@ -18,7 +18,7 @@ def START_TASK(task, source, details):
         # group - start lighting scene
         # ############################
 
-        if "lighting # start_scene" in task and "turn_off" not in task:
+        if "lighting" in task and "start_scene" in task and "turn_off" not in task:
             task = task.split(" # ")
             
             group = GET_LIGHTING_GROUP_BY_NAME(task[2].strip())
@@ -42,20 +42,20 @@ def START_TASK(task, source, details):
                         CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
                     else:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Scene - " + task[3] + " | missing")
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Scene - " + task[3] + " | missing")
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Group - " + task[2] + " | empty")             
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | empty")             
                 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Group - " + task[2] + " | missing")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | missing")
 
 
         # #######################################
         # group - start lighting scene / turn off
         # #######################################
 
-        if "lighting # start_scene" in task and "turn_off" in task:
+        if "lighting" in task and "start_scene" in task and "turn_off" in task:
             task = task.split(" # ")
             
             group = GET_LIGHTING_GROUP_BY_NAME(task[2].strip())
@@ -86,20 +86,20 @@ def START_TASK(task, source, details):
                             CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
                         else:
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Scene - " + task[3] + " | missing")
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Scene - " + task[3] + " | missing")
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Group - " + task[2] + " | empty")                        
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | empty")                        
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Group - " + task[2] + " | missing")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | missing")
 
 
         # #############################
         # group - rotate lighting scene
         # #############################
 
-        if "lighting # rotate_scene" in task:
+        if "lighting" in task and "rotate_scene" in task:
             task = task.split(" # ") 
 
             group = GET_LIGHTING_GROUP_BY_NAME(task[2].strip())
@@ -139,17 +139,17 @@ def START_TASK(task, source, details):
                     CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Group - " + task[2] + " | empty")            
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | empty")            
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Group - " + task[2] + " | missing")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | missing")
 
 
         # #########################
         # group - change brightness
         # #########################
 
-        if "lighting # brightness" in task:
+        if "lighting" in task and "brightness" in task:
             task = task.split(" # ")
             
             group   = GET_LIGHTING_GROUP_BY_NAME(task[2].strip())
@@ -201,20 +201,20 @@ def START_TASK(task, source, details):
                             WRITE_LOGFILE_SYSTEM("WARNING", "Light | Group - " + group.name + " | OFF : 0 %")
 
                     else:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Command - " + task[3] + " | invalid")
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Command - " + task[3] + " | invalid")
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Group - " + task[2] + " | empty")            
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | empty")            
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Group - " + task[2] + " | missing")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | missing")
 
 
         # ###################
         # light - start light
         # ###################
 
-        if "lighting # light" in task and "turn_off" not in task:
+        if "lighting" in task and "light" in task and "start_scene" not in task and "turn_off" not in task:
             task = task.split(" # ") 
                     
             device = GET_DEVICE_BY_NAME(task[2].strip())
@@ -237,17 +237,17 @@ def START_TASK(task, source, details):
                     CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "ON", 10)
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Invalid settings")  
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Invalid settings")  
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Light - " + task[2] + " | missing")   
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Light - " + task[2] + " | missing")   
 
 
         # ###########################
         # group and light - light off
         # ###########################
 
-        if "lighting # turn_off" in task:
+        if "lighting" in task and "turn_off" in task:
             task = task.split(" # ")
 
             if task[2].lower() == "group":
@@ -276,11 +276,11 @@ def START_TASK(task, source, details):
                             CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
                         else:
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Group - " + input_group_name + " | empty")            
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + input_group_name + " | empty")            
 
                 # group not found
                 if group_found == False:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Group - " + input_group_name + " | missing")
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + input_group_name + " | missing")
 
 
             if task[2].lower() == "light":
@@ -293,7 +293,7 @@ def START_TASK(task, source, details):
                     CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "OFF", 10)
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Light - " + task[3].strip() + " | missing")
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Light - " + task[3].strip() + " | missing")
 
 
             if task[2].lower() == "all":
@@ -310,7 +310,7 @@ def START_TASK(task, source, details):
                         CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
                     else:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Group - " + group.name + " | empty")        
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + group.name + " | empty")        
 
 
         # ######
@@ -375,10 +375,10 @@ def START_TASK(task, source, details):
                             command_position = command_position + 1
         
                     else:
-                        WRITE_LOGFILE_SYSTEM("WARNING","Task | " + source + " | " + str(details) + " | " + check_result)
+                        WRITE_LOGFILE_SYSTEM("WARNING","Task | " + source + " | " + str(error_informations) + " | " + check_result)
                                         
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Gerät - " + task[1] + " | missing")        
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Gerät - " + task[1] + " | missing")        
         
 
         # ##################
@@ -474,16 +474,16 @@ def START_TASK(task, source, details):
             if program != None:
 
                 if task[2].strip() == "START":
-                    heapq.heappush(process_management_queue, (10, ("program", program.id, "start")))  
+                    heapq.heappush(process_management_queue, (10, ("program", "start", program.id)))  
 
                 elif task[2].strip() == "STOP":
-                    heapq.heappush(process_management_queue, (10, ("program", program.name, "stop")))  
+                    heapq.heappush(process_management_queue, (10, ("program", "stop", program.name, blocked_program_thread_id)))  
      
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Invalid command")
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Invalid command")
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | Program - " + program + " | missing")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Program - " + program + " | missing")
 
 
         # #####
@@ -572,11 +572,28 @@ def START_TASK(task, source, details):
                     album_volume      = int(task[5].strip())
                     
                     SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
-        
+
+                # change interface
+                        
+                if task[1].strip() == "interface": 
+
+                    device = GET_DEVICE_BY_NAME(task[2].strip())
+
+                    # device found ?
+                    if device != None:
+
+                        interface = task[3].strip()
+                        volume    = task[4].strip()
+
+                        channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
+                        message = '{"interface":"' + interface + '","volume":' + str(volume) + '}'
+
+                        heapq.heappush(mqtt_message_queue, (10, (channel, message)))            
+                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, interface + '; ' + str(volume), 60)      
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | No Spotify Token found")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | No Spotify Token found")
 
 
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(details) + " | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | " + str(e))

@@ -18,14 +18,14 @@ import spotipy
 def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
-        #try:
-        if current_user.role == "user" or current_user.role == "administrator":
-            return f(*args, **kwargs)
-        else:
+        try:
+            if current_user.role == "user" or current_user.role == "administrator":
+                return f(*args, **kwargs)
+            else:
+                return redirect(url_for('logout'))
+        except Exception as e:
+            print(e)
             return redirect(url_for('logout'))
-        #except Exception as e:
-        #    print(e)
-        #    return redirect(url_for('logout'))
         
     return wrap
 
@@ -34,7 +34,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def programs():
-    page_title       = 'Callisto | Programs'
+    page_title       = 'Bianca | Programs'
     page_description = 'The programs configuration page.'
 
     success_message_add_program             = False       

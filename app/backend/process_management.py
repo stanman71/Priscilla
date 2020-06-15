@@ -52,10 +52,17 @@ def PROCESS_MANAGEMENT():
             # #######
                                     
             if process[0] == "program": 
-                program = process[1]     
-                command = process[2]
 
-                PROCESS_PROGRAM(program, command) 
+                if process[1] == "start":   
+                    program_id = process[2]
+
+                    PROCESS_PROGRAM("start", program_id) 
+
+                if process[1] == "stop":   
+                    program_name              = process[2]
+                    blocked_program_thread_id = process[3]
+
+                    PROCESS_PROGRAM("stop", program_name, blocked_program_thread_id) 
 
 
             # #########
