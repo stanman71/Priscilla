@@ -187,8 +187,8 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
                                 target_brightness = int(current_brightness) - 20
 
-                                if target_brightness < 0:
-                                    target_brightness = 0
+                                if target_brightness < 10:
+                                    target_brightness = 10
 
                                 SET_LIGHTING_GROUP_BRIGHTNESS_DIMMER(group.id, "turn_down")
                                 CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, target_brightness, 2, 10)
@@ -243,9 +243,9 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                 WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Light - " + task[2] + " | missing")   
 
 
-        # ###########################
-        # group and light - light off
-        # ###########################
+        # #########
+        # light off
+        # #########
 
         if "lighting" in task and "turn_off" in task:
             task = task.split(" # ")
@@ -283,7 +283,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                     WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + input_group_name + " | missing")
 
 
-            if task[2].lower() == "light":
+            elif task[2].lower() == "light":
 
                 device = GET_DEVICE_BY_NAME(task[3].strip())
 
@@ -296,7 +296,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                     WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Light - " + task[3].strip() + " | missing")
 
 
-            if task[2].lower() == "all":
+            elif task[2].lower() == "all":
 
                 for light in GET_ALL_DEVICES("light"):
                     Thread = threading.Thread(target=SET_LIGHT_TURN_OFF_THREAD, args=(light.ieeeAddr, ))
@@ -310,7 +310,10 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                         CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
                     else:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + group.name + " | empty")        
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + group.name + " | empty")      
+
+            else:
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | No Target found")      
 
 
         # ######

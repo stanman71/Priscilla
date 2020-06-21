@@ -40,7 +40,7 @@ def CHECK_DEVICE_EXCEPTION_SETTINGS(device_exceptions):
             error_message_settings.append(device.name + " || No Sensor selected")
 
          if exception.exception_value_2 == "None" or exception.exception_value_2 == None:
-            error_message_settings.append(device.name + " || No Operator (<, >, =) selected")
+            error_message_settings.append(device.name + " || No Operator selected >>> Options || < || > || =")
 
          if exception.exception_value_3 == "None" or exception.exception_value_3 == None:
             error_message_settings.append(device.name + " || No check_value selected")
@@ -785,7 +785,7 @@ def CHECK_TASK_OPERATION(task, task_type, details):
                   
                else:
                   if task_type == "controller" or task_type == "program":
-                     list_task_errors.append(details + " || Invalid setting | TURN_UP or TURN_DOWN ?")
+                     list_task_errors.append(details + " || Invalid setting >>> Options || TURN_UP || TURN_DOWN")
                   else:                               
                      list_task_errors.append("Invalid setting | TURN_UP or TURN_DOWN ?")
 
@@ -793,9 +793,9 @@ def CHECK_TASK_OPERATION(task, task_type, details):
                   
             except:
                if task_type == "controller" or task_type == "program":
-                  list_task_errors.append(details + " || Missing setting | TURN_UP or TURN_DOWN")   
+                  list_task_errors.append(details + " || Missing setting >>> Options || TURN_UP || TURN_DOWN")   
                else:                               
-                  list_task_errors.append("Missing setting | TURN_UP or TURN_DOWN")     
+                  list_task_errors.append("Missing setting >>> Options || TURN_UP || TURN_DOWN")     
 
                return list_task_errors
 
@@ -959,9 +959,9 @@ def CHECK_TASK_OPERATION(task, task_type, details):
 
             else:
                if task_type == "controller" or task_type == "program":
-                  list_task_errors.append(details + " || Invalid Input | 'all' / 'group' / 'light'")
+                  list_task_errors.append(details + " || Invalid Input >>> Options || all || group || light")
                else:                   
-                  list_task_errors.append("Invalid Input || 'all' / 'group' / 'light'")
+                  list_task_errors.append("Invalid Input >>> Options || all || group || light")
                return list_task_errors  
 
 

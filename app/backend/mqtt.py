@@ -1000,11 +1000,10 @@ def CHECK_DEVICE_EXCEPTIONS(ieeeAddr, command):
 
                 if exception.exception_option == "IP-Address" and exception_command.lower() == command.lower():
 
-                    for x in range(3):
+                    for x in range(5):
                         if ping(exception.exception_value_1, timeout=1) != None:    
                             return (exception.device.name + " | Device running")
-                            break
-            
+       
 
                 # ################
                 # exception sensor

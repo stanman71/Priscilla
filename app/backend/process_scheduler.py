@@ -588,7 +588,7 @@ def CHECK_SCHEDULER_PING(job):
 
     for ip_address in ip_addresses:
 
-        for x in range(3):
+        for x in range(5):
             if ping(ip_address, timeout=1) != None:
                 return True
 
@@ -616,8 +616,7 @@ def GET_SUNRISE_TIME(lat, long):
         sunrise = data[34:42]
         sunrise = sunrise.split(":")
 
-        # add one hour for CEST
-        sunrise_hour   = str(int(sunrise[0]) + 1)
+        sunrise_hour   = str(sunrise[0])
         sunrise_minute = str(sunrise[1])
 
         if len(sunrise_minute) == 1:
@@ -643,8 +642,7 @@ def GET_SUNSET_TIME(lat, long):
         sunset = data[71:79]
         sunset = sunset.split(":")
 
-        # add one hour for CEST
-        sunset_hour   = str(int(sunset[0]) + 1)
+        sunset_hour   = str(sunset[0])
         sunset_minute = str(sunset[1])
 
         if len(sunset_minute) == 1:

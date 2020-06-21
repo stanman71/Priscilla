@@ -543,5 +543,6 @@ if GET_SYSTEM_SETTINGS().squeezelite_active != "True":
 
 PROCESS_MANAGEMENT_THREAD()
 START_REFRESH_SPOTIFY_TOKEN_THREAD()
+START_MULTIROOM_SYNCHRONIZATION_THREAD()
 
 socketio.run(app, host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)

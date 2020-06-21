@@ -197,3 +197,270 @@ Timestamp,Type,Description
 2020-06-12 17:44:55,EVENT,|System || Services || Squeezelie Player || disabled|
 2020-06-12 17:44:56,SUCCESS,|Music || Spotify || Token || updated|
 2020-06-12 17:45:04,EVENT,|System || File || /data/csv/music.csv || created|
+2020-06-21 03:17:32,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:17:32,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:17:33,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:17:33,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:17:34,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:17:35,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:18:27,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:18:27,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:18:28,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:18:28,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:18:28,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:18:29,ERROR,|Host || Thread || Multiroom || http status: 401, code:-1 - https://api.spotify.com/v1/me/player:
+ No token provided|
+2020-06-21 03:18:29,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:18:30,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:30,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:31,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:32,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:33,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:33,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:34,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:35,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:35,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:36,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:37,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:37,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:38,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:39,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:40,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:40,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:41,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:42,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:42,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:43,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:44,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:44,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:45,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:46,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:47,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:47,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:48,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:49,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:49,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:50,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:51,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:52,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:52,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:53,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:54,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:54,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:55,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:56,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:56,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:57,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:58,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:59,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:18:59,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:00,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:01,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:01,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:02,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:03,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:04,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:04,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:05,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:06,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:06,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:07,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:08,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:09,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:09,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:10,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:11,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:11,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:12,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:13,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:14,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:19:14,ERROR,|Host || Thread || Multiroom || 'NoneType' object is not subscriptable|
+2020-06-21 03:20:27,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:20:27,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:20:28,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:20:28,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:20:28,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:20:29,ERROR,|Host || Thread || Multiroom || http status: 401, code:-1 - https://api.spotify.com/v1/me/player:
+ No token provided|
+2020-06-21 03:20:29,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:21:47,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:21:47,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:21:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:21:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:21:48,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:21:49,ERROR,|Host || Thread || Multiroom || http status: 401, code:-1 - https://api.spotify.com/v1/me/player:
+ No token provided|
+2020-06-21 03:21:49,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:23:02,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:23:02,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:23:03,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:23:03,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:23:04,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:23:05,ERROR,|Host || Thread || Multiroom || http status: 401, code:-1 - https://api.spotify.com/v1/me/player:
+ No token provided|
+2020-06-21 03:23:05,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:27:16,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:27:16,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:27:17,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:27:17,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:27:17,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:27:19,ERROR,|Host || Thread || Multiroom Synchronization || http status: 401, code:-1 - https://api.spotify.com/v1/me/player:
+ No token provided|
+2020-06-21 03:27:19,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:27:47,ERROR,|Music || Spotify || Get Device ID || 'NoneType' object has no attribute 'last_values_json'|
+2020-06-21 03:27:47,ERROR,|Music || Spotify || Control || http status: 404, code:-1 - https://api.spotify.com/v1/me/player/play?device_id=ERROR:%20'NoneType'%20object%20has%20no%20attribute%20'last_values_json':
+ Device not found|
+2020-06-21 03:28:04,ERROR,|Music || Spotify || Get Device ID || 'NoneType' object has no attribute 'last_values_json'|
+2020-06-21 03:28:04,ERROR,|Music || Spotify || Control || http status: 404, code:-1 - https://api.spotify.com/v1/me/player/play?device_id=ERROR:%20'NoneType'%20object%20has%20no%20attribute%20'last_values_json':
+ Device not found|
+2020-06-21 03:30:26,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:30:26,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:30:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:30:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:30:27,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:30:28,ERROR,|Host || Thread || Multiroom Synchronization || http status: 401, code:-1 - https://api.spotify.com/v1/me/player:
+ No token provided|
+2020-06-21 03:30:29,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:31:47,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:31:47,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:31:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:31:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:31:48,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:31:49,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:32:11,ERROR,|Music || Spotify || Get Device ID || 'NoneType' object has no attribute 'last_values_json'|
+2020-06-21 03:32:11,ERROR,|Music || Spotify || Control || http status: 404, code:-1 - https://api.spotify.com/v1/me/player/play?device_id=ERROR:%20'NoneType'%20object%20has%20no%20attribute%20'last_values_json':
+ Device not found|
+2020-06-21 03:34:25,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:34:25,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:34:26,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:34:26,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:34:26,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:34:27,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:34:41,ERROR,|Music || Spotify || Get Device ID || 'NoneType' object has no attribute 'last_values_json'|
+2020-06-21 03:34:42,ERROR,|Music || Spotify || Control || http status: 404, code:-1 - https://api.spotify.com/v1/me/player/play?device_id=ERROR:%20'NoneType'%20object%20has%20no%20attribute%20'last_values_json':
+ Device not found|
+2020-06-21 03:37:57,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:37:57,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:37:58,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:37:58,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:37:58,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:38:00,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:38:13,ERROR,|Music || Spotify || Get Device ID || 'NoneType' object has no attribute 'last_values_json'|
+2020-06-21 03:38:13,ERROR,|Music || Spotify || Control || http status: 404, code:-1 - https://api.spotify.com/v1/me/player/play?device_id=ERROR:%20'NoneType'%20object%20has%20no%20attribute%20'last_values_json':
+ Device not found|
+2020-06-21 03:38:57,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:38:57,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:38:58,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:38:58,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:38:58,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:38:59,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:39:59,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:39:59,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:40:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:40:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:40:00,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:40:01,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:40:11,ERROR,|Music || Spotify || Get Device ID || 'NoneType' object has no attribute 'last_values_json'|
+2020-06-21 03:40:11,ERROR,|Music || Spotify || Control || http status: 404, code:-1 - https://api.spotify.com/v1/me/player/play?device_id=ERROR:%20'NoneType'%20object%20has%20no%20attribute%20'last_values_json':
+ Device not found|
+2020-06-21 03:42:04,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:42:04,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:42:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:42:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:42:05,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:42:06,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:43:30,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:43:30,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:43:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:43:31,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:43:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:43:32,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:45:25,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:45:25,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:45:26,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:45:26,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:45:26,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:45:27,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:45:39,ERROR,|Music || Spotify || Get Device ID || 'NoneType' object has no attribute 'last_values_json'|
+2020-06-21 03:45:39,ERROR,|Music || Spotify || Control || http status: 404, code:-1 - https://api.spotify.com/v1/me/player/play?device_id=ERROR:%20'NoneType'%20object%20has%20no%20attribute%20'last_values_json':
+ Device not found|
+2020-06-21 03:47:10,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:47:10,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:47:11,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:47:11,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:47:11,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:47:12,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:50:19,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:50:19,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:50:20,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:50:20,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:50:20,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:50:21,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:50:36,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:50:36,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:50:37,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:50:37,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:50:37,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:50:38,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:53:21,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:53:21,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:53:22,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:53:22,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:53:22,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:53:23,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:54:30,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:54:30,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:54:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:54:31,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:54:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:54:32,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:54:59,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/play:
+ API rate limit exceeded|
+2020-06-21 03:56:28,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:56:28,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:56:29,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:56:29,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:56:29,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:56:30,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:57:51,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:57:51,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:57:52,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:57:52,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:57:52,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:57:53,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:58:42,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:58:42,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:58:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:58:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:58:43,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:58:44,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 03:59:47,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 03:59:47,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 03:59:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:59:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 03:59:48,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 03:59:49,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 04:01:40,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 04:01:40,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 04:01:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 04:01:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 04:01:41,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 04:01:43,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 04:04:56,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 04:04:56,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 04:04:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 04:04:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 04:04:57,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 04:04:58,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 04:05:45,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 04:05:45,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 04:05:46,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 04:05:46,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 04:05:46,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 04:05:47,SUCCESS,|Music || Spotify || Token || updated|
+2020-06-21 04:07:30,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-06-21 04:07:30,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-06-21 04:07:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 04:07:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-06-21 04:07:31,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-06-21 04:07:32,SUCCESS,|Music || Spotify || Token || updated|

@@ -329,6 +329,64 @@ def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
         pass
 
 
+""" ################################## """
+"""  multiroom synchronization thread  """
+""" ################################## """
+
+def START_MULTIROOM_SYNCHRONIZATION_THREAD():
+    
+    try:
+        Thread = threading.Thread(target=MULTIROOM_SYNCHRONIZATION_THREAD)
+        Thread.start()  
+        
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | Multiroom Synchronization | " + str(e)) 
+
+
+def MULTIROOM_SYNCHRONIZATION_THREAD():   
+      
+    while True:
+               
+        if SPOTIFY_TOKEN != "":
+
+            try:
+
+                sp                       = spotipy.Spotify(auth=SPOTIFY_TOKEN)
+                sp.trace                 = False     
+                spotify_current_playback = sp.current_playback(market=None)
+
+                spotify_current_device_id            = spotify_current_playback['device']['id']
+                spotify_current_playback_device_name = spotify_current_playback['device']['name']                
+                spotify_current_playback_state       = spotify_current_playback['is_playing']
+                spotify_current_playback_progress    = spotify_current_playback['progress_ms'] 
+        
+                if spotify_current_playback_state == True and "multiroom" in spotify_current_playback_device_name.lower():
+
+                    # get lms position
+                    server = find_server()
+
+                    for player in server.players:
+                        lms_position = player.position
+                        break    
+
+                    # get spotify position
+                    spotify_position = int(spotify_current_playback_progress / 1000)
+
+                    # calculate position distance
+                    position_distance = abs((lms_position) - (spotify_position))
+
+                    # start next track, if synchronization was lost
+                    if position_distance > 30:  
+                        sp.next_track(device_id=spotify_current_device_id)  
+               
+
+            except Exception as e:
+                if str(e) != "'NoneType' object is not subscriptable":
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | Multiroom Synchronization | " + str(e)) 
+                    
+        time.sleep(1)
+
+
 """ ################# """
 """  spotify control  """
 """ ################# """
@@ -344,14 +402,14 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             
             try:
 
-                # start previous playlist
+                # start current playback
                 spotify_current_playback = sp.current_playback(market=None)
                 spotify_device_id        = sp.current_playback(market=None)['device']['id']
-                
+
                 sp.next_track(device_id=spotify_device_id) 
                 SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
 
-            except:      
+            except:
 
                 # start default settings
                 UPDATE_MULTIROOM_DEFAULT_SETTINGS()
@@ -373,7 +431,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                     sp.next_track(device_id=spotify_device_id)                    
                 
                 else:
-                    sp.shuffle(False, device_id=spotify_device_id)                                    
+                    sp.shuffle(False, device_id=spotify_device_id)         
 
 
         if command == "play/stop":    
@@ -381,7 +439,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             try:
                 spotify_current_playback = sp.current_playback(market=None)
 
-                # start previous playlist 
+                # start current playback 
                 if spotify_current_playback['is_playing'] == False:
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
                     sp.next_track(device_id=spotify_device_id) 
@@ -390,7 +448,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 # stop playing
                 if spotify_current_playback['is_playing'] == True:
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
-                    sp.pause_playback(device_id=spotify_device_id)           
+                    sp.pause_playback(device_id=spotify_device_id)      
 
             except:                                
                 # start default settings
@@ -414,7 +472,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
                 else:
                     spotify_device_id = sp.current_playback(market=None)['device']['id'] 
-                    sp.shuffle(False, device_id=spotify_device_id)                         
+                    sp.shuffle(False, device_id=spotify_device_id)                      
 
 
         if command == "rotate_playlist":   
@@ -746,9 +804,8 @@ def GET_SPOTIFY_DEVICE_ID(spotify_token, device_name):
 
         return spotify_device_id
 
-    except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Get Device ID | " + str(e)) 
-        return ("ERROR: " + str(e))          
+    except:
+        pass  
 
 
 """ ################## """

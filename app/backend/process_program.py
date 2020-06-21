@@ -314,7 +314,7 @@ def PROGRAM_THREAD(thread_id, program_id):
                             second = second + 1
                             time.sleep(1)
 
-                            # program stopped
+                            # program stopped ?
                             if thread_id == 1 and stop_program_thread_1 == True:
                                 break
                             if thread_id == 2 and stop_program_thread_2 == True:
@@ -336,7 +336,6 @@ def PROGRAM_THREAD(thread_id, program_id):
 
                     else: 
                         START_TASK(line[1], "Program", program_name, thread_id)
-
 
                     line_number = line_number + 1
                     time.sleep(1)
