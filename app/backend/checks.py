@@ -229,10 +229,15 @@ def CHECK_SCHEDULER_JOB_SETTINGS(scheduler_jobs):
 
       if task.trigger_sun_position == "True":
 
-         # check setting sunrise / sunset 
-         if task.option_sunrise != "True" and task.option_sunset != "True":
-            list_errors.append("Missing setting || Sunrise or Sunset")
+         # check setting sunrise / sunset / day / night
+         if task.option_sunrise != "True" and task.option_sunset != "True" and task.option_day != "True" and task.option_night != "True":
+            list_errors.append("Missing setting || Sunrise / Sunset / Day / Night")
 
+         # check setting sunrise / sunset / day / night
+         if (task.option_sunrise == "True" or task.option_sunset == "True") and (task.option_day == "True" or task.option_night == "True"):
+            list_errors.append("Wrong Settings || Sunrise / Sunset or Day / Night")
+
+         # check coordinates
          if task.latitude == "None":
             list_errors.append("No latitude coordinates found")
          else:
@@ -579,7 +584,7 @@ def CHECK_TASKS(check_object, task_type):
 
 def CHECK_TASK_OPERATION(task, task_type, details):
    
-   list_task_errors   = []
+   list_task_errors = []
 
    try:
       
@@ -1448,11 +1453,11 @@ def CHECK_TASK_OPERATION(task, task_type, details):
    except Exception as e:
 
       if task_type == "controller" or task_type == "program":
-         list_task_errors.append(details + " || " + str(e))   
+         list_task_errors.append(details + " || Invalid task")   
          return list_task_errors
 
       else:
-         list_task_errors.append(str(e))        
+         list_task_errors.append("Invalid task")        
          return list_task_errors
 
 

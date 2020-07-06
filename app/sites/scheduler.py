@@ -198,6 +198,18 @@ def scheduler():
                 else:              
                     option_sunset = "False"  
 
+                # set option day
+                if request.form.get("set_checkbox_option_day_" + str(i)):
+                    option_day = "True"
+                else:              
+                    option_day = "False"  
+
+                # set option night
+                if request.form.get("set_checkbox_option_night_" + str(i)):
+                    option_night = "True"
+                else:              
+                    option_night = "False"  
+
                 # set coordinates
                 latitude  = request.form.get("set_latitude_" + str(i))
 
@@ -350,7 +362,7 @@ def scheduler():
                     if SET_SCHEDULER_JOB(i, name, task, 
                                          trigger_time, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause,
                                          day, hour, minute,
-                                         option_sunrise, option_sunset, latitude, longitude,
+                                         option_sunrise, option_sunset, option_day, option_night, latitude, longitude,
                                          device_ieeeAddr_1, device_name_1, device_input_values_1, 
                                          sensor_key_1, operator_1, value_1, main_operator_second_sensor,
                                          device_ieeeAddr_2, device_name_2, device_input_values_2, 

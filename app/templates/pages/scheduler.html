@@ -572,14 +572,34 @@
                             <td colspan="8">
                               <div class="row justify-content-md-center">                                                
                                 <div class="col-sm-4"> 
-                                  <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="checkbox_option_sunrise_{{ entry.id }}" {% if entry.option_sunrise == "True" %} checked="on" {% endif %} name="set_checkbox_option_sunrise_{{ entry.id }}" >
-                                    <label class="custom-control-label" for="checkbox_option_sunrise_{{ entry.id }}">Sunrise ({{ entry.sunrise }})</label>
-                                  </div>     
-                                  <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="checkbox_option_sunset_{{ entry.id }}" {% if entry.option_sunset == "True" %} checked="on" {% endif %} name="set_checkbox_option_sunset_{{ entry.id }}" >
-                                    <label class="custom-control-label" for="checkbox_option_sunset_{{ entry.id }}">Sunset ({{ entry.sunset }})</label>
-                                  </div>   
+                                  <div class="row justify-content-md-center">                                                
+                                    <div class="col-sm-6">                                 
+                                      <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="checkbox_option_sunrise_{{ entry.id }}" {% if entry.option_sunrise == "True" %} checked="on" {% endif %} name="set_checkbox_option_sunrise_{{ entry.id }}" >
+                                        <label class="custom-control-label" for="checkbox_option_sunrise_{{ entry.id }}">Sunrise ({{ entry.sunrise }})</label>
+                                      </div>     
+                                    </div>  
+                                    <div class="col-sm-6">                                       
+                                      <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="checkbox_option_day_{{ entry.id }}" {% if entry.option_day == "True" %} checked="on" {% endif %} name="set_checkbox_option_day_{{ entry.id }}" >
+                                        <label class="custom-control-label" for="checkbox_option_day_{{ entry.id }}">Day</label>
+                                      </div>   
+                                    </div>  
+                                  </div>  
+                                  <div class="row justify-content-md-center">                                                
+                                    <div class="col-sm-6">                                 
+                                      <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="checkbox_option_sunset_{{ entry.id }}" {% if entry.option_sunset == "True" %} checked="on" {% endif %} name="set_checkbox_option_sunset_{{ entry.id }}" >
+                                        <label class="custom-control-label" for="checkbox_option_sunset_{{ entry.id }}">Sunset ({{ entry.sunset }})</label>
+                                      </div>    
+                                    </div>  
+                                    <div class="col-sm-6">                                       
+                                      <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="checkbox_option_night_{{ entry.id }}" {% if entry.option_night == "True" %} checked="on" {% endif %} name="set_checkbox_option_night_{{ entry.id }}" >
+                                        <label class="custom-control-label" for="checkbox_option_night_{{ entry.id }}">Night</label>
+                                      </div>   
+                                    </div>  
+                                  </div>                                    
                                 </div>                     
                                 <div class="col-sm-4">                                         
                                   <input type="text" class="form-control" placeholder="Latitude" name="set_latitude_{{ entry.id }}"

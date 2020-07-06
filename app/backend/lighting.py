@@ -273,8 +273,8 @@ def SET_LIGHTING_GROUP_BRIGHTNESS_DIMMER(group_id, command):
         if command == "turn_down":
             target_brightness = int(current_brightness) - 20
             
-            if target_brightness < 0:
-                target_brightness = 0    
+            if target_brightness < 10:
+                target_brightness = 10    
                 
         SET_LIGHTING_GROUP_BRIGHTNESS(group.id, target_brightness)
 

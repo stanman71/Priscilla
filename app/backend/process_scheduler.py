@@ -1,4 +1,5 @@
 import requests
+import datetime
 
 from app                          import app
 from app.backend.database_models  import *
@@ -17,7 +18,6 @@ from difflib import SequenceMatcher
 
 
 def PROCESS_SCHEDULER(job, ieeeAddr):
-
     start_job = False
 
     # check time
@@ -51,6 +51,20 @@ def PROCESS_SCHEDULER(job, ieeeAddr):
 
         if job.option_sunset == "True":
             if CHECK_SCHEDULER_SUNSET(job) == False:
+                return
+            else:
+                start_job = True
+
+        if job.option_day == "True":
+            print("hjhj")
+            if CHECK_SCHEDULER_DAY(job) == False:
+                return
+            else:
+                start_job = True
+
+        if job.option_night == "True":
+            print("hjhj")            
+            if CHECK_SCHEDULER_NIGHT(job) == False:
                 return
             else:
                 start_job = True
@@ -340,6 +354,54 @@ def CHECK_SCHEDULER_SUNSET(job):
         sunset_data = sunset_data.split(":")
 
         if int(current_hour) == int(sunset_data[0]) and int(current_minute) == int(sunset_data[1]):
+            return True
+
+        else:
+            return False
+
+    except:
+        return False
+
+
+def CHECK_SCHEDULER_DAY(job):
+
+    def is_between(time, time_range):
+        if time_range[1] < time_range[0]:
+            return time >= time_range[0] or time <= time_range[1]
+
+        return time_range[0] <= time <= time_range[1]
+
+    # get current time
+    now            = datetime.datetime.now()
+    current_hour   = now.strftime('%H')
+    current_minute = now.strftime('%M')
+
+    try:
+        if is_between(current_hour + ":" + current_minute, (GET_SCHEDULER_JOB_SUNRISE(job.id), GET_SCHEDULER_JOB_SUNSET(job.id))) == True:
+            return True
+
+        else:
+            return False
+
+    except:
+        return False
+
+
+def CHECK_SCHEDULER_NIGHT(job):
+
+    def is_between(time, time_range):
+        if time_range[1] < time_range[0]:
+            return time >= time_range[0] or time <= time_range[1]
+
+        return time_range[0] <= time <= time_range[1]
+
+    # get current time
+    now            = datetime.datetime.now()
+    current_hour   = now.strftime('%H')
+    current_minute = now.strftime('%M')
+
+    try:
+        if is_between(current_hour + ":" + current_minute, (GET_SCHEDULER_JOB_SUNSET(job.id), GET_SCHEDULER_JOB_SUNRISE(job.id))) == True:
             return True
 
         else:

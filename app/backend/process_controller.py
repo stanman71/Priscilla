@@ -65,9 +65,9 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             # #########
             # command_1
             # #########
-            
+
             try:                                                                                    
-                if str(controller.command_1)[1:-1] in str(msg):
+                if controller.command_1 != "None" and str(controller.command_1)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -96,7 +96,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_2)[1:-1] in str(msg):
+                if controller.command_2 != "None" and str(controller.command_2)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -125,7 +125,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
 
             try:
 
-                if str(controller.command_3)[1:-1] in str(msg):
+                if controller.command_3 != "None" and str(controller.command_3)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -154,7 +154,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_4)[1:-1] in str(msg):
+                if controller.command_4 != "None" and str(controller.command_4)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -183,7 +183,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_5)[1:-1] in str(msg):
+                if controller.command_5 != "None" and str(controller.command_5)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -212,7 +212,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_6)[1:-1] in str(msg):
+                if controller.command_6 != "None" and str(controller.command_6)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -241,7 +241,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
            
-                if str(controller.command_7)[1:-1] in str(msg):
+                if controller.command_7 != "None" and str(controller.command_7)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -270,7 +270,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:                                            
                                                 
-                if str(controller.command_8)[1:-1] in str(msg):
+                if controller.command_8 != "None" and str(controller.command_8)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -299,7 +299,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_9)[1:-1] in str(msg):
+                if controller.command_9 != "None" and str(controller.command_9)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -328,7 +328,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:                                              
                                             
-                if str(controller.command_10)[1:-1] in str(msg):
+                if controller.command_10 != "None" and str(controller.command_10)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -357,7 +357,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
                                                                        
-                if str(controller.command_11)[1:-1] in str(msg):
+                if controller.command_11 != "None" and str(controller.command_11)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -386,7 +386,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_12)[1:-1] in str(msg):
+                if controller.command_12 != "None" and str(controller.command_12)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -415,7 +415,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_13)[1:-1] in str(msg):
+                if controller.command_13 != "None" and str(controller.command_13)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -444,7 +444,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_14)[1:-1] in str(msg):
+                if controller.command_14 != "None" and str(controller.command_14)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -473,7 +473,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_15)[1:-1] in str(msg):
+                if controller.command_15 != "None" and str(controller.command_15)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -502,7 +502,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_16)[1:-1] in str(msg):
+                if controller.command_16 != "None" and str(controller.command_16)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -531,7 +531,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_17)[1:-1] in str(msg):
+                if controller.command_17 != "None" and str(controller.command_17)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -560,7 +560,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_18)[1:-1] in str(msg):
+                if controller.command_18 != "None" and str(controller.command_18)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       
@@ -589,7 +589,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_19)[1:-1] in str(msg):
+                if controller.command_19 != "None" and str(controller.command_19)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                        
@@ -618,7 +618,7 @@ def PROCESS_CONTROLLER(ieeeAddr, msg):
             
             try:
 
-                if str(controller.command_20)[1:-1] in str(msg):
+                if controller.command_20 != "None" and str(controller.command_20)[1:-1] in str(msg):
 
                     # special case "hold" command (Xiaomi Opple)
                     if "hold" in str(msg):                       

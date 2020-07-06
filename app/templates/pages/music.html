@@ -514,12 +514,14 @@
                         <tr>                   
                           <td>
                             <select class="form-control" data-size="5" name="set_spotify_default_device_id" style="background-color:#27293D"> 
-                              {% if "multiroom" in default_settings.default_device_name %}
-                                <option value = "{{ default_settings.default_device_id }}" > 
-                                  MULTIROOM | {{ default_settings.default_device_name | replace("multiroom, ","") | replace(" & multiroom","") | replace("multiroom & ","") | replace("multiroom","") | replace(" & ",", ") }}</option>
-                              {% else %}
-                                <option value="{{ default_settings.default_device_id }}" > {{ default_settings.default_device_name }} </option>
-                              {% endif %}      
+                              {% if default_settings.default_device_name != "None" %}
+                                {% if "multiroom" in default_settings.default_device_name %}
+                                  <option value = "{{ default_settings.default_device_id }}" > 
+                                    MULTIROOM | {{ default_settings.default_device_name | replace("multiroom, ","") | replace(" & multiroom","") | replace("multiroom & ","") | replace("multiroom","") | replace(" & ",", ") }}</option>
+                                {% else %}
+                                  <option value="{{ default_settings.default_device_id }}" > {{ default_settings.default_device_name }} </option>
+                                {% endif %}   
+                              {% endif %}    
                               <option disabled>------------------</option>    
                               {% if spotify_devices != "" %}
                                 {% for device in list_spotify_devices %}                  
@@ -534,7 +536,7 @@
                                 {% endfor %}
                               {% else %}
                                 <option value= "" > No devices found </option>
-                              {% endif %}  
+                              {% endif %}    
                               <option disabled>------------------</option>  
                               <option value="None"> None </option> 
                             </select>                                    

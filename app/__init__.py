@@ -60,18 +60,49 @@ from app.backend.shared_resources import *
 async_mode      = None
 socketio        = SocketIO(app, async_mode=async_mode)
 
-thread_log      = None
-thread_music    = None
-thread_programs = None
-thread_zigbee   = None
+thread_dashboard_devices    = None
+thread_dashboard_system_log = None
+thread_music                = None
+thread_programs             = None
+thread_zigbee               = None
 
 thread_lock = Lock()
  
-# ############################
-# background thread system_log
-# ############################
+# ###################################
+# background thread dashboard devices
+# ###################################
 
-def background_thread_log():
+def background_thread_dashboard_devices():
+
+    devices = ["", "", "", "", "", "", "", "", "", "",
+               "", "", "", "", "", "", "", "", "", "",
+               "", "", "", "", "", "", "", "", "", "",
+               "", "", "", "", "", "", "", "", "", "",
+               "", "", "", "", "", "", "", "", "", "",
+               "", "", "", "", "", "", "", "", "", "",
+               "", "", "", "", "", "", "", "", "", "",
+               "", "", "", "", "", "", "", "", "", "",
+               "", "", "", "", "", "", "", "", "", "",
+               "", "", "", "", "", "", "", "", "", ""]
+
+    while True:
+        socketio.sleep(1)
+
+        for i, item in enumerate(devices):
+
+            try:
+                devices[i] = GET_DEVICE_BY_ID(i+1).last_values_string
+            except:
+                pass
+
+        socketio.emit('dashboard_devices', {'device_table': devices}, namespace='/socketIO')
+
+
+# ######################################
+# background thread dashboard system_log
+# ######################################
+
+def background_thread_dashboard_system_log():
     
     while True:
         socketio.sleep(1)
@@ -87,7 +118,7 @@ def background_thread_log():
             else:
                 data_log_system = ""
 
-            socketio.emit('system_log',
+            socketio.emit('dashboard_system_log',
                          {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
                           'data_1_title': data_log_system[1][1] + " ||| " + data_log_system[1][0], 'data_1_content': data_log_system[1][2], 
                           'data_2_title': data_log_system[2][1] + " ||| " + data_log_system[2][0], 'data_2_content': data_log_system[2][2], 
@@ -101,7 +132,7 @@ def background_thread_log():
                           namespace='/socketIO')
 
         except:
-            socketio.emit('system_log',
+            socketio.emit('dashboard_system_log',
                          {'data_0_title': "" + " ||| " + "", 'data_0_content': "", 
                           'data_1_title': "" + " ||| " + "", 'data_1_content': "", 
                           'data_2_title': "" + " ||| " + "", 'data_2_content': "", 
@@ -122,7 +153,7 @@ def background_thread_log():
 def background_thread_music():
 
     while True:
-        socketio.sleep(0.5)
+        socketio.sleep(1)
 
         try:
             spotify_token = GET_SPOTIFY_TOKEN()
@@ -151,7 +182,7 @@ def background_thread_music():
         except:
             socketio.emit('music',
                          {'current_device': "", 'current_state': "", 'current_track': "", 'current_artists': "", 'current_progress': "", 'current_playlist': ""},                                                               
-                           namespace='/socketIO')                 
+                           namespace='/socketIO')           
 
 
 # ##########################
@@ -340,16 +371,19 @@ def background_thread_zigbee():
 
 @socketio.on('connect', namespace='/socketIO')
 def start_socketIO():
-    global thread_log
-    global thread_music
+    global thread_dashboard_devices  
+    global thread_dashboard_system_log
+    global thread_music      
     global thread_programs
     global thread_zigbee
 
     with thread_lock:
-        if thread_log is None:
-            thread_log = socketio.start_background_task(background_thread_log)
-        if thread_music is None:            
-            thread_music = socketio.start_background_task(background_thread_music)
+        if thread_dashboard_devices is None:        
+            thread_dashboard_devices = socketio.start_background_task(background_thread_dashboard_devices)             
+        if thread_dashboard_system_log is None:
+            thread_dashboard_system_log = socketio.start_background_task(background_thread_dashboard_system_log)
+        if thread_music is None:          
+            thread_music = socketio.start_background_task(background_thread_music)                   
         if thread_programs is None:               
             thread_programs = socketio.start_background_task(background_thread_programs)
         if thread_zigbee is None:               
@@ -418,7 +452,7 @@ def update_sunrise_sunset():
     for job in GET_ALL_SCHEDULER_JOBS():
 
         if job.trigger_sun_position == "True":
-            if job.option_sunrise == "True" or job.option_sunset == "True":
+            if job.option_sunrise == "True" or job.option_sunset == "True" or job.option_day == "True" or job.option_night == "True":
 
                 # get coordinates
                 if job.latitude != "None" and job.latitude != None and job.longitude != "None" and job.longitude:

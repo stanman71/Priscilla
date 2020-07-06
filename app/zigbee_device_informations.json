@@ -276,6 +276,15 @@
 				"commands_json"   : []
 			},	
 			{
+				"model"           : "E1745",
+				"device_type"     : "sensor_passiv",
+				"description"     : "IKEA TRADFRI motion sensor",
+				"input_values"    : ["occupancy"],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
+			{
 				"model"           : "E1744",
 				"device_type"     : "controller",
 				"description"     : "IKEA SYMFONISK sound controller",

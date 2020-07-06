@@ -464,3 +464,164 @@ Timestamp,Type,Description
 2020-06-21 04:07:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-06-21 04:07:31,EVENT,|System || Services || Squeezelie Player || disabled|
 2020-06-21 04:07:32,SUCCESS,|Music || Spotify || Token || updated|
+2020-07-05 20:54:26,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-05 20:54:26,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-05 20:54:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-05 20:54:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-05 20:54:27,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-05 20:54:29,SUCCESS,|Music || Spotify || Token || updated|
+2020-07-05 20:55:20,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-05 20:55:20,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-05 20:55:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-05 20:55:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-05 20:55:21,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-05 20:55:22,SUCCESS,|Music || Spotify || Token || updated|
+2020-07-05 20:55:58,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-05 20:55:58,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-05 20:55:59,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-05 20:55:59,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-05 20:55:59,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-05 20:56:00,SUCCESS,|Music || Spotify || Token || updated|
+2020-07-06 12:31:34,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 12:31:34,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 12:31:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 12:31:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 12:31:35,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 12:31:36,SUCCESS,|Music || Spotify || Token || updated|
+2020-07-06 12:32:52,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 12:32:52,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 12:32:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 12:32:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 12:32:53,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 12:32:55,SUCCESS,|Music || Spotify || Token || updated|
+2020-07-06 12:33:40,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 12:33:40,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 12:33:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 12:33:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 12:33:41,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 12:33:43,SUCCESS,|Music || Spotify || Token || updated|
+2020-07-06 12:34:54,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 12:34:54,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 12:34:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 12:34:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 12:34:55,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 12:34:57,SUCCESS,|Music || Spotify || Token || updated|
+2020-07-06 12:36:13,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 12:36:13,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 12:36:14,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 12:36:14,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 12:36:14,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 12:36:15,SUCCESS,|Music || Spotify || Token || updated|
+2020-07-06 12:36:39,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 12:36:39,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 12:36:40,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 12:36:40,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 12:36:40,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 12:36:42,SUCCESS,|Music || Spotify || Token || updated|
+2020-07-06 14:12:54,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 14:12:54,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 14:12:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 14:12:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 14:12:55,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 14:12:56,SUCCESS,|Music || Spotify || Token || updated|
+2020-07-06 14:48:13,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 14:48:13,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 14:48:14,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 14:48:14,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 14:48:14,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 14:49:21,DATABASE,|Scheduler || Job - new_scheduler_job_6 || added|
+2020-07-06 14:49:25,DATABASE,|Scheduler || Job - new_scheduler_job_6 || changed |||| trigger_settings |||| time: False, sun_position: False, sensors: False, position: False >>> time: False, sun_position: True, sensors: False, position: False|
+2020-07-06 14:51:17,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 14:51:18,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 14:51:19,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 14:51:19,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 14:51:19,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 14:53:25,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 14:53:25,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 14:53:26,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 14:53:26,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 14:53:26,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 14:58:45,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 14:58:45,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 14:58:46,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 14:58:46,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 14:58:46,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 14:58:50,DATABASE,|Scheduler || Job - new_scheduler_job_6 || changed |||| sun_position_settings |||| option_sunrise: False, option_sunset: False, option_day: False, option_night: False, latitude: None, longitude: None >>> option_sunrise: False, option_sunset: False, latitude: None, longitude: None|
+2020-07-06 14:58:53,DATABASE,|Scheduler || Job - new_scheduler_job_6 || changed |||| sun_position_settings |||| option_sunrise: False, option_sunset: False, option_day: True, option_night: False, latitude: None, longitude: None >>> option_sunrise: False, option_sunset: False, latitude: None, longitude: None|
+2020-07-06 14:58:56,DATABASE,|Scheduler || Job - new_scheduler_job_6 || changed |||| sun_position_settings |||| option_sunrise: False, option_sunset: False, option_day: True, option_night: True, latitude: None, longitude: None >>> option_sunrise: False, option_sunset: False, latitude: None, longitude: None|
+2020-07-06 15:03:33,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 15:03:33,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 15:03:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:03:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:03:34,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 15:03:40,DATABASE,|Scheduler || Job - new_scheduler_job_6 || changed |||| sun_position_settings |||| option_sunrise: False, option_sunset: False, option_day: False, option_night: True, latitude: None, longitude: None >>> option_sunrise: False, option_sunset: False, latitude: None, longitude: None|
+2020-07-06 15:03:46,DATABASE,|Scheduler || Job - new_scheduler_job_6 || changed |||| sun_position_settings |||| option_sunrise: False, option_sunset: False, option_day: False, option_night: False, latitude: None, longitude: None >>> option_sunrise: False, option_sunset: True, latitude: None, longitude: None|
+2020-07-06 15:03:51,DATABASE,|Scheduler || Job - new_scheduler_job_6 || changed |||| sun_position_settings |||| option_sunrise: False, option_sunset: True, option_day: False, option_night: True, latitude: None, longitude: None >>> option_sunrise: False, option_sunset: False, latitude: None, longitude: None|
+2020-07-06 15:14:53,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 15:14:53,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 15:14:54,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:14:54,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:14:54,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 15:15:00,ERROR,|System || Process Management || ('scheduler', 6, '') || invalid literal for int() with base 10: 'None'|
+2020-07-06 15:15:16,DATABASE,|Scheduler || Job - new_scheduler_job_6 || changed |||| task |||| None >>> program # Light_Corridor # START |||| sun_position_settings |||| option_sunrise: False, option_sunset: False, option_day: False, option_night: True, latitude: None, longitude: None >>> option_sunrise: False, option_sunset: False, latitude: 34, longitude: 23|
+2020-07-06 15:16:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:17:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:17:26,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 15:17:26,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 15:17:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:17:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:17:27,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 15:18:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:18:20,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 15:18:20,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 15:18:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:18:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:18:21,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 15:19:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:20:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:20:42,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 15:20:42,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 15:20:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:20:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:20:43,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 15:21:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:21:45,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 15:21:45,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 15:21:46,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:21:46,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:21:46,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 15:22:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:22:34,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 15:22:35,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 15:22:36,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:22:36,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:22:36,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 15:23:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:24:04,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 15:24:04,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 15:24:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:24:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:24:05,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 15:25:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:25:35,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 15:25:36,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 15:25:37,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:25:37,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:25:37,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 15:26:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:27:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:28:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:29:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:30:00,ERROR,|System || Process Management || ('scheduler', 6, '') || name 'time_in_range' is not defined|
+2020-07-06 15:30:21,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 15:30:21,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 15:30:22,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:30:22,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:30:22,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 15:32:55,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-06 15:32:55,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-06 15:32:56,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:32:56,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-06 15:32:56,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-06 15:35:12,DATABASE,|Scheduler || Job - new_scheduler_job_6 || changed |||| sun_position_settings |||| option_sunrise: False, option_sunset: False, option_day: False, option_night: True, latitude: 34, longitude: 23 >>> option_sunrise: False, option_sunset: False, latitude: 34, longitude: 23|
+2020-07-06 15:36:00,ERROR,|Task || Scheduler || new_scheduler_job_6 || can only concatenate str (not "NoneType") to str|

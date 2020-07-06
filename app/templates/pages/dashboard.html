@@ -6,7 +6,117 @@
     namespace  = '/socketIO';
     var socket = io(namespace);
 
-    socket.on('system_log', function(msg) {
+    socket.on('dashboard_devices', function(msg) {
+        $('#device_last_values_1').text(msg.device_table[0]);   
+        $('#device_last_values_2').text(msg.device_table[1]);           
+        $('#device_last_values_3').text(msg.device_table[2]);   
+        $('#device_last_values_4').text(msg.device_table[3]);     
+        $('#device_last_values_5').text(msg.device_table[4]);   
+        $('#device_last_values_6').text(msg.device_table[5]);           
+        $('#device_last_values_7').text(msg.device_table[6]);   
+        $('#device_last_values_8').text(msg.device_table[7]);    
+        $('#device_last_values_9').text(msg.device_table[8]);   
+        $('#device_last_values_10').text(msg.device_table[9]);           
+        $('#device_last_values_11').text(msg.device_table[10]);    
+        $('#device_last_values_12').text(msg.device_table[11]);      
+        $('#device_last_values_13').text(msg.device_table[12]);    
+        $('#device_last_values_14').text(msg.device_table[13]);            
+        $('#device_last_values_15').text(msg.device_table[14]);    
+        $('#device_last_values_16').text(msg.device_table[15]);             
+        $('#device_last_values_17').text(msg.device_table[16]);    
+        $('#device_last_values_18').text(msg.device_table[17]);            
+        $('#device_last_values_19').text(msg.device_table[18]);    
+        $('#device_last_values_20').text(msg.device_table[19]);    
+        $('#device_last_values_21').text(msg.device_table[20]);    
+        $('#device_last_values_22').text(msg.device_table[21]);            
+        $('#device_last_values_23').text(msg.device_table[22]);    
+        $('#device_last_values_24').text(msg.device_table[23]);      
+        $('#device_last_values_25').text(msg.device_table[24]);    
+        $('#device_last_values_26').text(msg.device_table[25]);            
+        $('#device_last_values_27').text(msg.device_table[26]);    
+        $('#device_last_values_28').text(msg.device_table[27]);     
+        $('#device_last_values_29').text(msg.device_table[28]);    
+        $('#device_last_values_30').text(msg.device_table[29]);            
+        $('#device_last_values_31').text(msg.device_table[30]);    
+        $('#device_last_values_32').text(msg.device_table[31]);      
+        $('#device_last_values_33').text(msg.device_table[32]);    
+        $('#device_last_values_34').text(msg.device_table[33]);            
+        $('#device_last_values_35').text(msg.device_table[34]);    
+        $('#device_last_values_36').text(msg.device_table[35]);             
+        $('#device_last_values_37').text(msg.device_table[36]);    
+        $('#device_last_values_38').text(msg.device_table[37]);            
+        $('#device_last_values_39').text(msg.device_table[38]);    
+        $('#device_last_values_40').text(msg.device_table[39]);     
+        $('#device_last_values_41').text(msg.device_table[40]);    
+        $('#device_last_values_42').text(msg.device_table[41]);            
+        $('#device_last_values_43').text(msg.device_table[42]);    
+        $('#device_last_values_44').text(msg.device_table[43]);      
+        $('#device_last_values_45').text(msg.device_table[44]);    
+        $('#device_last_values_46').text(msg.device_table[45]);            
+        $('#device_last_values_47').text(msg.device_table[46]);    
+        $('#device_last_values_48').text(msg.device_table[47]);     
+        $('#device_last_values_49').text(msg.device_table[48]);    
+        $('#device_last_values_50').text(msg.device_table[49]);            
+        $('#device_last_values_51').text(msg.device_table[50]);    
+        $('#device_last_values_52').text(msg.device_table[51]);      
+        $('#device_last_values_53').text(msg.device_table[52]);    
+        $('#device_last_values_54').text(msg.device_table[53]);            
+        $('#device_last_values_55').text(msg.device_table[54]);    
+        $('#device_last_values_56').text(msg.device_table[55]);             
+        $('#device_last_values_57').text(msg.device_table[56]);    
+        $('#device_last_values_58').text(msg.device_table[57]);            
+        $('#device_last_values_59').text(msg.device_table[58]);    
+        $('#device_last_values_60').text(msg.device_table[59]);     
+        $('#device_last_values_61').text(msg.device_table[60]);    
+        $('#device_last_values_62').text(msg.device_table[61]);            
+        $('#device_last_values_63').text(msg.device_table[62]);    
+        $('#device_last_values_64').text(msg.device_table[63]);      
+        $('#device_last_values_65').text(msg.device_table[64]);    
+        $('#device_last_values_66').text(msg.device_table[65]);            
+        $('#device_last_values_67').text(msg.device_table[66]);    
+        $('#device_last_values_68').text(msg.device_table[67]);     
+        $('#device_last_values_69').text(msg.device_table[68]);    
+        $('#device_last_values_70').text(msg.device_table[69]);            
+        $('#device_last_values_71').text(msg.device_table[70]);    
+        $('#device_last_values_72').text(msg.device_table[71]);      
+        $('#device_last_values_73').text(msg.device_table[72]);    
+        $('#device_last_values_74').text(msg.device_table[73]);            
+        $('#device_last_values_75').text(msg.device_table[74]);    
+        $('#device_last_values_76').text(msg.device_table[75]);             
+        $('#device_last_values_77').text(msg.device_table[76]);   
+        $('#device_last_values_78').text(msg.device_table[77]);           
+        $('#device_last_values_79').text(msg.device_table[78]);   
+        $('#device_last_values_80').text(msg.device_table[79]);    
+        $('#device_last_values_81').text(msg.device_table[80]);    
+        $('#device_last_values_82').text(msg.device_table[81]);   
+        $('#device_last_values_83').text(msg.device_table[82]);           
+        $('#device_last_values_84').text(msg.device_table[83]);   
+        $('#device_last_values_85').text(msg.device_table[84]);     
+        $('#device_last_values_86').text(msg.device_table[85]);   
+        $('#device_last_values_87').text(msg.device_table[86]);           
+        $('#device_last_values_88').text(msg.device_table[87]);   
+        $('#device_last_values_89').text(msg.device_table[88]);            
+        $('#device_last_values_90').text(msg.device_table[89]);   
+        $('#device_last_values_91').text(msg.device_table[90]);           
+        $('#device_last_values_92').text(msg.device_table[91]);   
+        $('#device_last_values_93').text(msg.device_table[92]);           
+        $('#device_last_values_94').text(msg.device_table[93]);          
+        $('#device_last_values_95').text(msg.device_table[94]);          
+        $('#device_last_values_96').text(msg.device_table[95]);          
+        $('#device_last_values_97').text(msg.device_table[96]);          
+        $('#device_last_values_98').text(msg.device_table[97]);          
+        $('#device_last_values_99').text(msg.device_table[98]);                  
+    });
+  });
+</script>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+
+    namespace  = '/socketIO';
+    var socket = io(namespace);
+
+    socket.on('dashboard_system_log', function(msg) {
         $('#data_0_title').text(msg.data_0_title);   
         $('#data_0_content').text(msg.data_0_content);           
         $('#data_1_title').text(msg.data_1_title);   
@@ -130,7 +240,107 @@
                             </td>  
                             <td style="width:3%"></td> 
                             <td style="width:40%" class="minwidth_200">
-                              {{ entry.last_values_string }}
+
+                              {% if entry.id == 1 %}  <div id="device_last_values_1"></div>  {% endif %}
+                              {% if entry.id == 2 %}  <div id="device_last_values_2"></div>  {% endif %}
+                              {% if entry.id == 3 %}  <div id="device_last_values_3"></div>  {% endif %}
+                              {% if entry.id == 4 %}  <div id="device_last_values_4"></div>  {% endif %}
+                              {% if entry.id == 5 %}  <div id="device_last_values_5"></div>  {% endif %}
+                              {% if entry.id == 6 %}  <div id="device_last_values_6"></div>  {% endif %}
+                              {% if entry.id == 7 %}  <div id="device_last_values_7"></div>  {% endif %}
+                              {% if entry.id == 8 %}  <div id="device_last_values_8"></div>  {% endif %}
+                              {% if entry.id == 9 %}  <div id="device_last_values_9"></div>  {% endif %}
+                              {% if entry.id == 10 %} <div id="device_last_values_10"></div> {% endif %} 
+                              {% if entry.id == 11 %} <div id="device_last_values_11"></div> {% endif %} 
+                              {% if entry.id == 12 %} <div id="device_last_values_12"></div> {% endif %} 
+                              {% if entry.id == 13 %} <div id="device_last_values_13"></div> {% endif %} 
+                              {% if entry.id == 14 %} <div id="device_last_values_14"></div> {% endif %} 
+                              {% if entry.id == 15 %} <div id="device_last_values_15"></div> {% endif %} 
+                              {% if entry.id == 16 %} <div id="device_last_values_16"></div> {% endif %} 
+                              {% if entry.id == 17 %} <div id="device_last_values_17"></div> {% endif %} 
+                              {% if entry.id == 18 %} <div id="device_last_values_18"></div> {% endif %} 
+                              {% if entry.id == 19 %} <div id="device_last_values_19"></div> {% endif %} 
+                              {% if entry.id == 20 %} <div id="device_last_values_20"></div> {% endif %} 
+                              {% if entry.id == 21 %} <div id="device_last_values_21"></div> {% endif %} 
+                              {% if entry.id == 22 %} <div id="device_last_values_22"></div> {% endif %} 
+                              {% if entry.id == 23 %} <div id="device_last_values_23"></div> {% endif %} 
+                              {% if entry.id == 24 %} <div id="device_last_values_24"></div> {% endif %} 
+                              {% if entry.id == 25 %} <div id="device_last_values_25"></div> {% endif %} 
+                              {% if entry.id == 26 %} <div id="device_last_values_26"></div> {% endif %} 
+                              {% if entry.id == 27 %} <div id="device_last_values_27"></div> {% endif %} 
+                              {% if entry.id == 28 %} <div id="device_last_values_28"></div> {% endif %} 
+                              {% if entry.id == 29 %} <div id="device_last_values_29"></div> {% endif %} 
+                              {% if entry.id == 30 %} <div id="device_last_values_30"></div> {% endif %} 
+                              {% if entry.id == 31 %} <div id="device_last_values_31"></div> {% endif %} 
+                              {% if entry.id == 32 %} <div id="device_last_values_32"></div> {% endif %} 
+                              {% if entry.id == 33 %} <div id="device_last_values_33"></div> {% endif %} 
+                              {% if entry.id == 34 %} <div id="device_last_values_34"></div> {% endif %} 
+                              {% if entry.id == 35 %} <div id="device_last_values_35"></div> {% endif %} 
+                              {% if entry.id == 36 %} <div id="device_last_values_36"></div> {% endif %} 
+                              {% if entry.id == 37 %} <div id="device_last_values_37"></div> {% endif %} 
+                              {% if entry.id == 38 %} <div id="device_last_values_38"></div> {% endif %} 
+                              {% if entry.id == 39 %} <div id="device_last_values_39"></div> {% endif %} 
+                              {% if entry.id == 40 %} <div id="device_last_values_40"></div> {% endif %} 
+                              {% if entry.id == 41 %} <div id="device_last_values_41"></div> {% endif %} 
+                              {% if entry.id == 42 %} <div id="device_last_values_42"></div> {% endif %} 
+                              {% if entry.id == 43 %} <div id="device_last_values_43"></div> {% endif %} 
+                              {% if entry.id == 44 %} <div id="device_last_values_44"></div> {% endif %} 
+                              {% if entry.id == 45 %} <div id="device_last_values_45"></div> {% endif %} 
+                              {% if entry.id == 46 %} <div id="device_last_values_46"></div> {% endif %} 
+                              {% if entry.id == 47 %} <div id="device_last_values_47"></div> {% endif %} 
+                              {% if entry.id == 48 %} <div id="device_last_values_48"></div> {% endif %} 
+                              {% if entry.id == 49 %} <div id="device_last_values_49"></div> {% endif %} 
+                              {% if entry.id == 50 %} <div id="device_last_values_50"></div> {% endif %} 
+                              {% if entry.id == 51 %} <div id="device_last_values_51"></div> {% endif %} 
+                              {% if entry.id == 52 %} <div id="device_last_values_52"></div> {% endif %} 
+                              {% if entry.id == 53 %} <div id="device_last_values_53"></div> {% endif %} 
+                              {% if entry.id == 54 %} <div id="device_last_values_54"></div> {% endif %} 
+                              {% if entry.id == 55 %} <div id="device_last_values_55"></div> {% endif %} 
+                              {% if entry.id == 56 %} <div id="device_last_values_56"></div> {% endif %} 
+                              {% if entry.id == 57 %} <div id="device_last_values_57"></div> {% endif %} 
+                              {% if entry.id == 58 %} <div id="device_last_values_58"></div> {% endif %} 
+                              {% if entry.id == 59 %} <div id="device_last_values_59"></div> {% endif %} 
+                              {% if entry.id == 60 %} <div id="device_last_values_60"></div> {% endif %} 
+                              {% if entry.id == 61 %} <div id="device_last_values_61"></div> {% endif %} 
+                              {% if entry.id == 62 %} <div id="device_last_values_62"></div> {% endif %} 
+                              {% if entry.id == 63 %} <div id="device_last_values_63"></div> {% endif %} 
+                              {% if entry.id == 64 %} <div id="device_last_values_64"></div> {% endif %} 
+                              {% if entry.id == 65 %} <div id="device_last_values_65"></div> {% endif %} 
+                              {% if entry.id == 66 %} <div id="device_last_values_66"></div> {% endif %} 
+                              {% if entry.id == 67 %} <div id="device_last_values_67"></div> {% endif %} 
+                              {% if entry.id == 68 %} <div id="device_last_values_68"></div> {% endif %} 
+                              {% if entry.id == 69 %} <div id="device_last_values_69"></div> {% endif %} 
+                              {% if entry.id == 70 %} <div id="device_last_values_70"></div> {% endif %} 
+                              {% if entry.id == 71 %} <div id="device_last_values_71"></div> {% endif %} 
+                              {% if entry.id == 72 %} <div id="device_last_values_72"></div> {% endif %} 
+                              {% if entry.id == 73 %} <div id="device_last_values_73"></div> {% endif %} 
+                              {% if entry.id == 74 %} <div id="device_last_values_74"></div> {% endif %} 
+                              {% if entry.id == 75 %} <div id="device_last_values_75"></div> {% endif %} 
+                              {% if entry.id == 76 %} <div id="device_last_values_76"></div> {% endif %} 
+                              {% if entry.id == 77 %} <div id="device_last_values_77"></div> {% endif %} 
+                              {% if entry.id == 78 %} <div id="device_last_values_78"></div> {% endif %} 
+                              {% if entry.id == 79 %} <div id="device_last_values_79"></div> {% endif %} 
+                              {% if entry.id == 80 %} <div id="device_last_values_80"></div> {% endif %} 
+                              {% if entry.id == 81 %} <div id="device_last_values_81"></div> {% endif %} 
+                              {% if entry.id == 82 %} <div id="device_last_values_82"></div> {% endif %} 
+                              {% if entry.id == 83 %} <div id="device_last_values_83"></div> {% endif %} 
+                              {% if entry.id == 84 %} <div id="device_last_values_84"></div> {% endif %} 
+                              {% if entry.id == 85 %} <div id="device_last_values_85"></div> {% endif %} 
+                              {% if entry.id == 86 %} <div id="device_last_values_86"></div> {% endif %} 
+                              {% if entry.id == 87 %} <div id="device_last_values_87"></div> {% endif %} 
+                              {% if entry.id == 88 %} <div id="device_last_values_88"></div> {% endif %} 
+                              {% if entry.id == 89 %} <div id="device_last_values_89"></div> {% endif %} 
+                              {% if entry.id == 90 %} <div id="device_last_values_90"></div> {% endif %} 
+                              {% if entry.id == 91 %} <div id="device_last_values_91"></div> {% endif %} 
+                              {% if entry.id == 92 %} <div id="device_last_values_92"></div> {% endif %} 
+                              {% if entry.id == 93 %} <div id="device_last_values_93"></div> {% endif %} 
+                              {% if entry.id == 94 %} <div id="device_last_values_94"></div> {% endif %} 
+                              {% if entry.id == 95 %} <div id="device_last_values_95"></div> {% endif %} 
+                              {% if entry.id == 96 %} <div id="device_last_values_96"></div> {% endif %} 
+                              {% if entry.id == 97 %} <div id="device_last_values_97"></div> {% endif %} 
+                              {% if entry.id == 98 %} <div id="device_last_values_98"></div> {% endif %} 
+                              {% if entry.id == 99 %} <div id="device_last_values_99"></div> {% endif %} 
+
                             </td>                                                                                 
                           </tr>
                         {% endfor %}
@@ -373,6 +583,15 @@
                       <div id="current_artists"></div> 
                     </div> 
                   </div>         
+
+                  <div class="row justify-content-md-center">                                                 
+                    <div class="col-sm-3">    
+                      <p><span>Progress</span></p>                        
+                    </div>
+                    <div class="col-sm-9">                           
+                      <div id="current_progress"></div> 
+                    </div> 
+                  </div>      
 
 <!------------------------>
 <!------------------------>

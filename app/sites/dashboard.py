@@ -48,7 +48,7 @@ def dashboard():
 
     if request.form.get("apply_changes_lighting_groups_devices") != None: 
 
-        for i in range (1,101):
+        for i in range (1,100):
             
             # ########
             # lighting 
@@ -142,8 +142,6 @@ def dashboard():
 
             except:
                 pass        
-
-        time.sleep(3)
 
 
     """ ########## """

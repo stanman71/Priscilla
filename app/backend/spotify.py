@@ -274,6 +274,8 @@ def SET_MUSIC_VOLUME(spotify_token, volume):
         for player in server.players:
             player.set_volume(volume)     
 
+    time.sleep(0.15)
+
 
 """ ################################### """
 """  update multiroom default settings  """
@@ -329,6 +331,46 @@ def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
         pass
 
 
+""" ################################# """
+"""  check multiroom synchronization  """
+""" ################################# """
+
+def START_CHECK_MULTIROOM_SYNCHRONIZATION_THREAD():
+	try:
+		Thread = threading.Thread(target=CHECK_MULTIROOM_SYNCHRONIZATION_THREAD)
+		Thread.start()  
+
+	except Exception as e:
+		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Check Multiroom Synchronization | " + str(e)) 
+
+
+def CHECK_MULTIROOM_SYNCHRONIZATION_THREAD(): 
+    counter = 0
+
+    try:
+
+        while counter < 15:
+
+            sp                       = spotipy.Spotify(auth=SPOTIFY_TOKEN)
+            sp.trace                 = False     
+            spotify_current_playback = sp.current_playback(market=None)
+                    
+            spotify_current_playback_state = spotify_current_playback['is_playing']
+            spotify_current_device_id      = spotify_current_playback['device']['id']
+
+            # restart playback
+            if spotify_current_playback_state == False:
+                sp.start_playback(device_id=spotify_current_device_id)
+            else:
+                break
+
+            counter = counter + 1
+            time.sleep(1)
+
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | Check Multiroom Synchronization | " + str(e))         
+
+        
 """ ################################## """
 """  multiroom synchronization thread  """
 """ ################################## """
@@ -344,7 +386,9 @@ def START_MULTIROOM_SYNCHRONIZATION_THREAD():
 
 
 def MULTIROOM_SYNCHRONIZATION_THREAD():   
-      
+    last_lms_position  = 0
+    lms_position_error = 0
+
     while True:
                
         if SPOTIFY_TOKEN != "":
@@ -369,20 +413,61 @@ def MULTIROOM_SYNCHRONIZATION_THREAD():
                         lms_position = player.position
                         break    
 
+                    # lms stopped playing ?
+                    if lms_position != 0 and last_lms_position != 0 and lms_position <= last_lms_position:
+                        lms_position_error = lms_position_error + 1
+                    else:
+                        lms_position_error = 0
+
+                    if lms_position_error > 2:
+                        sp.next_track(device_id=spotify_current_device_id)  
+
+                        # restart playback, if necessary
+                        START_CHECK_MULTIROOM_SYNCHRONIZATION_THREAD()
+                             
+                    last_lms_position = lms_position
+
+
                     # get spotify position
                     spotify_position = int(spotify_current_playback_progress / 1000)
 
                     # calculate position distance
-                    position_distance = abs((lms_position) - (spotify_position))
+                    if lms_position > 15 and spotify_position > 15:              
+                        position_distance = abs((lms_position) - (spotify_position))
 
-                    # start next track, if synchronization was lost
-                    if position_distance > 30:  
-                        sp.next_track(device_id=spotify_current_device_id)  
-               
+                        # start next track, if synchronization was lost
+                        if position_distance > 30:  
+                            
+                            while True:
 
-            except Exception as e:
-                if str(e) != "'NoneType' object is not subscriptable":
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | Multiroom Synchronization | " + str(e)) 
+                                # lms stopped playing ?
+                                if lms_position <= last_lms_position:
+                                    lms_position_error = lms_position_error + 1
+
+                                if lms_position_error > 2:
+                                    lms_position_error = 0
+
+                                    sp.next_track(device_id=spotify_current_device_id)  
+
+                                    # restart playback, if necessary
+                                    START_CHECK_MULTIROOM_SYNCHRONIZATION_THREAD()
+                                    break
+                                        
+                                # lms start next track        
+                                if lms_position < 2:
+                                    lms_position_error = 0
+
+                                    sp.next_track(device_id=spotify_current_device_id)  
+
+                                    # restart playback, if necessary
+                                    START_CHECK_MULTIROOM_SYNCHRONIZATION_THREAD()
+                                    break
+
+                                last_lms_position = lms_position
+                                time.sleep(0.5)
+            
+            except:
+                pass
                     
         time.sleep(1)
 
@@ -548,7 +633,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_AMP2":
     
                     if spotify_volume < 97:
-                        volume = spotify_volume + 3
+                        volume = spotify_volume + 2
                     else:
                         volume = 100
                     
@@ -568,7 +653,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
                 # case default
                 if spotify_volume < 97:
-                    volume = spotify_volume + 3
+                    volume = spotify_volume + 2
                 else:
                     volume = 100
                 
@@ -584,8 +669,8 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 # case hifiberry_AMP2                
                 if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_AMP2":
             
-                    if spotify_volume > 3:
-                        volume = spotify_volume - 3       
+                    if spotify_volume > 2:
+                        volume = spotify_volume - 2       
                     else:
                         volume = 1
 
@@ -604,8 +689,8 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             except:
 
                 # case default                   
-                if spotify_volume > 3:
-                    volume = spotify_volume - 3       
+                if spotify_volume > 2:
+                    volume = spotify_volume - 2       
                 else:
                     volume = 1              
 
