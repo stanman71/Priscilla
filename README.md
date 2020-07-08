@@ -1,4 +1,4 @@
-# homatiX
+# Bianca
 
 This project creates a smarthome environment.
 
