@@ -625,3 +625,8 @@ Timestamp,Type,Description
 2020-07-06 15:32:56,EVENT,|System || Services || Squeezelie Player || disabled|
 2020-07-06 15:35:12,DATABASE,|Scheduler || Job - new_scheduler_job_6 || changed |||| sun_position_settings |||| option_sunrise: False, option_sunset: False, option_day: False, option_night: True, latitude: 34, longitude: 23 >>> option_sunrise: False, option_sunset: False, latitude: 34, longitude: 23|
 2020-07-06 15:36:00,ERROR,|Task || Scheduler || new_scheduler_job_6 || can only concatenate str (not "NoneType") to str|
+2020-07-08 00:20:32,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-07-08 00:20:32,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-07-08 00:20:33,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-08 00:20:33,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-08 00:20:33,EVENT,|System || Services || Squeezelie Player || disabled|

@@ -274,7 +274,7 @@ def SET_MUSIC_VOLUME(spotify_token, volume):
         for player in server.players:
             player.set_volume(volume)     
 
-    time.sleep(0.15)
+    time.sleep(0.2)
 
 
 """ ################################### """
@@ -633,7 +633,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_AMP2":
     
                     if spotify_volume < 97:
-                        volume = spotify_volume + 2
+                        volume = spotify_volume + 3
                     else:
                         volume = 100
                     
@@ -653,7 +653,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
                 # case default
                 if spotify_volume < 97:
-                    volume = spotify_volume + 2
+                    volume = spotify_volume + 3
                 else:
                     volume = 100
                 
@@ -669,8 +669,8 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 # case hifiberry_AMP2                
                 if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_AMP2":
             
-                    if spotify_volume > 2:
-                        volume = spotify_volume - 2       
+                    if spotify_volume > 3:
+                        volume = spotify_volume - 3       
                     else:
                         volume = 1
 
@@ -689,8 +689,8 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             except:
 
                 # case default                   
-                if spotify_volume > 2:
-                    volume = spotify_volume - 2       
+                if spotify_volume > 3:
+                    volume = spotify_volume - 3       
                 else:
                     volume = 1              
 

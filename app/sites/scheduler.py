@@ -223,7 +223,9 @@ def scheduler():
 
                 try:                
                     # update sunrise / sunset  
-                    if latitude != "None" and longitude != "None":     
+                    if latitude != "None" and longitude != "None":  
+                        latitude  = latitude.replace(",",".")
+                        longitude = longitude.replace(",",".")
 
                         # valid values ?
                         if -90.0 <= float(latitude) <= 90.0 and -180.0 <= float(longitude) <= 180.0:       

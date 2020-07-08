@@ -56,14 +56,12 @@ def PROCESS_SCHEDULER(job, ieeeAddr):
                 start_job = True
 
         if job.option_day == "True":
-            print("hjhj")
             if CHECK_SCHEDULER_DAY(job) == False:
                 return
             else:
                 start_job = True
 
-        if job.option_night == "True":
-            print("hjhj")            
+        if job.option_night == "True":          
             if CHECK_SCHEDULER_NIGHT(job) == False:
                 return
             else:
