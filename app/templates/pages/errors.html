@@ -1,3 +1,8 @@
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
 
       <div class="content">
         <div class="row">
@@ -5,16 +10,15 @@
             <div class="card">
               <div class="card-header">
                 <h5 class="title"><p class="text-danger">ERROR</p></h5>    
-                  <label><p class="text-danger">{{ error_message }}</p></label>
+                  <label><p class="text-danger">{{ error_message }}</p></label>           
               </div>
               <div class="card-body">
                 <form role="form" method="post" action="">
-
-      
+                  <button type="submit" onclick="goBack()" class="btn btn-fill btn-primary pull-left">GO BACK</button>
+                  <a class="btn btn-fill btn-primary pull-right" href="/" role="button">LOGIN</a>   
                 </form>
               </div>
             </div>
           </div>
-
         </div>
       </div>
