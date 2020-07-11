@@ -83,16 +83,15 @@ def GET_SPOTIFY_AUTHORIZATION():
 
 
 def GENERATE_SPOTIFY_TOKEN(auth_token):
+    global SPOTIFY_TOKEN    
+    global SPOTIFY_REFRESH_TOKEN       
 
     # Server-side Parameters
     if GET_SYSTEM_SETTINGS().ip_address == "":
         REDIRECT_URI = "http://127.0.0.1:80/music/spotify/token"
     else:
         REDIRECT_URI = "http://" + str(GET_SYSTEM_SETTINGS().ip_address) + ":80/music/spotify/token"   
-
-    global SPOTIFY_TOKEN    
-    global SPOTIFY_REFRESH_TOKEN       
-    
+ 
     body = {
         "grant_type": 'authorization_code',
         "code" : str(auth_token),
@@ -102,8 +101,7 @@ def GENERATE_SPOTIFY_TOKEN(auth_token):
     }
 
     post_request = requests.post(SPOTIFY_TOKEN_URL, data=body)
-
-    answer = json.loads(post_request.text)
+    answer       = json.loads(post_request.text)
 
     try:
         SPOTIFY_TOKEN = answer["access_token"]

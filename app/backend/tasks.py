@@ -599,4 +599,5 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
 
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | " + str(e))
+        if "'NoneType' object is not subscriptable" not in str(e):
+            WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | " + str(e))
