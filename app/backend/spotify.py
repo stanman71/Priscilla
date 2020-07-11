@@ -163,10 +163,9 @@ def CHECK_CLIENT_MUSIC_CONNECTION():
 
                 except Exception as e:
                     WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + client_music.name + " | " + str(e))      
-                    print(e)
 
     except Exception as e:
-        print(e)
+        WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + client_music.name + " | " + str(e))
 
 
 """ ###################### """
@@ -627,68 +626,78 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
             spotify_device_name = sp.current_playback(market=None)['device']['name']
 
-            # case multiroom
-            if "multiroom" in spotify_device_name:
-                if spotify_volume < 98:
-                    volume = spotify_volume + 2
-                else:
-                    volume = 100      
+            try:
 
-                SET_MUSIC_VOLUME(spotify_token, volume)
+                # case multiroom
+                if "multiroom" in spotify_device_name:
+                    if spotify_volume < 98:
+                        volume = spotify_volume + 2
+                    else:
+                        volume = 100      
 
-            # case hifiberry_AMP2
-            if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_AMP2":
-                if spotify_volume < 98:
-                    volume = spotify_volume + 2
-                else:
-                    volume = 100
-                
-                SET_MUSIC_VOLUME(spotify_token, volume)
-                
-            # case hifiberry_miniAMP
-            if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_miniAMP":
+                    SET_MUSIC_VOLUME(spotify_token, volume)
 
-                if spotify_volume < 99:
-                    volume = spotify_volume + 1
-                else:
-                    volume = 100
-                
-                SET_MUSIC_VOLUME(spotify_token, volume)                   
-                          
+                # case hifiberry_AMP2
+                if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_AMP2":
+                    if spotify_volume < 98:
+                        volume = spotify_volume + 2
+                    else:
+                        volume = 100
+                    
+                    SET_MUSIC_VOLUME(spotify_token, volume)
+                    
+                # case hifiberry_miniAMP
+                if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_miniAMP":
+
+                    if spotify_volume < 99:
+                        volume = spotify_volume + 1
+                    else:
+                        volume = 100
+                    
+                    SET_MUSIC_VOLUME(spotify_token, volume)                   
+                            
+            except:
+                pass
+
 
         if command == "volume_down":   
 
             spotify_device_name = sp.current_playback(market=None)['device']['name']
 
-            # case multiroom
-            if "multiroom" in spotify_device_name:                 
-                if spotify_volume > 2:
-                    volume = spotify_volume - 2       
-                else:
-                    volume = 1              
+            try:
 
-                SET_MUSIC_VOLUME(spotify_token, volume)   
+                # case multiroom
+                if "multiroom" in spotify_device_name:                 
+                    if spotify_volume > 2:
+                        volume = spotify_volume - 2       
+                    else:
+                        volume = 1              
 
-            # case hifiberry_AMP2                
-            if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_AMP2":
-        
-                if spotify_volume > 2:
-                    volume = spotify_volume - 2       
-                else:
-                    volume = 1
+                    SET_MUSIC_VOLUME(spotify_token, volume)   
 
-                SET_MUSIC_VOLUME(spotify_token, volume) 
-
-            # case hifiberry_miniAMP
-            if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_miniAMP":
-
-                if spotify_volume > 1:
-                    volume = spotify_volume - 1       
-                else:
-                    volume = 1
-
-                SET_MUSIC_VOLUME(spotify_token, volume) 
+                # case hifiberry_AMP2                
+                if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_AMP2":
             
+                    if spotify_volume > 2:
+                        volume = spotify_volume - 2       
+                    else:
+                        volume = 1
+
+                    SET_MUSIC_VOLUME(spotify_token, volume) 
+
+                # case hifiberry_miniAMP
+                if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_miniAMP":
+
+                    if spotify_volume > 1:
+                        volume = spotify_volume - 1       
+                    else:
+                        volume = 1
+
+                    SET_MUSIC_VOLUME(spotify_token, volume) 
+            
+            except:
+                pass
+
 
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Control | " + str(e)) 
