@@ -50,12 +50,6 @@ SPOTIFY_API_BASE_URL  = "https://api.spotify.com"
 API_VERSION           = "v1"
 SPOTIFY_API_URL       = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
 
-# Server-side Parameters
-if GET_SYSTEM_SETTINGS().ip_address == "":
-    REDIRECT_URI = "http://127.0.0.1:80/music/spotify/token"
-else:
-    REDIRECT_URI = "http://" + str(GET_SYSTEM_SETTINGS().ip_address) + ":80/music/spotify/token"
-
 
 SCOPE                 = "playlist-read-private user-read-recently-played user-read-currently-playing user-read-playback-state streaming"
 STATE                 = ""
@@ -68,6 +62,13 @@ SPOTIFY_REFRESH_TOKEN = GET_SPOTIFY_REFRESH_TOKEN()
 
 
 def GET_SPOTIFY_AUTHORIZATION():
+
+    # Server-side Parameters
+    if GET_SYSTEM_SETTINGS().ip_address == "":
+        REDIRECT_URI = "http://127.0.0.1:80/music/spotify/token"
+    else:
+        REDIRECT_URI = "http://" + str(GET_SYSTEM_SETTINGS().ip_address) + ":80/music/spotify/token"
+
     auth_query_parameters = {
         "response_type": "code",
         "redirect_uri": REDIRECT_URI,
@@ -82,7 +83,13 @@ def GET_SPOTIFY_AUTHORIZATION():
 
 
 def GENERATE_SPOTIFY_TOKEN(auth_token):
-    
+
+    # Server-side Parameters
+    if GET_SYSTEM_SETTINGS().ip_address == "":
+        REDIRECT_URI = "http://127.0.0.1:80/music/spotify/token"
+    else:
+        REDIRECT_URI = "http://" + str(GET_SYSTEM_SETTINGS().ip_address) + ":80/music/spotify/token"   
+
     global SPOTIFY_TOKEN    
     global SPOTIFY_REFRESH_TOKEN       
     
@@ -623,10 +630,10 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             SET_MUSIC_VOLUME(spotify_token, spotify_volume)    
 
         if command == "volume_up":   
-
-            spotify_device_name = sp.current_playback(market=None)['device']['name']
-
+            
             try:
+
+                spotify_device_name = sp.current_playback(market=None)['device']['name']
 
                 # case multiroom
                 if "multiroom" in spotify_device_name:
@@ -662,9 +669,9 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
         if command == "volume_down":   
 
-            spotify_device_name = sp.current_playback(market=None)['device']['name']
-
             try:
+
+                spotify_device_name = sp.current_playback(market=None)['device']['name']
 
                 # case multiroom
                 if "multiroom" in spotify_device_name:                 
