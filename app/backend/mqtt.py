@@ -639,7 +639,7 @@ def UPDATE_DEVICES(gateway):
 
         except Exception as e:
             if str(e) == "string index out of range":
-                WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | Update")            
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | Update | " + str(e))            
                 return ("Network | MQTT | Update | " + str(e))     
 
 
@@ -755,8 +755,7 @@ def UPDATE_DEVICES(gateway):
      
      
             except Exception as e:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Update | " + str(e))  
-                SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | Update | " + str(e))             
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | Update | " + str(e))       
                 return ("Network | ZigBee2MQTT | Update " + str(e))
 
         else:
@@ -977,6 +976,58 @@ def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
         time.sleep(0.2)
                     
     return False 
+
+
+def START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD():
+
+    try:
+        Thread = threading.Thread(target=CHECK_ZIGBEE2MQTT_RUNNING)
+        Thread.start()  
+        
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Check ZIGBEE running | " + str(e))  
+        SEND_EMAIL("ERROR", "System | Thread | Check ZIGBEE running | " + str(e))    
+
+
+def CHECK_ZIGBEE2MQTT_RUNNING():   
+
+    while True:
+
+        try:
+
+            if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
+
+                counter = 1
+
+                if GET_ZIGBEE2MQTT_PAIRING_SETTING() == "True":
+                    heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "true")))   
+
+                if GET_ZIGBEE2MQTT_PAIRING_SETTING() == "False":
+                    heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "false")))   
+
+                zigbee_active = False
+
+                # 10 seconds
+                while counter < 50:       
+                    for message in GET_MQTT_INCOMING_MESSAGES(15):
+                        if message[1] == "smarthome/zigbee2mqtt/bridge/config":   
+                            zigbee_active = True
+                            counter       = 50
+
+                    counter = counter + 1
+                    time.sleep(0.2)
+
+                if zigbee_active == True:
+                    SET_ZIGBEE2MQTT_CONNECTION_STATUS(True)      
+                else:          
+                    SET_ZIGBEE2MQTT_CONNECTION_STATUS(False)
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")  
+                    time.sleep(1800)
+
+        except:
+            pass
+
+        time.sleep(10)
 
 
 """ ######################### """

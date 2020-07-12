@@ -430,8 +430,8 @@ for device in GET_ALL_DEVICES(""):
 """ ####### """
 
 from app.sites                      import index, about, dashboard, scheduler, programs, lighting_scenes, lighting_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_threads, settings_devices, settings_controller, settings_users, settings_system_log, errors
-from app.backend.process_management import PROCESS_MANAGEMENT_THREAD
-from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING
+from app.backend.process_management import START_PROCESS_MANAGEMENT_THREAD
+from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING, START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD
 from app.backend.email              import SEND_EMAIL
 from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
 from app.backend.spotify            import START_REFRESH_SPOTIFY_TOKEN_THREAD
@@ -575,8 +575,9 @@ if GET_SYSTEM_SETTINGS().squeezelite_active != "True":
 """ background processes """
 """ #################### """
 
-PROCESS_MANAGEMENT_THREAD()
+START_PROCESS_MANAGEMENT_THREAD()
 START_REFRESH_SPOTIFY_TOKEN_THREAD()
 START_MULTIROOM_SYNCHRONIZATION_THREAD()
+START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD()
 
 socketio.run(app, host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)

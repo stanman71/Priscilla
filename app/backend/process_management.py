@@ -18,7 +18,7 @@ from app.backend.process_scheduler  import PROCESS_SCHEDULER
 
 # https://www.bogotobogo.com/python/python_PriorityQueue_heapq_Data_Structure.php
 
-def PROCESS_MANAGEMENT_THREAD():
+def START_PROCESS_MANAGEMENT_THREAD():
 
     try:
         Thread = threading.Thread(target=PROCESS_MANAGEMENT)

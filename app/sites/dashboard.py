@@ -14,8 +14,11 @@ from app.backend.shared_resources import *
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
-
-import os, shutil, re, cgi
+import os
+import shutil
+import re
+import cgi
+import spotipy
 
 
 # access rights
