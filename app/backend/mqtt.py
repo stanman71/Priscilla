@@ -1026,7 +1026,7 @@ def CHECK_ZIGBEE2MQTT_RUNNING():
                     fail_counter = 0
 
                     # fail process
-                    while fail_counter < 1800 and zigbee_active == False:
+                    while fail_counter < 3600 and zigbee_active == False:
 
                         if GET_ZIGBEE2MQTT_PAIRING_SETTING() == "True":
                             heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "true")))   
