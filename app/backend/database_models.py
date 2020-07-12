@@ -3613,21 +3613,11 @@ def SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active, lms_active, squeezelite_acti
     # values changed ?
     if (entry.zigbee2mqtt_active != zigbee2mqtt_active or entry.lms_active != lms_active or entry.squeezelite_active != squeezelite_active):
 
-        changes = ""
-
-        if entry.zigbee2mqtt_active != zigbee2mqtt_active:
-            changes = changes + " || zigbee2mqtt_active_setting || " + str(entry.zigbee2mqtt_active) + " >>> " + str(zigbee2mqtt_active)
-        if entry.lms_active != lms_active:
-            changes = changes + " || lms_active_setting || " + str(entry.lms_active) + " >>> " + str(lms_active)            
-        if entry.squeezelite_active != squeezelite_active:
-            changes = changes + " || squeezelite_active_setting || " + str(entry.squeezelite_active) + " >>> " + str(squeezelite_active)        
-
         entry.zigbee2mqtt_active   = zigbee2mqtt_active    
         entry.lms_active           = lms_active   
         entry.squeezelite_active   = squeezelite_active               
         db.session.commit()   
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "System | Services | changed" + changes) 
         return True
 
 
