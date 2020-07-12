@@ -37,7 +37,7 @@ def GET_PATH():
 def CREATE_LOGFILE(filename):
     try:
         # create csv file
-        file = PATH + "/data/logs/" + filename + ".csv"
+        file = GET_PATH() + "/data/logs/" + filename + ".csv"
         
         with open(file, 'w', encoding='utf-8') as csvfile:
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)    
@@ -59,8 +59,8 @@ def CREATE_LOGFILE(filename):
 
         
 def RESET_LOGFILE(filename):
-    if os.path.isfile(PATH + "/data/logs/" + filename + ".csv"):
-        os.remove (PATH + "/data/logs/" + filename + ".csv")
+    if os.path.isfile(GET_PATH() + "/data/logs/" + filename + ".csv"):
+        os.remove (GET_PATH() + "/data/logs/" + filename + ".csv")
 
         WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/" + filename + ".csv | deleted")
         
@@ -75,12 +75,12 @@ def RESET_LOGFILE(filename):
 def WRITE_LOGFILE_DEVICES(channel, msg):
     
     # create file if not exist
-    if os.path.isfile(PATH + "/data/logs/log_devices.csv") is False:
+    if os.path.isfile(GET_PATH() + "/data/logs/log_devices.csv") is False:
         CREATE_LOGFILE("log_devices")
         
     try: 
         # open csv file
-        file = PATH + "/data/logs/log_devices.csv"
+        file = GET_PATH() + "/data/logs/log_devices.csv"
         
         with open(file, 'a', newline='', encoding='utf-8') as csvfile:
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                                        
@@ -95,12 +95,12 @@ def WRITE_LOGFILE_DEVICES(channel, msg):
 def WRITE_LOGFILE_SYSTEM(log_type, description):
 
     # create file if not exist
-    if os.path.isfile(PATH + "/data/logs/log_system.csv") is False:
+    if os.path.isfile(GET_PATH() + "/data/logs/log_system.csv") is False:
         CREATE_LOGFILE("log_system")
 
     try:
         # open csv file
-        file = PATH + "/data/logs/log_system.csv"
+        file = GET_PATH() + "/data/logs/log_system.csv"
         
         with open(file, 'a', newline='', encoding='utf-8') as csvfile:
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)   
@@ -116,7 +116,7 @@ def GET_LOGFILE_SYSTEM(selected_log_types, search, rows):
     
     try:
         # open csv file
-        file = PATH + "/data/logs/log_system.csv"
+        file = GET_PATH() + "/data/logs/log_system.csv"
         
         with open(file, 'r', newline='', encoding='utf-8') as csvfile:
             rowReader = csv.reader(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -192,7 +192,7 @@ def UPDATE_NETWORK_SETTINGS_LINUX(dhcp, ip_address, gateway):
 
 def GET_ALL_BACKUP_FILES():
     file_list = []
-    for files in os.walk(PATH + '/data/backup_database/'):  
+    for files in os.walk(GET_PATH() + '/data/backup_database/'):  
         file_list.append(files)
 
     if file_list == []:
@@ -205,12 +205,12 @@ def GET_ALL_BACKUP_FILES():
 
 def BACKUP_DATABASE():  
     try:
-        shutil.copyfile(PATH + '/data/database.db', 
-                        PATH + '/data/backup_database/' + str(datetime.datetime.now().date()) + '_database.db')
+        shutil.copyfile(GET_PATH() + '/data/database.db', 
+                        GET_PATH() + '/data/backup_database/' + str(datetime.datetime.now().date()) + '_database.db')
                 
         # if more then 10 backups saved, delete oldest backup file
-        list_of_files = os.listdir(PATH + '/data/backup_database/')    
-        full_path     = [PATH + '/data/backup_database/' + '{0}'.format(x) for x in list_of_files]
+        list_of_files = os.listdir(GET_PATH() + '/data/backup_database/')    
+        full_path     = [GET_PATH() + '/data/backup_database/' + '{0}'.format(x) for x in list_of_files]
 
         if len([name for name in list_of_files]) > 10:
             oldest_file = min(full_path, key=os.path.getctime)
@@ -226,7 +226,7 @@ def BACKUP_DATABASE():
 def RESTORE_DATABASE(filename):
     try:
         if filename.split("_")[1] == "database.db":
-            shutil.copyfile(PATH + '/data/backup_database/' + filename, PATH + '/data/database.db')
+            shutil.copyfile(GET_PATH() + '/data/backup_database/' + filename, GET_PATH() + '/data/database.db')
             WRITE_LOGFILE_SYSTEM("SUCCESS", "System | Database_Backup | " + filename + " | restored")
             return True
             
@@ -237,7 +237,7 @@ def RESTORE_DATABASE(filename):
         
 def DELETE_DATABASE_BACKUP(filename):
     try:
-        os.remove (PATH + '/data/backup_database/' + filename)
+        os.remove (GET_PATH() + '/data/backup_database/' + filename)
         WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/backup_database/" + filename + " | deleted")
         return True
         
@@ -252,11 +252,11 @@ def DELETE_DATABASE_BACKUP(filename):
 
 def BACKUP_ZIGBEE():  
     try:
-        os.system("sudo zip -r " + PATH + '/data/backup_zigbee/' + str(datetime.datetime.now().date()) + ".zip /opt/zigbee2mqtt/data/")
+        os.system("sudo zip -r " + GET_PATH() + '/data/backup_zigbee/' + str(datetime.datetime.now().date()) + ".zip /opt/zigbee2mqtt/data/")
              
         # if more then 10 backups saved, delete oldest backup file
-        list_of_files = os.listdir(PATH + '/data/backup_zigbee/')    
-        full_path     = [PATH + '/data/backup_zigbee/' + '{0}'.format(x) for x in list_of_files]
+        list_of_files = os.listdir(GET_PATH() + '/data/backup_zigbee/')    
+        full_path     = [GET_PATH() + '/data/backup_zigbee/' + '{0}'.format(x) for x in list_of_files]
 
         if len([name for name in list_of_files]) > 10:
             oldest_file = min(full_path, key=os.path.getctime)
@@ -275,7 +275,7 @@ def BACKUP_ZIGBEE():
 
 def GET_ALL_MQTT_FIRMWARE_FILES():
     file_list = []
-    for files in os.walk(PATH + "/firmwares/"):  
+    for files in os.walk(GET_PATH() + "/firmwares/"):  
         file_list.append(files)   
 
     if file_list == []:
@@ -286,7 +286,7 @@ def GET_ALL_MQTT_FIRMWARE_FILES():
 
 def DELETE_MQTT_FIRMWARE(filename):
     try:
-        os.remove (PATH + '/firmwares/' + filename)
+        os.remove (GET_PATH() + '/firmwares/' + filename)
         WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /firmwares/" + filename + " | deleted")
         return True
 
@@ -301,7 +301,7 @@ def DELETE_MQTT_FIRMWARE(filename):
 
 def GET_ALL_SENSORDATA_FILES():
     file_list = []
-    for files in os.walk(PATH + "/data/csv/"):  
+    for files in os.walk(GET_PATH() + "/data/csv/"):  
         file_list.append(files)   
 
     if file_list == []:
@@ -311,11 +311,11 @@ def GET_ALL_SENSORDATA_FILES():
 
 
 def CREATE_SENSORDATA_FILE(filename):
-    if os.path.isfile(PATH + "/data/csv/" + filename + ".csv") is False:
+    if os.path.isfile(GET_PATH() + "/data/csv/" + filename + ".csv") is False:
 
         try:
             # create csv file
-            file = PATH + "/data/csv/" + filename + ".csv"
+            file = GET_PATH() + "/data/csv/" + filename + ".csv"
             with open(file, 'w', encoding='utf-8') as csvfile:
                 filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                       
                 filewriter.writerow(['Timestamp','Device','Sensor','Sensor_Value'])
@@ -349,7 +349,7 @@ def BLOCK_SENSORDATA_THREAD(message):
 
 def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
 
-    if os.path.isfile(PATH + "/data/csv/" + filename + ".csv") is False:
+    if os.path.isfile(GET_PATH() + "/data/csv/" + filename + ".csv") is False:
         CREATE_SENSORDATA_FILE(filename)
 
     # block existing message
@@ -363,7 +363,7 @@ def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
 
     try:
         # open csv file
-        file = PATH + "/data/csv/" + filename + ".csv"
+        file = GET_PATH() + "/data/csv/" + filename + ".csv"
         with open(file, 'a', newline='', encoding='utf-8') as csvfile:
             filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)                                        
             filewriter.writerow( [str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), str(device), str(sensor), str(value) ])
@@ -375,7 +375,7 @@ def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
 
 def READ_SENSORDATA_FILE(filename):
     try:
-        file = PATH + "/data/csv/" + filename
+        file = GET_PATH() + "/data/csv/" + filename
 
         df = pd.read_csv(file, sep = ",", skiprows = 1, names = ["Timestamp","Device","Sensor","Sensor_Value"])
         return df
@@ -387,7 +387,7 @@ def READ_SENSORDATA_FILE(filename):
 
 def DELETE_SENSORDATA_FILE(filename):
     try:
-        os.remove (PATH + '/data/csv/' + filename)
+        os.remove (GET_PATH() + '/data/csv/' + filename)
         WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/csv/" + filename + " | deleted")
         return True
 
@@ -405,7 +405,7 @@ def GET_ALL_MQTT_DEVICES_MANUALLY_ADDING():
     try:
         list_devices = []    
 
-        with open(PATH + "/app/mqtt_manually_adding.json", 'r') as data_file:
+        with open(GET_PATH() + "/app/mqtt_manually_adding.json", 'r') as data_file:
             data_loaded = json.load(data_file)
 
         for device in data_loaded["data"]:
@@ -428,7 +428,7 @@ def GET_ALL_MQTT_DEVICES_MANUALLY_ADDING():
 def GET_MQTT_DEVICE_MANUALLY_ADDING_INFORMATIONS(model):
 
     try:
-        with open(PATH + "/app/mqtt_manually_adding.json", 'r') as data_file:
+        with open(GET_PATH() + "/app/mqtt_manually_adding.json", 'r') as data_file:
             data_loaded = json.load(data_file)
 
         for device in data_loaded["data"]:
@@ -488,7 +488,7 @@ def GET_MQTT_DEVICE_MANUALLY_ADDING_INFORMATIONS(model):
 def GET_ZIGBEE_DEVICE_INFORMATIONS(model):
     
     try:
-        with open(PATH + "/app/zigbee_device_informations.json", 'r') as data_file:
+        with open(H + "/app/zigbee_device_informations.json", 'r') as data_file:
             data_loaded = json.load(data_file)
 
         for device in data_loaded["data"]:
