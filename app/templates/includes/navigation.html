@@ -53,19 +53,6 @@
 
                 <ul class="nav pl-4">
 
-                  {% if data.navigation == "lighting_scenes" %} 
-                    <li class="active navbar-collapse_active">
-                  {% else %} 
-                    <li class="navbar-collapse_active">
-                  {% endif %}
-
-                    <a href="/lighting/scenes">
-                      <div class="navbar-collapse_text">
-                        <p><font size="2">Scenes</font></p>     
-                      </div>     
-                    </a>
-                  </li>
-                
                   {% if data.navigation == "lighting_groups" %} 
                     <li class="active navbar-collapse_active">
                   {% else %} 
@@ -78,6 +65,19 @@
                       </div>   
                     </a>
                   </li>    
+
+                  {% if data.navigation == "lighting_scenes" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/lighting/scenes">
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">Scenes</font></p>     
+                      </div>     
+                    </a>
+                  </li>   
 
                 </ul>
               </div>
