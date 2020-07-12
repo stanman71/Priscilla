@@ -53,12 +53,12 @@ from app.backend.spotify          import *
 from app.backend.shared_resources import *
 
 
-""" ######### """
-""" socket IO """
-""" ######### """
+""" ########### """
+"""  socket IO  """
+""" ########### """
 
-async_mode      = None
-socketio        = SocketIO(app, async_mode=async_mode)
+async_mode = None
+socketio   = SocketIO(app, async_mode=async_mode)
 
 thread_dashboard_devices    = None
 thread_dashboard_system_log = None
@@ -390,9 +390,9 @@ def start_socketIO():
             thread_zigbee = socketio.start_background_task(background_thread_zigbee)
 
 
-""" ################## """
-""" update ip settings """
-""" ################## """
+""" #################### """
+"""  update ip settings  """
+""" #################### """
 
 time.sleep(1)
 
@@ -414,9 +414,9 @@ except:
 SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, GET_SYSTEM_SETTINGS().port, GET_SYSTEM_SETTINGS().dhcp)
 
 
-""" ################################## """
-""" update zigbee device update status """
-""" ################################## """
+""" #################################### """
+"""  update zigbee device update status  """
+""" #################################### """
 
 SET_ZIGBEE_DEVICE_UPDATE_STATUS("No Device Update available")
 
@@ -437,9 +437,9 @@ from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
 from app.backend.spotify            import START_REFRESH_SPOTIFY_TOKEN_THREAD
 
 
-""" ######### """
-""" scheduler """
-""" ######### """
+""" ########### """
+"""  scheduler  """
+""" ########### """
 
 from flask_apscheduler import APScheduler
 
@@ -476,9 +476,9 @@ def scheduler_ping():
             heapq.heappush(process_management_queue, (20, ("scheduler", job.id, "")))
 
 
-""" #### """
-""" mqtt """
-""" #### """
+""" ###### """
+"""  mqtt  """
+""" ###### """
 
 try:
     print("###### Start MQTT ######")
@@ -494,9 +494,9 @@ except Exception as e:
     WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | " + str(e)) 
 
 
-""" ######## """
-""" services """
-""" ######## """
+""" ########## """
+"""  services  """
+""" ########## """
 
 if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
 
@@ -571,9 +571,9 @@ if GET_SYSTEM_SETTINGS().squeezelite_active != "True":
         print("ERROR: System | Services | Squeezelie Player | " + str(e)) 
 
 
-""" #################### """
-""" background processes """
-""" #################### """
+""" ###################### """
+"""  background processes  """
+""" ###################### """
 
 START_PROCESS_MANAGEMENT_THREAD()
 START_REFRESH_SPOTIFY_TOKEN_THREAD()

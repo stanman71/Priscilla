@@ -13,7 +13,6 @@ from app.backend.shared_resources import *
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
-
 import datetime
 import os
 import time
@@ -300,6 +299,7 @@ def settings_system():
         else:
             dhcp = "False"  
 
+
         # #############
         # dhcp disabled
         # #############
@@ -370,6 +370,7 @@ def settings_system():
                 if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_SETTINGS().ip_address, GET_SYSTEM_SETTINGS().gateway, GET_SYSTEM_SETTINGS().port, dhcp):
                     success_message_change_settings_network = True       
 
+
         # ##############
         # dhcp activated
         # ##############
@@ -402,12 +403,12 @@ def settings_system():
     
     # update email settings
     if request.form.get("update_settings_email") != None:  
-
+        
         server_address = request.form.get("set_server_address").strip()        
-        server_port = request.form.get("set_server_port").strip()  
-        encoding = request.form.get("radio_encoding")
-        username = request.form.get("set_username").strip()  
-        password = request.form.get("set_password").strip()  
+        server_port    = request.form.get("set_server_port").strip()  
+        encoding       = request.form.get("radio_encoding")
+        username       = request.form.get("set_username").strip()  
+        password       = request.form.get("set_password").strip()  
 
         if SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password):
             success_message_change_settings_email = True

@@ -1,14 +1,14 @@
-import time
-import threading
-import json
-import heapq
-
 from app                          import app
 from app.backend.database_models  import *
 from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS
 from app.backend.email            import SEND_EMAIL
 from app.backend.shared_resources import mqtt_message_queue, GET_MQTT_CONNECTION_STATUS
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
+
+import time
+import threading
+import json
+import heapq
 
 
 """ ################## """
@@ -277,7 +277,6 @@ def SET_LIGHTING_GROUP_BRIGHTNESS_DIMMER(group_id, command):
                 target_brightness = 10    
                 
         SET_LIGHTING_GROUP_BRIGHTNESS(group.id, target_brightness)
-
 
     else:
         return ["MQTT is not avilable"]    

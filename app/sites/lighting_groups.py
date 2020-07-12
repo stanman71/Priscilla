@@ -39,7 +39,6 @@ def lighting_groups():
     error_message_change_settings_lighting_group   = []    
     success_message_add_lighting_group             = False
     error_message_add_lighting_group               = []
-    name = ""
 
     RESET_LIGHTING_GROUP_COLLAPSE()
     UPDATE_LIGHTING_GROUP_LIGHT_NAMES()

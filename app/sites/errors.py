@@ -4,7 +4,6 @@ from app import app
 
 
 def http_err(err_code):
-	
     err_msg = 'Oups !! Some internal error ocurred. Thanks to contact support.'
 	
     if 400 == err_code:

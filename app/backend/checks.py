@@ -582,8 +582,7 @@ def CHECK_TASKS(check_object, task_type):
 """  check task operation  """
 """ ###################### """
 
-def CHECK_TASK_OPERATION(task, task_type, details):
-   
+def CHECK_TASK_OPERATION(task, task_type, details): 
    list_task_errors = []
 
    try:

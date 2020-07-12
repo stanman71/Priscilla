@@ -1,6 +1,3 @@
-import requests
-import datetime
-
 from app                          import app
 from app.backend.database_models  import *
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
@@ -8,6 +5,9 @@ from app.backend.tasks            import START_TASK
 
 from ping3   import ping
 from difflib import SequenceMatcher
+
+import requests
+import datetime
 
 
 """ ################################ """
@@ -636,9 +636,6 @@ def CHECK_SCHEDULER_SENSORS(job):
                     passing = False
 
 
-    print(passing)
-
-    # Options ended
     return passing
 
 

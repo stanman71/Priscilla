@@ -31,7 +31,7 @@ def about():
     page_title       = 'Bianca | About'
     page_description = 'The information and update page.'
 
-    version = "2.5"
+    version = "3.0"
 
     data = {'navigation': 'about'}
 

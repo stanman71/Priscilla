@@ -10,7 +10,6 @@ from app.backend.spotify         import GET_SPOTIFY_TOKEN
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
-
 import spotipy
 
 # access rights

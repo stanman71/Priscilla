@@ -8,7 +8,7 @@ import threading
 import heapq
 import json
 
-process_management_queue = []
+process_management_queue    = []
 
 
 """ ################ """
@@ -17,7 +17,6 @@ process_management_queue = []
 
 mqtt_message_queue          = []
 mqtt_incoming_messages_list = []
-
 
 def START_REFRESH_MQTT_INPUT_MESSAGES_THREAD():
 	try:
@@ -205,6 +204,7 @@ def SET_ZIGBEE_PAIRING_TIMER(setting):
 	if setting == "False":
 		timer_disable_zigbee_pairing = "None"
 
+
 def START_DISABLE_ZIGBEE_PAIRING_THREAD():
 	try:
 		Thread = threading.Thread(target=DISABLE_ZIGBEE_PAIRING_THREAD)
@@ -213,6 +213,7 @@ def START_DISABLE_ZIGBEE_PAIRING_THREAD():
 	except Exception as e:
 		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Disable Zigbee Pairing | " + str(e)) 
 		SEND_EMAIL("ERROR", "System | Thread | Disable Zigbee Pairing | " + str(e)) 
+
 
 # disable pairing after 30 minutes automatically
 def DISABLE_ZIGBEE_PAIRING_THREAD():

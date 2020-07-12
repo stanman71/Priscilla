@@ -50,7 +50,6 @@ SPOTIFY_API_BASE_URL  = "https://api.spotify.com"
 API_VERSION           = "v1"
 SPOTIFY_API_URL       = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
 
-
 SCOPE                 = "playlist-read-private user-read-recently-played user-read-currently-playing user-read-playback-state streaming"
 STATE                 = ""
 SHOW_DIALOG_bool      = True
@@ -63,7 +62,6 @@ SPOTIFY_REFRESH_TOKEN = GET_SPOTIFY_REFRESH_TOKEN()
 
 def GET_SPOTIFY_AUTHORIZATION():
 
-    # Server-side Parameters
     if GET_SYSTEM_SETTINGS().ip_address == "":
         REDIRECT_URI = "http://127.0.0.1:80/music/spotify/token"
     else:
@@ -86,7 +84,6 @@ def GENERATE_SPOTIFY_TOKEN(auth_token):
     global SPOTIFY_TOKEN    
     global SPOTIFY_REFRESH_TOKEN       
 
-    # Server-side Parameters
     if GET_SYSTEM_SETTINGS().ip_address == "":
         REDIRECT_URI = "http://127.0.0.1:80/music/spotify/token"
     else:
@@ -189,12 +186,11 @@ def START_REFRESH_SPOTIFY_TOKEN_THREAD():
 
 
 def REFRESH_SPOTIFY_TOKEN_THREAD():   
-    
-    current_timer = 3000
-    
     global SPOTIFY_TOKEN        
-    global SPOTIFY_REFRESH_TOKEN
-    
+    global SPOTIFY_REFRESH_TOKEN 
+
+    current_timer = 3000
+
     while True:
                
         try:
@@ -664,7 +660,6 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             except:
                 pass
 
-
         if command == "volume_down":   
 
             try:
@@ -762,14 +757,12 @@ def GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token):
     except:
         spotify_current_playback_device_type = ""     
 
-
     try:
         # get playback state
         spotify_current_playback_state = str(spotify_current_playback['is_playing']).upper()
         
     except:
         spotify_current_playback_state = ""
- 
  
     try:
         # get playback volume
@@ -778,14 +771,12 @@ def GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token):
     except:
         spotify_current_playback_volume = ""      
  
- 
     try:
         # get playback track
         spotify_current_playback_track = spotify_current_playback['item']['name']   
         
     except:
         spotify_current_playback_track = ""           
- 
  
     try:
         # get playback track artists
@@ -798,7 +789,6 @@ def GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token):
             
     except:
         spotify_current_playback_artists = []     
-
 
     try:
         # get progress in minutes:seconds
@@ -819,8 +809,7 @@ def GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token):
     
     except:
         spotify_current_playback_progress = ""
-    
-    
+     
     try:
         # get playlist name
         spotify_current_playback_playlist_name = sp.user_playlist(sp.current_user()["display_name"], spotify_current_playback["context"]["uri"], fields=None)
@@ -828,8 +817,7 @@ def GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token):
         
     except:
         spotify_current_playback_playlist_name = ""
-        
-            
+                 
     try:
         # get playback shuffle state
         spotify_current_playback_shuffle_state = spotify_current_playback['shuffle_state']

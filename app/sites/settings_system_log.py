@@ -9,9 +9,9 @@ from app.backend.file_management import RESET_LOGFILE, GET_LOGFILE_SYSTEM, GET_P
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
-
 import datetime
 import os
+
 
 # access rights
 def permission_required(f):
@@ -43,7 +43,6 @@ def settings_system_log():
     if session.get('error_download_log_system', None) != None:
         error_message_logfile = session.get('error_download_log_system') 
         session['error_download_log_system'] = None
-
 
     selected_type_event    = "selected"
     selected_type_database = "selected"    

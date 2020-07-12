@@ -1,3 +1,8 @@
+from flask          import send_from_directory
+from werkzeug.utils import secure_filename
+
+from app import app
+
 import datetime
 import os
 import shutil
@@ -8,28 +13,21 @@ import yaml
 import time
 import threading
 
-
-from flask          import send_from_directory
-from werkzeug.utils import secure_filename
-
-from app import app
-
 sensordata_messages_list = []
+
 
 """ ###### """
 """  path  """
 """ ###### """
 
-# windows
-if os.name == "nt":                 
-    PATH = os.path.abspath("") 
-# linux
-else:                               
-    PATH = "/home/pi/smarthome/"
-
-
 def GET_PATH():
-    return (PATH)
+
+    # windows
+    if os.name == "nt":                 
+        return(os.path.abspath("")) 
+    # linux
+    else:                               
+        return("/home/pi/smarthome/")
 
 
 """ ###### """
@@ -80,8 +78,7 @@ def WRITE_LOGFILE_DEVICES(channel, msg):
     if os.path.isfile(PATH + "/data/logs/log_devices.csv") is False:
         CREATE_LOGFILE("log_devices")
         
-    try:
-        
+    try: 
         # open csv file
         file = PATH + "/data/logs/log_devices.csv"
         
@@ -399,9 +396,9 @@ def DELETE_SENSORDATA_FILE(filename):
         return ("Delete Datafile || " + str(e)) 
 
 
-""" ########################## """
+""" ########################### """
 """  file mqtt manually adding  """
-""" ########################## """
+""" ########################### """
 
 def GET_ALL_MQTT_DEVICES_MANUALLY_ADDING():
 
@@ -476,7 +473,6 @@ def GET_MQTT_DEVICE_MANUALLY_ADDING_INFORMATIONS(model):
                 except:
                     commands_json = "" 
 
-
                 return (device_type, description, input_values, input_events, commands, commands_json)
                 
         return ("", "", "", "", "", "")   
@@ -536,7 +532,6 @@ def GET_ZIGBEE_DEVICE_INFORMATIONS(model):
                     commands_json = commands_json.replace("'", '"')                             
                 except:
                     commands_json = "" 
-
 
                 return (device_type, description, input_values, input_events, commands, commands_json)
                 

@@ -13,7 +13,6 @@ from app.backend.checks           import CHECK_DEVICE_EXCEPTION_SETTINGS
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
-
 import datetime
 import os
 import heapq
@@ -114,7 +113,6 @@ def UPLOAD_FIRMWARE(file):
     return result
 
 
-
 @app.route('/settings/devices', methods=['GET', 'POST'])
 @login_required
 @permission_required
@@ -122,33 +120,33 @@ def settings_devices():
     page_title       = 'Bianca | Settings | Devices'
     page_description = 'The devices configuration page.'
 
-    error_message_mqtt_connection               = False
-    error_message_zigbee2mqtt_connection        = False    
-    success_message_change_settings_devices     = []     
-    error_message_change_settings_devices       = []    
-    success_message_add_device_exception        = False
-    error_message_add_device_exception          = []        
-    success_message_change_device_exceptions    = []
-    error_message_change_device_exceptions      = []
-    success_message_mqtt_manually_adding        = False
-    error_message_mqtt_manually_adding          = []
-    success_message_mqtt_firmware_upload        = False
-    error_message_mqtt_firmware_upload          = ""
-    error_message_zigbee_device_update          = False
-    success_message_zigbee_pairing              = []
-    error_message_zigbee_pairing                = []
-    success_message_zigbee_touchlink            = False
-    error_message_zigbee_touchlink              = []    
-    success_message_logfile                     = False
-    error_message_logfile                       = ""
-    error_message_mqtt_firmware                 = ""
-    error_download_log_zigbee2mqtt              = ""
-    error_download_topology_zigbee2mqtt         = ""    
+    error_message_mqtt_connection            = False
+    error_message_zigbee2mqtt_connection     = False    
+    success_message_change_settings_devices  = []     
+    error_message_change_settings_devices    = []    
+    success_message_add_device_exception     = False
+    error_message_add_device_exception       = []        
+    success_message_change_device_exceptions = []
+    error_message_change_device_exceptions   = []
+    success_message_mqtt_manually_adding     = False
+    error_message_mqtt_manually_adding       = []
+    success_message_mqtt_firmware_upload     = False
+    error_message_mqtt_firmware_upload       = ""
+    error_message_zigbee_device_update       = False
+    success_message_zigbee_pairing           = []
+    error_message_zigbee_pairing             = []
+    success_message_zigbee_touchlink         = False
+    error_message_zigbee_touchlink           = []    
+    success_message_logfile                  = False
+    error_message_logfile                    = ""
+    error_message_mqtt_firmware              = ""
+    error_download_log_zigbee2mqtt           = ""
+    error_download_topology_zigbee2mqtt      = ""    
 
-    device_exceptions_collapse_open             = False    
-    mqtt_device_update_collapse_open            = False
-    zigbee_device_update_collapse_open          = False
-    zigbee_topology_exist                       = False
+    device_exceptions_collapse_open          = False    
+    mqtt_device_update_collapse_open         = False
+    zigbee_device_update_collapse_open       = False
+    zigbee_topology_exist                    = False
 
     # error firmware
     if session.get('error_mqtt_firmware', None) != None:
@@ -354,7 +352,6 @@ def settings_devices():
     """ ######################### """
 
     if request.form.get("add_device_exception") != None:  
-
         device_exceptions_collapse_open = True
 
         ieeeAddr = request.form.get("set_mqtt_device_exception_ieeeAddr")
@@ -373,7 +370,6 @@ def settings_devices():
 
 
     if request.form.get("save_device_exceptions") != None:  
-
         device_exceptions_collapse_open = True
 
         for i in range (1,26):
@@ -1344,7 +1340,6 @@ def change_device_exception_position(id, direction):
 @login_required
 @permission_required
 def remove_device_exception(id):
-
     try:
         result = DELETE_DEVICE_EXCEPTION(id)
 

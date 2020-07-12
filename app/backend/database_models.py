@@ -109,51 +109,51 @@ class eMail(db.Model):
     password       = db.Column(db.String(50), server_default=("None"))
 
 class Lighting_Groups(db.Model):
-    __tablename__         = 'lighting_groups'
-    id                      = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    name                    = db.Column(db.String(50), unique = True)
-    light_ieeeAddr_1        = db.Column(db.String(50), server_default=("None"))
-    light_name_1            = db.Column(db.String(50), server_default=("None"))
-    light_device_type_1     = db.Column(db.String(50), server_default=("None"))
-    active_light_2          = db.Column(db.String(50), server_default=("False"))
-    light_ieeeAddr_2        = db.Column(db.String(50), server_default=("None"))           
-    light_name_2            = db.Column(db.String(50), server_default=("None"))
-    light_device_type_2     = db.Column(db.String(50), server_default=("None"))
-    active_light_3          = db.Column(db.String(50), server_default=("False"))
-    light_ieeeAddr_3        = db.Column(db.String(50), server_default=("None"))           
-    light_name_3            = db.Column(db.String(50), server_default=("None"))
-    light_device_type_3     = db.Column(db.String(50), server_default=("None"))
-    active_light_4          = db.Column(db.String(50), server_default=("False"))
-    light_ieeeAddr_4        = db.Column(db.String(50), server_default=("None"))       
-    light_name_4            = db.Column(db.String(50), server_default=("None"))
-    light_device_type_4     = db.Column(db.String(50), server_default=("None"))
-    active_light_5          = db.Column(db.String(50), server_default=("False"))
-    light_ieeeAddr_5        = db.Column(db.String(50), server_default=("None"))         
-    light_name_5            = db.Column(db.String(50), server_default=("None")) 
-    light_device_type_5     = db.Column(db.String(50), server_default=("None"))
-    active_light_6          = db.Column(db.String(50), server_default=("False"))
-    light_ieeeAddr_6        = db.Column(db.String(50), server_default=("None"))
-    light_name_6            = db.Column(db.String(50), server_default=("None"))
-    light_device_type_6     = db.Column(db.String(50), server_default=("None"))
-    active_light_7          = db.Column(db.String(50), server_default=("False"))
-    light_ieeeAddr_7        = db.Column(db.String(50), server_default=("None"))
-    light_name_7            = db.Column(db.String(50), server_default=("None"))
-    light_device_type_7     = db.Column(db.String(50), server_default=("None"))
-    active_light_8          = db.Column(db.String(50), server_default=("False"))
-    light_ieeeAddr_8        = db.Column(db.String(50), server_default=("None"))
-    light_name_8            = db.Column(db.String(50), server_default=("None"))
-    light_device_type_8     = db.Column(db.String(50), server_default=("None"))
-    active_light_9          = db.Column(db.String(50), server_default=("False"))
-    light_ieeeAddr_9        = db.Column(db.String(50), server_default=("None"))
-    light_name_9            = db.Column(db.String(50), server_default=("None")) 
-    light_device_type_9     = db.Column(db.String(50), server_default=("None"))
-    collapse                = db.Column(db.String(50))    
-    current_scene           = db.Column(db.String(50), server_default=("OFF"))
-    current_brightness      = db.Column(db.Integer, server_default=("0"))
-    group_errors            = db.Column(db.String(50))    
+    __tablename__ = 'lighting_groups'
+    id                  = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name                = db.Column(db.String(50), unique = True)
+    light_ieeeAddr_1    = db.Column(db.String(50), server_default=("None"))
+    light_name_1        = db.Column(db.String(50), server_default=("None"))
+    light_device_type_1 = db.Column(db.String(50), server_default=("None"))
+    active_light_2      = db.Column(db.String(50), server_default=("False"))
+    light_ieeeAddr_2    = db.Column(db.String(50), server_default=("None"))           
+    light_name_2        = db.Column(db.String(50), server_default=("None"))
+    light_device_type_2 = db.Column(db.String(50), server_default=("None"))
+    active_light_3      = db.Column(db.String(50), server_default=("False"))
+    light_ieeeAddr_3    = db.Column(db.String(50), server_default=("None"))           
+    light_name_3        = db.Column(db.String(50), server_default=("None"))
+    light_device_type_3 = db.Column(db.String(50), server_default=("None"))
+    active_light_4      = db.Column(db.String(50), server_default=("False"))
+    light_ieeeAddr_4    = db.Column(db.String(50), server_default=("None"))       
+    light_name_4        = db.Column(db.String(50), server_default=("None"))
+    light_device_type_4 = db.Column(db.String(50), server_default=("None"))
+    active_light_5      = db.Column(db.String(50), server_default=("False"))
+    light_ieeeAddr_5    = db.Column(db.String(50), server_default=("None"))         
+    light_name_5        = db.Column(db.String(50), server_default=("None")) 
+    light_device_type_5 = db.Column(db.String(50), server_default=("None"))
+    active_light_6      = db.Column(db.String(50), server_default=("False"))
+    light_ieeeAddr_6    = db.Column(db.String(50), server_default=("None"))
+    light_name_6        = db.Column(db.String(50), server_default=("None"))
+    light_device_type_6 = db.Column(db.String(50), server_default=("None"))
+    active_light_7      = db.Column(db.String(50), server_default=("False"))
+    light_ieeeAddr_7    = db.Column(db.String(50), server_default=("None"))
+    light_name_7        = db.Column(db.String(50), server_default=("None"))
+    light_device_type_7 = db.Column(db.String(50), server_default=("None"))
+    active_light_8      = db.Column(db.String(50), server_default=("False"))
+    light_ieeeAddr_8    = db.Column(db.String(50), server_default=("None"))
+    light_name_8        = db.Column(db.String(50), server_default=("None"))
+    light_device_type_8 = db.Column(db.String(50), server_default=("None"))
+    active_light_9      = db.Column(db.String(50), server_default=("False"))
+    light_ieeeAddr_9    = db.Column(db.String(50), server_default=("None"))
+    light_name_9        = db.Column(db.String(50), server_default=("None")) 
+    light_device_type_9 = db.Column(db.String(50), server_default=("None"))
+    collapse            = db.Column(db.String(50))    
+    current_scene       = db.Column(db.String(50), server_default=("OFF"))
+    current_brightness  = db.Column(db.Integer, server_default=("0"))
+    group_errors        = db.Column(db.String(50))    
 
 class Lighting_Scenes(db.Model):
-    __tablename__ = 'lighting_scenes'
+    __tablename__  = 'lighting_scenes'
     id             = db.Column(db.Integer, primary_key=True, autoincrement = True)
     name           = db.Column(db.String(50), unique = True) 
     red_1          = db.Column(db.Integer, server_default=("255")) 
@@ -203,69 +203,69 @@ class Lighting_Scenes(db.Model):
     collapse       = db.Column(db.String(50))        
 
 class Programs(db.Model):
-    __tablename__ = 'programs'
-    id                = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    name              = db.Column(db.String(50), unique = True)
-    line_active_1     = db.Column(db.String(50), server_default=("True"))
-    line_content_1    = db.Column(db.String(50), server_default=(""))
-    line_active_2     = db.Column(db.String(50), server_default=(""))
-    line_content_2    = db.Column(db.String(50), server_default=(""))
-    line_active_3     = db.Column(db.String(50), server_default=(""))
-    line_content_3    = db.Column(db.String(50), server_default=(""))
-    line_active_4     = db.Column(db.String(50), server_default=(""))
-    line_content_4    = db.Column(db.String(50), server_default=(""))
-    line_active_5     = db.Column(db.String(50), server_default=(""))
-    line_content_5    = db.Column(db.String(50), server_default=(""))
-    line_active_6     = db.Column(db.String(50), server_default=(""))
-    line_content_6    = db.Column(db.String(50), server_default=(""))
-    line_active_7     = db.Column(db.String(50), server_default=(""))
-    line_content_7    = db.Column(db.String(50), server_default=(""))
-    line_active_8     = db.Column(db.String(50), server_default=(""))
-    line_content_8    = db.Column(db.String(50), server_default=(""))
-    line_active_9     = db.Column(db.String(50), server_default=(""))
-    line_content_9    = db.Column(db.String(50), server_default=(""))
-    line_active_10    = db.Column(db.String(50), server_default=(""))
-    line_content_10   = db.Column(db.String(50), server_default=(""))
-    line_active_11    = db.Column(db.String(50), server_default=(""))
-    line_content_11   = db.Column(db.String(50), server_default=(""))
-    line_active_12    = db.Column(db.String(50), server_default=(""))
-    line_content_12   = db.Column(db.String(50), server_default=(""))
-    line_active_13    = db.Column(db.String(50), server_default=(""))
-    line_content_13   = db.Column(db.String(50), server_default=(""))
-    line_active_14    = db.Column(db.String(50), server_default=(""))
-    line_content_14   = db.Column(db.String(50), server_default=(""))
-    line_active_15    = db.Column(db.String(50), server_default=(""))
-    line_content_15   = db.Column(db.String(50), server_default=(""))
-    line_active_16    = db.Column(db.String(50), server_default=(""))
-    line_content_16   = db.Column(db.String(50), server_default=(""))
-    line_active_17    = db.Column(db.String(50), server_default=(""))
-    line_content_17   = db.Column(db.String(50), server_default=(""))
-    line_active_18    = db.Column(db.String(50), server_default=(""))
-    line_content_18   = db.Column(db.String(50), server_default=(""))
-    line_active_19    = db.Column(db.String(50), server_default=(""))
-    line_content_19   = db.Column(db.String(50), server_default=(""))
-    line_active_20    = db.Column(db.String(50), server_default=(""))
-    line_content_20   = db.Column(db.String(50), server_default=(""))
-    line_active_21    = db.Column(db.String(50), server_default=(""))
-    line_content_21   = db.Column(db.String(50), server_default=(""))
-    line_active_22    = db.Column(db.String(50), server_default=(""))
-    line_content_22   = db.Column(db.String(50), server_default=(""))
-    line_active_23    = db.Column(db.String(50), server_default=(""))
-    line_content_23   = db.Column(db.String(50), server_default=(""))
-    line_active_24    = db.Column(db.String(50), server_default=(""))
-    line_content_24   = db.Column(db.String(50), server_default=(""))
-    line_active_25    = db.Column(db.String(50), server_default=(""))
-    line_content_25   = db.Column(db.String(50), server_default=(""))
-    line_active_26    = db.Column(db.String(50), server_default=(""))
-    line_content_26   = db.Column(db.String(50), server_default=(""))
-    line_active_27    = db.Column(db.String(50), server_default=(""))
-    line_content_27   = db.Column(db.String(50), server_default=(""))
-    line_active_28    = db.Column(db.String(50), server_default=(""))
-    line_content_28   = db.Column(db.String(50), server_default=(""))
-    line_active_29    = db.Column(db.String(50), server_default=(""))
-    line_content_29   = db.Column(db.String(50), server_default=(""))
-    line_active_30    = db.Column(db.String(50), server_default=(""))
-    line_content_30   = db.Column(db.String(50), server_default=(""))    
+    __tablename__   = 'programs'
+    id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name            = db.Column(db.String(50), unique = True)
+    line_active_1   = db.Column(db.String(50), server_default=("True"))
+    line_content_1  = db.Column(db.String(50), server_default=(""))
+    line_active_2   = db.Column(db.String(50), server_default=(""))
+    line_content_2  = db.Column(db.String(50), server_default=(""))
+    line_active_3   = db.Column(db.String(50), server_default=(""))
+    line_content_3  = db.Column(db.String(50), server_default=(""))
+    line_active_4   = db.Column(db.String(50), server_default=(""))
+    line_content_4  = db.Column(db.String(50), server_default=(""))
+    line_active_5   = db.Column(db.String(50), server_default=(""))
+    line_content_5  = db.Column(db.String(50), server_default=(""))
+    line_active_6   = db.Column(db.String(50), server_default=(""))
+    line_content_6  = db.Column(db.String(50), server_default=(""))
+    line_active_7   = db.Column(db.String(50), server_default=(""))
+    line_content_7  = db.Column(db.String(50), server_default=(""))
+    line_active_8   = db.Column(db.String(50), server_default=(""))
+    line_content_8  = db.Column(db.String(50), server_default=(""))
+    line_active_9   = db.Column(db.String(50), server_default=(""))
+    line_content_9  = db.Column(db.String(50), server_default=(""))
+    line_active_10  = db.Column(db.String(50), server_default=(""))
+    line_content_10 = db.Column(db.String(50), server_default=(""))
+    line_active_11  = db.Column(db.String(50), server_default=(""))
+    line_content_11 = db.Column(db.String(50), server_default=(""))
+    line_active_12  = db.Column(db.String(50), server_default=(""))
+    line_content_12 = db.Column(db.String(50), server_default=(""))
+    line_active_13  = db.Column(db.String(50), server_default=(""))
+    line_content_13 = db.Column(db.String(50), server_default=(""))
+    line_active_14  = db.Column(db.String(50), server_default=(""))
+    line_content_14 = db.Column(db.String(50), server_default=(""))
+    line_active_15  = db.Column(db.String(50), server_default=(""))
+    line_content_15 = db.Column(db.String(50), server_default=(""))
+    line_active_16  = db.Column(db.String(50), server_default=(""))
+    line_content_16 = db.Column(db.String(50), server_default=(""))
+    line_active_17  = db.Column(db.String(50), server_default=(""))
+    line_content_17 = db.Column(db.String(50), server_default=(""))
+    line_active_18  = db.Column(db.String(50), server_default=(""))
+    line_content_18 = db.Column(db.String(50), server_default=(""))
+    line_active_19  = db.Column(db.String(50), server_default=(""))
+    line_content_19 = db.Column(db.String(50), server_default=(""))
+    line_active_20  = db.Column(db.String(50), server_default=(""))
+    line_content_20 = db.Column(db.String(50), server_default=(""))
+    line_active_21  = db.Column(db.String(50), server_default=(""))
+    line_content_21 = db.Column(db.String(50), server_default=(""))
+    line_active_22  = db.Column(db.String(50), server_default=(""))
+    line_content_22 = db.Column(db.String(50), server_default=(""))
+    line_active_23  = db.Column(db.String(50), server_default=(""))
+    line_content_23 = db.Column(db.String(50), server_default=(""))
+    line_active_24  = db.Column(db.String(50), server_default=(""))
+    line_content_24 = db.Column(db.String(50), server_default=(""))
+    line_active_25  = db.Column(db.String(50), server_default=(""))
+    line_content_25 = db.Column(db.String(50), server_default=(""))
+    line_active_26  = db.Column(db.String(50), server_default=(""))
+    line_content_26 = db.Column(db.String(50), server_default=(""))
+    line_active_27  = db.Column(db.String(50), server_default=(""))
+    line_content_27 = db.Column(db.String(50), server_default=(""))
+    line_active_28  = db.Column(db.String(50), server_default=(""))
+    line_content_28 = db.Column(db.String(50), server_default=(""))
+    line_active_29  = db.Column(db.String(50), server_default=(""))
+    line_content_29 = db.Column(db.String(50), server_default=(""))
+    line_active_30  = db.Column(db.String(50), server_default=(""))
+    line_content_30 = db.Column(db.String(50), server_default=(""))    
 
 class Scheduler_Jobs(db.Model):
     __tablename__ = 'scheduler_jobs'
@@ -311,7 +311,7 @@ class Scheduler_Jobs(db.Model):
     job_setting_errors          = db.Column(db.String(50))     
 
 class Sensordata_Jobs(db.Model):
-    __tablename__  = 'sensordata_jobs'
+    __tablename__   = 'sensordata_jobs'
     id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
     name            = db.Column(db.String(50), unique=True)
     filename        = db.Column(db.String(50), server_default=(""))
@@ -399,14 +399,14 @@ for job in Scheduler_Jobs.query.all():
 
 if update_devices_found == False:
     scheduler_job_update_devices = Scheduler_Jobs(
-        name           = "update_devices",
-        task           = "update_devices",
-        visible        = "False",
-        trigger_time   = "True",
-        option_repeat  = "True",
-        day            = "*",        
-        hour           = "00",
-        minute         = "00",       
+        name          = "update_devices",
+        task          = "update_devices",
+        visible       = "False",
+        trigger_time  = "True",
+        option_repeat = "True",
+        day           = "*",        
+        hour          = "00",
+        minute        = "00",       
     )
     db.session.add(scheduler_job_update_devices)
     db.session.commit()
@@ -536,8 +536,8 @@ def ADD_CAMERA():
         else:
             # add the new camera
             camera = Camera(
-                    id       = i,
-                    name     = "new_camera_" + str(i),                            
+                    id   = i,
+                    name = "new_camera_" + str(i),                            
                 )
             db.session.add(camera)
             db.session.commit()
@@ -573,7 +573,6 @@ def SET_CAMERA_SETTINGS(id, name, url, user, password):
         db.session.commit()  
    
         WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera - " + str(previous_name) + " | changed" + changes)
-
         return True
 
 
@@ -658,9 +657,9 @@ def ADD_CONTROLLER(device_ieeeAddr):
             else:
                 # add new controller
                 controller = Controller(
-                                        id              = i,
-                                        device_ieeeAddr = device_ieeeAddr,
-                                        )
+                            id              = i,
+                            device_ieeeAddr = device_ieeeAddr,
+                            )
                 db.session.add(controller)
                 db.session.commit()
                 
@@ -928,8 +927,7 @@ def GET_DEVICE_BY_ID(id):
 
 
 def GET_DEVICE_BY_NAME(name):
-    for device in Devices.query.all():
-        
+    for device in Devices.query.all():     
         if device.name.lower() == name.lower():
             return device 
     
@@ -1006,19 +1004,19 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", version = 
             else:
                 # add the new device            
                 device = Devices(
-                        id               = i,
-                        name             = name,
-                        gateway          = gateway,                    
-                        ieeeAddr         = ieeeAddr,
-                        model            = model,
-                        device_type      = device_type,
-                        version          = version,
-                        description      = description,
-                        input_values     = str(input_values),
-                        input_events     = str(input_events),
-                        commands         = str(commands),   
-                        commands_json    = str(commands_json),                                           
-                        last_contact     = last_contact,
+                        id            = i,
+                        name          = name,
+                        gateway       = gateway,                    
+                        ieeeAddr      = ieeeAddr,
+                        model         = model,
+                        device_type   = device_type,
+                        version       = version,
+                        description   = description,
+                        input_values  = str(input_values),
+                        input_events  = str(input_events),
+                        commands      = str(commands),   
+                        commands_json = str(commands_json),                                           
+                        last_contact  = last_contact,
                         )
                         
                 db.session.add(device)
@@ -1327,9 +1325,9 @@ def ADD_DEVICE_EXCEPTION(device_ieeeAddr):
         else:
             # add the new device exception
             device_exception = Device_Exceptions(
-                    id              = i,
-                    device_ieeeAddr = device_ieeeAddr,           
-                )
+                            id              = i,
+                            device_ieeeAddr = device_ieeeAddr,           
+                            )
             db.session.add(device_exception)
             db.session.commit()
 
@@ -1534,9 +1532,9 @@ def ADD_LIGHTING_GROUP():
         else:
             # add the new program
             group = Lighting_Groups(
-                    id = i,
-                    name = "new_group_" + str(i),
-                )
+                        id   = i,
+                        name = "new_group_" + str(i),
+                        )
             db.session.add(group)
             db.session.commit()
 
@@ -1914,13 +1912,13 @@ def ADD_LIGHTING_SCENE():
         else:
             # add the new scene
             scene = Lighting_Scenes(
-                    id           = i,
-                    name         = "new_scene_" + str(i),
-                    red_1        = 255,
-                    green_1      = 255,
-                    blue_1       = 255, 
-                    brightness_1 = 255,                                
-                )
+                        id           = i,
+                        name         = "new_scene_" + str(i),
+                        red_1        = 255,
+                        green_1      = 255,
+                        blue_1       = 255, 
+                        brightness_1 = 255,                                
+                        )
             db.session.add(scene)
             db.session.commit()
 
@@ -2274,14 +2272,13 @@ def ADD_PROGRAM():
         else:
             # add the new program
             program = Programs(
-                    id = i,
-                    name = "new_program_" + str(i), 
-                )
+                        id = i,
+                        name = "new_program_" + str(i), 
+                        )
             db.session.add(program)
             db.session.commit()
 
             WRITE_LOGFILE_SYSTEM("DATABASE", "Program | " + "new_program_" + str(i) + " | added")  
-
             return True
 
     return "Limit reached (30)"
@@ -3071,11 +3068,11 @@ def ADD_SCHEDULER_JOB():
         else:
             # add the new job
             new_job = Scheduler_Jobs(
-                    id            = i,
-                    name          = "new_scheduler_job_" + str(i),
-                    visible       = "True",
-                    option_repeat = "True",
-                )
+                            id            = i,
+                            name          = "new_scheduler_job_" + str(i),
+                            visible       = "True",
+                            option_repeat = "True",
+                            )
             db.session.add(new_job)
             db.session.commit()
 
@@ -3403,9 +3400,9 @@ def ADD_SENSORDATA_JOB():
         else:
             # add the new job
             sensordata_job = Sensordata_Jobs(
-                    id   = i,
-                    name = "new_job_" + str(i),           
-                )
+                                    id   = i,
+                                    name = "new_job_" + str(i),           
+                                    )
             db.session.add(sensordata_job)
             db.session.commit()
 
@@ -3602,7 +3599,6 @@ def SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, port, dhcp):
         db.session.commit()
         
         WRITE_LOGFILE_SYSTEM("DATABASE", "System | Network | changed") 
-
         return True
 
 
@@ -3613,9 +3609,9 @@ def SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active, lms_active, squeezelite_acti
     # values changed ?
     if (entry.zigbee2mqtt_active != zigbee2mqtt_active or entry.lms_active != lms_active or entry.squeezelite_active != squeezelite_active):
 
-        entry.zigbee2mqtt_active   = zigbee2mqtt_active    
-        entry.lms_active           = lms_active   
-        entry.squeezelite_active   = squeezelite_active               
+        entry.zigbee2mqtt_active = zigbee2mqtt_active    
+        entry.lms_active         = lms_active   
+        entry.squeezelite_active = squeezelite_active               
         db.session.commit()   
 
         return True
@@ -3654,9 +3650,9 @@ def ADD_USER():
         else:
             # add the new user
             new_user = User(
-                    id   = i,
-                    name = "new_user_" + str(i),
-                )
+                        id   = i,
+                        name = "new_user_" + str(i),
+                        )
             db.session.add(new_user)
             db.session.commit()
 
@@ -3691,7 +3687,6 @@ def UPDATE_USER_SETTINGS(id, name, email, role, email_notification):
         db.session.commit()
         
         WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + str(previous_name) + " | changed" + changes)
-
         return True
 
 

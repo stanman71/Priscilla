@@ -1,11 +1,10 @@
-import threading
-
 from app                          import app
 from app.backend.database_models  import *
 from app.backend.file_management  import *
 from app.backend.shared_resources import *
 from app.backend.tasks            import START_TASK
 
+import threading
 
 stop_program_thread_1 = False
 stop_program_thread_2 = False

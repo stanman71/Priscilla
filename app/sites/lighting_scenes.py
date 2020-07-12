@@ -45,7 +45,6 @@ def lighting_scenes():
     error_message_change_settings_lighting_scene   = []    
     success_message_add_lighting_scene             = False
     error_message_add_lighting_scene               = []
-    name = ""
 
     last_group_tested_id   = ""
     last_group_tested_name = ""
@@ -59,9 +58,9 @@ def lighting_scenes():
 
     if request.form.get("add_lighting_scene") != None:             
         result = ADD_LIGHTING_SCENE()   
+
         if result != True: 
             error_message_add_lighting_scene.append(result)         
-
         else:       
             success_message_add_lighting_scene = True
             
@@ -70,12 +69,10 @@ def lighting_scenes():
     """  table lighting scenes  """
     """ ####################### """   
 
-
     # set collapse open 
     if session.get("set_collapse_open", None) != None:
         SET_LIGHTING_SCENE_COLLAPSE_OPEN(session.get('set_collapse_open'))
         session['set_collapse_open'] = None
-
 
     # save scene settings
     if request.form.get("save_lighting_scene_settings") != None or request.form.get("test_lighting_scene") != None:
@@ -110,7 +107,6 @@ def lighting_scenes():
                 else:                          
                     name = GET_LIGHTING_SCENE_BY_ID(i).name 
                     error_message_change_settings_lighting_scene = {"scene_number": i,"message": "No name given"}
-
 
                 #######
                 ## 1 ##

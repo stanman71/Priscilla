@@ -12,7 +12,6 @@ from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
-
 from lms import find_server
 
 import requests
@@ -20,6 +19,7 @@ import json
 import spotipy
 import socket 
 import heapq
+
 
 # access rights
 def permission_required(f):
@@ -94,7 +94,6 @@ def music():
             list_spotify_devices   = sp.devices()["devices"]        
             list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]    
 
-
             # player show ?
             if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token) != ('', '', '', '', '', [], '', '', ''):
                 show_player = True                             
@@ -155,6 +154,7 @@ def music():
 
                 volume = player_volume 
 
+
             # ##############
             # start playlist
             # ##############
@@ -197,6 +197,7 @@ def music():
 
                 volume = track_volume   
 
+
             # ############
             # search album
             # ############
@@ -229,7 +230,6 @@ def music():
         # login failed
         except Exception as e:
             WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
-            SEND_EMAIL("ERROR", "Spotify | " + str(e)) 
             
             spotify_user           = ""
             list_spotify_playlists = ""
@@ -330,8 +330,7 @@ def music():
 
                                 except:
                                     pass
-                    
-                    
+                                        
                     # no valid last values existing                        
                     except:
 
@@ -357,7 +356,6 @@ def music():
 
 
         if request.form.get("restart_client_music_services") != None:
-
             list_client_music = GET_ALL_DEVICES("client_music")
 
             for client_music in list_client_music:
