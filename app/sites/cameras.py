@@ -103,7 +103,6 @@ def cameras():
             selected_camera = "camera_" + str(camera.id)
             break
     
-
     # delete message
     if session.get('delete_camera_success', None) != None:
         success_message_change_settings.append(session.get('delete_camera_success')) 
@@ -158,14 +157,14 @@ def cameras():
         for i in range (1,26):
 
             if request.form.get("set_name_" + str(i)) != None:
-
                 error_found = False
         
+
                 # ############
                 # name setting
                 # ############
 
-                camera    = GET_CAMERA_BY_ID(i)
+                camera     = GET_CAMERA_BY_ID(i)
                 input_name = request.form.get("set_name_" + str(i)).strip()                    
 
                 # add new name

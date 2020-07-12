@@ -82,7 +82,6 @@ def dashboard():
             except:
                 pass
 
-
             # #######
             # devices
             # #######
@@ -166,8 +165,8 @@ def dashboard():
 
         try:
 
-            sp             = spotipy.Spotify(auth=spotify_token,requests_timeout=3)
-            sp.trace       = False     
+            sp       = spotipy.Spotify(auth=spotify_token,requests_timeout=3)
+            sp.trace = False     
             
             # ############
             # account data
@@ -256,7 +255,7 @@ def dashboard():
     list_lighting_groups          = GET_ALL_LIGHTING_GROUPS()
     list_devices                  = GET_ALL_DEVICES("devices")
 
-    dropdown_list_programs   = GET_ALL_PROGRAMS()
+    dropdown_list_programs = GET_ALL_PROGRAMS()
 
     data = {'navigation': 'dashboard'}
 

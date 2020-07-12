@@ -560,9 +560,8 @@ def UPDATE_DEVICES(gateway):
                 
                 if message[1] == "smarthome/mqtt/log":
 
-                    message = str(message[2])
-                   
-                    data = json.loads(message)
+                    message = str(message[2])          
+                    data    = json.loads(message)
                    
                     name             = data['ieeeAddr']
                     gateway          = "mqtt"
@@ -1060,7 +1059,6 @@ def CHECK_ZIGBEE2MQTT_RUNNING():
 """ ######################### """
 """  check device exceptions  """
 """ ######################### """
-
 
 def CHECK_DEVICE_EXCEPTIONS(ieeeAddr, command):
 

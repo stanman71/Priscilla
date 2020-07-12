@@ -1,6 +1,6 @@
-from flask import url_for, render_template, request, redirect
+from flask             import url_for, render_template, request, redirect
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from flask_login       import LoginManager, login_user, login_required, logout_user, current_user
 
 from flask_wtf          import FlaskForm, RecaptchaField
 from flask_wtf.file     import FileField, FileRequired
@@ -12,8 +12,11 @@ from app.backend.database_models import *
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
+import os
+import shutil
+import re
+import cgi
 
-import os, shutil, re, cgi
 
 """ ############# """
 """ login manager """

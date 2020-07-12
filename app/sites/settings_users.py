@@ -36,11 +36,11 @@ def settings_users():
     page_title       = 'Bianca | Settings | Users'
     page_description = 'The users configuration page.'
 
-    success_message_add_user           = False
-    error_message_add_user             = []
-    error_message_missing_passwords    = []
-    success_message_change_settings    = []
-    error_message_change_settings      = []
+    success_message_add_user        = False
+    error_message_add_user          = []
+    error_message_missing_passwords = []
+    success_message_change_settings = []
+    error_message_change_settings   = []
 
     message_admin_password_not_changed = ""
 
@@ -83,8 +83,8 @@ def settings_users():
 
             if request.form.get("set_email_" + str(i)) != None:
 
-                error_found       = False
-                hashed_password     = None
+                error_found     = False
+                hashed_password = None
 
 
                 # ############
@@ -139,7 +139,7 @@ def settings_users():
                 else:
                     error_message_change_settings.append(user.name + " || eMail - " + input_email + " - already taken")  
                     error_found = True
-                    email = user.email
+                    email       = user.email
 
 
                 # ################
@@ -196,8 +196,8 @@ def settings_users():
                     if changes_saved == True:
                         success_message_change_settings.append(name + " || Settings successfully saved") 
 
-
     list_users = GET_ALL_USERS()
+
 
     # check passwords
     try:                                        

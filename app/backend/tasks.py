@@ -1,13 +1,13 @@
-import spotipy
-import re
-import json
-import time
-
 from app.backend.lighting         import *
 from app.backend.mqtt             import *
 from app.backend.spotify          import *
 from app.backend.file_management  import BACKUP_DATABASE
 from app.backend.shared_resources import *
+
+import spotipy
+import re
+import json
+import time
 
 
 def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):

@@ -11,8 +11,8 @@ from app.backend.spotify         import GET_SPOTIFY_TOKEN
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
-
 import spotipy
+
 
 # access rights
 def permission_required(f):
@@ -60,7 +60,6 @@ def programs():
         result = ADD_PROGRAM()   
         if result != True: 
             error_message_add_program.append(result)         
-
         else:       
             success_message_add_program = True
 
@@ -86,7 +85,6 @@ def programs():
         for i in range (1,26):
 
             if request.form.get("set_name_" + str(i)) != None:
-
                 error_found = False   
 
                 # ############

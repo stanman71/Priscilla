@@ -63,7 +63,6 @@ def sensordata_jobs():
         result = ADD_SENSORDATA_JOB()   
         if result != True: 
             error_message_add_job.append(result)         
-
         else:       
             success_message_add_job = True
 
@@ -77,7 +76,6 @@ def sensordata_jobs():
         for i in range (1,26):
 
             if request.form.get("set_name_" + str(i)) != None:
-
                 error_found = False            
 
                 # ############
