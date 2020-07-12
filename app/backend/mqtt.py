@@ -1022,7 +1022,34 @@ def CHECK_ZIGBEE2MQTT_RUNNING():
                 else:          
                     SET_ZIGBEE2MQTT_CONNECTION_STATUS(False)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")  
-                    time.sleep(1800)
+
+                    fail_counter = 0
+
+                    # fail process
+                    while fail_counter < 1800 and zigbee_active == False:
+
+                        if GET_ZIGBEE2MQTT_PAIRING_SETTING() == "True":
+                            heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "true")))   
+
+                        if GET_ZIGBEE2MQTT_PAIRING_SETTING() == "False":
+                            heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "false")))                           
+
+                        counter = 1                        
+
+                        # 10 seconds
+                        while counter < 50:       
+                            for message in GET_MQTT_INCOMING_MESSAGES(15):
+                                if message[1] == "smarthome/zigbee2mqtt/bridge/config":  
+                                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | connected")  
+                                    zigbee_active = True
+                                    counter       = 50
+                                    break
+
+                            counter = counter + 1
+                            time.sleep(0.2)
+
+                        fail_counter = fail_counter + 10
+                        time.sleep(10)
 
         except:
             pass
