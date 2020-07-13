@@ -1466,3 +1466,34 @@ def request_mqtt_firmware():
         
     except Exception as e:
         return 'Error: ' + str(e), 400
+
+
+##########
+# OLD PATH
+##########
+
+# request mqtt firmware
+@app.route('/settings/devices/firmware/request', methods=['GET', 'POST'])
+def request_mqtt_firmware_OLD():
+    try:
+        path = GET_PATH() + "/firmwares/"     
+
+        device_ieeeAddr = request.args.get('device_ieeeAddr', default=None)
+        current_version = request.args.get('current_version', default=None)
+
+        device = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr)
+
+        if device.auto_update == "True":
+
+            # load existing firmware files
+            for firmware in GET_ALL_MQTT_FIRMWARE_FILES():
+                firmware_device_model = str(firmware.rsplit("_", 1)[0])
+                firmware_version      = float(firmware.rsplit("_", 1)[1].replace(".bin",""))
+
+                if device.model.lower() == firmware_device_model.lower() and float(current_version) < firmware_version:     
+                    return send_from_directory(path, firmware, as_attachment=True, mimetype='application/octet-stream', attachment_filename=firmware)
+
+        return 'No update needed', 304
+        
+    except Exception as e:
+        return 'Error: ' + str(e), 400
