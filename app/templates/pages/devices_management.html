@@ -352,7 +352,7 @@
 
             <div class="card ">
               <div class="card-header">
-                <h4 class="card-title"><b>Settings - Devices</b></h4>
+                <h4 class="card-title"><b>Devices - Management</b></h4>
               </div>
             </div>  
 
@@ -438,8 +438,8 @@
                           <tr>  
                             <td style="display:none">{{ entry.name }}</td>
                             <td>
-                              <a href="/settings/devices/device/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
-                              <a href="/settings/devices/device/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
+                              <a href="/devices/management/device/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                              <a href="/devices/management/device/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
                             </td>        
                             <td>                     
                               <div class="row justify-content-md-left">
@@ -486,7 +486,7 @@
                                     </div>          
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                      <a class="btn btn-danger" href="/settings/devices/device/delete/{{ entry.ieeeAddr }}#table_devices" role="button">DELETE</a>
+                                      <a class="btn btn-danger" href="/devices/management/device/delete/{{ entry.ieeeAddr }}#table_devices" role="button">DELETE</a>
                                     </div>
                                   </div>
                                 </div>
@@ -500,8 +500,8 @@
                   </div> 
                   <br>   
                   <br>    
-                  <button type="submit" onclick="window.location.href='/settings/devices#table_devices'" name="save_device_settings" class="btn btn-fill btn-primary">SAVE</button>
-                  <button type="submit" onclick="window.location.href='/settings/devices#table_devices'" name="update_devices" class="btn btn-fill btn-info pull-right">UPDATE</button>
+                  <button type="submit" onclick="window.location.href='/devices/management#table_devices'" name="save_device_settings" class="btn btn-fill btn-primary">SAVE</button>
+                  <button type="submit" onclick="window.location.href='/devices/management#table_devices'" name="update_devices" class="btn btn-fill btn-info pull-right">UPDATE</button>
                 </div>
               </form>
             </div>
@@ -561,7 +561,7 @@
                       </div>   
                     </div>  
                     <div class="col-sm-6">    
-                      <button type="submit" onclick="window.location.href='/settings/devices#mqtt_device_manually_adding'" name="add_mqtt_device_manually" class="btn btn-fill btn-primary pull-right">ADD DEVICE MANUALLY</button>
+                      <button type="submit" onclick="window.location.href='/devices/management#mqtt_device_manually_adding'" name="add_mqtt_device_manually" class="btn btn-fill btn-primary pull-right">ADD DEVICE MANUALLY</button>
                     </div>   
                   </div>                
                 </div>
@@ -666,7 +666,7 @@
                         </div>
                       </div>   
                       <div class="col-sm-9">    
-                        <button type="submit" onclick="window.location.href='/settings/devices#device_exceptions'" name="add_device_exception" class="btn btn-fill btn-primary pull-right">ADD DEVICE EXCEPTION</button>
+                        <button type="submit" onclick="window.location.href='/devices/management#device_exceptions'" name="add_device_exception" class="btn btn-fill btn-primary pull-right">ADD DEVICE EXCEPTION</button>
                       </div>   
                     </div>  
                     <br>     
@@ -686,8 +686,8 @@
                             
                               <tr style="border-style:hidden;">
                                 <td style="width:3%">
-                                  <a href="/settings/devices/device_exception/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
-                                  <a href="/settings/devices/device_exception/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
+                                  <a href="/devices/management/device_exception/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                                  <a href="/devices/management/device_exception/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
                                 </td>       
                                 <td style="width:20%" class="minwidth_200"> {{entry.device.name}} </td>  
                                 <td style="width:67%" class="minwidth_200">      
@@ -762,7 +762,7 @@
                                         </div>          
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                          <a class="btn btn-danger" href="/settings/devices/device_exception/delete/{{ entry.id }}#table" role="button">DELETE</a>
+                                          <a class="btn btn-danger" href="/devices/management/device_exception/delete/{{ entry.id }}#table" role="button">DELETE</a>
                                         </div>
                                       </div>
                                     </div>
@@ -844,7 +844,7 @@
                           </tbody>
                         </table> 
                       </div>    
-                      <button type="submit" onclick="window.location.href='/settings/devices#device_exceptions'" name="save_device_exceptions" class="btn btn-fill btn-primary">SAVE</button>
+                      <button type="submit" onclick="window.location.href='/devices/management#device_exceptions'" name="save_device_exceptions" class="btn btn-fill btn-primary">SAVE</button>
 
                     {% endif %} 
 
@@ -912,7 +912,7 @@
                         </div>
                       </div>
                       <br>
-                      <input type=submit onclick="window.location.href='/settings/devices#mqtt_device_updates'" class="btn btn-default" name="upload_mqtt_firmware" value="UPLOAD">
+                      <input type=submit onclick="window.location.href='/devices/management#mqtt_device_updates'" class="btn btn-default" name="upload_mqtt_firmware" value="UPLOAD">
                     </form>   
  
                     <script>
@@ -945,7 +945,7 @@
                                         <td>{{ entry.rsplit("_", 1)[0] }}</td> 
                                         <td>{{ entry.rsplit("_", 1)[1] | replace(".bin","") }}</td> 
                                         <td>
-                                          <a class="btn btn-default pull-left" href="/settings/devices/firmware/download/{{ entry }}?time={{ timestamp }}" role="button">DOWNLOAD</a>
+                                          <a class="btn btn-default pull-left" href="/devices/management/firmware/download/{{ entry }}?time={{ timestamp }}" role="button">DOWNLOAD</a>
                                         </td>  
                                         <td>
                                           <!-- Button trigger modal -->
@@ -959,7 +959,7 @@
                                                 </div>          
                                                 <div class="modal-footer">
                                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                                  <a class="btn btn-danger" href="/settings/devices/firmware/delete/{{ entry }}#table_mqtt_device_updates" role="button">DELETE</a>
+                                                  <a class="btn btn-danger" href="/devices/management/firmware/delete/{{ entry }}#table_mqtt_device_updates" role="button">DELETE</a>
                                                 </div>
                                               </div>
                                             </div>
@@ -1038,7 +1038,7 @@
                                         </div>          
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                          <a class="btn btn-info" href="/settings/devices/firmware/update/{{ entry.ieeeAddr }}#table_zigbee_device_updates" role="button">UPDATE</a>
+                                          <a class="btn btn-info" href="/devices/management/firmware/update/{{ entry.ieeeAddr }}#table_zigbee_device_updates" role="button">UPDATE</a>
                                         </div>
                                       </div>
                                     </div>
@@ -1113,7 +1113,7 @@
                     <div id="zigbee2mqtt_pairing_status"></div>                     
                   </div>   
                   <div class="card-footer">                  
-                    <button type="submit" onclick="window.location.href='/settings/devices#zigbee_pairing'" name="set_zigbee_pairing" class="btn btn-fill btn-primary">SAVE</button>
+                    <button type="submit" onclick="window.location.href='/devices/management#zigbee_pairing'" name="set_zigbee_pairing" class="btn btn-fill btn-primary">SAVE</button>
                   </div>                
                 </form>
               </div>
@@ -1178,7 +1178,7 @@
                               </div>          
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                <button type="submit" onclick="window.location.href='/settings/devices#zigbee_touchlink'" name="activate_zigbee_touchlink" class="btn btn-fill pull-right btn-info">ACTIVATE</button>
+                                <button type="submit" onclick="window.location.href='/devices/management#zigbee_touchlink'" name="activate_zigbee_touchlink" class="btn btn-fill pull-right btn-info">ACTIVATE</button>
                               </div>
                             </div>
                           </div>
@@ -1222,12 +1222,12 @@
               <div class="card">       
                 <form method="POST"> 
                   <div class="card-body">    
-                    <a href="/settings/devices/log/download/zigbee2mqtt.txt?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE LOG</b></font></a> 
+                    <a href="/devices/management/log/download/zigbee2mqtt.txt?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE LOG</b></font></a> 
 
                     {% if zigbee_topology_exist == True %}
                       <br>
                       {% if request.MOBILE %} <br> {% endif %}
-                      <a href="/settings/devices/topology/download/zigbee_topology.png?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE TOPOLOGY</b></font></a>  
+                      <a href="/devices/management/topology/download/zigbee_topology.png?time={{ timestamp }}"><font color="lightblue"><b>OPEN ZIGBEE TOPOLOGY</b></font></a>  
                     {% endif %} 
 
                   </div>             
@@ -1268,7 +1268,7 @@
             <div class="card">
               <div class="card-body">
                 <form method="POST"> 
-                  <a class="btn btn-default" href="/settings/devices/log/download/log_devices.csv?time={{ timestamp }}" role="button">DOWNLOAD DEVICE LOG</a>                
+                  <a class="btn btn-default" href="/devices/management/log/download/log_devices.csv?time={{ timestamp }}" role="button">DOWNLOAD DEVICE LOG</a>                
 
                   <!-- Button trigger modal -->
                   {% if request.MOBILE %} <br><br> {% endif %}
@@ -1284,7 +1284,7 @@
                         </div>          
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                          <button type="submit" onclick="window.location.href='/settings/devices#logfile'" name="reset_logfile" class="btn btn-fill btn-danger pull-right">RESET DEVICE LOG</button>
+                          <button type="submit" onclick="window.location.href='/devices/management#logfile'" name="reset_logfile" class="btn btn-fill btn-danger pull-right">RESET DEVICE LOG</button>
                         </div>
                       </div>
                     </div>

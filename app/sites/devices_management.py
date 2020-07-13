@@ -113,11 +113,11 @@ def UPLOAD_FIRMWARE(file):
     return result
 
 
-@app.route('/settings/devices', methods=['GET', 'POST'])
+@app.route('/devices/management', methods=['GET', 'POST'])
 @login_required
 @permission_required
-def settings_devices():
-    page_title       = 'Bianca | Settings | Devices'
+def devices_management():
+    page_title       = 'Bianca | Devices | Management'
     page_description = 'The devices configuration page.'
 
     error_message_mqtt_connection            = False
@@ -607,7 +607,7 @@ def settings_devices():
     if os.path.isfile(GET_PATH() + "/app/static/temp/zigbee_topology.png"):
         zigbee_topology_exist = True
 
-    data = {'navigation': 'settings_devices'}
+    data = {'navigation': 'devices_management'}
 
     timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")) 
 
@@ -1114,7 +1114,7 @@ def settings_devices():
                             data=data,    
                             title=page_title,        
                             description=page_description,                               
-                            content=render_template( 'pages/settings_devices.html',
+                            content=render_template( 'pages/devices_management.html',
                                                     error_message_mqtt_connection=error_message_mqtt_connection,
                                                     error_message_zigbee2mqtt_connection=error_message_zigbee2mqtt_connection,
                                                     success_message_change_settings_devices=success_message_change_settings_devices,
@@ -1258,7 +1258,7 @@ def settings_devices():
 
 
 # change device position 
-@app.route('/settings/devices/device/position/<string:direction>/<int:id>')
+@app.route('/devices/management/device/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
 def change_device_position(id, direction):
@@ -1267,7 +1267,7 @@ def change_device_position(id, direction):
 
 
 # remove device
-@app.route('/settings/devices/device/delete/<string:ieeeAddr>')
+@app.route('/devices/management/device/delete/<string:ieeeAddr>')
 @login_required
 @permission_required
 def remove_device(ieeeAddr):
@@ -1327,7 +1327,7 @@ def remove_device(ieeeAddr):
 
 
 # change device exception position 
-@app.route('/settings/devices/device_exception/position/<string:direction>/<int:id>')
+@app.route('/devices/management/device_exception/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
 def change_device_exception_position(id, direction):
@@ -1336,7 +1336,7 @@ def change_device_exception_position(id, direction):
 
 
 # remove device exception
-@app.route('/settings/devices/device_exception/delete/<int:id>')
+@app.route('/devices/management/device_exception/delete/<int:id>')
 @login_required
 @permission_required
 def remove_device_exception(id):
@@ -1357,7 +1357,7 @@ def remove_device_exception(id):
 
 
 # download mqtt firmware
-@app.route('/settings/devices/firmware/download/<string:filename>')
+@app.route('/devices/management/firmware/download/<string:filename>')
 @login_required
 @permission_required
 def download_mqtt_firmware(filename):
@@ -1371,8 +1371,78 @@ def download_mqtt_firmware(filename):
         session['error_mqtt_firmware'] = "Download Firmware || " + str(e)
 
 
+# delete mqtt firmware
+@app.route('/devices/management/firmware/delete/<string:filename>')
+@login_required
+@permission_required
+def delete_mqtt_firmware(filename):
+    result = DELETE_MQTT_FIRMWARE(filename)
+
+    if result != True:
+        session['error_mqtt_firmware'] = result
+
+    return redirect(url_for('settings_devices'))
+
+
+# update zigbee device 
+@app.route('/devices/management/firmware/update/<string:ieeeAddr>')
+@login_required
+@permission_required
+def update_zigbee_device(ieeeAddr):
+    if GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "" or GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "Device Update found":
+        channel  = "smarthome/zigbee2mqtt/bridge/ota_update/update"
+        msg      = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
+
+        heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
+        session['zigbee_device_update_started'] = "True" 
+
+    else:
+        session['zigbee_device_update_running'] = "True"
+
+    return redirect(url_for('settings_devices'))
+
+
+# download zigbee topology 
+@app.route('/devices/management/topology/download/<string:filename>')
+@login_required
+@permission_required
+def download_zigbee_topology(filename): 
+    path = GET_PATH() + "/app/static/temp/"
+    
+    if os.path.isfile(path + filename) == False:
+        session['error_download_topology_zigbee2mqtt'] = "Download Topology || File not found" 
+        return redirect(url_for('settings_devices'))
+    
+    else:
+        return send_from_directory(path, filename)
+
+
+# download logs
+@app.route('/devices/management/log/download/<string:filename>')
+@login_required
+@permission_required
+def download_logs(filename): 
+    path = GET_PATH() + "/data/logs/"
+    
+    if os.path.isfile(path + filename) == False:
+
+        if filename == "zigbee2mqtt.txt":
+            session['error_download_log_zigbee2mqtt'] = "Download Log || File not found" 
+            return redirect(url_for('settings_devices'))
+
+        if filename == "log_devices.csv":
+            session['error_download_log_devices'] = "Download Log || File not found"  
+    
+    else:
+        return send_from_directory(path, filename)
+
+
+""" ################## """
+"""  request firmware  """
+""" ################## """   
+
 # request mqtt firmware
-@app.route('/settings/devices/firmware/request', methods=['GET', 'POST'])
+@app.route('/firmware/request', methods=['GET', 'POST'])
 def request_mqtt_firmware():
     try:
         path = GET_PATH() + "/firmwares/"     
@@ -1396,69 +1466,3 @@ def request_mqtt_firmware():
         
     except Exception as e:
         return 'Error: ' + str(e), 400
-
-
-# delete mqtt firmware
-@app.route('/settings/devices/firmware/delete/<string:filename>')
-@login_required
-@permission_required
-def delete_mqtt_firmware(filename):
-    result = DELETE_MQTT_FIRMWARE(filename)
-
-    if result != True:
-        session['error_mqtt_firmware'] = result
-
-    return redirect(url_for('settings_devices'))
-
-
-# update zigbee device 
-@app.route('/settings/devices/firmware/update/<string:ieeeAddr>')
-@login_required
-@permission_required
-def update_zigbee_device(ieeeAddr):
-    if GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "" or GET_ZIGBEE_DEVICE_UPDATE_STATUS() == "Device Update found":
-        channel  = "smarthome/zigbee2mqtt/bridge/ota_update/update"
-        msg      = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
-
-        heapq.heappush(mqtt_message_queue, (20, (channel, msg)))
-        session['zigbee_device_update_started'] = "True" 
-
-    else:
-        session['zigbee_device_update_running'] = "True"
-
-    return redirect(url_for('settings_devices'))
-
-
-# download zigbee topology 
-@app.route('/settings/devices/topology/download/<string:filename>')
-@login_required
-@permission_required
-def download_zigbee_topology(filename): 
-    path = GET_PATH() + "/app/static/temp/"
-    
-    if os.path.isfile(path + filename) == False:
-        session['error_download_topology_zigbee2mqtt'] = "Download Topology || File not found" 
-        return redirect(url_for('settings_devices'))
-    
-    else:
-        return send_from_directory(path, filename)
-
-
-# download logs
-@app.route('/settings/devices/log/download/<string:filename>')
-@login_required
-@permission_required
-def download_logs(filename): 
-    path = GET_PATH() + "/data/logs/"
-    
-    if os.path.isfile(path + filename) == False:
-
-        if filename == "zigbee2mqtt.txt":
-            session['error_download_log_zigbee2mqtt'] = "Download Log || File not found" 
-            return redirect(url_for('settings_devices'))
-
-        if filename == "log_devices.csv":
-            session['error_download_log_devices'] = "Download Log || File not found"  
-    
-    else:
-        return send_from_directory(path, filename)

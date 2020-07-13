@@ -55,7 +55,7 @@ char model[40]       = "sensor_motion2_light";
 char device_type[40] = "sensor_passiv";
 char description[80] = "MQTT Motion Sensor";
 
-String current_Version = "2.0";
+String current_Version = "2.1";
 
 int sensor_1_last_value = 0;
 int sensor_2_last_value = 0;
@@ -507,7 +507,7 @@ void loop() {
 
 void checkForUpdates() {
 
-    String checkUrl = "/settings/devices/firmware/request";
+    String checkUrl = "/firmware/request";
 
     String str_mqtt_server(mqtt_server);
     

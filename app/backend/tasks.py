@@ -13,7 +13,7 @@ import time
 def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
     try:
-    
+
         # ############################
         # group - start lighting scene
         # ############################
@@ -320,7 +320,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
         # device
         # ######
 
-        if "device" in task:  
+        if "device" in task and not "update_devices" in task:  
             task = task.split(" # ")
             
             # get input group names 
@@ -481,7 +481,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
                 elif task[2].strip() == "STOP":
                     heapq.heappush(process_management_queue, (10, ("program", "stop", program.name, blocked_program_thread_id)))  
-     
+        
                 else:
                     WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Invalid command")
 

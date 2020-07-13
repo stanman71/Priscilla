@@ -635,3 +635,7 @@ Timestamp,Type,Description
 2020-07-11 09:58:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-07-11 09:58:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-07-11 09:58:21,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-07-12 20:38:17,WARNING,|Network || ZigBee2MQTT || Pairing disabled || No MQTT connection|
+2020-07-12 20:38:19,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-12 20:38:19,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-07-12 20:38:27,ERROR,|Network || ZigBee2MQTT || No Connection|

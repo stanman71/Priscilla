@@ -429,7 +429,7 @@ for device in GET_ALL_DEVICES(""):
 """ imports """
 """ ####### """
 
-from app.sites                      import index, about, dashboard, scheduler, programs, lighting_scenes, lighting_groups, cameras, music, sensordata_jobs, sensordata_statistics, settings_system, settings_threads, settings_devices, settings_controller, settings_users, settings_system_log, errors
+from app.sites                      import index, dashboard, scheduler, programs, lighting_scenes, lighting_groups, cameras, music, sensordata_jobs, sensordata_statistics, devices_management, devices_controller, settings_system, settings_users, settings_system_log, settings_threads, settings_about, errors
 from app.backend.process_management import START_PROCESS_MANAGEMENT_THREAD
 from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING, START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD
 from app.backend.email              import SEND_EMAIL

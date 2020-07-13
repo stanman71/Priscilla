@@ -21,7 +21,6 @@ sensordata_messages_list = []
 """ ###### """
 
 def GET_PATH():
-
     # windows
     if os.name == "nt":                 
         return(os.path.abspath("")) 
@@ -488,7 +487,7 @@ def GET_MQTT_DEVICE_MANUALLY_ADDING_INFORMATIONS(model):
 def GET_ZIGBEE_DEVICE_INFORMATIONS(model):
     
     try:
-        with open(H + "/app/zigbee_device_informations.json", 'r') as data_file:
+        with open(GET_PATH() + "/app/zigbee_device_informations.json", 'r') as data_file:
             data_loaded = json.load(data_file)
 
         for device in data_loaded["data"]:

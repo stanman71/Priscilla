@@ -28,11 +28,11 @@ def permission_required(f):
     return wrap
 
 
-@app.route('/settings/controller', methods=['GET', 'POST'])
+@app.route('/devices/controller', methods=['GET', 'POST'])
 @login_required
 @permission_required
-def settings_controller():
-    page_title       = 'Bianca | Settings | Controller'
+def devices_controller():
+    page_title       = 'Bianca | Devices | Controller'
     page_description = 'The controller configuration page.'
 
     success_message_change_settings_controller = False
@@ -225,13 +225,13 @@ def settings_controller():
         
     list_controller = GET_ALL_CONTROLLER()
 
-    data = {'navigation': 'settings_controller'}
+    data = {'navigation': 'devices_controller'}
 
     return render_template('layouts/default.html',
                             data=data,    
                             title=page_title,        
                             description=page_description,                               
-                            content=render_template( 'pages/settings_controller.html', 
+                            content=render_template( 'pages/devices_controller.html', 
                                                     success_message_change_settings_controller=success_message_change_settings_controller,
                                                     list_controller=list_controller,
                                                     list_lighting_group_options=list_lighting_group_options,
@@ -247,7 +247,7 @@ def settings_controller():
 
 
 # change controller position 
-@app.route('/settings/controller/position/<string:direction>/<int:id>')
+@app.route('/devices/controller/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
 def change_controller_position(id, direction):

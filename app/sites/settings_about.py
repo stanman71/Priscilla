@@ -24,22 +24,22 @@ def permission_required(f):
     return wrap
 
 
-@app.route('/about', methods=['GET', 'POST'])
+@app.route('/settings/about', methods=['GET', 'POST'])
 @login_required
 @permission_required
-def about():
-    page_title       = 'Bianca | About'
+def settings_about():
+    page_title       = 'Bianca | Settings | About'
     page_description = 'The information and update page.'
 
     version = "3.0"
 
-    data = {'navigation': 'about'}
+    data = {'navigation': 'settings_about'}
 
     return render_template('layouts/default.html',
                             data=data,    
                             title=page_title,        
                             description=page_description,               
-                            content=render_template( 'pages/about.html',
+                            content=render_template( 'pages/settings_about.html',
                                                      version=version,                                                   
                                                     ) 
                            )

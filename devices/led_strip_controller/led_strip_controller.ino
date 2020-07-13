@@ -49,7 +49,7 @@ char model[40]       = "led_strip_controller";
 char device_type[40] = "led_rgb";
 char description[80] = "MQTT LED Strip Controller";
 
-String current_Version = "2.2";
+String current_Version = "2.3";
 
 #include <FastLED.h>  
 
@@ -565,7 +565,7 @@ void loop() {
 
 void checkForUpdates() {
 
-    String checkUrl = "/settings/devices/firmware/request";
+    String checkUrl = "/firmware/request";
 
     String str_mqtt_server(mqtt_server);
     

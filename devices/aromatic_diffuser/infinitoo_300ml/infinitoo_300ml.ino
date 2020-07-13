@@ -50,7 +50,7 @@ char model[40]       = "infinitoo_300ml";
 char device_type[40] = "aromatic_diffuser";
 char description[80] = "MQTT Aromatic Diffuser";
 
-String current_Version = "2.3";
+String current_Version = "2.4";
 
 String state = "OFF";
 int level    = 0;
@@ -832,7 +832,7 @@ void loop() {
 
 void checkForUpdates() {
 
-    String checkUrl = "/settings/devices/firmware/request";
+    String checkUrl = "/firmware/request";
 
     String str_mqtt_server(mqtt_server);
     

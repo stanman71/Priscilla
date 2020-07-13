@@ -537,7 +537,7 @@ void loop() {
 
 void checkForUpdates() {
 
-    String checkUrl = "/settings/devices/firmware/request";
+    String checkUrl = "/firmware/request";
 
     String str_mqtt_server(mqtt_server);
     
