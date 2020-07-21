@@ -189,7 +189,7 @@ def REFRESH_SPOTIFY_TOKEN_THREAD():
     global SPOTIFY_TOKEN        
     global SPOTIFY_REFRESH_TOKEN 
 
-    current_timer = 3000
+    counter = 3001
 
     while True:
                
@@ -198,7 +198,7 @@ def REFRESH_SPOTIFY_TOKEN_THREAD():
             # check spotify login 
             if SPOTIFY_REFRESH_TOKEN != "":
 
-                if current_timer == 3000:
+                if counter > 3000:
 
                     # get a new token
                 
@@ -234,17 +234,17 @@ def REFRESH_SPOTIFY_TOKEN_THREAD():
                     except:
                         pass
                         
-                    # restart timer
-                    current_timer = 0
+                    # restart counter
+                    counter = 0
 
 
                 # check device connections every 30 seconds
-                elif (current_timer % 30 == 0):
+                elif (counter % 30 == 0):
                     CHECK_CLIENT_MUSIC_CONNECTION()
-                    current_timer = current_timer + 1
+                    counter = counter + 1
 
                 else:
-                    current_timer = current_timer + 1
+                    counter = counter + 1
 
         except Exception as e:
             WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | Refresh Spotify Token | " + str(e)) 
@@ -849,7 +849,7 @@ def GET_SPOTIFY_DEVICE_ID(spotify_token, device_name):
     sp                = spotipy.Spotify(auth=spotify_token)
     sp.trace          = False                                 
     spotify_device_id = 0
-    timer             = 0
+    counter           = 0
 
     try:
 
@@ -864,7 +864,7 @@ def GET_SPOTIFY_DEVICE_ID(spotify_token, device_name):
                 CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "spotify" + '; ' + str(data["volume"]), 45)     
                 
         # get device spotify id
-        while spotify_device_id == 0 and timer < 30:
+        while spotify_device_id == 0 and counter < 30:
 
             for device in sp.devices()["devices"]:
 
@@ -879,7 +879,7 @@ def GET_SPOTIFY_DEVICE_ID(spotify_token, device_name):
                         spotify_device_id = device['id'] 
                         continue    
 
-            timer = timer + 1
+            counter = counter + 1
             time.sleep(1)     
 
         return spotify_device_id
