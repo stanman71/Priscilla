@@ -154,7 +154,7 @@ def cameras():
 
     if request.form.get("save_cameras_settings") != None: 
         
-        for i in range (1,26):
+        for i in range (1,7):
 
             if request.form.get("set_name_" + str(i)) != None:
                 error_found = False

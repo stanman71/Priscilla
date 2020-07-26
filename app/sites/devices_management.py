@@ -1263,7 +1263,7 @@ def devices_management():
 @permission_required
 def change_device_position(id, direction):
     CHANGE_DEVICE_POSITION(id, direction)
-    return redirect(url_for('settings_devices'))
+    return redirect(url_for('devices_management'))
 
 
 # remove device
@@ -1318,12 +1318,12 @@ def remove_device(ieeeAddr):
             else:
                 session['delete_device_error'] = device_name + " || Zigbee is disabled"      
                
-        return redirect(url_for('settings_devices'))
+        return redirect(url_for('devices_management'))
 
 
     except Exception as e:
         session['delete_device_error'] = device_name + " || Error | + " + str(e)            
-        return redirect(url_for('settings_devices'))        
+        return redirect(url_for('devices_management'))        
 
 
 # change device exception position 
@@ -1332,7 +1332,7 @@ def remove_device(ieeeAddr):
 @permission_required
 def change_device_exception_position(id, direction):
     CHANGE_DEVICE_EXCEPTION_POSITION(id, direction)
-    return redirect(url_for('settings_devices'))
+    return redirect(url_for('devices_management'))
 
 
 # remove device exception
@@ -1348,12 +1348,12 @@ def remove_device_exception(id):
         else:
             session['delete_device_exception_error'] = "Device Exception || Deletion not confirmed"      
 
-        return redirect(url_for('settings_devices'))
+        return redirect(url_for('devices_management'))
 
 
     except Exception as e:
         session['delete_device_exception_error'] = "Device Exception || Error | + " + str(e)            
-        return redirect(url_for('settings_devices'))        
+        return redirect(url_for('devices_management'))        
 
 
 # download mqtt firmware
@@ -1381,7 +1381,7 @@ def delete_mqtt_firmware(filename):
     if result != True:
         session['error_mqtt_firmware'] = result
 
-    return redirect(url_for('settings_devices'))
+    return redirect(url_for('devices_management'))
 
 
 # update zigbee device 
@@ -1399,7 +1399,7 @@ def update_zigbee_device(ieeeAddr):
     else:
         session['zigbee_device_update_running'] = "True"
 
-    return redirect(url_for('settings_devices'))
+    return redirect(url_for('devices_management'))
 
 
 # download zigbee topology 
@@ -1411,7 +1411,7 @@ def download_zigbee_topology(filename):
     
     if os.path.isfile(path + filename) == False:
         session['error_download_topology_zigbee2mqtt'] = "Download Topology || File not found" 
-        return redirect(url_for('settings_devices'))
+        return redirect(url_for('devices_management'))
     
     else:
         return send_from_directory(path, filename)
@@ -1428,7 +1428,7 @@ def download_logs(filename):
 
         if filename == "zigbee2mqtt.txt":
             session['error_download_log_zigbee2mqtt'] = "Download Log || File not found" 
-            return redirect(url_for('settings_devices'))
+            return redirect(url_for('devices_management'))
 
         if filename == "log_devices.csv":
             session['error_download_log_devices'] = "Download Log || File not found"  

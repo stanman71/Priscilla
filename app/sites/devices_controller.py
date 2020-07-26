@@ -252,4 +252,4 @@ def devices_controller():
 @permission_required
 def change_controller_position(id, direction):
     CHANGE_CONTROLLER_POSITION(id, direction)
-    return redirect(url_for('settings_controller'))
+    return redirect(url_for('devices_controller'))
