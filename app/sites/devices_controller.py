@@ -7,6 +7,7 @@ from app                         import app
 from app.backend.database_models import *
 from app.backend.checks          import CHECK_TASKS
 from app.backend.spotify         import GET_SPOTIFY_TOKEN
+from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
@@ -22,7 +23,10 @@ def permission_required(f):
             else:
                 return redirect(url_for('logout'))
         except Exception as e:
-            print(e)
+            WRITE_LOGFILE_SYSTEM("ERROR", "System | " + str(e))  
+            print("#################")
+            print(str(e))
+            print("#################")
             return redirect(url_for('logout'))
         
     return wrap
@@ -244,12 +248,3 @@ def devices_controller():
                                                     list_spotify_playlists=list_spotify_playlists,    
                                                     ) 
                            )
-
-
-# change controller position 
-@app.route('/devices/controller/position/<string:direction>/<int:id>')
-@login_required
-@permission_required
-def change_controller_position(id, direction):
-    CHANGE_CONTROLLER_POSITION(id, direction)
-    return redirect(url_for('devices_controller'))

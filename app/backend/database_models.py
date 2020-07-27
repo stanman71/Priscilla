@@ -870,46 +870,6 @@ def SET_CONTROLLER_TASK_ERRORS(id, task_errors):
         db.session.commit()     
 
 
-def CHANGE_CONTROLLER_POSITION(id, direction):
-    if direction == "up":
-        controller_list = GET_ALL_CONTROLLER()
-        controller_list = controller_list[::-1]
-        
-        for controller in controller_list:
-            
-            if controller.id < id:     
-                new_id = controller.id
-                
-                # change ids
-                controller_1 = GET_CONTROLLER_BY_ID(id)
-                controller_2 = GET_CONTROLLER_BY_ID(new_id)
-                
-                controller_1.id = 99
-                db.session.commit()
-                
-                controller_2.id = id
-                controller_1.id = new_id
-                db.session.commit()     
-                return 
-
-    if direction == "down":
-        for controller in GET_ALL_CONTROLLER():
-            if controller.id > id:       
-                new_id = controller.id
-                
-                # change ids
-                controller_1 = GET_CONTROLLER_BY_ID(id)
-                controller_2 = GET_CONTROLLER_BY_ID(new_id)
-                
-                controller_1.id = 99
-                db.session.commit()
-                
-                controller_2.id = id
-                controller_1.id = new_id
-                db.session.commit()     
-                return 
-
-
 def DELETE_CONTROLLER(device_ieeeAddr):
     Controller.query.filter_by(device_ieeeAddr=device_ieeeAddr).delete()
     db.session.commit()

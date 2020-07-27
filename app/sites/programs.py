@@ -8,6 +8,7 @@ from app.backend.database_models import *
 from app.backend.process_program import * 
 from app.backend.checks          import CHECK_TASKS
 from app.backend.spotify         import GET_SPOTIFY_TOKEN
+from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
@@ -24,7 +25,10 @@ def permission_required(f):
             else:
                 return redirect(url_for('logout'))
         except Exception as e:
-            print(e)
+            WRITE_LOGFILE_SYSTEM("ERROR", "System | " + str(e))  
+            print("#################")
+            print(str(e))
+            print("#################")
             return redirect(url_for('logout'))
         
     return wrap

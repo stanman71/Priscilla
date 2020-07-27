@@ -3,12 +3,12 @@ from flask_login         import current_user, login_required
 from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
-from app                          import app
-from app.backend.database_models  import *
-from app.backend.file_management  import READ_SENSORDATA_FILE, GET_ALL_SENSORDATA_FILES
-from app.backend.build_graph      import BUILD_GRAPH
-from app.common                   import COMMON, STATUS
-from app.assets                   import *
+from app                         import app
+from app.backend.database_models import *
+from app.backend.file_management import WRITE_LOGFILE_SYSTEM, READ_SENSORDATA_FILE, GET_ALL_SENSORDATA_FILES
+from app.backend.build_graph     import BUILD_GRAPH
+from app.common                  import COMMON, STATUS
+from app.assets                  import *
 
 import datetime
 import time
@@ -27,7 +27,10 @@ def permission_required(f):
             else:
                 return redirect(url_for('logout'))
         except Exception as e:
-            print(e)
+            WRITE_LOGFILE_SYSTEM("ERROR", "System | " + str(e))  
+            print("#################")
+            print(str(e))
+            print("#################")
             return redirect(url_for('logout'))
         
     return wrap

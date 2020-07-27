@@ -23,7 +23,10 @@ def permission_required(f):
             else:
                 return redirect(url_for('logout'))
         except Exception as e:
-            print(e)
+            WRITE_LOGFILE_SYSTEM("ERROR", "System | " + str(e))  
+            print("#################")
+            print(str(e))
+            print("#################")
             return redirect(url_for('logout'))
         
     return wrap

@@ -3,9 +3,10 @@ from flask_login         import current_user, login_required
 from werkzeug.exceptions import HTTPException, NotFound, abort
 from functools           import wraps
 
-from app         import app
-from app.common  import COMMON, STATUS
-from app.assets  import *
+from app                         import app
+from app.backend.file_management import WRITE_LOGFILE_SYSTEM
+from app.common                  import COMMON, STATUS
+from app.assets                  import *
 
 
 # access rights
@@ -18,7 +19,10 @@ def permission_required(f):
             else:
                 return redirect(url_for('logout'))
         except Exception as e:
-            print(e)
+            WRITE_LOGFILE_SYSTEM("ERROR", "System | " + str(e))  
+            print("#################")
+            print(str(e))
+            print("#################")
             return redirect(url_for('logout'))
         
     return wrap
