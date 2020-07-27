@@ -16,7 +16,7 @@ def permission_required(f):
     @wraps(f)
     def wrap(*args, **kwargs): 
         try:
-            if current_user.role == "user" or current_user.role == "administrator":
+            if current_user.role == "administrator":
                 return f(*args, **kwargs)
             else:
                 return redirect(url_for('logout'))
