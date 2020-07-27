@@ -241,16 +241,11 @@
                             {% endif %}     
                           </div>
                         </div>       
-                        <div class="col-sm-2">                       
-                          <div class="form-group">
-                            <label>LAN Port</label>
-                              <br>                      
-                              <input type="text" class="form-control" name="set_port" value="{% if system_settings.port != None %}{{ system_settings.port }}{% endif %}" /> 
-                          </div>
-                        </div>                                               
+                        <div class="col-sm-7"></div>                                               
                       </div>
                     </div>
-                  </div>                  
+                  </div>   
+                  <br>               
                   <button type="submit" onclick="window.location.href='/settings/system#network'" name="set_settings_network" class="btn btn-fill btn-primary">Save</button>
                 </div>
               </form>

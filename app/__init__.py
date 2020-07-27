@@ -412,7 +412,7 @@ try:
 except:
     gateway = ""
     
-SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, GET_SYSTEM_SETTINGS().port, GET_SYSTEM_SETTINGS().dhcp)
+SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, GET_SYSTEM_SETTINGS().dhcp)
 
 
 """ #################################### """

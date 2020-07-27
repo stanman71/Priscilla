@@ -3546,15 +3546,14 @@ def GET_SYSTEM_SETTINGS():
     return System.query.filter_by().first()
 
 
-def SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, port, dhcp):
+def SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, dhcp):
     entry = System.query.filter_by().first()
 
     # values changed ?
-    if entry.ip_address != ip_address or entry.gateway != gateway or entry.port != port or entry.dhcp != dhcp:   
+    if entry.ip_address != ip_address or entry.gateway != gateway or entry.dhcp != dhcp:   
      
         entry.ip_address = ip_address
-        entry.gateway    = gateway  
-        entry.port       = port          
+        entry.gateway    = gateway         
         entry.dhcp       = dhcp 
         db.session.commit()
         
