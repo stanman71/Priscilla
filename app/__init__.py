@@ -34,7 +34,7 @@ else:
 """ ####### """
 
 app = Flask(__name__, static_url_path='/static')
-app.config['SECRET_KEY']                     = "randon" #os.urandom(20).hex()
+app.config['SECRET_KEY']                     = os.urandom(20).hex()
 app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///' + PATH + '/data/database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SEND_FILE_MAX_AGE_DEFAULT']      = 1
@@ -88,6 +88,7 @@ def background_thread_dashboard_devices():
     while True:
         socketio.sleep(1)
 
+        # get last values
         for i, item in enumerate(devices):
 
             try:
@@ -425,9 +426,9 @@ for device in GET_ALL_DEVICES(""):
         SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update found")
 
 
-""" ####### """
-""" imports """
-""" ####### """
+""" ######### """
+"""  imports  """
+""" ######### """
 
 from app.sites                      import index, dashboard, scheduler, programs, lighting_scenes, lighting_groups, cameras, music, sensordata_jobs, sensordata_statistics, devices_management, devices_controller, settings_system, settings_users, settings_system_log, settings_threads, settings_about, errors
 from app.backend.process_management import START_PROCESS_MANAGEMENT_THREAD

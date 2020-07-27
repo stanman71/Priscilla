@@ -32,7 +32,7 @@ def permission_required(f):
         except Exception as e:
             WRITE_LOGFILE_SYSTEM("ERROR", "System | " + str(e))  
             print("#################")
-            print(str(e))
+            print("ERROR: " + str(e))
             print("#################")
             return redirect(url_for('logout'))
         
