@@ -12,8 +12,8 @@ import random
 """  path  """
 """ ###### """
                            
-PATH = "/home/pi/smarthome/"
-
+PATH    = "/home/pi/smarthome/"
+counter = 0
 
 """ ############# """
 """  config file  """
@@ -360,9 +360,20 @@ def on_connect(client, userdata, flags, rc):
         print("MQTT | Broker - " + GET_MQTT_BROKER() + " | Connected") 
 
 
-client = mqtt.Client()
-client.username_pw_set(username=GET_MQTT_BROKER_USERNAME(),password=GET_MQTT_BROKER_PASSWORD())
-client.on_connect = on_connect
-client.on_message = on_message
-client.connect(GET_MQTT_BROKER(), 1884, 60)
-client.loop_forever()
+while True:
+
+    if counter > 120:
+        os.system("sudo reboot")    
+
+    try:
+        client = mqtt.Client()
+        client.username_pw_set(username=GET_MQTT_BROKER_USERNAME(),password=GET_MQTT_BROKER_PASSWORD())
+        client.on_connect = on_connect
+        client.on_message = on_message
+        client.connect(GET_MQTT_BROKER(), 1884, 60)
+        client.loop_forever()
+
+    except Exception as e:
+        print("ERROR: MQTT | Broker - " + str(e))
+        time.sleep(5)
+        counter = counter + 1
