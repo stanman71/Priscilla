@@ -1447,3 +1447,7 @@ Timestamp,Type,Description
 2020-08-01 22:45:36,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-08-01 22:45:36,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-08-01 22:45:37,SUCCESS,|Music || Spotify || Token || updated|
+2020-08-01 23:25:47,SUCCESS,|Music || Spotify || Token || updated|
+2020-08-02 00:00:10,SUCCESS,|Network || MQTT || Update|
+2020-08-02 00:16:21,SUCCESS,|Music || Spotify || Token || updated|
+2020-08-02 00:30:00,ERROR,|Task || Scheduler || reset_log_files || name 'PATH' is not defined|

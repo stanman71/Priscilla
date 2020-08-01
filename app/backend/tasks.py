@@ -1,7 +1,7 @@
 from app.backend.lighting         import *
 from app.backend.mqtt             import *
 from app.backend.spotify          import *
-from app.backend.file_management  import BACKUP_DATABASE
+from app.backend.file_management  import GET_PATH, BACKUP_DATABASE
 from app.backend.shared_resources import *
 
 import spotipy
@@ -427,25 +427,25 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
         if "reset_log_files" in task:
 
             # reset device log if size > 2,5 mb
-            file_size = os.path.getsize(PATH + "/data/logs/log_devices.csv")
+            file_size = os.path.getsize(GET_PATH() + "/data/logs/log_devices.csv")
             file_size = round(file_size / 1024 / 1024, 2)
 
             if file_size > 2.5:
                 RESET_LOGFILE("log_devices")
 
             # reset system log if size > 2.5 mb
-            file_size = os.path.getsize(PATH + "/data/logs/log_system.csv")
+            file_size = os.path.getsize(GET_PATH() + "/data/logs/log_system.csv")
             file_size = round(file_size / 1024 / 1024, 2)
 
             if file_size > 2.5:
                 RESET_LOGFILE("log_system")
 
             # delete system2mqtt log if size > 5 mb
-            file_size = os.path.getsize(PATH + "/data/logs/zigbee2mqtt.txt")
+            file_size = os.path.getsize(GET_PATH() + "/data/logs/zigbee2mqtt.txt")
             file_size = round(file_size / 1024 / 1024, 2)
 
             if file_size > 5:
-                os.remove(PATH + "/data/logs/zigbee2mqtt.txt")
+                os.remove(GET_PATH() + "/data/logs/zigbee2mqtt.txt")
 
 
         # ############

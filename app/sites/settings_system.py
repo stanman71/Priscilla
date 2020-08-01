@@ -431,7 +431,7 @@ def settings_system():
         result = BACKUP_DATABASE() 
         
         if result:
-            success_message_backup_database = "Backup || Successfully deleted"
+            success_message_backup_database = "Backup || Successfully created"
         else:
             error_message_backup_database = "Backup || " + str(result)
 
