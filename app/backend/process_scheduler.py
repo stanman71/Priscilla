@@ -3,8 +3,9 @@ from app.backend.database_models  import *
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
 from app.backend.tasks            import START_TASK
 
-from ping3   import ping
-from difflib import SequenceMatcher
+from ping3    import ping
+from difflib  import SequenceMatcher
+from croniter import croniter
 
 import requests
 import datetime
@@ -21,7 +22,7 @@ def PROCESS_SCHEDULER(job, ieeeAddr):
     start_job = False
 
     # check time
-    if job.trigger_time == "True":
+    if job.trigger_timedate == "True":
         if CHECK_SCHEDULER_TIME(job) == False:
             return
         else:
@@ -97,222 +98,10 @@ def PROCESS_SCHEDULER(job, ieeeAddr):
 
 def CHECK_SCHEDULER_TIME(job):
 
-    now            = datetime.datetime.now()
-    current_day    = now.strftime('%a')
-    current_hour   = now.strftime('%H')
-    current_minute = now.strftime('%M')
-
-    passing = False
-
-
-    # #########
-    # check day
-    # #########
-
-    days = job.day.replace(" ","")
-
-    if "," in job.day:
-        days = days.split(",")
-
-        for element in days:
-
-            if element.lower() == current_day.lower():
-                passing = True
-                break
-    
+    if croniter.match(job.timedate, datetime.datetime.now()):
+        return True
     else:
-
-        if days.lower() == current_day.lower() or days == "*":
-            passing = True
-
-
-    # ###########
-    # check hours
-    # ###########
-
-    if passing == True:
-
-        hours = job.hour.replace(" ","")
-
-        # without range
-
-        if "-" not in hours:
-            list_all_hours = hours.split(",")
-
-            # find exceptions
-            list_exception_hours = []
-            list_valid_hours     = []
-
-            for hour in list_all_hours:
-
-                if "!" in hour:
-                    list_exception_hours.append(int(hour[1:]))
-                else:
-                    list_valid_hours.append(hour)
-
-            # check passing
-            if int(current_hour) not in list_exception_hours:
-
-                for hour in list_valid_hours:
-
-                    if str(hour) == "*":
-                        passing = True
-                        break
-
-                    elif int(hour) == int(current_hour):
-                        passing = True
-                        break
-
-                    else:
-                        passing = False
-
-            else:
-                passing = False
-
-        # with range
-
-        else:
-
-            list_hours = hours.split(",")
-
-            # find exceptions
-            list_exception_hours = []
-
-            for hour in list_hours:
-
-                if "!" in hour:
-                    list_exception_hours.append(int(hour[1:]))
-
-            # find min_hour and max_hour
-            for hour in list_hours:
-
-                if "-" in hour:
-                    min_hour = hour.split("-")[0]
-                    max_hour = hour.split("-")[1]
-
-            list_hours_all = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
-                              "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
-
-            # find positions
-            for i, hour in enumerate(list_hours_all):
-                if int(hour) == int(min_hour):
-                    position_min = i
-                if int(hour) == int(max_hour):
-                    position_max = i
-
-            # check passing
-            if int(current_hour) not in list_exception_hours:
-
-                for hour in list_hours_all[position_min:position_max + 1]:
-
-                    if int(hour) == int(current_hour):
-                        passing = True
-                        break
-
-                    else:
-                        passing = False
-
-            else:
-                passing = False
-
-
-    # ############
-    # check minute
-    # ############
-
-    if passing == True:
-
-        minutes = job.minute.replace(" ","")
-
-        # without range
-
-        if "-" not in minutes:
-
-            list_all_minutes = minutes.split(",")
-
-            # find exceptions
-            list_exception_minutes = []
-            list_valid_minutes     = []
-
-            for minute in list_all_minutes:
-
-                if "!" in minute:
-                    list_exception_minutes.append(int(minute[1:]))
-                else:
-                    list_valid_minutes.append(minute)
-
-            # check passing
-            if int(current_minute) not in list_exception_minutes:
-
-                for minute in list_valid_minutes:
-
-                    if str(minute) == "*":
-                        passing = True
-                        break
-
-                    elif int(minute) == int(current_minute):
-                        passing = True
-                        break
-
-                    else:
-                        passing = False
-
-            else:
-                passing = False
-
-        # with range
-
-        else:
-
-            list_minutes = minutes.split(",")
-
-            # find exceptions
-            list_exception_minutes = []
-
-            for minute in list_minutes:
-
-                if "!" in minute:
-                    list_exception_minutes.append(int(minute[1:]))
-
-            # find min_minute and max_minute
-            for minute in list_minutes:
-
-                if "-" in minute:
-                    min_minute = minute.split("-")[0]
-                    max_minute = minute.split("-")[1]
-
-            list_minutes_all = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
-                                "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23",
-                                "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35",
-                                "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47",
-                                "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"]
-
-            position_min = 0
-            position_max = 0
-
-            # find positions
-            for i, minute in enumerate(list_minutes_all):
-                if int(minute) == int(min_minute):
-                    position_min = i
-                if int(minute) == int(max_minute):
-                    position_max = i
-
-            # check passing
-            if int(current_minute) not in list_exception_minutes:
-
-                for minute in list_minutes_all[position_min:position_max + 1]:
-
-                    if int(minute) == int(current_minute):
-                        passing = True
-                        break
-
-                    else:
-                        passing = False
-
-            else:
-                passing = False
-
-    return passing
+        return False
 
 
 def CHECK_SCHEDULER_SUNRISE(job):

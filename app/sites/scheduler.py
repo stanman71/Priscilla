@@ -125,10 +125,10 @@ def scheduler():
                 # #################
 
                 # set checkbox time
-                if request.form.get("set_checkbox_trigger_time_" + str(i)):
-                    trigger_time = "True"
+                if request.form.get("set_checkbox_trigger_timedate_" + str(i)):
+                    trigger_timedate = "True"
                 else:
-                    trigger_time = "False"  
+                    trigger_timedate = "False"  
 
                 # set checkbox sun
                 if request.form.get("set_checkbox_trigger_sun_position_" + str(i)):
@@ -161,27 +161,15 @@ def scheduler():
                     option_pause = "False"  
 
 
-                # #############
-                # time settings
-                # #############
+                # #################
+                # timedate settings
+                # #################
 
-                # set day
-                if request.form.get("set_day_" + str(i)) != "" and request.form.get("set_day_" + str(i)) != None:
-                    day = request.form.get("set_day_" + str(i)).strip()
+                # set timedate
+                if request.form.get("set_timedate_" + str(i)) != "" and request.form.get("set_timedate_" + str(i)) != None:
+                    timedate = request.form.get("set_timedate_" + str(i)).strip()
                 else:
-                    day = GET_SCHEDULER_JOB_BY_ID(i).day
-
-                # set hour
-                if request.form.get("set_hour_" + str(i)) != "" and request.form.get("set_hour_" + str(i)) != None:
-                    hour = request.form.get("set_hour_" + str(i)).strip()
-                else:
-                    hour = GET_SCHEDULER_JOB_BY_ID(i).hour
-
-                # set minute
-                if request.form.get("set_minute_" + str(i)) != "" and request.form.get("set_minute_" + str(i)) != None:
-                    minute = request.form.get("set_minute_" + str(i)).strip()
-                else:
-                    minute = GET_SCHEDULER_JOB_BY_ID(i).minute 
+                    timedate = GET_SCHEDULER_JOB_BY_ID(i).timedate
 
 
                 # ############
@@ -364,8 +352,8 @@ def scheduler():
                 if error_found == False: 
 
                     if SET_SCHEDULER_JOB(i, name, task, 
-                                         trigger_time, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause,
-                                         day, hour, minute,
+                                         trigger_timedate, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause,
+                                         timedate,
                                          option_sunrise, option_sunset, option_day, option_night, latitude, longitude,
                                          device_ieeeAddr_1, device_name_1, device_input_values_1, 
                                          sensor_key_1, operator_1, value_1, main_operator_second_sensor,

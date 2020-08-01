@@ -520,7 +520,7 @@
                       <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_stop">
                         <i class='uil uil-square-full'></i>
                       </button>
-                    </div>
+                    </div> 
                     <br>
                     <div class="col-sm-5">  
                       <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_volume">
@@ -530,12 +530,13 @@
                         <i class="uil uil-arrow-random"></i>
                       </button>
                     </div>
-                    <div class="col-sm-7">
+                    <div class="col-sm-2">
                       <div class="vertical_center">       
                         <input id="volume_slider_dashboard_music" data-slider-id="volume_slider_dashboard_music" name="slider_spotify_volume" 
                           type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>                              
                       </div>
                     </div> 
+                    <div class="col-sm-5"></div>
                   </div> 
 
 {% endif %} 

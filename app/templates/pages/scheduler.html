@@ -495,8 +495,8 @@
                             <td></td>                         
                             <td>
                               <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="checkbox_trigger_time_{{ entry.id }}" {% if entry.trigger_time == "True" %} checked="on" {% endif %} name="set_checkbox_trigger_time_{{ entry.id }}" >
-                                <label class="custom-control-label" for="checkbox_trigger_time_{{ entry.id }}">Time</label>
+                                <input type="checkbox" class="custom-control-input" id="checkbox_trigger_timedate_{{ entry.id }}" {% if entry.trigger_timedate == "True" %} checked="on" {% endif %} name="set_checkbox_trigger_timedate_{{ entry.id }}" >
+                                <label class="custom-control-label" for="checkbox_trigger_timedate_{{ entry.id }}">TimeDate</label>
                               </div>     
                               <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="checkbox_trigger_sun_position_{{ entry.id }}" {% if entry.trigger_sun_position == "True" %} checked="on" {% endif %} name="set_checkbox_trigger_sun_position_{{ entry.id }}" >
@@ -527,9 +527,9 @@
                             </td>                          
                           </tr>
 
-  <!-- section time -->
+  <!-- section timedate -->
 
-                          {% if entry.trigger_time == "True" %}
+                          {% if entry.trigger_timedate == "True" %}
 
                           <tr>
                             <td colspan="10"></td>
@@ -539,20 +539,11 @@
                             <td colspan="8">
                               <div class="row justify-content-md-center">                                                
                                 <div class="col-sm-4"> 
-                                  <label>Days ( Mon, Tue, Wed, Thu, Fri, Sat, Sun || * )</label>
-                                  <input type="text" class="form-control" placeholder="Days" name="set_day_{{ entry.id }}"
-                                    value = {% if entry.day != None and entry.day != "None" %}"{{ entry.day }}"{% else %}""{% endif %} /> 
+                                  <label>TimeDate (https://en.wikipedia.org/wiki/Cron)</label>
+                                  <input type="text" class="form-control" placeholder="TimeDate" name="set_timedate_{{ entry.id }}"
+                                    value = {% if entry.timedate != None and entry.timedate != "None" %}"{{ entry.timedate }}"{% else %}""{% endif %} /> 
                                 </div>                     
-                                <div class="col-sm-4">   
-                                  <label>Hours ( 12, 16 || 00-23 || * || !20 )</label>                                    
-                                  <input type="text" class="form-control" placeholder="Hours" name="set_hour_{{ entry.id }}"
-                                    value = {% if entry.hour != None and entry.hour != "None" %}"{{ entry.hour }}"{% else %}""{% endif %} /> 
-                                </div> 
-                                <div class="col-sm-4">   
-                                  <label>Minutes ( 12, 13, 16 || 00-59 || * || !20 )</label>
-                                  <input type="text" class="form-control" placeholder="Minutes" name="set_minute_{{ entry.id }}"
-                                    value = {% if entry.minute != None and entry.minute != "None" %}"{{ entry.minute }}"{% else %}""{% endif %} /> 
-                                </div>
+                                <div class="col-sm-8"></div> 
                               </div>
                             </td>                           
                           </tr>
@@ -567,8 +558,7 @@
                             <td colspan="10"></td>
                           </tr>
                           <tr>
-                            <td colspan="1"></td>
-                            <td colspan="1"></td>
+                            <td colspan="2"></td>
                             <td colspan="8">
                               <div class="row justify-content-md-center">                                                
                                 <div class="col-sm-4"> 

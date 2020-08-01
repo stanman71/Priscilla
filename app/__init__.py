@@ -466,7 +466,7 @@ def update_sunrise_sunset():
 @scheduler.task('cron', id='scheduler_time', minute='*')
 def scheduler_time():
     for job in GET_ALL_SCHEDULER_JOBS():
-        if (job.trigger_time == "True" or job.trigger_sun_position == "True") and job.option_pause != "True":
+        if (job.trigger_timedate == "True" or job.trigger_sun_position == "True") and job.option_pause != "True":
             heapq.heappush(process_management_queue, (20, ("scheduler", job.id, "")))         
     
 

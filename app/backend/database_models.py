@@ -273,15 +273,13 @@ class Scheduler_Jobs(db.Model):
     name                        = db.Column(db.String(50), unique=True)
     task                        = db.Column(db.String(50))
     visible                     = db.Column(db.String(50))    
-    trigger_time                = db.Column(db.String(50), server_default=("False"))  
+    trigger_timedate            = db.Column(db.String(50), server_default=("False"))  
     trigger_sun_position        = db.Column(db.String(50), server_default=("False")) 
     trigger_sensors             = db.Column(db.String(50), server_default=("False")) 
     trigger_position            = db.Column(db.String(50), server_default=("False")) 
     option_repeat               = db.Column(db.String(50), server_default=("False")) 
     option_pause                = db.Column(db.String(50), server_default=("False")) 
-    day                         = db.Column(db.String(50), server_default=("None")) 
-    hour                        = db.Column(db.String(50), server_default=("None")) 
-    minute                      = db.Column(db.String(50), server_default=("None")) 
+    timedate                    = db.Column(db.String(50), server_default=("* * * * *")) 
     option_sunrise              = db.Column(db.String(50), server_default=("False")) 
     option_sunset               = db.Column(db.String(50), server_default=("False")) 
     option_day                  = db.Column(db.String(50), server_default=("False")) 
@@ -399,70 +397,60 @@ for job in Scheduler_Jobs.query.all():
 
 if update_devices_found == False:
     scheduler_job_update_devices = Scheduler_Jobs(
-        name          = "update_devices",
-        task          = "update_devices",
-        visible       = "False",
-        trigger_time  = "True",
-        option_repeat = "True",
-        day           = "*",        
-        hour          = "00",
-        minute        = "00",       
+        name             = "update_devices",
+        task             = "update_devices",
+        visible          = "False",
+        trigger_timedate = "True",
+        option_repeat    = "True",
+        timedate         = "0 0 * * *",          
     )
     db.session.add(scheduler_job_update_devices)
     db.session.commit()
 
 if backup_database_found == False:
     scheduler_job_backup_database = Scheduler_Jobs(
-        name          = "backup_database",
-        task          = "backup_database",
-        visible       = "False",        
-        trigger_time  = "True",
-        option_repeat = "True",
-        day           = "*",        
-        hour          = "22",
-        minute        = "00",        
+        name             = "backup_database",
+        task             = "backup_database",
+        visible          = "False",        
+        trigger_timedate = "True",
+        option_repeat    = "True",
+        timedate         = "0 22 * * *",     
     )
     db.session.add(scheduler_job_backup_database)
     db.session.commit()
 
 if backup_zigbee_found == False:
     scheduler_job_backup_zigbee = Scheduler_Jobs(
-        name          = "backup_zigbee",
-        task          = "backup_zigbee",
-        visible       = "False",        
-        trigger_time  = "True",
-        option_repeat = "True",
-        day           = "*",        
-        hour          = "22",
-        minute        = "30",        
+        name             = "backup_zigbee",
+        task             = "backup_zigbee",
+        visible          = "False",        
+        trigger_timedate = "True",
+        option_repeat    = "True",
+        timedate         = "30 22 * * *",    
     )
     db.session.add(scheduler_job_backup_zigbee)
     db.session.commit()
 
 if reset_log_files_found == False:
     scheduler_job_reset_log_files = Scheduler_Jobs(
-        name          = "reset_log_files",
-        task          = "reset_log_files",
-        visible       = "False",        
-        trigger_time  = "True",
-        option_repeat = "True",
-        day           = "*",        
-        hour          = "00",
-        minute        = "30",        
+        name             = "reset_log_files",
+        task             = "reset_log_files",
+        visible          = "False",        
+        trigger_timedate = "True",
+        option_repeat    = "True",
+        timedate         = "30 0 * * *",      
     )
     db.session.add(scheduler_job_reset_log_files)
     db.session.commit()
 
 if reset_system_found == False:
     scheduler_job_reset_system = Scheduler_Jobs(
-        name          = "reset_system",
-        task          = "reset_system",
-        visible       = "False",        
-        trigger_time  = "True",
-        option_repeat = "True",
-        day           = "*",        
-        hour          = "05",
-        minute        = "00",        
+        name             = "reset_system",
+        task             = "reset_system",
+        visible          = "False",        
+        trigger_timedate = "True",
+        option_repeat    = "True",
+        timedate         = "0 5 * * *",      
     )
     db.session.add(scheduler_job_reset_system)
     db.session.commit()
@@ -3045,8 +3033,8 @@ def ADD_SCHEDULER_JOB():
 
 
 def SET_SCHEDULER_JOB(id, name, task,
-                      trigger_time, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause, 
-                      day, hour, minute, 
+                      trigger_timedate, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause, 
+                      timedate, 
                       option_sunrise, option_sunset, option_day, option_night, latitude, longitude,
                       device_ieeeAddr_1, device_name_1, device_input_values_1, sensor_key_1, operator_1, value_1, main_operator_second_sensor,
                       device_ieeeAddr_2, device_name_2, device_input_values_2, sensor_key_2, operator_2, value_2, 
@@ -3056,10 +3044,10 @@ def SET_SCHEDULER_JOB(id, name, task,
     previous_name = entry.name
 
     # values changed ?
-    if (entry.name != name or entry.task != task or entry.trigger_time != trigger_time or
+    if (entry.name != name or entry.task != task or entry.trigger_timedate != trigger_timedate or
         entry.trigger_sun_position != trigger_sun_position or entry.trigger_sensors != trigger_sensors or 
         entry.trigger_position != trigger_position or entry.option_repeat != option_repeat or entry.option_pause != option_pause or 
-        entry.day != day or entry.hour != hour or entry.minute != minute or
+        entry.timedate != timedate or
         entry.option_sunrise != option_sunrise or entry.option_sunset != option_sunset or entry.option_day != option_day or entry.option_night != option_night or 
         str(entry.latitude) != str(latitude) or str(entry.longitude) != str(longitude) or 
         entry.device_ieeeAddr_1 != device_ieeeAddr_1 or entry.sensor_key_1 != sensor_key_1 or 
@@ -3075,19 +3063,18 @@ def SET_SCHEDULER_JOB(id, name, task,
         if entry.task != task:
             changes = changes + " || task || " + str(entry.task) + " >>> " + str(task)           
 
-        if entry.trigger_time != trigger_time or entry.trigger_sun_position != trigger_sun_position or entry.trigger_sensors != trigger_sensors or entry.trigger_position != trigger_position:
-            changes = (changes + " || trigger_settings || time: " + str(entry.trigger_time) + ", sun_position: " + str(entry.trigger_sun_position) + ", sensors: " + str(entry.trigger_sensors) + ", position: " + str(entry.trigger_position) + 
-                                 " >>> time: " + str(trigger_time) + ", sun_position: " + str(trigger_sun_position) + ", sensors: " + str(trigger_sensors) + ", position: " + str(trigger_position)) 
+        if entry.trigger_timedate != trigger_timedate or entry.trigger_sun_position != trigger_sun_position or entry.trigger_sensors != trigger_sensors or entry.trigger_position != trigger_position:
+            changes = (changes + " || trigger_settings || time: " + str(entry.trigger_timedate) + ", sun_position: " + str(entry.trigger_sun_position) + ", sensors: " + str(entry.trigger_sensors) + ", position: " + str(entry.trigger_position) + 
+                                 " >>> time: " + str(trigger_timedate) + ", sun_position: " + str(trigger_sun_position) + ", sensors: " + str(trigger_sensors) + ", position: " + str(trigger_position)) 
     
         if entry.option_repeat != option_repeat or entry.option_pause != option_pause:
             changes = (changes + " || options_settings || repeat: " + str(entry.option_repeat) + ", pause: " + str(entry.option_pause) +
                                  " >>> repeat: " + str(option_repeat) + ", pause: " + str(option_pause)) 
       
-        if trigger_time == "True": 
+        if trigger_timedate == "True": 
 
-            if entry.day != day or entry.hour != hour or entry.minute != minute:
-                changes = (changes + " || time_settings || days: " + str(entry.day)  + ", hours: " + str(entry.hour)  + ", minutes: " + str(entry.minute) + 
-                                    " >>> days: " + str(day)  + ", hours: " + str(hour)  + ", minutes: " + str(minute))
+            if entry.timedate != timedate:
+                changes = (changes + " || time_settings || " + str(entry.timedate)  + " >>> " + str(timedate))
 
         if trigger_sun_position == "True":      
 
@@ -3138,15 +3125,13 @@ def SET_SCHEDULER_JOB(id, name, task,
 
         entry.name                        = name
         entry.task                        = task      
-        entry.trigger_time                = trigger_time    
+        entry.trigger_timedate            = trigger_timedate    
         entry.trigger_sun_position        = trigger_sun_position            
         entry.trigger_sensors             = trigger_sensors
         entry.trigger_position            = trigger_position        
         entry.option_repeat               = option_repeat
         entry.option_pause                = option_pause
-        entry.day                         = day
-        entry.hour                        = hour
-        entry.minute                      = minute
+        entry.timedate                    = timedate
         entry.option_sunrise              = option_sunrise
         entry.option_sunset               = option_sunset
         entry.option_day                  = option_day
