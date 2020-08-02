@@ -2,9 +2,25 @@ Mobile View
 
 - center single buttons
 - optimize scheduler
-- show always menue shotcut
 
 
 System
 
 - Updatefunction
+
+
+GPIO
+
+- add page /devices/GPIO
+- add option Disabled / Input / Output for each pin
+- add name-option for each activated pin
+- add special modes (SPI...)
+- Input-pin request in while-loop, handle them like sensors (True / False), add note only 3V
+- Output-pins handle like devices (ON / OFF)
+- use library RPi.GPIO (https://pypi.org/project/RPi.GPIO/ ++ https://sourceforge.net/p/raspberry-gpio-python/wiki/BasicUsage/)
+
+
+import RPi.GPIO as GPIO
+
+GPIO.input(channel)
+GPIO.output(channel, state)

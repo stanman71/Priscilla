@@ -98,10 +98,14 @@ def PROCESS_SCHEDULER(job, ieeeAddr):
 
 def CHECK_SCHEDULER_TIME(job):
 
-    if croniter.match(job.timedate, datetime.datetime.now()):
-        return True
-    else:
-        return False
+    try:
+        if croniter.match(job.timedate, datetime.datetime.now()):
+            return True
+        else:
+            return False
+    
+    except:
+        False
 
 
 def CHECK_SCHEDULER_SUNRISE(job):

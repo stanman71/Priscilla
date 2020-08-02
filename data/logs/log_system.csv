@@ -1451,3 +1451,6 @@ Timestamp,Type,Description
 2020-08-02 00:00:10,SUCCESS,|Network || MQTT || Update|
 2020-08-02 00:16:21,SUCCESS,|Music || Spotify || Token || updated|
 2020-08-02 00:30:00,ERROR,|Task || Scheduler || reset_log_files || name 'PATH' is not defined|
+2020-08-02 01:06:57,SUCCESS,|Music || Spotify || Token || updated|
+2020-08-02 01:57:36,SUCCESS,|Music || Spotify || Token || updated|
+2020-08-02 02:48:14,SUCCESS,|Music || Spotify || Token || updated|

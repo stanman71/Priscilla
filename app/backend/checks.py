@@ -3,8 +3,6 @@ from app.backend.database_models import *
 
 from croniter import croniter
 
-import re
-
 
 """ ################### """
 """  device exceptions  """
@@ -108,7 +106,7 @@ def CHECK_SCHEDULER_JOB_SETTINGS(scheduler_jobs):
 
       if task.trigger_timedate == "True":
 
-         ### check TimeDate
+         ### check timedate
          try:
             if croniter.is_valid(task.timedate) is False:
                list_errors.append("Invalid TimeDate")
@@ -1332,9 +1330,9 @@ def CHECK_TASK_OPERATION(task, task_type, details):
       
       
       if task_type == "controller" or task_type == "program":
-         list_task_errors.append(details + " || Invalid task") 
+         list_task_errors.append(details + " || No task found") 
       else:
-         list_task_errors.append("Invalid task")
+         list_task_errors.append("No task found")
          
       return list_task_errors
    
