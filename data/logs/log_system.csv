@@ -1478,3 +1478,9 @@ Timestamp,Type,Description
 2020-08-03 10:21:24,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-08-03 10:21:24,EVENT,|System || Services || Squeezelie Player || disabled|
 2020-08-03 10:21:25,SUCCESS,|Music || Spotify || Token || updated|
+2020-08-03 10:46:17,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-08-03 10:46:17,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-08-03 10:46:18,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-08-03 10:46:18,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-08-03 10:46:18,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-08-03 10:46:19,SUCCESS,|Music || Spotify || Token || updated|

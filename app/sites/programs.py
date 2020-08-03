@@ -39,7 +39,7 @@ def permission_required(f):
 @permission_required
 def programs():
     page_title       = 'Bianca | Programs'
-    page_description = 'The programs configuration page.'
+    page_description = 'The programs configuration page'
 
     success_message_add_program             = False       
     error_message_add_program               = []

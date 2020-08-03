@@ -36,7 +36,7 @@ def permission_required(f):
 @permission_required
 def sensordata_jobs():
     page_title       = 'Bianca | Sensordata | Jobs'
-    page_description = 'The sensordata jobs configuration page.'
+    page_description = 'The sensordata jobs configuration page'
 
     success_message_change_settings = []      
     error_message_change_settings   = []    

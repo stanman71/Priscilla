@@ -92,7 +92,7 @@ def GENERATE_FRAME(camera_url):
 @permission_required
 def cameras():
     page_title       = 'Bianca | Cameras'
-    page_description = 'The cameras configuration page.'
+    page_description = 'The cameras configuration page'
 
     success_message_change_settings = []      
     error_message_change_settings   = []    

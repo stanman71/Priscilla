@@ -39,7 +39,7 @@ lighting_scenes_rgb_values_array = [[0 for x in range(10)] for y in range(20)]
 @permission_required
 def lighting_scenes():
     page_title       = 'Bianca | Lighting | Scenes'
-    page_description = 'The lighting scenes configuration page.'
+    page_description = 'The lighting scenes configuration page'
 
     global lighting_scenes_rgb_values_array
 

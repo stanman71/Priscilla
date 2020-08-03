@@ -38,7 +38,7 @@ def permission_required(f):
 @permission_required
 def settings_users():
     page_title       = 'Bianca | Settings | Users'
-    page_description = 'The users configuration page.'
+    page_description = 'The users configuration page'
 
     success_message_add_user        = False
     error_message_add_user          = []

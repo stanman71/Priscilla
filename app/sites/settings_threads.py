@@ -35,7 +35,7 @@ def permission_required(f):
 @permission_required
 def settings_threads():
     page_title       = 'Bianca | Settings | Threads'
-    page_description = 'The threads overview page.'
+    page_description = 'The threads overview page'
 
     success_message_program_stop = "" 
     error_message_program_stop   = ""

@@ -16,4 +16,4 @@ This project creates a smarthome environment.
 - smartphone view
 
 
-[WIKI](https://github.com/stanman71/homatiX/wiki)
+[WIKI](https://github.com/stanman71/bianca/wiki)

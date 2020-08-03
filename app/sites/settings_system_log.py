@@ -37,7 +37,7 @@ def permission_required(f):
 @permission_required
 def settings_system_log():
     page_title       = 'Bianca | Settings | SystemLOG'
-    page_description = 'The system log page.'
+    page_description = 'The system log page'
 
     success_message_logfile   = False
     error_message_logfile     = ""

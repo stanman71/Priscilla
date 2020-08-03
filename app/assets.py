@@ -1,4 +1,3 @@
 class Assets:
-
-    BRAND_NAME = 'Smarthome'
-    BRAND_INFO = 'Smarthome'  
+    BRAND_NAME = 'Bianca'
+    BRAND_INFO = 'Bianca'  

@@ -43,7 +43,7 @@ def sensordata_statistics():
     global dropdown_list_dates_temp
 
     page_title       = 'Bianca | Sensordata | Statistics'
-    page_description = 'The sensordata statistics page.'
+    page_description = 'The sensordata statistics page'
 
     error_message_select_datafiles = []    
     error_message_create_graph     = []

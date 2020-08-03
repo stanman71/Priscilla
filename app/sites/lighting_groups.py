@@ -35,7 +35,7 @@ def permission_required(f):
 @permission_required
 def lighting_groups():
     page_title       = 'Bianca | Lighting | Groups'
-    page_description = 'The lighting groups configuration page.'
+    page_description = 'The lighting groups configuration page'
 
     success_message_change_settings                = []
     error_message_change_settings                  = []

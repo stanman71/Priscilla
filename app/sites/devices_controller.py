@@ -37,7 +37,7 @@ def permission_required(f):
 @permission_required
 def devices_controller():
     page_title       = 'Bianca | Devices | Controller'
-    page_description = 'The controller configuration page.'
+    page_description = 'The controller configuration page'
 
     success_message_change_settings_controller = False
 

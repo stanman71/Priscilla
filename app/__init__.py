@@ -21,12 +21,14 @@ import json
 """  path  """
 """ ###### """
 
-# windows
-if os.name == "nt":                 
-    PATH = os.path.abspath("") 
-# linux
-else:                               
-    PATH = "/home/pi/smarthome/"
+def GET_PATH():
+
+    # windows
+    if os.name == "nt":                 
+        return(os.path.abspath(""))
+    # linux
+    else:                               
+        return("/home/pi/smarthome/")
 
 
 """ ####### """
@@ -35,10 +37,10 @@ else:
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY']                     = os.urandom(20).hex()
-app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///' + PATH + '/data/database.db'
+app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///' + GET_PATH() + '/data/database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SEND_FILE_MAX_AGE_DEFAULT']      = 1
-app.config['UPLOAD_FOLDER']                  = PATH + "firmwares/"
+app.config['UPLOAD_FOLDER']                  = GET_PATH() + "firmwares/"
 app.config['MAX_CONTENT_LENGTH']             = 2 * 1024 * 1024          # 2 MB
 
 Mobility(app)

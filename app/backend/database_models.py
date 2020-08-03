@@ -6,7 +6,6 @@ from app.backend.file_management import *
 from app.common                  import COMMON, STATUS, DATATYPE
 
 import datetime
-import re
 
 db = SQLAlchemy(app)
 
@@ -352,11 +351,11 @@ class User(UserMixin, db.Model):
     email_notification = db.Column(db.String(20), server_default=("False"))
 
 
-""" ################################ """
-""" ################################ """
-""" create tables and default values """
-""" ################################ """
-""" ################################ """
+""" ################################## """
+""" ################################## """
+"""  create tables and default values  """
+""" ################################## """
+""" ################################## """
 
 
 # create all database tables
@@ -1405,6 +1404,7 @@ def GET_EMAIL_ADDRESSES(address_type):
     if address_type == "NOTIFICATION":
         mail_list = []
         users = User.query.all()
+        
         for user in users:
             if user.email_notification == "True":
                 mail_list.append(user.email)
@@ -3662,4 +3662,4 @@ def DELETE_USER(user_id):
                 return(e)
 
     else:
-        return "User 'admin' cannot be deleted"
+        return "User 'admin' can not be deleted"

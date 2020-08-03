@@ -4,16 +4,16 @@ from app import app
 
 
 def http_err(err_code):
-    err_msg = 'Oups !! Some internal error ocurred. Thanks to contact support.'
+    err_msg = 'Oups !! Some internal error ocurred. Thanks to contact support'
 	
     if 400 == err_code:
-        err_msg = "It seems like you are not allowed to access this link."
+        err_msg = "It seems like you are not allowed to access this link"
 
     elif 404 == err_code:    
-        err_msg  = "The URL you were looking for does not seem to exist."
+        err_msg  = "The URL you were looking for does not seem to exist"
     
     elif 500 == err_code:    
-        err_msg = "Internal error. Contact the manager about this."
+        err_msg = "Internal error. Contact the manager about this"
 
     else:
         err_msg = "Forbidden access."

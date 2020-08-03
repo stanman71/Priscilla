@@ -93,7 +93,7 @@ def SYSTEM_SHUTDOWN():
 @permission_required
 def settings_system():
     page_title       = 'Bianca | Settings | System'
-    page_description = 'The system configuration page.'
+    page_description = 'The system configuration page'
 
     success_message_change_settings_services = False    
     error_message_change_settings_services   = [] 
