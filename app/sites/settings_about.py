@@ -47,4 +47,3 @@ def settings_about():
                                                      version=version,                                                   
                                                     ) 
                            )
-

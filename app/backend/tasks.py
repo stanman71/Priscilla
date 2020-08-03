@@ -440,12 +440,12 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
             if file_size > 2.5:
                 RESET_LOGFILE("log_system")
 
-            # delete system2mqtt log if size > 5 mb
+            # reset system2mqtt log if size > 5 mb
             file_size = os.path.getsize(GET_PATH() + "/data/logs/zigbee2mqtt.txt")
             file_size = round(file_size / 1024 / 1024, 2)
 
             if file_size > 5:
-                os.remove(GET_PATH() + "/data/logs/zigbee2mqtt.txt")
+                RESET_ZIGBEE_LOGFILE()
 
 
         # ############

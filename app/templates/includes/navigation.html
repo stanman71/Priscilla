@@ -161,7 +161,7 @@
                 <b class="caret mt-2"></b>
               </a>
 
-              {% if data.navigation == "devices_management" or data.navigation == "devices_controller" %} 
+              {% if data.navigation == "devices_management" or data.navigation == "devices_controller" or data.navigation == "devices_gpio" %} 
                 <div class="collapse show" id="devices">
               {% else %} 
                 <div class="collapse" id="devices">
@@ -195,6 +195,19 @@
                     </a>
                   </li>   
 
+                  {% if data.navigation == "devices_gpio" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/devices/gpio">
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">GPIO</font></p>     
+                      </div>     
+                    </a>
+                  </li>   
+
                 </ul>
               </div>
             </li>    
@@ -206,8 +219,12 @@
                 <b class="caret mt-2"></b>
               </a>
 
-              {% if data.navigation == "settings_system" or data.navigation == "settings_threads" or data.navigation == "settings_devices" or 
-                    data.navigation == "settings_controller" or data.navigation == "settings_users" or data.navigation == "settings_system_log" %} 
+              {% if data.navigation == "settings_system" or 
+                    data.navigation == "settings_users" or 
+                    data.navigation == "settings_threads" or 
+                    data.navigation == "settings_system_log" or 
+                    data.navigation == "settings_about" %} 
+
                 <div class="collapse show" id="settings">
               {% else %} 
                 <div class="collapse" id="settings">
@@ -273,7 +290,7 @@
                     <li class="navbar-collapse_active">
                   {% endif %}
 
-                    <a href="/settings/settings_about">
+                    <a href="/settings/about">
                       <div class="navbar-collapse_text">
                         <p><font size="2">About</font></p>     
                       </div>     

@@ -21,9 +21,11 @@ sensordata_messages_list = []
 """ ###### """
 
 def GET_PATH():
+
     # windows
     if os.name == "nt":                 
         return(os.path.abspath("")) 
+
     # linux
     else:                               
         return("/home/pi/smarthome/")
@@ -34,6 +36,7 @@ def GET_PATH():
 """ ###### """
 
 def CREATE_LOGFILE(filename):
+
     try:
         # create csv file
         file = GET_PATH() + "/data/logs/" + filename + ".csv"
@@ -58,11 +61,19 @@ def CREATE_LOGFILE(filename):
 
         
 def RESET_LOGFILE(filename):
-    if os.path.isfile(GET_PATH() + "/data/logs/" + filename + ".csv"):
-        os.remove (GET_PATH() + "/data/logs/" + filename + ".csv")
 
-        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/" + filename + ".csv | deleted")
-        
+    # remove old log file
+    if os.path.isfile(GET_PATH() + "/data/logs/" + filename + "_old" + ".csv"):
+        os.remove (GET_PATH() + "/data/logs/" + filename + "_old" + ".csv")
+
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/" + filename + "_old" + ".csv | deleted")
+
+    # rename current log file      
+    if os.path.isfile(GET_PATH() + "/data/logs/" + filename + ".csv"):
+        os.rename (GET_PATH() + "/data/logs/" + filename + ".csv", GET_PATH() + "/data/logs/" + "_old" + filename + ".csv")
+ 
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/" + filename + ".csv | renamed")
+
     result = CREATE_LOGFILE(filename)
     
     if result:
@@ -190,6 +201,7 @@ def UPDATE_NETWORK_SETTINGS_LINUX(dhcp, ip_address, gateway):
 """ ################# """
 
 def GET_ALL_BACKUP_FILES():
+
     file_list = []
     for files in os.walk(GET_PATH() + '/data/backup_database/'):  
         file_list.append(files)
@@ -203,6 +215,7 @@ def GET_ALL_BACKUP_FILES():
 
 
 def BACKUP_DATABASE():  
+
     try:
         shutil.copyfile(GET_PATH() + '/data/database.db', 
                         GET_PATH() + '/data/backup_database/' + str(datetime.datetime.now().date()) + '_database.db')
@@ -223,6 +236,7 @@ def BACKUP_DATABASE():
 
 
 def RESTORE_DATABASE(filename):
+
     try:
         if filename.split("_")[1] == "database.db":
             shutil.copyfile(GET_PATH() + '/data/backup_database/' + filename, GET_PATH() + '/data/database.db')
@@ -235,6 +249,7 @@ def RESTORE_DATABASE(filename):
         
         
 def DELETE_DATABASE_BACKUP(filename):
+
     try:
         os.remove (GET_PATH() + '/data/backup_database/' + filename)
         WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/backup_database/" + filename + " | deleted")
@@ -250,6 +265,7 @@ def DELETE_DATABASE_BACKUP(filename):
 """ ############### """
 
 def BACKUP_ZIGBEE():  
+
     try:
         os.system("sudo zip -r " + GET_PATH() + '/data/backup_zigbee/' + str(datetime.datetime.now().date()) + ".zip /opt/zigbee2mqtt/data/")
              
@@ -273,6 +289,7 @@ def BACKUP_ZIGBEE():
 """ ################ """
 
 def GET_ALL_MQTT_FIRMWARE_FILES():
+
     file_list = []
     for files in os.walk(GET_PATH() + "/firmwares/"):  
         file_list.append(files)   
@@ -284,6 +301,7 @@ def GET_ALL_MQTT_FIRMWARE_FILES():
 
 
 def DELETE_MQTT_FIRMWARE(filename):
+
     try:
         os.remove (GET_PATH() + '/firmwares/' + filename)
         WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /firmwares/" + filename + " | deleted")
@@ -299,6 +317,7 @@ def DELETE_MQTT_FIRMWARE(filename):
 """ ############ """
 
 def GET_ALL_SENSORDATA_FILES():
+
     file_list = []
     for files in os.walk(GET_PATH() + "/data/csv/"):  
         file_list.append(files)   
@@ -310,6 +329,7 @@ def GET_ALL_SENSORDATA_FILES():
 
 
 def CREATE_SENSORDATA_FILE(filename):
+
     if os.path.isfile(GET_PATH() + "/data/csv/" + filename + ".csv") is False:
 
         try:
@@ -333,6 +353,7 @@ def CREATE_SENSORDATA_FILE(filename):
 sensordata_messages_list = []
 
 def START_BLOCK_SENSORDATA_THREAD(message):
+
 	try:
 		Thread = threading.Thread(target=BLOCK_SENSORDATA_THREAD, args=(message, ))
 		Thread.start()  
@@ -373,6 +394,7 @@ def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
 
 
 def READ_SENSORDATA_FILE(filename):
+
     try:
         file = GET_PATH() + "/data/csv/" + filename
 
@@ -385,6 +407,7 @@ def READ_SENSORDATA_FILE(filename):
 
 
 def DELETE_SENSORDATA_FILE(filename):
+    
     try:
         os.remove (GET_PATH() + '/data/csv/' + filename)
         WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/csv/" + filename + " | deleted")
@@ -480,9 +503,9 @@ def GET_MQTT_DEVICE_MANUALLY_ADDING_INFORMATIONS(model):
         WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /app/mqtt_manually_adding.json | " + str(e))   
 
 
-""" ################################# """
-"""  file zigbee device informations  """
-""" ################################# """
+""" ######## """
+"""  zigbee  """
+""" ######## """
 
 def GET_ZIGBEE_DEVICE_INFORMATIONS(model):
     
@@ -538,3 +561,18 @@ def GET_ZIGBEE_DEVICE_INFORMATIONS(model):
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /app/zigbee_device_informations.json | " + str(e))   
+
+
+def RESET_ZIGBEE_LOGFILE():
+
+    # remove old log file
+    if os.path.isfile(GET_PATH() + "/data/logs/zigbee2mqtt_old.txt"):
+        os.remove (GET_PATH() + "/data/logs/zigbee2mqtt_old.txt")
+
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/zigbee2mqtt_old.txt | deleted")
+
+    # rename current log file      
+    if os.path.isfile(GET_PATH() + "/data/logs/zigbee2mqtt.txt"):
+        os.rename (GET_PATH() + "/data/logs/zigbee2mqtt.txt", GET_PATH() + "/data/logs/zigbee2mqtt_old.txt")
+ 
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/zigbee2mqtt.txt | renamed")
