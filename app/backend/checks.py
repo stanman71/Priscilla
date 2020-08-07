@@ -1101,13 +1101,13 @@ def CHECK_TASK_OPERATION(task, task_type, details):
                   try:
                      if not task[2].isdigit():
                         if task_type == "controller" or task_type == "program":
-                           list_task_errors.append(details + " || Missing setting | Job")
+                           list_task_errors.append(details + " || Invalid volume_value | " + task[2])
                         else:                        
                            list_task_errors.append(task[2] + " || Invalid volume_value") 
                      else:
                         if not 0 <= int(task[2]) <= 100:
                            if task_type == "controller" or task_type == "program":
-                              list_task_errors.append(details + " || Missing setting | Job")
+                              list_task_errors.append(details + " || Invalid volume_value | " + task[2])
                            else:                           
                               list_task_errors.append(task[2] + " || Invalid volume_value")
                            
@@ -1115,7 +1115,7 @@ def CHECK_TASK_OPERATION(task, task_type, details):
                            
                   except:
                      if task_type == "controller" or task_type == "program":
-                        list_task_errors.append(details + " || Missing setting | Job")
+                        list_task_errors.append(details + " || Invalid volume_value | " + task[2])
                      else:                     
                         list_task_errors.append(task[2] + " || Invalid volume_value") 
 
@@ -1131,20 +1131,20 @@ def CHECK_TASK_OPERATION(task, task_type, details):
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
                            if task_type == "controller" or task_type == "program":
-                              list_task_errors.append(details + " || Missing setting | Job")
+                              list_task_errors.append(details + " || Device not found | " + device_name)
                            else:                           
                               list_task_errors.append(device_name + " || Device not found")      
 
                      try:
                         if not task[4].isdigit():
                            if task_type == "controller" or task_type == "program":
-                              list_task_errors.append(details + " || Missing setting | Job")
+                              list_task_errors.append(details + " || Invalid volume_value | " + task[4])
                            else:                           
                               list_task_errors.append(task[4] + " || Invalid volume_value") 
                         else:
                            if not 0 <= int(task[4]) <= 100:
                               if task_type == "controller" or task_type == "program":
-                                 list_task_errors.append(details + " || Missing setting | Job")
+                                 list_task_errors.append(details + " || Invalid volume_value | " + task[4])
                               else:                              
                                  list_task_errors.append(task[4] + " || Invalid volume_value")
                               
@@ -1152,7 +1152,7 @@ def CHECK_TASK_OPERATION(task, task_type, details):
                                  
                      except:
                         if task_type == "controller" or task_type == "program":
-                           list_task_errors.append(details + " || Missing setting | Job")
+                           list_task_errors.append(details + " || Invalid volume_value | " + task[4])
                         else:                        
                            list_task_errors.append(task[4] + " || Invalid volume_value") 
 
@@ -1160,7 +1160,7 @@ def CHECK_TASK_OPERATION(task, task_type, details):
    
                   except:
                      if task_type == "controller" or task_type == "program":
-                        list_task_errors.append(details + " || Missing setting | Job")
+                        list_task_errors.append(details + " || Invalid volume_value | " + task[4])
                      else:                     
                         list_task_errors.append(str(task) + " || Invalid formatting") 
 
@@ -1176,20 +1176,20 @@ def CHECK_TASK_OPERATION(task, task_type, details):
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
                            if task_type == "controller" or task_type == "program":
-                              list_task_errors.append(details + " || Missing setting | Job")
+                              list_task_errors.append(details + " || Device not found | " + device_name)
                            else:                           
                               list_task_errors.append(device_name + " || Device not found")           
 
                      try:
                         if not task[5].isdigit():
                            if task_type == "controller" or task_type == "program":
-                              list_task_errors.append(details + " || Missing setting | Job")
+                              list_task_errors.append(details + " || Invalid volume_value | " + task[5])
                            else:                           
                               list_task_errors.append(task[5] + " || Invalid volume_value") 
                         else:
                            if not 0 <= int(task[5]) <= 100:
                               if task_type == "controller" or task_type == "program":
-                                 list_task_errors.append(details + " || Missing setting | Job")
+                                 list_task_errors.append(details + " || Invalid volume_value | " + task[5])
                               else:                              
                                  list_task_errors.append(task[5] + " || Invalid volume_value")
                               
@@ -1197,14 +1197,14 @@ def CHECK_TASK_OPERATION(task, task_type, details):
                                  
                      except:
                         if task_type == "controller" or task_type == "program":
-                           list_task_errors.append(details + " || Missing setting | Job")
+                           list_task_errors.append(details + " || Invalid volume_value | " + task[5])
                         else:                        
                            list_task_errors.append(task[5] + " || Invalid volume_value") 
                         return list_task_errors
                         
                   except:
                      if task_type == "controller" or task_type == "program":
-                        list_task_errors.append(details + " || Missing setting | Job")
+                        list_task_errors.append(details + " || Invalid formatting")
                      else:                     
                         list_task_errors.append(str(task) + " || Invalid formatting") 
                      return list_task_errors  
@@ -1219,20 +1219,20 @@ def CHECK_TASK_OPERATION(task, task_type, details):
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
                            if task_type == "controller" or task_type == "program":
-                              list_task_errors.append(details + " || Missing setting | Job")
+                              list_task_errors.append(details + " || Device not found | " + device_name)
                            else:                           
                               list_task_errors.append(device_name + " || Device not found")                  
 
                      try:
                         if not task[5].isdigit():
                            if task_type == "controller" or task_type == "program":
-                              list_task_errors.append(details + " || Missing setting | Job")
+                              list_task_errors.append(details + " || Invalid volume_value | " + task[5])
                            else:                           
                               list_task_errors.append(task[5] + " || Invalid volume_value") 
                         else:
                            if not 0 <= int(task[5]) <= 100:
                               if task_type == "controller" or task_type == "program":
-                                 list_task_errors.append(details + " || Missing setting | Job")
+                                 list_task_errors.append(details + " || Invalid volume_value | " + task[5])
                               else:                              
                                  list_task_errors.append(task[5] + " || Invalid volume_value")
                         
@@ -1240,7 +1240,7 @@ def CHECK_TASK_OPERATION(task, task_type, details):
                                  
                      except:
                         if task_type == "controller" or task_type == "program":
-                           list_task_errors.append(details + " || Missing setting | Job")
+                           list_task_errors.append(details + " || Invalid volume_value | " + task[5])
                         else:                        
                            list_task_errors.append(task[5] + " || Invalid volume_value") 
 
@@ -1248,7 +1248,7 @@ def CHECK_TASK_OPERATION(task, task_type, details):
                         
                   except:
                      if task_type == "controller" or task_type == "program":
-                        list_task_errors.append(details + " || Missing setting | Job")
+                        list_task_errors.append(details + " || Invalid formatting")
                      else:                     
                         list_task_errors.append(str(task) + " || Invalid formatting") 
 
@@ -1263,24 +1263,24 @@ def CHECK_TASK_OPERATION(task, task_type, details):
 
                      if device_name.lower() != "multiroom":
                         if GET_DEVICE_BY_NAME(device_name) == None: 
-                           list_task_errors.append(details + " || Device not found")       
+                           list_task_errors.append(details + " || Device not found | " + device_name)       
 
                      if device_name.lower() == "multiroom":
-                           list_task_errors.append(details + " || Invalid Device")      
+                           list_task_errors.append(details + " || Invalid Device | " + task[2])      
 
                      if task[3].strip() != "spotify" and task[3].strip() != "multiroom":
-                           list_task_errors.append(details + " || Invalid interface")        
+                           list_task_errors.append(details + " || Invalid interface | " + task[3])        
 
                      try:
                         if not task[4].isdigit():
-                           list_task_errors.append(details + " || Invalid device_volume")      
+                           list_task_errors.append(details + " || Invalid device_volume | " + task[4])     
 
                         else:
                            if not 100 <= int(task[4]) <= 200:
-                              list_task_errors.append(details + " || Invalid volume_value (100 - 200)")    
+                              list_task_errors.append(details + " || Invalid volume_value (100 - 200) | " + task[4])    
 
                      except:
-                        list_task_errors.append(details + " || Invalid volume_value")      
+                        list_task_errors.append(details + " || Invalid volume_value | " + task[4])      
 
                   except:
                      list_task_errors.append(details + " || Invalid formatting")    

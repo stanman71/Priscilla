@@ -70,7 +70,7 @@ def RESET_LOGFILE(filename):
 
     # rename current log file      
     if os.path.isfile(GET_PATH() + "/data/logs/" + filename + ".csv"):
-        os.rename (GET_PATH() + "/data/logs/" + filename + ".csv", GET_PATH() + "/data/logs/" + "_old" + filename + ".csv")
+        os.rename (GET_PATH() + "/data/logs/" + filename + ".csv", GET_PATH() + "/data/logs/" + filename + "_old" + ".csv")
  
         WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/" + filename + ".csv | renamed")
 
