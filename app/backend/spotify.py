@@ -166,8 +166,8 @@ def CHECK_CLIENT_MUSIC_CONNECTION():
                 except Exception as e:
                     WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + client_music.name + " | " + str(e))      
 
-    except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + client_music.name + " | " + str(e))
+    except:
+        pass
 
 
 """ ###################### """
