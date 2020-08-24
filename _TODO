@@ -24,3 +24,8 @@ import RPi.GPIO as GPIO
 
 GPIO.input(channel)
 GPIO.output(channel, state)
+
+
+Camera
+
+- support usb cameras
