@@ -3,6 +3,7 @@ from app.backend.database_models import *
 
 from croniter import croniter
 
+import re
 
 """ ################### """
 """  device exceptions  """
@@ -734,46 +735,46 @@ def CHECK_TASK_OPERATION(task, task_type, details):
                   if task_type == "controller" or task_type == "program":
                      list_task_errors.append(details + " || Invalid rgb_values")
                   else:                               
-                     list_task_errors.append("Invalid rgb_values || " + task[2].strip())  
+                     list_task_errors.append("Invalid rgb_values || " + task[3].strip())  
 
                if not rgb_values[1].isdigit() or not (0 <= int(rgb_values[1]) <= 255): 
                   if task_type == "controller" or task_type == "program":
                      list_task_errors.append(details + " || Invalid rgb_values")
                   else:                               
-                     list_task_errors.append("Invalid rgb_values || " + task[2].strip())  
+                     list_task_errors.append("Invalid rgb_values || " + task[3].strip())  
 
                if not rgb_values[2].isdigit() or not (0 <= int(rgb_values[2]) <= 255): 
                   if task_type == "controller" or task_type == "program":
                      list_task_errors.append(details + " || Invalid rgb_values")
                   else:                               
-                     list_task_errors.append("Invalid rgb_values || " + task[2].strip())                       
+                     list_task_errors.append("Invalid rgb_values || " + task[3].strip())                       
 
             except:
                if task_type == "controller" or task_type == "program":
                   list_task_errors.append(details + " || Invalid rgb_values")
                else:                               
-                  list_task_errors.append("Invalid rgb_values || " + task[2].strip())     
+                  list_task_errors.append("Invalid rgb_values || " + task[3].strip())     
 
             # check brightness    
 
             try:
 
                if task[4].isdigit():
-                  if 1 <= int(task[4]) <= 100:
+                  if 1 <= int(task[4]) <= 255:
                      return list_task_errors
 
                   else:
                      if task_type == "controller" or task_type == "program":
                         list_task_errors.append(details + " || Invalid brightness_value")
                      else:                        
-                        list_task_errors.append("Invalid brightness_value") 
+                        list_task_errors.append("Invalid brightness_value || " + task[4].strip())    
                      return list_task_errors    
 
                else:
                   if task_type == "controller" or task_type == "program":
                      list_task_errors.append(details + " || Invalid brightness_value")
                   else:                     
-                     list_task_errors.append("Invalid brightness_value")
+                     list_task_errors.append("Invalid brightness_value || " + task[4].strip())    
                   return list_task_errors
 
             except:
