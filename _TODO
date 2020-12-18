@@ -7,25 +7,23 @@ Mobile View
 System
 
 - Updatefunction
+- Remove GPIO
 
 
-GPIO
+Music
 
-- add page /devices/GPIO
-- add option Disabled / Input / Output for each pin
-- add name-option for each activated pin
-- add special modes (SPI...)
-- Input-pin request in while-loop, handle them like sensors (True / False), add note only 3V
-- Output-pins handle like devices (ON / OFF)
-- use library RPi.GPIO (https://pypi.org/project/RPi.GPIO/ ++ https://sourceforge.net/p/raspberry-gpio-python/wiki/BasicUsage/)
+- error_message if restart not working
+- add option "restart client"
 
 
-import RPi.GPIO as GPIO
+Devices
 
-GPIO.input(channel)
-GPIO.output(channel, state)
+- Build moisture sensor
+- Build pump_shield
+- Optimize motion sensor
 
 
-Camera
+BUGFIX
 
-- support usb cameras
+- SystemLog on Dashboard shows nothing until 9 entries
+- No volume_control spotify on pc
