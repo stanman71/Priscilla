@@ -115,26 +115,179 @@ def background_thread_dashboard_system_log():
             selected_log_types = ["EVENT", "DATABASE", "SUCCESS", "WARNING", "ERROR"]
             log_search         = ""
 
-            # get log entries
-            if GET_LOGFILE_SYSTEM(selected_log_types, log_search, 10) != None:
+            # get 10 log entries
+            if COUNT_ROWS_LOGFILE_SYSTEM() >= 10:
                 data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 10)
-            else:
-                data_log_system = ""
 
-            socketio.emit('dashboard_system_log',
-                         {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
-                          'data_1_title': data_log_system[1][1] + " ||| " + data_log_system[1][0], 'data_1_content': data_log_system[1][2], 
-                          'data_2_title': data_log_system[2][1] + " ||| " + data_log_system[2][0], 'data_2_content': data_log_system[2][2], 
-                          'data_3_title': data_log_system[3][1] + " ||| " + data_log_system[3][0], 'data_3_content': data_log_system[3][2], 
-                          'data_4_title': data_log_system[4][1] + " ||| " + data_log_system[4][0], 'data_4_content': data_log_system[4][2], 
-                          'data_5_title': data_log_system[5][1] + " ||| " + data_log_system[5][0], 'data_5_content': data_log_system[5][2], 
-                          'data_6_title': data_log_system[6][1] + " ||| " + data_log_system[6][0], 'data_6_content': data_log_system[6][2], 
-                          'data_7_title': data_log_system[7][1] + " ||| " + data_log_system[7][0], 'data_7_content': data_log_system[7][2], 
-                          'data_8_title': data_log_system[8][1] + " ||| " + data_log_system[8][0], 'data_8_content': data_log_system[8][2], 
-                          'data_9_title': data_log_system[9][1] + " ||| " + data_log_system[9][0], 'data_9_content': data_log_system[9][2]},                                                    
-                          namespace='/socketIO')
+                socketio.emit('dashboard_system_log',
+                            {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
+                             'data_1_title': data_log_system[1][1] + " ||| " + data_log_system[1][0], 'data_1_content': data_log_system[1][2], 
+                             'data_2_title': data_log_system[2][1] + " ||| " + data_log_system[2][0], 'data_2_content': data_log_system[2][2], 
+                             'data_3_title': data_log_system[3][1] + " ||| " + data_log_system[3][0], 'data_3_content': data_log_system[3][2], 
+                             'data_4_title': data_log_system[4][1] + " ||| " + data_log_system[4][0], 'data_4_content': data_log_system[4][2], 
+                             'data_5_title': data_log_system[5][1] + " ||| " + data_log_system[5][0], 'data_5_content': data_log_system[5][2], 
+                             'data_6_title': data_log_system[6][1] + " ||| " + data_log_system[6][0], 'data_6_content': data_log_system[6][2], 
+                             'data_7_title': data_log_system[7][1] + " ||| " + data_log_system[7][0], 'data_7_content': data_log_system[7][2], 
+                             'data_8_title': data_log_system[8][1] + " ||| " + data_log_system[8][0], 'data_8_content': data_log_system[8][2], 
+                             'data_9_title': data_log_system[9][1] + " ||| " + data_log_system[9][0], 'data_9_content': data_log_system[9][2]},                                                    
+                             namespace='/socketIO')
+
+            # get 9 log entries
+            elif COUNT_ROWS_LOGFILE_SYSTEM() == 9:
+                data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 9)
+
+                socketio.emit('dashboard_system_log',
+                            {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
+                             'data_1_title': data_log_system[1][1] + " ||| " + data_log_system[1][0], 'data_1_content': data_log_system[1][2], 
+                             'data_2_title': data_log_system[2][1] + " ||| " + data_log_system[2][0], 'data_2_content': data_log_system[2][2], 
+                             'data_3_title': data_log_system[3][1] + " ||| " + data_log_system[3][0], 'data_3_content': data_log_system[3][2], 
+                             'data_4_title': data_log_system[4][1] + " ||| " + data_log_system[4][0], 'data_4_content': data_log_system[4][2], 
+                             'data_5_title': data_log_system[5][1] + " ||| " + data_log_system[5][0], 'data_5_content': data_log_system[5][2], 
+                             'data_6_title': data_log_system[6][1] + " ||| " + data_log_system[6][0], 'data_6_content': data_log_system[6][2], 
+                             'data_7_title': data_log_system[7][1] + " ||| " + data_log_system[7][0], 'data_7_content': data_log_system[7][2], 
+                             'data_8_title': data_log_system[8][1] + " ||| " + data_log_system[8][0], 'data_8_content': data_log_system[8][2], 
+                             'data_9_title': "" + " ||| " + "", 'data_9_content': ""},                                                    
+                             namespace='/socketIO')
+
+            # get 8 log entries
+            elif COUNT_ROWS_LOGFILE_SYSTEM() == 8:
+                data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 8)
+
+                socketio.emit('dashboard_system_log',
+                            {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
+                             'data_1_title': data_log_system[1][1] + " ||| " + data_log_system[1][0], 'data_1_content': data_log_system[1][2], 
+                             'data_2_title': data_log_system[2][1] + " ||| " + data_log_system[2][0], 'data_2_content': data_log_system[2][2], 
+                             'data_3_title': data_log_system[3][1] + " ||| " + data_log_system[3][0], 'data_3_content': data_log_system[3][2], 
+                             'data_4_title': data_log_system[4][1] + " ||| " + data_log_system[4][0], 'data_4_content': data_log_system[4][2], 
+                             'data_5_title': data_log_system[5][1] + " ||| " + data_log_system[5][0], 'data_5_content': data_log_system[5][2], 
+                             'data_6_title': data_log_system[6][1] + " ||| " + data_log_system[6][0], 'data_6_content': data_log_system[6][2], 
+                             'data_7_title': data_log_system[7][1] + " ||| " + data_log_system[7][0], 'data_7_content': data_log_system[7][2], 
+                             'data_8_title': "" + " ||| " + "", 'data_8_content': "", 
+                             'data_9_title': "" + " ||| " + "", 'data_9_content': ""},                                                        
+                             namespace='/socketIO')
+
+            # get 7 log entries
+            elif COUNT_ROWS_LOGFILE_SYSTEM() == 7:
+                data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 7)
+
+                socketio.emit('dashboard_system_log',
+                            {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
+                             'data_1_title': data_log_system[1][1] + " ||| " + data_log_system[1][0], 'data_1_content': data_log_system[1][2], 
+                             'data_2_title': data_log_system[2][1] + " ||| " + data_log_system[2][0], 'data_2_content': data_log_system[2][2], 
+                             'data_3_title': data_log_system[3][1] + " ||| " + data_log_system[3][0], 'data_3_content': data_log_system[3][2], 
+                             'data_4_title': data_log_system[4][1] + " ||| " + data_log_system[4][0], 'data_4_content': data_log_system[4][2], 
+                             'data_5_title': data_log_system[5][1] + " ||| " + data_log_system[5][0], 'data_5_content': data_log_system[5][2], 
+                             'data_6_title': data_log_system[6][1] + " ||| " + data_log_system[6][0], 'data_6_content': data_log_system[6][2], 
+                             'data_7_title': "" + " ||| " + "", 'data_7_content': "", 
+                             'data_8_title': "" + " ||| " + "", 'data_8_content': "", 
+                             'data_9_title': "" + " ||| " + "", 'data_9_content': ""},                                                        
+                             namespace='/socketIO')
+
+            # get 6 log entries
+            elif COUNT_ROWS_LOGFILE_SYSTEM() == 6:
+                data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 6)
+
+                socketio.emit('dashboard_system_log',
+                            {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
+                             'data_1_title': data_log_system[1][1] + " ||| " + data_log_system[1][0], 'data_1_content': data_log_system[1][2], 
+                             'data_2_title': data_log_system[2][1] + " ||| " + data_log_system[2][0], 'data_2_content': data_log_system[2][2], 
+                             'data_3_title': data_log_system[3][1] + " ||| " + data_log_system[3][0], 'data_3_content': data_log_system[3][2], 
+                             'data_4_title': data_log_system[4][1] + " ||| " + data_log_system[4][0], 'data_4_content': data_log_system[4][2], 
+                             'data_5_title': data_log_system[5][1] + " ||| " + data_log_system[5][0], 'data_5_content': data_log_system[5][2], 
+                             'data_6_title': "" + " ||| " + "", 'data_6_content': "", 
+                             'data_7_title': "" + " ||| " + "", 'data_7_content': "", 
+                             'data_8_title': "" + " ||| " + "", 'data_8_content': "", 
+                             'data_9_title': "" + " ||| " + "", 'data_9_content': ""},                                                        
+                             namespace='/socketIO')
+
+            # get 5 log entries
+            elif COUNT_ROWS_LOGFILE_SYSTEM() == 5:
+                data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 5)
+
+                socketio.emit('dashboard_system_log',
+                            {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
+                             'data_1_title': data_log_system[1][1] + " ||| " + data_log_system[1][0], 'data_1_content': data_log_system[1][2], 
+                             'data_2_title': data_log_system[2][1] + " ||| " + data_log_system[2][0], 'data_2_content': data_log_system[2][2], 
+                             'data_3_title': data_log_system[3][1] + " ||| " + data_log_system[3][0], 'data_3_content': data_log_system[3][2], 
+                             'data_4_title': data_log_system[4][1] + " ||| " + data_log_system[4][0], 'data_4_content': data_log_system[4][2], 
+                             'data_5_title': "" + " ||| " + "", 'data_5_content': "", 
+                             'data_6_title': "" + " ||| " + "", 'data_6_content': "", 
+                             'data_7_title': "" + " ||| " + "", 'data_7_content': "", 
+                             'data_8_title': "" + " ||| " + "", 'data_8_content': "", 
+                             'data_9_title': "" + " ||| " + "", 'data_9_content': ""},                                                        
+                             namespace='/socketIO')
+
+            # get 4 log entries
+            elif COUNT_ROWS_LOGFILE_SYSTEM() == 4:
+                data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 4)
+
+                socketio.emit('dashboard_system_log',
+                            {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
+                             'data_1_title': data_log_system[1][1] + " ||| " + data_log_system[1][0], 'data_1_content': data_log_system[1][2], 
+                             'data_2_title': data_log_system[2][1] + " ||| " + data_log_system[2][0], 'data_2_content': data_log_system[2][2], 
+                             'data_3_title': data_log_system[3][1] + " ||| " + data_log_system[3][0], 'data_3_content': data_log_system[3][2], 
+                             'data_4_title': "" + " ||| " + "", 'data_4_content': "", 
+                             'data_5_title': "" + " ||| " + "", 'data_5_content': "", 
+                             'data_6_title': "" + " ||| " + "", 'data_6_content': "", 
+                             'data_7_title': "" + " ||| " + "", 'data_7_content': "", 
+                             'data_8_title': "" + " ||| " + "", 'data_8_content': "", 
+                             'data_9_title': "" + " ||| " + "", 'data_9_content': ""},                                                        
+                             namespace='/socketIO')
+
+            # get 3 log entries
+            elif COUNT_ROWS_LOGFILE_SYSTEM() == 3:
+                data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 3)
+
+                socketio.emit('dashboard_system_log',
+                            {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
+                             'data_1_title': data_log_system[1][1] + " ||| " + data_log_system[1][0], 'data_1_content': data_log_system[1][2], 
+                             'data_2_title': data_log_system[2][1] + " ||| " + data_log_system[2][0], 'data_2_content': data_log_system[2][2], 
+                             'data_3_title': "" + " ||| " + "", 'data_3_content': "", 
+                             'data_4_title': "" + " ||| " + "", 'data_4_content': "", 
+                             'data_5_title': "" + " ||| " + "", 'data_5_content': "", 
+                             'data_6_title': "" + " ||| " + "", 'data_6_content': "", 
+                             'data_7_title': "" + " ||| " + "", 'data_7_content': "", 
+                             'data_8_title': "" + " ||| " + "", 'data_8_content': "", 
+                             'data_9_title': "" + " ||| " + "", 'data_9_content': ""},                                                        
+                             namespace='/socketIO')
+
+            # get 2 log entries
+            elif COUNT_ROWS_LOGFILE_SYSTEM() == 2:
+                data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 2)
+
+                socketio.emit('dashboard_system_log',
+                            {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
+                             'data_1_title': data_log_system[1][1] + " ||| " + data_log_system[1][0], 'data_1_content': data_log_system[1][2], 
+                             'data_2_title': "" + " ||| " + "", 'data_2_content': "", 
+                             'data_3_title': "" + " ||| " + "", 'data_3_content': "", 
+                             'data_4_title': "" + " ||| " + "", 'data_4_content': "", 
+                             'data_5_title': "" + " ||| " + "", 'data_5_content': "", 
+                             'data_6_title': "" + " ||| " + "", 'data_6_content': "", 
+                             'data_7_title': "" + " ||| " + "", 'data_7_content': "", 
+                             'data_8_title': "" + " ||| " + "", 'data_8_content': "", 
+                             'data_9_title': "" + " ||| " + "", 'data_9_content': ""},                                                        
+                             namespace='/socketIO')
+
+            # get 1 log entries
+            else:
+                data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 1)
+
+                socketio.emit('dashboard_system_log',
+                            {'data_0_title': data_log_system[0][1] + " ||| " + data_log_system[0][0], 'data_0_content': data_log_system[0][2], 
+                             'data_1_title': "" + " ||| " + "", 'data_1_content': "", 
+                             'data_2_title': "" + " ||| " + "", 'data_2_content': "", 
+                             'data_3_title': "" + " ||| " + "", 'data_3_content': "", 
+                             'data_4_title': "" + " ||| " + "", 'data_4_content': "", 
+                             'data_5_title': "" + " ||| " + "", 'data_5_content': "", 
+                             'data_6_title': "" + " ||| " + "", 'data_6_content': "", 
+                             'data_7_title': "" + " ||| " + "", 'data_7_content': "", 
+                             'data_8_title': "" + " ||| " + "", 'data_8_content': "", 
+                             'data_9_title': "" + " ||| " + "", 'data_9_content': ""},                                                        
+                             namespace='/socketIO')
+
 
         except:
+
             socketio.emit('dashboard_system_log',
                          {'data_0_title': "" + " ||| " + "", 'data_0_content': "", 
                           'data_1_title': "" + " ||| " + "", 'data_1_content': "", 

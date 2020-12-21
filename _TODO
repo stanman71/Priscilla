@@ -9,12 +9,6 @@ System
 - Updatefunction
 
 
-Music
-
-- error_message if restart not working
-- add option "restart client"
-
-
 Devices
 
 - Build moisture sensor
@@ -24,5 +18,3 @@ Devices
 
 BUGFIX
 
-- SystemLog on Dashboard shows nothing until 9 entries
-- No volume_control spotify on pc

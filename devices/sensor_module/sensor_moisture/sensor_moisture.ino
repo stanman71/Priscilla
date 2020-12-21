@@ -55,7 +55,7 @@ int send_message_timer_value = 900000;           // 15 minutes (in milliseconds)
 
 char model[40]       = "sensor_moisture";
 char device_type[40] = "sensor_passiv";
-char description[80] = "MQTT Motion Sensor";
+char description[80] = "MQTT Moisture Sensor";
 
 String current_Version = "1.0";
 
@@ -464,8 +464,6 @@ void loop() {
     } 
 
     send_message_timer_counter = send_message_timer_counter + 100;    
-
-    Serial.println(analogRead(SENSOR));  
 
     delay(100);
     client.loop();

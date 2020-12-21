@@ -631,8 +631,8 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
                 # case multiroom
                 if "multiroom" in spotify_device_name:
-                    if spotify_volume < 98:
-                        volume = spotify_volume + 2
+                    if spotify_volume < 97:
+                        volume = spotify_volume + 3
                     else:
                         volume = 100      
 
@@ -640,8 +640,8 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
                 # case hifiberry_AMP2
                 if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_AMP2":
-                    if spotify_volume < 98:
-                        volume = spotify_volume + 2
+                    if spotify_volume < 97:
+                        volume = spotify_volume + 3
                     else:
                         volume = 100
                     
@@ -650,15 +650,23 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 # case hifiberry_miniAMP
                 if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_miniAMP":
 
-                    if spotify_volume < 99:
-                        volume = spotify_volume + 1
+                    if spotify_volume < 98:
+                        volume = spotify_volume + 2
                     else:
                         volume = 100
                     
-                    SET_MUSIC_VOLUME(spotify_token, volume)                   
-                            
+                    SET_MUSIC_VOLUME(spotify_token, volume)      
+
             except:
-                pass
+
+                # case spotity connect device
+                if spotify_volume < 97:
+                    volume = spotify_volume + 3
+                else:
+                    volume = 100
+                
+                SET_MUSIC_VOLUME(spotify_token, volume)     
+
 
         if command == "volume_down":   
 
@@ -668,8 +676,8 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
                 # case multiroom
                 if "multiroom" in spotify_device_name:                 
-                    if spotify_volume > 2:
-                        volume = spotify_volume - 2       
+                    if spotify_volume > 3:
+                        volume = spotify_volume - 3       
                     else:
                         volume = 1              
 
@@ -678,8 +686,8 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 # case hifiberry_AMP2                
                 if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_AMP2":
             
-                    if spotify_volume > 2:
-                        volume = spotify_volume - 2       
+                    if spotify_volume > 3:
+                        volume = spotify_volume - 3       
                     else:
                         volume = 1
 
@@ -688,15 +696,22 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 # case hifiberry_miniAMP
                 if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_miniAMP":
 
-                    if spotify_volume > 1:
-                        volume = spotify_volume - 1       
+                    if spotify_volume > 2:
+                        volume = spotify_volume - 2       
                     else:
                         volume = 1
 
                     SET_MUSIC_VOLUME(spotify_token, volume) 
-            
-            except:
-                pass
+
+            except Exception as e:
+
+                # case spotity connect device
+                if spotify_volume > 3:
+                    volume = spotify_volume - 3       
+                else:
+                    volume = 1
+
+                SET_MUSIC_VOLUME(spotify_token, volume)    
 
 
     except Exception as e:
