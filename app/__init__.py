@@ -53,7 +53,7 @@ app.add_template_global(app.config , 'cfg'   )
 from app.backend.database_models  import *
 from app.backend.spotify          import *
 from app.backend.shared_resources import *
-
+from app.backend.user_id          import GET_CURRENT_USER_ID
 
 """ ########### """
 """  socket IO  """
@@ -112,11 +112,16 @@ def background_thread_dashboard_system_log():
 
         try:
 
-            selected_log_types = ["EVENT", "DATABASE", "SUCCESS", "WARNING", "ERROR"]
-            log_search         = ""
+            if GET_USER_BY_ID(GET_CURRENT_USER_ID()).dashboard_log_show_exceptions == "False":
+                selected_log_types = ["EVENT", "DATABASE", "SUCCESS", "WARNING", "ERROR"]
+            else:
+                selected_log_types = ["WARNING", "ERROR"]
+
+            log_search = ""
+            count_rows = len(GET_LOGFILE_SYSTEM(selected_log_types, log_search, 10))
 
             # get 10 log entries
-            if COUNT_ROWS_LOGFILE_SYSTEM() >= 10:
+            if count_rows == 10:
                 data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 10)
 
                 socketio.emit('dashboard_system_log',
@@ -133,7 +138,7 @@ def background_thread_dashboard_system_log():
                              namespace='/socketIO')
 
             # get 9 log entries
-            elif COUNT_ROWS_LOGFILE_SYSTEM() == 9:
+            elif count_rows == 9:
                 data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 9)
 
                 socketio.emit('dashboard_system_log',
@@ -150,7 +155,7 @@ def background_thread_dashboard_system_log():
                              namespace='/socketIO')
 
             # get 8 log entries
-            elif COUNT_ROWS_LOGFILE_SYSTEM() == 8:
+            elif count_rows == 8:
                 data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 8)
 
                 socketio.emit('dashboard_system_log',
@@ -167,7 +172,7 @@ def background_thread_dashboard_system_log():
                              namespace='/socketIO')
 
             # get 7 log entries
-            elif COUNT_ROWS_LOGFILE_SYSTEM() == 7:
+            elif count_rows == 7:
                 data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 7)
 
                 socketio.emit('dashboard_system_log',
@@ -184,7 +189,7 @@ def background_thread_dashboard_system_log():
                              namespace='/socketIO')
 
             # get 6 log entries
-            elif COUNT_ROWS_LOGFILE_SYSTEM() == 6:
+            elif count_rows == 6:
                 data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 6)
 
                 socketio.emit('dashboard_system_log',
@@ -201,7 +206,7 @@ def background_thread_dashboard_system_log():
                              namespace='/socketIO')
 
             # get 5 log entries
-            elif COUNT_ROWS_LOGFILE_SYSTEM() == 5:
+            elif count_rows == 5:
                 data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 5)
 
                 socketio.emit('dashboard_system_log',
@@ -218,7 +223,7 @@ def background_thread_dashboard_system_log():
                              namespace='/socketIO')
 
             # get 4 log entries
-            elif COUNT_ROWS_LOGFILE_SYSTEM() == 4:
+            elif count_rows == 4:
                 data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 4)
 
                 socketio.emit('dashboard_system_log',
@@ -235,7 +240,7 @@ def background_thread_dashboard_system_log():
                              namespace='/socketIO')
 
             # get 3 log entries
-            elif COUNT_ROWS_LOGFILE_SYSTEM() == 3:
+            elif count_rows == 3:
                 data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 3)
 
                 socketio.emit('dashboard_system_log',
@@ -252,7 +257,7 @@ def background_thread_dashboard_system_log():
                              namespace='/socketIO')
 
             # get 2 log entries
-            elif COUNT_ROWS_LOGFILE_SYSTEM() == 2:
+            elif count_rows == 2:
                 data_log_system = GET_LOGFILE_SYSTEM(selected_log_types, log_search, 2)
 
                 socketio.emit('dashboard_system_log',
@@ -286,7 +291,8 @@ def background_thread_dashboard_system_log():
                              namespace='/socketIO')
 
 
-        except:
+        except Exception as e:
+            print(e)
 
             socketio.emit('dashboard_system_log',
                          {'data_0_title': "" + " ||| " + "", 'data_0_content': "", 
@@ -587,7 +593,7 @@ for device in GET_ALL_DEVICES(""):
 
 from app.sites                      import index, dashboard, scheduler, programs, lighting_scenes, lighting_groups, cameras, music, sensordata_jobs, sensordata_statistics, devices_management, devices_controller, settings_system, settings_users, settings_system_log, settings_threads, settings_about, errors
 from app.backend.process_management import START_PROCESS_MANAGEMENT_THREAD
-from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING, START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD
+from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING, START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD, START_CHECK_MQTT_DEVICE_CONNECTION_THREAD
 from app.backend.email              import SEND_EMAIL
 from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
 from app.backend.spotify            import START_REFRESH_SPOTIFY_TOKEN_THREAD
@@ -735,5 +741,6 @@ START_PROCESS_MANAGEMENT_THREAD()
 START_REFRESH_SPOTIFY_TOKEN_THREAD()
 START_MULTIROOM_SYNCHRONIZATION_THREAD()
 START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD()
+START_CHECK_MQTT_DEVICE_CONNECTION_THREAD()
 
 socketio.run(app, host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)

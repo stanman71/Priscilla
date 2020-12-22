@@ -1,8 +1,8 @@
-from flask                     import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
-from flask_login               import current_user, login_required
-from werkzeug.exceptions       import HTTPException, NotFound, abort
-from functools                 import wraps
-from flask_mobility.decorators import mobile_template
+from flask                        import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
+from flask_login                  import current_user, login_required
+from werkzeug.exceptions          import HTTPException, NotFound, abort
+from functools                    import wraps
+from flask_mobility.decorators    import mobile_template
 
 from app                          import app, socketio
 from app.backend.database_models  import *
@@ -11,6 +11,7 @@ from app.backend.spotify          import *
 from app.backend.mqtt             import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
 from app.backend.shared_resources import *
+from app.backend.user_id          import SET_CURRENT_USER_ID
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
@@ -19,7 +20,6 @@ import shutil
 import re
 import cgi
 import spotipy
-
 
 # access rights
 def permission_required(f):
@@ -46,6 +46,8 @@ def permission_required(f):
 def dashboard():
     page_title       = 'Bianca | Dashboard'
     page_description = 'The main page and Dashboard'
+
+    SET_CURRENT_USER_ID(current_user.id)    
 
 
     """ ############################ """
@@ -254,11 +256,21 @@ def dashboard():
         spotify_shuffle        = "False"
 
 
+    """ ###### """
+    """  logs  """
+    """ ###### """   
+
+    if request.form.get("apply_changes_log_show_exceptions") != None:
+        log_setting = request.form.get("set_radio_show_messages")
+        SET_DASHBOARD_LOG_SHOW_EXCEPTIONS(current_user.id, log_setting)
+
+
     dropdown_list_lighting_scenes = GET_ALL_LIGHTING_SCENES()
     list_lighting_groups          = GET_ALL_LIGHTING_GROUPS()
     list_devices                  = GET_ALL_DEVICES("devices")
 
     dropdown_list_programs = GET_ALL_PROGRAMS()
+    log_show_exceptions    = current_user.dashboard_log_show_exceptions      
 
     data = {'navigation': 'dashboard'}
 
@@ -276,6 +288,7 @@ def dashboard():
                                                     spotify_volume=spotify_volume, 
                                                     spotify_shuffle=spotify_shuffle,
                                                     list_devices=list_devices,    
-                                                    dropdown_list_programs=dropdown_list_programs,                                                  
+                                                    dropdown_list_programs=dropdown_list_programs,    
+                                                    log_show_exceptions=log_show_exceptions,                                              
                                                     ) 
                            )      

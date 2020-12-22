@@ -122,20 +122,6 @@ def WRITE_LOGFILE_SYSTEM(log_type, description):
         return(e)
 
 
-def COUNT_ROWS_LOGFILE_SYSTEM():
-
-    try:
-        # open csv file        
-        file = GET_PATH() + "/data/logs/log_system.csv"
-        count = len(open(file).readlines()) - 1
-
-        return count
-
-    except Exception as e:
-        RESET_LOGFILE("log_system")
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/logs/log_system.csv | " + str(e)) 
-
-
 def GET_LOGFILE_SYSTEM(selected_log_types, search, rows):   
     
     try:

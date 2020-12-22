@@ -980,7 +980,7 @@ def CHECK_ZIGBEE2MQTT_DEVICE_DELETED(device_name):
 def START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD():
 
     try:
-        Thread = threading.Thread(target=CHECK_ZIGBEE2MQTT_RUNNING)
+        Thread = threading.Thread(target=CHECK_ZIGBEE2MQTT_RUNNING_THREAD)
         Thread.start()  
         
     except Exception as e:
@@ -988,7 +988,7 @@ def START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD():
         SEND_EMAIL("ERROR", "System | Thread | Check ZIGBEE running | " + str(e))    
 
 
-def CHECK_ZIGBEE2MQTT_RUNNING():   
+def CHECK_ZIGBEE2MQTT_RUNNING_THREAD():   
 
     while True:
 
@@ -1020,7 +1020,7 @@ def CHECK_ZIGBEE2MQTT_RUNNING():
                     SET_ZIGBEE2MQTT_CONNECTION_STATUS(True)      
                 else:          
                     SET_ZIGBEE2MQTT_CONNECTION_STATUS(False)
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")  
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No connection")  
 
                     fail_counter = 0
 
@@ -1054,6 +1054,42 @@ def CHECK_ZIGBEE2MQTT_RUNNING():
             pass
 
         time.sleep(10)
+
+
+def START_CHECK_MQTT_DEVICE_CONNECTION_THREAD():
+
+    try:
+        Thread = threading.Thread(target=CHECK_MQTT_DEVICE_CONNECTION_THREAD)
+        Thread.start()  
+        
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Check MQTT Device connection | " + str(e))  
+        SEND_EMAIL("ERROR", "System | Thread | Check MQTT Device connection | " + str(e))    
+
+
+def CHECK_MQTT_DEVICE_CONNECTION_THREAD():   
+
+    while True:
+
+        try:
+            # get the current time value
+            time_check = datetime.datetime.now() - datetime.timedelta(days=1) 
+            time_check = time_check.strftime("%Y-%m-%d %H:%M:%S")
+
+            for device in GET_ALL_DEVICES("mqtt"):
+
+                time_last_contact = datetime.datetime.strptime(device.last_contact,"%Y-%m-%d %H:%M:%S")   
+                time_limit        = datetime.datetime.strptime(time_check, "%Y-%m-%d %H:%M:%S")                
+
+                # error message if no connection in the last 24 hours
+                if time_last_contact < time_limit:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | No connection | " + device.name)
+
+        except:
+            pass
+
+        # daily check
+        time.sleep(86400)
 
 
 """ ######################### """

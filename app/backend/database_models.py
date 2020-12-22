@@ -343,12 +343,13 @@ class System(db.Model):
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
-    id                 = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    name               = db.Column(db.String(64), unique = True)
-    email              = db.Column(db.String(120), unique = True, server_default=(""))
-    role               = db.Column(db.String(50), server_default=("user"))   
-    password           = db.Column(db.String(100), server_default=(""))
-    email_notification = db.Column(db.String(20), server_default=("False"))
+    id                            = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name                          = db.Column(db.String(64), unique = True)
+    email                         = db.Column(db.String(120), unique = True, server_default=(""))
+    role                          = db.Column(db.String(50), server_default=("user"))   
+    password                      = db.Column(db.String(100), server_default=(""))
+    email_notification            = db.Column(db.String(20), server_default=("False"))
+    dashboard_log_show_exceptions = db.Column(db.String(20), server_default=("False"))
 
 
 """ ################################## """
@@ -3643,9 +3644,22 @@ def CHANGE_USER_PASSWORD(id, hashed_password):
         entry.password = hashed_password    
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + str(entry.name) + " | Password changed")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + str(entry.name) + " | Password | changed")
         return True
     
+
+def SET_DASHBOARD_LOG_SHOW_EXCEPTIONS(id, dashboard_log_show_exceptions):
+    entry = User.query.filter_by(id=id).first()
+
+    # values changed ?
+    if entry.dashboard_log_show_exceptions != dashboard_log_show_exceptions:    
+    
+        entry.dashboard_log_show_exceptions = dashboard_log_show_exceptions    
+        db.session.commit()
+        
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + str(entry.name) + " | Dashboard Setting | changed")
+        return True
+
 
 def DELETE_USER(user_id):
     entry = GET_USER_BY_ID(user_id)

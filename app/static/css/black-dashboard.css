@@ -17802,15 +17802,15 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card-tasks-music-frame {
-  min-height: 330px;
+  min-height: 300px;
 }
 
 .card-tasks-system_log-frame-reduced {
-  height: 259px;
+  height: 285px;
 }
 
 .card-tasks-system_log-table-reduced .table-full-width {
-  max-height: 235px;
+  max-height: 190px;
   position: relative;
 }
 
@@ -17819,7 +17819,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card-tasks-system_log-table-full .table-full-width {
-  max-height: 596px;
+  max-height: 530px;
   position: relative;
 }
 

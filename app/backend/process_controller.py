@@ -8,8 +8,7 @@ from difflib import SequenceMatcher
 
 
 def PROCESS_CONTROLLER(ieeeAddr, msg):
-    global command_hold_break_loop
-
+    
     for controller in GET_ALL_CONTROLLER():
         
         if controller.device_ieeeAddr == ieeeAddr:

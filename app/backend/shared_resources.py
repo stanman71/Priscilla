@@ -45,8 +45,8 @@ def REFRESH_MQTT_INPUT_MESSAGES_THREAD():
 				if time_message <= time_limit:
 					mqtt_incoming_messages_list.remove(message)
 
-		except Exception as e:
-			print(e)
+		except:
+			pass
 			
 		time.sleep(1)
 
