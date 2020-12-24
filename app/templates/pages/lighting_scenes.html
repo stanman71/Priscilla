@@ -1802,12 +1802,10 @@
                       <br>     
                       
                       <div class="vertical_center">   
-
-                        {% if request.MOBILE %}<br>{% endif %}     
-                            
                         <input id="brightness_slider_lighting_scenes_test_setting_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_test_setting_{{entry.id}}"
                           name="set_lighting_group_brightness_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100"/> 
                       </div>  
+                      
                       <button type="submit" onclick="window.location.href='/lighting/scenes#table_{{entry.id}}'" name="test_lighting_scene" class="btn btn-fill btn-primary">TEST SCENE</button>
 
                       <!-- Button trigger modal -->

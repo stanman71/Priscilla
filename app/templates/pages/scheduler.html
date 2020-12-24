@@ -652,8 +652,6 @@
                                   </select>                                                                
                                 </div>       
                                 
-                                {% if request.MOBILE %}<br>{% endif %}                                
-
                                 <div class="col-sm-4"> 
                                   <select id="selected_sensor_1_{{ entry.id }}" data-size="5" class="form-control" name="set_sensor_1_{{ entry.id }}" style="background-color:#27293D">    
                                     {% if device_id_1 != None and device_id_1 != "None" and entry.device_ieeeAddr_1 != None and entry.device_ieeeAddr_1 != "None" %}
@@ -672,8 +670,6 @@
                                 
                                 </div>      
                                 
-                                {% if request.MOBILE %}<br>{% endif %}    
-
                                 <div class="col-sm-2">     
                                   <select data-size="5" class="form-control" name="set_operator_1_{{ entry.id }}" style="background-color:#27293D">    
                                     {% if entry.operator_1 != None and entry.operator_1 != "None" and entry.operator_1 != "" %}
@@ -687,9 +683,7 @@
                                     {% endfor %}                                                                                                                   
                                   </select>        
                                 </div>        
-                                
-                                {% if request.MOBILE %}<br>{% endif %}    
-
+                              
                                 <div class="col-sm-2"> 
                                   <input type="text" class="form-control" placeholder="Value 1" name="set_value_1_{{ entry.id }}"
                                     value = {% if entry.value_1 != None and entry.value_1 != "None" %}"{{ entry.value_1 }}"{% else %}""{% endif %} /> 

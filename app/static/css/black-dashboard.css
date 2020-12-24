@@ -17823,6 +17823,11 @@ Copyright (c) 2015 Daniel Eden
   position: relative;
 }
 
+.card-tasks-system_log-table-full-mobile .table-full-width {
+  max-height: 465px;
+  position: relative;
+}
+
 .card-tasks .card-header .title {
   margin-right: 20px;
   font-weight: 400;

@@ -585,7 +585,7 @@
 <!-- system_log table -->
 
             {% if request.MOBILE %}
-              <div class="card card-tasks-system_log-frame-full card-tasks-system_log-table-full">
+              <div class="card card-tasks-system_log-frame-full card-tasks-system_log-table-full-mobile">
             {% else %}
 
               {% if spotify_token != "" %}  
@@ -612,21 +612,15 @@
                     <div class="col-sm-8">
 
                       {% if request.MOBILE %}
-
-                        <br>
                         <br>
                         <div class="text-center">
                           <button type="submit" name="apply_changes_log_show_exceptions" class="btn btn-fill btn-primary">APPLY</button>
                         </div>
                         <br>
-                        <br>
-
                       {% else %}
-
                         <div class="text-right">
                           <button type="submit" name="apply_changes_log_show_exceptions" class="btn btn-fill btn-primary">APPLY</button>
                         </div>
-
                       {% endif %}
 
                     </div>

@@ -47,7 +47,15 @@
                     <div class="col-md-1 px-md-1"></div>
 
                     <div class="col-md-1 px-md-1">
-                    <button type="submit" class="btn btn-fill btn-primary">LOGIN</button> 
+
+                      {% if request.MOBILE %}           
+                        <div class="text-center">
+                          <button type="submit" class="btn btn-fill btn-primary">LOGIN</button> 
+                        </div>
+                      {% else %}
+                        <button type="submit" class="btn btn-fill btn-primary">LOGIN</button> 
+                      {% endif %}
+
                     </div>
 
                   </div>
