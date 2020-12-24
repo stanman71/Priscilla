@@ -1,4 +1,4 @@
-from flask_mail import Mail, Message
+from flask_mail                  import Mail, Message
 
 from app                         import app
 from app.backend.database_models import *

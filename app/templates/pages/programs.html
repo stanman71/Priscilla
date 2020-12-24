@@ -44,7 +44,15 @@
             <div class="card">
               <form method="POST">         
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/programs#new_program'" name="add_program" class="btn btn-fill btn-primary">NEW PROGRAM</button>
+
+                  {% if request.MOBILE %}
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/programs#new_program'" name="add_program" class="btn btn-fill btn-primary">NEW PROGRAM</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/programs#new_program'" name="add_program" class="btn btn-fill btn-primary">NEW PROGRAM</button>
+                  {% endif %}
+
                 </div>
               </form>
             </div>
@@ -100,8 +108,16 @@
                       </select>      
                     </div>
                   </div>  
-                  <br>                              
-                  <button type="submit" onclick="window.location.href='/programs#open_program'" name="open_program" class="btn btn-fill btn-primary">OPEN</button>          
+                  <br>     
+
+                  {% if request.MOBILE %}
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/programs#open_program'" name="open_program" class="btn btn-fill btn-primary">OPEN</button>    
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/programs#open_program'" name="open_program" class="btn btn-fill btn-primary">OPEN</button>    
+                  {% endif %}
+
                 </div>
               </form>
             </div>
@@ -1307,9 +1323,23 @@
                   {% endif %}
                  
                   <!-- Button trigger modal -->
-                  {% if request.MOBILE %} <br><br> {% endif %}
-                  <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{selected_program.id}}">DELETE</button>
-                  {% if request.MOBILE %} <br><br><br> {% endif %}
+
+                  {% if request.MOBILE %}
+                  
+                    <br>
+                    <br>
+                    <div class="text-center">
+                      <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{selected_program.id}}">DELETE</button>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+
+                  {% else %}
+
+                    <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{selected_program.id}}">DELETE</button> 
+
+                  {% endif %}
 
                   <!-- Modal -->
                   <div class="modal fade" id="delete_dialog_{{selected_program.id}}">

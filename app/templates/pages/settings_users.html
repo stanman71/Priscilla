@@ -43,7 +43,15 @@
             <div class="card"> 
               <form method="POST">        
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/settings/users#'" name="add_user" class="btn btn-fill btn-primary">NEW USER</button>
+
+                  {% if request.MOBILE %}  
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/settings/users#'" name="add_user" class="btn btn-fill btn-primary">NEW USER</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/settings/users#'" name="add_user" class="btn btn-fill btn-primary">NEW USER</button>
+                  {% endif %}       
+
                 </div>
               </form>
             </div>
@@ -215,8 +223,16 @@
                         {% endfor %}
                       </tbody>
                     </table>
-                  </div>              
-                  <button type="submit" onclick="window.location.href='/settings/users#table'" name="save_user_settings" class="btn btn-fill btn-primary">Save</button>
+                  </div>      
+                  
+                  {% if request.MOBILE %}  
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/settings/users#table'" name="save_user_settings" class="btn btn-fill btn-primary">SAVE</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/settings/users#table'" name="save_user_settings" class="btn btn-fill btn-primary">SAVE</button>
+                  {% endif %}                         
+
                 </div>
               </form>
             </div>

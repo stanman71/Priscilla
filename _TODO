@@ -1,8 +1,3 @@
-Mobile View
-
-- center single buttons
-- optimize scheduler
-
 
 System
 
@@ -11,8 +6,7 @@ System
 
 Devices
 
-- Build moisture sensor
-- Build pump_shield
+- Build moisture + pump sensor
 - Optimize motion sensor
 
 

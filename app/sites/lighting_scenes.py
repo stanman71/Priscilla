@@ -1,13 +1,14 @@
-from flask               import json, url_for, redirect, render_template, flash, g, session, jsonify, request
-from flask_login         import current_user, login_required
-from werkzeug.exceptions import HTTPException, NotFound, abort
-from functools           import wraps
+from flask                       import json, url_for, redirect, render_template, flash, g, session, jsonify, request
+from flask_login                 import current_user, login_required
+from werkzeug.exceptions         import HTTPException, NotFound, abort
+from functools                   import wraps
 
 from app                         import app
 from app.backend.database_models import *
 from app.backend.checks          import CHECK_TASKS
 from app.backend.lighting        import *
 from app.backend.file_management import WRITE_LOGFILE_SYSTEM
+from app.backend.user_id         import SET_CURRENT_USER_ID
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
@@ -55,6 +56,7 @@ def lighting_scenes():
 
     RESET_LIGHTING_SCENE_COLLAPSE()
 
+    SET_CURRENT_USER_ID(current_user.id)  
 
     """ #################### """
     """  add lighting scene  """

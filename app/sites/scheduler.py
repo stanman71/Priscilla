@@ -1,7 +1,7 @@
-from flask               import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
-from flask_login         import current_user, login_required
-from werkzeug.exceptions import HTTPException, NotFound, abort
-from functools           import wraps
+from flask                         import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
+from flask_login                   import current_user, login_required
+from werkzeug.exceptions           import HTTPException, NotFound, abort
+from functools                     import wraps
 
 from app                           import app
 from app.backend.database_models   import *
@@ -9,6 +9,7 @@ from app.backend.checks            import CHECK_TASKS, CHECK_SCHEDULER_JOB_SETTI
 from app.backend.process_scheduler import GET_SUNRISE_TIME, GET_SUNSET_TIME
 from app.backend.spotify           import GET_SPOTIFY_TOKEN
 from app.backend.file_management   import WRITE_LOGFILE_SYSTEM
+from app.backend.user_id           import SET_CURRENT_USER_ID
 from app.common                    import COMMON, STATUS
 from app.assets                    import *
 
@@ -50,6 +51,7 @@ def scheduler():
     RESET_SCHEDULER_JOB_COLLAPSE()
     UPDATE_SCHEDULER_JOBS_DEVICE_NAMES()
 
+    SET_CURRENT_USER_ID(current_user.id)  
 
     """ ################### """
     """  add scheduler job  """

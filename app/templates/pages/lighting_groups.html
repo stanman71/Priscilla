@@ -42,7 +42,15 @@
             <div class="card">
               <form method="POST">         
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/lighting/groups#'" name="add_lighting_group" class="btn btn-fill btn-primary">NEW GROUP</button>
+
+                  {% if request.MOBILE %}           
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/lighting/groups#'" name="add_lighting_group" class="btn btn-fill btn-primary">NEW GROUP</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/lighting/groups#'" name="add_lighting_group" class="btn btn-fill btn-primary">NEW GROUP</button>
+                  {% endif %}
+
                 </div>
               </form>
             </div>

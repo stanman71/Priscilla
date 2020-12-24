@@ -1,12 +1,13 @@
-from flask               import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
-from flask_login         import current_user, login_required
-from werkzeug.exceptions import HTTPException, NotFound, abort
-from functools           import wraps
+from flask                       import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
+from flask_login                 import current_user, login_required
+from werkzeug.exceptions         import HTTPException, NotFound, abort
+from functools                   import wraps
 
 from app                         import app
 from app.backend.database_models import *
 from app.backend.process_program import * 
 from app.backend.file_management import WRITE_LOGFILE_SYSTEM
+from app.backend.user_id         import SET_CURRENT_USER_ID
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
@@ -39,6 +40,8 @@ def settings_threads():
 
     success_message_program_stop = "" 
     error_message_program_stop   = ""
+
+    SET_CURRENT_USER_ID(current_user.id)  
 
     # stop message
     if session.get('program_stop_success', None) != None:

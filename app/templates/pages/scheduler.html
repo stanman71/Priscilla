@@ -386,7 +386,15 @@
             <div class="card">
               <form method="POST">         
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/scheduler#'" name="add_scheduler_job" class="btn btn-fill btn-primary">NEW SCHEDULER JOB</button>
+
+                  {% if request.MOBILE %}
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/scheduler#'" name="add_scheduler_job" class="btn btn-fill btn-primary">NEW SCHEDULER JOB</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/scheduler#'" name="add_scheduler_job" class="btn btn-fill btn-primary">NEW SCHEDULER JOB</button>
+                  {% endif %}
+
                 </div>
               </form>
             </div>
@@ -642,7 +650,10 @@
                                       <option value="{{ each.id }}"> {{ each.name }} </option>
                                     {% endfor %}                                                                                                                           
                                   </select>                                                                
-                                </div>                             
+                                </div>       
+                                
+                                {% if request.MOBILE %}<br>{% endif %}                                
+
                                 <div class="col-sm-4"> 
                                   <select id="selected_sensor_1_{{ entry.id }}" data-size="5" class="form-control" name="set_sensor_1_{{ entry.id }}" style="background-color:#27293D">    
                                     {% if device_id_1 != None and device_id_1 != "None" and entry.device_ieeeAddr_1 != None and entry.device_ieeeAddr_1 != "None" %}
@@ -659,7 +670,10 @@
                               {% if entry.main_operator_second_sensor == "and"  or entry.main_operator_second_sensor == "or" or 
                                     entry.main_operator_second_sensor == "None" or entry.main_operator_second_sensor == None %}
                                 
-                                </div>                                                 
+                                </div>      
+                                
+                                {% if request.MOBILE %}<br>{% endif %}    
+
                                 <div class="col-sm-2">     
                                   <select data-size="5" class="form-control" name="set_operator_1_{{ entry.id }}" style="background-color:#27293D">    
                                     {% if entry.operator_1 != None and entry.operator_1 != "None" and entry.operator_1 != "" %}
@@ -672,7 +686,10 @@
                                       <option value="{{each}}"> {{ each }} </option>
                                     {% endfor %}                                                                                                                   
                                   </select>        
-                                </div>                                           
+                                </div>        
+                                
+                                {% if request.MOBILE %}<br>{% endif %}    
+
                                 <div class="col-sm-2"> 
                                   <input type="text" class="form-control" placeholder="Value 1" name="set_value_1_{{ entry.id }}"
                                     value = {% if entry.value_1 != None and entry.value_1 != "None" %}"{{ entry.value_1 }}"{% else %}""{% endif %} /> 

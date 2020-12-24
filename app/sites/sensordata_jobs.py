@@ -1,13 +1,14 @@
-from flask               import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
-from flask_login         import current_user, login_required
-from werkzeug.exceptions import HTTPException, NotFound, abort
-from functools           import wraps
+from flask                       import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
+from flask_login                 import current_user, login_required
+from werkzeug.exceptions         import HTTPException, NotFound, abort
+from functools                   import wraps
 
 from app                         import app
 from app.backend.database_models import *
 from app.backend.file_management import GET_PATH, GET_ALL_SENSORDATA_FILES, WRITE_LOGFILE_SYSTEM
 from app.backend.checks          import CHECK_SENSORDATA_JOBS
 from app.backend.file_management import WRITE_LOGFILE_SYSTEM
+from app.backend.user_id         import SET_CURRENT_USER_ID
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
@@ -43,6 +44,8 @@ def sensordata_jobs():
     success_message_add_job         = False       
     error_message_add_job           = []
     error_message_datafile          = ""
+
+    SET_CURRENT_USER_ID(current_user.id)  
 
     # delete message
     if session.get('delete_job_success', None) != None:
@@ -846,7 +849,6 @@ def download_sensordata_file(filename):
         return send_from_directory(path, filename)
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filename + " | " + str(e)) 
         session['error_datafile'] = "Download Datafile || " + str(e)
 
 

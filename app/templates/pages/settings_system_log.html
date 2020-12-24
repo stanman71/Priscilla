@@ -36,7 +36,15 @@
                       </div>                            
                     </div>                                                    
                   </div>   
-                  <button type="submit"  onclick="window.location.href='/settings/system_log#'" name="get_log_output" class="btn btn-fill btn-info">SELECT</button>
+
+                  {% if request.MOBILE %}  
+                    <div class="text-center">
+                      <button type="submit"  onclick="window.location.href='/settings/system_log#'" name="get_log_output" class="btn btn-fill btn-info">SELECT</button>
+                    </div>
+                  {% else %}
+                    <button type="submit"  onclick="window.location.href='/settings/system_log#'" name="get_log_output" class="btn btn-fill btn-info">SELECT</button>
+                  {% endif %}         
+
                 </div>
               </form>     
             </div>
@@ -114,12 +122,18 @@
             <div class="card">
               <div class="card-body">
                 <form method="POST"> 
-                  <a class="btn btn-default pull-left" href="/settings/system_log/download/log_system.csv?time={{ timestamp }}" role="button">DOWNLOAD SYSTEM LOG</a>
 
-                  <!-- Button trigger modal -->
-                  {% if request.MOBILE %} <br><br><br> {% endif %}
-                  <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#reset_dialog">RESET SYSTEM LOG</button>
-                  {% if request.MOBILE %} <br><br> {% endif %}
+                  {% if request.MOBILE %}  
+                    <div class="text-center">
+                      <a class="btn btn-default pull-left" href="/settings/system_log/download/log_system.csv?time={{ timestamp }}" role="button">DOWNLOAD SYSTEM LOG</a>
+                      <br>
+                      <br>
+                      <button type="button" class="btn btn-fill btn-danger" data-toggle="modal" data-target="#reset_dialog">RESET SYSTEM LOG</button>
+                    </div>
+                  {% else %}
+                    <a class="btn btn-default pull-left" href="/settings/system_log/download/log_system.csv?time={{ timestamp }}" role="button">DOWNLOAD SYSTEM LOG</a>
+                    <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#reset_dialog">RESET SYSTEM LOG</button>
+                  {% endif %}     
 
                   <!-- Modal -->
                   <div class="modal fade" id="reset_dialog">

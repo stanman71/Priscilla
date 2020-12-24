@@ -1,5 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
-from flask_login      import UserMixin
+from flask_sqlalchemy            import SQLAlchemy
+from flask_login                 import UserMixin
 
 from app                         import app
 from app.backend.file_management import *
@@ -895,6 +895,11 @@ def GET_ALL_DEVICES(selector):
     if selector == "mqtt":
         for device in devices:   
             if device.gateway == "mqtt":               
+                device_list.append(device)     
+
+    if selector == "zigbee2mqtt":
+        for device in devices:   
+            if device.gateway == "zigbee2mqtt":               
                 device_list.append(device)     
 
     if selector == "controller":

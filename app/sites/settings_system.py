@@ -1,8 +1,8 @@
-from flask               import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
-from flask_login         import current_user, login_required
-from werkzeug.exceptions import HTTPException, NotFound, abort
-from functools           import wraps
-from ping3               import ping
+from flask                        import json, url_for, redirect, render_template, flash, g, session, jsonify, request, send_from_directory
+from flask_login                  import current_user, login_required
+from werkzeug.exceptions          import HTTPException, NotFound, abort
+from functools                    import wraps
+from ping3                        import ping
 
 from app                          import app
 from app.backend.database_models  import *
@@ -10,6 +10,7 @@ from app.backend.email            import SEND_EMAIL
 from app.backend.mqtt             import CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING
 from app.backend.file_management  import UPDATE_NETWORK_SETTINGS_LINUX, GET_ALL_BACKUP_FILES, BACKUP_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP, WRITE_LOGFILE_SYSTEM
 from app.backend.shared_resources import *
+from app.backend.user_id          import SET_CURRENT_USER_ID
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
@@ -113,6 +114,8 @@ def settings_system():
     ip_address = GET_SYSTEM_SETTINGS().ip_address
     gateway    = GET_SYSTEM_SETTINGS().gateway
     dhcp       = GET_SYSTEM_SETTINGS().dhcp
+
+    SET_CURRENT_USER_ID(current_user.id)  
 
     # restore message
     if session.get('restore_database_success', None) != None:

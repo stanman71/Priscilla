@@ -561,7 +561,21 @@
                       </div>   
                     </div>  
                     <div class="col-sm-6">    
+
+                      {% if request.MOBILE %}
+                  
+                        <br>
+                        <br>
+                        <div class="text-center">
+                          <button type="submit" onclick="window.location.href='/devices/management#mqtt_device_manually_adding'" name="add_mqtt_device_manually" class="btn btn-fill btn-primary pull-right">ADD DEVICE MANUALLY</button>
+                        </div>
+    
+                      {% else %}
+    
                       <button type="submit" onclick="window.location.href='/devices/management#mqtt_device_manually_adding'" name="add_mqtt_device_manually" class="btn btn-fill btn-primary pull-right">ADD DEVICE MANUALLY</button>
+    
+                      {% endif %}
+
                     </div>   
                   </div>                
                 </div>
@@ -666,7 +680,21 @@
                         </div>
                       </div>   
                       <div class="col-sm-9">    
-                        <button type="submit" onclick="window.location.href='/devices/management#device_exceptions'" name="add_device_exception" class="btn btn-fill btn-primary pull-right">ADD DEVICE EXCEPTION</button>
+
+                        {% if request.MOBILE %}
+                  
+                          <br>
+                          <br>
+                          <div class="text-center">
+                            <button type="submit" onclick="window.location.href='/devices/management#device_exceptions'" name="add_device_exception" class="btn btn-fill btn-primary pull-right">ADD DEVICE EXCEPTION</button>
+                          </div>
+      
+                        {% else %}
+      
+                          <button type="submit" onclick="window.location.href='/devices/management#device_exceptions'" name="add_device_exception" class="btn btn-fill btn-primary pull-right">ADD DEVICE EXCEPTION</button>
+      
+                        {% endif %}
+                        
                       </div>   
                     </div>  
                     <br>     
@@ -844,7 +872,18 @@
                           </tbody>
                         </table> 
                       </div>    
-                      <button type="submit" onclick="window.location.href='/devices/management#device_exceptions'" name="save_device_exceptions" class="btn btn-fill btn-primary">SAVE</button>
+
+                      {% if request.MOBILE %}
+                  
+                        <div class="text-center">
+                          <button type="submit" onclick="window.location.href='/devices/management#device_exceptions'" name="save_device_exceptions" class="btn btn-fill btn-primary">SAVE</button>
+                        </div>
+  
+                      {% else %}
+    
+                       <button type="submit" onclick="window.location.href='/devices/management#device_exceptions'" name="save_device_exceptions" class="btn btn-fill btn-primary">SAVE</button>
+    
+                      {% endif %}
 
                     {% endif %} 
 
@@ -912,7 +951,15 @@
                         </div>
                       </div>
                       <br>
-                      <input type=submit onclick="window.location.href='/devices/management#mqtt_device_updates'" class="btn btn-default" name="upload_mqtt_firmware" value="UPLOAD">
+
+                      {% if request.MOBILE %}  
+                        <div class="text-center">
+                          <input type=submit onclick="window.location.href='/devices/management#mqtt_device_updates'" class="btn btn-default" name="upload_mqtt_firmware" value="UPLOAD">
+                        </div>
+                      {% else %}
+                        <input type=submit onclick="window.location.href='/devices/management#mqtt_device_updates'" class="btn btn-default" name="upload_mqtt_firmware" value="UPLOAD">
+                      {% endif %}
+
                     </form>   
  
                     <script>
@@ -1114,8 +1161,16 @@
                     <br>
                     <div id="zigbee2mqtt_pairing_status"></div>                     
                   </div>   
-                  <div class="card-footer">                  
-                    <button type="submit" onclick="window.location.href='/devices/management#zigbee_pairing'" name="set_zigbee_pairing" class="btn btn-fill btn-primary">SAVE</button>
+                  <div class="card-footer">       
+                    
+                    {% if request.MOBILE %}  
+                      <div class="text-center">
+                        <button type="submit" onclick="window.location.href='/devices/management#zigbee_pairing'" name="set_zigbee_pairing" class="btn btn-fill btn-primary">SAVE</button>
+                      </div>
+                    {% else %}
+                      <button type="submit" onclick="window.location.href='/devices/management#zigbee_pairing'" name="set_zigbee_pairing" class="btn btn-fill btn-primary">SAVE</button>
+                    {% endif %}                    
+
                   </div>                
                 </form>
               </div>
@@ -1169,7 +1224,15 @@
                       </div>
                       <div class="col-sm-3">       
 
-                        <button type="button" class="btn btn-fill btn-info pull-right" data-toggle="modal" data-target="#touchlink_dialog">ACTIVATE</button>
+                        {% if request.MOBILE %}  
+                          <br>
+                          <br>
+                          <div class="text-center">
+                            <button type="button" class="btn btn-fill btn-info pull-right" data-toggle="modal" data-target="#touchlink_dialog">ACTIVATE</button>
+                          </div>
+                        {% else %}
+                          <button type="button" class="btn btn-fill btn-info pull-right" data-toggle="modal" data-target="#touchlink_dialog">ACTIVATE</button>
+                        {% endif %}      
 
                         <!-- Modal -->
                         <div class="modal fade" id="touchlink_dialog">
@@ -1270,12 +1333,18 @@
             <div class="card">
               <div class="card-body">
                 <form method="POST"> 
-                  <a class="btn btn-default" href="/devices/management/log/download/log_devices.csv?time={{ timestamp }}" role="button">DOWNLOAD DEVICE LOG</a>                
 
-                  <!-- Button trigger modal -->
-                  {% if request.MOBILE %} <br><br> {% endif %}
-                  <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#reset_dialog">RESET DEVICE LOG</button>
-                  {% if request.MOBILE %} <br><br> {% endif %}
+                  {% if request.MOBILE %}  
+                    <div class="text-center">
+                      <a class="btn btn-default" href="/devices/management/log/download/log_devices.csv?time={{ timestamp }}" role="button">DOWNLOAD DEVICE LOG</a>
+                      <br>
+                      <br>
+                      <button type="button" class="btn btn-fill btn-danger" data-toggle="modal" data-target="#reset_dialog">RESET DEVICE LOG</button>
+                    </div>
+                  {% else %}
+                    <a class="btn btn-default" href="/devices/management/log/download/log_devices.csv?time={{ timestamp }}" role="button">DOWNLOAD DEVICE LOG</a>  
+                    <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#reset_dialog">RESET DEVICE LOG</button>
+                  {% endif %}    
 
                   <!-- Modal -->
                   <div class="modal fade" id="reset_dialog">

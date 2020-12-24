@@ -36,12 +36,28 @@
                 <div class="card-body">                          
                   Spotify >>> {% if spotify_user == "" %}<font color="salmon"> Not logged in </font>{% else %}<font color="lightgreen"> {{ spotify_user }} </font>{% endif %}</span>
                 </div>   
-                <div class="card-footer">                                                                    
-                  {% if spotify_user == "" %}
-                    <a href="/music/spotify/login#" class="btn btn-fill btn-info" role="button">Login</a> 
-                  {% else %}    
-                    <a href="/music/spotify/logout#" class="btn btn-fill btn-warning" role="button">Logout</a>  
-                  {% endif %}  
+                <div class="card-footer">        
+                  
+                  {% if request.MOBILE %}
+                  
+                    <div class="text-center">
+                      {% if spotify_user == "" %}
+                        <a href="/music/spotify/login#" class="btn btn-fill btn-info" role="button">Login</a> 
+                      {% else %}    
+                        <a href="/music/spotify/logout#" class="btn btn-fill btn-warning" role="button">Logout</a>  
+                      {% endif %}  
+                    </div>
+
+                  {% else %}
+
+                    {% if spotify_user == "" %}
+                      <a href="/music/spotify/login#" class="btn btn-fill btn-info" role="button">Login</a> 
+                    {% else %}    
+                      <a href="/music/spotify/logout#" class="btn btn-fill btn-warning" role="button">Logout</a>  
+                    {% endif %}  
+
+                  {% endif %}                  
+
                 </div>  
               </form>
             </div>
@@ -625,7 +641,9 @@
                         <input type="text" class="form-control" name="set_spotify_search_track" placeholder="Track" value="{{ track_name }}" />
                       </div>           
                       <div class="col-sm-3"> 
+
                         {% if request.MOBILE %} <br> {% endif %} 
+                        
                         <input type="text" class="form-control" name="set_spotify_search_track_artist" placeholder="Artist (Optional)" value="{{ track_artist }}" />
                       </div>  
                     </div>    
@@ -744,7 +762,9 @@
                         <input type="text" class="form-control" name="set_spotify_search_album" placeholder="Album" value="{{ album_name }}" />
                       </div>           
                       <div class="col-sm-3"> 
+
                         {% if request.MOBILE %} <br> {% endif %} 
+
                         <input type="text" class="form-control" name="set_spotify_search_album_artist" placeholder="Artist (Optional)" value="{{ album_artist }}" />
                       </div>  
                     </div>
@@ -957,15 +977,20 @@
                     </table>
                   </div>    
                 </div>  
-                <div class="card-footer">                   
-                  <button type="submit" onclick="window.location.href='/music#client_music'" name="save_client_music_settings" class="btn btn-fill btn-primary">SAVE</button>
-                  {% if request.MOBILE %}
-                    <br>
-                    <br>                    
-                    <button type="submit" onclick="window.location.href='/music#client_music'" name="restart_client_music_services" class="btn btn-fill btn-info">RESTART SERVICES</button>                  
-                  {% else %} 
-                    <button type="submit" onclick="window.location.href='/music#client_music'" name="restart_client_music_services" class="btn btn-fill btn-info pull-right">RESTART SERVICES</button>    
-                  {% endif %} 
+                <div class="card-footer">      
+                  
+                  {% if request.MOBILE %}        
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/music#client_music'" name="save_client_music_settings" class="btn btn-fill btn-primary">SAVE</button>
+                      <br>
+                      <br>                    
+                      <button type="submit" onclick="window.location.href='/music#client_music'" name="restart_client_music_services" class="btn btn-fill btn-info">RESTART SERVICES</button>                              
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/music#client_music'" name="save_client_music_settings" class="btn btn-fill btn-primary">SAVE</button>
+                    <button type="submit" onclick="window.location.href='/music#client_music'" name="restart_client_music_services" class="btn btn-fill btn-info pull-right">RESTART SERVICES</button>  
+                  {% endif %}                  
+
                 </div>
               </form>
             </div>

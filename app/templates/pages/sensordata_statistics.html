@@ -32,7 +32,9 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-4">
+
                       {% if request.MOBILE %} <br> {% endif %}
+
                       <select class="form-control" name="get_file_1" style="background-color:#27293D"> 
                         {% if data_file_1 != "" %}
                           <option value= "{{ data_file_1 }}" > {{ data_file_1 }} </option> 
@@ -50,7 +52,9 @@
                       </select>  
                     </div>     
                     <div class="col-md-4">
-                      {% if request.MOBILE %} <br> {% endif %}                    
+
+                      {% if request.MOBILE %} <br> {% endif %}        
+
                       <select class="form-control" name="get_file_2" style="background-color:#27293D"> 
                         {% if data_file_2 != "" %}
                           <option value= "{{ data_file_2 }}" > {{ data_file_2 }} </option> 
@@ -68,7 +72,9 @@
                       </select>  
                     </div>     
                     <div class="col-md-4">
-                      {% if request.MOBILE %} <br> {% endif %}                    
+
+                      {% if request.MOBILE %} <br> {% endif %}     
+
                       <select class="form-control" name="get_file_3" style="background-color:#27293D"> 
                         {% if data_file_3 != "" %}
                           <option value= "{{ data_file_3 }}" > {{ data_file_3 }} </option> 
@@ -87,7 +93,15 @@
                     </div>
                   </div>
                   <br>
-                  <button type="submit" onclick="window.location.href='/sensordata/statistics#select_datafiles'" name="select_datafiles" class="btn btn-fill btn-info">SELECT DATAFILES</button>
+
+                  {% if request.MOBILE %}    
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/sensordata/statistics#select_datafiles'" name="select_datafiles" class="btn btn-fill btn-info">SELECT DATAFILES</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/sensordata/statistics#select_datafiles'" name="select_datafiles" class="btn btn-fill btn-info">SELECT DATAFILES</button>
+                  {% endif %}
+
                 </div>
               </div>
 
@@ -132,7 +146,9 @@
                       </select>        
                     </div> 
                     <div class="col-sm-3">
-                      {% if request.MOBILE %} <br> {% endif %}                    
+                      
+                      {% if request.MOBILE %} <br> {% endif %}      
+
                       <select class="form-control" name="set_date_stop" style="background-color:#27293D"> 
                         <option value= "{{ date_stop }}" > {{ date_stop }} </option>
                         <option disabled>------------------</option> 
@@ -145,7 +161,15 @@
                   </div>
                 </div>
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/sensordata/statistics#create_graph'" name="create_graph" class="btn btn-fill btn-info">CREATE GRAPH</button>
+
+                  {% if request.MOBILE %}           
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/sensordata/statistics#create_graph'" name="create_graph" class="btn btn-fill btn-info">CREATE GRAPH</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/sensordata/statistics#create_graph'" name="create_graph" class="btn btn-fill btn-info">CREATE GRAPH</button>
+                  {% endif %}
+
                 </div>
               </form>
             </div>

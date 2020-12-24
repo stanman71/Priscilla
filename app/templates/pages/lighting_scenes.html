@@ -1438,7 +1438,15 @@
             <div class="card">
               <form method="POST">         
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/lighting/scenes#'" name="add_lighting_scene" class="btn btn-fill btn-primary">NEW SCENE</button>
+
+                  {% if request.MOBILE %} 
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/lighting/scenes#'" name="add_lighting_scene" class="btn btn-fill btn-primary">NEW SCENE</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/lighting/scenes#'" name="add_lighting_scene" class="btn btn-fill btn-primary">NEW SCENE</button>
+                  {% endif %}
+
                 </div>
               </form>
             </div>
@@ -1512,477 +1520,453 @@
               <form method="POST">  
                 <div id="collapse{{entry.id}}" class="collapse{% if entry.collapse == "True" %}.show{% endif %}">    
 
-{% if request.MOBILE %}   
+<!-------------------->
+<!-- mobile section -->
+<!-------------------->
+
+                  {% if request.MOBILE %}   
   
-                  <div class="card-body"> 
-                    <div class="table-responsive">
-                      <table class="table tablesorter">
-                        <tbody> 
-                          <tr style="border-style:hidden;">
-                            <td style="width:3%">
-                              <a href="/lighting/scenes/position/up/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-up"></i></a>
-                              <a href="/lighting/scenes/position/down/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-down"></i></a>                                
-                            </td>                 
-                            <td style="width:20%" class="minwidth_200">
-                              <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                                
-                            </td> 
-                            <td></td>
-                            <td style="width:5%">
-                              <a href="/lighting/scenes/add_light/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-add"></i></font></a>                          
-                              <br> 
-                              <br>                                                                                      
-                              <a href="/lighting/scenes/remove_light/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-delete"></i></font></a>    
-                            </td> 
-                          </tr>
+                    <div class="card-body"> 
+                      <div class="table-responsive">
+                        <table class="table tablesorter">
+                          <tbody> 
+                            <tr style="border-style:hidden;">
+                              <td style="width:3%">
+                                <a href="/lighting/scenes/position/up/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-up"></i></a>
+                                <a href="/lighting/scenes/position/down/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-down"></i></a>                                
+                              </td>                 
+                              <td style="width:20%" class="minwidth_200">
+                                <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                                
+                              </td> 
+                              <td></td>
+                              <td style="width:5%">
+                                <a href="/lighting/scenes/add_light/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-add"></i></font></a>                          
+                                <br> 
+                                <br>                                                                                      
+                                <a href="/lighting/scenes/remove_light/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-delete"></i></font></a>    
+                              </td> 
+                            </tr>
 
 <!-- mobile section 1 -->
 
-                          <tr style="border-style:hidden;">                        
-                            <td colspan="4">   
-                              Light 1  
-                            </td>
-                          </tr>
-                          <tr style="border-style:hidden;">                        
-                            <td colspan="4">                  
-                              <div class="wrap">
-                                <div class="half">       
-                                  <div class="colorPicker_1_{{ entry.id }}"></div>
-                                </div>
-                              </div>  
-                              <br>  
-                              <input id="brightness_slider_lighting_scenes_1_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_1_{{entry.id}}" 
-                                name="set_brightness_1_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_1}}"/> 
-                              <br>
-                              <br>                                                        
-                            </td>
-                          </tr>
+                            <tr style="border-style:hidden;">                        
+                              <td colspan="4">   
+                                Light 1  
+                              </td>
+                            </tr>
+                            <tr style="border-style:hidden;">                        
+                              <td colspan="4">                  
+                                <div class="wrap">
+                                  <div class="half">       
+                                    <div class="colorPicker_1_{{ entry.id }}"></div>
+                                  </div>
+                                </div>  
+                                <br>  
+                                <input id="brightness_slider_lighting_scenes_1_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_1_{{entry.id}}" 
+                                  name="set_brightness_1_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_1}}"/> 
+                                <br>
+                                <br>                                                        
+                              </td>
+                            </tr>
 
 <!-- mobile section 2 -->
 
-                          {% if entry.active_light_2 == "True" %}   
+                            {% if entry.active_light_2 == "True" %}   
 
-                            <tr style="border-style:hidden;">                        
-                              <td colspan="4">   
-                                Light 2
-                              </td>
-                            </tr>
-                            <tr style="border-style:hidden;">
-                              <td colspan="4">                                
-                                <div class="wrap">
-                                  <div class="half">
-                                    <div class="colorPicker_2_{{ entry.id }}"></div>
+                              <tr style="border-style:hidden;">                        
+                                <td colspan="4">   
+                                  Light 2
+                                </td>
+                              </tr>
+                              <tr style="border-style:hidden;">
+                                <td colspan="4">                                
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_2_{{ entry.id }}"></div>
+                                    </div>
                                   </div>
-                                </div>
+                                  <br>  
+                                  <input id="brightness_slider_lighting_scenes_2_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_2_{{entry.id}}" 
+                                    name="set_brightness_2_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_2}}"/> 
+                                  <br>
+                                  <br>                                
+                                </td>
+                              </tr>
+
+                            {% endif %}
+
+<!-- mobile section 3 -->
+
+                            {% if entry.active_light_3 == "True" %}   
+
+                              <tr style="border-style:hidden;">                        
+                                <td colspan="4">   
+                                  Light 3
+                                </td>
+                              </tr>
+                              <tr style="border-style:hidden;">
+                                <td colspan="4">                                
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_3_{{ entry.id }}"></div>
+                                    </div>
+                                  </div>
+                                  <br>  
+                                  <input id="brightness_slider_lighting_scenes_3_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_3_{{entry.id}}" 
+                                    name="set_brightness_3_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_3}}"/> 
+                                  <br>
+                                  <br>                                
+                                </td>
+                              </tr>
+
+                            {% endif %}
+
+<!-- mobile section 4 -->
+
+                            {% if entry.active_light_4 == "True" %}   
+
+                              <tr style="border-style:hidden;">                        
+                                <td colspan="4">   
+                                  Light 4
+                                </td>
+                              </tr>
+                              <tr style="border-style:hidden;">
+                                <td colspan="4">                                
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_4_{{ entry.id }}"></div>
+                                    </div>
+                                  </div>
+                                  <br>  
+                                  <input id="brightness_slider_lighting_scenes_4_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_4_{{entry.id}}" 
+                                    name="set_brightness_4_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_4}}"/> 
+                                  <br>
+                                  <br>                                
+                                </td>
+                              </tr>
+
+                            {% endif %}
+
+<!-- mobile section 5 -->
+
+                            {% if entry.active_light_5 == "True" %}   
+
+                              <tr style="border-style:hidden;">                        
+                                <td colspan="4">   
+                                  Light 5
+                                </td>
+                              </tr>
+                              <tr style="border-style:hidden;">
+                                <td colspan="4">                                
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_5_{{ entry.id }}"></div>
+                                    </div>
+                                  </div>
+                                  <br>  
+                                  <input id="brightness_slider_lighting_scenes_5_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_5_{{entry.id}}" 
+                                    name="set_brightness_5_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_5}}"/> 
+                                  <br>
+                                  <br>                                
+                                </td>
+                              </tr>
+
+                            {% endif %}
+
+<!-- mobile section 6 -->
+
+                            {% if entry.active_light_6 == "True" %}   
+
+                              <tr style="border-style:hidden;">                        
+                                <td colspan="4">   
+                                  Light 6
+                                </td>
+                              </tr>
+                              <tr style="border-style:hidden;">
+                                <td colspan="4">                                
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_6_{{ entry.id }}"></div>
+                                    </div>
+                                  </div>
+                                  <br>  
+                                  <input id="brightness_slider_lighting_scenes_6_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_6_{{entry.id}}" 
+                                    name="set_brightness_6_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_6}}"/> 
+                                  <br>
+                                  <br>                                
+                                </td>
+                              </tr>
+
+                            {% endif %}
+
+<!-- mobile section 7 -->
+
+                            {% if entry.active_light_7 == "True" %}   
+
+                              <tr style="border-style:hidden;">                        
+                                <td colspan="4">   
+                                  Light 7
+                                </td>
+                              </tr>
+                              <tr style="border-style:hidden;">
+                                <td colspan="4">                                
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_7_{{ entry.id }}"></div>
+                                    </div>
+                                  </div>
+                                  <br>  
+                                  <input id="brightness_slider_lighting_scenes_7_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_7_{{entry.id}}" 
+                                    name="set_brightness_7_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_7}}"/> 
+                                  <br>
+                                  <br>                                
+                                </td>
+                              </tr>
+
+                            {% endif %}
+
+<!-- mobile section 8 -->
+
+                            {% if entry.active_light_8 == "True" %}   
+
+                              <tr style="border-style:hidden;">                        
+                                <td colspan="4">   
+                                  Light 8
+                                </td>
+                              </tr>
+                              <tr style="border-style:hidden;">
+                                <td colspan="4">                                
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_8_{{ entry.id }}"></div>
+                                    </div>
+                                  </div>
+                                  <br>  
+                                  <input id="brightness_slider_lighting_scenes_8_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_8_{{entry.id}}" 
+                                    name="set_brightness_8_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_8}}"/> 
+                                  <br>
+                                  <br>                                
+                                </td>
+                              </tr>
+
+                            {% endif %}
+
+<!-- mobile section 9 -->
+
+                            {% if entry.active_light_9 == "True" %}   
+
+                              <tr style="border-style:hidden;">                        
+                                <td colspan="4">   
+                                  Light 9
+                                </td>
+                              </tr>
+                              <tr style="border-style:hidden;">
+                                <td colspan="4">                                
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_9_{{ entry.id }}"></div>
+                                    </div>
+                                  </div>
+                                  <br>  
+                                  <input id="brightness_slider_lighting_scenes_9_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_9_{{entry.id}}" 
+                                    name="set_brightness_9_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_9}}"/> 
+                                  <br>
+                                  <br>                                
+                                </td>
+                              </tr>
+
+                            {% endif %}                     
+
+                          </tbody>
+                        </table> 
+                      </div>  
+  
+                      <div class="text-center">
+                        <button type="submit" onclick="window.location.href='/lighting/scenes#table_{{entry.id}}'" name="save_lighting_scene_settings" class="btn btn-fill btn-primary">SAVE</button>
+                      </div>    
+                      <br>
+                      <br>
+  
+                      <div class="vertical_center">                 
+                        <select class="form-control" data-size="5" name="set_lighting_group_{{entry.id}}" style="background-color:#27293D">  
+                          {% if last_group_tested_id != "" %} 
+                            <option value="{{last_group_tested_id }}"> {{ last_group_tested_name }} </option>
+                            <option disabled>------------------</option> 
+                          {% endif %}
+                          {% for each in dropdown_list_lighting_groups %}
+                            <option value="{{each.id }}"> {{ each.name }} </option>
+                          {% endfor %}     
+                        </select>       
+                      </div>     
+                      <br>
+                      <br>     
+                      
+                      <div class="vertical_center">   
+
+                        {% if request.MOBILE %}<br>{% endif %}     
+                            
+                        <input id="brightness_slider_lighting_scenes_test_setting_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_test_setting_{{entry.id}}"
+                          name="set_lighting_group_brightness_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100"/> 
+                      </div>  
+                      <button type="submit" onclick="window.location.href='/lighting/scenes#table_{{entry.id}}'" name="test_lighting_scene" class="btn btn-fill btn-primary">TEST SCENE</button>
+
+                      <!-- Button trigger modal -->
+                      <div class="pull-right">  
+                        <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>
+                      </div>
+                      <!-- Modal -->
+                      <div class="modal fade" id="delete_dialog_{{entry.id}}">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Delete {{entry.name}} ?</h5>
+                            </div>          
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                              <button type="submit" onclick="window.location.href='/lighting/scenes#'" name="delete_lighting_scene_{{entry.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
+                            </div>                              
+                          </div>
+                        </div>
+                      </div>      
+                    </div>
+
+<!--------------------->
+<!-- desktop section -->
+<!--------------------->
+
+                  {% else %}
+          
+                    <div class="card-body"> 
+                      <div class="table-responsive">
+                        <table class="table tablesorter">
+                          <tbody> 
+                            <tr style="border-style:hidden;">
+                              <td style="width:3%">
+                                <a href="/lighting/scenes/position/up/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-up"></i></a>
+                                <a href="/lighting/scenes/position/down/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-down"></i></a>                                
+                              </td>                 
+                              <td style="width:20%" class="minwidth_200">
+                                <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                                
+                              </td> 
+                              <td></td>
+                              <td style="width:5%">
+                                <a href="/lighting/scenes/add_light/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-add"></i></font></a>                          
+                                <br> 
+                                <br>                                                                                      
+                                <a href="/lighting/scenes/remove_light/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-delete"></i></font></a>    
+                              </td> 
+                              <td></td> 
+
+<!-- desktop section 1 / 2 / 3 -->
+
+                              <td></td>
+                              <td style="width:24%">  
+                                Light 1   
+                                <br>
+                                <br>               
+                                <div class="wrap">
+                                  <div class="half">       
+                                    <div class="colorPicker_1_{{ entry.id }}"></div>
+                                  </div>
+                                </div>  
+                                <br>  
+                                <input id="brightness_slider_lighting_scenes_1_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_1_{{entry.id}}" 
+                                  name="set_brightness_1_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_1}}"/> 
+                                <br>
+                                <br>                                                        
+                              </td>
+
+                              {% if entry.active_light_2 == "True" %}   
+
+                                <td style="width:24%">
+                                  Light 2                              
+                                  <br>
+                                  <br>                                
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_2_{{ entry.id }}"></div>
+                                    </div>
+                                  </div>
                                 <br>  
                                 <input id="brightness_slider_lighting_scenes_2_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_2_{{entry.id}}" 
                                   name="set_brightness_2_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_2}}"/> 
                                 <br>
                                 <br>                                
-                              </td>
-                            </tr>
+                                </th>
 
-                          {% endif %}
+                              {% else %}   
+                                <td style="width:24%"></td>
+                              {% endif %}   
 
-<!-- mobile section 3 -->
+                              {% if entry.active_light_3 == "True" %} 
 
-                          {% if entry.active_light_3 == "True" %}   
-
-                            <tr style="border-style:hidden;">                        
-                              <td colspan="4">   
-                                Light 3
-                              </td>
-                            </tr>
-                            <tr style="border-style:hidden;">
-                              <td colspan="4">                                
-                                <div class="wrap">
-                                  <div class="half">
-                                    <div class="colorPicker_3_{{ entry.id }}"></div>
+                                <td style="width:24%">   
+                                  Light 3                                  
+                                  <br>
+                                  <br>                                                   
+                                  <div class="wrap">
+                                    <div class="half">
+                                      <div class="colorPicker_3_{{ entry.id }}"></div>
+                                    </div>
                                   </div>
-                                </div>
                                 <br>  
                                 <input id="brightness_slider_lighting_scenes_3_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_3_{{entry.id}}" 
                                   name="set_brightness_3_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_3}}"/> 
                                 <br>
-                                <br>                                
-                              </td>
-                            </tr>
+                                <br>                                       
+                                </th>
 
-                          {% endif %}
-
-<!-- mobile section 4 -->
-
-                          {% if entry.active_light_4 == "True" %}   
-
-                            <tr style="border-style:hidden;">                        
-                              <td colspan="4">   
-                                Light 4
-                              </td>
-                            </tr>
-                            <tr style="border-style:hidden;">
-                              <td colspan="4">                                
-                                <div class="wrap">
-                                  <div class="half">
-                                    <div class="colorPicker_4_{{ entry.id }}"></div>
-                                  </div>
-                                </div>
-                                <br>  
-                                <input id="brightness_slider_lighting_scenes_4_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_4_{{entry.id}}" 
-                                  name="set_brightness_4_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_4}}"/> 
-                                <br>
-                                <br>                                
-                              </td>
-                            </tr>
-
-                          {% endif %}
-
-<!-- mobile section 5 -->
-
-                          {% if entry.active_light_5 == "True" %}   
-
-                            <tr style="border-style:hidden;">                        
-                              <td colspan="4">   
-                                Light 5
-                              </td>
-                            </tr>
-                            <tr style="border-style:hidden;">
-                              <td colspan="4">                                
-                                <div class="wrap">
-                                  <div class="half">
-                                    <div class="colorPicker_5_{{ entry.id }}"></div>
-                                  </div>
-                                </div>
-                                <br>  
-                                <input id="brightness_slider_lighting_scenes_5_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_5_{{entry.id}}" 
-                                  name="set_brightness_5_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_5}}"/> 
-                                <br>
-                                <br>                                
-                              </td>
-                            </tr>
-
-                          {% endif %}
-
-<!-- mobile section 6 -->
-
-                          {% if entry.active_light_6 == "True" %}   
-
-                            <tr style="border-style:hidden;">                        
-                              <td colspan="4">   
-                                Light 6
-                              </td>
-                            </tr>
-                            <tr style="border-style:hidden;">
-                              <td colspan="4">                                
-                                <div class="wrap">
-                                  <div class="half">
-                                    <div class="colorPicker_6_{{ entry.id }}"></div>
-                                  </div>
-                                </div>
-                                <br>  
-                                <input id="brightness_slider_lighting_scenes_6_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_6_{{entry.id}}" 
-                                  name="set_brightness_6_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_6}}"/> 
-                                <br>
-                                <br>                                
-                              </td>
-                            </tr>
-
-                          {% endif %}
-
-<!-- mobile section 7 -->
-
-                          {% if entry.active_light_7 == "True" %}   
-
-                            <tr style="border-style:hidden;">                        
-                              <td colspan="4">   
-                                Light 7
-                              </td>
-                            </tr>
-                            <tr style="border-style:hidden;">
-                              <td colspan="4">                                
-                                <div class="wrap">
-                                  <div class="half">
-                                    <div class="colorPicker_7_{{ entry.id }}"></div>
-                                  </div>
-                                </div>
-                                <br>  
-                                <input id="brightness_slider_lighting_scenes_7_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_7_{{entry.id}}" 
-                                  name="set_brightness_7_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_7}}"/> 
-                                <br>
-                                <br>                                
-                              </td>
-                            </tr>
-
-                          {% endif %}
-
-<!-- mobile section 8 -->
-
-                          {% if entry.active_light_8 == "True" %}   
-
-                            <tr style="border-style:hidden;">                        
-                              <td colspan="4">   
-                                Light 8
-                              </td>
-                            </tr>
-                            <tr style="border-style:hidden;">
-                              <td colspan="4">                                
-                                <div class="wrap">
-                                  <div class="half">
-                                    <div class="colorPicker_8_{{ entry.id }}"></div>
-                                  </div>
-                                </div>
-                                <br>  
-                                <input id="brightness_slider_lighting_scenes_8_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_8_{{entry.id}}" 
-                                  name="set_brightness_8_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_8}}"/> 
-                                <br>
-                                <br>                                
-                              </td>
-                            </tr>
-
-                          {% endif %}
-
-<!-- mobile section 9 -->
-
-                          {% if entry.active_light_9 == "True" %}   
-
-                            <tr style="border-style:hidden;">                        
-                              <td colspan="4">   
-                                Light 9
-                              </td>
-                            </tr>
-                            <tr style="border-style:hidden;">
-                              <td colspan="4">                                
-                                <div class="wrap">
-                                  <div class="half">
-                                    <div class="colorPicker_9_{{ entry.id }}"></div>
-                                  </div>
-                                </div>
-                                <br>  
-                                <input id="brightness_slider_lighting_scenes_9_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_9_{{entry.id}}" 
-                                  name="set_brightness_9_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_9}}"/> 
-                                <br>
-                                <br>                                
-                              </td>
-                            </tr>
-
-                          {% endif %}                     
-
-                        </tbody>
-                      </table> 
-                    </div> 
-                  </div>  
-
-{% else %}
-          
-                  <div class="card-body"> 
-                    <div class="table-responsive">
-                      <table class="table tablesorter">
-                        <tbody> 
-                          <tr style="border-style:hidden;">
-                            <td style="width:3%">
-                              <a href="/lighting/scenes/position/up/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-up"></i></a>
-                              <a href="/lighting/scenes/position/down/{{ entry.id }}#table_{{entry.id}}"><i class="tim-icons icon-minimal-down"></i></a>                                
-                            </td>                 
-                            <td style="width:20%" class="minwidth_200">
-                              <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                                
-                            </td> 
-                            <td></td>
-                            <td style="width:5%">
-                              <a href="/lighting/scenes/add_light/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-add"></i></font></a>                          
-                              <br> 
-                              <br>                                                                                      
-                              <a href="/lighting/scenes/remove_light/{{ entry.id }}#table_{{entry.id}}"><font size="4"><i class="tim-icons icon-simple-delete"></i></font></a>    
-                            </td> 
-                            <td></td> 
-
-<!-- desktop section 1 / 2 / 3 -->
-
-                            <td></td>
-                            <td style="width:24%">  
-                              Light 1   
-                              <br>
-                              <br>               
-                              <div class="wrap">
-                                <div class="half">       
-                                  <div class="colorPicker_1_{{ entry.id }}"></div>
-                                </div>
-                              </div>  
-                              <br>  
-                              <input id="brightness_slider_lighting_scenes_1_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_1_{{entry.id}}" 
-                                name="set_brightness_1_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_1}}"/> 
-                              <br>
-                              <br>                                                        
-                            </td>
-
-                            {% if entry.active_light_2 == "True" %}   
-
-                              <td style="width:24%">
-                                Light 2                              
-                                <br>
-                                <br>                                
-                                <div class="wrap">
-                                  <div class="half">
-                                    <div class="colorPicker_2_{{ entry.id }}"></div>
-                                  </div>
-                                </div>
-                              <br>  
-                              <input id="brightness_slider_lighting_scenes_2_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_2_{{entry.id}}" 
-                                name="set_brightness_2_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_2}}"/> 
-                              <br>
-                              <br>                                
-                              </th>
-
-                            {% else %}   
-                              <td style="width:24%"></td>
-                            {% endif %}   
-
-                            {% if entry.active_light_3 == "True" %} 
-
-                              <td style="width:24%">   
-                                Light 3                                  
-                                <br>
-                                <br>                                                   
-                                <div class="wrap">
-                                  <div class="half">
-                                    <div class="colorPicker_3_{{ entry.id }}"></div>
-                                  </div>
-                                </div>
-                              <br>  
-                              <input id="brightness_slider_lighting_scenes_3_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_3_{{entry.id}}" 
-                                name="set_brightness_3_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_3}}"/> 
-                              <br>
-                              <br>                                       
-                              </th>
-
-                            {% else %}   
-                              <td style="width:24%"></td>
-                            {% endif %}   
+                              {% else %}   
+                                <td style="width:24%"></td>
+                              {% endif %}   
 
 <!-- desktop section 4 / 5 / 6 -->
 
-                          {% if entry.active_light_4 == "True" %} 
+                            {% if entry.active_light_4 == "True" %} 
 
-                            </tr>
-                            <tr style="border-style:hidden;">
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <p style="visibility: hidden;">
-                                <td style="width:24%">
-                                  Light 4                                  
-                                  <br>
-                                  <br>                                  
-                                  <div class="wrap">
-                                    <div class="half">
-                                      <div class="colorPicker_4_{{ entry.id }}"></div>
-                                    </div>
-                                  </div>    
-                                  <br>  
-                                  <input id="brightness_slider_lighting_scenes_4_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_4_{{entry.id}}" 
-                                    name="set_brightness_4_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_4}}"/> 
-                                  <br>
-                                  <br>                                                                    
-                                </td>
-                              </p>
-                              
-                            {% if entry.active_light_5 == "True" %} 
-
-                              <p style="visibility: hidden;">
-                                <td style="width:24%">
-                                  Light 5                                
-                                  <br>
-                                  <br>                                  
-                                  <div class="wrap">
-                                    <div class="half">
-                                      <div class="colorPicker_5_{{ entry.id }}"></div>
-                                    </div>
-                                  </div>      
-                                  <br>  
-                                  <input id="brightness_slider_lighting_scenes_5_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_5_{{entry.id}}" 
-                                    name="set_brightness_5_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_5}}"/> 
-                                  <br>
-                                  <br>                                                                   
-                                </td>
-                              </p>
-
-                            {% else %}   
-                              <td style="width:24%"></td>
-                            {% endif %}   
-
-                            {% if entry.active_light_6 == "True" %} 
-
-                              <p style="visibility: hidden;">
-                                <td style="width:24%">
-                                  Light 6                                 
-                                  <br>
-                                  <br>                                 
-                                  <div class="wrap">
-                                    <div class="half">
-                                      <div class="colorPicker_6_{{ entry.id }}"></div>
-                                    </div>
-                                  </div>    
-                                  <br>  
-                                  <input id="brightness_slider_lighting_scenes_6_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_6_{{entry.id}}" 
-                                    name="set_brightness_6_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_6}}"/> 
-                                  <br>
-                                  <br>                                                                
-                                </td>
-                              </p>
-                                                      
-                            {% else %}   
-                              <td style="width:24%"></td>
-                            {% endif %}                                                                              
-
-                          {% endif %}
-
-<!-- desktop section 7 / 8 / 9 -->
-
-                          {% if entry.active_light_7 == "True" %} 
-
-                            </tr>
-                            <tr style="border-style:hidden;">
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <p style="visibility: hidden;">
-                                <td style="width:24%">
-                                  Light 7                                  
-                                  <br>
-                                  <br>                                  
-                                  <div class="wrap">
-                                    <div class="half">
-                                      <div class="colorPicker_7_{{ entry.id }}"></div>
-                                    </div>
-                                  </div>    
-                                  <br>  
-                                  <input id="brightness_slider_lighting_scenes_7_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_7_{{entry.id}}" 
-                                    name="set_brightness_7_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_7}}"/> 
-                                  <br>
-                                  <br>    
-                                </td>
-                              </p>
-    
-                              {% if entry.active_light_8 == "True" %} 
+                              </tr>
+                              <tr style="border-style:hidden;">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <p style="visibility: hidden;">
+                                  <td style="width:24%">
+                                    Light 4                                  
+                                    <br>
+                                    <br>                                  
+                                    <div class="wrap">
+                                      <div class="half">
+                                        <div class="colorPicker_4_{{ entry.id }}"></div>
+                                      </div>
+                                    </div>    
+                                    <br>  
+                                    <input id="brightness_slider_lighting_scenes_4_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_4_{{entry.id}}" 
+                                      name="set_brightness_4_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_4}}"/> 
+                                    <br>
+                                    <br>                                                                    
+                                  </td>
+                                </p>
+                                
+                              {% if entry.active_light_5 == "True" %} 
 
                                 <p style="visibility: hidden;">
                                   <td style="width:24%">
-                                    Light 8                                    
+                                    Light 5                                
                                     <br>
-                                    <br>                                      
+                                    <br>                                  
                                     <div class="wrap">
                                       <div class="half">
-                                        <div class="colorPicker_8_{{ entry.id }}"></div>
+                                        <div class="colorPicker_5_{{ entry.id }}"></div>
                                       </div>
-                                    </div>   
-                                  <br>  
-                                  <input id="brightness_slider_lighting_scenes_8_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_8_{{entry.id}}" 
-                                    name="set_brightness_8_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_8}}"/> 
-                                  <br>
-                                  <br>                                                                      
+                                    </div>      
+                                    <br>  
+                                    <input id="brightness_slider_lighting_scenes_5_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_5_{{entry.id}}" 
+                                      name="set_brightness_5_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_5}}"/> 
+                                    <br>
+                                    <br>                                                                   
                                   </td>
                                 </p>
 
@@ -1990,97 +1974,172 @@
                                 <td style="width:24%"></td>
                               {% endif %}   
 
-                              {% if entry.active_light_9 == "True" %} 
+                              {% if entry.active_light_6 == "True" %} 
 
                                 <p style="visibility: hidden;">
                                   <td style="width:24%">
-                                    Light 9                                   
+                                    Light 6                                 
                                     <br>
-                                    <br>                                      
+                                    <br>                                 
                                     <div class="wrap">
                                       <div class="half">
-                                        <div class="colorPicker_9_{{ entry.id }}"></div>
+                                        <div class="colorPicker_6_{{ entry.id }}"></div>
                                       </div>
-                                    </div>   
-                                  <br>  
-                                  <input id="brightness_slider_lighting_scenes_9_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_9_{{entry.id}}" 
-                                    name="set_brightness_9_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_9}}"/> 
-                                  <br>
-                                  <br>                                                                 
+                                    </div>    
+                                    <br>  
+                                    <input id="brightness_slider_lighting_scenes_6_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_6_{{entry.id}}" 
+                                      name="set_brightness_6_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_6}}"/> 
+                                    <br>
+                                    <br>                                                                
                                   </td>
                                 </p>
                                                         
                               {% else %}   
                                 <td style="width:24%"></td>
-                              {% endif %}   
+                              {% endif %}                                                                              
 
-                          {% endif %}
+                            {% endif %}
 
-                          </tr>
-                        </tbody>
-                      </table> 
-                    </div> 
+<!-- desktop section 7 / 8 / 9 -->
 
-{% endif %}
+                            {% if entry.active_light_7 == "True" %} 
+
+                              </tr>
+                              <tr style="border-style:hidden;">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <p style="visibility: hidden;">
+                                  <td style="width:24%">
+                                    Light 7                                  
+                                    <br>
+                                    <br>                                  
+                                    <div class="wrap">
+                                      <div class="half">
+                                        <div class="colorPicker_7_{{ entry.id }}"></div>
+                                      </div>
+                                    </div>    
+                                    <br>  
+                                    <input id="brightness_slider_lighting_scenes_7_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_7_{{entry.id}}" 
+                                      name="set_brightness_7_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_7}}"/> 
+                                    <br>
+                                    <br>    
+                                  </td>
+                                </p>
+      
+                                {% if entry.active_light_8 == "True" %} 
+
+                                  <p style="visibility: hidden;">
+                                    <td style="width:24%">
+                                      Light 8                                    
+                                      <br>
+                                      <br>                                      
+                                      <div class="wrap">
+                                        <div class="half">
+                                          <div class="colorPicker_8_{{ entry.id }}"></div>
+                                        </div>
+                                      </div>   
+                                    <br>  
+                                    <input id="brightness_slider_lighting_scenes_8_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_8_{{entry.id}}" 
+                                      name="set_brightness_8_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_8}}"/> 
+                                    <br>
+                                    <br>                                                                      
+                                    </td>
+                                  </p>
+
+                                {% else %}   
+                                  <td style="width:24%"></td>
+                                {% endif %}   
+
+                                {% if entry.active_light_9 == "True" %} 
+
+                                  <p style="visibility: hidden;">
+                                    <td style="width:24%">
+                                      Light 9                                   
+                                      <br>
+                                      <br>                                      
+                                      <div class="wrap">
+                                        <div class="half">
+                                          <div class="colorPicker_9_{{ entry.id }}"></div>
+                                        </div>
+                                      </div>   
+                                    <br>  
+                                    <input id="brightness_slider_lighting_scenes_9_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_9_{{entry.id}}" 
+                                      name="set_brightness_9_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="{{entry.brightness_9}}"/> 
+                                    <br>
+                                    <br>                                                                 
+                                    </td>
+                                  </p>
+                                                          
+                                {% else %}   
+                                  <td style="width:24%"></td>
+                                {% endif %}   
+
+                            {% endif %}
+
+                            </tr>
+                          </tbody>
+                        </table> 
+                      </div> 
 
 <!-- end table -->
                 
-                    <div class="row justify-content-md-left">
-                      <div class="col-sm-2">                         
-                        <button type="submit" onclick="window.location.href='/lighting/scenes#table_{{entry.id}}'" name="save_lighting_scene_settings" class="btn btn-fill btn-primary">SAVE</button>
-                      </div>  
-                      <div class="col-sm-7">     
-                        <div class="row justify-content-md-left">
-                          <div class="col-sm-4">      
-                            <div class="vertical_center">       
-                              {% if request.MOBILE %}<br>{% endif %}                 
-                              <select class="form-control" data-size="5" name="set_lighting_group_{{entry.id}}" style="background-color:#27293D">  
-                                {% if last_group_tested_id != "" %} 
-                                  <option value="{{last_group_tested_id }}"> {{ last_group_tested_name }} </option>
-                                  <option disabled>------------------</option> 
-                                {% endif %}
-                                {% for each in dropdown_list_lighting_groups %}
-                                  <option value="{{each.id }}"> {{ each.name }} </option>
-                                {% endfor %}     
-                              </select>       
-                            </div>                        
-                          </div>  
-                          <div class="col-sm-4">    
-                            <div class="vertical_center">   
-                              {% if request.MOBILE %}<br>{% endif %}         
-                              <input id="brightness_slider_lighting_scenes_test_setting_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_test_setting_{{entry.id}}"
-                                name="set_lighting_group_brightness_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100"/> 
+                      <div class="row justify-content-md-left">
+                        <div class="col-sm-2">      
+                          <button type="submit" onclick="window.location.href='/lighting/scenes#table_{{entry.id}}'" name="save_lighting_scene_settings" class="btn btn-fill btn-primary">SAVE</button>
+                        </div>  
+                        <div class="col-sm-7">     
+                          <div class="row justify-content-md-left">
+                            <div class="col-sm-4">      
+                              <div class="vertical_center">                       
+                                <select class="form-control" data-size="5" name="set_lighting_group_{{entry.id}}" style="background-color:#27293D">  
+                                  {% if last_group_tested_id != "" %} 
+                                    <option value="{{last_group_tested_id }}"> {{ last_group_tested_name }} </option>
+                                    <option disabled>------------------</option> 
+                                  {% endif %}
+                                  {% for each in dropdown_list_lighting_groups %}
+                                    <option value="{{each.id }}"> {{ each.name }} </option>
+                                  {% endfor %}     
+                                </select>       
+                              </div>                        
                             </div>  
-                          </div>   
-                          <div class="col-sm-4">    
-                            {% if request.MOBILE %}<br>{% endif %} 
-                            <button type="submit" onclick="window.location.href='/lighting/scenes#table_{{entry.id}}'" name="test_lighting_scene" class="btn btn-fill btn-primary">TEST SCENE</button>
+                            <div class="col-sm-4">    
+                              <div class="vertical_center">       
+                                <input id="brightness_slider_lighting_scenes_test_setting_{{entry.id}}" data-slider-id="brightness_slider_lighting_scenes_test_setting_{{entry.id}}"
+                                  name="set_lighting_group_brightness_{{entry.id}}" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100"/> 
+                              </div>  
+                            </div>   
+                            <div class="col-sm-4">    
+                              <button type="submit" onclick="window.location.href='/lighting/scenes#table_{{entry.id}}'" name="test_lighting_scene" class="btn btn-fill btn-primary">TEST SCENE</button>
+                            </div>  
                           </div>  
                         </div>  
-                      </div>  
-                      <div class="col-sm-3">      
-                        {% if request.MOBILE %}<br>{% endif %}     
-
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="delete_dialog_{{entry.id}}">
-                          <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">Delete {{entry.name}} ?</h5>
-                              </div>          
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                <button type="submit" onclick="window.location.href='/lighting/scenes#'" name="delete_lighting_scene_{{entry.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
+                        <div class="col-sm-3">      
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-fill btn-danger pull-right" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>
+                          <!-- Modal -->
+                          <div class="modal fade" id="delete_dialog_{{entry.id}}">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">Delete {{entry.name}} ?</h5>
+                                </div>          
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                  <button type="submit" onclick="window.location.href='/lighting/scenes#'" name="delete_lighting_scene_{{entry.id}}" class="btn btn-fill btn-danger pull-right">DELETE</button>
+                                </div>
                               </div>
-                            </div>
-                          </div>                              
+                            </div>                              
+                          </div>
                         </div>
-                      </div>
-                    </div>   
-                            
-                  </div>
+                      </div>       
+                    </div>
+
+                  {% endif %}
+
                 </form>
               </div>
             </div>

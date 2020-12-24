@@ -29,8 +29,14 @@
               <div class="card-body">         
                 <form method="POST">
         
-                  <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-fill btn-info pull-left" data-toggle="modal" data-target="#restart_dialog">RESTART</button>
+                  {% if request.MOBILE %}  
+                    <div class="text-center">
+                      <button type="button" class="btn btn-fill btn-info pull-left" data-toggle="modal" data-target="#restart_dialog">RESTART</button>
+                    </div>
+                  {% else %}
+                    <button type="button" class="btn btn-fill btn-info pull-left" data-toggle="modal" data-target="#restart_dialog">RESTART</button>
+                  {% endif %}     
+                  
                   <!-- Modal -->
                   <div class="modal fade" id="restart_dialog">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -46,15 +52,15 @@
                     </div>
                   </div>   
 
-                  <!-- Button trigger modal -->
-                  {% if request.MOBILE %}
-                    <br>
-                    <br>    
-                    <br>                
-                    <button type="button" class="btn btn-fill btn-info" data-toggle="modal" data-target="#shutdown_dialog">SHUTDOWN</button>                 
-                  {% else %} 
-                    <button type="button" class="btn btn-fill btn-info pull-right" data-toggle="modal" data-target="#shutdown_dialog">SHUTDOWN</button>   
-                  {% endif %} 
+                  {% if request.MOBILE %}  
+                    <div class="text-center">
+                      <br>    
+                      <br>                
+                      <button type="button" class="btn btn-fill btn-info" data-toggle="modal" data-target="#shutdown_dialog">SHUTDOWN</button>        
+                    </div>
+                  {% else %}
+                    <button type="button" class="btn btn-fill btn-info pull-right" data-toggle="modal" data-target="#shutdown_dialog">SHUTDOWN</button>  
+                  {% endif %}    
 
                   <!-- Modal -->
                   <div class="modal fade" id="shutdown_dialog">
@@ -114,7 +120,9 @@
                   <div class="row"> 
                     <div class="col-md-3">
                       <label>ZigBee</label>
+
                       {% if request.MOBILE %}<br><br>{% endif %}   
+
                     </div>
                     <div class="col-md-9">
                       <div class="custom-control custom-radio custom-control-inline">
@@ -127,13 +135,17 @@
                       </div>      
                       <br>
                       <br>
+
                       {% if request.MOBILE %}<br>{% endif %} 
+
                     </div>        
                   </div>   
                   <div class="row"> 
                     <div class="col-md-3">
                       <label>Logitech Media Server</label>
+
                       {% if request.MOBILE %}<br><br>{% endif %}   
+
                     </div>
                     <div class="col-md-9">
                       <div class="custom-control custom-radio custom-control-inline">
@@ -146,13 +158,17 @@
                       </div>      
                       <br>
                       <br>
-                      {% if request.MOBILE %}<br>{% endif %}   
+
+                      {% if request.MOBILE %}<br>{% endif %}  
+
                     </div>        
                   </div>   
                   <div class="row"> 
                     <div class="col-md-3">
                       <label>Squeezelite Player</label>
+
                       {% if request.MOBILE %}<br><br>{% endif %}   
+
                     </div>
                     <div class="col-md-9">
                       <div class="custom-control custom-radio custom-control-inline">
@@ -167,7 +183,15 @@
                       <br>
                     </div>        
                   </div>   
-                  <button type="submit" onclick="window.location.href='/settings/system#services'" name="update_settings_services" class="btn btn-fill btn-primary">SAVE</button>
+
+                  {% if request.MOBILE %}  
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/settings/system#services'" name="update_settings_services" class="btn btn-fill btn-primary">SAVE</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/settings/system#services'" name="update_settings_services" class="btn btn-fill btn-primary">SAVE</button>
+                  {% endif %}     
+
                 </div>
               </form>
             </div>
@@ -245,8 +269,16 @@
                       </div>
                     </div>
                   </div>   
-                  <br>               
-                  <button type="submit" onclick="window.location.href='/settings/system#network'" name="set_settings_network" class="btn btn-fill btn-primary">Save</button>
+                  <br>        
+                  
+                  {% if request.MOBILE %}  
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/settings/system#network'" name="set_settings_network" class="btn btn-fill btn-primary">SAVE</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/settings/system#network'" name="set_settings_network" class="btn btn-fill btn-primary">SAVE</button>
+                  {% endif %}                       
+
                 </div>
               </form>
             </div>
@@ -404,8 +436,16 @@
                         <input type="password" class="form-control" name="set_client_secret" value="{% if spotify_settings.client_secret != None %}{{ spotify_settings.client_secret }}{% endif %}" />
                       </div>
                     </div>
-                  </div>                                
-                  <button type="submit" onclick="window.location.href='/settings/system#spotify'" name="update_settings_spotify" class="btn btn-fill btn-primary">SAVE</button>
+                  </div>      
+                  
+                  {% if request.MOBILE %}  
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/settings/system#spotify'" name="update_settings_spotify" class="btn btn-fill btn-primary">SAVE</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/settings/system#spotify'" name="update_settings_spotify" class="btn btn-fill btn-primary">SAVE</button>
+                  {% endif %}                    
+
                 </div>
               </form>
             </div>
@@ -502,7 +542,14 @@
                     {{ list_backup_files }}
                   {% endif %}                  
 
-                  <button type="submit" onclick="window.location.href='/settings/system#backup'" name="backup_database" class="btn btn-fill btn-info">BACKUP DATABASE</button>
+                  {% if request.MOBILE %}  
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/settings/system#backup'" name="backup_database" class="btn btn-fill btn-info">BACKUP DATABASE</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/settings/system#backup'" name="backup_database" class="btn btn-fill btn-info">BACKUP DATABASE</button>
+                  {% endif %}       
+
                 </div>
               </form>
             </div>

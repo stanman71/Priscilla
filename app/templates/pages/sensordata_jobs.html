@@ -364,7 +364,15 @@
             <div class="card">
               <form method="POST">         
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/sensordata/jobs#'" name="add_sensordata_job" class="btn btn-fill btn-primary">NEW JOB</button>
+
+                  {% if request.MOBILE %}         
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/sensordata/jobs#'" name="add_sensordata_job" class="btn btn-fill btn-primary">NEW JOB</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/sensordata/jobs#'" name="add_sensordata_job" class="btn btn-fill btn-primary">NEW JOB</button>
+                  {% endif %}                  
+
                 </div>
               </form>
             </div>
@@ -516,7 +524,15 @@
                         </tbody>
                       </table>               
                     </div>
-                    <button type="submit" onclick="window.location.href='/sensordata/jobs#table_sensordata_jobs'" name="save_sensordata_jobs_settings" class="btn btn-fill btn-primary">SAVE</button>
+
+                    {% if request.MOBILE %}                  
+                      <div class="text-center">
+                        <button type="submit" onclick="window.location.href='/sensordata/jobs#table_sensordata_jobs'" name="save_sensordata_jobs_settings" class="btn btn-fill btn-primary">SAVE</button>
+                      </div>
+                    {% else %}
+                      <button type="submit" onclick="window.location.href='/sensordata/jobs#table_sensordata_jobs'" name="save_sensordata_jobs_settings" class="btn btn-fill btn-primary">SAVE</button>
+                    {% endif %}     
+
                   </div>
                 </form>
               </div>

@@ -396,10 +396,11 @@ def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
 def READ_SENSORDATA_FILE(filename):
 
     try:
-        file = GET_PATH() + "/data/csv/" + filename
+        if filename != "None":
+            file = GET_PATH() + "/data/csv/" + filename
 
-        df = pd.read_csv(file, sep = ",", skiprows = 1, names = ["Timestamp","Device","Sensor","Sensor_Value"])
-        return df
+            df = pd.read_csv(file, sep = ",", skiprows = 1, names = ["Timestamp","Device","Sensor","Sensor_Value"])
+            return df
 
     except Exception as e:
         if "Error tokenizing data. C error: Calling read(nbytes) on source failed. Try engine='python'." not in str(e):

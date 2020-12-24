@@ -1085,11 +1085,20 @@ def CHECK_MQTT_DEVICE_CONNECTION_THREAD():
                 if time_last_contact < time_limit:
                     WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | No connection | " + device.name)
 
+            for device in GET_ALL_DEVICES("zigbee2mqtt"):
+
+                time_last_contact = datetime.datetime.strptime(device.last_contact,"%Y-%m-%d %H:%M:%S")   
+                time_limit        = datetime.datetime.strptime(time_check, "%Y-%m-%d %H:%M:%S")                
+
+                # error message if no connection in the last 24 hours
+                if time_last_contact < time_limit:
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No connection | " + device.name)
+
         except:
             pass
 
-        # daily check
-        time.sleep(86400)
+        # check every 12h
+        time.sleep(43200)
 
 
 """ ######################### """

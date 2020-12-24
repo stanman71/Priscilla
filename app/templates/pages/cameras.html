@@ -192,7 +192,15 @@
             <div class="card">
               <form method="POST">         
                 <div class="card-footer">
-                  <button type="submit" onclick="window.location.href='/cameras#'" name="add_camera" class="btn btn-fill btn-primary">NEW CAMERA</button>
+
+                  {% if request.MOBILE %}     
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/cameras#'" name="add_camera" class="btn btn-fill btn-primary">NEW CAMERA</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/cameras#'" name="add_camera" class="btn btn-fill btn-primary">NEW CAMERA</button>
+                  {% endif %}
+
                 </div>
               </form>
             </div>
@@ -302,8 +310,16 @@
                         {% endfor %}
                       </tbody>
                     </table>
-                  </div>           
-                  <button type="submit" onclick="window.location.href='/cameras#'" name="save_cameras_settings" class="btn btn-fill btn-primary">SAVE</button>
+                  </div>        
+                  
+                  {% if request.MOBILE %}    
+                    <div class="text-center">
+                      <button type="submit" onclick="window.location.href='/cameras#'" name="save_cameras_settings" class="btn btn-fill btn-primary">SAVE</button>
+                    </div>
+                  {% else %}
+                    <button type="submit" onclick="window.location.href='/cameras#'" name="save_cameras_settings" class="btn btn-fill btn-primary">SAVE</button>
+                  {% endif %}                  
+
                 </div>
               </form>
             </div>

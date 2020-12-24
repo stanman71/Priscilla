@@ -1,6 +1,6 @@
 from flask import json, url_for, redirect, render_template, flash, g, session, jsonify, request
 
-from app import app
+from app   import app
 
 
 def http_err(err_code):

@@ -372,6 +372,7 @@
                       </div>   
                     </div>
                     <div class="col-sm-4"> 
+
                       {% if request.MOBILE %} 
                         <div class="text-center">
                           <br> 
@@ -382,6 +383,7 @@
                           <button type="submit" onclick="window.location.href='/dashboard#programs'" name="start_program" class="btn btn-fill btn-info">START</button>                      
                         </div> 
                       {% endif %}
+                      
                     </div> 
                   </div>                      
                 </div>
@@ -450,102 +452,78 @@
 
                   <div class="border-top my-2"></div>
 
-<!------------------------>
-<!------------------------>
-<!-- START MOBILE ONLY  -->
-<!------------------------>
-<!------------------------>
-
-{% if request.MOBILE %}
+                  {% if request.MOBILE %}
             
-                  <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_play">
-                    <i class='uil uil-play'></i>
-                  </button>     
-                  <div class="pull-right">
-                    <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_previous">
-                      <i class='uil uil-backward'></i>
-                    </button>
-                  </div>
-                  <br>
-                  <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_next">
-                    <i class='uil uil-forward'></i>
-                  </button>
-                  <div class="pull-right">                  
-                    <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_stop">
-                      <i class='uil uil-square-full'></i>
-                    </button>
-                  </div>
-                  <br>                  
-                  <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_volume">
-                    <i class='uil uil-volume'></i>
-                  </button>
-                  <div class="pull-right">
-                    <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn {% if spotify_shuffle == "True" %} btn-primary {% else %} btn-secondary {% endif %} " name="set_spotify_shuffle">
-                      <i class="uil uil-arrow-random"></i>
-                    </button>
-                  </div>
-                  <br> 
-                  <br>  
-                  <div class="vertical_center">       
-                    <br>           
-                    <input id="volume_slider_dashboard_music_mobile" data-slider-id="volume_slider_dashboard_music_mobile" name="slider_spotify_volume" 
-                      type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>                               
-                  </div>
-
-<!---------------------->
-<!---------------------->
-<!--  END MOBILE ONLY -->
-<!---------------------->
-<!---------------------->
-
-{% else %}
-
-<!-------------------------->
-<!-------------------------->
-<!--  START DESKTOP ONLY  -->
-<!-------------------------->
-<!-------------------------->
-
-                  <div class="row justify-content-md-center">                                                 
-                    <div class="col-sm-12">                 
-                      <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_play">
-                        <i class='uil uil-play'></i>
-                      </button>                               
+                    <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_play">
+                      <i class='uil uil-play'></i>
+                    </button>     
+                    <div class="pull-right">
                       <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_previous">
                         <i class='uil uil-backward'></i>
                       </button>
-                      <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_next">
-                        <i class='uil uil-forward'></i>
-                      </button>
+                    </div>
+                    <br>
+                    <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_next">
+                      <i class='uil uil-forward'></i>
+                    </button>
+                    <div class="pull-right">                  
                       <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_stop">
                         <i class='uil uil-square-full'></i>
                       </button>
-                    </div> 
-                    <br>
-                    <div class="col-sm-5">  
-                      <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_volume">
-                        <i class='uil uil-volume'></i>
-                      </button>
+                    </div>
+                    <br>                  
+                    <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_volume">
+                      <i class='uil uil-volume'></i>
+                    </button>
+                    <div class="pull-right">
                       <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn {% if spotify_shuffle == "True" %} btn-primary {% else %} btn-secondary {% endif %} " name="set_spotify_shuffle">
                         <i class="uil uil-arrow-random"></i>
                       </button>
                     </div>
-                    <div class="col-sm-2">
-                      <div class="vertical_center">       
-                        <input id="volume_slider_dashboard_music" data-slider-id="volume_slider_dashboard_music" name="slider_spotify_volume" 
-                          type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>                              
+                    <br> 
+                    <br>  
+                    <div class="vertical_center">       
+                      <br>           
+                      <input id="volume_slider_dashboard_music_mobile" data-slider-id="volume_slider_dashboard_music_mobile" name="slider_spotify_volume" 
+                        type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>                               
+                    </div>
+
+                  {% else %}
+
+                    <div class="row justify-content-md-center">                                                 
+                      <div class="col-sm-12">                 
+                        <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_play">
+                          <i class='uil uil-play'></i>
+                        </button>                               
+                        <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_previous">
+                          <i class='uil uil-backward'></i>
+                        </button>
+                        <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_next">
+                          <i class='uil uil-forward'></i>
+                        </button>
+                        <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_stop">
+                          <i class='uil uil-square-full'></i>
+                        </button>
+                      </div> 
+                      <br>
+                      <div class="col-sm-5">  
+                        <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_volume">
+                          <i class='uil uil-volume'></i>
+                        </button>
+                        <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn {% if spotify_shuffle == "True" %} btn-primary {% else %} btn-secondary {% endif %} " name="set_spotify_shuffle">
+                          <i class="uil uil-arrow-random"></i>
+                        </button>
                       </div>
+                      <div class="col-sm-2">
+                        <div class="vertical_center">       
+                          <input id="volume_slider_dashboard_music" data-slider-id="volume_slider_dashboard_music" name="slider_spotify_volume" 
+                            type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>                              
+                        </div>
+                      </div> 
+                      <div class="col-sm-5"></div>
                     </div> 
-                    <div class="col-sm-5"></div>
-                  </div> 
 
-{% endif %} 
-
-<!------------------------>
-<!------------------------>
-<!--  END DESKTOP ONLY  -->
-<!------------------------>
-<!------------------------>
+                  {% endif %} 
 
                   <div class="border-top my-2"></div>
 
@@ -585,30 +563,18 @@
                     </div> 
                   </div>      
 
-<!------------------------>
-<!------------------------>
-<!-- START MOBILE ONLY  -->
-<!------------------------>
-<!------------------------>
+                  {% if request.MOBILE %} 
 
-{% if request.MOBILE %} 
+                    <div class="row justify-content-md-center">                                                 
+                      <div class="col-sm-3">    
+                        <p><span>Playlist</span></p>                        
+                      </div>
+                      <div class="col-sm-9">                           
+                        <div id="current_playlist"></div> 
+                      </div> 
+                    </div>    
 
-                  <div class="row justify-content-md-center">                                                 
-                    <div class="col-sm-3">    
-                      <p><span>Playlist</span></p>                        
-                    </div>
-                    <div class="col-sm-9">                           
-                      <div id="current_playlist"></div> 
-                    </div> 
-                  </div>    
-
-{% endif %}
-
-<!---------------------->
-<!---------------------->
-<!-- END MOBILE ONLY  -->
-<!---------------------->
-<!---------------------->
+                  {% endif %}
 
                 </div>
               </form>                
@@ -618,23 +584,17 @@
 
 <!-- system_log table -->
 
-{% if request.MOBILE %}
-
-            <div class="card card-tasks-system_log-frame-full card-tasks-system_log-table-full">
-
-{% else %}
-
-  {% if spotify_token != "" %}  
-
-              <div class="card card-tasks-system_log-frame-reduced card-tasks-system_log-table-reduced">
-
-  {% else %}
-
+            {% if request.MOBILE %}
               <div class="card card-tasks-system_log-frame-full card-tasks-system_log-table-full">
+            {% else %}
 
-  {% endif %}
+              {% if spotify_token != "" %}  
+                <div class="card card-tasks-system_log-frame-reduced card-tasks-system_log-table-reduced">
+              {% else %}
+                <div class="card card-tasks-system_log-frame-full card-tasks-system_log-table-full">
+              {% endif %}
 
-{% endif %}
+            {% endif %}
 
               <div class="card-body ">
                 <form method="POST"> 
@@ -650,9 +610,25 @@
                       </div>   
                     </div>  
                     <div class="col-sm-8">
-                      <div class="text-right">
-                        <button type="submit" name="apply_changes_log_show_exceptions" class="btn btn-fill btn-primary">APPLY</button>
-                      </div>
+
+                      {% if request.MOBILE %}
+
+                        <br>
+                        <br>
+                        <div class="text-center">
+                          <button type="submit" name="apply_changes_log_show_exceptions" class="btn btn-fill btn-primary">APPLY</button>
+                        </div>
+                        <br>
+                        <br>
+
+                      {% else %}
+
+                        <div class="text-right">
+                          <button type="submit" name="apply_changes_log_show_exceptions" class="btn btn-fill btn-primary">APPLY</button>
+                        </div>
+
+                      {% endif %}
+
                     </div>
                   </div> 
 
@@ -728,7 +704,6 @@
               </div>
             </div>
           </div>
-
 
         </div>
       </div>
