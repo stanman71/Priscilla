@@ -105,8 +105,8 @@ def dashboard():
 
                         if device.gateway == "mqtt":
 
-                            # special case roborock s50
-                            if device.model == "roborock_s50":
+                            # special case xiaomi vacuum cleaner
+                            if device.model == "xiaomi_mi" or device.model == "roborock_s50":
                                 channel = "smarthome/mqtt/" + device.ieeeAddr + "/command"  
                             else:
                                 channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
@@ -116,8 +116,8 @@ def dashboard():
 
                         command_position  = 0
 
-                        # special case roborock s50
-                        if device.model == "roborock_s50":
+                        # special case xiaomi vacuum cleaner
+                        if device.model == "xiaomi_mi" or device.model == "roborock_s50":
                             list_command_json = device.commands_json.split(",")
 
                         else:
@@ -129,17 +129,17 @@ def dashboard():
                                             
                             if str(dashboard_command.lower()) == command.lower():
 
-                                # special case roborock s50
-                                if device.model == "roborock_s50" and dashboard_command.lower() == "return_to_base":
+                                # special case xiaomi vacuum cleaner
+                                if (device.model == "xiaomi_mi" or device.model == "roborock_s50") and dashboard_command.lower() == "return_to_base":
                                     heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
                                     time.sleep(5)
                                     heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
-                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 60)  
+                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 100)  
                                     continue    
 
                                 else:
                                     heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 60)      
+                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 100)      
                                     continue
 
                             command_position = command_position + 1

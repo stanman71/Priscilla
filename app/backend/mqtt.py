@@ -765,19 +765,18 @@ def UPDATE_DEVICES(gateway):
 """  check device setting  """
 """ ###################### """
  
-def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, seconds = 10): 
-    repeats = seconds * 5
+def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, seconds = 100): 
     Thread  = threading.Thread(target=CHECK_DEVICE_SETTING_PROCESS, args=(ieeeAddr, setting, seconds, ))
     Thread.start()   
 
  
 def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, seconds, log_report = True):  
-    repeats = seconds * 5                  
+    repeats = seconds * 5                 
     device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
     counter = 1
 
-    # special case roborock s50 >>> change setting words
-    if device.model == "roborock_s50":
+    # special case xiaomi vacuum cleaner >>> change setting words
+    if device.model == "xiaomi_mi" or device.model == "roborock_s50":
         if setting.lower() == "start":
             setting = "cleaning"
         if setting.lower() == "stop":
@@ -1072,27 +1071,33 @@ def CHECK_MQTT_DEVICE_CONNECTION_THREAD():
     while True:
 
         try:
+
             # get the current time value
-            time_check = datetime.datetime.now() - datetime.timedelta(days=1) 
-            time_check = time_check.strftime("%Y-%m-%d %H:%M:%S")
+            time_check_mqtt = datetime.datetime.now() - datetime.timedelta(days=1) 
+            time_check_mqtt = time_check_mqtt.strftime("%Y-%m-%d %H:%M:%S")
 
             for device in GET_ALL_DEVICES("mqtt"):
 
                 time_last_contact = datetime.datetime.strptime(device.last_contact,"%Y-%m-%d %H:%M:%S")   
-                time_limit        = datetime.datetime.strptime(time_check, "%Y-%m-%d %H:%M:%S")                
+                time_limit        = datetime.datetime.strptime(time_check_mqtt, "%Y-%m-%d %H:%M:%S")                
 
                 # error message if no connection in the last 24 hours
                 if time_last_contact < time_limit:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | No connection | " + device.name)
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | " + device.name + " | No connection for over 24h")
+
+
+            # get the current time value
+            time_check_zigbee2mqtt = datetime.datetime.now() - datetime.timedelta(days=2) 
+            time_check_zigbee2mqtt = time_check_zigbee2mqtt.strftime("%Y-%m-%d %H:%M:%S")
 
             for device in GET_ALL_DEVICES("zigbee2mqtt"):
 
                 time_last_contact = datetime.datetime.strptime(device.last_contact,"%Y-%m-%d %H:%M:%S")   
-                time_limit        = datetime.datetime.strptime(time_check, "%Y-%m-%d %H:%M:%S")                
+                time_limit        = datetime.datetime.strptime(time_check_zigbee2mqtt, "%Y-%m-%d %H:%M:%S")                
 
                 # error message if no connection in the last 24 hours
                 if time_last_contact < time_limit:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No connection | " + device.name)
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | " + device.name + " | No connection for over 48h")
 
         except:
             pass

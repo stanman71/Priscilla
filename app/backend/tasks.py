@@ -234,7 +234,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
                 if rgb_values != []:    
                     SET_LIGHT_RGB_THREAD(device.ieeeAddr, rgb_values[0], rgb_values[1], rgb_values[2], brightness)
-                    CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "ON", 10)
+                    CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "ON", 100)
 
                 else:
                     WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Invalid settings")  
@@ -290,7 +290,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                 # device existing ?
                 if device != None:                            
                     SET_LIGHT_TURN_OFF_THREAD(device.ieeeAddr)
-                    CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "OFF", 10)
+                    CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "OFF", 100)
 
                 else:
                     WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Light - " + task[3].strip() + " | missing")
@@ -338,8 +338,8 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
                         if device.gateway == "mqtt":
 
-                            # special case roborock s50
-                            if device.model == "roborock_s50": 
+                            # special case xiaomi vacuum cleaner
+                            if device.model == "xiaomi_mi" or device.model == "roborock_s50":
                                 channel = "smarthome/mqtt/" + device.ieeeAddr + "/command"  
                             else:
                                 channel = "smarthome/mqtt/" + device.ieeeAddr + "/set"  
@@ -349,8 +349,8 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
                         command_position  = 0
 
-                        # special case roborock s50
-                        if device.model == "roborock_s50":
+                        # special case xiaomi vacuum cleaner
+                        if device.model == "xiaomi_mi" or device.model == "roborock_s50":
                             list_command_json = device.commands_json.split(",")
 
                         else:
@@ -362,17 +362,17 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                                                     
                             if str(controller_command.lower()) == command.lower():
 
-                                # special case roborock s50
-                                if device.model == "roborock_s50" and controller_command.lower() == "return_to_base":
+                                # special case xiaomi vacuum cleaner
+                                if (device.model == "xiaomi_mi" or device.model == "roborock_s50") and controller_command.lower() == "return_to_base":
                                     heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
                                     time.sleep(5)
                                     heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
-                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_command, 60)  
+                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_command, 50)  
                                     continue    
 
                                 else:
                                     heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_command, 60)      
+                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_command, 50)      
                                     continue
 
                             command_position = command_position + 1
@@ -592,7 +592,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                         message = '{"interface":"' + interface + '","volume":' + str(volume) + '}'
 
                         heapq.heappush(mqtt_message_queue, (10, (channel, message)))            
-                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, interface + '; ' + str(volume), 60)      
+                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, interface + '; ' + str(volume), 100)      
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | No Spotify Token found")

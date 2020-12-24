@@ -1067,8 +1067,8 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
             except:
                 last_values_string = last_values_string_modified
 
-        # special case roborock s50 >>> ignore attributes messages
-        if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "roborock_s50":
+        # special case xiaomi vacuum cleaner >>> ignore attributes messages
+        if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "xiaomi_mi" or GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "roborock_s50":
             if "cleanTime" in last_values_string:
                 return
 
