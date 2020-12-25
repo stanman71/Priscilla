@@ -299,7 +299,9 @@ def settings_system():
     """ ################## """    
                 
     if request.form.get("set_settings_network") != None:
-        
+
+        save_settings_lan = True     
+
         if request.form.get("set_checkbox_dhcp"):
             dhcp = "True" 
         else:
@@ -314,8 +316,7 @@ def settings_system():
 
             # first reload of the website after deactivate dhcp, website don't know the values "set_ip_address" and "set_gateway"
             if request.form.get("set_ip_address") != None:          
-                save_settings_lan = True
-                        
+                       
                 # ip address
                 if request.form.get("set_ip_address") != "":
                     new_ip_address = request.form.get("set_ip_address").strip()  
@@ -352,11 +353,23 @@ def settings_system():
                     error_message_change_settings_network.append("Network || No gateway given") 
                     save_settings_lan = False
 
+                # port
+                if request.form.get("set_port") != "":
+                    port = request.form.get("set_port").strip()      
+
+                    if not 50 < int(port) < 9999:
+                        error_message_change_settings_network.append("Network || Invalid port given") 
+                        save_settings_lan = False                 
+
+                else:
+                    error_message_change_settings_network.append("Network || No port given") 
+                    save_settings_lan = False
+
                 # save settings
                 if save_settings_lan == True:
                     changes_saved = False
 
-                    if SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, dhcp):
+                    if SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, dhcp, port):
                         changes_saved = True
                     if UPDATE_NETWORK_SETTINGS_LINUX(dhcp, ip_address, gateway):
                         changes_saved = True
@@ -365,17 +378,38 @@ def settings_system():
                         success_message_change_settings_network = True
 
             else:
-                if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_SETTINGS().ip_address, GET_SYSTEM_SETTINGS().gateway, dhcp):
+                if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_SETTINGS().ip_address, GET_SYSTEM_SETTINGS().gateway, dhcp, GET_SYSTEM_SETTINGS().port):
                     success_message_change_settings_network = True       
 
 
-        # ##############
-        # dhcp activated
-        # ##############
+        # ############
+        # dhcp enabled
+        # ############
 
         else:   
-            if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_SETTINGS().ip_address, GET_SYSTEM_SETTINGS().gateway, dhcp):
-                success_message_change_settings_network = True            
+
+            # port
+            if request.form.get("set_port") != "":
+                port = request.form.get("set_port").strip()      
+
+                try:
+                    if not 50 < int(port) < 65535:
+                        error_message_change_settings_network.append("Network || Invalid port given") 
+                        save_settings_lan = False             
+
+                except:
+                    error_message_change_settings_network.append("Network || Invalid port given") 
+                    save_settings_lan = False                              
+
+            else:
+                error_message_change_settings_network.append("Network || No port given") 
+                save_settings_lan = False
+
+            # save settings
+            if save_settings_lan == True:
+
+                if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_SETTINGS().ip_address, GET_SYSTEM_SETTINGS().gateway, dhcp, port):
+                    success_message_change_settings_network = True
 
 
     """ ################ """

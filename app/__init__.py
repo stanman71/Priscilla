@@ -23,7 +23,7 @@ import json
 
 def GET_PATH():
 
-    # windows
+    # windows development environment
     if os.name == "nt":                 
         return(os.path.abspath(""))
     # linux
@@ -573,7 +573,7 @@ try:
 except:
     gateway = ""
     
-SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, GET_SYSTEM_SETTINGS().dhcp)
+SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, GET_SYSTEM_SETTINGS().dhcp, GET_SYSTEM_SETTINGS().port)
 
 
 """ #################################### """
@@ -743,4 +743,10 @@ START_MULTIROOM_SYNCHRONIZATION_THREAD()
 START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD()
 START_CHECK_MQTT_DEVICE_CONNECTION_THREAD()
 
-socketio.run(app, ssl_context=('/home/pi/smarthome/cert.pem', '/home/pi/smarthome/key.pem'), host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)
+
+# windows development environment
+if os.name == "nt":                 
+    socketio.run(app, host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)
+# linux
+else:                               
+    socketio.run(app, ssl_context=('/home/pi/smarthome/cert.pem', '/home/pi/smarthome/key.pem'), host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)

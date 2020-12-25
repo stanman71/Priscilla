@@ -265,7 +265,13 @@
                             {% endif %}     
                           </div>
                         </div>       
-                        <div class="col-sm-7"></div>                                               
+                        <div class="col-sm-2">                       
+                          <div class="form-group">
+                            <label>Port</label>                        
+                            <input type="text" class="form-control" name="set_port" value="{% if system_settings.port != None %}{{ system_settings.port }}{% endif %}" />   
+                          </div>
+                        </div>                                
+                        <div class="col-sm-5"></div>                                               
                       </div>
                     </div>
                   </div>   
