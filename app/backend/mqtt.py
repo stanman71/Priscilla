@@ -798,7 +798,7 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, seconds, log_report = True):
         # set previous setting
         if result == True:
             if log_report == True:
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | Setting changed | " + setting)  
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + device.name + " | Setting changed | " + setting)  
 
             return True
 
@@ -807,10 +807,10 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, seconds, log_report = True):
 
     # error message
     if log_report == True:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)  
-        SEND_EMAIL("ERROR", "Network | Device - " + device.name + " | Setting not confirmed | " + setting)          
+        WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + device.name + " | Setting not confirmed | " + setting)  
+        SEND_EMAIL("ERROR", "Network | Device | " + device.name + " | Setting not confirmed | " + setting)          
               
-    return ("Device - " + device.name + " | Setting not confirmed - " + setting) 
+    return ("Device | " + device.name + " | Setting not confirmed - " + setting) 
                          
 
 def CHECK_MQTT_SETTING(ieeeAddr, setting):     
@@ -1083,7 +1083,7 @@ def CHECK_MQTT_DEVICE_CONNECTION_THREAD():
 
                 # error message if no connection in the last 24 hours
                 if time_last_contact < time_limit:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | " + device.name + " | No connection for over 24h")
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + device.name + " | No connection for over 24h")
 
 
             # get the current time value
@@ -1097,7 +1097,7 @@ def CHECK_MQTT_DEVICE_CONNECTION_THREAD():
 
                 # error message if no connection in the last 24 hours
                 if time_last_contact < time_limit:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | " + device.name + " | No connection for over 48h")
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + device.name + " | No connection for over 48h")
 
         except:
             pass

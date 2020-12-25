@@ -743,4 +743,4 @@ START_MULTIROOM_SYNCHRONIZATION_THREAD()
 START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD()
 START_CHECK_MQTT_DEVICE_CONNECTION_THREAD()
 
-socketio.run(app, host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)
+socketio.run(app, ssl_context=('/home/pi/smarthome/cert.pem', '/home/pi/smarthome/key.pem'), host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)
