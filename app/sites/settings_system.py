@@ -357,9 +357,14 @@ def settings_system():
                 if request.form.get("set_port") != "":
                     port = request.form.get("set_port").strip()      
 
-                    if not 50 < int(port) < 9999:
+                    try:
+                        if not 50 < int(port) < 65535:
+                            error_message_change_settings_network.append("Network || Invalid port given") 
+                            save_settings_lan = False             
+
+                    except:
                         error_message_change_settings_network.append("Network || Invalid port given") 
-                        save_settings_lan = False                 
+                        save_settings_lan = False                  
 
                 else:
                     error_message_change_settings_network.append("Network || No port given") 
@@ -407,7 +412,6 @@ def settings_system():
 
             # save settings
             if save_settings_lan == True:
-
                 if SET_SYSTEM_NETWORK_SETTINGS(GET_SYSTEM_SETTINGS().ip_address, GET_SYSTEM_SETTINGS().gateway, dhcp, port):
                     success_message_change_settings_network = True
 
