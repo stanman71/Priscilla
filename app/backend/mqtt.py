@@ -212,10 +212,10 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                         ADD_DEVICE(ieeeAddr, "zigbee2mqtt", ieeeAddr, model, device_type, version, description, input_values, input_events, commands, commands_json)
 
                         SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device added - " + data["meta"]["friendly_name"]) 
-                        WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["meta"]["friendly_name"] + " | added")    
+                        WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + data["meta"]["friendly_name"] + " | added")    
 
-                        # add device config for IKEA SYMFONISK sound controller
-                        if model == "E1744":
+                        # add device config for IKEA SYMFONISK sound controller and IKEA TRADFRI wireless dimmer
+                        if model == "E1744" or model == "ICTC-G-1":
            
                             try:
 
@@ -232,13 +232,13 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                                 os.system("sudo systemctl restart zigbee2mqtt")    
 
                             except Exception as e:
-                                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + data["meta"]["friendly_name"] + " | " + str(e))
+                                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + data["meta"]["friendly_name"] + " | " + str(e))
 
                         time.sleep(10) 
 
 
                 except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + data["meta"]["friendly_name"] + " | " + str(e))
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + data["meta"]["friendly_name"] + " | " + str(e))
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Error: " + str(e) + " | Update Devices manually")  
                     time.sleep(10)
 
@@ -246,7 +246,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
             # device connection failed
             if data["type"] == "pairing" and data["message"] == "interview_failed":
-                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + data["meta"]["friendly_name"] + " | adding failed")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + data["meta"]["friendly_name"] + " | adding failed")
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Device adding failed - " + data["meta"]["friendly_name"])   
                 time.sleep(10)
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
@@ -257,10 +257,10 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         # ##############
 
         if data["type"] == "device_removed":
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["meta"]["friendly_name"] + " | deleted")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + data["meta"]["friendly_name"] + " | deleted")
 
         if data["type"] == "device_force_removed":
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["message"] + " | deleted (force)")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + data["message"] + " | deleted (force)")
 
 
         # #####################
@@ -279,12 +279,12 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             # update started
 
             if data["meta"]["status"] == "update_in_progress":
-                WRITE_LOGFILE_SYSTEM("EVENT", "Network | Device - " + data["meta"]["device"] + " | Device Update | started")
+                WRITE_LOGFILE_SYSTEM("EVENT", "Network | Device | " + data["meta"]["device"] + " | Device Update | started")
 
             # update success
 
             if data["meta"]["status"] == "update_succeeded":
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + data["meta"]["device"] + " | Device Update | " + str(data["message"]))
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + data["meta"]["device"] + " | Device Update | " + str(data["message"]))
                 time.sleep(10)
           
                 SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(GET_DEVICE_BY_NAME(data["meta"]["device"]).ieeeAddr, "")
@@ -299,7 +299,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             # update failed
             
             if data["meta"]["status"] == "update_failed":
-                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + data["meta"]["device"] + " | Device Update | " + str(data["message"]))
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + data["meta"]["device"] + " | Device Update | " + str(data["message"]))
                 time.sleep(10)                
 
                 # update update status
@@ -310,7 +310,10 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                         SET_ZIGBEE_DEVICE_UPDATE_STATUS("Device Update found")
 
                 # reset update variable
-                SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(GET_DEVICE_BY_NAME(data["meta"]["device"]).ieeeAddr, "True")
+                if "No new image available" in str(data["message"]):
+                    SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(GET_DEVICE_BY_NAME(data["meta"]["device"]).ieeeAddr, "False")
+                else:
+                    SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(GET_DEVICE_BY_NAME(data["meta"]["device"]).ieeeAddr, "True")
 
 
     # #########################
@@ -344,13 +347,13 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             if data["message"] == "success":
                 device = GET_DEVICE_BY_IEEEADDR(data["device_ieeeAddr"])
 
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + device.name + " | updated || Version || " + device.version + " >>> " + str(data["version"]))
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + device.name + " | updated || Version || " + device.version + " >>> " + str(data["version"]))
                 UPDATE_MQTT_DEVICE_VERSION(device.ieeeAddr, data["version"])
 
             else:
                 device = GET_DEVICE_BY_IEEEADDR(data["device_ieeeAddr"])
 
-                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + device.name + " || " + str(data["message"]))                
+                WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + device.name + " || " + str(data["message"]))                
 
         except:
             pass
@@ -382,7 +385,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                 # special case eurotronic heater_thermostat
                 if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "SPZB0001":
                     if int(data["battery"]) < 5:
-                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")    
+                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")    
 
                         # add device to block list
                         list_battery_low_devices.append(ieeeAddr)
@@ -390,7 +393,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
                 else:
                     if int(data["battery"]) < 25:
-                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")           
+                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")           
 
                         # add device to block list
                         list_battery_low_devices.append(ieeeAddr)
@@ -405,8 +408,10 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             data = json.loads(msg)
             
             if int(data["linkquality"]) < 10:
-                WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Bad Linkquality")
-       
+
+                # add ieeeAddr to the bad linkquality list
+                zigbee2mqtt_bad_linkquality_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), ieeeAddr)) 
+
         except:
             pass   
 
@@ -616,7 +621,7 @@ def UPDATE_DEVICES(gateway):
 
                     if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):
                         ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, version, description, input_values, input_events, commands, commands_json)
-                        WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + name + " | added")   
+                        WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + name + " | added")   
                       
                     # update existing device
 
@@ -677,7 +682,7 @@ def UPDATE_DEVICES(gateway):
                                     # skip coordinator
                                     if device['type'] != "Coordinator":
                                         
-                                        # add new device
+                                        # add new devices from zigbee2mqtt database
                                 
                                         if not GET_DEVICE_BY_IEEEADDR(device['ieeeAddr']):
 
@@ -701,7 +706,7 @@ def UPDATE_DEVICES(gateway):
                                             commands_json = new_device[5] 
 
                                             ADD_DEVICE(name, gateway, ieeeAddr, new_model, device_type, version, description, input_values, input_events, commands, commands_json)
-                                            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device - " + name + " | added")    
+                                            WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + name + " | added")    
 
                                         # update device informations
                                     

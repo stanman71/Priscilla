@@ -915,15 +915,15 @@ def GET_ALL_DEVICES(selector):
                 device.device_type == "heater_thermostat" or
                 device.device_type == "aromatic_diffuser" or 
                 device.device_type == "engine_module" or 
-                device.device_type == "relais_module"):
+                device.device_type == "relais_module" or
+                device.device_type == "watering_controller"):
                 
                 device_list.append(device)      
 
     if selector == "light":
         for device in devices:
             if (device.device_type == "led_rgb" or 
-                device.device_type == "led_simple"):
-                    
+                device.device_type == "led_simple"):      
                 device_list.append(device)    
 
     if selector == "client_music":
@@ -935,7 +935,9 @@ def GET_ALL_DEVICES(selector):
         for device in devices:     
             if (device.device_type == "sensor_passiv" or 
                 device.device_type == "sensor_active" or
-                device.device_type == "heater_thermostat"):
+                device.device_type == "heater_thermostat" or
+                device.device_type == "watering_controller" or
+                device.model == "ZNCZ04LM"):
                 
                 device_list.append(device)   
  
@@ -1039,7 +1041,7 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
         if "update_available: false" in last_values_string:
             last_values_string = last_values_string.replace(", update_available: false","")
 
-        # special case eurotronic heater_thermostat >>> reduce string statement 
+        # special case EUROTRONIC heater_thermostat >>> reduce string statement 
         if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "SPZB0001":
 
             last_values_string_modified = ""
@@ -1067,7 +1069,24 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
             except:
                 last_values_string = last_values_string_modified
 
-        # special case xiaomi vacuum cleaner >>> ignore attributes messages
+        # special case XIAOMI Mi power plug EU >>> reduce string statement 
+        if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "ZNCZ04LM":
+
+            last_values_string_modified = ""
+
+            for element in last_values_string.split(","):
+                if "linkquality" in element:
+                    last_values_string_modified = last_values_string_modified + element + ", "
+                if "power" in element:
+                    last_values_string_modified = last_values_string_modified + element + ", "                   
+                if "state" in element:
+                    last_values_string_modified = last_values_string_modified + element + ", "
+                if "temperature" in element:
+                    last_values_string_modified = last_values_string_modified + element 
+
+            last_values_string = last_values_string_modified
+
+        # special case XIAOMI vacuum cleaner >>> ignore attributes messages
         if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "xiaomi_mi" or GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "roborock_s50":
             if "cleanTime" in last_values_string:
                 return

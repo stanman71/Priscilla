@@ -9,13 +9,13 @@ import heapq
 import json
 
 process_management_queue    = []
+mqtt_message_queue          = []
 
 
 """ ################ """
 """  mqtt functions  """
 """ ################ """
 
-mqtt_message_queue          = []
 mqtt_incoming_messages_list = []
 
 def START_REFRESH_MQTT_INPUT_MESSAGES_THREAD():
@@ -63,7 +63,7 @@ def GET_MQTT_INCOMING_MESSAGES(limit):
         time_message = datetime.datetime.strptime(message[0],"%Y-%m-%d %H:%M:%S")   
         time_limit   = datetime.datetime.strptime(time_check, "%Y-%m-%d %H:%M:%S")
 
-        # select messages in search_time 
+        # select messages in search_time limit
         if time_message > time_limit:
             message_list.append(message)
                 
@@ -155,6 +155,30 @@ def GET_PROGRAM_THREAD_STATUS_9():
 def SET_PROGRAM_THREAD_STATUS_9(program_name, line, lines_total, command):
 	global program_thread_status_9
 	program_thread_status_9 = [program_name, line, lines_total, command]
+
+
+""" ################# """
+"""  system messages  """
+""" ################# """
+
+mqtt_connetion_status        = False
+zigbee2mqtt_connetion_status = False
+
+def GET_MQTT_CONNECTION_STATUS():
+    global mqtt_connetion_status
+    return mqtt_connetion_status 
+
+def SET_MQTT_CONNECTION_STATUS(value):
+	global mqtt_connetion_status
+	mqtt_connetion_status = value
+
+def GET_ZIGBEE2MQTT_CONNECTION_STATUS():
+    global zigbee2mqtt_connetion_status
+    return zigbee2mqtt_connetion_status	
+
+def SET_ZIGBEE2MQTT_CONNECTION_STATUS(value):
+	global zigbee2mqtt_connetion_status
+	zigbee2mqtt_connetion_status = value	
 
 
 """ ###################### """
@@ -273,25 +297,73 @@ def DISABLE_ZIGBEE_PAIRING_THREAD():
 			SET_ZIGBEE2MQTT_PAIRING_STATUS("No MQTT connection")     
 
 
-""" ################# """
-"""  system messages  """
-""" ################# """
+""" ############################# """
+"""  zigbee2mqtt bad linkquality  """
+""" ############################# """
 
-mqtt_connetion_status        = False
-zigbee2mqtt_connetion_status = False
+zigbee2mqtt_bad_linkquality_list = []
 
-def GET_MQTT_CONNECTION_STATUS():
-    global mqtt_connetion_status
-    return mqtt_connetion_status 
+def START_REFRESH_AND_ENTRIES_COUNTER_ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD():
+	try:
+		Thread = threading.Thread(target=REFRESH_AND_ENTRIES_COUNTER_ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD)
+		Thread.start()  
+		
+	except Exception as e:
+		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Zigbee2MQTT Bad Linkquality | " + str(e)) 
+		SEND_EMAIL("ERROR", "System | Thread | Zigbee2MQTT Bad Linkquality | " + str(e)) 
 
-def SET_MQTT_CONNECTION_STATUS(value):
-	global mqtt_connetion_status
-	mqtt_connetion_status = value
 
-def GET_ZIGBEE2MQTT_CONNECTION_STATUS():
-    global zigbee2mqtt_connetion_status
-    return zigbee2mqtt_connetion_status	
+def REFRESH_AND_ENTRIES_COUNTER_ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD():   
+	while True:
+	
+		# delete entries after 6 hours
 
-def SET_ZIGBEE2MQTT_CONNECTION_STATUS(value):
-	global zigbee2mqtt_connetion_status
-	zigbee2mqtt_connetion_status = value	
+		try:
+			# get the time check value
+			time_check = datetime.datetime.now() - datetime.timedelta(hours=6)
+			time_check = time_check.strftime("%Y-%m-%d %H:%M:%S")
+
+			for entry in zigbee2mqtt_bad_linkquality_list:
+
+				time_entry = datetime.datetime.strptime(entry[0],"%Y-%m-%d %H:%M:%S")   
+				time_limit = datetime.datetime.strptime(time_check, "%Y-%m-%d %H:%M:%S")
+
+				# remove saved entries after 6 hours
+				if time_entry <= time_limit:
+					zigbee2mqtt_bad_linkquality_list.remove(entry)
+
+		except:
+			pass
+
+		# send bad linkquality message of devices if they have 3 and more entries
+	
+		try:
+			for device in GET_ALL_DEVICES("zigbee2mqtt"):
+
+				counter = 0
+
+				# count bad quality entries of the device
+				for entry in zigbee2mqtt_bad_linkquality_list:
+					if device.ieeeAddr == entry[1]:
+						counter = counter + 1
+
+				if counter >= 3:
+					WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + device.name + " | Bad Linkquality")
+
+					# remove entries of this device
+					for entry in zigbee2mqtt_bad_linkquality_list:
+						if device.ieeeAddr == entry[1]:
+							zigbee2mqtt_bad_linkquality_list.remove(entry)					
+
+		except:
+			pass
+			
+		time.sleep(60)		
+
+				
+
+				
+
+
+				
+

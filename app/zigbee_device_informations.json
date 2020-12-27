@@ -76,7 +76,25 @@
 				"input_events"    : [],
 				"commands"        : [],
 				"commands_json"   : []
-			},										
+			},		
+			{
+				"model"           : "LED1835C6",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED white E14 470 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
+			{
+				"model"           : "LED1903C5",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED white E14 470 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
 			{
 				"model"           : "LED1624G9",
 				"device_type"     : "led_rgb",
@@ -159,6 +177,15 @@
 				"commands_json"   : []
 			},	
 			{
+				"model"           : "LED1739R5",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA TRADFRI LED white GU10 400 lumen",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
+			{
 				"model"           : "LED1837R5",
 				"device_type"     : "led_simple",
 				"description"     : "IKEA TRADFRI LED white GU10 400 lumen",
@@ -220,7 +247,25 @@
 				"input_events"    : [],
 				"commands"        : [],
 				"commands_json"   : []
+			},		
+			{
+				"model"           : "T1828",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA GUNNARP panel round",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
 			},				
+			{
+				"model"           : "T2011",
+				"device_type"     : "led_simple",
+				"description"     : "IKEA Osvalla panel round",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},						
 			{
 				"model"           : "L1531",
 				"device_type"     : "led_simple",
@@ -265,7 +310,7 @@
 				"input_events"    : [],
 				"commands"        : ["ON","OFF"],				
 				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]
-			},	
+			},				
 			{
 				"model"           : "E1525",
 				"device_type"     : "sensor_passiv",
@@ -292,7 +337,7 @@
 				"input_events"    : ["{'action':'play_pause'}","{'action':'rotate_left'}","{'action':'rotate_right'}","{'action':'skip_forward'}","{'action':'skip_backward'}"],
 				"commands"        : [],
 				"commands_json"   : []
-			},									
+			},												
 			{
 				"model"           : "E1746",
 				"device_type"     : "signal_repeater",
@@ -303,7 +348,7 @@
 				"commands_json"   : []
 			},	
 			{
-				"model"           : "E1524/E1810",
+				"model"           : "E1524",
 				"device_type"     : "controller",
 				"description"     : "IKEA TRADFRI remote control",
 				"input_values"    : [],
@@ -312,6 +357,15 @@
 				"commands_json"   : []
 			},	
 			{
+				"model"           : "E1810",
+				"device_type"     : "controller",
+				"description"     : "IKEA TRADFRI remote control",
+				"input_values"    : [],
+				"input_events"    : ["{'action':'toggle'}","{'action':'arrow_left_click'}","{'action':'arrow_right_click'}","{'action':'brightness_up_click'}","{'action':'brightness_down_click'}"],
+				"commands"        : [],
+				"commands_json"   : []
+			},							
+			{
 				"model"           : "E1743",
 				"device_type"     : "controller",
 				"description"     : "IKEA TRADFRI on/off switch",
@@ -319,7 +373,16 @@
 				"input_events"    : ["{'click':'on'}","{'click':'off'}"],
 				"commands"        : [],
 				"commands_json"   : []
-			},					
+			},	
+			{
+				"model"           : "ICTC-G-1",
+				"device_type"     : "controller",
+				"description"     : "IKEA TRADFRI wireless dimmer",
+				"input_values"    : [],
+				"input_events"    : ["{'action':'brightness_move_up'}","{'action':'brightness_move_down'}"],
+				"commands"        : [],
+				"commands_json"   : []
+			},								
 			{
 				"model"           : "E1766",
 				"device_type"     : "controller",
@@ -643,7 +706,25 @@
 				"input_events"    : [],
 				"commands"        : [],
 				"commands_json"   : []
-			},			
+			},	
+			{
+				"model"           : "XDD13LM",
+				"device_type"     : "led_simple",
+				"description"     : "Xiaomi Aqara Opple Light MX480",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},	
+			{
+				"model"           : "XDD12LM",
+				"device_type"     : "led_simple",
+				"description"     : "Xiaomi Aqara Opple Light MX650",
+				"input_values"    : [],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},									
 			{
 				"model"           : "MCCGQ01LM",
 				"device_type"     : "sensor_passiv",
@@ -672,6 +753,15 @@
 				"commands_json"   : []			
 			},	
 			{
+				"model"           : "SJCGQ12LM",
+				"device_type"     : "sensor_passiv",
+				"description"     : "XIAOMI Aqara water leak sensor",
+				"input_values"    : ["water_leak"],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []			
+			},				
+			{
 				"model"           : "WSDCGQ01LM",
 				"device_type"     : "sensor_passiv",
 				"description"     : "XIAOMI MiJia temperature and humidity sensor",
@@ -690,6 +780,15 @@
 				"commands_json"   : []
 			},		
 			{
+				"model"           : "WSDCGQ12LM",
+				"device_type"     : "sensor_passiv",
+				"description"     : "XIAOMI Aqara temperature, humidity and pressure sensor",
+				"input_values"    : ["temperature","humidity","pressure"],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
+			{
 				"model"           : "DJT11LM",
 				"device_type"     : "sensor_passiv",
 				"description"     : "XIAOMI Aqara vibration sensor",
@@ -698,6 +797,15 @@
 				"commands"        : [],
 				"commands_json"   : []
 			},	
+			{
+				"model"           : "DJT12LM",
+				"device_type"     : "sensor_passiv",
+				"description"     : "XIAOMI Aqara vibration sensor",
+				"input_values"    : ["drop","tilt","touch"],
+				"input_events"    : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
 			{
 				"model"           : "GZCGQ01LM",
 				"device_type"     : "sensor_passiv",
