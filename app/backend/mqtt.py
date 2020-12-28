@@ -34,7 +34,7 @@ def START_BLOCK_BATTERY_LOW_DEVICES_THREAD(device):
 
 
 def BLOCK_BATTERY_LOW_DEVICES_THREAD(device): 
-    time.sleep(3600)
+    time.sleep(86400)  # 24h
     list_battery_low_devices.remove(device)
 
 
@@ -416,7 +416,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             pass   
 
 
-    if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "heater_thermostat":
+    if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "heater_thermostat" or device_type == "watering_controller":
 
         # save sensordata
         for job in GET_ALL_SENSORDATA_JOBS():
@@ -1060,18 +1060,18 @@ def CHECK_ZIGBEE2MQTT_RUNNING_THREAD():
         time.sleep(10)
 
 
-def START_CHECK_MQTT_DEVICE_CONNECTION_THREAD():
+def START_CHECK_DEVICE_CONNECTION_THREAD():
 
     try:
-        Thread = threading.Thread(target=CHECK_MQTT_DEVICE_CONNECTION_THREAD)
+        Thread = threading.Thread(target=CHECK_DEVICE_CONNECTION_THREAD)
         Thread.start()  
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Check MQTT Device connection | " + str(e))  
-        SEND_EMAIL("ERROR", "System | Thread | Check MQTT Device connection | " + str(e))    
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Check Device connection | " + str(e))  
+        SEND_EMAIL("ERROR", "System | Thread | Check Device connection | " + str(e))    
 
 
-def CHECK_MQTT_DEVICE_CONNECTION_THREAD():   
+def CHECK_DEVICE_CONNECTION_THREAD():   
 
     while True:
 
@@ -1088,7 +1088,7 @@ def CHECK_MQTT_DEVICE_CONNECTION_THREAD():
 
                 # error message if no connection in the last 24 hours
                 if time_last_contact < time_limit:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + device.name + " | No connection for over 24h")
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + device.name + " | No connection in the last 24h")
 
 
             # get the current time value
@@ -1102,7 +1102,7 @@ def CHECK_MQTT_DEVICE_CONNECTION_THREAD():
 
                 # error message if no connection in the last 24 hours
                 if time_last_contact < time_limit:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + device.name + " | No connection for over 48h")
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + device.name + " | No connection in the last 48h")
 
         except:
             pass

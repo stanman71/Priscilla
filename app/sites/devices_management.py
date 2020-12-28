@@ -1328,7 +1328,7 @@ def remove_device(ieeeAddr):
 
 
     except Exception as e:
-        session['delete_device_error'] = device_name + " || Error | + " + str(e)            
+        session['delete_device_error'] = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " || Error | + " + str(e)            
         return redirect(url_for('devices_management'))        
 
 

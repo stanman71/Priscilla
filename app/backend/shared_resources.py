@@ -303,9 +303,9 @@ def DISABLE_ZIGBEE_PAIRING_THREAD():
 
 zigbee2mqtt_bad_linkquality_list = []
 
-def START_REFRESH_AND_ENTRIES_COUNTER_ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD():
+def START_ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD():
 	try:
-		Thread = threading.Thread(target=REFRESH_AND_ENTRIES_COUNTER_ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD)
+		Thread = threading.Thread(target=ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD)
 		Thread.start()  
 		
 	except Exception as e:
@@ -313,7 +313,7 @@ def START_REFRESH_AND_ENTRIES_COUNTER_ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD():
 		SEND_EMAIL("ERROR", "System | Thread | Zigbee2MQTT Bad Linkquality | " + str(e)) 
 
 
-def REFRESH_AND_ENTRIES_COUNTER_ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD():   
+def ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD():   
 	while True:
 	
 		# delete entries after 6 hours
@@ -358,12 +358,4 @@ def REFRESH_AND_ENTRIES_COUNTER_ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD():
 		except:
 			pass
 			
-		time.sleep(60)		
-
-				
-
-				
-
-
-				
-
+		time.sleep(60)
