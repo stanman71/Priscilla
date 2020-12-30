@@ -1,5 +1,6 @@
 from app                         import app
 from app.backend.file_management import WRITE_LOGFILE_SYSTEM
+from app.backend.database_models import GET_ALL_DEVICES
 from app.backend.email           import SEND_EMAIL
 
 import datetime
