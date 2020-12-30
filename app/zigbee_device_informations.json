@@ -891,7 +891,7 @@
 				"model"           : "ZNCZ04LM",
 				"device_type"     : "power_switch",
 				"description"     : "XIAOMI Mi power plug EU",
-				"input_values"    : [],
+				"input_values"    : ["power","temperature"],
 				"input_events"    : [],
 				"commands"        : ["ON","OFF"],				
 				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]
@@ -900,7 +900,7 @@
 				"model"           : "SP-EUC01",
 				"device_type"     : "power_switch",
 				"description"     : "XIAOMI Aqara smart plug EU",
-				"input_values"    : [],
+				"input_values"    : ["power","temperature"],
 				"input_events"    : [],
 				"commands"        : ["ON","OFF"],				
 				"commands_json"   : ["{'state':'ON'}","{'state':'OFF'}"]

@@ -367,3 +367,26 @@ Timestamp,Type,Description
 2020-12-26 03:44:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-12-26 03:44:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2020-12-26 03:44:31,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-12-29 09:56:10,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-12-29 09:56:10,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-12-29 09:56:11,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-12-29 09:56:11,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-12-29 09:56:11,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-12-29 09:56:22,DATABASE,|Scheduler || Job - new_scheduler_job_6 || added|
+2020-12-29 09:56:25,DATABASE,|Scheduler || Job - new_scheduler_job_6 || changed |||| trigger_settings |||| time: False, sun_position: False, sensors: False, position: False >>> time: True, sun_position: False, sensors: False, position: False|
+2020-12-29 09:57:00,ERROR,|Task || Scheduler || new_scheduler_job_6 || argument of type 'NoneType' is not iterable|
+2020-12-29 09:57:12,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-12-29 09:57:13,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-12-29 09:57:14,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-12-29 09:57:14,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-12-29 09:57:14,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-12-29 09:57:54,DATABASE,|Scheduler || Job - new_scheduler_job_6 || deleted|
+2020-12-29 16:15:03,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2020-12-29 16:15:03,EVENT,|System || Services || Logitech Media Server || disabled|
+2020-12-29 16:15:04,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-12-29 16:15:04,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2020-12-29 16:15:04,EVENT,|System || Services || Squeezelie Player || disabled|
+2020-12-29 16:15:21,SUCCESS,|Music || Spotify || Login || successful|
+2020-12-29 16:15:21,SUCCESS,|Music || Spotify || Token || received|
+2020-12-29 16:15:21,SUCCESS,|Music || Spotify || Refresh Token || received|
+2020-12-29 16:15:22,SUCCESS,|Music || Spotify || Token || updated|

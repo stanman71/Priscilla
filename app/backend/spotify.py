@@ -640,8 +640,8 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
                 # case hifiberry_AMP2
                 if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_AMP2":
-                    if spotify_volume < 97:
-                        volume = spotify_volume + 3
+                    if spotify_volume < 98:
+                        volume = spotify_volume + 2
                     else:
                         volume = 100
                     
@@ -686,8 +686,8 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 # case hifiberry_AMP2                
                 if GET_DEVICE_BY_NAME(spotify_device_name).model == "hifiberry_AMP2":
             
-                    if spotify_volume > 3:
-                        volume = spotify_volume - 3       
+                    if spotify_volume > 2:
+                        volume = spotify_volume - 2       
                     else:
                         volume = 1
 

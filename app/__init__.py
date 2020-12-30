@@ -315,7 +315,7 @@ def background_thread_dashboard_system_log():
 def background_thread_music():
 
     while True:
-        socketio.sleep(1)
+        socketio.sleep(0.5)
 
         try:
             spotify_token = GET_SPOTIFY_TOKEN()
