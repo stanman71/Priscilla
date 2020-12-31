@@ -18,9 +18,9 @@ from ruamel.yaml import YAML
 from pathlib     import Path
 
 
-""" ########################### """
-"""  block battery low message  """
-""" ########################### """
+""" ############################ """
+"""  block battery low messages  """
+""" ############################ """
 
 list_battery_low_devices = []
 
@@ -36,6 +36,13 @@ def START_BLOCK_BATTERY_LOW_DEVICES_THREAD(device):
 def BLOCK_BATTERY_LOW_DEVICES_THREAD(device): 
     time.sleep(86400)  # 24h
     list_battery_low_devices.remove(device)
+
+
+""" ########################## """
+""" ########################## """
+"""     messenger functions    """
+""" ########################## """
+""" ########################## """
 
 
 """ ###################### """
@@ -177,15 +184,15 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         data = json.loads(msg)
         
 
-        # ################################
-        # zigbee2mqtt pairing log messages
-        # ################################
+        # ##################
+        # zigbee add devices
+        # ##################
 
         if GET_ZIGBEE2MQTT_PAIRING_SETTING() == "True":
 
             # new device connected
             if data["type"] == "pairing" and data["message"] == "interview_started":
-                SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device found - " + data["meta"]["friendly_name"])   
+                SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device found | " + data["meta"]["friendly_name"])   
 
             # device successful added
             if data["type"] == "pairing" and data["message"] == "interview_successful":
@@ -211,7 +218,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
                         ADD_DEVICE(ieeeAddr, "zigbee2mqtt", ieeeAddr, model, device_type, version, description, input_values, input_events, commands, commands_json)
 
-                        SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device added - " + data["meta"]["friendly_name"]) 
+                        SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device added | " + data["meta"]["friendly_name"]) 
                         WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + data["meta"]["friendly_name"] + " | added")    
 
                         # add device config for IKEA SYMFONISK sound controller and IKEA TRADFRI wireless dimmer
@@ -247,14 +254,14 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             # device connection failed
             if data["type"] == "pairing" and data["message"] == "interview_failed":
                 WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + data["meta"]["friendly_name"] + " | adding failed")
-                SET_ZIGBEE2MQTT_PAIRING_STATUS("Device adding failed - " + data["meta"]["friendly_name"])   
+                SET_ZIGBEE2MQTT_PAIRING_STATUS("Device adding failed | " + data["meta"]["friendly_name"])   
                 time.sleep(10)
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
       
 
-        # ##############
-        # remove devices
-        # ##############
+        # #####################
+        # zigbee remove devices
+        # #####################
 
         if data["type"] == "device_removed":
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + data["meta"]["friendly_name"] + " | deleted")
@@ -263,9 +270,9 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + data["message"] + " | deleted (force)")
 
 
-        # #####################
-        # zigbee device updates
-        # #####################
+        # ##################
+        # zigbee OTA updates
+        # ##################
 
         if data["type"] == "ota_update":
             SET_ZIGBEE_DEVICE_UPDATE_STATUS(data["message"])
@@ -316,9 +323,9 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                     SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(GET_DEVICE_BY_NAME(data["meta"]["device"]).ieeeAddr, "True")
 
 
-    # #########################
-    # start function networkmap
-    # #########################
+    # ########################
+    # zigbee create networkmap
+    # ########################
 
     if channel == "smarthome/zigbee2mqtt/bridge/networkmap/graphviz":
 
@@ -335,9 +342,9 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             WRITE_LOGFILE_SYSTEM("ERROR", "Network | Zigbee Topology | " + str)         
 
 
-    # ############
-    # mqtt updates
-    # ############
+    # ###################
+    # mqtt device updates
+    # ###################
 
     if channel == "smarthome/mqtt/update":
 
@@ -359,9 +366,9 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             pass
 
 
-    # ################
-    # device processes
-    # ################
+    # ############################
+    # device last contact + checks
+    # ############################
 
     if ieeeAddr != "":
         
@@ -392,7 +399,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                         START_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
 
                 else:
-                    if int(data["battery"]) < 25:
+                    if int(data["battery"]) < 20:
                         WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")           
 
                         # add device to block list
@@ -403,7 +410,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             pass               
 
 
-        # check link quality
+        # check linkquality
         try:
             data = json.loads(msg)
             
@@ -415,6 +422,10 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         except:
             pass   
 
+
+    # ##########
+    # sensordata
+    # ##########
 
     if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "heater_thermostat" or device_type == "watering_controller":
 
@@ -430,13 +441,17 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                     WRITE_SENSORDATA_FILE(filename, ieeeAddr, sensor_key, data[sensor_key])
                     
                 except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job - " + job.name + " | " + str(e))
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job | " + job.name + " | " + str(e))
 
         # start schedular job 
         for task in GET_ALL_SCHEDULER_JOBS():
             if task.trigger_sensors == "True" and task.option_pause != "True":
                 heapq.heappush(process_management_queue, (10, ("scheduler", task.id, ieeeAddr)))
 
+
+    # ##########
+    # controller
+    # ##########
 
     # start controller job  
     if device_type == "controller":       
@@ -500,6 +515,13 @@ def MQTT_PUBLISH_THREAD():
         time.sleep(0.1)
 
 
+""" ########################### """
+""" ########################### """
+"""     background functions    """
+""" ########################### """
+""" ########################### """
+
+
 """ ##################### """
 """  mqtt control thread  """
 """ ##################### """
@@ -536,13 +558,6 @@ def MQTT_CONTROL_THREAD():
             SET_MQTT_CONNECTION_STATUS(False)        
                     
         time.sleep(10)
-
-
-""" ################################ """
-""" ################################ """
-"""           mqtt functions         """
-""" ################################ """
-""" ################################ """
 
 
 """ ################ """
@@ -815,7 +830,7 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, seconds, log_report = True):
         WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + device.name + " | Setting not confirmed | " + setting)  
         SEND_EMAIL("ERROR", "Network | Device | " + device.name + " | Setting not confirmed | " + setting)          
               
-    return ("Device | " + device.name + " | Setting not confirmed - " + setting) 
+    return ("Device | " + device.name + " | Setting not confirmed | " + setting) 
                          
 
 def CHECK_MQTT_SETTING(ieeeAddr, setting):     
@@ -1088,7 +1103,7 @@ def CHECK_DEVICE_CONNECTION_THREAD():
 
                 # error message if no connection in the last 24 hours
                 if time_last_contact < time_limit:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + device.name + " | No connection in the last 24h")
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | Last connection | " + str(time_last_contact))
 
 
             # get the current time value
@@ -1100,9 +1115,9 @@ def CHECK_DEVICE_CONNECTION_THREAD():
                 time_last_contact = datetime.datetime.strptime(device.last_contact,"%Y-%m-%d %H:%M:%S")   
                 time_limit        = datetime.datetime.strptime(time_check_zigbee2mqtt, "%Y-%m-%d %H:%M:%S")                
 
-                # error message if no connection in the last 24 hours
+                # error message if no connection in the last 48 hours
                 if time_last_contact < time_limit:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + device.name + " | No connection in the last 48h")
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | Last connection | " + str(time_last_contact))
 
         except:
             pass
@@ -1221,7 +1236,7 @@ def REQUEST_SENSORDATA(job_name):
                     filename = sensordata_job.filename
         
                     WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
-                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Sensordata | Job - " + job_name + " | Data saved")  
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Sensordata | Job | " + job_name + " | Data saved")  
                     return True
                     
                 except:
@@ -1238,10 +1253,10 @@ def REQUEST_SENSORDATA(job_name):
                     filename = sensordata_job.filename
         
                     WRITE_SENSORDATA_FILE(filename, device_ieeeAddr, sensor_key, data[sensor_key])
-                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Sensordata | Job - " + job_name + " | Data saved")  
+                    WRITE_LOGFILE_SYSTEM("SUCCESS", "Sensordata | Job | " + job_name + " | Data saved")  
                     return True
                     
                 except:
                     pass
 
-    WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job - " + job_name + " | No Data found") 
+    WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job | " + job_name + " | No Data found") 

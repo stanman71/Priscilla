@@ -46,7 +46,7 @@ def START_PROGRAM_THREAD(program_id):
             program_thread_1.start()   
    
             SET_PROGRAM_THREAD_STATUS_1(program_name,0,0,"")
-            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | started") 
             return True
     
         elif GET_PROGRAM_THREAD_STATUS_2()[0] == "None":
@@ -57,7 +57,7 @@ def START_PROGRAM_THREAD(program_id):
             program_thread_2.start()   
    
             SET_PROGRAM_THREAD_STATUS_2(program_name,0,0,"")
-            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | started") 
             return True
 
         elif GET_PROGRAM_THREAD_STATUS_3()[0] == "None":
@@ -68,7 +68,7 @@ def START_PROGRAM_THREAD(program_id):
             program_thread_3.start()   
    
             SET_PROGRAM_THREAD_STATUS_3(program_name,0,0,"")
-            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | started") 
             return True
 
         elif GET_PROGRAM_THREAD_STATUS_4()[0] == "None":
@@ -79,7 +79,7 @@ def START_PROGRAM_THREAD(program_id):
             program_thread_4.start()   
    
             SET_PROGRAM_THREAD_STATUS_4(program_name,0,0,"")
-            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | started") 
             return True
 
         elif GET_PROGRAM_THREAD_STATUS_5()[0] == "None":
@@ -90,7 +90,7 @@ def START_PROGRAM_THREAD(program_id):
             program_thread_5.start()   
    
             SET_PROGRAM_THREAD_STATUS_5(program_name,0,0,"")
-            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | started") 
             return True
 
         elif GET_PROGRAM_THREAD_STATUS_6()[0] == "None":
@@ -101,7 +101,7 @@ def START_PROGRAM_THREAD(program_id):
             program_thread_6.start()   
    
             SET_PROGRAM_THREAD_STATUS_6(program_name,0,0,"")
-            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | started") 
             return True
 
         elif GET_PROGRAM_THREAD_STATUS_7()[0] == "None":
@@ -112,7 +112,7 @@ def START_PROGRAM_THREAD(program_id):
             program_thread_7.start()   
    
             SET_PROGRAM_THREAD_STATUS_7(program_name,0,0,"")
-            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | started") 
             return True
 
         elif GET_PROGRAM_THREAD_STATUS_8()[0] == "None":
@@ -123,7 +123,7 @@ def START_PROGRAM_THREAD(program_id):
             program_thread_8.start()   
    
             SET_PROGRAM_THREAD_STATUS_8(program_name,0,0,"")
-            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | started") 
             return True
 
         elif GET_PROGRAM_THREAD_STATUS_9()[0] == "None":
@@ -134,7 +134,7 @@ def START_PROGRAM_THREAD(program_id):
             program_thread_9.start()   
    
             SET_PROGRAM_THREAD_STATUS_9(program_name,0,0,"")
-            WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | started") 
+            WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | started") 
             return True            
 
         else:
@@ -211,63 +211,63 @@ def PROGRAM_THREAD(thread_id, program_id):
                 stop_program_thread_1 = False   
                 
                 SET_PROGRAM_THREAD_STATUS_1("None","","","")
-                WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
+                WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | stopped")
                 return
 
             if thread_id == 2 and stop_program_thread_2 == True:
                 stop_program_thread_2 = False  
                 
                 SET_PROGRAM_THREAD_STATUS_2("None","","","")
-                WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
+                WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | stopped")
                 return
 
             if thread_id == 3 and stop_program_thread_3 == True:
                 stop_program_thread_3 = False   
                 
                 SET_PROGRAM_THREAD_STATUS_3("None","","","")
-                WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
+                WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | stopped")
                 return
 
             if thread_id == 4 and stop_program_thread_4 == True:
                 stop_program_thread_4 = False    
                 
                 SET_PROGRAM_THREAD_STATUS_4("None","","","")
-                WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
+                WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | stopped")
                 return
 
             if thread_id == 5 and stop_program_thread_5 == True:
                 stop_program_thread_5 = False    
                 
                 SET_PROGRAM_THREAD_STATUS_5("None","","","")
-                WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
+                WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | stopped")
                 return
 
             if thread_id == 6 and stop_program_thread_6 == True:
                 stop_program_thread_6 = False   
                 
                 SET_PROGRAM_THREAD_STATUS_6("None","","","")
-                WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
+                WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | stopped")
                 return
 
             if thread_id == 7 and stop_program_thread_7 == True:
                 stop_program_thread_7 = False   
                 
                 SET_PROGRAM_THREAD_STATUS_7("None","","","")
-                WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
+                WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | stopped")
                 return
 
             if thread_id == 8 and stop_program_thread_8 == True:
                 stop_program_thread_8 = False 
                 
                 SET_PROGRAM_THREAD_STATUS_8("None","","","")
-                WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
+                WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | stopped")
                 return
 
             if thread_id == 9 and stop_program_thread_9 == True:
                 stop_program_thread_9 = False   
                 
                 SET_PROGRAM_THREAD_STATUS_9("None","","","")
-                WRITE_LOGFILE_SYSTEM("EVENT", "Program - " + program_name + " | stopped")
+                WRITE_LOGFILE_SYSTEM("EVENT", "Program | " + program_name + " | stopped")
                 return            
 
 
@@ -344,51 +344,51 @@ def PROGRAM_THREAD(thread_id, program_id):
         if thread_id == 1:
             SET_PROGRAM_THREAD_STATUS_1("None","","","")  
             time.sleep(10)
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program | " + program_name + " | finished")
 
         if thread_id == 2:
             SET_PROGRAM_THREAD_STATUS_2("None","","","") 
             time.sleep(10)
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program | " + program_name + " | finished")
 
         if thread_id == 3:
             SET_PROGRAM_THREAD_STATUS_3("None","","","") 
             time.sleep(10)
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program | " + program_name + " | finished")
 
         if thread_id == 4:
             SET_PROGRAM_THREAD_STATUS_4("None","","","") 
             time.sleep(10)
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program | " + program_name + " | finished")
 
         if thread_id == 5:
             SET_PROGRAM_THREAD_STATUS_5("None","","","")   
             time.sleep(10)
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program | " + program_name + " | finished")
 
         if thread_id == 6:
             SET_PROGRAM_THREAD_STATUS_6("None","","","")   
             time.sleep(10)
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program | " + program_name + " | finished")
 
         if thread_id == 7:
             SET_PROGRAM_THREAD_STATUS_7("None","","","")   
             time.sleep(10)
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program | " + program_name + " | finished")
 
         if thread_id == 8:
             SET_PROGRAM_THREAD_STATUS_8("None","","","")   
             time.sleep(10)
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program | " + program_name + " | finished")
 
         if thread_id == 9:
             SET_PROGRAM_THREAD_STATUS_9("None","","","")   
             time.sleep(10)
-            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program - " + program_name + " | finished")            
+            WRITE_LOGFILE_SYSTEM("SUCCESS", "Program | " + program_name + " | finished")            
 
 
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Programm - " + GET_PROGRAM_BY_ID(program_id).name + " | " + str(e))
+        WRITE_LOGFILE_SYSTEM("ERROR", "Programm | " + GET_PROGRAM_BY_ID(program_id).name + " | " + str(e))
         return str(e)
 
 

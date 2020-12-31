@@ -349,7 +349,7 @@ def ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD():
 						counter = counter + 1
 
 				if counter >= 3:
-					WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device - " + device.name + " | Bad Linkquality")
+					WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | Bad Linkquality")
 
 					# remove entries of this device
 					for entry in zigbee2mqtt_bad_linkquality_list:

@@ -82,7 +82,7 @@ def dashboard():
                             CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, int(brightness), 2, 10)
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Lighting | Start_Scene | Group - " + str(group.name) + " | empty")
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Lighting | Start_Scene | Group | " + str(group.name) + " | empty")
 
             except:
                 pass

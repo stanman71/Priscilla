@@ -164,7 +164,7 @@ def CHECK_CLIENT_MUSIC_CONNECTION():
                     heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + client_music.ieeeAddr + "/set", '{"interface":"restart"}')))  
 
                 except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device - " + client_music.name + " | " + str(e))      
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + client_music.name + " | " + str(e))      
 
     except:
         pass

@@ -530,7 +530,7 @@ def ADD_CAMERA():
             db.session.add(camera)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera - " + "new_camera_" + str(i) + " | added")               
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera | " + "new_camera_" + str(i) + " | added")               
             return True
             
     return "Limit reached (6)"
@@ -560,7 +560,7 @@ def SET_CAMERA_SETTINGS(id, name, url, user, password):
         entry.password = password                       
         db.session.commit()  
    
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera - " + str(previous_name) + " | changed" + changes)
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera | " + str(previous_name) + " | changed" + changes)
         return True
 
 
@@ -610,7 +610,7 @@ def DELETE_CAMERA(id):
     Camera.query.filter_by(id=id).delete()
     db.session.commit() 
     
-    WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera - " + str(camera_name) + " | deleted")   
+    WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Camera | " + str(camera_name) + " | deleted")   
     return True
 
 
@@ -846,7 +846,7 @@ def SET_CONTROLLER_TASKS(id, task_1  = "", task_2  = "", task_3  = "", task_4  =
 
         controller_name = GET_DEVICE_BY_IEEEADDR(entry.device_ieeeAddr).name
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Controller - " + str(controller_name) + " | changed" + changes)  
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Controller | " + str(controller_name) + " | changed" + changes)  
         return True
 
 
@@ -1000,7 +1000,7 @@ def SET_DEVICE_NAME(ieeeAddr, name):
         entry.name = name    
         db.session.commit()    
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(previous_name) + " | changed || name || " + str(previous_name) + " >>> " + str(entry.name))
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device | " + str(previous_name) + " | changed || name || " + str(previous_name) + " >>> " + str(entry.name))
 
 
 def SET_DEVICE_AUTO_UPDATE(ieeeAddr, auto_update):
@@ -1013,7 +1013,7 @@ def SET_DEVICE_AUTO_UPDATE(ieeeAddr, auto_update):
         entry.auto_update = auto_update        
         db.session.commit()    
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(entry.name) + " | changed || auto_update || " + str(previous_setting) + " >>> " + str(entry.auto_update))
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device | " + str(entry.name) + " | changed || auto_update || " + str(previous_setting) + " >>> " + str(entry.auto_update))
 
 
 def SET_DEVICE_LAST_CONTACT(ieeeAddr):
@@ -1120,7 +1120,7 @@ def UPDATE_DEVICE(id, name, gateway, model, device_type = "", version = "", desc
         entry.commands_json = str(commands_json)               
         db.session.commit()    
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(entry.name) + " | updated")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device | " + str(entry.name) + " | updated")
    
         if device_type == "controller":
             ADD_CONTROLLER(GET_DEVICE_BY_ID(id).ieeeAddr)
@@ -1203,45 +1203,45 @@ def DELETE_DEVICE(ieeeAddr):
     for entry in entries:
         if (entry.device_ieeeAddr_1 == ieeeAddr) or (entry.device_ieeeAddr_2 == ieeeAddr):
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " used in scheduler"
+            error_list = error_list + ", " + device.name + " listed in scheduler"
     
     # check sensordata
     entries = GET_ALL_SENSORDATA_JOBS()
     for entry in entries:
         if entry.device_ieeeAddr == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " used in sensordata / jobs"
+            error_list = error_list + ", " + device.name + " listed in sensordata / jobs"
 
     # check lighting groups
     entries = GET_ALL_LIGHTING_GROUPS()
     for entry in entries:
         if entry.light_ieeeAddr_1 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " used in lighting / groups"
+            error_list = error_list + ", " + device.name + " listed in lighting / groups"
         if entry.light_ieeeAddr_2 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " used in lighting / groups"
+            error_list = error_list + ", " + device.name + " listed in lighting / groups"
         if entry.light_ieeeAddr_3 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " used in lighting / groups" 
+            error_list = error_list + ", " + device.name + " listed in lighting / groups" 
         if entry.light_ieeeAddr_4 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " used in lighting / groups"
+            error_list = error_list + ", " + device.name + " listed in lighting / groups"
         if entry.light_ieeeAddr_5 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " used in lighting / groups"
+            error_list = error_list + ", " + device.name + " listed in lighting / groups"
         if entry.light_ieeeAddr_6 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " used in lighting / groups"
+            error_list = error_list + ", " + device.name + " listed in lighting / groups"
         if entry.light_ieeeAddr_7 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " used in lighting / groups"
+            error_list = error_list + ", " + device.name + " listed in lighting / groups"
         if entry.light_ieeeAddr_8 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " used in lighting / groups"
+            error_list = error_list + ", " + device.name + " listed in lighting / groups"
         if entry.light_ieeeAddr_9 == ieeeAddr:
             device = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
-            error_list = error_list + ", " + device.name + " used in lighting / groups"            
+            error_list = error_list + ", " + device.name + " listed in lighting / groups"            
         
     if error_list != "":
         return error_list[2:]   
@@ -1264,7 +1264,7 @@ def DELETE_DEVICE(ieeeAddr):
             Devices.query.filter_by(ieeeAddr=ieeeAddr).delete()
             db.session.commit() 
       
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(device_name) + " | deleted")                      
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device | " + str(device_name) + " | deleted")                      
             return True
 
         except Exception as e:
@@ -1305,7 +1305,7 @@ def ADD_DEVICE_EXCEPTION(device_ieeeAddr):
 
             device = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr)
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(device.name) + " | Exception | added")                   
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device | " + str(device.name) + " | Exception | added")                   
             return True
 
     return "Limit reached (25)"
@@ -1349,7 +1349,7 @@ def UPDATE_DEVICE_EXCEPTION(id, exception_option, exception_command, exception_s
         entry.exception_value_3             = exception_value_3            
         db.session.commit()  
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(entry.device.name) + " | Exception | changed" + changes) 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device | " + str(entry.device.name) + " | Exception | changed" + changes) 
 
         return True
 
@@ -1400,7 +1400,7 @@ def DELETE_DEVICE_EXCEPTION(id):
     entry = Device_Exceptions.query.filter_by(id=id).first()
 
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device - " + str(entry.device.name) + " | Exception | deleted")   
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Network | Device | " + str(entry.device.name) + " | Exception | deleted")   
     except:
         pass         
     
@@ -1511,7 +1511,7 @@ def ADD_LIGHTING_GROUP():
             db.session.add(group)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Group - " + "new_group_" + str(i) + " | added")  
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Group | " + "new_group_" + str(i) + " | added")  
             return True
 
     return "Limit reached (20)"
@@ -1595,7 +1595,7 @@ def SET_LIGHTING_GROUP(id, name, light_ieeeAddr_1, light_name_1, light_device_ty
         
         db.session.commit()  
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Group - " + str(previous_name) + " | changed" + changes)  
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Group | " + str(previous_name) + " | changed" + changes)  
         return True 
 
 
@@ -1847,7 +1847,7 @@ def DELETE_LIGHTING_GROUP(id):
     name = GET_LIGHTING_GROUP_BY_ID(id).name
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Group - " + str(name) + " | deleted")   
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Group | " + str(name) + " | deleted")   
     except:
         pass     
     
@@ -1895,7 +1895,7 @@ def ADD_LIGHTING_SCENE():
             db.session.add(scene)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Scene - " + "new_scene_" + str(i) + " | added")  
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Scene | " + "new_scene_" + str(i) + " | added")  
             return True
 
     return "Limit reached (20)"
@@ -1990,7 +1990,7 @@ def SET_LIGHTING_SCENE(id, name, red_1, green_1, blue_1, brightness_1, red_2, gr
         entry.brightness_9 = brightness_9                       
         db.session.commit()  
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Light | Scene - " + str(previous_name) + " | changed" + changes) 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Light | Scene | " + str(previous_name) + " | changed" + changes) 
         return True
 
 
@@ -2207,7 +2207,7 @@ def DELETE_LIGHTING_SCENE(id):
     name = GET_LIGHTING_SCENE_BY_ID(id).name
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Scene - " + str(name) + " | deleted") 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Lighting | Scene | " + str(name) + " | deleted") 
     except:
         pass 
 
@@ -3051,7 +3051,7 @@ def ADD_SCHEDULER_JOB():
 
             SET_SCHEDULER_JOB_COLLAPSE_OPEN(i)
         
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Job - " + "new_scheduler_job_" + str(i) + " | added")             
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Job | " + "new_scheduler_job_" + str(i) + " | added")             
             return True
 
     return "Limit reached (30)"
@@ -3182,7 +3182,7 @@ def SET_SCHEDULER_JOB(id, name, task,
 
         db.session.commit()   
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Job - " + str(previous_name) + " | changed" + changes) 
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Job | " + str(previous_name) + " | changed" + changes) 
         return True
 
 
@@ -3332,7 +3332,7 @@ def DELETE_SCHEDULER_JOB(job_id):
     entry = GET_SCHEDULER_JOB_BY_ID(job_id)
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Job - " + str(entry.name) + " | deleted")   
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Scheduler | Job | " + str(entry.name) + " | deleted")   
     except:
         pass         
     
@@ -3376,7 +3376,7 @@ def ADD_SENSORDATA_JOB():
             db.session.add(sensordata_job)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata | Job - " + "new_job_" + str(i) + " | added")                    
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata | Job | " + "new_job_" + str(i) + " | added")                    
             return True
 
     return "Limit reached (25)"
@@ -3408,7 +3408,7 @@ def SET_SENSORDATA_JOB_SETTINGS(id, name, filename, device_ieeeAddr, sensor_key,
         entry.always_active = always_active
         db.session.commit()    
 
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata | Job - " + str(previous_name) + " | changed" + changes)   
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata | Job | " + str(previous_name) + " | changed" + changes)   
         return True 
 
 
@@ -3456,7 +3456,7 @@ def DELETE_SENSORDATA_JOB(id):
     entry = GET_SENSORDATA_JOB_BY_ID(id)
     
     try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata | Job - " + str(entry.name) + " | deleted")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata | Job | " + str(entry.name) + " | deleted")
     except:
         pass     
  
@@ -3626,7 +3626,7 @@ def ADD_USER():
             db.session.add(new_user)
             db.session.commit()
 
-            WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + "new_user_" + str(i) + " | added") 
+            WRITE_LOGFILE_SYSTEM("DATABASE", "System | User | " + "new_user_" + str(i) + " | added") 
             return True
 
     return "Limit reached (10)"        
@@ -3656,7 +3656,7 @@ def UPDATE_USER_SETTINGS(id, name, email, role, email_notification):
         entry.email_notification = email_notification
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + str(previous_name) + " | changed" + changes)
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User | " + str(previous_name) + " | changed" + changes)
         return True
 
 
@@ -3669,7 +3669,7 @@ def CHANGE_USER_PASSWORD(id, hashed_password):
         entry.password = hashed_password    
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + str(entry.name) + " | Password | changed")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User | " + str(entry.name) + " | Password | changed")
         return True
     
 
@@ -3682,7 +3682,7 @@ def SET_DASHBOARD_LOG_SHOW_EXCEPTIONS(id, dashboard_log_show_exceptions):
         entry.dashboard_log_show_exceptions = dashboard_log_show_exceptions    
         db.session.commit()
         
-        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + str(entry.name) + " | Dashboard Setting | changed")
+        WRITE_LOGFILE_SYSTEM("DATABASE", "System | User | " + str(entry.name) + " | Dashboard Setting | changed")
         return True
 
 
@@ -3692,7 +3692,7 @@ def DELETE_USER(user_id):
     if entry.name != "admin":
 
         try:
-            WRITE_LOGFILE_SYSTEM("DATABASE", "System | User - " + str(entry.name) + " | deleted")    
+            WRITE_LOGFILE_SYSTEM("DATABASE", "System | User | " + str(entry.name) + " | deleted")    
             User.query.filter_by(id=user_id).delete()
             db.session.commit()    
             return True

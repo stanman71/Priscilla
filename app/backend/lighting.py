@@ -445,14 +445,14 @@ def CHECK_LIGHTING_GROUP_SETTING_PROCESS(group_id, scene_id, scene_name, brightn
     group_name = GET_LIGHTING_GROUP_BY_ID(group_id).name
                 
     if result == []:
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "Lighting | Group - " + group_name + " | Setting changed | " + str(scene_name) + " : "  + str(brightness) + " %") 
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "Lighting | Group | " + group_name + " | Setting changed | " + str(scene_name) + " : "  + str(brightness) + " %") 
     else:
         device_errors = ""
 
         for element in result:
             device_errors = device_errors + ", " + element
 
-        WRITE_LOGFILE_SYSTEM("WARNING", "Lighting | Group - " + group_name + " | "  + str(scene_name) + " : "  + str(brightness) + " | Setting not confirmed | " + device_errors[2:])
+        WRITE_LOGFILE_SYSTEM("WARNING", "Lighting | Group | " + group_name + " | "  + str(scene_name) + " : "  + str(brightness) + " | Setting not confirmed | " + device_errors[2:])
 
     return result     
                                                              

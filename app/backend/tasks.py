@@ -42,13 +42,13 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                         CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
                     else:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Scene - " + task[3] + " | missing")
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Scene | " + task[3] + " | missing")
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | empty")             
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group | " + task[2] + " | empty")             
                 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | missing")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group | " + task[2] + " | missing")
 
 
         # #######################################
@@ -86,13 +86,13 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                             CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
                         else:
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Scene - " + task[3] + " | missing")
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Scene | " + task[3] + " | missing")
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | empty")                        
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group | " + task[2] + " | empty")                        
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | missing")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group | " + task[2] + " | missing")
 
 
         # #############################
@@ -139,10 +139,10 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                     CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | empty")            
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group | " + task[2] + " | empty")            
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | missing")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group | " + task[2] + " | missing")
 
 
         # #########################
@@ -194,20 +194,20 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                                 CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, target_brightness, 2, 10)
 
                             else:
-                                WRITE_LOGFILE_SYSTEM("STATUS", "Light | Group - " + group.name +
+                                WRITE_LOGFILE_SYSTEM("STATUS", "Light | Group | " + group.name +
                                                     " | " + scene_name + " : " + str(current_brightness) + " %")
 
                         else:
-                            WRITE_LOGFILE_SYSTEM("WARNING", "Light | Group - " + group.name + " | OFF : 0 %")
+                            WRITE_LOGFILE_SYSTEM("WARNING", "Light | Group | " + group.name + " | OFF : 0 %")
 
                     else:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Command - " + task[3] + " | invalid")
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Command | " + task[3] + " | invalid")
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | empty")            
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group | " + task[2] + " | empty")            
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + task[2] + " | missing")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group | " + task[2] + " | missing")
 
 
         # ###################
@@ -240,7 +240,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                     WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Invalid settings")  
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Light - " + task[2] + " | missing")   
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Light | " + task[2] + " | missing")   
 
 
         # #########
@@ -276,11 +276,11 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                             CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
                         else:
-                            WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + input_group_name + " | empty")            
+                            WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group | " + input_group_name + " | empty")            
 
                 # group not found
                 if group_found == False:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + input_group_name + " | missing")
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group | " + input_group_name + " | missing")
 
 
             elif task[2].lower() == "light":
@@ -293,7 +293,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                     CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "OFF", 100)
 
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Light - " + task[3].strip() + " | missing")
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Light | " + task[3].strip() + " | missing")
 
 
             elif task[2].lower() == "all":
@@ -310,7 +310,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                         CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
                     else:
-                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group - " + group.name + " | empty")      
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group | " + group.name + " | empty")      
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | No Target found")      
@@ -381,7 +381,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                         WRITE_LOGFILE_SYSTEM("WARNING","Task | " + source + " | " + str(error_informations) + " | " + check_result)
                                         
                 else:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Gerät - " + task[1] + " | missing")        
+                    WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Device | " + task[1] + " | missing")        
         
 
         # ##################
@@ -486,7 +486,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                     WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Invalid command")
 
             else:
-                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Program - " + program + " | missing")
+                WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Program | " + program + " | missing")
 
 
         # #####

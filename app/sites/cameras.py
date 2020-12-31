@@ -233,7 +233,7 @@ def cameras():
                 # save settings
                 if error_found == False: 
                     if SET_CAMERA_SETTINGS(i, name, url, user, password):
-                        success_message_change_settings.append(name + " || Settings successfully saved - System restart nessessary") 
+                        success_message_change_settings.append(name + " || Settings successfully saved | System restart nessessary") 
 
 
     """ ############# """
