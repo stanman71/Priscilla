@@ -366,9 +366,9 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             pass
 
 
-    # ############################
-    # device last contact + checks
-    # ############################
+    # #####################################
+    # device last contact + check functions
+    # #####################################
 
     if ieeeAddr != "":
         
@@ -427,26 +427,29 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
     # sensordata
     # ##########
 
-    if device_type == "sensor_passiv" or device_type == "sensor_active" or device_type == "heater_thermostat" or device_type == "watering_controller":
+    # save sensordata 
+    for job in GET_ALL_SENSORDATA_JOBS():
+        if job.device_ieeeAddr == ieeeAddr and job.always_active == "True":
 
-        # save sensordata
-        for job in GET_ALL_SENSORDATA_JOBS():
-            if job.device_ieeeAddr == ieeeAddr and job.always_active == "True":
+            try:
+                sensor_key = job.sensor_key.strip()
+                data       = json.loads(msg)
+                filename   = job.filename
 
-                try:
-                    sensor_key = job.sensor_key.strip()
-                    data       = json.loads(msg)
-                    filename   = job.filename
+                WRITE_SENSORDATA_FILE(filename, ieeeAddr, sensor_key, data[sensor_key])
+                
+            except Exception as e:
+                WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job | " + job.name + " | " + str(e))
 
-                    WRITE_SENSORDATA_FILE(filename, ieeeAddr, sensor_key, data[sensor_key])
-                    
-                except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job | " + job.name + " | " + str(e))
 
-        # start schedular job 
-        for task in GET_ALL_SCHEDULER_JOBS():
-            if task.trigger_sensors == "True" and task.option_pause != "True":
-                heapq.heappush(process_management_queue, (10, ("scheduler", task.id, ieeeAddr)))
+    # #########
+    # schedular
+    # #########
+
+    # start schedular job 
+    for task in GET_ALL_SCHEDULER_JOBS():
+        if task.trigger_sensors == "True" and task.option_pause != "True":
+            heapq.heappush(process_management_queue, (10, ("scheduler", task.id, ieeeAddr)))
 
 
     # ##########

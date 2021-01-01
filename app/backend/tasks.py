@@ -553,8 +553,13 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                     spotify_device_id = GET_SPOTIFY_DEVICE_ID(spotify_token, task[2].strip()) 
                     playlist_uri      = GET_SPOTIFY_PLAYLIST(spotify_token, task[3].strip(), 20)
                     playlist_volume   = int(task[4]) 
+                    
+                    if task[5].strip() == "True":
+                        playlist_shuffle = True
+                    else:
+                        playlist_shuffle = False
 
-                    SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume)
+                    SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume, playlist_shuffle)
             
                 # start track
                         
@@ -573,8 +578,13 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                     spotify_device_id = GET_SPOTIFY_DEVICE_ID(spotify_token, task[2].strip())                        
                     album_uri         = SPOTIFY_SEARCH_ALBUM(spotify_token, task[3].strip(), task[4].strip(), 1) [0][2]
                     album_volume      = int(task[5].strip())
-                    
-                    SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
+
+                    if task[6].strip() == "True":
+                        album_shuffle = True
+                    else:
+                        album_shuffle = False           
+
+                    SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume, album_shuffle)
 
                 # change interface
                         

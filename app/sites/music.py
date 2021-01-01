@@ -168,8 +168,13 @@ def music():
                 spotify_device_id = request.form.get("set_spotify_device_id")
                 playlist_uri      = request.form.get("set_spotify_playlist")
                 playlist_volume   = request.form.get("set_spotify_playlist_volume")
-                
-                SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume)
+
+                if request.form.get("set_checkbox_shuffle_setting") != None:
+                    playlist_shuffle = True
+                else:
+                    playlist_shuffle = False
+
+                SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume, playlist_shuffle)
 
                 volume = playlist_volume   
 

@@ -718,14 +718,17 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
         WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Control | " + str(e)) 
 
 
-def SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume):
+def SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume, playlist_shuffle = True):
 
     sp       = spotipy.Spotify(auth=spotify_token)
     sp.trace = False    
     
     sp.start_playback(device_id=spotify_device_id, context_uri=playlist_uri, uris=None, offset = None)      
-    sp.shuffle(True, device_id=spotify_device_id)
-    sp.next_track(device_id=spotify_device_id) 
+    sp.shuffle(playlist_shuffle, device_id=spotify_device_id)
+
+    if playlist_shuffle == True:
+        sp.next_track(device_id=spotify_device_id) 
+
     SET_MUSIC_VOLUME(spotify_token, playlist_volume)
     
 
@@ -738,12 +741,17 @@ def SPOTIFY_START_TRACK(spotify_token, spotify_device_id, track_uri, track_volum
     SET_MUSIC_VOLUME(spotify_token, track_volume)
 
 
-def SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume):
+def SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume, album_shuffle = True):
 
     sp       = spotipy.Spotify(auth=spotify_token)
     sp.trace = False    
 
     sp.start_playback(device_id=spotify_device_id, context_uri=album_uri, uris=None, offset={"position": 0})      
+    sp.shuffle(album_shuffle, device_id=spotify_device_id)
+    
+    if album_shuffle == True:
+        sp.next_track(device_id=spotify_device_id) 
+
     SET_MUSIC_VOLUME(spotify_token, album_volume)
 
 
