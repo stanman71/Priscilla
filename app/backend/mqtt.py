@@ -1075,7 +1075,7 @@ def CHECK_ZIGBEE2MQTT_RUNNING_THREAD():
         except:
             pass
 
-        time.sleep(10)
+        time.sleep(600)   # every 10 minutes
 
 
 def START_CHECK_DEVICE_CONNECTION_THREAD():

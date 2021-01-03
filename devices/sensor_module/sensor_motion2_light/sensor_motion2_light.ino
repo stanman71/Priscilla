@@ -43,11 +43,12 @@ int PIN_LED_RED   = 12;                          // D6
 // CUSTOM SETTINGS
 // ###############
 
-int SENSOR_1 = 0;                                // D3 
-int SENSOR_2 = A0;                               // A0 
+int SENSOR_1 = 5;                                // D1
+int SENSOR_2 = 4;                                // D2 
+int SENSOR_3 = A0;                               // A0 
 
-// int SENSOR = 5;                               // D1 
-// int SENSOR = 4;                               // D2 
+
+// int SENSOR = 0;                               // D3 
 // int SENSOR = 13;                              // D7
 
 
@@ -59,8 +60,9 @@ String current_Version = "2.1";
 
 int sensor_1_last_value = 0;
 int sensor_2_last_value = 0;
+int sensor_3_last_value = 0;
 
-int disable_sensor_2_timer = 0;
+int disable_sensor_3_timer = 0;
 
 
 // ############
@@ -312,13 +314,13 @@ void send_default_mqtt_message() {
     // create msg as json
     DynamicJsonDocument msg(128);
 
-    if (digitalRead(SENSOR_1) == 0){
+    if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
         msg["occupancy"] = "True";
     } else {
         msg["occupancy"] = "False";
     }
 
-    msg["illuminance"] = sensor_2_last_value;          
+    msg["illuminance"] = sensor_3_last_value;          
 
     // convert msg to char
     char msg_Char[128];
@@ -439,10 +441,11 @@ void setup() {
 
     // custom settings
     
-    pinMode(SENSOR_1, INPUT_PULLUP); 
-    pinMode(SENSOR_2, INPUT); 
+    pinMode(SENSOR_1, INPUT);
+    pinMode(SENSOR_2, INPUT);      
+    pinMode(SENSOR_3, INPUT); 
     
-    sensor_2_last_value = analogRead(SENSOR_2);
+    sensor_3_last_value = analogRead(SENSOR_3);
 }
 
 
@@ -473,25 +476,28 @@ void loop() {
     // custom settings
 
     // if occupancy is true, freeze illuminance value for 30 seconds
-    if (digitalRead(SENSOR_1) == 0){
-        disable_sensor_2_timer = 30000;
+    if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
+        disable_sensor_3_timer = 30000;
     }   
 
     // illuminance timer
-    if (disable_sensor_2_timer > 0){
-        disable_sensor_2_timer = disable_sensor_2_timer - 10; 
+    if (disable_sensor_3_timer > 0){
+        disable_sensor_3_timer = disable_sensor_3_timer - 10; 
     } else {
-        disable_sensor_2_timer = 0;
+        disable_sensor_3_timer = 0;
     }
 
     // read illuminance sensor ?    
-    if (disable_sensor_2_timer == 0){
-        sensor_2_last_value = analogRead(SENSOR_2);
+    if (disable_sensor_3_timer == 0){
+        sensor_3_last_value = analogRead(SENSOR_3);
     }           
 
     // send message ?     
-    if (digitalRead(SENSOR_1) == 0 or sensor_1_last_value != digitalRead(SENSOR_1)){
+    if (digitalRead(SENSOR_1) == 1 or sensor_1_last_value != digitalRead(SENSOR_1) or
+        digitalRead(SENSOR_2) == 1 or sensor_2_last_value != digitalRead(SENSOR_2)){
+          
         sensor_1_last_value = digitalRead(SENSOR_1);
+        sensor_2_last_value = digitalRead(SENSOR_2);        
         send_default_mqtt_message();
         delay(1000);
     } 
