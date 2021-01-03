@@ -476,11 +476,11 @@ def GET_MQTT_DEVICE_MANUALLY_ADDING_INFORMATIONS(model):
                     input_values  = ""
                   
                 try:
-                    input_events  = device['input_events']
-                    input_events  = ','.join(input_events)
-                    input_events  = input_events.replace("'", '"')     
+                    input_trigger = device['input_trigger']
+                    input_trigger = ','.join(input_trigger)
+                    input_trigger = input_trigger.replace("'", '"')     
                 except:
-                    input_events  = ""
+                    input_trigger = ""
                     
                 try:
                     commands      = device['commands']   
@@ -496,7 +496,7 @@ def GET_MQTT_DEVICE_MANUALLY_ADDING_INFORMATIONS(model):
                 except:
                     commands_json = "" 
 
-                return (device_type, description, input_values, input_events, commands, commands_json)
+                return (device_type, description, input_values, input_trigger, commands, commands_json)
                 
         return ("", "", "", "", "", "")   
         
@@ -536,11 +536,11 @@ def GET_ZIGBEE_DEVICE_INFORMATIONS(model):
                     input_values  = ""
                   
                 try:
-                    input_events  = device['input_events']
-                    input_events  = ','.join(input_events)
-                    input_events  = input_events.replace("'", '"')     
+                    input_trigger = device['input_trigger']
+                    input_trigger = ','.join(input_trigger)
+                    input_trigger = input_trigger.replace("'", '"')     
                 except:
-                    input_events  = ""
+                    input_trigger = ""
                     
                 try:
                     commands      = device['commands']   
@@ -556,7 +556,7 @@ def GET_ZIGBEE_DEVICE_INFORMATIONS(model):
                 except:
                     commands_json = "" 
 
-                return (device_type, description, input_values, input_events, commands, commands_json)
+                return (device_type, description, input_values, input_trigger, commands, commands_json)
                 
         return ("", "", "", "", "", "")   
         

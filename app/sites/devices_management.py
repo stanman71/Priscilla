@@ -341,11 +341,11 @@ def devices_management():
             version       = ""                                            
             description   = new_device[1]
             input_values  = new_device[2]
-            input_events  = new_device[3]  
+            input_trigger = new_device[3]  
             commands      = new_device[4]                                
             commands_json = new_device[5] 
 
-            result = ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, version, description, input_values, input_events, commands, commands_json) 
+            result = ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, version, description, input_values, input_trigger, commands, commands_json) 
 
             if result:
                 success_message_mqtt_manually_adding = True

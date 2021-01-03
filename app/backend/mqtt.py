@@ -212,11 +212,11 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                         version       = ""                                            
                         description   = new_device[1]
                         input_values  = new_device[2]
-                        input_events  = new_device[3]  
+                        input_trigger = new_device[3]  
                         commands      = new_device[4]                                
                         commands_json = new_device[5] 
 
-                        ADD_DEVICE(ieeeAddr, "zigbee2mqtt", ieeeAddr, model, device_type, version, description, input_values, input_events, commands, commands_json)
+                        ADD_DEVICE(ieeeAddr, "zigbee2mqtt", ieeeAddr, model, device_type, version, description, input_values, input_trigger, commands, commands_json)
 
                         SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device added | " + data["meta"]["friendly_name"]) 
                         WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + data["meta"]["friendly_name"] + " | added")    
@@ -614,11 +614,11 @@ def UPDATE_DEVICES(gateway):
                         input_values  = ""
                       
                     try:
-                        input_events  = data['input_events']
-                        input_events  = ','.join(input_events)
-                        input_events  = input_events.replace("'", '"')                                         
+                        input_trigger = data['input_trigger']
+                        input_trigger = ','.join(input_trigger)
+                        input_trigger = input_trigger.replace("'", '"')                                         
                     except:
-                        input_events  = ""
+                        input_trigger = ""
                         
                     try:
                         commands      = data['commands'] 
@@ -638,7 +638,7 @@ def UPDATE_DEVICES(gateway):
                     # add new device
 
                     if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):
-                        ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, version, description, input_values, input_events, commands, commands_json)
+                        ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, version, description, input_values, input_trigger, commands, commands_json)
                         WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + name + " | added")   
                       
                     # update existing device
@@ -647,7 +647,7 @@ def UPDATE_DEVICES(gateway):
                         id   = GET_DEVICE_BY_IEEEADDR(ieeeAddr).id
                         name = GET_DEVICE_BY_IEEEADDR(ieeeAddr).name
                                         
-                        UPDATE_DEVICE(id, name, gateway, model, device_type, version, description, input_values, input_events, commands, commands_json)
+                        UPDATE_DEVICE(id, name, gateway, model, device_type, version, description, input_values, input_trigger, commands, commands_json)
                         SET_DEVICE_LAST_CONTACT(ieeeAddr)
                       
                     # update input values
@@ -719,11 +719,11 @@ def UPDATE_DEVICES(gateway):
                                             version       = ""                                            
                                             description   = new_device[1]
                                             input_values  = new_device[2]
-                                            input_events  = new_device[3]  
+                                            input_trigger = new_device[3]  
                                             commands      = new_device[4]                                
                                             commands_json = new_device[5] 
 
-                                            ADD_DEVICE(name, gateway, ieeeAddr, new_model, device_type, version, description, input_values, input_events, commands, commands_json)
+                                            ADD_DEVICE(name, gateway, ieeeAddr, new_model, device_type, version, description, input_values, input_trigger, commands, commands_json)
                                             WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + name + " | added")    
 
                                         # update device informations
@@ -744,7 +744,7 @@ def UPDATE_DEVICES(gateway):
                                                 version       = ""                                                
                                                 description   = existing_device[1]                                            
                                                 input_values  = existing_device[2]
-                                                input_events  = existing_device[3]  
+                                                input_trigger = existing_device[3]  
                                                 commands      = existing_device[4]  
                                                 commands_json = existing_device[5] 
 
@@ -753,13 +753,13 @@ def UPDATE_DEVICES(gateway):
                                                 version       = ""                                                
                                                 description   = device_data.description                                             
                                                 input_values  = device_data.input_values
-                                                input_events  = device_data.input_events
+                                                input_trigger = device_data.input_trigger
                                                 commands      = device_data.commands 
                                                 commands_json = device_data.commands_json 
                                         
                                                 error = "Error | " + str(existing_model) + " not found | " + str(e)
                                                                         
-                                            UPDATE_DEVICE(id, name, gateway, existing_model, device_type, version, description, input_values, input_events, commands, commands_json)
+                                            UPDATE_DEVICE(id, name, gateway, existing_model, device_type, version, description, input_values, input_trigger, commands, commands_json)
 
                                 except:
                                     pass

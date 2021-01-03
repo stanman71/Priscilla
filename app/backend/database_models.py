@@ -77,7 +77,7 @@ class Devices(db.Model):
     description        = db.Column(db.String(200)) 
     auto_update        = db.Column(db.String(50), server_default=("False")) 
     input_values       = db.Column(db.String(200))
-    input_events       = db.Column(db.String(200))
+    input_trigger      = db.Column(db.String(200))
     commands           = db.Column(db.String(200))    
     commands_json      = db.Column(db.String(200))     
     last_contact       = db.Column(db.String(50))
@@ -658,87 +658,87 @@ def ADD_CONTROLLER(device_ieeeAddr):
 def UPDATE_CONTROLLER_EVENTS(): 
     for controller in GET_ALL_CONTROLLER():
     
-        device_input_events = GET_DEVICE_BY_IEEEADDR(controller.device_ieeeAddr).input_events
-        device_input_events = device_input_events.split(",")
+        device_input_trigger = GET_DEVICE_BY_IEEEADDR(controller.device_ieeeAddr).input_trigger
+        device_input_trigger = device_input_trigger.split(",")
 
         try:
-            controller.command_1 = device_input_events[0]
+            controller.command_1 = device_input_trigger[0]
         except:
             controller.command_1 = "None"
         try:
-            controller.command_2 = device_input_events[1]
+            controller.command_2 = device_input_trigger[1]
         except:
             controller.command_2 = "None"
         try:
-            controller.command_3 = device_input_events[2]
+            controller.command_3 = device_input_trigger[2]
         except:
             controller.command_3 = "None"
         try:
-            controller.command_4 = device_input_events[3]
+            controller.command_4 = device_input_trigger[3]
         except:
             controller.command_4 = "None"
         try:
-            controller.command_5 = device_input_events[4]
+            controller.command_5 = device_input_trigger[4]
         except:
             controller.command_5 = "None"
         try:
-            controller.command_6 = device_input_events[5]
+            controller.command_6 = device_input_trigger[5]
         except:
             controller.command_6 = "None"            
         try:
-            controller.command_7 = device_input_events[6]
+            controller.command_7 = device_input_trigger[6]
         except:
             controller.command_7 = "None"
         try:
-            controller.command_8 = device_input_events[7]
+            controller.command_8 = device_input_trigger[7]
         except:
             controller.command_8 = "None"
         try:
-            controller.command_9 = device_input_events[8]
+            controller.command_9 = device_input_trigger[8]
         except:
             controller.command_9 = "None"      
         try:
-            controller.command_10 = device_input_events[9]
+            controller.command_10 = device_input_trigger[9]
         except:
             controller.command_10 = "None"      
         try:
-            controller.command_11 = device_input_events[10]
+            controller.command_11 = device_input_trigger[10]
         except:
             controller.command_11 = "None"      
         try:
-            controller.command_12 = device_input_events[11]
+            controller.command_12 = device_input_trigger[11]
         except:
             controller.command_12 = "None"      
         try:
-            controller.command_13 = device_input_events[12]
+            controller.command_13 = device_input_trigger[12]
         except:
             controller.command_13 = "None"      
         try:
-            controller.command_14 = device_input_events[13]
+            controller.command_14 = device_input_trigger[13]
         except:
             controller.command_14 = "None"      
         try:
-            controller.command_15 = device_input_events[14]
+            controller.command_15 = device_input_trigger[14]
         except:
             controller.command_15 = "None"      
         try:
-            controller.command_16 = device_input_events[15]
+            controller.command_16 = device_input_trigger[15]
         except:
             controller.command_16 = "None"      
         try:
-            controller.command_17 = device_input_events[16]
+            controller.command_17 = device_input_trigger[16]
         except:
             controller.command_17 = "None"      
         try:
-            controller.command_18 = device_input_events[17]
+            controller.command_18 = device_input_trigger[17]
         except:
             controller.command_18 = "None"      
         try:
-            controller.command_19 = device_input_events[18]
+            controller.command_19 = device_input_trigger[18]
         except:
             controller.command_19 = "None"      
         try:
-            controller.command_20 = device_input_events[19]
+            controller.command_20 = device_input_trigger[19]
         except:
             controller.command_20 = "None"      
 
@@ -945,7 +945,7 @@ def GET_ALL_DEVICES(selector):
         
 
 def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", version = "", description = "", 
-               input_values = "", input_events = "", commands = "", commands_json = "", last_contact = ""):
+               input_values = "", input_trigger = "", commands = "", commands_json = "", last_contact = ""):
         
     # path exist ?
     if not GET_DEVICE_BY_IEEEADDR(ieeeAddr):   
@@ -968,7 +968,7 @@ def ADD_DEVICE(name, gateway, ieeeAddr, model = "", device_type = "", version = 
                         version       = version,
                         description   = description,
                         input_values  = str(input_values),
-                        input_events  = str(input_events),
+                        input_trigger = str(input_trigger),
                         commands      = str(commands),   
                         commands_json = str(commands_json),                                           
                         last_contact  = last_contact,
@@ -1102,12 +1102,12 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
         pass
 
 
-def UPDATE_DEVICE(id, name, gateway, model, device_type = "", version = "", description = "", input_values = "", input_events = "", commands = "", commands_json = ""):
+def UPDATE_DEVICE(id, name, gateway, model, device_type = "", version = "", description = "", input_values = "", input_trigger = "", commands = "", commands_json = ""):
     entry = Devices.query.filter_by(id=id).first()
 
     # values changed ?
     if (entry.name != name or entry.model != model or entry.device_type != device_type or entry.version != version or entry.description != description or
-        entry.input_values != input_values or entry.input_events != input_events or entry.commands != commands or entry.commands_json != commands_json):
+        entry.input_values != input_values or entry.input_trigger != input_trigger or entry.commands != commands or entry.commands_json != commands_json):
         
         entry.name          = name
         entry.model         = model
@@ -1115,7 +1115,7 @@ def UPDATE_DEVICE(id, name, gateway, model, device_type = "", version = "", desc
         entry.version       = version        
         entry.description   = description
         entry.input_values  = str(input_values)
-        entry.input_events  = str(input_events)
+        entry.input_trigger = str(input_trigger)
         entry.commands      = str(commands)   
         entry.commands_json = str(commands_json)               
         db.session.commit()    
