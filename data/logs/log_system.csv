@@ -390,3 +390,143 @@ Timestamp,Type,Description
 2020-12-29 16:15:21,SUCCESS,|Music || Spotify || Token || received|
 2020-12-29 16:15:21,SUCCESS,|Music || Spotify || Refresh Token || received|
 2020-12-29 16:15:22,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-13 21:04:51,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:04:51,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:04:52,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:04:52,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:04:52,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:14:45,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:14:45,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:14:46,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:14:46,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:14:46,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:19:36,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:19:37,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:19:38,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:19:38,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:19:38,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:25:50,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:25:50,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:25:51,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:25:51,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:25:51,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:26:47,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:26:47,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:26:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:26:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:26:48,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:29:15,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:29:15,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:29:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:29:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:29:16,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:46:13,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:46:13,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:46:14,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:46:14,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:46:14,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:46:52,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:46:52,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:46:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:46:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:46:53,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:47:20,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:47:20,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:47:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:47:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:47:21,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:48:33,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:48:33,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:48:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:48:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:48:34,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:49:49,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:49:49,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:49:50,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:49:50,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:49:50,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:53:34,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:53:34,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:53:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:53:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:53:35,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:56:03,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:56:04,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:56:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:56:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:56:05,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:58:15,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:58:15,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:58:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:58:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:58:16,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 21:59:16,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 21:59:16,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 21:59:17,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:59:17,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 21:59:17,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 22:00:05,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 22:00:06,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 22:00:07,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:00:07,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:00:07,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 22:00:49,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 22:00:50,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 22:00:50,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:00:50,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:00:51,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 22:01:34,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 22:01:34,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 22:01:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:01:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:01:35,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 22:02:30,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 22:02:30,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 22:02:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:02:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:02:31,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 22:03:29,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 22:03:29,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 22:03:30,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:03:31,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 22:03:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:03:59,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 22:03:59,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 22:04:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:04:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:04:00,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 22:05:18,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 22:05:18,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 22:05:19,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:05:19,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:05:19,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 22:05:55,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 22:05:55,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 22:05:56,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:05:56,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:05:56,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 22:06:31,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 22:06:31,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 22:06:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:06:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:06:32,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 22:07:52,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 22:07:52,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 22:07:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:07:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:07:53,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 22:08:47,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 22:08:47,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 22:08:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:08:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:08:48,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 22:09:45,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 22:09:45,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 22:09:46,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:09:46,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:09:46,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-13 22:13:11,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-13 22:13:11,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-13 22:13:12,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:13:12,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-13 22:13:12,EVENT,|System || Services || Squeezelie Player || disabled|

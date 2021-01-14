@@ -969,71 +969,64 @@
                       });
                     </script>
 
+                    <br>
+
                     <form method="POST">  
-                      <div class="table-responsive">
-                        <table class="table tablesorter">
-                          <tbody> 
 
-                            {% if list_mqtt_firmware_files != "No Files found" %}
+                      {% if list_mqtt_firmware_files != "" %}
 
-                              <div class="table-responsive">
-                                <table class="table tablesorter"> 
-                                  <thead> 
-                                    <th scope="col" style="width:20%" class="minwidth_200">Device_Model</th>
-                                    <th scope="col" style="width:60%" class="minwidth_100">Version</th>
-                                    <th scope="col" style="width:10%"></th>
-                                    <th scope="col" style="width:10%"></th>
-                                  </thead>                            
-                                  <tbody> 
-                                    {% set counter = [1] %}
+                        <div class="table-responsive">
+                          <table class="table tablesorter"> 
+                            <thead> 
+                              <th scope="col" style="width:20%" class="minwidth_200">Device_Model</th>
+                              <th scope="col" style="width:60%" class="minwidth_100">Version</th>
+                              <th scope="col" style="width:10%"></th>
+                              <th scope="col" style="width:10%"></th>
+                            </thead>                            
+                            <tbody> 
+                              {% set counter = [1] %}
 
-                                    {% for entry in list_mqtt_firmware_files %}
-                                      <tr>                          
-                                        <td>{{ entry.rsplit("_", 1)[0] }}</td> 
-                                        <td>{{ entry.rsplit("_", 1)[1] | replace(".bin","") }}</td> 
-                                        <td>
-                                          <a class="btn btn-default pull-left" href="/devices/management/firmware/download/{{ entry }}?time={{ timestamp }}" role="button">DOWNLOAD</a>
-                                        </td>  
-                                        <td>
-                                          <!-- Button trigger modal -->
-                                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_firmware_dialog_{{ counter[0] }}">DELETE</button>
-                                          <!-- Modal -->
-                                          <div class="modal fade" id="delete_firmware_dialog_{{ counter[0] }}">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <h5 class="modal-title">Delete {{ entry }} ?</h5>
-                                                </div>          
-                                                <div class="modal-footer">
-                                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                                  <a class="btn btn-danger" href="/devices/management/firmware/delete/{{ entry }}#table_mqtt_device_updates" role="button">DELETE</a>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>                                
-                                        </td> 
-                                      </tr>
+                              {% for entry in list_mqtt_firmware_files %}
+                                <tr>                          
+                                  <td>{{ entry.rsplit("_", 1)[0] }}</td> 
+                                  <td>{{ entry.rsplit("_", 1)[1] | replace(".bin","") }}</td> 
+                                  <td>
+                                    <a class="btn btn-default pull-left" href="/devices/management/firmware/download/{{ entry }}?time={{ timestamp }}" role="button">DOWNLOAD</a>
+                                  </td>  
+                                  <td>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_firmware_dialog_{{ counter[0] }}">DELETE</button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="delete_firmware_dialog_{{ counter[0] }}">
+                                      <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title">Delete {{ entry }} ?</h5>
+                                          </div>          
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                            <a class="btn btn-danger" href="/devices/management/firmware/delete/{{ entry }}#table_mqtt_device_updates" role="button">DELETE</a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>                                
+                                  </td> 
+                                </tr>
 
-                                      {% if counter.append(counter.pop() + 1) %}{% endif %}
+                                {% if counter.append(counter.pop() + 1) %}{% endif %}
 
-                                    {% endfor %} 
-                                    
-                                  </tbody>
-                                </table>
-                              </div>
+                              {% endfor %} 
+                              
+                            </tbody>
+                          </table>
+                        </div>
 
-                            {% else %}
-                              {{ list_firmware_files }}
-                            {% endif %}
-                                    
-                          </tbody>
-                        </table> 
-                      </div>
+                      {% endif %}
+                                
                     </form>  
                   </div>            
                 </div>     
               </div>
-            </div>
 
 <!------------------------------>
 <!--  ZIGBEE DEVICE UPDATES   -->

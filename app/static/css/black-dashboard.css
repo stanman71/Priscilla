@@ -1122,7 +1122,8 @@ pre code {
   }
   .col-md-12 {
     flex: 0 0 100%;
-    max-width: 100%;
+    max-width: 1260px;
+    min-width: 1260px;    
   }
   .order-md-first {
     order: -1;
@@ -1240,7 +1241,8 @@ pre code {
   }
   .col-lg-6 {
     flex: 0 0 50%;
-    max-width: 50%;
+    min-width: 630px;
+    max-width: 630px;
   }
   .col-lg-7 {
     flex: 0 0 58.333333%;
