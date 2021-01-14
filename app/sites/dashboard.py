@@ -44,7 +44,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def dashboard():
-    page_title       = 'Bianca | Dashboard'
+    page_title       = 'Priscilla | Dashboard'
     page_description = 'The main page and Dashboard'
 
     SET_CURRENT_USER_ID(current_user.id)    

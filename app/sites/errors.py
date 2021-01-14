@@ -23,7 +23,7 @@ def http_err(err_code):
 
 @app.errorhandler(400)
 def e400(e):
-    page_title       = 'Bianca | Error'
+    page_title       = 'Priscilla | Error'
     page_description = 'error 400'
 
     data          = {'navigation': 'None'}

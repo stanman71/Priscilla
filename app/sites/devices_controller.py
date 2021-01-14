@@ -37,7 +37,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def devices_controller():
-    page_title       = 'Bianca | Devices | Controller'
+    page_title       = 'Priscilla | Devices | Controller'
     page_description = 'The controller configuration page'
 
     success_message_change_settings_controller = False

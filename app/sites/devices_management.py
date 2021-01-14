@@ -121,7 +121,7 @@ def UPLOAD_FIRMWARE(file):
 @login_required
 @permission_required
 def devices_management():
-    page_title       = 'Bianca | Devices | Management'
+    page_title       = 'Priscilla | Devices | Management'
     page_description = 'The devices configuration page'
 
     error_message_mqtt_connection            = False

@@ -41,7 +41,7 @@ def load_user(user_id):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    page_title       = 'Bianca | Login'
+    page_title       = 'Priscilla | Login'
     page_description = 'The login page'    
 
     # define login form here
