@@ -784,3 +784,19 @@ Timestamp,Type,Description
 2021-01-14 23:31:59,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2021-01-14 23:31:59,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2021-01-14 23:31:59,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-14 23:50:51,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-14 23:50:51,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-14 23:50:52,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-14 23:50:52,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-14 23:50:52,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-14 23:52:25,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-14 23:52:25,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-14 23:52:26,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-14 23:52:26,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-14 23:52:26,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-14 23:56:18,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-14 23:56:18,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-14 23:56:19,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-14 23:56:19,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-14 23:56:19,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-15 00:00:10,SUCCESS,|Network || MQTT || Update|

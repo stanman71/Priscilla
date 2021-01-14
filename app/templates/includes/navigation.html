@@ -3,9 +3,11 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
 
-          <ul class="nav_title">
-            <p><font size="6" color=rgb(30, 30, 47)>Priscilla</font></p>
-          </ul>
+          {% if not request.MOBILE %}
+            <ul class="nav_title">
+              <p><font size="6" color=rgb(30, 30, 47)>Priscilla</font></p>
+            </ul>
+          {% endif %}             
 
           {% if data.navigation == "dashboard" %}
             <li class="active ">

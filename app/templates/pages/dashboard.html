@@ -601,33 +601,45 @@
 
               <div class="card-body ">
                 <form method="POST"> 
-                  <div class="row justify-content-md-center">                                                 
-                    <div class="col-sm-4">    
-                      <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="radio_show_all_messages" {% if log_show_exceptions == "False" %} checked="on" {% endif %} value="False" name="set_radio_show_messages">
-                        <label class="custom-control-label" for="radio_show_all_messages">All Messages</label>
-                      </div> 
-                      <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="radio_show_exeption_messages" {% if log_show_exceptions == "True" %} checked="on" {% endif %} value="True" name="set_radio_show_messages">
-                        <label class="custom-control-label" for="radio_show_exeption_messages">Exeption Messages</label>
-                      </div>   
-                    </div>  
-                    <div class="col-sm-8">
 
-                      {% if request.MOBILE %}
-                        <br>
-                        <div class="text-center">
-                          <button type="submit" name="apply_changes_log_show_exceptions" class="btn btn-fill btn-primary">APPLY</button>
-                        </div>
-                        <br>
-                      {% else %}
+                  {% if request.MOBILE %}
+
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" class="custom-control-input" id="radio_show_all_messages" {% if log_show_exceptions == "False" %} checked="on" {% endif %} value="False" name="set_radio_show_messages">
+                      <label class="custom-control-label" for="radio_show_all_messages">All Messages</label>
+                    </div> 
+                    <br>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" class="custom-control-input" id="radio_show_exeption_messages" {% if log_show_exceptions == "True" %} checked="on" {% endif %} value="True" name="set_radio_show_messages">
+                      <label class="custom-control-label" for="radio_show_exeption_messages">Exeption Messages</label>
+                    </div>   
+                    <br>
+                    <br>
+                    <div class="text-center">
+                      <button type="submit" name="apply_changes_log_show_exceptions" class="btn btn-fill btn-primary">APPLY</button>
+                    </div>
+
+                  {% else %}
+
+                    <div class="row justify-content-md-center">                                                 
+                      <div class="col-sm-4">    
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" class="custom-control-input" id="radio_show_all_messages" {% if log_show_exceptions == "False" %} checked="on" {% endif %} value="False" name="set_radio_show_messages">
+                          <label class="custom-control-label" for="radio_show_all_messages">All Messages</label>
+                        </div>  
+                        <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" class="custom-control-input" id="radio_show_exeption_messages" {% if log_show_exceptions == "True" %} checked="on" {% endif %} value="True" name="set_radio_show_messages">
+                          <label class="custom-control-label" for="radio_show_exeption_messages">Exeption Messages</label>
+                        </div>   
+                      </div>  
+                      <div class="col-sm-8">             
                         <div class="text-right">
                           <button type="submit" name="apply_changes_log_show_exceptions" class="btn btn-fill btn-primary">APPLY</button>
                         </div>
-                      {% endif %}
+                      </div>
+                    </div> 
 
-                    </div>
-                  </div> 
+                  {% endif %}
 
                   <div class="border-top my-2"></div>
 
