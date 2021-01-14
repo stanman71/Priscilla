@@ -494,7 +494,9 @@
               </div>            
               <form method="POST">          
                 <div class="card-body"> 
-                  {% if list_backup_files != "No Files found" %}
+
+                  {% if list_backup_files != "" %}
+
                     <div class="table-responsive">
                       <table class="table tablesorter">             
                         <tbody> 
@@ -547,8 +549,7 @@
                         </tbody>
                       </table>  
                     </div>
-                  {% else %}
-                    {{ list_backup_files }}
+
                   {% endif %}                  
 
                   {% if request.MOBILE %}  

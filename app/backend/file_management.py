@@ -57,7 +57,8 @@ def CREATE_LOGFILE(filename):
     except Exception as e:
         if filename != "log_system":
             WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/logs/" + filename + ".csv | " + str(e))  
-        return(e)
+        
+        return str(e)
 
         
 def RESET_LOGFILE(filename):
@@ -99,7 +100,7 @@ def WRITE_LOGFILE_DEVICES(channel, msg):
             return True
        
     except Exception as e:
-        return(e)
+        return str(e)
 
 
 def WRITE_LOGFILE_SYSTEM(log_type, description):
@@ -119,7 +120,7 @@ def WRITE_LOGFILE_SYSTEM(log_type, description):
             return True
         
     except Exception as e:
-        return(e)
+        return str(e)
 
 
 def GET_LOGFILE_SYSTEM(selected_log_types, search, rows):   
@@ -163,6 +164,7 @@ def GET_LOGFILE_SYSTEM(selected_log_types, search, rows):
     except Exception as e:
         RESET_LOGFILE("log_system")
         WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/logs/log_system.csv | " + str(e)) 
+        return str(e)
 
 
 """ ###################### """
@@ -194,6 +196,7 @@ def UPDATE_NETWORK_SETTINGS_LINUX(dhcp, ip_address, gateway):
 
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /etc/network/interfaces | " + str(e))  
+        return str(e)
 
 
 """ ################# """
@@ -207,7 +210,7 @@ def GET_ALL_BACKUP_FILES():
         file_list.append(files)
 
     if file_list == []:
-        return "No Files found"
+        return ""
     else:
         file_list = file_list[0][2]
         file_list = sorted(file_list, reverse=True)
@@ -233,6 +236,7 @@ def BACKUP_DATABASE():
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | Database | " + str(e)) 
+        return str(e)
 
 
 def RESTORE_DATABASE(filename):
@@ -245,7 +249,7 @@ def RESTORE_DATABASE(filename):
             
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | Database_Backup | " + str(e))  
-        return (e)
+        return str(e)
         
         
 def DELETE_DATABASE_BACKUP(filename):
@@ -257,7 +261,7 @@ def DELETE_DATABASE_BACKUP(filename):
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/backup_database/" + filename + " | " + str(e))  
-        return (e)
+        return str(e)
 
 
 """ ############### """
@@ -282,6 +286,7 @@ def BACKUP_ZIGBEE():
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | Zigbee | " + str(e)) 
+        return str(e)
 
 
 """ ################ """
@@ -345,6 +350,7 @@ def CREATE_SENSORDATA_FILE(filename):
                 
         except Exception as e:
             WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filename + ".csv | " + str(e))
+            return str(e)
 
     else:
         return True
@@ -360,6 +366,7 @@ def START_BLOCK_SENSORDATA_THREAD(message):
 
 	except Exception as e:
 		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Block Sensordata | " + str(e)) 
+		return str(e)
 
 
 def BLOCK_SENSORDATA_THREAD(message): 
@@ -391,6 +398,7 @@ def WRITE_SENSORDATA_FILE(filename, device, sensor, value):
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filename + ".csv | " + str(e))
+        return str(e)
 
 
 def READ_SENSORDATA_FILE(filename):
@@ -405,6 +413,7 @@ def READ_SENSORDATA_FILE(filename):
     except Exception as e:
         if "Error tokenizing data. C error: Calling read(nbytes) on source failed. Try engine='python'." not in str(e):
             WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/csv/" + filename + " | " + str(e))    
+        return str(e)
 
 
 def DELETE_SENSORDATA_FILE(filename):
@@ -446,6 +455,7 @@ def GET_ALL_MQTT_DEVICES_MANUALLY_ADDING():
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /app/mqtt_manually_adding.json | " + str(e))   
+        return str(e)
 
 
 def GET_MQTT_DEVICE_MANUALLY_ADDING_INFORMATIONS(model):
@@ -501,7 +511,8 @@ def GET_MQTT_DEVICE_MANUALLY_ADDING_INFORMATIONS(model):
         return ("", "", "", "", "", "")   
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /app/mqtt_manually_adding.json | " + str(e))   
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /app/mqtt_manually_adding.json | " + str(e))
+        return str(e)   
 
 
 """ ######## """
@@ -562,6 +573,7 @@ def GET_ZIGBEE_DEVICE_INFORMATIONS(model):
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /app/zigbee_device_informations.json | " + str(e))   
+        return str(e)
 
 
 def RESET_ZIGBEE_LOGFILE():

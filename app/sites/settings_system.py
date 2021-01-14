@@ -471,7 +471,7 @@ def settings_system():
     if request.form.get("backup_database") != None:
         result = BACKUP_DATABASE() 
         
-        if result:
+        if result == True:
             success_message_backup_database = "Backup || Successfully created"
         else:
             error_message_backup_database = "Backup || " + str(result)

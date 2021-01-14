@@ -347,7 +347,7 @@ def devices_management():
 
             result = ADD_DEVICE(name, gateway, ieeeAddr, model, device_type, version, description, input_values, input_trigger, commands, commands_json) 
 
-            if result:
+            if result == True:
                 success_message_mqtt_manually_adding = True
             else:
                 error_message_mqtt_manually_adding.append(result)
@@ -366,7 +366,7 @@ def devices_management():
 
             result = ADD_DEVICE_EXCEPTION(ieeeAddr)
 
-            if result:
+            if result == True:
                 success_message_add_device_exception = True
             else:
                 error_message_add_device_exception = result
@@ -584,7 +584,7 @@ def devices_management():
     if request.form.get("reset_logfile") != None: 
         result = RESET_LOGFILE("log_devices")  
 
-        if result:
+        if result == True:
             success_message_logfile = True 
         else:
             error_message_logfile = "Reset Log || " + str(result)
@@ -1349,7 +1349,7 @@ def remove_device_exception(id):
     try:
         result = DELETE_DEVICE_EXCEPTION(id)
 
-        if result:
+        if result == True:
             session['delete_device_exception_success'] = "Device Exception successfully deleted"       
         else:
             session['delete_device_exception_error'] = "Device Exception || Deletion not confirmed"      

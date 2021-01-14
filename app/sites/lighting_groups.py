@@ -314,7 +314,7 @@ def lighting_groups():
             group  = GET_LIGHTING_GROUP_BY_ID(i).name  
             result = DELETE_LIGHTING_GROUP(i)            
 
-            if result:
+            if result == True:
                 success_message_change_settings.append(group + " || Group successfully deleted") 
             else:
                 error_message_change_settings.append(group + " || " + str(result))

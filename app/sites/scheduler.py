@@ -376,7 +376,7 @@ def scheduler():
             scene  = GET_SCHEDULER_JOB_BY_ID(i).name  
             result = DELETE_SCHEDULER_JOB(i)            
 
-            if result:
+            if result == True:
                 success_message_change_settings.append(scene + " || Job successfully deleted") 
             else:
                 error_message_change_settings.append(scene + " || " + str(result))

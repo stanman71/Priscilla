@@ -394,7 +394,7 @@ def lighting_scenes():
             scene  = GET_LIGHTING_SCENE_BY_ID(i).name  
             result = DELETE_LIGHTING_SCENE(i)    
 
-            if result:
+            if result == True:
                 success_message_change_settings.append(scene + " || Scene successfully deleted") 
             else:
                 error_message_change_settings.append(scene + " || " + str(result))

@@ -99,7 +99,7 @@ def settings_system_log():
     if request.form.get("reset_logfile") != None: 
         result = RESET_LOGFILE("log_system")  
 
-        if result:
+        if result == True:
             success_message_logfile = True 
         else:
             error_message_logfile = "Reset Log || " + str(result)

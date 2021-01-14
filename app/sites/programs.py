@@ -293,7 +293,7 @@ def programs():
             result           = START_PROGRAM_THREAD(i)
             selected_program = GET_PROGRAM_BY_ID(i)
 
-            if result:
+            if result == True:
                 success_message_change_settings_program.append("Program successfully started")
             else:
                 success_message_change_settings_program.append("ERROR || " + str(result))
@@ -309,7 +309,7 @@ def programs():
             program = GET_PROGRAM_BY_ID(i).name  
             result  = DELETE_PROGRAM(i)    
 
-            if result:
+            if result == True:
                 success_message_change_settings.append(program + " || Program successfully deleted") 
             else:
                 error_message_change_settings.append(program + " || " + str(result))

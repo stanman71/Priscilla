@@ -421,87 +421,85 @@
                 <div class="card-body">
                   <input class="form-control" id="input_table_devices" type="text" placeholder="Search ...">
                   <br>
-                  <div class="table-responsive">
-                    <div style="max-height: 500px">
-                      <table class="table tablesorter">
-                        <thead> 
-                          <td style="display:none" class="minwidth_200"></td>
-                          <th scope="col" style="width:3%"></th> 
-                          <th scope="col" style="width:16%" class="minwidth_200">Device</th>                        
-                          <th scope="col" style="width:16%" class="minwidth_200">Address</th> 
-                          <th scope="col" style="width:13%" class="minwidth_100">Device_Model</th>
-                          <th scope="col" style="width:13%" class="minwidth_100">Device_Type</th> 
-                          <th scope="col" style="width:5%"  class="minwidth_50"> Auto Update</th>                              
-                          <th scope="col" style="width:5%"  class="minwidth_50"> Version</th>                           
-                          <th scope="col" style="width:11%" class="minwidth_100">Description</th>                                             
-                          <th scope="col" style="width:10%" class="minwidth_100">Last contact</th>     
-                          <th scope="col" style="width:8%"></th>                                                                                
-                        </thead>
-                        <tbody id="table_devices">
-                          {% for entry in list_devices %}
-                          <tr>  
-                            <td style="display:none">{{ entry.name }}</td>
-                            <td>
-                              <a href="/devices/management/device/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
-                              <a href="/devices/management/device/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
-                            </td>        
-                            <td>                     
-                              <div class="row justify-content-md-left">
-                                <div class="col-sm-10">                                    
-                                  <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{% if entry.name != None %}{{ entry.name }}{% endif %}" /> 
-                                </div>
+                  <div style="max-height: 500px">
+                    <table class="table tablesorter">
+                      <thead> 
+                        <td style="display:none" class="minwidth_200"></td>
+                        <th scope="col" style="width:3%"></th> 
+                        <th scope="col" style="width:16%" class="minwidth_200">Device</th>                        
+                        <th scope="col" style="width:13%" class="minwidth_100">Address</th> 
+                        <th scope="col" style="width:13%" class="minwidth_100">Device_Model</th>
+                        <th scope="col" style="width:13%" class="minwidth_100">Device_Type</th> 
+                        <th scope="col" style="width:4%"  class="minwidth_50"> Auto Update</th>                              
+                        <th scope="col" style="width:4%"  class="minwidth_50"> Version</th>                           
+                        <th scope="col" style="width:15%" class="minwidth_100">Description</th>                                             
+                        <th scope="col" style="width:10%" class="minwidth_100">Last contact</th>     
+                        <th scope="col" style="width:8%"></th>                                                                                
+                      </thead>
+                      <tbody id="table_devices">
+                        {% for entry in list_devices %}
+                        <tr>  
+                          <td style="display:none">{{ entry.name }}</td>
+                          <td>
+                            <a href="/devices/management/device/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                            <a href="/devices/management/device/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>  
+                          </td>        
+                          <td>                     
+                            <div class="row justify-content-md-left">
+                              <div class="col-sm-10">                                    
+                                <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{% if entry.name != None %}{{ entry.name }}{% endif %}" /> 
                               </div>
-                            </td>      
-                            <td>{{ entry.ieeeAddr }}</td>    
-                            <td>{{ entry.model }}</td>   
-                            <td>                            
-                              {% if entry.gateway == "mqtt" %}
-                                {% if entry.device_type == "client_music" or entry.device_type == "vacuum_cleaner" %}
-                                  <font color="#73c6b6">{{ entry.device_type }}</font>                           
-                                {% else %}
-                                  <font color="#ccccff">{{ entry.device_type }}</font>
-                                {% endif %}
+                            </div>
+                          </td>      
+                          <td>{{ entry.ieeeAddr }}</td>    
+                          <td>{{ entry.model }}</td>   
+                          <td>                            
+                            {% if entry.gateway == "mqtt" %}
+                              {% if entry.device_type == "client_music" or entry.device_type == "vacuum_cleaner" %}
+                                <font color="#73c6b6">{{ entry.device_type }}</font>                           
                               {% else %}
-                                <font color="#ffffcc">{{ entry.device_type }}</font>
+                                <font color="#ccccff">{{ entry.device_type }}</font>
                               {% endif %}
-                            </td>
-                            <td> 
-                              {% if entry.gateway == "mqtt" and entry.device_type != "client_music" and entry.device_type != "vacuum_cleaner" %}
-                                <div class="vertical_center"> 
-                                  <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="checkbox_auto_update_{{ entry.id }}" {% if entry.auto_update == "True" %} checked="on" {% endif %} name="set_checkbox_auto_update_{{ entry.id }}">
-                                    <label class="custom-control-label" for="checkbox_auto_update_{{ entry.id }}"></label>
-                                  </div>        
-                                </div>                           
-                              {% endif %}       
-                            </td>     
-                            <td>{% if entry.version != None %}{{ entry.version }}{% endif %}</td>                   
-                            <td>{{ entry.description }}</td>                            
-                            <td>{{ entry.last_contact }}</td>                       
-                            <td>
-                              <!-- Button trigger modal -->
-                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_devices_{{entry.id}}">DELETE</button>
-                              <!-- Modal -->
-                              <div class="modal fade" id="delete_dialog_devices_{{entry.id}}">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title">Delete {{entry.name}} ?</h5>
-                                    </div>          
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                      <a class="btn btn-danger" href="/devices/management/device/delete/{{ entry.ieeeAddr }}#table_devices" role="button">DELETE</a>
-                                    </div>
+                            {% else %}
+                              <font color="#ffffcc">{{ entry.device_type }}</font>
+                            {% endif %}
+                          </td>
+                          <td> 
+                            {% if entry.gateway == "mqtt" and entry.device_type != "client_music" and entry.device_type != "vacuum_cleaner" %}
+                              <div class="vertical_center"> 
+                                <div class="custom-control custom-checkbox">
+                                  <input type="checkbox" class="custom-control-input" id="checkbox_auto_update_{{ entry.id }}" {% if entry.auto_update == "True" %} checked="on" {% endif %} name="set_checkbox_auto_update_{{ entry.id }}">
+                                  <label class="custom-control-label" for="checkbox_auto_update_{{ entry.id }}"></label>
+                                </div>        
+                              </div>                           
+                            {% endif %}       
+                          </td>     
+                          <td>{% if entry.version != None %}{{ entry.version }}{% endif %}</td>                   
+                          <td>{{ entry.description }}</td>                            
+                          <td>{{ entry.last_contact }}</td>                       
+                          <td>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_devices_{{entry.id}}">DELETE</button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="delete_dialog_devices_{{entry.id}}">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">Delete {{entry.name}} ?</h5>
+                                  </div>          
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                    <a class="btn btn-danger" href="/devices/management/device/delete/{{ entry.ieeeAddr }}#table_devices" role="button">DELETE</a>
                                   </div>
                                 </div>
                               </div>
-                            </td>                                 
-                          </tr>
-                          {% endfor %}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div> 
+                            </div>
+                          </td>                                 
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
                   <br>   
                   <br>    
                   <button type="submit" onclick="window.location.href='/devices/management#table_devices'" name="save_device_settings" class="btn btn-fill btn-primary">SAVE</button>

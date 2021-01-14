@@ -101,11 +101,11 @@ class Device_Exceptions(db.Model):
 class eMail(db.Model):
     __tablename__  = 'email'
     id             = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    server_address = db.Column(db.String(50), server_default=("None"))
+    server_address = db.Column(db.String(50), server_default=(""))
     server_port    = db.Column(db.Integer)
-    encoding       = db.Column(db.String(50), server_default=("None"))
-    username       = db.Column(db.String(50), server_default=("None"))
-    password       = db.Column(db.String(50), server_default=("None"))
+    encoding       = db.Column(db.String(50), server_default=(""))
+    username       = db.Column(db.String(50), server_default=(""))
+    password       = db.Column(db.String(50), server_default=(""))
 
 class Lighting_Groups(db.Model):
     __tablename__ = 'lighting_groups'

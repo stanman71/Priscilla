@@ -92,22 +92,19 @@
   </div>
 {% endif %}  
 
+{% if dropdown_list_programs != [] %}
 
             <div class="card ">
               <form method="POST">                  
                 <div class="card-footer">  
                   <div class="row justify-content-md-left">
                     <div class="col-sm-3">                     
-                      <select class="form-control" data-size="5" name="select_program" style="background-color:#27293D"> 
-                        {% if dropdown_list_programs != [] %}
-                          {% for each in dropdown_list_programs %}
-                            {% if each != None %}
-                            <option value="{{each.name}}">{{each.name}}</option>
-                            {% endif %}
-                          {% endfor %}       
-                        {% else %}
-                        <option value= "" > No programs found </option>    
-                        {% endif %}                           
+                      <select class="form-control" data-size="5" name="select_program" style="background-color:#27293D">                      
+                        {% for each in dropdown_list_programs %}
+                          {% if each != None %}
+                          <option value="{{each.name}}">{{each.name}}</option>
+                          {% endif %}
+                        {% endfor %}                              
                       </select>      
                     </div>
                   </div>  
@@ -125,6 +122,7 @@
               </form>
             </div>
 
+{% endif %} 
 
 {% if selected_program != "" %}
   
@@ -1378,362 +1376,360 @@
               </div>                 
               <div id="collapse_info" class="collapse">      
                 <div class="card-body"> 
-                  <div class="table-responsive">
-                    <table class="table tablesorter">
-                      <tbody>  
-                        <tr> 
-                          <td><h4><p class="text-muted">Break</p></h4></td>
-                          <td></td>
-                        </tr>  
-                        <tr>
-                          <td></td>
-                          <td></td>
-                        </tr>                                               
-                        <tr>
-                          <td>break # 10</td>   
-                          <td>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-12"> 
-                                break 10 seconds
-                              </div>
-                            </div>                                   
-                          </td>
-                        </tr>  
-                        <tr>
-                          <td></td>
-                          <td></td>
-                        </tr>         
-                        <tr>
-                          <td><h4><p class="text-muted">Lighting</p></h4></td>
-                          <td></td>
-                        </tr>   
-                        <tr>
-                          <td></td>
-                          <td></td>
-                        </tr>                                                                                               
-                        <tr>
-                          <td>lighting # start_scene # livingroom # relax # 100</td>
-                          <td>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-12"> 
-                                start lighting | group "livingroom" | scene "relax" | brightness "100%"
-                              </div>
-                            </div>  
-                            <br>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                Lighting - Groups >>
-                              </div>
-                              <div class="col-sm-8">   
-                                {% for group in list_lighting_group_options %}
-                                  {{ group }} |
-                                {% endfor %}    
-                              </div>  
-                            </div>  
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                Lighting - Scenes >>
-                              </div>
-                              <div class="col-sm-8">   
-                                {% for scene in list_lighting_scene_options %}
-                                  {{ scene }} |
-                                {% endfor %}    
-                              </div>  
-                            </div>                              
-                          </td>                                
-                        </tr>
-                        <tr>
-                          <td>lighting # brightness # bedroom # TURN_UP</td>
-                          <td>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-12"> 
-                                increase brightness in "bedroom" by 20%
-                              </div>
-                            </div>  
-                            <br>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                TURN_UP >>
-                              </div>
-                              <div class="col-sm-8"> 
-                                increase brightness
-                              </div>                        
-                            </div>                                            
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                TURN_DOWN >> 
-                              </div>
-                              <div class="col-sm-8"> 
-                                decrease brightness
-                              </div>                        
+                  <table class="table tablesorter">
+                    <tbody>  
+                      <tr> 
+                        <td><h4><p class="text-muted">Break</p></h4></td>
+                        <td></td>
+                      </tr>  
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>                                               
+                      <tr>
+                        <td>break # 10</td>   
+                        <td>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-12"> 
+                              break 10 seconds
                             </div>
-                          </td>
-                        </tr>                          
-                        <tr>
-                          <td>lighting # light # LED_FLOOR # 255 0 0 # 100</td>
-                          <td>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-12"> 
-                                start lighting | light "LED_FLOOR" | rgb "255 0 0" | brightness "100%"
-                              </div>
+                          </div>                                   
+                        </td>
+                      </tr>  
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>         
+                      <tr>
+                        <td><h4><p class="text-muted">Lighting</p></h4></td>
+                        <td></td>
+                      </tr>   
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>                                                                                               
+                      <tr>
+                        <td>lighting # start_scene # livingroom # relax # 100</td>
+                        <td>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-12"> 
+                              start lighting | group "livingroom" | scene "relax" | brightness "100%"
+                            </div>
+                          </div>  
+                          <br>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              Lighting - Groups >>
+                            </div>
+                            <div class="col-sm-8">   
+                              {% for group in list_lighting_group_options %}
+                                {{ group }} |
+                              {% endfor %}    
                             </div>  
-                            <br>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                Lights >>
-                              </div>
-                              <div class="col-sm-8">   
-                                {% for light in list_light_options %}
-                                  {{ light }} |
-                                {% endfor %}    
-                              </div>  
-                            </div>                              
-                          </td>                                
-                        </tr>                        
-                        <tr>                        
-                          <td>lighting # turn_off # group # kitchen, bathroom</td>
-                          <td>turn off the lights of group "bathroom" and "kitchen"</td>
-                        </tr>       
-                        <tr>                        
-                          <td>lighting # turn_off # light # LED_FLOOR</td>
-                          <td>turn off the light "LED_FLOOR"</td>
-                        </tr>                                    
-                        <tr>
-                          <td>lighting # turn_off # ALL</td>
-                          <td>turn off all lights</td>
-                        </tr> 
-                        <tr>
-                          <td></td>
-                          <td></td>
-                        </tr>       
-                        <tr>
-                          <td><h4><p class="text-muted">Devices</p></h4></td>
-                          <td></td>
-                        </tr>  
-                        <tr>
-                          <td></td>
-                          <td></td>
-                        </tr>                                                                  
-                        <tr>
-                          <td>device # Power_TV, Power_Server # OFF</td>   
-                          <td>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-12"> 
-                                send | command "OFF" | devices "Power_TV" and "Power_Server"
-                              </div>
+                          </div>  
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              Lighting - Scenes >>
+                            </div>
+                            <div class="col-sm-8">   
+                              {% for scene in list_lighting_scene_options %}
+                                {{ scene }} |
+                              {% endfor %}    
                             </div>  
-                            <br>
-                            {% for device in list_device_command_options %}
-                              <div class="row justify-content-md-center">
-                                <div class="col-sm-4">
-                                  {{ device[0] }} >>
-                                </div>
-                                <div class="col-sm-8">          
-                                  {{ device[1] | replace(',', ' | ') }} 
-                                </div>
-                              </div> 
-                            {% endfor %}                                            
-                          </td>
-                        </tr>  
-                        <tr>
-                          <td></td>
-                          <td></td>
-                        </tr>     
-                        <tr>
-                          <td><h4><p class="text-muted">Sensordata</p></h4></td>
-                          <td></td>
-                        </tr> 
-                        <tr>
-                          <td></td>
-                          <td></td>
-                        </tr>                                                     
-                        <tr>
-                          <td>request_sensordata # sensor_1 </td>
-                          <td>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-12"> 
-                                request and save data of sensor_1 (only active sensor)
-                              </div>
-                            </div>        
-                            <br>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                Sensordata Jobs >>
-                              </div>
-                              <div class="col-sm-8">   
-                                {% for job in list_sensordata_job_options %}
-                                  {{ job }} |
-                                {% endfor %}    
-                              </div>  
-                            </div>                                                              
-                          </td>                    
-                        </tr>    
-                        <tr>                       
-                          <td></td>
-                          <td></td>
-                        </tr> 
-                        <tr>
-                          <td><h4><p class="text-muted">Programs</p></h4></td>
-                          <td></td>
-                        </tr>   
-                        <tr>
-                          <td></td>
-                          <td></td>
-                        </tr>                                                     
-                        <tr>
-                          <td>program # SUNRISE # START</td>
-                          <td>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-12"> 
-                                start program "SUNRISE" 
-                              </div>
-                            </div>  
-                            <br>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                START >> 
-                              </div>
-                              <div class="col-sm-8"> 
-                                start 
-                              </div>                        
-                            </div>                                            
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                STOP >> 
-                              </div>
-                              <div class="col-sm-8"> 
-                                stop (exept the current program)
-                              </div>                        
-                            </div>                                                               
-                            <br>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                Programs >>
-                              </div>
-                              <div class="col-sm-8">   
-                                {% for program in list_program_options %}
-                                  {{ program }} |
-                                {% endfor %}    
-                              </div>  
-                            </div>                                                                       
-                          </td>                    
-                        </tr>  
-                        <tr>                       
-                          <td></td>
-                          <td></td>
-                        </tr>                                                                                           
-                        <tr>
-                          <td><h4><p class="text-muted">Music</p></h4></td>
-                          <td></td>
-                        </tr>  
-                        <tr>
-                          <td></td>
-                          <td></td>
-                        </tr>                                                    
-                        <tr>
-                          <td>music # PLAY</td>
-                          <td>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-12"> 
-                                start | last song | album | playlist | on active device or start DEFAULT_SETTINGS
-                              </div>
-                            </div>  
-                            <br>                          
-                            <br>
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                PLAY >> 
-                              </div>
-                              <div class="col-sm-8"> 
-                                start playing
-                              </div>                        
-                            </div>                                            
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                PREVIOUS >> 
-                              </div>
-                              <div class="col-sm-8"> 
-                                previous track 
-                              </div>                        
-                            </div>    
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                NEXT >> 
-                              </div>
-                              <div class="col-sm-8"> 
-                                next track
-                              </div>                        
+                          </div>                              
+                        </td>                                
+                      </tr>
+                      <tr>
+                        <td>lighting # brightness # bedroom # TURN_UP</td>
+                        <td>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-12"> 
+                              increase brightness in "bedroom" by 20%
+                            </div>
+                          </div>  
+                          <br>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              TURN_UP >>
+                            </div>
+                            <div class="col-sm-8"> 
+                              increase brightness
                             </div>                        
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                STOP >> 
-                              </div>
-                              <div class="col-sm-8"> 
-                                stop playing
-                              </div>                        
+                          </div>                                            
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              TURN_DOWN >> 
+                            </div>
+                            <div class="col-sm-8"> 
+                              decrease brightness
                             </div>                        
+                          </div>
+                        </td>
+                      </tr>                          
+                      <tr>
+                        <td>lighting # light # LED_FLOOR # 255 0 0 # 100</td>
+                        <td>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-12"> 
+                              start lighting | light "LED_FLOOR" | rgb "255 0 0" | brightness "100%"
+                            </div>
+                          </div>  
+                          <br>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              Lights >>
+                            </div>
+                            <div class="col-sm-8">   
+                              {% for light in list_light_options %}
+                                {{ light }} |
+                              {% endfor %}    
+                            </div>  
+                          </div>                              
+                        </td>                                
+                      </tr>                        
+                      <tr>                        
+                        <td>lighting # turn_off # group # kitchen, bathroom</td>
+                        <td>turn off the lights of group "bathroom" and "kitchen"</td>
+                      </tr>       
+                      <tr>                        
+                        <td>lighting # turn_off # light # LED_FLOOR</td>
+                        <td>turn off the light "LED_FLOOR"</td>
+                      </tr>                                    
+                      <tr>
+                        <td>lighting # turn_off # ALL</td>
+                        <td>turn off all lights</td>
+                      </tr> 
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>       
+                      <tr>
+                        <td><h4><p class="text-muted">Devices</p></h4></td>
+                        <td></td>
+                      </tr>  
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>                                                                  
+                      <tr>
+                        <td>device # Power_TV, Power_Server # OFF</td>   
+                        <td>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-12"> 
+                              send | command "OFF" | devices "Power_TV" and "Power_Server"
+                            </div>
+                          </div>  
+                          <br>
+                          {% for device in list_device_command_options %}
                             <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                VOLUME # 70 >> 
+                              <div class="col-sm-4">
+                                {{ device[0] }} >>
                               </div>
-                              <div class="col-sm-8"> 
-                                set volume to 70%
+                              <div class="col-sm-8">          
+                                {{ device[1] | replace(',', ' | ') }} 
                               </div>
+                            </div> 
+                          {% endfor %}                                            
+                        </td>
+                      </tr>  
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>     
+                      <tr>
+                        <td><h4><p class="text-muted">Sensordata</p></h4></td>
+                        <td></td>
+                      </tr> 
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>                                                     
+                      <tr>
+                        <td>request_sensordata # sensor_1 </td>
+                        <td>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-12"> 
+                              request and save data of sensor_1 (only active sensor)
+                            </div>
+                          </div>        
+                          <br>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              Sensordata Jobs >>
+                            </div>
+                            <div class="col-sm-8">   
+                              {% for job in list_sensordata_job_options %}
+                                {{ job }} |
+                              {% endfor %}    
+                            </div>  
+                          </div>                                                              
+                        </td>                    
+                      </tr>    
+                      <tr>                       
+                        <td></td>
+                        <td></td>
+                      </tr> 
+                      <tr>
+                        <td><h4><p class="text-muted">Programs</p></h4></td>
+                        <td></td>
+                      </tr>   
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>                                                     
+                      <tr>
+                        <td>program # SUNRISE # START</td>
+                        <td>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-12"> 
+                              start program "SUNRISE" 
+                            </div>
+                          </div>  
+                          <br>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              START >> 
+                            </div>
+                            <div class="col-sm-8"> 
+                              start 
                             </div>                        
-                            <br>        
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                Devices >>
-                              </div>
-                              <div class="col-sm-8">   
-                                {% for device in list_spotify_devices %}
-                                  {% if device['type'] != "Smartphone" %}
-                                    {% if "multiroom" in device['name'] %}
-                                      multiroom |
-                                    {% else %}
-                                      {{ device['name'] }} |
-                                    {% endif %}                                          
-                                  {% endif %}
-                                {% endfor %}
-                              </div>
-                            </div>                     
-                            <div class="row justify-content-md-center">
-                              <div class="col-sm-4"> 
-                                Playlists >>
-                              </div>
-                              <div class="col-sm-8">   
-                                {% for playlist in list_spotify_playlists %}
-                                  {% if playlist['name'] != "Discover Weekly" %}
-                                    {{ playlist['name'] }} |
-                                  {% endif %}
-                                {% endfor %}    
-                              </div>
-                            </div>                                                                                    
-                          </td>                    
-                        </tr>                                                    
-                        <tr>
-                          <td>music # playlist # PC # Rock # 50 # True</td>
-                          <td>start music | playlist "Rock" | device "PC" | volume "50%" | shuffle "True"</td>
-                        </tr>     
-                        <tr>
-                          <td>music # track # PC # Go Time # Young Mozart # 25</td>
-                          <td>start music | track "Go Time" | interprets "Young Mozart" | device "PC" | volume "25%"</td>
-                        </tr>     
-                        <tr>
-                          <td>music # album # PC # Hold On # Nano # 60 # False</td>
-                          <td>start music | album "Hold On" | interprets "Nano" | device "PC" | volume "60%" | shuffle "False"</td>
-                        </tr>     
-                        <tr>
-                          <td>music # interface # PC # spotify # 150</td>
-                          <td>change interface | device "PC" | interface "spotify" | device_volume "150"</td>
-                        </tr>     
-                        <tr>
-                          <td>music # interface # PC # multiroom # 150</td>
-                          <td>change interface | device "PC" | interface "multiroom" | device_volume "150"</td>
-                        </tr>                                                     
-                      </tbody>
-                    </table>                
-                  </div>                 
+                          </div>                                            
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              STOP >> 
+                            </div>
+                            <div class="col-sm-8"> 
+                              stop (exept the current program)
+                            </div>                        
+                          </div>                                                               
+                          <br>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              Programs >>
+                            </div>
+                            <div class="col-sm-8">   
+                              {% for program in list_program_options %}
+                                {{ program }} |
+                              {% endfor %}    
+                            </div>  
+                          </div>                                                                       
+                        </td>                    
+                      </tr>  
+                      <tr>                       
+                        <td></td>
+                        <td></td>
+                      </tr>                                                                                           
+                      <tr>
+                        <td><h4><p class="text-muted">Music</p></h4></td>
+                        <td></td>
+                      </tr>  
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>                                                    
+                      <tr>
+                        <td>music # PLAY</td>
+                        <td>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-12"> 
+                              start | last song | album | playlist | on active device or start DEFAULT_SETTINGS
+                            </div>
+                          </div>  
+                          <br>                          
+                          <br>
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              PLAY >> 
+                            </div>
+                            <div class="col-sm-8"> 
+                              start playing
+                            </div>                        
+                          </div>                                            
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              PREVIOUS >> 
+                            </div>
+                            <div class="col-sm-8"> 
+                              previous track 
+                            </div>                        
+                          </div>    
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              NEXT >> 
+                            </div>
+                            <div class="col-sm-8"> 
+                              next track
+                            </div>                        
+                          </div>                        
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              STOP >> 
+                            </div>
+                            <div class="col-sm-8"> 
+                              stop playing
+                            </div>                        
+                          </div>                        
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              VOLUME # 70 >> 
+                            </div>
+                            <div class="col-sm-8"> 
+                              set volume to 70%
+                            </div>
+                          </div>                        
+                          <br>        
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              Devices >>
+                            </div>
+                            <div class="col-sm-8">   
+                              {% for device in list_spotify_devices %}
+                                {% if device['type'] != "Smartphone" %}
+                                  {% if "multiroom" in device['name'] %}
+                                    multiroom |
+                                  {% else %}
+                                    {{ device['name'] }} |
+                                  {% endif %}                                          
+                                {% endif %}
+                              {% endfor %}
+                            </div>
+                          </div>                     
+                          <div class="row justify-content-md-center">
+                            <div class="col-sm-4"> 
+                              Playlists >>
+                            </div>
+                            <div class="col-sm-8">   
+                              {% for playlist in list_spotify_playlists %}
+                                {% if playlist['name'] != "Discover Weekly" %}
+                                  {{ playlist['name'] }} |
+                                {% endif %}
+                              {% endfor %}    
+                            </div>
+                          </div>                                                                                    
+                        </td>                    
+                      </tr>                                                    
+                      <tr>
+                        <td>music # playlist # PC # Rock # 50 # True</td>
+                        <td>start music | playlist "Rock" | device "PC" | volume "50%" | shuffle "True"</td>
+                      </tr>     
+                      <tr>
+                        <td>music # track # PC # Go Time # Young Mozart # 25</td>
+                        <td>start music | track "Go Time" | interprets "Young Mozart" | device "PC" | volume "25%"</td>
+                      </tr>     
+                      <tr>
+                        <td>music # album # PC # Hold On # Nano # 60 # False</td>
+                        <td>start music | album "Hold On" | interprets "Nano" | device "PC" | volume "60%" | shuffle "False"</td>
+                      </tr>     
+                      <tr>
+                        <td>music # interface # PC # spotify # 150</td>
+                        <td>change interface | device "PC" | interface "spotify" | device_volume "150"</td>
+                      </tr>     
+                      <tr>
+                        <td>music # interface # PC # multiroom # 150</td>
+                        <td>change interface | device "PC" | interface "multiroom" | device_volume "150"</td>
+                      </tr>                                                     
+                    </tbody>
+                  </table>                               
                 </div>            
               </div>
             </div>
