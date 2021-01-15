@@ -33,7 +33,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def settings_about():
-    page_title       = 'Priscilla | Settings | About'
+    page_title       = 'Bianca | Settings | About'
     page_description = 'The information and update page'
 
     version = "3.1"

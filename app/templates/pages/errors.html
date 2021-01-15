@@ -18,8 +18,12 @@
               </div>
               <div class="card-body">
                 <form role="form" method="post" action="">
-                  <button type="submit" onclick="goBack()" class="btn btn-fill btn-primary pull-left">GO BACK</button>
-                  <a class="btn btn-fill btn-primary pull-right" href="/" role="button">LOGIN</a>   
+
+                  {% if error_message == "Forbidden access." %}   
+                    <a class="btn btn-fill btn-primary pull-left" href="/" role="button">LOGIN</a>       
+                  {% endif %} 
+                  
+                  <button type="submit" onclick="goBack()" class="btn btn-fill btn-info pull-right">GO BACK</button> 
                 </form>
               </div>
             </div>

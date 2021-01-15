@@ -49,7 +49,7 @@ list_search_album_results = ""
 @login_required
 @permission_required
 def music():    
-    page_title       = 'Priscilla | Music'
+    page_title       = 'Bianca | Music'
     page_description = 'The music configuration page'
 
     global list_search_track_results

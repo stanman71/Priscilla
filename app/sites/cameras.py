@@ -92,7 +92,7 @@ def GENERATE_FRAME(camera_url):
 @login_required
 @permission_required
 def cameras():
-    page_title       = 'Priscilla | Cameras'
+    page_title       = 'Bianca | Cameras'
     page_description = 'The cameras configuration page'
 
     success_message_change_settings = []      

@@ -39,7 +39,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def programs():
-    page_title       = 'Priscilla | Programs'
+    page_title       = 'Bianca | Programs'
     page_description = 'The programs configuration page'
 
     success_message_add_program             = False       

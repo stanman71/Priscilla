@@ -43,7 +43,7 @@ def permission_required(f):
 def sensordata_statistics():
     global dropdown_list_dates_temp
 
-    page_title       = 'Priscilla | Sensordata | Statistics'
+    page_title       = 'Bianca | Sensordata | Statistics'
     page_description = 'The sensordata statistics page'
 
     error_message_select_datafiles = []    

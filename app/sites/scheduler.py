@@ -39,7 +39,7 @@ def permission_required(f):
 @login_required
 @permission_required
 def scheduler():
-    page_title       = 'Priscilla | Scheduler'
+    page_title       = 'Bianca | Scheduler'
     page_description = 'The scheduler configuration page'
 
     success_message_change_settings               = []
