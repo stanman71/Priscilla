@@ -63,9 +63,9 @@ SPOTIFY_REFRESH_TOKEN = GET_SPOTIFY_REFRESH_TOKEN()
 def GET_SPOTIFY_AUTHORIZATION():
 
     if GET_SYSTEM_SETTINGS().ip_address == "":
-        REDIRECT_URI = "http://127.0.0.1:80/music/spotify/token"
+        REDIRECT_URI = "http://127.0.0.1:" + str(GET_SYSTEM_SETTINGS().port) + "/music/spotify/token"
     else:
-        REDIRECT_URI = "http://" + str(GET_SYSTEM_SETTINGS().ip_address) + ":80/music/spotify/token"
+        REDIRECT_URI = "https://" + str(GET_SYSTEM_SETTINGS().ip_address) + ":" + str(GET_SYSTEM_SETTINGS().port) + "/music/spotify/token"
 
     auth_query_parameters = {
         "response_type": "code",
@@ -85,9 +85,9 @@ def GENERATE_SPOTIFY_TOKEN(auth_token):
     global SPOTIFY_REFRESH_TOKEN       
 
     if GET_SYSTEM_SETTINGS().ip_address == "":
-        REDIRECT_URI = "http://127.0.0.1:80/music/spotify/token"
+        REDIRECT_URI = "http://127.0.0.1:" + str(GET_SYSTEM_SETTINGS().port) + "/music/spotify/token"
     else:
-        REDIRECT_URI = "http://" + str(GET_SYSTEM_SETTINGS().ip_address) + ":80/music/spotify/token"   
+        REDIRECT_URI = "https://" + str(GET_SYSTEM_SETTINGS().ip_address) + ":" + str(GET_SYSTEM_SETTINGS().port) + "/music/spotify/token"   
  
     body = {
         "grant_type": 'authorization_code',

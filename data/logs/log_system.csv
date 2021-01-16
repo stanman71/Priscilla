@@ -810,3 +810,77 @@ Timestamp,Type,Description
 2021-01-15 20:56:02,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2021-01-15 20:56:02,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2021-01-15 20:56:02,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 21:32:15,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 21:32:15,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 21:32:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:32:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:32:16,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 21:34:17,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 21:34:17,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 21:34:18,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:34:18,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:34:18,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 21:36:19,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 21:36:19,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 21:36:20,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:36:20,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:36:20,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 21:38:01,SUCCESS,|Music || Spotify || Login || successful|
+2021-01-16 21:38:01,SUCCESS,|Music || Spotify || Token || received|
+2021-01-16 21:38:01,SUCCESS,|Music || Spotify || Refresh Token || received|
+2021-01-16 21:38:01,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 21:40:34,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 21:40:34,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 21:40:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:40:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:40:36,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 21:40:37,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 21:41:59,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 21:41:59,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 21:42:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:42:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:42:00,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 21:42:01,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 21:43:42,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 21:43:42,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 21:43:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:43:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:43:43,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 21:43:44,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 21:51:58,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 21:51:58,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 21:51:59,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:51:59,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:51:59,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 21:52:00,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 21:53:08,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 21:53:08,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 21:53:09,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:53:09,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:53:09,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 21:53:11,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 21:55:35,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 21:55:35,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 21:55:36,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:55:36,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:55:36,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 21:55:37,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 21:56:31,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 21:56:31,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 21:56:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:56:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:56:32,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 21:56:34,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 21:58:12,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 21:58:12,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 21:58:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:58:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:58:13,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 21:58:14,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 21:59:52,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 21:59:52,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 21:59:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:59:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 21:59:53,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 21:59:54,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:00:00,ERROR,|System || Database || [Errno 2] No such file or directory: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Bianca/data/backup_database/2021-01-16_database.db'|
