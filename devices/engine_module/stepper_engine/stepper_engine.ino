@@ -39,9 +39,7 @@ int PIN_LED_GREEN = 14;                          // D5
 int PIN_LED_RED   = 12;                          // D6
 
 
-// ###############
-// CUSTOM SETTINGS
-// ###############
+// custom settings   
 
 int DIRECTION      = 5;                          // D1 
 int STEP           = 4;                          // D2 
@@ -55,6 +53,9 @@ String current_Version = "1.0";
 
 String engine_direction = "OFF";
 int engine_steps        = 0;
+
+// custom settings end
+
 
 // ############
 // split string
@@ -303,6 +304,7 @@ void send_default_mqtt_message() {
  
     // create msg as json
     DynamicJsonDocument msg(128);
+
     msg["direction"] = engine_direction;
     msg["steps"]     = engine_steps;
     
@@ -348,6 +350,8 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["device_type"] = device_type;
         msg["version"]     = current_Version;        
         msg["description"] = description;
+
+        // custom settings  
     
         JsonArray data_inputs        = msg.createNestedArray("input_values");
         JsonArray data_commands      = msg.createNestedArray("commands");
@@ -363,6 +367,8 @@ void callback (char* topic, byte* payload, unsigned int length) {
         data_commands_json.add("{'direction':'RIGHT','steps':10000}");   
         data_commands_json.add("{'direction':'RIGHT','steps':20000}");  
         data_commands_json.add("{'direction':'OFF','steps':0}");
+
+        // custom settings end  
 
         // convert msg to char
         char msg_Char[512];
@@ -490,8 +496,6 @@ void setup() {
     client.setServer(mqtt_server, 1884);
     client.setCallback(callback); 
 
-    // custom settings
-    
     pinMode(DIRECTION, OUTPUT); 
     pinMode(STEP, OUTPUT); 
     pinMode(RELAIS_CONTROL, OUTPUT);  

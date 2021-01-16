@@ -39,9 +39,7 @@ int PIN_LED_GREEN = 14;                          // D5
 int PIN_LED_RED   = 12;                          // D6
 
 
-// ###############
-// CUSTOM SETTINGS
-// ###############
+// custom settings
 
 int SENSOR = A0;                                 // A0 
 
@@ -58,6 +56,8 @@ char device_type[40] = "sensor_passiv";
 char description[80] = "MQTT Moisture Sensor";
 
 String current_Version = "1.0";
+
+// custom settings end
 
 
 // ############
@@ -308,7 +308,12 @@ void send_default_mqtt_message() {
  
     // create msg as json
     DynamicJsonDocument msg(128);
+
+    // custom settings  
+    
     msg["moisture"] = analogRead(SENSOR);          
+
+    // custom settings end  
 
     // convert msg to char
     char msg_Char[128];
@@ -353,12 +358,16 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["device_type"] = device_type;
         msg["version"]     = current_Version;        
         msg["description"] = description;
+
+        // custom settings  
     
         JsonArray data_inputs = msg.createNestedArray("input_values");
         data_inputs.add("moisture");        
 
         JsonArray data_commands      = msg.createNestedArray("commands");
         JsonArray data_commands_json = msg.createNestedArray("commands_json");
+
+        // custom settings end  
 
         // convert msg to char
         char msg_Char[512];
@@ -427,7 +436,11 @@ void setup() {
     client.setCallback(callback); 
 
     // custom settings
+    
     pinMode(SENSOR, INPUT); 
+
+    // custom settings end  
+    
 }
 
 
@@ -464,6 +477,8 @@ void loop() {
     } 
 
     send_message_timer_counter = send_message_timer_counter + 100;    
+
+    // custom settings end  
 
     delay(100);
     client.loop();

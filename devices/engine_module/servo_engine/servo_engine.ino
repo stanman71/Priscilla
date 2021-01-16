@@ -40,9 +40,7 @@ int PIN_LED_GREEN = 14;                          // D5
 int PIN_LED_RED   = 12;                          // D6
 
 
-// ###############
-// CUSTOM SETTINGS
-// ###############
+// custom settings
 
 Servo servo_1; 
 Servo servo_2; 
@@ -58,6 +56,8 @@ String current_Version = "1.0";
 
 int servo_1_position = 0;
 int servo_2_position = 0;
+
+// custom settings end
 
 
 // ############
@@ -307,8 +307,13 @@ void send_default_mqtt_message() {
  
     // create msg as json
     DynamicJsonDocument msg(128);
+
+    // custom settings  
+    
     msg["servo_1_position"] = servo_1_position;
     msg["servo_2_position"] = servo_2_position;
+
+    // custom settings end  
 
     // convert msg to char
     char msg_Char[128];
@@ -352,6 +357,8 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["device_type"] = device_type;
         msg["version"]     = current_Version;        
         msg["description"] = description;
+
+        // custom settings
     
         JsonArray data_inputs        = msg.createNestedArray("input_values");
         JsonArray data_commands      = msg.createNestedArray("commands");
@@ -363,6 +370,8 @@ void callback (char* topic, byte* payload, unsigned int length) {
         data_commands_json.add("{'servo_1_position':'15','servo_2_position':0}");              
         data_commands_json.add("{'servo_1_position':'90','servo_2_position':0}");  
         data_commands_json.add("{'servo_1_position':'180','servo_2_position':0}");   
+
+        // custom settings end  
 
         // convert msg to char
         char msg_Char[512];
@@ -384,6 +393,8 @@ void callback (char* topic, byte* payload, unsigned int length) {
     }    
 
     // set 
+
+    // custom settings  
 
     if (check_ieeeAddr == ieeeAddr and check_command == "set"){
 
@@ -412,7 +423,9 @@ void callback (char* topic, byte* payload, unsigned int length) {
         servo_2_position = set_servo_2_position;
         
         send_default_mqtt_message(); 
-    }            
+    } 
+
+     // custom settings end                 
 }
 
 // #####
@@ -464,6 +477,8 @@ void setup() {
     
     servo_1.attach(SERVO_1);
     servo_2.attach(SERVO_2);    
+
+    // custom settings end      
 }
 
 

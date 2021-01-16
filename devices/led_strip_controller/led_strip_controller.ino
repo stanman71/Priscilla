@@ -35,15 +35,10 @@ bool send_update_report = true;
 int PIN_RESET_SETTING = 16;                      // D0
 
 // LED PINS
-int PIN_LED_GREEN = 14;                          // D5
-int PIN_LED_RED   = 12;                          // D6
+int PIN_LED_GREEN  = 14;                          // D5
+int PIN_LED_RED    = 12;                          // D6
 
-
-// ###############
-// CUSTOM SETTINGS
-// ###############
-
-int RELAIS_CONTROL = 4;                          // D2
+int RELAIS_CONTROL = 4;                           // D2
 
 char model[40]       = "led_strip_controller";
 char device_type[40] = "led_rgb";
@@ -532,8 +527,6 @@ void loop() {
     } 
     
     update_timer_counter = update_timer_counter + 100;
-
-    // custom settings
 
     if (state_changed == true){   
 

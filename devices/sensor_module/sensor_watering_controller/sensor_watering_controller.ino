@@ -39,9 +39,7 @@ int PIN_LED_GREEN = 14;                          // D5
 int PIN_LED_RED   = 12;                          // D6
 
 
-// ###############
-// CUSTOM SETTINGS
-// ###############
+// custom settings
 
 int PIN_SENSOR = A0;                             // A0 
 int PIN_PUMP   = 4;                              // D2 
@@ -57,6 +55,8 @@ String current_Version = "1.0";
 
 String state  = "OFF";
 int pump_time = 0;
+
+// custom settings end
 
 
 // ############
@@ -307,9 +307,14 @@ void send_default_mqtt_message() {
  
     // create msg as json
     DynamicJsonDocument msg(128);
+
+    // custom settings  
+    
     msg["state"]     = state;
     msg["pump_time"] = pump_time;    
     msg["moisture"]  = analogRead(PIN_SENSOR);          
+
+    // custom settings end  
 
     // convert msg to char
     char msg_Char[128];
@@ -354,6 +359,8 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["device_type"] = device_type;
         msg["version"]     = current_Version;        
         msg["description"] = description;
+
+        // custom settings  
     
         JsonArray data_inputs = msg.createNestedArray("input_values");
         data_inputs.add("moisture");        
@@ -369,6 +376,8 @@ void callback (char* topic, byte* payload, unsigned int length) {
         data_commands_json.add("{'state':'ON','pump_time':30}");  
         data_commands_json.add("{'state':'ON','pump_time':45}");         
         data_commands_json.add("{'state':'ON','pump_time':60}"); 
+
+        // custom settings end  
 
         // convert msg to char
         char msg_Char[512];
@@ -389,6 +398,8 @@ void callback (char* topic, byte* payload, unsigned int length) {
         send_default_mqtt_message();    
     }      
 
+    // custom settings   
+    
     // set 
     
     if (check_ieeeAddr == ieeeAddr and check_command == "set"){
@@ -432,7 +443,9 @@ void callback (char* topic, byte* payload, unsigned int length) {
         pump_time = 0;
         state = "OFF"; 
         send_default_mqtt_message(); 
-    }    
+    }   
+
+    // custom settings end       
 }
 
 
@@ -482,10 +495,13 @@ void setup() {
     client.setCallback(callback); 
 
     // custom settings
+    
     pinMode(PIN_SENSOR, INPUT); 
     
     pinMode(PIN_PUMP, OUTPUT);  
     digitalWrite(PIN_PUMP, HIGH);
+
+    // custom settings end  
 }
 
 
@@ -522,6 +538,8 @@ void loop() {
     } 
 
     send_message_timer_counter = send_message_timer_counter + 100;    
+
+    // custom settings end  
 
     delay(100);
     client.loop();

@@ -39,14 +39,11 @@ int PIN_LED_GREEN = 14;                          // D5
 int PIN_LED_RED   = 12;                          // D6
 
 
-// ###############
-// CUSTOM SETTINGS
-// ###############
+// custom settings
 
 int SENSOR_1 = 5;                                // D1
 int SENSOR_2 = 4;                                // D2 
 int SENSOR_3 = A0;                               // A0 
-
 
 // int SENSOR = 0;                               // D3 
 // int SENSOR = 13;                              // D7
@@ -63,6 +60,8 @@ int sensor_2_last_value = 0;
 int sensor_3_last_value = 0;
 
 int disable_sensor_3_timer = 0;
+
+// custom settings end
 
 
 // ############
@@ -314,6 +313,8 @@ void send_default_mqtt_message() {
     // create msg as json
     DynamicJsonDocument msg(128);
 
+    // custom settings
+
     if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
         msg["occupancy"] = "True";
     } else {
@@ -321,6 +322,8 @@ void send_default_mqtt_message() {
     }
 
     msg["illuminance"] = sensor_3_last_value;          
+
+    // custom settings end  
 
     // convert msg to char
     char msg_Char[128];
@@ -365,6 +368,8 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["device_type"] = device_type;
         msg["version"]     = current_Version;        
         msg["description"] = description;
+
+        // custom settings   
     
         JsonArray data_inputs = msg.createNestedArray("input_values");
         data_inputs.add("occupancy");        
@@ -372,6 +377,8 @@ void callback (char* topic, byte* payload, unsigned int length) {
 
         JsonArray data_commands      = msg.createNestedArray("commands");
         JsonArray data_commands_json = msg.createNestedArray("commands_json");
+
+        // custom settings end  
 
         // convert msg to char
         char msg_Char[512];
@@ -446,6 +453,9 @@ void setup() {
     pinMode(SENSOR_3, INPUT); 
     
     sensor_3_last_value = analogRead(SENSOR_3);
+
+    // custom settings end  
+    
 }
 
 
@@ -501,6 +511,8 @@ void loop() {
         send_default_mqtt_message();
         delay(1000);
     } 
+
+    // custom settings end    
 
     delay(10);
     client.loop();

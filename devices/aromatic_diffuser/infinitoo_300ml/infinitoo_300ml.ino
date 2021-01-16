@@ -38,13 +38,8 @@ int PIN_RESET_SETTING = 16;                      // D0
 int PIN_LED_GREEN = 14;                          // D5
 int PIN_LED_RED   = 12;                          // D6
 
-
-// ###############
-// CUSTOM SETTINGS
-// ###############
-
-int PIN_SENSOR = A0;                             // A0
-int PIN_RELAIS = 0;                              // D3 
+int PIN_SENSOR    = A0;                          // A0
+int PIN_RELAIS    = 0;                           // D3 
 
 char model[40]       = "infinitoo_300ml";
 char device_type[40] = "aromatic_diffuser";
@@ -743,8 +738,6 @@ void setup() {
     client.setServer(mqtt_server, 1884);
     client.setCallback(callback); 
 
-    // custom settings
-
     pinMode(PIN_RELAIS, OUTPUT); 
     pinMode(PIN_SENSOR, INPUT); 
      
@@ -777,8 +770,6 @@ void loop() {
     } 
     
     update_timer_counter = update_timer_counter + 500;
-
-    // custom settings
 
     // get average sensor_value
     int sensor_value_1  = analogRead(PIN_SENSOR);
