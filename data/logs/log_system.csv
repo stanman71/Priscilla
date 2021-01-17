@@ -1434,3 +1434,15 @@ Timestamp,Type,Description
 2021-01-17 11:12:10,SUCCESS,|Music || Spotify || Token || updated|
 2021-01-17 11:12:50,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=20&device_id=1ecf009f333a4c9abd825c7327d3346d2a9d58d4:
  API rate limit exceeded|
+2021-01-17 15:48:39,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 15:48:40,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 15:48:41,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 15:48:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 15:48:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 15:48:42,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 15:57:49,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 15:57:49,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 15:57:50,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 15:57:50,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 15:57:50,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 15:57:52,SUCCESS,|Music || Spotify || Token || updated|

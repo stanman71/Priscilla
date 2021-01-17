@@ -258,7 +258,10 @@ def REFRESH_SPOTIFY_TOKEN_THREAD():
 
 def SET_MUSIC_VOLUME(spotify_token, volume):
 
-    if int(volume) == 0:
+    try:
+        if int(volume) == 0:
+            volume = 33
+    except:
         volume = 33
 
     sp                  = spotipy.Spotify(auth=spotify_token)

@@ -3,6 +3,3 @@ Music
 - add check for correct port / ip
 
 BUGFIX
-
-- Block new device "no connection" message for 12 hours
-
