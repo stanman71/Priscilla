@@ -36,9 +36,10 @@ def settings_about():
     page_title       = 'Bianca | Settings | About'
     page_description = 'The information and update page'
 
+    SET_CURRENT_USER_ID(current_user.id)  
+
     version = "3.1"
 
-    SET_CURRENT_USER_ID(current_user.id)  
 
     data = {'navigation': 'settings_about'}
 

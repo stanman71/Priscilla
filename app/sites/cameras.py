@@ -95,6 +95,8 @@ def cameras():
     page_title       = 'Bianca | Cameras'
     page_description = 'The cameras configuration page'
 
+    SET_CURRENT_USER_ID(current_user.id)  
+
     success_message_change_settings = []      
     error_message_change_settings   = []    
     success_message_add_camera      = False       
@@ -102,7 +104,6 @@ def cameras():
 
     selected_camera = ""
 
-    SET_CURRENT_USER_ID(current_user.id) 
 
     # default camera selection
     if GET_ALL_CAMERAS() != None:

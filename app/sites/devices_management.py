@@ -124,6 +124,8 @@ def devices_management():
     page_title       = 'Bianca | Devices | Management'
     page_description = 'The devices configuration page'
 
+    SET_CURRENT_USER_ID(current_user.id)  
+
     error_message_mqtt_connection            = False
     error_message_zigbee2mqtt_connection     = False    
     success_message_change_settings_devices  = []     
@@ -152,7 +154,6 @@ def devices_management():
     zigbee_device_update_collapse_open       = False
     zigbee_topology_exist                    = False
 
-    SET_CURRENT_USER_ID(current_user.id)   
 
     # error firmware
     if session.get('error_mqtt_firmware', None) != None:

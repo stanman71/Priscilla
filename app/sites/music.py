@@ -20,6 +20,7 @@ import json
 import spotipy
 import socket 
 import heapq
+import threading
 
 
 # access rights
@@ -41,8 +42,27 @@ def permission_required(f):
     return wrap
 
 
+# timeout spotify
+timeout_spotify = 0
+
+def START_TIMEOUT_SPOTIFY_THREAD():
+	try:
+		Thread = threading.Thread(target=TIMEOUT_SPOTIFY_THREAD)
+		Thread.start()  
+		
+	except:
+		pass
+
+def TIMEOUT_SPOTIFY_THREAD():   
+    global timeout_spotify
+    
+    time.sleep(1)
+    timeout_spotify = 0
+
+
 list_search_track_results = ""
 list_search_album_results = ""
+
 
 
 @app.route('/music', methods=['GET', 'POST'])
@@ -52,8 +72,20 @@ def music():
     page_title       = 'Bianca | Music'
     page_description = 'The music configuration page'
 
+    SET_CURRENT_USER_ID(current_user.id)  
+
     global list_search_track_results
     global list_search_album_results
+    global timeout_spotify
+
+    spotify_token = GET_SPOTIFY_TOKEN()
+    spotify_data  = GET_SPOTIFY_CONTROL_DATA(spotify_token)
+
+    spotify_user           = spotify_data[0]
+    list_spotify_devices   = spotify_data[1]
+    list_spotify_playlists = spotify_data[2]
+    spotify_volume         = spotify_data[3]
+    spotify_shuffle        = spotify_data[4]
 
     UPDATE_MULTIROOM_DEFAULT_SETTINGS()
 
@@ -73,10 +105,7 @@ def music():
     
     collapse_search_track_open = ""   
     collapse_search_album_open = ""        
-    
-    spotify_token = GET_SPOTIFY_TOKEN()
 
-    SET_CURRENT_USER_ID(current_user.id)  
 
     """ ################# """
     """  spotify control  """
@@ -84,177 +113,125 @@ def music():
 
     if spotify_token != "":
 
-        try:
+        # ##############
+        # player control
+        # ##############
 
-            sp            = spotipy.Spotify(auth=spotify_token,requests_timeout=3)
-            sp.trace      = False     
-            player_volume = request.form.get("set_spotify_player_volume") 
+        if "set_spotify_play" in request.form:  
+            SPOTIFY_CONTROL(spotify_token, "play")       
 
+        if "set_spotify_previous" in request.form: 
+            SPOTIFY_CONTROL(spotify_token, "previous")   
 
-            # ############
-            # account data
-            # ############
-                     
-            spotify_user           = sp.current_user()["display_name"]   
-            list_spotify_devices   = sp.devices()["devices"]        
-            list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]    
+        if "set_spotify_next" in request.form:
+            SPOTIFY_CONTROL(spotify_token, "next")     
 
-            # player show ?
-            if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token) != ('', '', '', '', '', [], '', '', ''):
-                show_player = True                             
+        if "set_spotify_stop" in request.form:  
+            SPOTIFY_CONTROL(spotify_token, "stop")   
 
-            # get volume
-            volume = str(GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[3])
+        if "set_spotify_volume" in request.form: 
+            SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)        
 
-            # get shuffle            
-            if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[8] == True:
-                spotify_shuffle = "True"
+        if "set_spotify_shuffle" in request.form:  
+            if spotify_shuffle == "True":
+                SPOTIFY_CONTROL(spotify_token, "shuffle_false")   
+                spotify_shuffle = "False" 
             else:
-                spotify_shuffle = "False"         
+                SPOTIFY_CONTROL(spotify_token, "shuffle_true")   
+                spotify_shuffle = "True"                 
 
 
-            # ##############
-            # player control
-            # ##############
+        # ##############
+        # start playlist
+        # ##############
 
-            if "set_spotify_play" in request.form:  
-                spotify_volume = request.form.get("slider_spotify_player_volume") 
-                SPOTIFY_CONTROL(spotify_token, "play", player_volume)       
+        if "spotify_start_playlist" in request.form:    
+            spotify_device_id = request.form.get("set_spotify_device_id")
+            playlist_uri      = request.form.get("set_spotify_playlist")
+            playlist_volume   = request.form.get("set_spotify_playlist_volume")
 
-                volume = player_volume 
+            if request.form.get("set_checkbox_shuffle_setting") != None:
+                playlist_shuffle = True
+            else:
+                playlist_shuffle = False
 
-            if "set_spotify_previous" in request.form: 
-                spotify_volume = request.form.get("slider_spotify_player_volume") 
-                SPOTIFY_CONTROL(spotify_token, "previous", player_volume)   
+            SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume, playlist_shuffle)
 
-                volume = player_volume      
-
-            if "set_spotify_next" in request.form:
-                spotify_volume = request.form.get("slider_spotify_player_volume") 
-                SPOTIFY_CONTROL(spotify_token, "next", player_volume)     
-
-                volume = player_volume 
-
-            if "set_spotify_stop" in request.form:  
-                spotify_volume = request.form.get("slider_spotify_player_volume") 
-                SPOTIFY_CONTROL(spotify_token, "stop", player_volume)   
-
-                volume = player_volume 
-
-            if "set_spotify_volume" in request.form: 
-                spotify_volume = request.form.get("slider_spotify_player_volume") 
-                SPOTIFY_CONTROL(spotify_token, "volume", player_volume)        
-
-                volume = player_volume 
-
-            if "set_spotify_shuffle" in request.form:  
-                spotify_volume = request.form.get("slider_spotify_player_volume") 
-
-                if spotify_shuffle == "True":
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", player_volume)   
-                    spotify_shuffle = "False" 
-                else:
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", player_volume)   
-                    spotify_shuffle = "True"                 
-
-                volume = player_volume 
+            spotify_volume = playlist_volume
 
 
-            # ##############
-            # start playlist
-            # ##############
-
-            if "spotify_start_playlist" in request.form:    
-                spotify_device_id = request.form.get("set_spotify_device_id")
-                playlist_uri      = request.form.get("set_spotify_playlist")
-                playlist_volume   = request.form.get("set_spotify_playlist_volume")
-
-                if request.form.get("set_checkbox_shuffle_setting") != None:
-                    playlist_shuffle = True
-                else:
-                    playlist_shuffle = False
-
-                SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume, playlist_shuffle)
-
-                volume = playlist_volume   
-
-
-            # ############
-            # search track
-            # ############
-        
-            if "spotify_search_track" in request.form:     
-                collapse_search_track_open = "True"   
-
-                track_name   = request.form.get("set_spotify_search_track").strip()  
-                track_artist = request.form.get("set_spotify_search_track_artist").strip()  
-                
-                list_search_track_results = SPOTIFY_SEARCH_TRACK(spotify_token, track_name, track_artist, 10)
-            
-                # check results found ?
-                if isinstance(list_search_track_results, str):
-                    error_message_search_track = list_search_track_results
-                    list_search_track_results  = []  
-
-            if "spotify_track_play" in request.form:       
-                collapse_search_track_open = "True"  
-                
-                track_uri         = request.form.get("spotify_track_play")
-                spotify_device_id = request.form.get("set_spotify_track_device:" + track_uri)
-                track_volume      = request.form.get("set_spotify_track_volume:" + track_uri)
-                
-                SPOTIFY_START_TRACK(spotify_token, spotify_device_id, track_uri, track_volume)
-
-                volume = track_volume   
-
-
-            # ############
-            # search album
-            # ############
-        
-            if "spotify_search_album" in request.form:     
-                collapse_search_album_open = "True"  
-
-                album_name   = request.form.get("set_spotify_search_album").strip()  
-                album_artist = request.form.get("set_spotify_search_album_artist").strip()  
-
-                list_search_album_results = SPOTIFY_SEARCH_ALBUM(spotify_token, album_name, album_artist, 5)  
+        # ############
+        # search track
+        # ############
     
-                # check results found ?
-                if isinstance(list_search_album_results, str):
-                    error_message_search_album = list_search_album_results 
-                    list_search_album_results  = []  
-                                   
-            if "spotify_album_play" in request.form:   
-                collapse_search_album_open = "True" 
-                
-                album_uri         = request.form.get("spotify_album_play")
-                spotify_device_id = request.form.get("set_spotify_album_device:" + album_uri)
-                album_volume      = request.form.get("set_spotify_album_volume:" + album_uri)
-                
-                SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
-    
-                volume = album_volume  
+        if "spotify_search_track" in request.form:     
+            collapse_search_track_open = "True"   
 
-
-        # login failed
-        except Exception as e:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
+            track_name   = request.form.get("set_spotify_search_track").strip()  
+            track_artist = request.form.get("set_spotify_search_track_artist").strip()  
             
-            spotify_user           = ""
-            list_spotify_playlists = ""
-            list_spotify_devices   = ""
-            volume                 = 50         
-            spotify_shuffle        = "False"
+            list_search_track_results = SPOTIFY_SEARCH_TRACK(spotify_token, track_name, track_artist, 10)
+        
+            # check results found ?
+            if isinstance(list_search_track_results, str):
+                error_message_search_track = list_search_track_results
+                list_search_track_results  = []  
+
+        if "spotify_track_play" in request.form:       
+            collapse_search_track_open = "True"  
+            
+            track_uri         = request.form.get("spotify_track_play")
+            spotify_device_id = request.form.get("set_spotify_track_device:" + track_uri)
+            track_volume      = request.form.get("set_spotify_track_volume:" + track_uri)
+            
+            SPOTIFY_START_TRACK(spotify_token, spotify_device_id, track_uri, track_volume)
+
+            spotify_volume = track_volume   
 
 
-    # not logged in
-    else:     
-        spotify_user           = ""
-        list_spotify_playlists = ""
-        list_spotify_devices   = ""
-        volume                 = 50     
-        spotify_shuffle        = "False"
+        # ############
+        # search album
+        # ############
+    
+        if "spotify_search_album" in request.form:     
+            collapse_search_album_open = "True"  
+
+            album_name   = request.form.get("set_spotify_search_album").strip()  
+            album_artist = request.form.get("set_spotify_search_album_artist").strip()  
+
+            list_search_album_results = SPOTIFY_SEARCH_ALBUM(spotify_token, album_name, album_artist, 5)  
+
+            # check results found ?
+            if isinstance(list_search_album_results, str):
+                error_message_search_album = list_search_album_results 
+                list_search_album_results  = []  
+                                
+        if "spotify_album_play" in request.form:   
+            collapse_search_album_open = "True" 
+            
+            album_uri         = request.form.get("spotify_album_play")
+            spotify_device_id = request.form.get("set_spotify_album_device:" + album_uri)
+            album_volume      = request.form.get("set_spotify_album_volume:" + album_uri)
+            
+            SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volume)
+
+            spotify_volume = album_volume  
+
+
+    """ ############## """
+    """  music volume  """
+    """ ############## """   
+
+    if request.method == 'POST':
+        if (spotify_token != "" and 
+            timeout_spotify == 0 and 
+            request.form.get("set_spotify_player_volume") != None):
+
+            timeout_spotify = 1
+            START_TIMEOUT_SPOTIFY_THREAD()
+
+            spotify_volume = request.form.get("set_spotify_player_volume") 
+            SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume) 
 
 
     """ ################## """
@@ -400,7 +377,7 @@ def music():
                                                     track_artist=track_artist,     
                                                     album_name=album_name,
                                                     album_artist=album_artist,   
-                                                    volume=volume, 
+                                                    spotify_volume=spotify_volume, 
                                                     spotify_shuffle=spotify_shuffle,
                                                     default_settings=default_settings,
                                                     list_client_music=list_client_music,

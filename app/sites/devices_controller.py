@@ -40,9 +40,9 @@ def devices_controller():
     page_title       = 'Bianca | Devices | Controller'
     page_description = 'The controller configuration page'
 
-    success_message_change_settings_controller = False
+    SET_CURRENT_USER_ID(current_user.id)  
 
-    SET_CURRENT_USER_ID(current_user.id) 
+    success_message_change_settings_controller = False
 
     RESET_CONTROLLER_COLLAPSE()
     UPDATE_CONTROLLER_EVENTS()

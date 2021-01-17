@@ -153,39 +153,47 @@
 
                 <div class="border-top my-2"></div>
 
-                <button type="submit" onclick="window.location.href='/music#player_control'" class="btn btn-default" name="set_spotify_play">
+                <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_play">
                   <i class='uil uil-play'></i>
-                </button>     
-                <div class="pull-right">
-                  <button type="submit" onclick="window.location.href='/music#player_control'" class="btn btn-default" name="set_spotify_previous">
-                    <i class='uil uil-backward'></i>
-                  </button>
-                </div>
-                <br>
-                <button type="submit" onclick="window.location.href='/music#player_control'" class="btn btn-default" name="set_spotify_next">
-                  <i class='uil uil-forward'></i>
-                </button>
+                </button>    
                 <div class="pull-right">                  
-                  <button type="submit" onclick="window.location.href='/music#player_control'" class="btn btn-default" name="set_spotify_stop">
+                  <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_stop">
                     <i class='uil uil-square-full'></i>
                   </button>
-                </div>
-                <br>                  
-                <button type="submit" onclick="window.location.href='/music#player_control'" class="btn btn-default" name="set_spotify_volume">
-                  <i class='uil uil-volume'></i>
-                </button>
+                </div>         
+                <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_previous">
+                  <i class='uil uil-backward'></i>
+                </button>                                
                 <div class="pull-right">
-                  <button type="submit" onclick="window.location.href='/music#player_control'" class="btn {% if spotify_shuffle == "True" %} btn-primary {% else %} btn-secondary {% endif %} " name="set_spotify_shuffle">
+                  <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn btn-default" name="set_spotify_next">
+                    <i class='uil uil-forward'></i>
+                  </button>
+                </div>                
+                <div class="text-center">
+                  <button type="submit" onclick="window.location.href='/dashboard#music'" class="btn {% if spotify_shuffle == "True" %} btn-primary {% else %} btn-secondary {% endif %} " name="set_spotify_shuffle">
                     <i class="uil uil-arrow-random"></i>
                   </button>
                 </div>
                 <br> 
-                <br>  
                 <div class="vertical_center">       
                   <br>           
-                  <input id="volume_slider_music_player_mobile" data-slider-id="volume_slider_music_player_mobile" name="set_spotify_player_volume" 
-                    type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}"/>                               
+                  <input id="volume_slider_music_player_mobile" data-slider-id="volume_slider_dashboard_music_mobile" name="set_spotify_player_volume" 
+                    type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>                               
                 </div>
+
+                <script>
+                  var slide = document.getElementById('volume_slider_music_player_mobile')    
+
+                  slide.onchange = function() {
+                    wto = setTimeout(function() {
+                      $.post({
+                              url: '/music',
+                              data: $('form').serialize(),
+                          });
+                    }, 250);
+                  }
+                </script>  
+
               </div>
             </form>                
           </div>
@@ -231,7 +239,7 @@
             </select>     
             <br>                 
             <input id="volume_slider_music_playlist_mobile" data-slider-id="volume_slider_music_playlist_mobile" name="set_spotify_playlist_volume" 
-              type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}"/>   
+              type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>   
             <br>
             <br>      
             <div class="text-center">                                  
@@ -380,7 +388,7 @@
             </div>
 
             <div class="row justify-content-md-center">                                                 
-              <div class="col-sm-5">                 
+              <div class="col-sm-6">                 
                 <button type="submit" onclick="window.location.href='/music#player_control'" class="btn btn-default" name="set_spotify_play">
                   <i class='uil uil-play'></i>
                 </button>                               
@@ -393,22 +401,32 @@
                 <button type="submit" onclick="window.location.href='/music#player_control'" class="btn btn-default" name="set_spotify_stop">
                   <i class='uil uil-square-full'></i>
                 </button>
-                <button type="submit" onclick="window.location.href='/music#player_control'" class="btn btn-default" name="set_spotify_volume">
-                  <i class='uil uil-volume'></i>
-                </button>
                 <button type="submit" onclick="window.location.href='/music#player_control'" class="btn {% if spotify_shuffle == "True" %} btn-primary {% else %} btn-secondary {% endif %} " name="set_spotify_shuffle">
                   <i class="uil uil-arrow-random"></i>
                 </button>                     
               </div>
-              <div class="col-sm-3">
+              <div class="col-sm-6">
                 <div class="vertical_center"> 
-                  <div class="row justify-content-md-center">                                                 
-                    <div class="col-sm-4"></div>       
+                  <div class="row justify-content-md-center">                                                  
                     <div class="col-sm-6">        
                       <input id="volume_slider_music_player" data-slider-id="volume_slider_music_player" name="set_spotify_player_volume" 
-                        type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}"/>                                                 
+                        type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>                                                 
                     </div>
-                    <div class="col-sm-2"></div>
+
+                    <script>
+                      var slide = document.getElementById('volume_slider_music_player')    
+
+                      slide.onchange = function() {
+                        wto = setTimeout(function() {
+                          $.post({
+                                  url: '/music',
+                                  data: $('form').serialize(),
+                              });
+                        }, 250);
+                      }
+                    </script>   
+
+                    <div class="col-sm-6"></div>
                   </div> 
                 </div>  
               </div>
@@ -477,7 +495,7 @@
                     <td></td>  
                     <td>
                       <input id="volume_slider_music_playlist" data-slider-id="volume_slider_music_playlist" name="set_spotify_playlist_volume" 
-                        type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ volume }}"/>    
+                        type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="{{ spotify_volume }}"/>    
                     </td>
                     <td>
                       <div class="vertical_center"> 

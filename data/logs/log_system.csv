@@ -884,3 +884,553 @@ Timestamp,Type,Description
 2021-01-16 21:59:53,EVENT,|System || Services || Squeezelie Player || disabled|
 2021-01-16 21:59:54,SUCCESS,|Music || Spotify || Token || updated|
 2021-01-16 22:00:00,ERROR,|System || Database || [Errno 2] No such file or directory: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Bianca/data/backup_database/2021-01-16_database.db'|
+2021-01-16 22:07:30,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:07:30,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:07:31,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:07:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:07:31,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:07:33,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:10:13,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:10:13,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:10:14,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:10:14,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:10:14,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:10:16,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:12:14,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:12:14,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:12:15,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:12:15,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:12:15,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:12:16,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:14:31,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:14:31,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:14:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:14:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:14:32,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:14:33,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:15:54,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:15:54,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:15:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:15:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:15:55,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:15:56,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:16:51,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:16:51,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:16:52,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:16:52,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:16:52,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:16:53,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:18:15,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:18:15,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:18:16,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:18:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:18:16,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:18:17,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:19:14,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:19:14,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:19:15,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:19:15,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:19:15,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:19:16,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:21:12,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:21:12,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:21:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:21:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:21:13,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:21:14,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:22:09,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:22:09,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:22:10,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:22:10,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:22:10,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:22:11,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:22:45,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:22:45,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:22:46,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:22:46,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:22:46,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:22:47,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:23:35,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:23:35,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:23:36,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:23:36,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:23:36,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:23:37,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:30:08,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:30:08,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:30:09,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:30:09,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:30:10,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:30:11,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:31:52,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:31:52,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:31:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:31:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:31:53,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:31:54,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:32:22,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=20&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 22:32:22,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=18&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 22:35:51,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:35:51,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:35:52,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:35:52,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:35:52,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:35:53,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:36:02,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=18&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 22:36:02,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=18&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 22:36:02,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=18&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 22:36:11,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=18&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 22:36:11,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=18&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 22:36:31,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=47&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 22:36:57,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:36:57,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:36:58,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:36:58,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:36:58,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:36:59,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:37:11,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=21&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 22:37:12,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=21&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 22:40:49,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:40:49,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:40:50,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:40:50,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:40:50,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:40:51,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:41:32,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:41:32,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:41:33,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:41:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:41:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:41:35,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:43:34,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:43:34,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:43:35,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:43:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:43:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:43:36,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:45:04,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:45:04,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:45:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:45:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:45:05,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:45:06,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:47:41,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:47:41,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:47:42,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:47:42,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:47:42,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:47:43,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:48:40,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:48:40,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:48:41,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:48:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:48:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:48:42,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:52:57,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:52:57,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:52:58,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:52:58,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:52:58,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:52:59,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:55:43,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:55:43,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:55:44,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:55:44,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:55:44,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:55:45,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:57:56,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:57:56,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:57:57,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:57:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:57:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:57:58,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 22:59:17,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 22:59:17,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 22:59:18,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:59:18,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 22:59:18,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 22:59:19,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:00:34,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:00:34,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:00:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:00:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:00:35,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:00:36,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:01:20,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=25&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 23:03:22,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:03:22,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:03:23,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:03:23,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:03:23,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:03:25,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:05:26,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:05:26,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:05:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:05:27,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:05:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:05:29,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:05:50,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=45&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 23:05:50,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=45&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 23:05:50,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=45&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 23:06:07,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:06:07,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:06:08,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:06:08,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:06:08,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:06:09,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:06:41,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=28&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 23:06:51,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=28&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 23:07:10,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:07:10,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:07:11,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:07:11,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:07:11,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:07:12,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:10:34,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:10:34,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:10:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:10:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:10:35,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:10:36,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:13:26,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:13:26,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:13:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:13:27,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:13:27,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:13:28,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:13:30,ERROR,|System || local variable 'spotify_token' referenced before assignment|
+2021-01-16 23:14:36,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:14:36,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:14:37,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:14:37,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:14:37,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:14:38,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:14:40,ERROR,|System || local variable 'list_spotify_playlists' referenced before assignment|
+2021-01-16 23:16:09,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:16:09,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:16:10,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:16:10,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:16:10,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:16:11,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:16:42,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=25&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 23:17:04,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=48&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 23:17:12,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=28&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 23:17:12,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=28&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 23:33:44,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:33:44,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:33:45,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:33:45,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:33:45,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:33:46,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:34:02,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=21&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 23:34:13,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=48&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 23:34:54,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:34:54,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:34:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:34:55,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:34:55,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:34:57,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:35:50,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:35:50,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:35:51,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:35:51,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:35:51,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:35:52,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:36:11,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=49&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ API rate limit exceeded|
+2021-01-16 23:37:56,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:37:56,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:37:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:37:57,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:37:57,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:37:58,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:39:39,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:39:39,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:39:40,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:39:40,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:39:40,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:39:42,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:40:41,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:40:41,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:40:42,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:40:42,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:40:42,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:40:43,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:41:25,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:41:25,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:41:26,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:41:26,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:41:26,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:41:27,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:45:04,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:45:04,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:45:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:45:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:45:05,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:45:06,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:47:11,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:47:12,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:47:12,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:47:12,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:47:13,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:47:14,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:47:50,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:47:50,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:47:51,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:47:51,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:47:52,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:47:53,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:48:47,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:48:47,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:48:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:48:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:48:48,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:48:49,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:49:28,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:49:28,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:49:29,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:49:29,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:49:29,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:49:30,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:50:16,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:50:16,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:50:17,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:50:17,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:50:17,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:50:18,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:50:39,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:50:39,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:50:40,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:50:40,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:50:40,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:50:41,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:54:18,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:54:18,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:54:19,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:54:19,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:54:19,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:54:21,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:55:03,ERROR,|Music || Spotify || Control || http status: 403, code:-1 - https://api.spotify.com/v1/me/player/shuffle?state=true&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ Player command failed: Restriction violated|
+2021-01-16 23:55:09,ERROR,|Music || Spotify || Control || http status: 403, code:-1 - https://api.spotify.com/v1/me/player/shuffle?state=true&device_id=165844395103f513df43cd3f231d98ac1e48dfdb:
+ Player command failed: Restriction violated|
+2021-01-16 23:56:52,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:56:52,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:56:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:56:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:56:53,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:56:54,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-16 23:58:34,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-16 23:58:34,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-16 23:58:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:58:35,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-16 23:58:35,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-16 23:58:36,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:00:10,SUCCESS,|Network || MQTT || Update|
+2021-01-17 00:02:33,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 00:02:33,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 00:02:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:02:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:02:34,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 00:02:36,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:03:41,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 00:03:41,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 00:03:42,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:03:42,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:03:42,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 00:03:43,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:14:48,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 00:14:48,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 00:14:49,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:14:49,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:14:49,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 00:14:50,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:16:06,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 00:16:06,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 00:16:07,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:16:07,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:16:07,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 00:16:08,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:16:31,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 00:16:31,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 00:16:32,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 00:16:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:16:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:16:33,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:17:42,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 00:17:42,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 00:17:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:17:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:17:43,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 00:17:44,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:18:57,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 00:18:57,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 00:18:58,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:18:58,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:18:58,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 00:18:59,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:22:03,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 00:22:03,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 00:22:04,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 00:22:04,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:22:04,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:22:06,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:22:58,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 00:22:58,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 00:22:59,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:22:59,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:22:59,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 00:23:00,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:23:43,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 00:23:43,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 00:23:44,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 00:23:45,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:23:45,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:23:46,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:25:05,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 00:25:05,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 00:25:06,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 00:25:06,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:25:06,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:25:07,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:25:47,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 00:25:48,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 00:25:49,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:25:49,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:25:49,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 00:25:50,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:26:36,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 00:26:36,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 00:26:37,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 00:26:37,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:26:37,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 00:26:38,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 00:30:00,ERROR,|Task || Scheduler || reset_log_files || [WinError 2] Das System kann die angegebene Datei nicht finden: 'C:\\Users\\stanman\\Desktop\\Unterlagen\\GIT\\Bianca/data/logs/log_devices.csv'|
+2021-01-17 10:04:20,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 10:04:20,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 10:04:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:04:21,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:04:21,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 10:04:22,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 10:04:25,ERROR,|System || local variable 'spotify_volume' referenced before assignment|
+2021-01-17 10:04:27,ERROR,|System || local variable 'spotify_volume' referenced before assignment|
+2021-01-17 10:24:52,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 10:24:52,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 10:24:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:24:53,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:24:53,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 10:24:54,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 10:25:10,ERROR,|System || SPOTIFY_START_PLAYLIST() missing 1 required positional argument: 'playlist_volume'|
+2021-01-17 10:26:42,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 10:26:42,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 10:26:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:26:43,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:26:43,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 10:26:44,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 10:26:48,ERROR,|System || local variable 'spotify_data' referenced before assignment|
+2021-01-17 10:27:40,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 10:27:40,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 10:27:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:27:41,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:27:41,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 10:27:43,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 10:28:33,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 10:28:33,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 10:28:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:28:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:28:34,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 10:28:35,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 10:30:44,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 10:30:44,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 10:30:45,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 10:30:45,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:30:45,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:30:46,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 10:32:09,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 10:32:09,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 10:32:10,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 10:32:10,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:32:10,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:32:11,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 10:33:33,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 10:33:33,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 10:33:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:33:34,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:33:34,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 10:33:35,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 10:34:24,SUCCESS,|Music || Spotify || Logout|
+2021-01-17 10:34:36,SUCCESS,|Music || Spotify || Login || successful|
+2021-01-17 10:34:36,SUCCESS,|Music || Spotify || Token || received|
+2021-01-17 10:34:36,SUCCESS,|Music || Spotify || Refresh Token || received|
+2021-01-17 10:58:12,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 10:58:12,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 10:58:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:58:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 10:58:13,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 10:58:14,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 10:58:27,ERROR,|Music || Spotify || Control || int() argument must be a string, a bytes-like object or a number, not 'NoneType'|
+2021-01-17 10:58:28,ERROR,|Music || Spotify || Control || int() argument must be a string, a bytes-like object or a number, not 'NoneType'|
+2021-01-17 10:58:35,ERROR,|Music || Spotify || Control || int() argument must be a string, a bytes-like object or a number, not 'NoneType'|
+2021-01-17 10:58:36,ERROR,|Music || Spotify || Control || int() argument must be a string, a bytes-like object or a number, not 'NoneType'|
+2021-01-17 10:58:37,ERROR,|Music || Spotify || Control || int() argument must be a string, a bytes-like object or a number, not 'NoneType'|
+2021-01-17 10:58:39,ERROR,|Music || Spotify || Control || int() argument must be a string, a bytes-like object or a number, not 'NoneType'|
+2021-01-17 10:58:47,ERROR,|Music || Spotify || Control || int() argument must be a string, a bytes-like object or a number, not 'NoneType'|
+2021-01-17 10:58:51,ERROR,|Music || Spotify || Control || int() argument must be a string, a bytes-like object or a number, not 'NoneType'|
+2021-01-17 10:58:58,ERROR,|Music || Spotify || Control || int() argument must be a string, a bytes-like object or a number, not 'NoneType'|
+2021-01-17 10:59:04,ERROR,|Music || Spotify || Control || int() argument must be a string, a bytes-like object or a number, not 'NoneType'|
+2021-01-17 11:02:12,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 11:02:12,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 11:02:13,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 11:02:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 11:02:13,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 11:02:15,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 11:05:01,ERROR,|Music || Spotify || Control || int() argument must be a string, a bytes-like object or a number, not 'NoneType'|
+2021-01-17 11:05:01,DATABASE,|Music || Spotify || Default Player Settings || changed |||| default_device_name |||| None >>> PC |||| default_playlist_name |||| None >>> Violin Hip-Hop Instrumental |||| default_volume |||| 0 >>> 47|
+2021-01-17 11:05:08,ERROR,|Music || Spotify || Control || int() argument must be a string, a bytes-like object or a number, not 'NoneType'|
+2021-01-17 11:05:08,DATABASE,|Music || Spotify || Default Player Settings || changed |||| default_volume |||| 47 >>> 23|
+2021-01-17 11:06:51,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=33&device_id=1ecf009f333a4c9abd825c7327d3346d2a9d58d4:
+ API rate limit exceeded|
+2021-01-17 11:09:21,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=30&device_id=1ecf009f333a4c9abd825c7327d3346d2a9d58d4:
+ API rate limit exceeded|
+2021-01-17 11:10:27,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 11:10:27,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 11:10:28,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 11:10:28,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 11:10:28,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 11:10:29,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 11:11:31,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 11:11:31,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 11:11:32,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 11:11:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 11:11:32,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 11:11:34,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 11:12:07,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-17 11:12:07,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-17 11:12:08,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-17 11:12:08,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 11:12:08,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-17 11:12:10,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-17 11:12:50,ERROR,|Music || Spotify || Control || http status: 429, code:-1 - https://api.spotify.com/v1/me/player/volume?volume_percent=20&device_id=1ecf009f333a4c9abd825c7327d3346d2a9d58d4:
+ API rate limit exceeded|

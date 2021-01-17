@@ -42,6 +42,8 @@ def scheduler():
     page_title       = 'Bianca | Scheduler'
     page_description = 'The scheduler configuration page'
 
+    SET_CURRENT_USER_ID(current_user.id)  
+
     success_message_change_settings               = []
     error_message_change_settings                 = []       
     success_message_add_scheduler_job             = []
@@ -51,7 +53,6 @@ def scheduler():
     RESET_SCHEDULER_JOB_COLLAPSE()
     UPDATE_SCHEDULER_JOBS_DEVICE_NAMES()
 
-    SET_CURRENT_USER_ID(current_user.id)  
 
     """ ################### """
     """  add scheduler job  """

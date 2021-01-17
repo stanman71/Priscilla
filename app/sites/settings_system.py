@@ -96,6 +96,8 @@ def settings_system():
     page_title       = 'Bianca | Settings | System'
     page_description = 'The system configuration page'
 
+    SET_CURRENT_USER_ID(current_user.id)  
+
     success_message_change_settings_services = False    
     error_message_change_settings_services   = [] 
     success_message_change_settings_network  = False
@@ -115,7 +117,6 @@ def settings_system():
     gateway    = GET_SYSTEM_SETTINGS().gateway
     dhcp       = GET_SYSTEM_SETTINGS().dhcp
 
-    SET_CURRENT_USER_ID(current_user.id)  
 
     # restore message
     if session.get('restore_database_success', None) != None:

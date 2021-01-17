@@ -520,19 +520,19 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                         spotify_volume = GET_SPOTIFY_SETTINGS().default_volume
 
                     if task[1].strip() == "PLAY":
-                        SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
+                        SPOTIFY_CONTROL(spotify_token, "play")       
         
                     if task[1].strip() == "PLAY/STOP":
-                        SPOTIFY_CONTROL(spotify_token, "play/stop", spotify_volume)       
+                        SPOTIFY_CONTROL(spotify_token, "play/stop")       
 
                     if task[1].strip() == "PREVIOUS":
-                        SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
+                        SPOTIFY_CONTROL(spotify_token, "previous")   
 
                     if task[1].strip() == "NEXT":
-                        SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
+                        SPOTIFY_CONTROL(spotify_token, "next")     
 
                     if task[1].strip() == "STOP": 
-                        SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)   
+                        SPOTIFY_CONTROL(spotify_token, "stop")   
 
                     if task[1].strip() == "VOLUME_UP":   
                         device_name = sp.current_playback(market=None)['device']['name']

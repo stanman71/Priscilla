@@ -38,10 +38,11 @@ def settings_threads():
     page_title       = 'Bianca | Settings | Threads'
     page_description = 'The threads overview page'
 
+    SET_CURRENT_USER_ID(current_user.id)  
+
     success_message_program_stop = "" 
     error_message_program_stop   = ""
 
-    SET_CURRENT_USER_ID(current_user.id)  
 
     # stop message
     if session.get('program_stop_success', None) != None:

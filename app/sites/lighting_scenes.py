@@ -42,6 +42,8 @@ def lighting_scenes():
     page_title       = 'Bianca | Lighting | Scenes'
     page_description = 'The lighting scenes configuration page'
 
+    SET_CURRENT_USER_ID(current_user.id)  
+
     global lighting_scenes_rgb_values_array
 
     success_message_change_settings                = []
@@ -56,7 +58,6 @@ def lighting_scenes():
 
     RESET_LIGHTING_SCENE_COLLAPSE()
 
-    SET_CURRENT_USER_ID(current_user.id)  
 
     """ #################### """
     """  add lighting scene  """

@@ -38,6 +38,8 @@ def lighting_groups():
     page_title       = 'Bianca | Lighting | Groups'
     page_description = 'The lighting groups configuration page'
 
+    SET_CURRENT_USER_ID(current_user.id)  
+
     success_message_change_settings                = []
     error_message_change_settings                  = []
     success_message_change_settings_lighting_group = ""
@@ -48,7 +50,6 @@ def lighting_groups():
     RESET_LIGHTING_GROUP_COLLAPSE()
     UPDATE_LIGHTING_GROUP_LIGHT_NAMES()
 
-    SET_CURRENT_USER_ID(current_user.id)  
 
     """ #################### """
     """  add lighting group  """

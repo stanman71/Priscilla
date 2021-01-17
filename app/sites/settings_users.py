@@ -41,6 +41,8 @@ def settings_users():
     page_title       = 'Bianca | Settings | Users'
     page_description = 'The users configuration page'
 
+    SET_CURRENT_USER_ID(current_user.id)  
+
     success_message_add_user        = False
     error_message_add_user          = []
     error_message_missing_passwords = []
@@ -55,7 +57,6 @@ def settings_users():
     password_repeat = ""
     hashed_password = ""
 
-    SET_CURRENT_USER_ID(current_user.id)  
 
     # delete message
     if session.get('delete_user_success', None) != None:

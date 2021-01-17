@@ -20,6 +20,7 @@ import shutil
 import re
 import cgi
 import spotipy
+import threading
 
 # access rights
 def permission_required(f):
@@ -40,6 +41,25 @@ def permission_required(f):
     return wrap
 
 
+# timeout spotify
+timeout_spotify = 0
+
+def START_TIMEOUT_SPOTIFY_THREAD():
+	try:
+		Thread = threading.Thread(target=TIMEOUT_SPOTIFY_THREAD)
+		Thread.start()  
+		
+	except:
+		pass
+
+def TIMEOUT_SPOTIFY_THREAD():   
+    global timeout_spotify
+    
+    time.sleep(1)
+    timeout_spotify = 0
+
+
+
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 @permission_required
@@ -49,6 +69,16 @@ def dashboard():
 
     SET_CURRENT_USER_ID(current_user.id)    
 
+    global timeout_spotify
+
+    spotify_token = GET_SPOTIFY_TOKEN()
+    spotify_data  = GET_SPOTIFY_CONTROL_DATA(spotify_token)
+
+    list_spotify_devices   = spotify_data[1]
+    list_spotify_playlists = spotify_data[2]
+    spotify_volume         = spotify_data[3]
+    spotify_shuffle        = spotify_data[4]
+    
 
     """ ############################ """
     """  lightings_groups / devices  """
@@ -164,66 +194,39 @@ def dashboard():
     """  music  """
     """ ####### """   
 
-    spotify_token = GET_SPOTIFY_TOKEN()
+    if ("set_spotify_play" in request.form or 
+        "set_spotify_previous" in request.form or
+        "set_spotify_next" in request.form or
+        "set_spotify_stop" in request.form or
+        "set_spotify_shuffle" in request.form or
+        "spotify_start_playlist" in request.form):
 
-    if spotify_token != "":
-
-        try:
-
-            sp       = spotipy.Spotify(auth=spotify_token,requests_timeout=3)
-            sp.trace = False     
-            
-            # ############
-            # account data
-            # ############
-
-            list_spotify_devices   = sp.devices()["devices"]        
-            list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]                        
-
-            # get volume
-            spotify_volume = str(GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[3])
-
-            # get shuffle            
-            if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[8] == True:
-                spotify_shuffle = "True"
-            else:
-                spotify_shuffle = "False"     
-
+        if spotify_token != "":
 
             # ##############
             # player control
             # ##############
 
             if "set_spotify_play" in request.form:  
-                spotify_volume = request.form.get("slider_spotify_volume") 
-                SPOTIFY_CONTROL(spotify_token, "play", spotify_volume)       
+                SPOTIFY_CONTROL(spotify_token, "play")       
 
             if "set_spotify_previous" in request.form: 
-                spotify_volume = request.form.get("slider_spotify_volume") 
-                SPOTIFY_CONTROL(spotify_token, "previous", spotify_volume)   
-      
+                SPOTIFY_CONTROL(spotify_token, "previous")   
+    
             if "set_spotify_next" in request.form:
-                spotify_volume = request.form.get("slider_spotify_volume") 
-                SPOTIFY_CONTROL(spotify_token, "next", spotify_volume)     
+                SPOTIFY_CONTROL(spotify_token, "next")     
 
             if "set_spotify_stop" in request.form:  
-                spotify_volume = request.form.get("slider_spotify_volume") 
-                SPOTIFY_CONTROL(spotify_token, "stop", spotify_volume)   
+                SPOTIFY_CONTROL(spotify_token, "stop")   
 
             if "set_spotify_shuffle" in request.form:  
-                spotify_volume = request.form.get("slider_spotify_volume") 
 
                 if spotify_shuffle == "True":
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_false", spotify_volume)   
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_false")   
                     spotify_shuffle = "False" 
                 else:
-                    SPOTIFY_CONTROL(spotify_token, "shuffle_true", spotify_volume)   
+                    SPOTIFY_CONTROL(spotify_token, "shuffle_true")   
                     spotify_shuffle = "True"                 
-
-            if "set_spotify_volume" in request.form: 
-                spotify_volume = request.form.get("slider_spotify_volume") 
-                SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume)                  
-            
 
             # ##############
             # start playlist
@@ -232,28 +235,24 @@ def dashboard():
             if "spotify_start_playlist" in request.form:    
                 spotify_device_id = request.form.get("set_spotify_device_id")
                 playlist_uri      = request.form.get("set_spotify_playlist")
-                spotify_volume    = request.form.get("slider_spotify_volume") 
                 
                 SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, spotify_volume)
 
 
-        # login failed
-        except Exception as e:
-            WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
-            SEND_EMAIL("ERROR", "Music | Spotify | " + str(e)) 
-            
-            list_spotify_playlists = ""
-            list_spotify_devices   = ""
-            spotify_volume         = 50         
-            spotify_shuffle        = "False"
+    """ ############## """
+    """  music volume  """
+    """ ############## """   
 
+    if request.method == 'POST':
+        if (spotify_token != "" and 
+            timeout_spotify == 0 and 
+            request.form.get("set_spotify_volume") != None):
 
-    # not logged in
-    else:     
-        list_spotify_playlists = ""
-        list_spotify_devices   = ""
-        spotify_volume         = 50     
-        spotify_shuffle        = "False"
+            timeout_spotify = 1
+            START_TIMEOUT_SPOTIFY_THREAD()
+
+            spotify_volume = request.form.get("set_spotify_volume") 
+            SPOTIFY_CONTROL(spotify_token, "volume", spotify_volume) 
 
 
     """ ###### """

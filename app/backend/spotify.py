@@ -476,7 +476,7 @@ def MULTIROOM_SYNCHRONIZATION_THREAD():
 """  spotify control  """
 """ ################# """
 
-def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
+def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
 
     sp       = spotipy.Spotify(auth=spotify_token)
     sp.trace = False     
@@ -492,7 +492,6 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 spotify_device_id        = sp.current_playback(market=None)['device']['id']
 
                 sp.next_track(device_id=spotify_device_id) 
-                SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
 
             except:
 
@@ -528,7 +527,6 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
                 if spotify_current_playback['is_playing'] == False:
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
                     sp.next_track(device_id=spotify_device_id) 
-                    SET_MUSIC_VOLUME(spotify_token, spotify_volume)
 
                 # stop playing
                 if spotify_current_playback['is_playing'] == True:
@@ -589,7 +587,6 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
             # start next playlist
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.start_playback(device_id=spotify_device_id, context_uri=next_playlist, uris=None, offset = None)         
-            SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
 
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.shuffle(True, device_id=spotify_device_id)     
@@ -598,12 +595,10 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
         if command == "previous":      
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.previous_track(device_id=spotify_device_id)     
-            SET_MUSIC_VOLUME(spotify_token, spotify_volume)
 
         if command == "next":     
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.next_track(device_id=spotify_device_id) 
-            SET_MUSIC_VOLUME(spotify_token, spotify_volume)
             
         if command == "stop":    
             spotify_device_id = sp.current_playback(market=None)['device']['id']
@@ -612,19 +607,17 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
         if command == "shuffle_true":     
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.shuffle(True, device_id=spotify_device_id) 
-            SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
 
         if command == "shuffle_false":              
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.shuffle(False, device_id=spotify_device_id) 
-            SET_MUSIC_VOLUME(spotify_token, spotify_volume) 
 
         if command == "volume":   
             spotify_device_id = sp.current_playback(market=None)['device']['id']  
             SET_MUSIC_VOLUME(spotify_token, spotify_volume)    
 
         if command == "volume_up":   
-            
+
             try:
 
                 spotify_device_name = sp.current_playback(market=None)['device']['name']
@@ -713,7 +706,6 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume):
 
                 SET_MUSIC_VOLUME(spotify_token, volume)    
 
-
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Control | " + str(e)) 
 
@@ -753,6 +745,76 @@ def SPOTIFY_START_ALBUM(spotify_token, spotify_device_id, album_uri, album_volum
         sp.next_track(device_id=spotify_device_id) 
 
     SET_MUSIC_VOLUME(spotify_token, album_volume)
+
+
+""" ###################### """
+"""  spotify control data  """
+""" ###################### """
+
+# timeout spotify
+timeout_spotify = 0
+
+def START_TIMEOUT_SPOTIFY_THREAD():
+	try:
+		Thread = threading.Thread(target=TIMEOUT_SPOTIFY_THREAD)
+		Thread.start()  
+		
+	except:
+		pass
+
+def TIMEOUT_SPOTIFY_THREAD():   
+    global timeout_spotify
+    
+    time.sleep(5)
+    timeout_spotify = 0
+
+
+spotify_data = ["", "", "", 50, "False"]
+
+def GET_SPOTIFY_CONTROL_DATA(spotify_token):
+    global timeout_spotify
+    global spotify_data
+
+    if spotify_token != "":
+
+        if timeout_spotify == 0:
+
+            try:
+                timeout_spotify = 5
+                START_TIMEOUT_SPOTIFY_THREAD()
+
+                sp       = spotipy.Spotify(auth=spotify_token,requests_timeout=5)
+                sp.trace = False     
+
+                spotify_user           = sp.current_user()["display_name"] 
+                list_spotify_devices   = sp.devices()["devices"]        
+                list_spotify_playlists = sp.current_user_playlists(limit=20)["items"]                        
+
+                # get volume
+                spotify_volume = str(GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[3])
+
+                # get shuffle            
+                if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[8] == True:
+                    spotify_shuffle = "True"
+                else:
+                    spotify_shuffle = "False"    
+
+                spotify_data = [spotify_user, list_spotify_devices, list_spotify_playlists, spotify_volume, spotify_shuffle]
+
+                return (spotify_data[0], spotify_data[1], spotify_data[2], spotify_data[3], spotify_data[4])
+
+            # login failed
+            except Exception as e:
+                WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
+                SEND_EMAIL("ERROR", "Music | Spotify | " + str(e)) 
+                return (spotify_data[0], spotify_data[1], spotify_data[2], spotify_data[3], spotify_data[4])
+
+        else:
+            return (spotify_data[0], spotify_data[1], spotify_data[2], spotify_data[3], spotify_data[4])
+
+    else:
+        spotify_data = ["","", "", 50, "False"]
+        return (spotify_data[0], spotify_data[1], spotify_data[2], spotify_data[3], spotify_data[4])
 
 
 """ ###################### """

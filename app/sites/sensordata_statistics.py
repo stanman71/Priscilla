@@ -41,10 +41,12 @@ def permission_required(f):
 @login_required
 @permission_required
 def sensordata_statistics():
-    global dropdown_list_dates_temp
-
     page_title       = 'Bianca | Sensordata | Statistics'
     page_description = 'The sensordata statistics page'
+
+    SET_CURRENT_USER_ID(current_user.id)  
+
+    global dropdown_list_dates_temp
 
     error_message_select_datafiles = []    
     error_message_create_graph     = []
@@ -61,7 +63,6 @@ def sensordata_statistics():
     
     graph_created = False
 
-    SET_CURRENT_USER_ID(current_user.id)  
 
     """ ############## """
     """  select files  """

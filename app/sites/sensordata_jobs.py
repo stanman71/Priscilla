@@ -39,13 +39,14 @@ def sensordata_jobs():
     page_title       = 'Bianca | Sensordata | Jobs'
     page_description = 'The sensordata jobs configuration page'
 
+    SET_CURRENT_USER_ID(current_user.id)  
+
     success_message_change_settings = []      
     error_message_change_settings   = []    
     success_message_add_job         = False       
     error_message_add_job           = []
     error_message_datafile          = ""
 
-    SET_CURRENT_USER_ID(current_user.id)  
 
     # delete message
     if session.get('delete_job_success', None) != None:

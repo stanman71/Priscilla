@@ -42,6 +42,8 @@ def programs():
     page_title       = 'Bianca | Programs'
     page_description = 'The programs configuration page'
 
+    SET_CURRENT_USER_ID(current_user.id)  
+
     success_message_add_program             = False       
     error_message_add_program               = []
     success_message_change_settings         = []
@@ -51,7 +53,6 @@ def programs():
 
     selected_program = ""
 
-    SET_CURRENT_USER_ID(current_user.id)  
 
     # selected program
     if session.get('selected_program_id', None) != None:
