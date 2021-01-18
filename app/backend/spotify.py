@@ -760,8 +760,7 @@ timeout_spotify = 0
 def START_TIMEOUT_SPOTIFY_THREAD():
 	try:
 		Thread = threading.Thread(target=TIMEOUT_SPOTIFY_THREAD)
-		Thread.start()  
-		
+		Thread.start()  		
 	except:
 		pass
 
@@ -772,7 +771,7 @@ def TIMEOUT_SPOTIFY_THREAD():
     timeout_spotify = 0
 
 
-spotify_data = ["", "", "", 50, "False"]
+spotify_data = ["", "", "", 33, "False"]
 
 def GET_SPOTIFY_CONTROL_DATA(spotify_token):
     global timeout_spotify
@@ -796,6 +795,12 @@ def GET_SPOTIFY_CONTROL_DATA(spotify_token):
                 # get volume
                 spotify_volume = str(GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[3])
 
+                try:
+                    if int(spotify_volume) == 0:
+                        spotify_volume = 33
+                except:
+                    spotify_volume = 33
+
                 # get shuffle            
                 if GET_SPOTIFY_CURRENT_PLAYBACK(spotify_token)[8] == True:
                     spotify_shuffle = "True"
@@ -816,7 +821,7 @@ def GET_SPOTIFY_CONTROL_DATA(spotify_token):
             return (spotify_data[0], spotify_data[1], spotify_data[2], spotify_data[3], spotify_data[4])
 
     else:
-        spotify_data = ["","", "", 50, "False"]
+        spotify_data = ["","", "", 33, "False"]
         return (spotify_data[0], spotify_data[1], spotify_data[2], spotify_data[3], spotify_data[4])
 
 

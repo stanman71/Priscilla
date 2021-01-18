@@ -95,6 +95,8 @@ def music():
     success_message_change_settings_client_music = []
     error_message_change_settings_client_music   = [] 
     success_message_change_default_settings      = False
+    error_message_ip_address_not_supported       = False
+    error_message_port_not_supported             = False
 
     track_name   = ""
     track_artist = ""
@@ -105,6 +107,18 @@ def music():
     
     collapse_search_track_open = ""   
     collapse_search_album_open = ""        
+
+    list_supported_ip = ["192.168.0.10","192.168.0.20","192.168.0.30","192.168.0.40","192.168.0.50","192.168.0.60","192.168.0.70","192.168.0.80","192.168.0.90","192.168.0.100",
+                         "192.168.1.10","192.168.1.20","192.168.1.30","192.168.1.40","192.168.1.50","192.168.1.60","192.168.1.70","192.168.1.80","192.168.1.90","192.168.1.100",
+                         "192.168.178.10","192.168.178.20","192.168.178.30","192.168.178.40","192.168.178.50","192.168.178.60","192.168.178.70","192.168.178.80","192.168.178.90","192.168.178.100"]
+
+    # error message ip
+    if str(GET_SYSTEM_SETTINGS().ip_address) not in list_supported_ip:
+        error_message_ip_address_not_supported = True
+
+    # error message port
+    if str(GET_SYSTEM_SETTINGS().port) != "443":
+        error_message_port_not_supported = True
 
 
     """ ################# """
@@ -367,6 +381,8 @@ def music():
                                                     success_message_change_settings_client_music=success_message_change_settings_client_music,
                                                     error_message_change_settings_client_music=error_message_change_settings_client_music, 
                                                     success_message_change_default_settings=success_message_change_default_settings,
+                                                    error_message_ip_address_not_supported=error_message_ip_address_not_supported,
+                                                    error_message_port_not_supported=error_message_port_not_supported,      
                                                     spotify_user=spotify_user,  
                                                     list_spotify_playlists=list_spotify_playlists,
                                                     list_spotify_devices=list_spotify_devices, 
