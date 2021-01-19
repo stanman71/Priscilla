@@ -1480,3 +1480,21 @@ Timestamp,Type,Description
 2021-01-18 15:39:27,SUCCESS,|Music || Spotify || Token || updated|
 2021-01-18 16:03:20,DATABASE,|System || Network || changed|
 2021-01-18 16:03:34,DATABASE,|System || Network || changed|
+2021-01-19 09:57:59,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-19 09:57:59,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-19 09:58:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-19 09:58:00,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-19 09:58:00,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-19 09:58:01,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-19 16:03:24,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-19 16:03:24,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-19 16:03:25,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-19 16:03:25,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-19 16:03:25,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-19 16:03:26,SUCCESS,|Music || Spotify || Token || updated|
+2021-01-19 16:07:36,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-01-19 16:07:36,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-01-19 16:07:37,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-19 16:07:37,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-01-19 16:07:38,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-01-19 16:07:39,SUCCESS,|Music || Spotify || Token || updated|
