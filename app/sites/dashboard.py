@@ -69,6 +69,7 @@ def dashboard():
 
     SET_CURRENT_USER_ID(current_user.id)    
 
+    # prevent timeout errors
     global timeout_spotify
 
     spotify_token = GET_SPOTIFY_TOKEN()

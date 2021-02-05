@@ -76,6 +76,8 @@ def music():
 
     global list_search_track_results
     global list_search_album_results
+
+    # prevent timeout errors
     global timeout_spotify
 
     spotify_token = GET_SPOTIFY_TOKEN()
