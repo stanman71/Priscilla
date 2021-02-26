@@ -742,12 +742,7 @@ START_REFRESH_SPOTIFY_TOKEN_THREAD()
 START_MULTIROOM_SYNCHRONIZATION_THREAD()
 START_CHECK_DEVICE_CONNECTION_THREAD()
 START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD()
-START_ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD()
+START_BAD_CONNECTION_THREAD()
 
-
-# windows development environment
-if os.name == "nt":                 
-    socketio.run(app, host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)
-# linux
-else:                               
-    socketio.run(app, ssl_context=('/home/pi/smarthome/cert.pem', '/home/pi/smarthome/key.pem'), host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)
+          
+socketio.run(app, host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)

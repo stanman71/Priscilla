@@ -53,7 +53,7 @@ char model[40]       = "sensor_motion2_light";
 char device_type[40] = "sensor_passiv";
 char description[80] = "MQTT Motion Sensor";
 
-String current_Version = "2.1";
+String current_Version = "2.2";
 
 int sensor_1_last_value = 0;
 int sensor_2_last_value = 0;
@@ -135,6 +135,8 @@ void wifi_manager(boolean reset_setting) {
     WiFiManagerParameter custom_mqtt_server  ("server",   "mqtt server",   mqtt_server, 40);
     WiFiManagerParameter custom_mqtt_username("username", "mqtt username", mqtt_username, 40);
     WiFiManagerParameter custom_mqtt_password("password", "mqtt password", mqtt_password, 40);
+
+    wifiManager.setConfigPortalTimeout(300);    
         
     wifiManager.setSaveConfigCallback(saveConfigCallback);
     wifiManager.addParameter(&custom_mqtt_server);
@@ -321,7 +323,8 @@ void send_default_mqtt_message() {
         msg["occupancy"] = "False";
     }
 
-    msg["illuminance"] = sensor_3_last_value;          
+    msg["illuminance"]     = sensor_3_last_value;          
+    msg["signal_strength"] = WiFi.RSSI();
 
     // custom settings end  
 

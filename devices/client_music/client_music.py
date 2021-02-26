@@ -6,6 +6,7 @@ import os
 import time
 import yaml
 import random
+import subprocess
 
 
 """ ###### """
@@ -14,6 +15,7 @@ import random
                            
 PATH    = "/home/pi/smarthome/"
 counter = 0
+
 
 """ ############# """
 """  config file  """
@@ -177,7 +179,12 @@ def on_message(client, userdata, message):
     print("### " + channel)
     print("### " + msg) 
 
+    signal_strength = subprocess.check_output("sudo iwconfig wlan0 | grep Link", shell=True).strip()
+    signal_strength = str(signal_strength).split("  ")[1]    
+    signal_strength = str(signal_strength).replace("Signal level=","")
+    signal_strength = str(signal_strength).replace(" dBm'","")
 
+    
     # #######
     # devices
     # #######
@@ -187,6 +194,7 @@ def on_message(client, userdata, message):
         msg     = '{"ieeeAddr":"' + device_ieeeAddr + '","model":"' + GET_MODEL() + '","device_type":"client_music","description":"MQTT Client Music","input_values":[],"input_events":[],"commands":[],"commands_json":[]}'
 
         MQTT_PUBLISH(channel, msg)
+
 
 
     # ###
@@ -222,10 +230,10 @@ def on_message(client, userdata, message):
                             print("AlsaMixer | Error | " + str(e))                     
                             MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, str(e))
 
-                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + '}')
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + ',"signal_strength":' + str(signal_strength) + '}')
 
                 except:
-                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + '}')
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + ',"signal_strength":' + str(signal_strength) + '}')
 
                 UPDATE_CURRENT_INTERFACE("spotify")
 
@@ -259,10 +267,10 @@ def on_message(client, userdata, message):
                             print("AlsaMixer | Error | " + str(e))                     
                             MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, str(e))
 
-                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + '}')
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + ',"signal_strength":' + str(signal_strength) + '}')
 
                 except:
-                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + '}')    
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + ',"signal_strength":' + str(signal_strength) + '}')
                     
                 UPDATE_CURRENT_INTERFACE("multiroom")
 
@@ -293,7 +301,7 @@ def on_message(client, userdata, message):
                         print("Squeezelite | Started")                    
                         time.sleep(2)
 
-                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + '}')
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + ',"signal_strength":' + str(signal_strength) + '}')
 
                 except Exception as e:
                     print("Reset | Error | " + str(e))                     
@@ -311,7 +319,7 @@ def on_message(client, userdata, message):
                     os.system("amixer -c " + GET_SOUNDCARD_NUMBER() + " cset numid=1 " + str(data["volume"]))
                     print("AlsaMixer | Volume adjusted")                    
                     time.sleep(2)
-                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"' + data["interface"] + '","volume":' + str(data["volume"]) + '}')
+                    MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"' + data["interface"] + '","volume":' + str(data["volume"]) + ',"signal_strength":' + str(signal_strength) + '}')
                     UPDATE_CURRENT_VOLUME(str(data["volume"]))
 
                 except Exception as e:
@@ -325,10 +333,10 @@ def on_message(client, userdata, message):
         # nothing changed
 
         if data["interface"] == "spotify" and current_interface == "spotify" and str(data["volume"]) == str(current_volume):
-            MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + '}')
+            MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + ',"signal_strength":' + str(signal_strength) + '}')
 
         if data["interface"] == "multiroom" and current_interface == "multiroom" and str(data["volume"]) == str(current_volume):
-            MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + '}')
+            MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"multiroom","volume":' + str(data["volume"]) + ',"signal_strength":' + str(signal_strength) + '}')
 
 
     # ###

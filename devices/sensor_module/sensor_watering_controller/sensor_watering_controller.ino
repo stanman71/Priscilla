@@ -2,7 +2,7 @@
 #include <ESP8266WiFi.h>          
 #include <DNSServer.h>
 #include <ESP8266WebServer.h>
-#include <WiFiManager.h>          
+#include <WiFiManager.h>        
 #include <ArduinoJson.h>     
 #include <PubSubClient.h>   
 #include <ESP8266HTTPClient.h>
@@ -51,7 +51,7 @@ char model[40]       = "watering_controller";
 char device_type[40] = "watering_controller";
 char description[80] = "MQTT Watering Controller";
 
-String current_Version = "1.0";
+String current_Version = "1.2";
 
 String state  = "OFF";
 int pump_time = 0;
@@ -130,7 +130,9 @@ void wifi_manager(boolean reset_setting) {
     WiFiManagerParameter custom_mqtt_server  ("server",   "mqtt server",   mqtt_server, 40);
     WiFiManagerParameter custom_mqtt_username("username", "mqtt username", mqtt_username, 40);
     WiFiManagerParameter custom_mqtt_password("password", "mqtt password", mqtt_password, 40);
-        
+
+    wifiManager.setConfigPortalTimeout(300);     
+
     wifiManager.setSaveConfigCallback(saveConfigCallback);
     wifiManager.addParameter(&custom_mqtt_server);
     wifiManager.addParameter(&custom_mqtt_username);
@@ -310,9 +312,10 @@ void send_default_mqtt_message() {
 
     // custom settings  
     
-    msg["state"]     = state;
-    msg["pump_time"] = pump_time;    
-    msg["moisture"]  = analogRead(PIN_SENSOR);          
+    msg["state"]            = state;
+    msg["pump_time"]        = pump_time;    
+    msg["moisture"]         = analogRead(PIN_SENSOR);          
+    msg["signal_strength"]  = WiFi.RSSI();
 
     // custom settings end  
 

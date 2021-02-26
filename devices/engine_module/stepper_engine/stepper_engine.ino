@@ -128,6 +128,8 @@ void wifi_manager(boolean reset_setting) {
     WiFiManagerParameter custom_mqtt_server  ("server",   "mqtt server",   mqtt_server, 40);
     WiFiManagerParameter custom_mqtt_username("username", "mqtt username", mqtt_username, 40);
     WiFiManagerParameter custom_mqtt_password("password", "mqtt password", mqtt_password, 40);
+
+    wifiManager.setConfigPortalTimeout(300); 
         
     wifiManager.setSaveConfigCallback(saveConfigCallback);
     wifiManager.addParameter(&custom_mqtt_server);
@@ -305,9 +307,10 @@ void send_default_mqtt_message() {
     // create msg as json
     DynamicJsonDocument msg(128);
 
-    msg["direction"] = engine_direction;
-    msg["steps"]     = engine_steps;
-    
+    msg["direction"]        = engine_direction;
+    msg["steps"]            = engine_steps;
+    msg["signal_strength"]  = WiFi.RSSI();
+        
     // convert msg to char
     char msg_Char[128];
     serializeJson(msg, msg_Char);

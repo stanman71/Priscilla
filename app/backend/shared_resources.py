@@ -298,23 +298,23 @@ def DISABLE_ZIGBEE_PAIRING_THREAD():
 			SET_ZIGBEE2MQTT_PAIRING_STATUS("No MQTT connection")     
 
 
-""" ############################# """
-"""  zigbee2mqtt bad linkquality  """
-""" ############################# """
+""" ################# """
+"""   bad connection  """
+""" ################# """
 
-zigbee2mqtt_bad_linkquality_list = []
+bad_connection_list = []
 
-def START_ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD():
+def START_BAD_CONNECTION_THREAD():
 	try:
-		Thread = threading.Thread(target=ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD)
+		Thread = threading.Thread(target=BAD_CONNECTION_THREAD)
 		Thread.start()  
 		
 	except Exception as e:
-		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Zigbee2MQTT Bad Linkquality | " + str(e)) 
-		SEND_EMAIL("ERROR", "System | Thread | Zigbee2MQTT Bad Linkquality | " + str(e)) 
+		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Bad Connection | " + str(e)) 
+		SEND_EMAIL("ERROR", "System | Thread | Bad Connection | " + str(e)) 
 
 
-def ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD():   
+def BAD_CONNECTION_THREAD():   
 	while True:
 	
 		# delete entries after 6 hours
@@ -324,14 +324,14 @@ def ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD():
 			time_check = datetime.datetime.now() - datetime.timedelta(hours=6)
 			time_check = time_check.strftime("%Y-%m-%d %H:%M:%S")
 
-			for entry in zigbee2mqtt_bad_linkquality_list:
+			for entry in bad_connection_list:
 
 				time_entry = datetime.datetime.strptime(entry[0],"%Y-%m-%d %H:%M:%S")   
 				time_limit = datetime.datetime.strptime(time_check, "%Y-%m-%d %H:%M:%S")
 
 				# remove saved entries after 6 hours
 				if time_entry <= time_limit:
-					zigbee2mqtt_bad_linkquality_list.remove(entry)
+					bad_connection_list.remove(entry)
 
 		except:
 			pass
@@ -344,17 +344,17 @@ def ZIGBEE2MQTT_BAD_LINKQUALITY_THREAD():
 				counter = 0
 
 				# count bad quality entries of the device
-				for entry in zigbee2mqtt_bad_linkquality_list:
+				for entry in bad_connection_list:
 					if device.ieeeAddr == entry[1]:
 						counter = counter + 1
 
 				if counter >= 3:
-					WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | Bad Linkquality")
+					WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | Bad Connection")
 
 					# remove entries of this device
-					for entry in zigbee2mqtt_bad_linkquality_list:
+					for entry in bad_connection_list:
 						if device.ieeeAddr == entry[1]:
-							zigbee2mqtt_bad_linkquality_list.remove(entry)					
+							bad_connection_list.remove(entry)					
 
 		except:
 			pass

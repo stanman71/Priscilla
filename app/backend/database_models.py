@@ -114,38 +114,47 @@ class Lighting_Groups(db.Model):
     light_ieeeAddr_1    = db.Column(db.String(50), server_default=("None"))
     light_name_1        = db.Column(db.String(50), server_default=("None"))
     light_device_type_1 = db.Column(db.String(50), server_default=("None"))
+    light_last_values_1 = db.Column(db.String(50), server_default=("None"))
     active_light_2      = db.Column(db.String(50), server_default=("False"))
     light_ieeeAddr_2    = db.Column(db.String(50), server_default=("None"))           
     light_name_2        = db.Column(db.String(50), server_default=("None"))
     light_device_type_2 = db.Column(db.String(50), server_default=("None"))
+    light_last_values_2 = db.Column(db.String(50), server_default=("None"))    
     active_light_3      = db.Column(db.String(50), server_default=("False"))
     light_ieeeAddr_3    = db.Column(db.String(50), server_default=("None"))           
     light_name_3        = db.Column(db.String(50), server_default=("None"))
     light_device_type_3 = db.Column(db.String(50), server_default=("None"))
+    light_last_values_3 = db.Column(db.String(50), server_default=("None"))    
     active_light_4      = db.Column(db.String(50), server_default=("False"))
     light_ieeeAddr_4    = db.Column(db.String(50), server_default=("None"))       
     light_name_4        = db.Column(db.String(50), server_default=("None"))
     light_device_type_4 = db.Column(db.String(50), server_default=("None"))
+    light_last_values_4 = db.Column(db.String(50), server_default=("None"))    
     active_light_5      = db.Column(db.String(50), server_default=("False"))
     light_ieeeAddr_5    = db.Column(db.String(50), server_default=("None"))         
     light_name_5        = db.Column(db.String(50), server_default=("None")) 
     light_device_type_5 = db.Column(db.String(50), server_default=("None"))
+    light_last_values_5 = db.Column(db.String(50), server_default=("None"))
     active_light_6      = db.Column(db.String(50), server_default=("False"))
     light_ieeeAddr_6    = db.Column(db.String(50), server_default=("None"))
     light_name_6        = db.Column(db.String(50), server_default=("None"))
     light_device_type_6 = db.Column(db.String(50), server_default=("None"))
+    light_last_values_6 = db.Column(db.String(50), server_default=("None"))
     active_light_7      = db.Column(db.String(50), server_default=("False"))
     light_ieeeAddr_7    = db.Column(db.String(50), server_default=("None"))
     light_name_7        = db.Column(db.String(50), server_default=("None"))
     light_device_type_7 = db.Column(db.String(50), server_default=("None"))
+    light_last_values_7 = db.Column(db.String(50), server_default=("None"))
     active_light_8      = db.Column(db.String(50), server_default=("False"))
     light_ieeeAddr_8    = db.Column(db.String(50), server_default=("None"))
     light_name_8        = db.Column(db.String(50), server_default=("None"))
     light_device_type_8 = db.Column(db.String(50), server_default=("None"))
+    light_last_values_8 = db.Column(db.String(50), server_default=("None")) 
     active_light_9      = db.Column(db.String(50), server_default=("False"))
     light_ieeeAddr_9    = db.Column(db.String(50), server_default=("None"))
     light_name_9        = db.Column(db.String(50), server_default=("None")) 
     light_device_type_9 = db.Column(db.String(50), server_default=("None"))
+    light_last_values_9 = db.Column(db.String(50), server_default=("None"))
     collapse            = db.Column(db.String(50))    
     current_scene       = db.Column(db.String(50), server_default=("OFF"))
     current_brightness  = db.Column(db.Integer, server_default=("0"))
@@ -1517,15 +1526,15 @@ def ADD_LIGHTING_GROUP():
     return "Limit reached (20)"
 
 
-def SET_LIGHTING_GROUP(id, name, light_ieeeAddr_1, light_name_1, light_device_type_1, 
-                                 light_ieeeAddr_2, light_name_2, light_device_type_2,
-                                 light_ieeeAddr_3, light_name_3, light_device_type_3,
-                                 light_ieeeAddr_4, light_name_4, light_device_type_4,
-                                 light_ieeeAddr_5, light_name_5, light_device_type_5,
-                                 light_ieeeAddr_6, light_name_6, light_device_type_6,
-                                 light_ieeeAddr_7, light_name_7, light_device_type_7,
-                                 light_ieeeAddr_8, light_name_8, light_device_type_8,
-                                 light_ieeeAddr_9, light_name_9, light_device_type_9):
+def SET_LIGHTING_GROUP(id, name, light_ieeeAddr_1, light_name_1, light_device_type_1, light_last_values_1,
+                                 light_ieeeAddr_2, light_name_2, light_device_type_2, light_last_values_2,
+                                 light_ieeeAddr_3, light_name_3, light_device_type_3, light_last_values_3,
+                                 light_ieeeAddr_4, light_name_4, light_device_type_4, light_last_values_4,
+                                 light_ieeeAddr_5, light_name_5, light_device_type_5, light_last_values_5,
+                                 light_ieeeAddr_6, light_name_6, light_device_type_6, light_last_values_6,
+                                 light_ieeeAddr_7, light_name_7, light_device_type_7, light_last_values_7,
+                                 light_ieeeAddr_8, light_name_8, light_device_type_8, light_last_values_8,
+                                 light_ieeeAddr_9, light_name_9, light_device_type_9, light_last_values_9):
 
     entry         = Lighting_Groups.query.filter_by(id=id).first()
     previous_name = entry.name
@@ -1568,30 +1577,39 @@ def SET_LIGHTING_GROUP(id, name, light_ieeeAddr_1, light_name_1, light_device_ty
         entry.light_ieeeAddr_1    = light_ieeeAddr_1
         entry.light_name_1        = light_name_1
         entry.light_device_type_1 = light_device_type_1
+        entry.light_last_values_1 = light_last_values_1
         entry.light_ieeeAddr_2    = light_ieeeAddr_2
         entry.light_name_2        = light_name_2
         entry.light_device_type_2 = light_device_type_2 
+        entry.light_last_values_2 = light_last_values_2
         entry.light_ieeeAddr_3    = light_ieeeAddr_3
         entry.light_name_3        = light_name_3
         entry.light_device_type_3 = light_device_type_3
+        entry.light_last_values_3 = light_last_values_3
         entry.light_ieeeAddr_4    = light_ieeeAddr_4
         entry.light_name_4        = light_name_4
         entry.light_device_type_4 = light_device_type_4
+        entry.light_last_values_4 = light_last_values_4
         entry.light_ieeeAddr_5    = light_ieeeAddr_5
         entry.light_name_5        = light_name_5
         entry.light_device_type_5 = light_device_type_5
+        entry.light_last_values_5 = light_last_values_5
         entry.light_ieeeAddr_6    = light_ieeeAddr_6
         entry.light_name_6        = light_name_6
         entry.light_device_type_6 = light_device_type_6 
+        entry.light_last_values_6 = light_last_values_6
         entry.light_ieeeAddr_7    = light_ieeeAddr_7
         entry.light_name_7        = light_name_7
         entry.light_device_type_7 = light_device_type_7
+        entry.light_last_values_7 = light_last_values_7
         entry.light_ieeeAddr_8    = light_ieeeAddr_8
         entry.light_name_8        = light_name_8
         entry.light_device_type_8 = light_device_type_8
+        entry.light_last_values_8 = light_last_values_8
         entry.light_ieeeAddr_9    = light_ieeeAddr_9
         entry.light_name_9        = light_name_9
         entry.light_device_type_9 = light_device_type_9
+        entry.light_last_values_9 = light_last_values_9
         
         db.session.commit()  
 
@@ -1642,7 +1660,7 @@ def SET_LIGHTING_GROUP_CURRENT_BRIGHTNESS(id, current_brightness):
     db.session.commit()  
 
 
-def UPDATE_LIGHTING_GROUP_LIGHT_NAMES():
+def UPDATE_LIGHTING_GROUP_VALUES():
     groups = GET_ALL_LIGHTING_GROUPS()
     
     for group in groups:
@@ -1652,46 +1670,55 @@ def UPDATE_LIGHTING_GROUP_LIGHT_NAMES():
         try:
             entry.light_name_1        = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_1).name
             entry.light_device_type_1 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_1).device_type
+            entry.light_last_values_1 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_1).last_values_string
         except:
             pass
         try:
             entry.light_name_2        = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_2).name
             entry.light_device_type_2 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_2).device_type
+            entry.light_last_values_2 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_2).last_values_string
         except:
             pass
         try:
             entry.light_name_3        = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_3).name
             entry.light_device_type_3 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_3).device_type
+            entry.light_last_values_3 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_3).last_values_string
         except:
             pass
         try:
             entry.light_name_4        = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_4).name
             entry.light_device_type_4 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_4).device_type
+            entry.light_last_values_4 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_4).last_values_string
         except:
             pass
         try:
             entry.light_name_5        = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_5).name
             entry.light_device_type_5 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_5).device_type
+            entry.light_last_values_5 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_5).last_values_string
         except:
             pass
         try:
             entry.light_name_6        = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_6).name
             entry.light_device_type_6 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_6).device_type
+            entry.light_last_values_6 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_6).last_values_string
         except:
             pass
         try:
             entry.light_name_7        = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_7).name
             entry.light_device_type_7 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_7).device_type
+            entry.light_last_values_7 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_7).last_values_string
         except:
             pass
         try:
             entry.light_name_8        = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_8).name
             entry.light_device_type_8 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_8).device_type
+            entry.light_last_values_8 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_8).last_values_string
         except:
             pass
         try:
             entry.light_name_9        = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_9).name
             entry.light_device_type_9 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_9).device_type
+            entry.light_last_values_9 = GET_DEVICE_BY_IEEEADDR(entry.light_ieeeAddr_9).last_values_string
         except:
             pass            
         

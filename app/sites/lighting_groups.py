@@ -48,7 +48,7 @@ def lighting_groups():
     error_message_add_lighting_group               = []
 
     RESET_LIGHTING_GROUP_COLLAPSE()
-    UPDATE_LIGHTING_GROUP_LIGHT_NAMES()
+    UPDATE_LIGHTING_GROUP_VALUES()
 
 
     """ #################### """
@@ -173,12 +173,14 @@ def lighting_groups():
                         try: 
                             light_ieeeAddr_1    = request.form.get("set_light_ieeeAddr_1_" + str(i))
                             light_name_1        = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_1).name   
-                            light_device_type_1 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_1).device_type         
+                            light_device_type_1 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_1).device_type   
+                            light_last_values_1 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_1).last_values_string      
 
                         except:
                             light_ieeeAddr_1    = "None"
                             light_name_1        = "None"
                             light_device_type_1 = "None"
+                            light_last_values_1 = "None"
 
                         #######
                         ## 2 ##
@@ -187,12 +189,14 @@ def lighting_groups():
                         try: 
                             light_ieeeAddr_2    = request.form.get("set_light_ieeeAddr_2_" + str(i))
                             light_name_2        = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_2).name   
-                            light_device_type_2 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_2).device_type         
+                            light_device_type_2 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_2).device_type  
+                            light_last_values_2 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_2).last_values_string          
 
                         except:
                             light_ieeeAddr_2    = "None"
                             light_name_2        = "None"
                             light_device_type_2 = "None"
+                            light_last_values_2 = "None"
 
                         #######
                         ## 3 ##
@@ -201,12 +205,14 @@ def lighting_groups():
                         try: 
                             light_ieeeAddr_3    = request.form.get("set_light_ieeeAddr_3_" + str(i))
                             light_name_3        = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_3).name   
-                            light_device_type_3 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_3).device_type         
+                            light_device_type_3 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_3).device_type  
+                            light_last_values_3 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_3).last_values_string          
 
                         except:
                             light_ieeeAddr_3    = "None"
                             light_name_3        = "None"
                             light_device_type_3 = "None"
+                            light_last_values_3 = "None"
 
                         #######
                         ## 4 ##
@@ -215,12 +221,14 @@ def lighting_groups():
                         try: 
                             light_ieeeAddr_4    = request.form.get("set_light_ieeeAddr_4_" + str(i))
                             light_name_4        = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_4).name   
-                            light_device_type_4 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_4).device_type         
+                            light_device_type_4 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_4).device_type
+                            light_last_values_4 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_4).last_values_string            
 
                         except:
                             light_ieeeAddr_4    = "None"
                             light_name_4        = "None"
                             light_device_type_4 = "None"
+                            light_last_values_4 = "None"
 
                         #######
                         ## 5 ##
@@ -229,12 +237,14 @@ def lighting_groups():
                         try: 
                             light_ieeeAddr_5    = request.form.get("set_light_ieeeAddr_5_" + str(i))
                             light_name_5        = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_5).name   
-                            light_device_type_5 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_5).device_type         
+                            light_device_type_5 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_5).device_type  
+                            light_last_values_5 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_5).last_values_string          
 
                         except:
                             light_ieeeAddr_5    = "None"
                             light_name_5        = "None"
                             light_device_type_5 = "None"
+                            light_last_values_5 = "None"
 
                         #######
                         ## 6 ##
@@ -243,12 +253,14 @@ def lighting_groups():
                         try: 
                             light_ieeeAddr_6    = request.form.get("set_light_ieeeAddr_6_" + str(i))
                             light_name_6        = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_6).name   
-                            light_device_type_6 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_6).device_type         
+                            light_device_type_6 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_6).device_type 
+                            light_last_values_6 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_6).last_values_string           
 
                         except:
                             light_ieeeAddr_6    = "None"
                             light_name_6        = "None"
                             light_device_type_6 = "None"
+                            light_last_values_6 = "None"
 
                         #######
                         ## 7 ##
@@ -257,12 +269,14 @@ def lighting_groups():
                         try: 
                             light_ieeeAddr_7    = request.form.get("set_light_ieeeAddr_7_" + str(i))
                             light_name_7        = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_7).name   
-                            light_device_type_7 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_7).device_type         
+                            light_device_type_7 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_7).device_type   
+                            light_last_values_7 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_7).last_values_string        
 
                         except:
                             light_ieeeAddr_7    = "None"
                             light_name_7        = "None"
                             light_device_type_7 = "None"
+                            light_last_values_7 = "None"
 
                         #######
                         ## 8 ##
@@ -271,12 +285,14 @@ def lighting_groups():
                         try: 
                             light_ieeeAddr_8    = request.form.get("set_light_ieeeAddr_8_" + str(i))
                             light_name_8        = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_8).name   
-                            light_device_type_8 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_8).device_type         
+                            light_device_type_8 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_8).device_type  
+                            light_last_values_8 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_8).last_values_string          
 
                         except:
                             light_ieeeAddr_8    = "None"
                             light_name_8        = "None"
                             light_device_type_8 = "None"
+                            light_last_values_8 = "None"
 
                         #######
                         ## 9 ##
@@ -285,22 +301,24 @@ def lighting_groups():
                         try: 
                             light_ieeeAddr_9    = request.form.get("set_light_ieeeAddr_9_" + str(i))
                             light_name_9        = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_9).name   
-                            light_device_type_9 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_9).device_type         
+                            light_device_type_9 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_9).device_type 
+                            light_last_values_9 = GET_DEVICE_BY_IEEEADDR(light_ieeeAddr_9).last_values_string           
 
                         except:
                             light_ieeeAddr_9    = "None"
                             light_name_9        = "None"
                             light_device_type_9 = "None"
+                            light_last_values_9 = "None"
 
-                        if SET_LIGHTING_GROUP(i, name, light_ieeeAddr_1, light_name_1, light_device_type_1,
-                                                       light_ieeeAddr_2, light_name_2, light_device_type_2,
-                                                       light_ieeeAddr_3, light_name_3, light_device_type_3,
-                                                       light_ieeeAddr_4, light_name_4, light_device_type_4,
-                                                       light_ieeeAddr_5, light_name_5, light_device_type_5,
-                                                       light_ieeeAddr_6, light_name_6, light_device_type_6,
-                                                       light_ieeeAddr_7, light_name_7, light_device_type_7,
-                                                       light_ieeeAddr_8, light_name_8, light_device_type_8,
-                                                       light_ieeeAddr_9, light_name_9, light_device_type_9):
+                        if SET_LIGHTING_GROUP(i, name, light_ieeeAddr_1, light_name_1, light_device_type_1, light_last_values_1,
+                                                       light_ieeeAddr_2, light_name_2, light_device_type_2, light_last_values_2,
+                                                       light_ieeeAddr_3, light_name_3, light_device_type_3, light_last_values_3,
+                                                       light_ieeeAddr_4, light_name_4, light_device_type_4, light_last_values_4,
+                                                       light_ieeeAddr_5, light_name_5, light_device_type_5, light_last_values_5,
+                                                       light_ieeeAddr_6, light_name_6, light_device_type_6, light_last_values_6,
+                                                       light_ieeeAddr_7, light_name_7, light_device_type_7, light_last_values_7,
+                                                       light_ieeeAddr_8, light_name_8, light_device_type_8, light_last_values_8,
+                                                       light_ieeeAddr_9, light_name_9, light_device_type_9, light_last_values_9 ):
                             
                             success_message_change_settings_lighting_group = i
 

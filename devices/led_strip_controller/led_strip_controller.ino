@@ -27,12 +27,12 @@ bool shouldSaveConfig = false;
 char message[200];
 
 int update_timer_counter;
-int update_timer_value = 3600000;                // 60 minutes (in milliseconds)
+int update_timer_value = 3600000;                 // 60 minutes (in milliseconds)
 
 bool send_update_report = true;
 
 // RESET 
-int PIN_RESET_SETTING = 16;                      // D0
+int PIN_RESET_SETTING = 16;                       // D0
 
 // LED PINS
 int PIN_LED_GREEN  = 14;                          // D5
@@ -44,7 +44,7 @@ char model[40]       = "led_strip_controller";
 char device_type[40] = "led_rgb";
 char description[80] = "MQTT LED Strip Controller";
 
-String current_Version = "2.3";
+String current_Version = "2.4";
 
 #include <FastLED.h>  
 
@@ -132,6 +132,8 @@ void wifi_manager(boolean reset_setting) {
     WiFiManagerParameter custom_mqtt_server  ("server",   "mqtt server",   mqtt_server, 40);
     WiFiManagerParameter custom_mqtt_username("username", "mqtt username", mqtt_username, 40);
     WiFiManagerParameter custom_mqtt_password("password", "mqtt password", mqtt_password, 40);
+
+    wifiManager.setConfigPortalTimeout(300);  
         
     wifiManager.setSaveConfigCallback(saveConfigCallback);
     wifiManager.addParameter(&custom_mqtt_server);
@@ -248,11 +250,12 @@ void send_default_mqtt_message() {
     // create msg as json
     DynamicJsonDocument msg(128);
 
-    msg["state"]      = state;
-    msg["brightness"] = brightness;
-    msg["color"]["r"] = red;
-    msg["color"]["g"] = green;
-    msg["color"]["b"] = blue;
+    msg["state"]           = state;
+    msg["brightness"]      = brightness;
+    msg["color"]["r"]      = red;
+    msg["color"]["g"]      = green;
+    msg["color"]["b"]      = blue;
+    msg["signal_strength"] = WiFi.RSSI();
 
     // convert msg to char
     char msg_Char[128];

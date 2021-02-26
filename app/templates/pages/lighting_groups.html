@@ -149,8 +149,9 @@
                           <th style="width:8%" class="minwidth_100"></th>
                           <th></th>
                           <th scope="col" style="width:10%" class="minwidth_100">Model</th>
-                          <th scope="col" style="width:25%" class="minwidth_200">Light</th>
-                          <th style="width:41%"></th>
+                          <th scope="col" style="width:34%" class="minwidth_200">Last Values</th>
+                          <th scope="col" style="width:3%"></th> 
+                          <th scope="col" style="width:30%" class="minwidth_200">Light</th>
                         </thead>
                         <tbody> 
                           <tr>
@@ -173,6 +174,8 @@
 <!-- section 1 -->
 
                             <th>{{ entry.light_device_type_1 }}</td> 
+                            <th>{{ entry.light_last_values_1 }}</td>   
+                            <td></td> 
                             <th>
                               <select class="form-control" data-size="5" name="set_light_ieeeAddr_1_{{ entry.id }}" style="background-color:#27293D"> 
                                 {% if entry.light_ieeeAddr_1 != "None" %}
@@ -186,7 +189,6 @@
                                 {% endfor %}  
                               </select>                   
                             </td> 
-                            <td></td> 
 
 <!-- section 2 -->
 
@@ -199,7 +201,9 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.light_device_type_2 }}</td>             
+                            <th>{{ entry.light_device_type_2 }}</td>     
+                            <th>{{ entry.light_last_values_2 }}</td>  
+                            <td></td>            
                             <td>
                               <select class="form-control" data-size="5" name="set_light_ieeeAddr_2_{{ entry.id }}" style="background-color:#27293D"> 
                                 {% if entry.light_ieeeAddr_2 != "None" %}
@@ -213,7 +217,6 @@
                                 {% endfor %}  
                               </select>  
                             </td> 
-                            <td></td> 
 
                         {% endif %}
 
@@ -228,7 +231,9 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.light_device_type_3 }}</td>          
+                            <th>{{ entry.light_device_type_3 }}</td>  
+                            <th>{{ entry.light_last_values_3 }}</td>   
+                            <td></td>      
                             <td>
                               <select class="form-control" data-size="5" name="set_light_ieeeAddr_3_{{ entry.id }}" style="background-color:#27293D"> 
                                 {% if entry.light_ieeeAddr_3 != "None" %}
@@ -242,7 +247,6 @@
                                 {% endfor %}  
                               </select> 
                             </td> 
-                            <td></td> 
                             
                         {% endif %}
 
@@ -257,7 +261,9 @@
                             <td></td>
                             <td></td> 
                             <td></td>
-                            <th>{{ entry.light_device_type_4 }}</td>            
+                            <th>{{ entry.light_device_type_4 }}</td>   
+                            <th>{{ entry.light_last_values_4 }}</td>     
+                            <td></td>     
                             <td>
                               <select class="form-control" data-size="5" name="set_light_ieeeAddr_4_{{ entry.id }}" style="background-color:#27293D"> 
                                 {% if entry.light_ieeeAddr_4 != "None" %}
@@ -270,8 +276,7 @@
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
                               </select> 
-                            </td> 
-                            <td></td> 
+                            </td>  
 
                         {% endif %}
 
@@ -286,7 +291,9 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.light_device_type_5 }}</td>              
+                            <th>{{ entry.light_device_type_5 }}</td>   
+                            <th>{{ entry.light_last_values_5 }}</td>    
+                            <td></td>            
                             <td>
                               <select class="form-control" data-size="5" name="set_light_ieeeAddr_5_{{ entry.id }}" style="background-color:#27293D"> 
                                 {% if entry.light_ieeeAddr_5 != "None" %}
@@ -300,7 +307,6 @@
                                 {% endfor %}  
                               </select>   
                             </td> 
-                            <td></td> 
 
                         {% endif %}
 
@@ -315,7 +321,9 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.light_device_type_6 }}</td>             
+                            <th>{{ entry.light_device_type_6 }}</td>    
+                            <th>{{ entry.light_last_values_6 }}</td>    
+                            <td></td>      
                             <td>
                               <select class="form-control" data-size="5" name="set_light_ieeeAddr_6_{{ entry.id }}" style="background-color:#27293D"> 
                                 {% if entry.light_ieeeAddr_6 != "None" %}
@@ -328,8 +336,7 @@
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
                               </select> 
-                            </td>   
-                            <td></td> 
+                            </td>    
 
                         {% endif %}
 
@@ -344,7 +351,9 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.light_device_type_7 }}</td>             
+                            <th>{{ entry.light_device_type_7 }}</td>    
+                            <th>{{ entry.light_last_values_7 }}</td>   
+                            <td></td>       
                             <td>
                               <select class="form-control" data-size="5" name="set_light_ieeeAddr_7_{{ entry.id }}" style="background-color:#27293D"> 
                                 {% if entry.light_ieeeAddr_7 != "None" %}
@@ -358,7 +367,6 @@
                                 {% endfor %}  
                               </select>  
                             </td>  
-                            <td></td> 
 
                         {% endif %}
 
@@ -373,7 +381,9 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.light_device_type_8 }}</td>             
+                            <th>{{ entry.light_device_type_8 }}</td>  
+                            <th>{{ entry.light_last_values_8 }}</td>        
+                            <td></td>    
                             <td>
                               <select class="form-control" data-size="5" name="set_light_ieeeAddr_8_{{ entry.id }}" style="background-color:#27293D"> 
                                 {% if entry.light_ieeeAddr_8 != "None" %}
@@ -386,8 +396,7 @@
                                   <option value="{{ each.ieeeAddr }}"> {{ each.name }} </option>
                                 {% endfor %}  
                               </select>       
-                            </td>  
-                            <td></td> 
+                            </td>   
 
                          {% endif %}
 
@@ -402,7 +411,9 @@
                             <td></td>
                             <td></td>
                             <td></td> 
-                            <th>{{ entry.light_device_type_9 }}</td>              
+                            <th>{{ entry.light_device_type_9 }}</td>
+                            <th>{{ entry.light_last_values_9 }}</td>   
+                            <td></td>            
                             <td>
                               <select class="form-control" data-size="5" name="set_light_ieeeAddr_9_{{ entry.id }}" style="background-color:#27293D"> 
                                 {% if entry.light_ieeeAddr_9 != "None" %}
@@ -416,7 +427,6 @@
                                 {% endfor %}  
                               </select>                                
                             </td>   
-                            <td></td> 
 
                         {% endif %}
 

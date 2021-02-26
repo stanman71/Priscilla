@@ -410,14 +410,32 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             pass               
 
 
-        # check linkquality
+        # check signal strength (mqtt)
         try:
             data = json.loads(msg)
             
-            if int(data["linkquality"]) < 10:
+            if device_type == "client_music" and int(data["signal_strength"]) < -65:
 
-                # add ieeeAddr to the bad linkquality list
-                zigbee2mqtt_bad_linkquality_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), ieeeAddr)) 
+                # add ieeeAddr to the bad connection list
+                bad_connection_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), ieeeAddr)) 
+
+            if device_type != "client_music" and int(data["signal_strength"]) < -70:
+
+                # add ieeeAddr to the bad connection list
+                bad_connection_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), ieeeAddr))                 
+
+        except:
+            pass   
+
+
+        # check linkquality (zigbee2mqtt)
+        try:
+            data = json.loads(msg)
+            
+            if int(data["linkquality"]) < 20:
+
+                # add ieeeAddr to the bad connection list
+                bad_connection_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), ieeeAddr)) 
 
         except:
             pass   

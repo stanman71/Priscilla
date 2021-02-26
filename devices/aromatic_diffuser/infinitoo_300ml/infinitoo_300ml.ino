@@ -45,7 +45,7 @@ char model[40]       = "infinitoo_300ml";
 char device_type[40] = "aromatic_diffuser";
 char description[80] = "MQTT Aromatic Diffuser";
 
-String current_Version = "2.4";
+String current_Version = "2.5";
 
 String state = "OFF";
 int level    = 0;
@@ -125,6 +125,8 @@ void wifi_manager(boolean reset_setting) {
     WiFiManagerParameter custom_mqtt_server  ("server",   "mqtt server",   mqtt_server, 40);
     WiFiManagerParameter custom_mqtt_username("username", "mqtt username", mqtt_username, 40);
     WiFiManagerParameter custom_mqtt_password("password", "mqtt password", mqtt_password, 40);
+
+    wifiManager.setConfigPortalTimeout(300); 
         
     wifiManager.setSaveConfigCallback(saveConfigCallback);
     wifiManager.addParameter(&custom_mqtt_server);
@@ -301,8 +303,10 @@ void send_default_mqtt_message() {
  
     // create msg as json
     DynamicJsonDocument msg(256); 
-    msg["state"] = state;
-    msg["level"] = level;
+    
+    msg["state"]           = state;
+    msg["level"]           = level;
+    msg["signal_strength"] = WiFi.RSSI();
 
     // convert msg to char
     char msg_Char[256];

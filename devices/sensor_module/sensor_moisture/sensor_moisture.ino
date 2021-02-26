@@ -131,6 +131,8 @@ void wifi_manager(boolean reset_setting) {
     WiFiManagerParameter custom_mqtt_server  ("server",   "mqtt server",   mqtt_server, 40);
     WiFiManagerParameter custom_mqtt_username("username", "mqtt username", mqtt_username, 40);
     WiFiManagerParameter custom_mqtt_password("password", "mqtt password", mqtt_password, 40);
+
+    wifiManager.setConfigPortalTimeout(300); 
         
     wifiManager.setSaveConfigCallback(saveConfigCallback);
     wifiManager.addParameter(&custom_mqtt_server);
@@ -311,7 +313,8 @@ void send_default_mqtt_message() {
 
     // custom settings  
     
-    msg["moisture"] = analogRead(SENSOR);          
+    msg["moisture"]        = analogRead(SENSOR);      
+    msg["signal_strength"] = WiFi.RSSI();    
 
     // custom settings end  
 

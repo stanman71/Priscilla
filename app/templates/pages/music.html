@@ -991,7 +991,7 @@
                           {% if entry.last_values_json != None %}
 
                             <input id="volume_slider_music_client_{{ counter[0] }}" data-slider-id="volume_slider_music_client_{{ counter[0] }}" name="set_client_music_volume_{{ entry.id }}" 
-                              type="text" data-slider-min="100" data-slider-max="207" data-slider-step="1" data-slider-value="{{ entry.last_values_json.split(':')[2] | replace('}', '') }}" />   
+                              type="text" data-slider-min="100" data-slider-max="207" data-slider-step="1" data-slider-value="{{ entry.last_values_string.split(',')[1] | replace('volume: ', '') }}" />   
 
                           <!-- no values found -->         
 

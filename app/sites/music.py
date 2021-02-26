@@ -119,7 +119,7 @@ def music():
         error_message_ip_address_not_supported = True
 
     # error message port
-    if str(GET_SYSTEM_SETTINGS().port) != "443":
+    if str(GET_SYSTEM_SETTINGS().port) != "80":
         error_message_port_not_supported = True
 
 
