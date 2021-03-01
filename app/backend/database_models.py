@@ -1064,6 +1064,8 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
                     last_values_string_modified = last_values_string_modified + element + ", "
                 if "eurotronic_error_status" in element:
                     last_values_string_modified = last_values_string_modified + element + ", "
+                if "linkquality" in element:
+                    last_values_string_modified = last_values_string_modified + element + ", "
 
             try:
                 # change battery_level scale to max_value = 100
@@ -1084,13 +1086,13 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
             last_values_string_modified = ""
 
             for element in last_values_string.split(","):
-                if "linkquality" in element:
-                    last_values_string_modified = last_values_string_modified + element + ", "
                 if "power" in element:
-                    last_values_string_modified = last_values_string_modified + element + ", "                   
-                if "state" in element:
                     last_values_string_modified = last_values_string_modified + element + ", "
+                if "state" in element:
+                    last_values_string_modified = last_values_string_modified + element + ", "                   
                 if "temperature" in element:
+                    last_values_string_modified = last_values_string_modified + element + ", "
+                if "linkquality" in element:
                     last_values_string_modified = last_values_string_modified + element 
 
             last_values_string = last_values_string_modified

@@ -339,7 +339,7 @@ def BAD_CONNECTION_THREAD():
 		# send bad linkquality message of devices if they have 3 and more entries
 	
 		try:
-			for device in GET_ALL_DEVICES("zigbee2mqtt"):
+			for device in GET_ALL_DEVICES(""):
 
 				counter = 0
 

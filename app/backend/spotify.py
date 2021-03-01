@@ -607,6 +607,16 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.pause_playback(device_id=spotify_device_id)  
 
+            # stop logitech media player
+            spotify_device_name = sp.current_playback(market=None)['device']['name']
+
+            if "multiroom" in spotify_device_name:
+                server = find_server()
+
+                for player in server.players:
+                    player.pause()   
+
+
         if command == "shuffle_true":     
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.shuffle(True, device_id=spotify_device_id) 

@@ -179,10 +179,13 @@ def on_message(client, userdata, message):
     print("### " + channel)
     print("### " + msg) 
 
-    signal_strength = subprocess.check_output("sudo iwconfig wlan0 | grep Link", shell=True).strip()
-    signal_strength = str(signal_strength).split("  ")[1]    
-    signal_strength = str(signal_strength).replace("Signal level=","")
-    signal_strength = str(signal_strength).replace(" dBm'","")
+    try:
+        signal_strength = subprocess.check_output("sudo iwconfig wlan0 | grep Link", shell=True).strip()
+        signal_strength = str(signal_strength).split("  ")[1]    
+        signal_strength = str(signal_strength).replace("Signal level=","")
+        signal_strength = str(signal_strength).replace(" dBm'","")
+    except:
+        signal_strength = ""
 
     
     # #######

@@ -413,13 +413,13 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         # check signal strength (mqtt)
         try:
             data = json.loads(msg)
-            
+
             if device_type == "client_music" and int(data["signal_strength"]) < -65:
 
                 # add ieeeAddr to the bad connection list
                 bad_connection_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), ieeeAddr)) 
 
-            if device_type != "client_music" and int(data["signal_strength"]) < -70:
+            if device_type != "client_music" and int(data["signal_strength"]) < -75:
 
                 # add ieeeAddr to the bad connection list
                 bad_connection_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), ieeeAddr))                 
@@ -432,7 +432,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
         try:
             data = json.loads(msg)
             
-            if int(data["linkquality"]) < 20:
+            if int(data["linkquality"]) < 10:
 
                 # add ieeeAddr to the bad connection list
                 bad_connection_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), ieeeAddr)) 
