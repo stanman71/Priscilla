@@ -185,7 +185,7 @@ def on_message(client, userdata, message):
         signal_strength = str(signal_strength).replace("Signal level=","")
         signal_strength = str(signal_strength).replace(" dBm'","")
     except:
-        signal_strength = ""
+        signal_strength = "LAN"
 
     
     # #######

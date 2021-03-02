@@ -237,7 +237,6 @@ def START_DISABLE_ZIGBEE_PAIRING_THREAD():
 		
 	except Exception as e:
 		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Disable Zigbee Pairing | " + str(e)) 
-		SEND_EMAIL("ERROR", "System | Thread | Disable Zigbee Pairing | " + str(e)) 
 
 
 # disable pairing after 30 minutes automatically

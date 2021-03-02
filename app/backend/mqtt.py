@@ -543,22 +543,22 @@ def MQTT_PUBLISH_THREAD():
 """ ########################### """
 
 
-""" ##################### """
-"""  mqtt control thread  """
-""" ##################### """
+""" ########################### """
+"""  check mqtt running thread  """
+""" ########################### """
 
-def START_MQTT_CONTROL_THREAD():
+def START_CHECK_MQTT_RUNNING_THREAD():
 
     try:
-        Thread = threading.Thread(target=MQTT_CONTROL_THREAD)
+        Thread = threading.Thread(target=CHECK_MQTT_RUNNING_THREAD)
         Thread.start()  
         
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | MQTT Publish | " + str(e))  
-        SEND_EMAIL("ERROR", "System | Thread | MQTT Publish | " + str(e))    
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Check MQTT running | " + str(e))  
+        SEND_EMAIL("ERROR", "System | Thread | Check MQTT running | " + str(e))    
 
 
-def MQTT_CONTROL_THREAD():
+def CHECK_MQTT_RUNNING_THREAD():
     
     def on_connect(client, userdata, flags, rc):
         if rc != 0:    
@@ -848,8 +848,7 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, seconds, log_report = True):
 
     # error message
     if log_report == True:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + device.name + " | Setting not confirmed | " + setting)  
-        SEND_EMAIL("ERROR", "Network | Device | " + device.name + " | Setting not confirmed | " + setting)          
+        WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + device.name + " | Setting not confirmed | " + setting)           
               
     return ("Device | " + device.name + " | Setting not confirmed | " + setting) 
                          

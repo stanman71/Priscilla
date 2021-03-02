@@ -593,7 +593,7 @@ for device in GET_ALL_DEVICES(""):
 
 from app.sites                      import index, dashboard, scheduler, programs, lighting_scenes, lighting_groups, cameras, music, sensordata_jobs, sensordata_statistics, devices_management, devices_controller, settings_system, settings_users, settings_system_log, settings_threads, settings_about, errors
 from app.backend.process_management import START_PROCESS_MANAGEMENT_THREAD
-from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_MQTT_CONTROL_THREAD, CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING, START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD, START_CHECK_DEVICE_CONNECTION_THREAD
+from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_CHECK_MQTT_RUNNING_THREAD, CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING, START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD, START_CHECK_DEVICE_CONNECTION_THREAD
 from app.backend.email              import SEND_EMAIL
 from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
 from app.backend.spotify            import START_REFRESH_SPOTIFY_TOKEN_THREAD
@@ -646,7 +646,7 @@ try:
     print("###### Start MQTT ######")
     START_MQTT_RECEIVE_THREAD()
     START_MQTT_PUBLISH_THREAD()
-    START_MQTT_CONTROL_THREAD()    
+    START_CHECK_MQTT_RUNNING_THREAD()    
     START_REFRESH_MQTT_INPUT_MESSAGES_THREAD()
 
     time.sleep(3)    

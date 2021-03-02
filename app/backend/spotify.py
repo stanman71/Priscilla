@@ -17,7 +17,6 @@ https://developer.spotify.com/documentation/web-api/reference/player/start-a-use
 from app                          import app
 from app.backend.database_models  import *
 from app.backend.file_management  import *
-from app.backend.email            import SEND_EMAIL
 from app.backend.shared_resources import mqtt_message_queue
 from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS
 
@@ -108,7 +107,6 @@ def GENERATE_SPOTIFY_TOKEN(auth_token):
     except:
         WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Login | failed")
         WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Token | not received | " + str(answer))
-        SEND_EMAIL("ERROR", "Music | Spotify | Token | not received | " + str(answer))
 
     try:
         SET_SPOTIFY_REFRESH_TOKEN(answer["refresh_token"])
@@ -116,8 +114,7 @@ def GENERATE_SPOTIFY_TOKEN(auth_token):
         WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify | Refresh Token | received") 
         
     except:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Refresh Token | not received | " + str(answer))
-        SEND_EMAIL("ERROR", "Music | Spotify | Refresh Token | not received | " + str(answer))           
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Refresh Token | not received | " + str(answer))         
 
 
 def GET_SPOTIFY_TOKEN():
@@ -182,7 +179,6 @@ def START_REFRESH_SPOTIFY_TOKEN_THREAD():
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | Refresh Spotify Token | " + str(e)) 
-        SEND_EMAIL("ERROR", "Host | Thread | Refresh Spotify Token | " + str(e)) 
 
 
 def REFRESH_SPOTIFY_TOKEN_THREAD():   
@@ -220,16 +216,13 @@ def REFRESH_SPOTIFY_TOKEN_THREAD():
 
                     try:
                         SPOTIFY_TOKEN = answer["access_token"]
-                        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify | Token | updated") 
                         
                     except Exception as e:
                         WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Token | update | " + str(e)) 
-                        SEND_EMAIL("ERROR", "Music | Spotify | Token | update | " + str(e)) 
 
                     try:
                         SET_SPOTIFY_REFRESH_TOKEN(answer["refresh_token"])
                         SPOTIFY_REFRESH_TOKEN = answer["refresh_token"]        
-                        WRITE_LOGFILE_SYSTEM("SUCCESS", "Music | Spotify | Refresh Token | updated")  
                         
                     except:
                         pass
@@ -824,7 +817,6 @@ def GET_SPOTIFY_CONTROL_DATA(spotify_token):
             # login failed
             except Exception as e:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | " + str(e)) 
-                SEND_EMAIL("ERROR", "Music | Spotify | " + str(e)) 
                 return (spotify_data[0], spotify_data[1], spotify_data[2], spotify_data[3], spotify_data[4])
 
         else:

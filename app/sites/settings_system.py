@@ -207,7 +207,6 @@ def settings_system():
                         print("ERROR: Network | ZigBee2MQTT | No Connection") 
                         
                         WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")        
-                        SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | No Connection")  
                         SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
                         SET_ZIGBEE2MQTT_PAIRING_STATUS("No Zigbee2MQTT Connection")        
 
