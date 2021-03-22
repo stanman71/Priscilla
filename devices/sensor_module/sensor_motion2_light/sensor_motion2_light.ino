@@ -39,29 +39,29 @@ int PIN_LED_GREEN = 14;                          // D5
 int PIN_LED_RED   = 12;                          // D6
 
 
-// custom settings
+        // custom settings ##################################################
 
-int SENSOR_1 = 5;                                // D1
-int SENSOR_2 = 4;                                // D2 
-int SENSOR_3 = A0;                               // A0 
+        int SENSOR_1 = 5;                                // D1
+        int SENSOR_2 = 4;                                // D2 
+        int SENSOR_3 = A0;                               // A0 
 
-// int SENSOR = 0;                               // D3 
-// int SENSOR = 13;                              // D7
+        // int SENSOR = 0;                               // D3 
+        // int SENSOR = 13;                              // D7
 
 
-char model[40]       = "sensor_motion2_light";
-char device_type[40] = "sensor_passiv";
-char description[80] = "MQTT Motion Sensor";
+        char model[40]       = "sensor_motion2_light";
+        char device_type[40] = "sensor_passiv";
+        char description[80] = "MQTT Motion Sensor";
 
-String current_Version = "2.2";
+        String current_Version = "2.2";
 
-int sensor_1_last_value = 0;
-int sensor_2_last_value = 0;
-int sensor_3_last_value = 0;
+        int sensor_1_last_value = 0;
+        int sensor_2_last_value = 0;
+        int sensor_3_last_value = 0;
 
-int disable_sensor_3_timer = 0;
+        int disable_sensor_3_timer = 0;
 
-// custom settings end
+        // custom settings end ###############################################
 
 
 // ############
@@ -315,18 +315,21 @@ void send_default_mqtt_message() {
     // create msg as json
     DynamicJsonDocument msg(128);
 
-    // custom settings
 
-    if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
-        msg["occupancy"] = "True";
-    } else {
-        msg["occupancy"] = "False";
-    }
+            // custom settings ###################################################
 
-    msg["illuminance"]     = sensor_3_last_value;          
+            if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
+                msg["occupancy"] = "True";
+            } else {
+                msg["occupancy"] = "False";
+            }
+
+            msg["illuminance"]     = sensor_3_last_value;          
+            
+            // custom settings end ############################################### 
+
+
     msg["signal_strength"] = WiFi.RSSI();
-
-    // custom settings end  
 
     // convert msg to char
     char msg_Char[128];
@@ -372,16 +375,18 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["version"]     = current_Version;        
         msg["description"] = description;
 
-        // custom settings   
-    
-        JsonArray data_inputs = msg.createNestedArray("input_values");
-        data_inputs.add("occupancy");        
-        data_inputs.add("illuminance"); 
+
+                // custom settings ###################################################  
+            
+                JsonArray data_inputs = msg.createNestedArray("input_values");
+                data_inputs.add("occupancy");        
+                data_inputs.add("illuminance"); 
+
+                // custom settings end ############################################### 
+
 
         JsonArray data_commands      = msg.createNestedArray("commands");
         JsonArray data_commands_json = msg.createNestedArray("commands_json");
-
-        // custom settings end  
 
         // convert msg to char
         char msg_Char[512];
@@ -449,15 +454,16 @@ void setup() {
     client.setServer(mqtt_server, 1884);
     client.setCallback(callback); 
 
-    // custom settings
-    
-    pinMode(SENSOR_1, INPUT);
-    pinMode(SENSOR_2, INPUT);      
-    pinMode(SENSOR_3, INPUT); 
-    
-    sensor_3_last_value = analogRead(SENSOR_3);
 
-    // custom settings end  
+            // custom settings ###################################################
+            
+            pinMode(SENSOR_1, INPUT);
+            pinMode(SENSOR_2, INPUT);      
+            pinMode(SENSOR_3, INPUT); 
+            
+            sensor_3_last_value = analogRead(SENSOR_3);
+
+            // custom settings end ###############################################
     
 }
 
@@ -486,36 +492,38 @@ void loop() {
     
     update_timer_counter = update_timer_counter + 10;
 
-    // custom settings
 
-    // if occupancy is true, freeze illuminance value for 30 seconds
-    if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
-        disable_sensor_3_timer = 30000;
-    }   
+            // custom settings ###################################################
 
-    // illuminance timer
-    if (disable_sensor_3_timer > 0){
-        disable_sensor_3_timer = disable_sensor_3_timer - 10; 
-    } else {
-        disable_sensor_3_timer = 0;
-    }
+            // if occupancy is true, freeze illuminance value for 30 seconds
+            if (digitalRead(SENSOR_1) == 1 or digitalRead(SENSOR_2) == 1){
+                disable_sensor_3_timer = 30000;
+            }   
 
-    // read illuminance sensor ?    
-    if (disable_sensor_3_timer == 0){
-        sensor_3_last_value = analogRead(SENSOR_3);
-    }           
+            // illuminance timer
+            if (disable_sensor_3_timer > 0){
+                disable_sensor_3_timer = disable_sensor_3_timer - 10; 
+            } else {
+                disable_sensor_3_timer = 0;
+            }
 
-    // send message ?     
-    if (digitalRead(SENSOR_1) == 1 or sensor_1_last_value != digitalRead(SENSOR_1) or
-        digitalRead(SENSOR_2) == 1 or sensor_2_last_value != digitalRead(SENSOR_2)){
-          
-        sensor_1_last_value = digitalRead(SENSOR_1);
-        sensor_2_last_value = digitalRead(SENSOR_2);        
-        send_default_mqtt_message();
-        delay(1000);
-    } 
+            // read illuminance sensor ?    
+            if (disable_sensor_3_timer == 0){
+                sensor_3_last_value = analogRead(SENSOR_3);
+            }           
 
-    // custom settings end    
+            // send message ?     
+            if (digitalRead(SENSOR_1) == 1 or sensor_1_last_value != digitalRead(SENSOR_1) or
+                digitalRead(SENSOR_2) == 1 or sensor_2_last_value != digitalRead(SENSOR_2)){
+                
+                sensor_1_last_value = digitalRead(SENSOR_1);
+                sensor_2_last_value = digitalRead(SENSOR_2);        
+                send_default_mqtt_message();
+                delay(1000);
+            } 
+
+            // custom settings end ###############################################   
+
 
     delay(10);
     client.loop();

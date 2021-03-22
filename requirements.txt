@@ -1,7 +1,7 @@
 bcrypt==3.1.5
 croniter==0.3.34
 fabric==2.4.0
-Flask==1.1.1
+Flask==1.1.2
 flask_apscheduler==1.11.0
 Flask-Bcrypt==0.7.1
 Flask-Bootstrap==3.3.7.1
@@ -17,7 +17,7 @@ Flask-SocketIO==4.3.0
 Flask-SQLAlchemy==2.4.0
 Flask-WTF==0.14.2
 graphviz==0.11.1
-Jinja2==2.11.2
+Jinja2==2.11.3
 lms==1.1.0
 matplotlib==3.0.3
 netifaces==0.10.9
@@ -25,6 +25,7 @@ numpy==1.16.4
 paho-mqtt==1.5.0
 pandas==0.25.0
 ping3==2.3.1
+python-engineio==3.13.2
 python-socketio==4.4.0
 pyyaml==5.1.2
 ruamel.yaml==0.16.10

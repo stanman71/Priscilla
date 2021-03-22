@@ -39,24 +39,24 @@ int PIN_LED_GREEN = 14;                          // D5
 int PIN_LED_RED   = 12;                          // D6
 
 
-// custom settings
+        // custom settings ###################################################
 
-int PIN_SENSOR = A0;                             // A0 
-int PIN_PUMP   = 4;                              // D2 
+        int PIN_SENSOR = A0;                             // A0 
+        int PIN_PUMP   = 4;                              // D2 
 
-int send_message_timer_counter;
-int send_message_timer_value = 900000;           // 15 minutes (in milliseconds)
+        int send_message_timer_counter;
+        int send_message_timer_value = 900000;           // 15 minutes (in milliseconds)
 
-char model[40]       = "watering_controller";
-char device_type[40] = "watering_controller";
-char description[80] = "MQTT Watering Controller";
+        char model[40]       = "watering_controller";
+        char device_type[40] = "watering_controller";
+        char description[80] = "MQTT Watering Controller";
 
-String current_Version = "1.2";
+        String current_Version = "1.2";
 
-String state  = "OFF";
-int pump_time = 0;
+        String state  = "OFF";
+        int pump_time = 0;
 
-// custom settings end
+        // custom settings end ###############################################
 
 
 // ############
@@ -310,14 +310,17 @@ void send_default_mqtt_message() {
     // create msg as json
     DynamicJsonDocument msg(128);
 
-    // custom settings  
-    
-    msg["state"]            = state;
-    msg["pump_time"]        = pump_time;    
-    msg["moisture"]         = analogRead(PIN_SENSOR);          
-    msg["signal_strength"]  = WiFi.RSSI();
 
-    // custom settings end  
+            // custom settings ###################################################
+            
+            msg["state"]            = state;
+            msg["pump_time"]        = pump_time;    
+            msg["moisture"]         = analogRead(PIN_SENSOR);          
+           
+            // custom settings end ###############################################
+
+
+    msg["signal_strength"]  = WiFi.RSSI();
 
     // convert msg to char
     char msg_Char[128];
@@ -363,24 +366,26 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["version"]     = current_Version;        
         msg["description"] = description;
 
-        // custom settings  
-    
-        JsonArray data_inputs = msg.createNestedArray("input_values");
-        data_inputs.add("moisture");        
 
-        JsonArray data_commands = msg.createNestedArray("commands");
-        data_commands.add("ON; 15");        
-        data_commands.add("ON; 30");
-        data_commands.add("ON; 45");        
-        data_commands.add("ON; 60");     
-        
-        JsonArray data_commands_json = msg.createNestedArray("commands_json");
-        data_commands_json.add("{'state':'ON','pump_time':15}");          
-        data_commands_json.add("{'state':'ON','pump_time':30}");  
-        data_commands_json.add("{'state':'ON','pump_time':45}");         
-        data_commands_json.add("{'state':'ON','pump_time':60}"); 
+                // custom settings ###################################################
+            
+                JsonArray data_inputs = msg.createNestedArray("input_values");
+                data_inputs.add("moisture");        
 
-        // custom settings end  
+                JsonArray data_commands = msg.createNestedArray("commands");
+                data_commands.add("ON; 15");        
+                data_commands.add("ON; 30");
+                data_commands.add("ON; 45");        
+                data_commands.add("ON; 60");     
+                
+                JsonArray data_commands_json = msg.createNestedArray("commands_json");
+                data_commands_json.add("{'state':'ON','pump_time':15}");          
+                data_commands_json.add("{'state':'ON','pump_time':30}");  
+                data_commands_json.add("{'state':'ON','pump_time':45}");         
+                data_commands_json.add("{'state':'ON','pump_time':60}"); 
+
+                // custom settings end ############################################### 
+
 
         // convert msg to char
         char msg_Char[512];
@@ -401,54 +406,55 @@ void callback (char* topic, byte* payload, unsigned int length) {
         send_default_mqtt_message();    
     }      
 
-    // custom settings   
-    
-    // set 
-    
-    if (check_ieeeAddr == ieeeAddr and check_command == "set"){
+    // set
 
-        char msg[length+1];
-  
-        for (int i = 0; i < length; i++) {
-            msg[i] = (char)payload[i];
-        }
-        msg[length] = '\0';
-        
-        Serial.print("msg: ");
-        Serial.println(msg);
 
-        // convert msg to json
-        DynamicJsonDocument msg_json(128);
-        deserializeJson(msg_json, msg);
-    
-        if (state != "OFF") {
-            // stop device
-            digitalWrite(PIN_PUMP, HIGH);
-        }
-
-        digitalWrite(PIN_PUMP, LOW);
-
-        state = "ON"; 
-      
-        for (int time = msg_json["pump_time"]; time > 0; time--) {
-
-            pump_time = time;
-          
-            if (time % 5 == 0 or time % 10 == 0) {               
-                send_default_mqtt_message();   
-            }    
+            // custom settings ###################################################  
             
-            delay(1000);
-        }            
+            if (check_ieeeAddr == ieeeAddr and check_command == "set"){
 
-        digitalWrite(PIN_PUMP, HIGH);
+                char msg[length+1];
+        
+                for (int i = 0; i < length; i++) {
+                    msg[i] = (char)payload[i];
+                }
+                msg[length] = '\0';
+                
+                Serial.print("msg: ");
+                Serial.println(msg);
 
-        pump_time = 0;
-        state = "OFF"; 
-        send_default_mqtt_message(); 
-    }   
+                // convert msg to json
+                DynamicJsonDocument msg_json(128);
+                deserializeJson(msg_json, msg);
+            
+                if (state != "OFF") {
+                    // stop device
+                    digitalWrite(PIN_PUMP, HIGH);
+                }
 
-    // custom settings end       
+                digitalWrite(PIN_PUMP, LOW);
+
+                state = "ON"; 
+            
+                for (int time = msg_json["pump_time"]; time > 0; time--) {
+
+                    pump_time = time;
+                
+                    if (time % 5 == 0 or time % 10 == 0) {               
+                        send_default_mqtt_message();   
+                    }    
+                    
+                    delay(1000);
+                }            
+
+                digitalWrite(PIN_PUMP, HIGH);
+
+                pump_time = 0;
+                state = "OFF"; 
+                send_default_mqtt_message(); 
+            }   
+
+            // custom settings end ###############################################
 }
 
 
@@ -497,14 +503,15 @@ void setup() {
     client.setServer(mqtt_server, 1884);
     client.setCallback(callback); 
 
-    // custom settings
-    
-    pinMode(PIN_SENSOR, INPUT); 
-    
-    pinMode(PIN_PUMP, OUTPUT);  
-    digitalWrite(PIN_PUMP, HIGH);
 
-    // custom settings end  
+            // custom settings ###################################################
+            
+            pinMode(PIN_SENSOR, INPUT); 
+            
+            pinMode(PIN_PUMP, OUTPUT);  
+            digitalWrite(PIN_PUMP, HIGH);
+
+            // custom settings end ###############################################
 }
 
 
@@ -532,20 +539,22 @@ void loop() {
     
     update_timer_counter = update_timer_counter + 100;
 
-    // custom settings
 
-    // send message timer 
-    if (send_message_timer_counter > send_message_timer_value){
-        send_default_mqtt_message();
-        send_message_timer_counter = 0;
-    } 
+            // custom settings ###################################################
 
-    send_message_timer_counter = send_message_timer_counter + 100;    
+            // send message timer 
+            if (send_message_timer_counter > send_message_timer_value){
+                send_default_mqtt_message();
+                send_message_timer_counter = 0;
+            } 
 
-    // custom settings end  
+            send_message_timer_counter = send_message_timer_counter + 100;    
 
-    delay(100);
-    client.loop();
+            delay(100);
+            client.loop();
+
+            // custom settings end ################################################
+
 }
 
 

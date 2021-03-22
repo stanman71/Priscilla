@@ -230,17 +230,17 @@ def SET_ZIGBEE_PAIRING_TIMER(setting):
 		timer_disable_zigbee_pairing = "None"
 
 
-def START_DISABLE_ZIGBEE_PAIRING_THREAD():
+def START_ZIGBEE_PAIRING_TIMER_THREAD():
 	try:
-		Thread = threading.Thread(target=DISABLE_ZIGBEE_PAIRING_THREAD)
+		Thread = threading.Thread(target=ZIGBEE_PAIRING_TIMER_THREAD)
 		Thread.start()    
 		
 	except Exception as e:
-		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Disable Zigbee Pairing | " + str(e)) 
+		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Disable Zigbee Pairing Timer | " + str(e)) 
 
 
 # disable pairing after 30 minutes automatically
-def DISABLE_ZIGBEE_PAIRING_THREAD():
+def ZIGBEE_PAIRING_TIMER_THREAD():
 	global timer_disable_zigbee_pairing
 	global mqtt_message_queue
 	
@@ -335,7 +335,7 @@ def BAD_CONNECTION_THREAD():
 		except:
 			pass
 
-		# send bad linkquality message of devices if they have 3 and more entries
+		# send bad connection message of devices if they have 3 and more entries
 	
 		try:
 			for device in GET_ALL_DEVICES(""):

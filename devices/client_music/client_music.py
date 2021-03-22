@@ -347,7 +347,7 @@ def on_message(client, userdata, message):
     # ###
 
     if channel == "smarthome/mqtt/" + device_ieeeAddr + "/get":   
-        MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + '}')
+        MQTT_PUBLISH("smarthome/mqtt/" + device_ieeeAddr, '{"interface":"' + current_interface + '","volume":' + current_volume + ',"signal_strength":' + str(signal_strength) + '}')
 
 
 """ ###################### """

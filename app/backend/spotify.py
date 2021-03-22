@@ -327,20 +327,20 @@ def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
         pass
 
 
-""" ################################# """
-"""  check multiroom synchronization  """
-""" ################################# """
+""" ############################ """
+"""  restart multiroom playback  """
+""" ############################ """
 
-def START_CHECK_MULTIROOM_SYNCHRONIZATION_THREAD():
+def START_RESTART_MULTIROOM_PLAYBACK_THREAD():
 	try:
-		Thread = threading.Thread(target=CHECK_MULTIROOM_SYNCHRONIZATION_THREAD)
+		Thread = threading.Thread(target=RESTART_MULTIROOM_PLAYBACK_THREAD)
 		Thread.start()  
 
 	except Exception as e:
 		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Check Multiroom Synchronization | " + str(e)) 
 
 
-def CHECK_MULTIROOM_SYNCHRONIZATION_THREAD(): 
+def RESTART_MULTIROOM_PLAYBACK_THREAD(): 
     counter = 0
 
     try:
@@ -419,7 +419,7 @@ def MULTIROOM_SYNCHRONIZATION_THREAD():
                         sp.next_track(device_id=spotify_current_device_id)  
 
                         # restart playback, if necessary
-                        START_CHECK_MULTIROOM_SYNCHRONIZATION_THREAD()
+                        START_RESTART_MULTIROOM_PLAYBACK_THREAD()
                              
                     last_lms_position = lms_position
 
@@ -446,7 +446,7 @@ def MULTIROOM_SYNCHRONIZATION_THREAD():
                                     sp.next_track(device_id=spotify_current_device_id)  
 
                                     # restart playback, if necessary
-                                    START_CHECK_MULTIROOM_SYNCHRONIZATION_THREAD()
+                                    START_RESTART_MULTIROOM_PLAYBACK_THREAD()
                                     break
                                         
                                 # lms start next track        
@@ -456,7 +456,7 @@ def MULTIROOM_SYNCHRONIZATION_THREAD():
                                     sp.next_track(device_id=spotify_current_device_id)  
 
                                     # restart playback, if necessary
-                                    START_CHECK_MULTIROOM_SYNCHRONIZATION_THREAD()
+                                    START_RESTART_MULTIROOM_PLAYBACK_THREAD()
                                     break
 
                                 last_lms_position = lms_position
@@ -595,7 +595,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
         if command == "next":     
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.next_track(device_id=spotify_device_id) 
-            
+
         if command == "stop":    
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.pause_playback(device_id=spotify_device_id)  

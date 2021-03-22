@@ -498,8 +498,6 @@ void setup() {
     client.setServer(mqtt_server, 1884);
     client.setCallback(callback); 
 
-    // custom settings
-    
     pinMode(RELAIS_CONTROL, OUTPUT);  
     digitalWrite(RELAIS_CONTROL, LOW);   
     

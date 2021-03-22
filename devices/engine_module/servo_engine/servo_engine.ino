@@ -39,25 +39,27 @@ int PIN_RESET_SETTING = 16;                      // D0
 int PIN_LED_GREEN = 14;                          // D5
 int PIN_LED_RED   = 12;                          // D6
 
-
-// custom settings
-
+// SERVO
 Servo servo_1; 
 Servo servo_2; 
 
 int SERVO_1 = 4;                                 // D1 
 int SERVO_2 = 5;                                 // D2 
 
-char model[40]       = "servo_engine";
-char device_type[40] = "engine_module";
-char description[80] = "MQTT Engine Module";
 
-String current_Version = "1.0";
+        // custom settings ###################################################
+
+        char model[40]       = "servo_engine";
+        char device_type[40] = "engine_module";
+        char description[80] = "MQTT Engine Module";
+
+        String current_Version = "1.0";
+
+        // custom settings end ###############################################
+
 
 int servo_1_position = 0;
 int servo_2_position = 0;
-
-// custom settings end
 
 
 // ############
@@ -310,13 +312,16 @@ void send_default_mqtt_message() {
     // create msg as json
     DynamicJsonDocument msg(128);
 
-    // custom settings  
-    
-    msg["servo_1_position"] = servo_1_position;
-    msg["servo_2_position"] = servo_2_position;
-    msg["signal_strength"]  = WiFi.RSSI();
 
-    // custom settings end  
+                // custom settings ###################################################
+                
+                msg["servo_1_position"] = servo_1_position;
+                msg["servo_2_position"] = servo_2_position;
+
+                // custom settings end ###############################################
+
+
+    msg["signal_strength"] = WiFi.RSSI();
 
     // convert msg to char
     char msg_Char[128];
@@ -361,20 +366,22 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["version"]     = current_Version;        
         msg["description"] = description;
 
-        // custom settings
-    
-        JsonArray data_inputs        = msg.createNestedArray("input_values");
-        JsonArray data_commands      = msg.createNestedArray("commands");
-        data_commands.add("15; 0");
-        data_commands.add("90; 0");     
-        data_commands.add("180; 0");
-          
-        JsonArray data_commands_json = msg.createNestedArray("commands_json");
-        data_commands_json.add("{'servo_1_position':'15','servo_2_position':0}");              
-        data_commands_json.add("{'servo_1_position':'90','servo_2_position':0}");  
-        data_commands_json.add("{'servo_1_position':'180','servo_2_position':0}");   
 
-        // custom settings end  
+                // custom settings ###################################################
+            
+                JsonArray data_inputs   = msg.createNestedArray("input_values");
+                JsonArray data_commands = msg.createNestedArray("commands");
+                data_commands.add("15; 0");
+                data_commands.add("90; 0");     
+                data_commands.add("180; 0");
+                
+                JsonArray data_commands_json = msg.createNestedArray("commands_json");
+                data_commands_json.add("{'servo_1_position':'15','servo_2_position':0}");              
+                data_commands_json.add("{'servo_1_position':'90','servo_2_position':0}");  
+                data_commands_json.add("{'servo_1_position':'180','servo_2_position':0}");   
+
+                // custom settings end ###############################################
+
 
         // convert msg to char
         char msg_Char[512];
@@ -397,8 +404,6 @@ void callback (char* topic, byte* payload, unsigned int length) {
 
     // set 
 
-    // custom settings  
-
     if (check_ieeeAddr == ieeeAddr and check_command == "set"){
 
         char msg[length+1];
@@ -414,21 +419,26 @@ void callback (char* topic, byte* payload, unsigned int length) {
         // convert msg to json
         DynamicJsonDocument msg_json(128);
         deserializeJson(msg_json, msg);
-    
-        // control engine
-        int set_servo_1_position = msg_json["servo_1_position"];
-        int set_servo_2_position = msg_json["servo_2_position"];
 
-        servo_1.write(set_servo_1_position); 
-        servo_2.write(set_servo_2_position); 
 
-        servo_1_position = set_servo_1_position;
-        servo_2_position = set_servo_2_position;
-        
+                // custom settings ###################################################
+
+                // control engine
+                int set_servo_1_position = msg_json["servo_1_position"];
+                int set_servo_2_position = msg_json["servo_2_position"];
+
+                servo_1.write(set_servo_1_position); 
+                servo_2.write(set_servo_2_position); 
+
+                servo_1_position = set_servo_1_position;
+                servo_2_position = set_servo_2_position;
+
+                // custom settings end ###############################################
+
+
         send_default_mqtt_message(); 
     } 
-
-     // custom settings end                 
+          
 }
 
 // #####
@@ -475,13 +485,9 @@ void setup() {
     
     client.setServer(mqtt_server, 1884);
     client.setCallback(callback); 
-
-    // custom settings
-    
+            
     servo_1.attach(SERVO_1);
     servo_2.attach(SERVO_2);    
-
-    // custom settings end      
 }
 
 

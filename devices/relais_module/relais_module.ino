@@ -39,20 +39,20 @@ int PIN_LED_GREEN = 14;                          // D5
 int PIN_LED_RED   = 12;                          // D6
 
 
-// custom settings  
+        // custom settings ###################################################
 
-String channel_1_state = "DISABLED";    // change to "OFF" to activate
-String channel_2_state = "DISABLED";    // change to "OFF" to activate
-String channel_3_state = "DISABLED";    // change to "OFF" to activate
-String channel_4_state = "DISABLED";    // change to "OFF" to activate
+        String channel_1_state = "DISABLED";    // change to "OFF" to activate
+        String channel_2_state = "DISABLED";    // change to "OFF" to activate
+        String channel_3_state = "DISABLED";    // change to "OFF" to activate
+        String channel_4_state = "DISABLED";    // change to "OFF" to activate
 
-char model[40]       = "watering_controller";
-char device_type[40] = "watering_controller";
-char description[80] = "MQTT Watering Controller";
+        char model[40]       = "watering_controller";
+        char device_type[40] = "watering_controller";
+        char description[80] = "MQTT Watering Controller";
 
-String current_Version = "1.0";
+        String current_Version = "1.0";
 
-// custom settings end
+        // custom settings end ###############################################
 
 
 // ############

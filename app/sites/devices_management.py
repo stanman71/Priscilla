@@ -141,8 +141,6 @@ def devices_management():
     error_message_zigbee_device_update       = False
     success_message_zigbee_pairing           = []
     error_message_zigbee_pairing             = []
-    success_message_zigbee_touchlink         = False
-    error_message_zigbee_touchlink           = []    
     success_message_logfile                  = False
     error_message_logfile                    = ""
     error_message_mqtt_firmware              = ""
@@ -556,26 +554,6 @@ def devices_management():
                     SET_ZIGBEE2MQTT_PAIRING_STATUS("Setting not confirmed")
                     error_message_zigbee_pairing.append("Setting not confirmed") 
 
-
-    """ ################## """
-    """  zigbee touchlink  """
-    """ ################## """
-
-    # activate touchlink 
-    if request.form.get("activate_zigbee_touchlink") != None: 
-
-        # check mqtt connection
-        if GET_MQTT_CONNECTION_STATUS() != True:  
-            error_message_zigbee_touchlink.append("No MQTT connection")  
-
-        # check zigbee service
-        elif GET_SYSTEM_SETTINGS().zigbee2mqtt_active != "True":  
-            error_message_zigbee_touchlink.append("Zigbee is disabled")              
-
-        else:         
-            heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/touchlink/factory_reset", "")))   
-            success_message_zigbee_touchlink = True
-        
 
     """ ############ """
     """  device log  """
@@ -1137,8 +1115,6 @@ def devices_management():
                                                     error_message_mqtt_firmware_upload=error_message_mqtt_firmware_upload,
                                                     error_message_zigbee_device_update=error_message_zigbee_device_update,
                                                     success_message_zigbee_pairing=success_message_zigbee_pairing,
-                                                    success_message_zigbee_touchlink=success_message_zigbee_touchlink,
-                                                    error_message_zigbee_touchlink=error_message_zigbee_touchlink,    
                                                     error_message_zigbee_pairing=error_message_zigbee_pairing,
                                                     success_message_logfile=success_message_logfile,     
                                                     error_message_logfile=error_message_logfile,   

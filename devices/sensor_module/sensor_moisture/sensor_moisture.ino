@@ -39,25 +39,25 @@ int PIN_LED_GREEN = 14;                          // D5
 int PIN_LED_RED   = 12;                          // D6
 
 
-// custom settings
+        // custom settings ####################################################
 
-int SENSOR = A0;                                 // A0 
+        int SENSOR = A0;                                 // A0 
 
-// int SENSOR = 5;                               // D1 
-// int SENSOR = 4;                               // D2 
-// int SENSOR = 0;                               // D3 
-// int SENSOR = 13;                              // D7
+        // int SENSOR = 5;                               // D1 
+        // int SENSOR = 4;                               // D2 
+        // int SENSOR = 0;                               // D3 
+        // int SENSOR = 13;                              // D7
 
-int send_message_timer_counter;
-int send_message_timer_value = 900000;           // 15 minutes (in milliseconds)
+        int send_message_timer_counter;
+        int send_message_timer_value = 900000;           // 15 minutes (in milliseconds)
 
-char model[40]       = "sensor_moisture";
-char device_type[40] = "sensor_passiv";
-char description[80] = "MQTT Moisture Sensor";
+        char model[40]       = "sensor_moisture";
+        char device_type[40] = "sensor_passiv";
+        char description[80] = "MQTT Moisture Sensor";
 
-String current_Version = "1.0";
+        String current_Version = "1.0";
 
-// custom settings end
+        // custom settings end ###############################################
 
 
 // ############
@@ -311,12 +311,15 @@ void send_default_mqtt_message() {
     // create msg as json
     DynamicJsonDocument msg(128);
 
-    // custom settings  
-    
-    msg["moisture"]        = analogRead(SENSOR);      
-    msg["signal_strength"] = WiFi.RSSI();    
 
-    // custom settings end  
+            // custom settings ###################################################
+            
+            msg["moisture"]        = analogRead(SENSOR);      
+               
+            // custom settings end ############################################### 
+
+
+    msg["signal_strength"] = WiFi.RSSI(); 
 
     // convert msg to char
     char msg_Char[128];
@@ -362,15 +365,17 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["version"]     = current_Version;        
         msg["description"] = description;
 
-        // custom settings  
-    
-        JsonArray data_inputs = msg.createNestedArray("input_values");
-        data_inputs.add("moisture");        
+
+                // custom settings ################################################### 
+            
+                JsonArray data_inputs = msg.createNestedArray("input_values");
+                data_inputs.add("moisture");        
+
+                // custom settings end ###############################################
+
 
         JsonArray data_commands      = msg.createNestedArray("commands");
         JsonArray data_commands_json = msg.createNestedArray("commands_json");
-
-        // custom settings end  
 
         // convert msg to char
         char msg_Char[512];
@@ -438,11 +443,12 @@ void setup() {
     client.setServer(mqtt_server, 1884);
     client.setCallback(callback); 
 
-    // custom settings
-    
-    pinMode(SENSOR, INPUT); 
 
-    // custom settings end  
+            // custom settings ###################################################
+            
+            pinMode(SENSOR, INPUT); 
+
+            // custom settings end ###############################################
     
 }
 
@@ -471,20 +477,22 @@ void loop() {
     
     update_timer_counter = update_timer_counter + 100;
 
-    // custom settings
 
-    // send message timer 
-    if (send_message_timer_counter > send_message_timer_value){
-        send_default_mqtt_message();
-        send_message_timer_counter = 0;
-    } 
+            // custom settings ###################################################
 
-    send_message_timer_counter = send_message_timer_counter + 100;    
+            // send message timer 
+            if (send_message_timer_counter > send_message_timer_value){
+                send_default_mqtt_message();
+                send_message_timer_counter = 0;
+            } 
 
-    // custom settings end  
+            send_message_timer_counter = send_message_timer_counter + 100;    
 
-    delay(100);
-    client.loop();
+            delay(100);
+            client.loop();
+
+            // custom settings end ################################################
+
 }
 
 

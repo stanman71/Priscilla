@@ -38,23 +38,25 @@ int PIN_RESET_SETTING = 16;                      // D0
 int PIN_LED_GREEN = 14;                          // D5
 int PIN_LED_RED   = 12;                          // D6
 
-
-// custom settings   
-
+// ENGINE
 int DIRECTION      = 5;                          // D1 
 int STEP           = 4;                          // D2 
 int RELAIS_CONTROL = 0;                          // D3
 
-char model[40]       = "stepper_engine";
-char device_type[40] = "engine_module";
-char description[80] = "MQTT Engine Module";
 
-String current_Version = "1.0";
+        // custom settings ###################################################
+
+        char model[40]       = "stepper_engine";
+        char device_type[40] = "engine_module";
+        char description[80] = "MQTT Engine Module";
+
+        String current_Version = "1.0";
+
+        // custom settings end ###############################################
+
 
 String engine_direction = "OFF";
 int engine_steps        = 0;
-
-// custom settings end
 
 
 // ############
@@ -354,24 +356,26 @@ void callback (char* topic, byte* payload, unsigned int length) {
         msg["version"]     = current_Version;        
         msg["description"] = description;
 
-        // custom settings  
-    
-        JsonArray data_inputs        = msg.createNestedArray("input_values");
-        JsonArray data_commands      = msg.createNestedArray("commands");
-        data_commands.add("LEFT; 10000");
-        data_commands.add("LEFT; 20000");     
-        data_commands.add("RIGHT; 10000");
-        data_commands.add("RIGHT; 20000");   
-        data_commands.add("OFF"); 
-          
-        JsonArray data_commands_json = msg.createNestedArray("commands_json");
-        data_commands_json.add("{'direction':'LEFT','steps':10000}");  
-        data_commands_json.add("{'direction':'LEFT','steps':20000}");  
-        data_commands_json.add("{'direction':'RIGHT','steps':10000}");   
-        data_commands_json.add("{'direction':'RIGHT','steps':20000}");  
-        data_commands_json.add("{'direction':'OFF','steps':0}");
 
-        // custom settings end  
+                // custom settings ################################################### 
+            
+                JsonArray data_inputs        = msg.createNestedArray("input_values");
+                JsonArray data_commands      = msg.createNestedArray("commands");
+                data_commands.add("LEFT; 10000");
+                data_commands.add("LEFT; 20000");     
+                data_commands.add("RIGHT; 10000");
+                data_commands.add("RIGHT; 20000");   
+                data_commands.add("OFF"); 
+                
+                JsonArray data_commands_json = msg.createNestedArray("commands_json");
+                data_commands_json.add("{'direction':'LEFT','steps':10000}");  
+                data_commands_json.add("{'direction':'LEFT','steps':20000}");  
+                data_commands_json.add("{'direction':'RIGHT','steps':10000}");   
+                data_commands_json.add("{'direction':'RIGHT','steps':20000}");  
+                data_commands_json.add("{'direction':'OFF','steps':0}");
+
+                // custom settings end ############################################### 
+
 
         // convert msg to char
         char msg_Char[512];

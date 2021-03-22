@@ -1504,3 +1504,27 @@ Timestamp,Type,Description
 2021-02-26 08:39:26,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2021-02-26 08:39:26,EVENT,|System || Services || Squeezelie Player || disabled|
 2021-02-26 08:39:37,DATABASE,|Lighting || Group || new_group_1 || added|
+2021-03-13 01:22:00,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-03-13 01:22:00,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-03-13 01:22:01,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-03-13 01:22:01,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-03-13 01:22:01,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-03-13 01:22:15,DATABASE,|Scheduler || Job || new_scheduler_job_6 || added|
+2021-03-13 01:22:18,DATABASE,|Scheduler || Job || new_scheduler_job_6 || changed |||| trigger_settings |||| time: False, sun_position: False, sensors: False, position: False >>> time: True, sun_position: False, sensors: False, position: False|
+2021-03-13 01:22:55,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-03-13 01:22:55,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-03-13 01:22:56,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-03-13 01:22:56,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-03-13 01:22:56,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-03-13 01:23:00,ERROR,|Task || Scheduler || new_scheduler_job_6 || argument of type 'NoneType' is not iterable|
+2021-03-13 01:23:48,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-03-13 01:23:48,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-03-13 01:23:49,EVENT,|System || Services || Squeezelie Player || disabled|
+2021-03-13 01:23:49,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-03-13 01:23:49,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-03-13 01:24:00,ERROR,|Task || Scheduler || new_scheduler_job_6 || argument of type 'NoneType' is not iterable|
+2021-03-18 21:34:32,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-03-18 21:34:32,EVENT,|System || Services || Logitech Media Server || disabled|
+2021-03-18 21:34:33,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-03-18 21:34:33,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-03-18 21:34:33,EVENT,|System || Services || Squeezelie Player || disabled|

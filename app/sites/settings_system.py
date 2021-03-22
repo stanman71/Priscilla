@@ -161,9 +161,6 @@ def settings_system():
     if request.form.get("update_settings_services") != None:
 
         zigbee2mqtt_active = request.form.get("set_radio_zigbee2mqtt_active") 
-        lms_active         = request.form.get("set_radio_lms_active")
-        squeezelite_active = request.form.get("set_radio_squeezelite_active")    
-
 
         ########
         # zigbee
@@ -187,7 +184,8 @@ def settings_system():
                         
                         WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | connected")
 
-                        START_DISABLE_ZIGBEE_PAIRING_THREAD()
+                        START_ZIGBEE_PAIRING_TIMER_THREAD()
+                        START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD()
 
                         # deactivate pairing at startup
                         if not CHECK_ZIGBEE2MQTT_PAIRING("False"):   
@@ -232,65 +230,11 @@ def settings_system():
                 print("ERROR: System | Services | ZigBee2MQTT | " + str(e)) 
     
 
-        #######################
-        # logitech media server
-        #######################
-
-        if GET_SYSTEM_SETTINGS().lms_active == "False" and lms_active == "True":
-
-            try:
-                os.system("sudo systemctl start logitechmediaserver")
-                WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Logitech Media Server | enabled")
-                print("System | Services | Logitech Media Server | enabled") 
-                time.sleep(1)
-            except Exception as e:
-                WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
-                print("ERROR: System | Services | Logitech Media Server | " + str(e))       
-
-        if GET_SYSTEM_SETTINGS().lms_active == "True" and lms_active == "False":
-
-            try:
-                os.system("sudo systemctl stop logitechmediaserver")
-                WRITE_LOGFILE_SYSTEM("EVENT", "System | Services |Logitech Media Server | disabled")
-                print("System | Services | Logitech Media Server | disabled") 
-                time.sleep(1)
-            except Exception as e:
-                WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
-                print("ERROR: System | Services | Logitech Media Server | " + str(e)) 
-
-
-        ####################
-        # squeezelite player
-        ####################
-
-        if GET_SYSTEM_SETTINGS().squeezelite_active == "False" and squeezelite_active == "True":
-
-            try:
-                os.system("sudo systemctl start squeezelite")
-                WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | enabled")
-                print("System | Services | Squeezelie Player | enabled") 
-                time.sleep(1)
-            except Exception as e:
-                WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
-                print("ERROR: System | Services | Squeezelie Player | " + str(e))     
-
-        if GET_SYSTEM_SETTINGS().squeezelite_active == "True" and squeezelite_active == "False":
-
-            try:
-                os.system("sudo systemctl stop squeezelite")
-                WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | disabled")
-                print("System | Services | Squeezelie Player | disabled") 
-                time.sleep(1)
-            except Exception as e:
-                WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
-                print("ERROR: System | Services | Squeezelie Player | " + str(e)) 
-
-
         ###############
         # save settings
         ###############
 
-        if SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active, lms_active, squeezelite_active):
+        if SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active):
             success_message_change_settings_services = True
 
 

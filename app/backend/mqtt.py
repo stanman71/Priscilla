@@ -428,17 +428,19 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             pass   
 
 
-        # check linkquality (zigbee2mqtt)
-        try:
-            data = json.loads(msg)
-            
-            if int(data["linkquality"]) < 10:
+        if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
 
-                # add ieeeAddr to the bad connection list
-                bad_connection_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), ieeeAddr)) 
+            # check linkquality (zigbee2mqtt)
+            try:
+                data = json.loads(msg)
+                
+                if int(data["linkquality"]) < 10:
 
-        except:
-            pass   
+                    # add ieeeAddr to the bad connection list
+                    bad_connection_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), ieeeAddr)) 
+
+            except:
+                pass   
 
 
     # ##########
@@ -1126,18 +1128,20 @@ def CHECK_DEVICE_CONNECTION_THREAD():
                     WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | Last connection | " + str(time_last_contact))
 
 
-            # get the current time value
-            time_check_zigbee2mqtt = datetime.datetime.now() - datetime.timedelta(days=2) 
-            time_check_zigbee2mqtt = time_check_zigbee2mqtt.strftime("%Y-%m-%d %H:%M:%S")
+            if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
 
-            for device in GET_ALL_DEVICES("zigbee2mqtt"):
+                # get the current time value
+                time_check_zigbee2mqtt = datetime.datetime.now() - datetime.timedelta(days=2) 
+                time_check_zigbee2mqtt = time_check_zigbee2mqtt.strftime("%Y-%m-%d %H:%M:%S")
 
-                time_last_contact = datetime.datetime.strptime(device.last_contact,"%Y-%m-%d %H:%M:%S")   
-                time_limit        = datetime.datetime.strptime(time_check_zigbee2mqtt, "%Y-%m-%d %H:%M:%S")                
+                for device in GET_ALL_DEVICES("zigbee2mqtt"):
 
-                # error message if no connection in the last 48 hours
-                if time_last_contact < time_limit:
-                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | Last connection | " + str(time_last_contact))
+                    time_last_contact = datetime.datetime.strptime(device.last_contact,"%Y-%m-%d %H:%M:%S")   
+                    time_limit        = datetime.datetime.strptime(time_check_zigbee2mqtt, "%Y-%m-%d %H:%M:%S")                
+
+                    # error message if no connection in the last 48 hours
+                    if time_last_contact < time_limit:
+                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | Last connection | " + str(time_last_contact))
 
         except:
             pass

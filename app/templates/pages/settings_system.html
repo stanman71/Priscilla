@@ -143,49 +143,6 @@
 
                     </div>        
                   </div>   
-                  <div class="row"> 
-                    <div class="col-md-3">
-                      <label>Logitech Media Server</label>
-
-                      {% if request.MOBILE %}<br><br>{% endif %}   
-
-                    </div>
-                    <div class="col-md-9">
-                      <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="radio_lms_active_true" {% if system_settings.lms_active == "True" %} checked="on" {% endif %} value="True" name="set_radio_lms_active">
-                        <label class="custom-control-label" for="radio_lms_active_true">enabled</label>
-                      </div>                      
-                      <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="radio_lms_active_false" {% if system_settings.lms_active == "False" %} checked="on" {% endif %} value="False" name="set_radio_lms_active">
-                        <label class="custom-control-label" for="radio_lms_active_false">disabled</label>
-                      </div>      
-                      <br>
-                      <br>
-
-                      {% if request.MOBILE %}<br>{% endif %}  
-
-                    </div>        
-                  </div>   
-                  <div class="row"> 
-                    <div class="col-md-3">
-                      <label>Squeezelite Player</label>
-
-                      {% if request.MOBILE %}<br><br>{% endif %}   
-
-                    </div>
-                    <div class="col-md-9">
-                      <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="radio_squeezelite_active_true" {% if system_settings.squeezelite_active == "True" %} checked="on" {% endif %} value="True" name="set_radio_squeezelite_active">
-                        <label class="custom-control-label" for="radio_squeezelite_active_true">enabled</label>
-                      </div>                      
-                      <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" class="custom-control-input" id="radio_squeezelite_active_false" {% if system_settings.squeezelite_active == "False" %} checked="on" {% endif %} value="False" name="set_radio_squeezelite_active">
-                        <label class="custom-control-label" for="radio_squeezelite_active_false">disabled</label>
-                      </div>      
-                      <br>
-                      <br>
-                    </div>        
-                  </div>   
 
                   {% if request.MOBILE %}  
                     <div class="text-center">

@@ -671,7 +671,8 @@ if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
             
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | connected")
 
-            START_DISABLE_ZIGBEE_PAIRING_THREAD()
+            START_ZIGBEE_PAIRING_TIMER_THREAD()
+            START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD()
 
             # deactivate pairing at startup
             if not CHECK_ZIGBEE2MQTT_PAIRING("False"):   
@@ -711,28 +712,6 @@ else:
     print("System | Services | ZigBee2MQTT | disabled") 
 
 
-if GET_SYSTEM_SETTINGS().lms_active != "True":
-    try:
-        os.system("sudo systemctl stop logitechmediaserver")
-        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Logitech Media Server | disabled")
-        print("System | Services | Logitech Media Server | disabled") 
-        time.sleep(1)
-    except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Logitech Media Server | " + str(e)) 
-        print("ERROR: System | Services | Logitech Media Server | " + str(e)) 
-
-
-if GET_SYSTEM_SETTINGS().squeezelite_active != "True":
-    try:
-        os.system("sudo systemctl stop squeezelite")
-        WRITE_LOGFILE_SYSTEM("EVENT", "System | Services | Squeezelie Player | disabled")
-        print("System | Services | Squeezelie Player | disabled") 
-        time.sleep(1)
-    except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | Services | Squeezelie Player | " + str(e)) 
-        print("ERROR: System | Services | Squeezelie Player | " + str(e)) 
-
-
 """ ###################### """
 """  background processes  """
 """ ###################### """
@@ -741,8 +720,6 @@ START_PROCESS_MANAGEMENT_THREAD()
 START_REFRESH_SPOTIFY_TOKEN_THREAD()
 START_MULTIROOM_SYNCHRONIZATION_THREAD()
 START_CHECK_DEVICE_CONNECTION_THREAD()
-START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD()
 START_BAD_CONNECTION_THREAD()
 
-          
 socketio.run(app, host = GET_SYSTEM_SETTINGS().ip_address, port = int(GET_SYSTEM_SETTINGS().port), debug=False)

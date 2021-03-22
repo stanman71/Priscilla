@@ -347,8 +347,6 @@ class System(db.Model):
     port               = db.Column(db.String(50), server_default=("443"))    
     dhcp               = db.Column(db.String(50), server_default=("True"))     
     zigbee2mqtt_active = db.Column(db.String(50), server_default=("False"))
-    lms_active         = db.Column(db.String(50), server_default=("False"))   
-    squeezelite_active = db.Column(db.String(50), server_default=("False"))   
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
@@ -3601,16 +3599,14 @@ def SET_SYSTEM_NETWORK_SETTINGS(ip_address, gateway, dhcp, port):
         return True
 
 
-def SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active, lms_active, squeezelite_active):
+def SET_SYSTEM_SERVICE_SETTINGS(zigbee2mqtt_active):
                              
     entry = System.query.filter_by().first()
 
     # values changed ?
-    if (entry.zigbee2mqtt_active != zigbee2mqtt_active or entry.lms_active != lms_active or entry.squeezelite_active != squeezelite_active):
+    if (entry.zigbee2mqtt_active != zigbee2mqtt_active):
 
-        entry.zigbee2mqtt_active = zigbee2mqtt_active    
-        entry.lms_active         = lms_active   
-        entry.squeezelite_active = squeezelite_active               
+        entry.zigbee2mqtt_active = zigbee2mqtt_active            
         db.session.commit()   
 
         return True
