@@ -1088,9 +1088,9 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
                     last_values_string_modified = last_values_string_modified + element + ", "
                 if "state" in element:
                     last_values_string_modified = last_values_string_modified + element + ", "                   
-                if "temperature" in element:
-                    last_values_string_modified = last_values_string_modified + element + ", "
                 if "linkquality" in element:
+                    last_values_string_modified = last_values_string_modified + element + ", "
+                if "temperature" in element:
                     last_values_string_modified = last_values_string_modified + element 
 
             last_values_string = last_values_string_modified

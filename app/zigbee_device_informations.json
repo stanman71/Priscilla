@@ -828,7 +828,7 @@
 				"model"           : "GZCGQ01LM",
 				"device_type"     : "sensor_passiv",
 				"description"     : "XIAOMI MiJia light intensity sensor",
-				"input_values"    : ["illuminance"],
+				"input_values"    : ["illuminance", "illuminance_lux"],
 				"input_trigger"   : [],
 				"commands"        : [],
 				"commands_json"   : []

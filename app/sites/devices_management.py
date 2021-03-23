@@ -573,7 +573,7 @@ def devices_management():
     list_exception_sensors = GET_ALL_DEVICES("sensors")    
 
     dropdown_list_exception_devices = GET_ALL_DEVICES("devices")    
-    dropdown_list_exception_options = ["IP-Address"] 
+    dropdown_list_exception_options = ["IP-ADDRESS"] 
     dropdown_list_operators         = ["=", ">", "<"]
     
     list_manually_adding_devices = GET_ALL_MQTT_DEVICES_MANUALLY_ADDING()

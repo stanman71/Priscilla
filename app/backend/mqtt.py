@@ -1168,7 +1168,7 @@ def CHECK_DEVICE_EXCEPTIONS(ieeeAddr, command):
                 
                 exception_command = exception.exception_command.strip()
 
-                if exception.exception_option == "IP-Address" and exception_command.lower() == command.lower():
+                if exception.exception_option == "IP-ADDRESS" and exception_command.lower() == command.lower():
 
                     for x in range(5):
                         if ping(exception.exception_value_1, timeout=1) != None:    
