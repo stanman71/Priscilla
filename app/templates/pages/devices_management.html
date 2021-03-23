@@ -748,7 +748,7 @@
                                     {% if entry.exception_option != "None" %} 
 
                                       <!-- exception option ip_address -->         
-                                      {% if entry.exception_option == "IP-Address" %}         
+                                      {% if entry.exception_option == "IP-ADDRESS" %}         
                                         <div class="col-sm-6"> 
                                           <input type="text" class="form-control" name="set_exception_value_1_{{ entry.id }}"
                                             value = {% if entry.exception_value_1 != None and entry.exception_value_1 != "None" %}"{{ entry.exception_value_1 }}"{% else %}""{% endif %} />

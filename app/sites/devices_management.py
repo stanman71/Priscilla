@@ -407,7 +407,7 @@ def devices_management():
                         exception_sensor_input_values = GET_DEVICE_BY_NAME(exception_option).input_values                                  
                 
                     # set device exception value 1
-                    if exception_option == "IP-Address":
+                    if exception_option == "IP-ADDRESS":
                         exception_value_1 = "None" 
                 
                     else:
@@ -450,7 +450,7 @@ def devices_management():
                 # IP Address
                 # ##########
 
-                elif exception_option == "IP-Address":
+                elif exception_option == "IP-ADDRESS":
                     
                     # set device exception value 1
                     try:

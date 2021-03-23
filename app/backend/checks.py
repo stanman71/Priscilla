@@ -4,6 +4,8 @@ from app.backend.database_models import *
 from croniter import croniter
 
 import re
+import ipaddress
+
 
 """ ################### """
 """  device exceptions  """
@@ -25,14 +27,14 @@ def CHECK_DEVICE_EXCEPTION_SETTINGS(device_exceptions):
          error_message_settings.append(device.name + " || No Option selected")
 
       # exception setting ip_address
-      elif exception.exception_option == "IP-Address":
+      elif exception.exception_option == "IP-ADDRESS":
 
-         # search for wrong chars
-         for element in exception.exception_value_1:
-            if not element.isdigit() and element != "." and element != "," and element != " ":
-               error_message_settings.append(device.name + " || Invalid IP-Address")
-               break
-            
+         # check ip-address
+         try:
+            ip = ipaddress.ip_address(exception.exception_value_1)
+         except:
+            error_message_settings.append(device.name + " || Invalid IP-ADDRESS")
+
       # exception setting sensor
       else: 
          
