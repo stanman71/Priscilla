@@ -37,9 +37,10 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                             brightness = int(task[4].strip())
                         except:
                             brightness = 100
-                            
-                        SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
-                        CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+
+                        if group.current_scene != scene or int(group.current_brightness) != int(brightness):                            
+                            SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
+                            CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
                     else:
                         WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Scene | " + task[3] + " | missing")
@@ -51,9 +52,9 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                 WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group | " + task[2] + " | missing")
 
 
-        # #######################################
-        # group - start lighting scene / turn off
-        # #######################################
+        # ####################################################
+        # group - start lighting scene / turn off (one button)
+        # ####################################################
 
         if "lighting" in task and "start_scene" in task and "turn_off" in task:
             task = task.split(" # ")
@@ -68,7 +69,6 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                 if group.light_ieeeAddr_1 != "None":
 
                     if group.current_scene != "OFF":
-
                         SET_LIGHTING_GROUP_TURN_OFF(group.id)
                         CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)                      
 
@@ -82,8 +82,9 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                             except:
                                 brightness = 100
                                 
-                            SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
-                            CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
+                            if group.current_scene != scene or int(group.current_brightness) != int(brightness):    
+                                SET_LIGHTING_GROUP_SCENE(group.id, scene.id, brightness)
+                                CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene.name, brightness, 2, 10)
 
                         else:
                             WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Scene | " + task[3] + " | missing")
@@ -194,8 +195,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                                 CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, scene.id, scene_name, target_brightness, 2, 10)
 
                             else:
-                                WRITE_LOGFILE_SYSTEM("STATUS", "Light | Group | " + group.name +
-                                                    " | " + scene_name + " : " + str(current_brightness) + " %")
+                                pass
 
                         else:
                             WRITE_LOGFILE_SYSTEM("WARNING", "Light | Group | " + group.name + " | OFF : 0 %")
@@ -270,10 +270,11 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                         group_found = True
 
                         # group not empty ?
-                        if group.light_ieeeAddr_1 != "None":               
+                        if group.light_ieeeAddr_1 != "None": 
 
-                            SET_LIGHTING_GROUP_TURN_OFF(group.id)
-                            CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
+                            if group.current_scene != "OFF":             
+                                SET_LIGHTING_GROUP_TURN_OFF(group.id)
+                                CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
                         else:
                             WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Group | " + input_group_name + " | empty")            
@@ -329,10 +330,10 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
                 # device found ?
                 if device != None:
-                    controller_command = task[2].strip()
-                    
+                    task_command = task[2].strip()
+
                     # check device exception
-                    check_result = CHECK_DEVICE_EXCEPTIONS(device.ieeeAddr, controller_command)
+                    check_result = CHECK_DEVICE_EXCEPTIONS(device.ieeeAddr, task_command)
                                 
                     if check_result == True:           
 
@@ -359,24 +360,26 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
                         # get the json command statement and start process
                         for command in device.commands.split(","):     
-                                                    
-                            if str(controller_command.lower()) == command.lower():
 
-                                # special case xiaomi vacuum cleaner
-                                if (device.model == "xiaomi_mi" or device.model == "roborock_s50") and controller_command.lower() == "return_to_base":
-                                    heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
-                                    time.sleep(5)
-                                    heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
-                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_command, 50)  
-                                    continue    
+                            if task_command.lower() not in device.last_values_json or command == "return_to_base":
 
-                                else:
-                                    heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, controller_command, 50)      
-                                    continue
+                                if str(task_command.lower()) == command.lower():
 
-                            command_position = command_position + 1
-        
+                                    # special case xiaomi vacuum cleaner
+                                    if (device.model == "xiaomi_mi" or device.model == "roborock_s50") and task_command.lower() == "return_to_base":
+                                        heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
+                                        time.sleep(5)
+                                        heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
+                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command, 50)  
+                                        continue    
+
+                                    else:
+                                        heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
+                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command, 50)      
+                                        continue
+
+                                command_position = command_position + 1
+
                     else:
                         WRITE_LOGFILE_SYSTEM("WARNING","Task | " + source + " | " + str(error_informations) + " | " + check_result)
                                         
