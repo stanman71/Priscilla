@@ -307,7 +307,6 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
                     # group not empty ?
                     if group.light_ieeeAddr_1 != "None":  
-
                         CHECK_LIGHTING_GROUP_SETTING_THREAD(group.id, 0, "OFF", 0, 5, 20)   
 
                     else:
@@ -348,7 +347,8 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                         if device.gateway == "zigbee2mqtt":   
                             channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                        command_position  = 0
+
+                        # generate list of commands
 
                         # special case xiaomi vacuum cleaner
                         if device.model == "xiaomi_mi" or device.model == "roborock_s50":
@@ -358,12 +358,16 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                             list_command_json = device.commands_json.replace("},{", "};{")                       
                             list_command_json = list_command_json.split(";")
 
+                        command_position  = 0
+
                         # get the json command statement and start process
                         for command in device.commands.split(","):     
 
-                            if task_command.lower() not in device.last_values_json or command == "return_to_base":
+                            # search for correct command
+                            if str(task_command.lower()) == command.lower():
 
-                                if str(task_command.lower()) == command.lower():
+                                # check last values
+                                if command not in device.last_values_json or command == "return_to_base":
 
                                     # special case xiaomi vacuum cleaner
                                     if (device.model == "xiaomi_mi" or device.model == "roborock_s50") and task_command.lower() == "return_to_base":
@@ -378,7 +382,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                                         CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command, 50)      
                                         continue
 
-                                command_position = command_position + 1
+                            command_position = command_position + 1
 
                     else:
                         WRITE_LOGFILE_SYSTEM("WARNING","Task | " + source + " | " + str(error_informations) + " | " + check_result)

@@ -327,6 +327,59 @@ def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
         pass
 
 
+""" ################################ """
+"""  check multiroom playing thread  """
+""" ################################ """
+
+def START_CHECK_MULTIROOM_PLAYING_THREAD():
+
+    try:
+        Thread = threading.Thread(target=CHECK_MULTIROOM_PLAYING_THREAD)
+        Thread.start()  
+
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | Check Multiroom Playing | " + str(e)) 
+
+
+def CHECK_MULTIROOM_PLAYING_THREAD(): 
+    global SPOTIFY_TOKEN   
+
+    while True:
+
+        if SPOTIFY_TOKEN != "":
+
+            try:
+
+                # search player
+                server = find_server()
+
+                for player in server.players:
+                    if player.name == "multiroom" and player.is_playing == True and player.position_pct == 100.0:
+
+                        time.sleep(5)
+
+                        # check track already change
+                        server = find_server()
+
+                        for player in server.players:             
+                            if player.name == "multiroom" and player.is_playing == True and player.position_pct == 100.0:
+
+                                sp                = spotipy.Spotify(auth=SPOTIFY_TOKEN)
+                                sp.trace          = False     
+                                spotify_device_id = sp.current_playback(market=None)['device']['id']
+                                
+                                sp.next_track(device_id=spotify_device_id)  
+
+                                break
+
+                        break
+
+            except:
+                pass
+
+        time.sleep(1)
+
+
 """ ################# """
 """  spotify control  """
 """ ################# """
@@ -339,7 +392,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
     try:
 
         if command == "play":    
-            
+
             try:
 
                 # start current playback
@@ -447,6 +500,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
             sp.shuffle(True, device_id=spotify_device_id)     
             sp.next_track(device_id=spotify_device_id) 
 
+
         if command == "previous":      
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.previous_track(device_id=spotify_device_id)     
@@ -468,7 +522,6 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
                 for player in server.players:
                     player.pause()   
 
-
         if command == "shuffle_true":     
             spotify_device_id = sp.current_playback(market=None)['device']['id']
             sp.shuffle(True, device_id=spotify_device_id) 
@@ -480,6 +533,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
         if command == "volume":   
             spotify_device_id = sp.current_playback(market=None)['device']['id']  
             SET_MUSIC_VOLUME(spotify_token, spotify_volume)    
+
 
         if command == "volume_up":   
 

@@ -291,9 +291,8 @@ def background_thread_dashboard_system_log():
                              namespace='/socketIO')
 
 
-        except Exception as e:
-            print(e)
-
+        except:
+            
             socketio.emit('dashboard_system_log',
                          {'data_0_title': "" + " ||| " + "", 'data_0_content': "", 
                           'data_1_title': "" + " ||| " + "", 'data_1_content': "", 
@@ -596,7 +595,7 @@ from app.backend.process_management import START_PROCESS_MANAGEMENT_THREAD
 from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_CHECK_MQTT_RUNNING_THREAD, CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING, START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD, START_CHECK_DEVICE_CONNECTION_THREAD
 from app.backend.email              import SEND_EMAIL
 from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
-from app.backend.spotify            import START_REFRESH_SPOTIFY_TOKEN_THREAD
+from app.backend.spotify            import START_REFRESH_SPOTIFY_TOKEN_THREAD, START_CHECK_MULTIROOM_PLAYING_THREAD
 
 
 """ ########### """
@@ -718,6 +717,7 @@ else:
 
 START_PROCESS_MANAGEMENT_THREAD()
 START_REFRESH_SPOTIFY_TOKEN_THREAD()
+START_CHECK_MULTIROOM_PLAYING_THREAD()
 START_CHECK_DEVICE_CONNECTION_THREAD()
 START_BAD_CONNECTION_THREAD()
 
