@@ -63,25 +63,27 @@ def CREATE_LOGFILE(filename):
         
 def RESET_LOGFILE(filename):
 
-    # remove old log file
-    if os.path.isfile(GET_PATH() + "/data/logs/" + filename + "_old" + ".csv"):
-        os.remove (GET_PATH() + "/data/logs/" + filename + "_old" + ".csv")
+    try:
 
-        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/" + filename + "_old" + ".csv | deleted")
+        # remove old log file
+        if os.path.isfile(GET_PATH() + "/data/logs/" + filename + "_old" + ".csv"):
+            os.remove (GET_PATH() + "/data/logs/" + filename + "_old" + ".csv")
 
-    # rename current log file      
-    if os.path.isfile(GET_PATH() + "/data/logs/" + filename + ".csv"):
-        os.rename (GET_PATH() + "/data/logs/" + filename + ".csv", GET_PATH() + "/data/logs/" + filename + "_old" + ".csv")
+        # rename current log file      
+        if os.path.isfile(GET_PATH() + "/data/logs/" + filename + ".csv"):
+            os.rename (GET_PATH() + "/data/logs/" + filename + ".csv", GET_PATH() + "/data/logs/" + filename + "_old" + ".csv")
  
-        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/" + filename + ".csv | renamed")
-
-    result = CREATE_LOGFILE(filename)
-    
-    if result:
-        return True
-    else:
-        return result
+        result = CREATE_LOGFILE(filename)
         
+        if result:
+            return True
+        else:
+            return result
+
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/logs/" + filename + ".csv | " + str(e))   
+        return str(e)   
+   
 
 def WRITE_LOGFILE_DEVICES(channel, msg):
     
@@ -163,7 +165,6 @@ def GET_LOGFILE_SYSTEM(selected_log_types, search, rows):
             
     except Exception as e:
         RESET_LOGFILE("log_system")
-        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/logs/log_system.csv | " + str(e)) 
         return str(e)
 
 
@@ -578,14 +579,18 @@ def GET_ZIGBEE_DEVICE_INFORMATIONS(model):
 
 def RESET_ZIGBEE_LOGFILE():
 
-    # remove old log file
-    if os.path.isfile(GET_PATH() + "/data/logs/zigbee2mqtt_old.txt"):
-        os.remove (GET_PATH() + "/data/logs/zigbee2mqtt_old.txt")
+    try:
 
-        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/zigbee2mqtt_old.txt | deleted")
+        # remove old log file
+        if os.path.isfile(GET_PATH() + "/data/logs/zigbee2mqtt_old.txt"):
+            os.remove (GET_PATH() + "/data/logs/zigbee2mqtt_old.txt")
 
-    # rename current log file      
-    if os.path.isfile(GET_PATH() + "/data/logs/zigbee2mqtt.txt"):
-        os.rename (GET_PATH() + "/data/logs/zigbee2mqtt.txt", GET_PATH() + "/data/logs/zigbee2mqtt_old.txt")
- 
-        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/zigbee2mqtt.txt | renamed")
+        # rename current log file      
+        if os.path.isfile(GET_PATH() + "/data/logs/zigbee2mqtt.txt"):
+            os.rename (GET_PATH() + "/data/logs/zigbee2mqtt.txt", GET_PATH() + "/data/logs/zigbee2mqtt_old.txt")
+    
+        WRITE_LOGFILE_SYSTEM("EVENT", "System | File | /data/logs/zigbee2mqtt.txt | created")
+
+    except Exception as e:
+        WRITE_LOGFILE_SYSTEM("ERROR", "System | File | /data/logs/zigbee2mqtt.txt | " + str(e))   
+        return str(e)        

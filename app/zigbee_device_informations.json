@@ -823,7 +823,25 @@
 				"input_trigger"   : [],
 				"commands"        : [],
 				"commands_json"   : []
-			},										
+			},		
+			{
+				"model"           : "RTCGQ12LM",
+				"device_type"     : "sensor_passiv",
+				"description"     : "XIAOMI Aqara human body movement sensor",
+				"input_values"    : ["occupancy"],
+				"input_trigger"   : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
+			{
+				"model"           : "RTCGQ13LM",
+				"device_type"     : "sensor_passiv",
+				"description"     : "XIAOMI Aqara human body high precision movement sensor",
+				"input_values"    : ["occupancy"],
+				"input_trigger"   : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},				
 			{
 				"model"           : "GZCGQ01LM",
 				"device_type"     : "sensor_passiv",
