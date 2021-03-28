@@ -332,13 +332,14 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                     task_command = task[2].strip()
 
                     # check device exception
+
                     check_result = CHECK_DEVICE_EXCEPTIONS(device.ieeeAddr, task_command)
                                 
                     if check_result == True:           
 
-                        if device.gateway == "mqtt":
+                        # generate mqtt channel
 
-                            # special case xiaomi vacuum cleaner
+                        if device.gateway == "mqtt":
                             if device.model == "xiaomi_mi" or device.model == "roborock_s50":
                                 channel = "smarthome/mqtt/" + device.ieeeAddr + "/command"  
                             else:
@@ -347,10 +348,8 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                         if device.gateway == "zigbee2mqtt":   
                             channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-
                         # generate list of commands
 
-                        # special case xiaomi vacuum cleaner
                         if device.model == "xiaomi_mi" or device.model == "roborock_s50":
                             list_command_json = device.commands_json.split(",")
 
@@ -361,27 +360,31 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                         command_position  = 0
 
                         # get the json command statement and start process
+
                         for command in device.commands.split(","):     
 
                             # search for correct command
                             if str(task_command.lower()) == command.lower():
 
-                                # check last values
-                                if command not in device.last_values_json or command == "return_to_base":
-
-                                    # special case xiaomi vacuum cleaner
-                                    if (device.model == "xiaomi_mi" or device.model == "roborock_s50") and task_command.lower() == "return_to_base":
+                                if device.model == "xiaomi_mi" or device.model == "roborock_s50":
+                                    if task_command.lower() == "return_to_base":
                                         heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
                                         time.sleep(5)
                                         heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
-                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command, 50)  
-                                        continue    
-
+                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command, 50)             
                                     else:
                                         heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command, 50)      
-                                        continue
+                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command, 50)                                                                           
 
+                                else:
+                                    # check last state, cancel process if state already set
+                                    last_command = list_command_json[command_position]
+                                    last_command = last_command[1:-1]
+
+                                    if last_command not in device.last_values_json:
+                                        heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
+                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command, 50)      
+                                        
                             command_position = command_position + 1
 
                     else:

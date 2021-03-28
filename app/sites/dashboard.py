@@ -130,13 +130,14 @@ def dashboard():
                 if dashboard_command != None and dashboard_command != "None":
 
                     # check device exception
+                    
                     check_result = CHECK_DEVICE_EXCEPTIONS(device.ieeeAddr, dashboard_command)
 
                     if check_result == True:               
 
-                        if device.gateway == "mqtt":
+                        # generate mqtt channel
 
-                            # special case xiaomi vacuum cleaner
+                        if device.gateway == "mqtt":
                             if device.model == "xiaomi_mi" or device.model == "roborock_s50":
                                 channel = "smarthome/mqtt/" + device.ieeeAddr + "/command"  
                             else:
@@ -145,9 +146,8 @@ def dashboard():
                         if device.gateway == "zigbee2mqtt":   
                             channel = "smarthome/zigbee2mqtt/" + device.name + "/set"          
 
-                        command_position  = 0
+                        # generate list of commands
 
-                        # special case xiaomi vacuum cleaner
                         if device.model == "xiaomi_mi" or device.model == "roborock_s50":
                             list_command_json = device.commands_json.split(",")
 
@@ -155,23 +155,23 @@ def dashboard():
                             list_command_json = device.commands_json.replace("},{", "};{")                       
                             list_command_json = list_command_json.split(";")
 
+                        command_position  = 0                           
+
                         # get the json command statement and start process
+
                         for command in device.commands.split(","):     
                                             
                             if str(dashboard_command.lower()) == command.lower():
 
-                                # special case xiaomi vacuum cleaner
                                 if (device.model == "xiaomi_mi" or device.model == "roborock_s50") and dashboard_command.lower() == "return_to_base":
                                     heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
                                     time.sleep(5)
                                     heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
-                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 100)  
-                                    continue    
+                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 50)  
 
                                 else:
                                     heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 100)      
-                                    continue
+                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 50)      
 
                             command_position = command_position + 1
 

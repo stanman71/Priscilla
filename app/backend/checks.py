@@ -868,12 +868,21 @@ def CHECK_TASK_OPERATION(task, task_trigger, details):
                      device  = GET_DEVICE_BY_NAME(device_name.strip())  
                      setting = task[2]
 
-                     if setting.lower() not in device.commands.lower():
+                     command_found = False
+
+                     for command in device.commands.split(","):
+                        if setting.lower() == command.lower():
+                           command_found = True
+                           break
                   
+                     if command_found == False:
+
                         if task_trigger == "controller" or task_trigger == "program":
                            list_task_errors.append(details + " || Invalid command | " + setting)
                         else:
                            list_task_errors.append("Invalid command || " + setting)
+
+                        break
                              
             except:       
                if task_trigger == "controller" or task_trigger == "program":
