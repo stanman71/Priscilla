@@ -708,6 +708,15 @@
 				"commands_json"   : []
 			},	
 			{
+				"model"           : "TS0115",
+				"device_type"     : "power_switch",
+				"description"     : "TuYa SmartPower strip",
+				"input_values"    : [],
+				"input_trigger"   : [],
+				"commands"        : ["OUTLET_1_ON","OUTLET_1_OFF","OUTLET_2_ON","OUTLET_2_OFF","OUTLET_3_ON","OUTLET_3_OFF","OUTLET_4_ON","OUTLET_4_OFF","USB_ON","USB_OFF"],				
+				"commands_json"   : ["{'state_l1':'ON'},{'state_l1':'OFF'},{'state_l2':'ON'},{'state_l2':'OFF'},{'state_l3':'ON'},{'state_l3':'OFF'},{'state_l4':'ON'},{'state_l4':'OFF'},{'state_l5':'ON'},{'state_l5':'OFF'}"]	
+			},				
+			{
 				"model"           : "XDD13LM",
 				"device_type"     : "led_simple",
 				"description"     : "Xiaomi Aqara Opple Light MX480",
