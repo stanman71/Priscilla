@@ -27,10 +27,10 @@
 				"input_values"    : ["local_temperature"],
 				"input_trigger"   : [],
 				"commands"        : ["16","17","18","19","20","21","22","23","24","25","OFF","HEAT"],				
-				"commands_json"   : ["{'current_heating_setpoint':16}","{'current_heating_setpoint':17}","{'current_heating_setpoint':18}",
-									 "{'current_heating_setpoint':19}","{'current_heating_setpoint':20}","{'current_heating_setpoint':21}",
-									 "{'current_heating_setpoint':22}","{'current_heating_setpoint':23}","{'current_heating_setpoint':24}",
-									 "{'current_heating_setpoint':25}","{'eurotronic_system_mode':32}","{'eurotronic_system_mode':16}"]
+				"commands_json"   : ["{'occupied_heating_setpoint':16}","{'occupied_heating_setpoint':17}","{'occupied_heating_setpoint':18}",
+									 "{'occupied_heating_setpoint':19}","{'occupied_heating_setpoint':20}","{'occupied_heating_setpoint':21}",
+									 "{'occupied_heating_setpoint':22}","{'occupied_heating_setpoint':23}","{'occupied_heating_setpoint':24}",
+									 "{'occupied_heating_setpoint':25}","{'eurotronic_system_mode':32}","{'eurotronic_system_mode':16}"]
 			},	
 			{
 				"model"           : "ICZB-KPD14S",

@@ -1031,7 +1031,7 @@ def SET_DEVICE_LAST_CONTACT(ieeeAddr):
 
 
 def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
- 
+
     try:
         entry = Devices.query.filter_by(ieeeAddr=ieeeAddr).first()
         
@@ -1060,7 +1060,7 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
             for element in last_values_string.split(","):
                 if "local_temperature" in element:
                     last_values_string_modified = last_values_string_modified + element + ", "
-                if "current_heating_setpoint" in element:
+                if "occupied_heating_setpoint" in element and "unoccupied_heating_setpoint" not in element:
                     last_values_string_modified = last_values_string_modified + element + ", "                   
                 if "system_mode" in element and "eurotronic" not in element:
                     last_values_string_modified = last_values_string_modified + element + ", "
@@ -1106,13 +1106,16 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
 
         timestamp = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
+
+
+
         entry.last_values_json   = last_values
         entry.last_values_string = last_values_string
         entry.last_contact       = timestamp
         db.session.commit()   
     
-    except:
-        pass
+    except Exception as e:
+        print(e)
 
 
 def UPDATE_DEVICE(id, name, gateway, model, device_type = "", version = "", description = "", input_values = "", input_trigger = "", commands = "", commands_json = ""):
