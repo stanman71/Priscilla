@@ -478,7 +478,7 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, limit):
             else:
                 setting = "OFF"
 
-            if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_1, setting, 10, False) != True:
+            if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_1, setting, setting, 10, False) != True:
                 error_list.append(light_1.name)
 
             # light 2
@@ -495,7 +495,7 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, limit):
                 else:
                     setting = "OFF"
 
-                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_2, setting, 10, False) != True:
+                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_2, setting, setting, 10, False) != True:
                     error_list.append(light_2.name)
                                 
             # light 3
@@ -512,7 +512,7 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, limit):
                 else:
                     setting = "OFF"
 
-                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_3, setting, 10, False) != True:
+                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_3, setting, setting, 10, False) != True:
                     error_list.append(light_3.name)
 
             # light 4
@@ -529,7 +529,7 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, limit):
                 else:
                     setting = "OFF"
 
-                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_4, setting, 10, False) != True:
+                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_4, setting, setting, 10, False) != True:
                     error_list.append(light_4.name)
 
             # light 5
@@ -546,7 +546,7 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, limit):
                 else:
                     setting = "OFF"
 
-                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_5, setting, 10, False) != True:
+                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_5, setting, setting, 10, False) != True:
                     error_list.append(light_5.name)
 
             # light 6
@@ -563,7 +563,7 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, limit):
                 else:
                     setting = "OFF"
 
-                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_6, setting, 10, False) != True:
+                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_6, setting, setting, 10, False) != True:
                     error_list.append(light_6.name)
 
             # light 7
@@ -580,7 +580,7 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, limit):
                 else:
                     setting = "OFF"
 
-                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_7, setting, 10, False) != True:
+                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_7, setting, setting, 10, False) != True:
                     error_list.append(light_7.name)
 
             # light 8
@@ -597,7 +597,7 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, limit):
                 else:
                     setting = "OFF"
 
-                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_8, setting, 10, False) != True:
+                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_8, setting, setting, 10, False) != True:
                     error_list.append(light_8.name)
 
             # light 9
@@ -614,7 +614,7 @@ def CHECK_LIGHTING_GROUP_SETTING(group_id, scene_id, limit):
                 else:
                     setting = "OFF"
 
-                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_9, setting, 10, False) != True:
+                if CHECK_DEVICE_SETTING_PROCESS(group.light_ieeeAddr_9, setting, setting, 10, False) != True:
                     error_list.append(light_9.name)
 
             return error_list

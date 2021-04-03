@@ -573,7 +573,7 @@ def CHECK_TASK_OPERATION(task, task_trigger, details):
       # start_scene/turn_off
       # ####################
       
-      if "lighting" in task and "start_scene" in task and "turn_off" in task and task_trigger == "controller":
+      if "lighting" in task and "start_scene/turn_off" in task and task_trigger == "controller":
          if " # " in task:
             task = task.split(" # ") 
 

@@ -371,10 +371,10 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                                         heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
                                         time.sleep(5)
                                         heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
-                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command, 50)             
+                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command, task_command, 50)             
                                     else:
                                         heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command, 50)                                                                           
+                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, list_command_json[command_position], task_command, 50)                                                                           
 
                                 else:
                                     # check last state, cancel process if state already set
@@ -383,7 +383,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
                                     if last_command not in device.last_values_json:
                                         heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command, 50)      
+                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, list_command_json[command_position], task_command, 50)      
                                         
                             command_position = command_position + 1
 
@@ -612,7 +612,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                         message = '{"interface":"' + interface + '","volume":' + str(volume) + '}'
 
                         heapq.heappush(mqtt_message_queue, (10, (channel, message)))            
-                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, interface + '; ' + str(volume), 100)      
+                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, message, interface + '; ' + str(volume), 100)      
 
             else:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | No Spotify Token found")

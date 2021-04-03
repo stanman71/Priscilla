@@ -869,7 +869,7 @@ def GET_SPOTIFY_DEVICE_ID(spotify_token, device_name):
             if str(data["interface"]).lower() == "multiroom":
                 heapq.heappush(mqtt_message_queue, (10, ("smarthome/mqtt/" + device.ieeeAddr + "/set", '{"interface":"spotify","volume":' + str(data["volume"]) + '}')))     
 
-                CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "spotify" + '; ' + str(data["volume"]), 45)     
+                CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, '{"interface":"spotify","volume":' + str(data["volume"]) + '}', "spotify" + '; ' + str(data["volume"]), 45)     
                 
         # get device spotify id
         while spotify_device_id == 0 and counter < 30:

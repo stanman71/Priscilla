@@ -1062,8 +1062,6 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
                     last_values_string_modified = last_values_string_modified + element + ", "
                 if "occupied_heating_setpoint" in element and "unoccupied_heating_setpoint" not in element:
                     last_values_string_modified = last_values_string_modified + element + ", "                   
-                if "system_mode" in element and "eurotronic" not in element:
-                    last_values_string_modified = last_values_string_modified + element + ", "
                 if "eurotronic_error_status" in element:
                     last_values_string_modified = last_values_string_modified + element + ", "
                 if "linkquality" in element:

@@ -808,35 +808,35 @@ def UPDATE_DEVICES(gateway):
 """  check device setting  """
 """ ###################### """
  
-def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, setting, seconds = 100): 
-    Thread  = threading.Thread(target=CHECK_DEVICE_SETTING_PROCESS, args=(ieeeAddr, setting, seconds, ))
+def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, command, setting, seconds = 100): 
+    Thread  = threading.Thread(target=CHECK_DEVICE_SETTING_PROCESS, args=(ieeeAddr, command, setting, seconds, ))
     Thread.start()   
 
  
-def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, seconds, log_report = True):  
+def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, command, setting, seconds, log_report = True):  
     repeats = seconds * 5                 
     device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
     counter = 1
 
     # special case xiaomi vacuum cleaner >>> change setting words
     if device.model == "xiaomi_mi" or device.model == "roborock_s50":
-        if setting.lower() == "start":
-            setting = "cleaning"
-        if setting.lower() == "stop":
-            setting = "idle"        
-        if setting.lower() == "pause":
-            setting = "paused"
-        if setting.lower() == "return_to_base":
-            setting = "returning"
-        if setting.lower() == "locate":
+        if command.lower() == "start":
+            command = "cleaning"
+        if command.lower() == "stop":
+            command = "idle"        
+        if command.lower() == "pause":
+            command = "paused"
+        if command.lower() == "return_to_base":
+            command = "returning"
+        if command.lower() == "locate":
             return True
 
     while counter < repeats:  
         
         if device.gateway == "mqtt":
-            result = CHECK_MQTT_SETTING(device.ieeeAddr, setting)
+            result = CHECK_MQTT_SETTING(device.ieeeAddr, command)
         if device.gateway == "zigbee2mqtt":
-            result = CHECK_ZIGBEE2MQTT_SETTING(device.name, setting)   
+            result = CHECK_ZIGBEE2MQTT_SETTING(device.name, command)   
 
         # set previous setting
         if result == True:
@@ -855,26 +855,26 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, setting, seconds, log_report = True):
     return ("Device | " + device.name + " | Setting not confirmed | " + setting) 
                          
 
-def CHECK_MQTT_SETTING(ieeeAddr, setting):     
-    setting = setting.lower()
+def CHECK_MQTT_SETTING(ieeeAddr, command):     
+    command = command[1:-1]
     
     for message in GET_MQTT_INCOMING_MESSAGES(20):
 
         # search for fitting message in incoming_messages_list
         if message[1] == "smarthome/mqtt/" + ieeeAddr or message[1] == "smarthome/mqtt/" + ieeeAddr + "/state":
 
-            # only one setting value ( "," = separator between command entities || ";" = separator between command values )
-            if not ";" in setting:    
-                if str(setting.strip()) in str(message[2].lower()):
+            # only one command value ( "," = separator inside command entities || ";" = separator between command entities )
+            if not ";" in command:    
+                if str(command) in str(message[2]):
                     return True
                                                     
             # more then one command values:
             else:
                 
-                list_settings = setting.split(";")
+                list_commands = command.split(";")
                 
-                for setting in list_settings:      
-                    if not str(setting.strip()) in str(message[2].lower()):
+                for command in list_commands:      
+                    if not str(command) in str(message[2]):
                         return False    
                         
                 return True
@@ -882,8 +882,8 @@ def CHECK_MQTT_SETTING(ieeeAddr, setting):
     return False
    
 
-def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
-    setting = setting.lower()
+def CHECK_ZIGBEE2MQTT_SETTING(device_name, command):
+    command = command[1:-1]
 
     if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
 
@@ -893,17 +893,17 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, setting):
             if message[1] == "smarthome/zigbee2mqtt/" + device_name:   
 
                 # only one setting value ( "," = separator between command entities || ";" = separator between command values )
-                if not ";" in setting:       
-                    if str(setting.strip()) in str(message[2].lower()):
+                if not ";" in command:       
+                    if str(command) in str(message[2]):
                         return True
                                     
                 # more then one command value:
                 else:
                     
-                    list_settings = setting.split(";")
+                    list_commands = command.split(";")
                     
-                    for setting in list_settings:        
-                        if not str(setting.strip()) in str(message[2].lower()):
+                    for command in list_commands:        
+                        if not str(command) in str(message[2]):
                             return False    
                             
                     return True                    

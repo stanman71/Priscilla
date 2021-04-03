@@ -167,11 +167,11 @@ def dashboard():
                                     heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
                                     time.sleep(5)
                                     heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
-                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 50)  
+                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, dashboard_command, 50)  
 
                                 else:
                                     heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, 50)      
+                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, list_command_json[command_position], dashboard_command, 50)      
 
                             command_position = command_position + 1
 
