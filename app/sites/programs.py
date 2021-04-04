@@ -7,7 +7,7 @@ from app                         import app
 from app.backend.database_models import *
 from app.backend.process_program import * 
 from app.backend.checks          import CHECK_TASKS
-from app.backend.spotify         import GET_SPOTIFY_TOKEN
+from app.backend.music           import GET_SPOTIFY_TOKEN
 from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 from app.backend.user_id         import SET_CURRENT_USER_ID
 from app.common                  import COMMON, STATUS

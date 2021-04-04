@@ -1,6 +1,6 @@
 from app.backend.lighting         import *
 from app.backend.mqtt             import *
-from app.backend.spotify          import *
+from app.backend.music            import *
 from app.backend.file_management  import GET_PATH, BACKUP_DATABASE, BACKUP_ZIGBEE, RESET_LOGFILE
 from app.backend.shared_resources import *
 
@@ -527,7 +527,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                     try: 
                         spotify_volume = sp.current_playback(market=None)['device']['volume_percent']
                     except:
-                        spotify_volume = GET_SPOTIFY_SETTINGS().default_volume
+                        spotify_volume = GET_MUSIC_SETTINGS().default_volume
 
                     if task[1].strip() == "PLAY":
                         SPOTIFY_CONTROL(spotify_token, "play")       

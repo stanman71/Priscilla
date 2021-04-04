@@ -5,7 +5,7 @@ from functools                    import wraps
 
 from app                          import app
 from app.backend.database_models  import *
-from app.backend.spotify          import *
+from app.backend.music            import *
 from app.backend.shared_resources import mqtt_message_queue, GET_MQTT_INCOMING_MESSAGES, GET_MQTT_CONNECTION_STATUS
 from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
@@ -272,18 +272,18 @@ def music():
 
         spotify_default_volume = request.form.get("set_spotify_default_volume") 
 
-        if request.form.get("set_checkbox_default_shuffle_setting") != None:
-            spotify_default_shuffle = "True"
+        if request.form.get("set_checkbox_default_shuffleStart_setting") != None:
+            spotify_default_shuffleStart = "True"
         else:
-            spotify_default_shuffle = "False"
+            spotify_default_shuffleStart = "False"
             
 
-        if SET_SPOTIFY_DEFAULT_SETTINGS(spotify_default_device_id, 
-                                        spotify_default_device_name, 
-                                        spotify_default_playlist_uri, 
-                                        spotify_default_playlist_name, 
-                                        spotify_default_volume, 
-                                        spotify_default_shuffle):
+        if SET_MUSIC_DEFAULT_SETTINGS(spotify_default_device_id, 
+                                      spotify_default_device_name, 
+                                      spotify_default_playlist_uri, 
+                                      spotify_default_playlist_name, 
+                                      spotify_default_volume, 
+                                      spotify_default_shuffleStart):
 
             success_message_change_default_settings = True  
 
@@ -368,7 +368,7 @@ def music():
         error_message_change_settings_client_music.append("No MQTT connection")
 
     list_client_music = GET_ALL_DEVICES("client_music")
-    default_settings  = GET_SPOTIFY_SETTINGS()
+    default_settings  = GET_MUSIC_SETTINGS()
 
     data = {'navigation': 'music'}    
 

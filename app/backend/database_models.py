@@ -210,6 +210,19 @@ class Lighting_Scenes(db.Model):
     brightness_9   = db.Column(db.Integer, server_default=("255")) 
     collapse       = db.Column(db.String(50))        
 
+class Music_Settings(db.Model):
+    __tablename__ = 'music_settings'
+    id                    = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    client_id             = db.Column(db.String(50), server_default=("120de7bdb90e4c139546f0f55919f8c0"))
+    client_secret         = db.Column(db.String(50), server_default=("8454b2fcaf134dff99e582507f0ad428"))   
+    refresh_token         = db.Column(db.String(50), server_default=(""))   
+    default_device_id     = db.Column(db.String(50), server_default=(""))   
+    default_device_name   = db.Column(db.String(50), server_default=("None"))       
+    default_playlist_uri  = db.Column(db.String(50), server_default=(""))   
+    default_playlist_name = db.Column(db.String(50), server_default=("None"))   
+    default_volume        = db.Column(db.Integer, server_default=("0"))
+    default_shuffleStart  = db.Column(db.String(50), server_default=("False"))   
+
 class Programs(db.Model):
     __tablename__   = 'programs'
     id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
@@ -326,19 +339,6 @@ class Sensordata_Jobs(db.Model):
     sensor_key      = db.Column(db.String(50)) 
     always_active   = db.Column(db.String(50), server_default=("True"))
 
-class Spotify_Settings(db.Model):
-    __tablename__ = 'spotify_settings'
-    id                    = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    client_id             = db.Column(db.String(50), server_default=("120de7bdb90e4c139546f0f55919f8c0"))
-    client_secret         = db.Column(db.String(50), server_default=("8454b2fcaf134dff99e582507f0ad428"))   
-    refresh_token         = db.Column(db.String(50), server_default=(""))   
-    default_device_id     = db.Column(db.String(50), server_default=(""))   
-    default_device_name   = db.Column(db.String(50), server_default=("None"))       
-    default_playlist_uri  = db.Column(db.String(50), server_default=(""))   
-    default_playlist_name = db.Column(db.String(50), server_default=("None"))   
-    default_volume        = db.Column(db.Integer, server_default=("0"))
-    default_shuffle       = db.Column(db.String(50), server_default=("False"))   
-
 class System(db.Model):
     __tablename__ = 'system'
     id                 = db.Column(db.Integer, primary_key=True, autoincrement = True)   
@@ -379,7 +379,18 @@ if eMail.query.filter_by().first() == None:
     )
     db.session.add(email)
     db.session.commit()
-   
+
+# #####
+# music
+# #####
+
+if Music_Settings.query.filter_by().first() == None:
+    music_settings = Music_Settings(
+        id = 1,
+    )
+    db.session.add(music_settings)
+    db.session.commit()   
+
 # ###############
 # scheduler jobs
 # ###############
@@ -460,17 +471,6 @@ if reset_system_found == False:
         timedate         = "0 5 * * *",      
     )
     db.session.add(scheduler_job_reset_system)
-    db.session.commit()
-
-# #######
-# spotify
-# #######
-
-if Spotify_Settings.query.filter_by().first() == None:
-    spotify_settings = Spotify_Settings(
-        id = 1,
-    )
-    db.session.add(spotify_settings)
     db.session.commit()
 
 # ######
@@ -2250,6 +2250,86 @@ def DELETE_LIGHTING_SCENE(id):
 
 """ ################### """
 """ ################### """
+"""        music        """
+""" ################### """
+""" ################### """
+
+    
+def GET_MUSIC_SETTINGS():
+    return Music_Settings.query.filter_by().first()
+
+
+def SET_MUSIC_SETTINGS(client_id, client_secret):
+    entry = Music_Settings.query.filter_by().first()
+
+    # values changed ?
+    if (entry.client_id != client_id or entry.client_secret != client_secret):    
+
+        changes = ""
+
+        if entry.client_id != client_id:
+            changes = changes + " || client_id || " + str(entry.client_id) + " >>> " + str(client_id)
+        if entry.client_secret != client_secret:
+            changes = changes + " || client_secret || " + str(entry.client_secret) + " >>> " + str(client_secret)      
+
+        entry.client_id     = client_id
+        entry.client_secret = client_secret   
+        db.session.commit()
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Music | General Settings | changed" + changes) 
+        return True
+
+
+def SET_MUSIC_DEFAULT_SETTINGS(default_device_id, default_device_name, default_playlist_uri, default_playlist_name, default_volume, default_shuffleStart):
+    entry = Music_Settings.query.filter_by().first()
+
+    # values changed ?
+    if (entry.default_device_id != default_device_id or entry.default_device_name != default_device_name or
+        entry.default_playlist_uri != default_playlist_uri or entry.default_playlist_name != default_playlist_name or
+        int(entry.default_volume) != int(default_volume) or entry.default_shuffleStart != default_shuffleStart):    
+
+        changes = ""
+
+        if entry.default_device_name != default_device_name:
+            changes = changes + " || default_device_name || " + str(entry.default_device_name) + " >>> " + str(default_device_name)
+        if entry.default_playlist_name != default_playlist_name:
+            changes = changes + " || default_playlist_name || " + str(entry.default_playlist_name) + " >>> " + str(default_playlist_name)            
+        if int(entry.default_volume) != int(default_volume):
+            changes = changes + " || default_volume || " + str(entry.default_volume) + " >>> " + str(default_volume)        
+        if entry.default_shuffleStart != default_shuffleStart:
+            changes = changes + " || default_shuffleStart || " + str(entry.default_shuffleStart) + " >>> " + str(default_shuffleStart)       
+
+        entry.default_device_id     = default_device_id
+        entry.default_device_name   = default_device_name
+        entry.default_playlist_uri  = default_playlist_uri
+        entry.default_playlist_name = default_playlist_name
+        entry.default_volume        = default_volume       
+        entry.default_shuffleStart  = default_shuffleStart               
+        db.session.commit()
+
+        if changes != "":
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Default Settings | changed" + changes) 
+
+        return True
+
+
+def GET_SPOTIFY_REFRESH_TOKEN():
+    return Music_Settings.query.filter_by().first().refresh_token
+
+
+def SET_SPOTIFY_REFRESH_TOKEN(refresh_token):
+    entry = Music_Settings.query.filter_by().first()
+
+    # values changed ?
+    if (entry.refresh_token != refresh_token):    
+
+        entry.refresh_token = refresh_token
+        db.session.commit()
+        return True
+
+
+""" ################### """
+""" ################### """
 """       programs      """
 """ ################### """
 """ ################### """
@@ -3495,86 +3575,6 @@ def DELETE_SENSORDATA_JOB(id):
     Sensordata_Jobs.query.filter_by(id=id).delete()
     db.session.commit()
     return True
-
-
-""" ################### """
-""" ################### """
-"""       spotitfy      """
-""" ################### """
-""" ################### """
-
-    
-def GET_SPOTIFY_SETTINGS():
-    return Spotify_Settings.query.filter_by().first()
-
-
-def SET_SPOTIFY_SETTINGS(client_id, client_secret):
-    entry = Spotify_Settings.query.filter_by().first()
-
-    # values changed ?
-    if (entry.client_id != client_id or entry.client_secret != client_secret):    
-
-        changes = ""
-
-        if entry.client_id != client_id:
-            changes = changes + " || client_id || " + str(entry.client_id) + " >>> " + str(client_id)
-        if entry.client_secret != client_secret:
-            changes = changes + " || client_secret || " + str(entry.client_secret) + " >>> " + str(client_secret)      
-
-        entry.client_id     = client_id
-        entry.client_secret = client_secret   
-        db.session.commit()
-
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify | Client Settings | changed" + changes) 
-        return True
-
-
-def GET_SPOTIFY_REFRESH_TOKEN():
-    return Spotify_Settings.query.filter_by().first().refresh_token
-
-
-def SET_SPOTIFY_REFRESH_TOKEN(refresh_token):
-    entry = Spotify_Settings.query.filter_by().first()
-
-    # values changed ?
-    if (entry.refresh_token != refresh_token):    
-
-        entry.refresh_token = refresh_token
-        db.session.commit()
-        return True
-
-
-def SET_SPOTIFY_DEFAULT_SETTINGS(default_device_id, default_device_name, default_playlist_uri, default_playlist_name, default_volume, default_shuffle):
-    entry = Spotify_Settings.query.filter_by().first()
-
-    # values changed ?
-    if (entry.default_device_id != default_device_id or entry.default_device_name != default_device_name or
-        entry.default_playlist_uri != default_playlist_uri or entry.default_playlist_name != default_playlist_name or
-        int(entry.default_volume) != int(default_volume) or entry.default_shuffle != default_shuffle):    
-
-        changes = ""
-
-        if entry.default_device_name != default_device_name:
-            changes = changes + " || default_device_name || " + str(entry.default_device_name) + " >>> " + str(default_device_name)
-        if entry.default_playlist_name != default_playlist_name:
-            changes = changes + " || default_playlist_name || " + str(entry.default_playlist_name) + " >>> " + str(default_playlist_name)            
-        if int(entry.default_volume) != int(default_volume):
-            changes = changes + " || default_volume || " + str(entry.default_volume) + " >>> " + str(default_volume)        
-        if entry.default_shuffle != default_shuffle:
-            changes = changes + " || default_shuffle || " + str(entry.default_shuffle) + " >>> " + str(default_shuffle)       
-
-        entry.default_device_id     = default_device_id
-        entry.default_device_name   = default_device_name
-        entry.default_playlist_uri  = default_playlist_uri
-        entry.default_playlist_name = default_playlist_name
-        entry.default_volume        = default_volume       
-        entry.default_shuffle       = default_shuffle               
-        db.session.commit()
-
-        if changes != "":
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Music | Spotify | Default Player Settings | changed" + changes) 
-
-        return True
 
 
 """ ################### """

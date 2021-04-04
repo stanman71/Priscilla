@@ -7,7 +7,7 @@ from flask_mobility.decorators    import mobile_template
 from app                          import app, socketio
 from app.backend.database_models  import *
 from app.backend.lighting         import *
-from app.backend.spotify          import *
+from app.backend.music            import *
 from app.backend.mqtt             import CHECK_DEVICE_EXCEPTIONS, CHECK_DEVICE_SETTING_THREAD
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
 from app.backend.shared_resources import *
