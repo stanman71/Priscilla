@@ -354,7 +354,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                             list_command_json = device.commands_json.split(",")
 
                         else:
-                            list_command_json = device.commands_json.replace("},{", "};{")                       
+                            list_command_json = device.commands_json.replace("},{","};{")                       
                             list_command_json = list_command_json.split(";")
 
                         command_position  = 0
@@ -366,20 +366,19 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                             # search for correct command
                             if str(task_command.lower()) == command.lower():
 
-                                if device.model == "xiaomi_mi" or device.model == "roborock_s50":
-                                    if task_command.lower() == "return_to_base":
-                                        heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
-                                        time.sleep(5)
-                                        heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
-                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command, task_command, 50)             
-                                    else:
-                                        heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            
-                                        CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, list_command_json[command_position], task_command, 50)                                                                           
+                                if (device.model == "xiaomi_mi" or device.model == "roborock_s50") and task_command.lower() == "return_to_base":
+                                    heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
+                                    time.sleep(5)
+                                    heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
+                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, task_command.lower(), task_command, 50)  
+
+                                elif device.model == "xiaomi_mi" or device.model == "roborock_s50" and task_command.lower() == "locate":
+                                    heapq.heappush(mqtt_message_queue, (10, (channel, "locate")))  
 
                                 else:
                                     # check last state, cancel process if state already set
                                     last_command = list_command_json[command_position]
-                                    last_command = last_command[1:-1]
+                                    last_command = re.sub('{}', '', command)
 
                                     if last_command not in device.last_values_json:
                                         heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            

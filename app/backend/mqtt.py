@@ -6,6 +6,7 @@ import datetime
 import time
 import os
 import yaml
+import re
 
 from app                          import app
 from app.backend.database_models  import *
@@ -818,19 +819,6 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, command, setting, seconds, log_report
     device  = GET_DEVICE_BY_IEEEADDR(ieeeAddr)
     counter = 1
 
-    # special case xiaomi vacuum cleaner >>> change setting words
-    if device.model == "xiaomi_mi" or device.model == "roborock_s50":
-        if command.lower() == "start":
-            command = "cleaning"
-        if command.lower() == "stop":
-            command = "idle"        
-        if command.lower() == "pause":
-            command = "paused"
-        if command.lower() == "return_to_base":
-            command = "returning"
-        if command.lower() == "locate":
-            return True
-
     while counter < repeats:  
         
         if device.gateway == "mqtt":
@@ -856,12 +844,14 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, command, setting, seconds, log_report
                          
 
 def CHECK_MQTT_SETTING(ieeeAddr, command):     
-    command = command[1:-1]
+    command = re.sub('{}', '', command)
     
     for message in GET_MQTT_INCOMING_MESSAGES(20):
 
         # search for fitting message in incoming_messages_list
-        if message[1] == "smarthome/mqtt/" + ieeeAddr or message[1] == "smarthome/mqtt/" + ieeeAddr + "/state":
+        if (message[1] == "smarthome/mqtt/" + ieeeAddr or 
+            message[1] == "smarthome/mqtt/" + ieeeAddr + "/state" or 
+            message[1] == "smarthome/mqtt/" + ieeeAddr + "/command_status"):
 
             # only one command value ( "," = separator inside command entities || ";" = separator between command entities )
             if not ";" in command:    

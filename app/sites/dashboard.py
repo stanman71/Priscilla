@@ -167,7 +167,10 @@ def dashboard():
                                     heapq.heappush(mqtt_message_queue, (10, (channel, "stop")))            
                                     time.sleep(5)
                                     heapq.heappush(mqtt_message_queue, (10, (channel, "return_to_base")))                               
-                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command, dashboard_command, 50)  
+                                    CHECK_DEVICE_SETTING_THREAD(device.ieeeAddr, dashboard_command.lower(), dashboard_command, 50)  
+
+                                elif device.model == "xiaomi_mi" or device.model == "roborock_s50" and dashboard_command.lower() == "locate":
+                                    heapq.heappush(mqtt_message_queue, (10, (channel, "locate")))  
 
                                 else:
                                     heapq.heappush(mqtt_message_queue, (10, (channel, list_command_json[command_position])))            

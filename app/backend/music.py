@@ -38,7 +38,7 @@ from lms import find_server
 """  spotify authentification  """
 """ ########################## """
 
-#  Client Keys
+# Client Keys
 CLIENT_ID             = GET_MUSIC_SETTINGS().client_id
 CLIENT_SECRET         = GET_MUSIC_SETTINGS().client_secret
 
@@ -54,7 +54,7 @@ STATE                 = ""
 SHOW_DIALOG_bool      = True
 SHOW_DIALOG_str       = str(SHOW_DIALOG_bool).lower()
 
-#  Client Tokens
+# Client Tokens
 SPOTIFY_TOKEN         = ""
 SPOTIFY_REFRESH_TOKEN = GET_SPOTIFY_REFRESH_TOKEN()
 
@@ -273,15 +273,17 @@ def SET_MUSIC_VOLUME(spotify_token, volume):
     time.sleep(0.15)
 
 
-""" ################################### """
-"""  update multiroom default settings  """
-""" ################################### """
+""" ############################### """
+"""  update music default settings  """
+""" ############################### """
 
-def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
+def UPDATE_MUSIC_DEFAULT_SETTINGS():
+
+    # update settings if ID was changed
 
     try:
 
-        # update multiroom settings
+        # update multiroom settings 
         if "multiroom" in GET_MUSIC_SETTINGS().default_device_name:
 
             sp                   = spotipy.Spotify(auth=SPOTIFY_TOKEN)
@@ -294,12 +296,12 @@ def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
                     spotify_default_device_name = device['name']
                     spotify_default_device_id   = device['id']
 
-                    SET_SPOTIFY_DEFAULT_SETTINGS(spotify_default_device_id, 
-                                                    spotify_default_device_name, 
-                                                    GET_MUSIC_SETTINGS().default_playlist_uri, 
-                                                    GET_MUSIC_SETTINGS().default_playlist_name, 
-                                                    GET_MUSIC_SETTINGS().default_volume,
-                                                    GET_MUSIC_SETTINGS().default_shuffle)        
+                    SET_MUSIC_DEFAULT_SETTINGS(spotify_default_device_id, 
+                                               spotify_default_device_name, 
+                                               GET_MUSIC_SETTINGS().default_playlist_uri, 
+                                               GET_MUSIC_SETTINGS().default_playlist_name, 
+                                               GET_MUSIC_SETTINGS().default_volume,
+                                               GET_MUSIC_SETTINGS().default_shuffle)        
 
 
         # update single device settings
@@ -316,12 +318,12 @@ def UPDATE_MULTIROOM_DEFAULT_SETTINGS():
                     if default_device_name.lower() == device['name'].lower():
                         spotify_default_device_id = device['id']
 
-                        SET_SPOTIFY_DEFAULT_SETTINGS(spotify_default_device_id, 
-                                                    GET_MUSIC_SETTINGS().default_device_name, 
-                                                    GET_MUSIC_SETTINGS().default_playlist_uri, 
-                                                    GET_MUSIC_SETTINGS().default_playlist_name, 
-                                                    GET_MUSIC_SETTINGS().default_volume,
-                                                    GET_MUSIC_SETTINGS().default_shuffle)    
+                        SET_MUSIC_DEFAULT_SETTINGS(spotify_default_device_id, 
+                                                   GET_MUSIC_SETTINGS().default_device_name, 
+                                                   GET_MUSIC_SETTINGS().default_playlist_uri, 
+                                                   GET_MUSIC_SETTINGS().default_playlist_name, 
+                                                   GET_MUSIC_SETTINGS().default_volume,
+                                                   GET_MUSIC_SETTINGS().default_shuffle)    
 
     except:
         pass
@@ -404,7 +406,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
             except:
 
                 # start default settings
-                UPDATE_MULTIROOM_DEFAULT_SETTINGS()
+                UPDATE_MUSIC_DEFAULT_SETTINGS()
 
                 # get spotity device id
                 spotify_device_id = GET_SPOTIFY_DEVICE_ID(spotify_token, GET_MUSIC_SETTINGS().default_device_name) 
@@ -444,7 +446,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
 
             except:                                
                 # start default settings
-                UPDATE_MULTIROOM_DEFAULT_SETTINGS()
+                UPDATE_MUSIC_DEFAULT_SETTINGS()
 
                 # get spotity device id
                 spotify_device_id = GET_SPOTIFY_DEVICE_ID(spotify_token, GET_MUSIC_SETTINGS().default_device_name) 
