@@ -728,7 +728,16 @@
 				"commands"        : ["CH1_ON","CH1_OFF","CH2_ON","CH2_OFF","CH3_ON","CH3_OFF","CH4_ON","CH4_OFF","USB_ON","USB_OFF"],				
 				"commands_json"   : ["{'state_l1':'ON'}","{'state_l1':'OFF'}","{'state_l2':'ON'}","{'state_l2':'OFF'}","{'state_l3':'ON'}",
 					                 "{'state_l3':'OFF'}","{'state_l4':'ON'}","{'state_l4':'OFF'}","{'state_l5':'ON'}","{'state_l5':'OFF'}"]	
-			},				
+			},		
+			{
+				"model"           : "TS0202",
+				"device_type"     : "sensor_passiv",
+				"description"     : "TuYa Motion sensor",
+				"input_values"    : ["occupancy"],
+				"input_trigger"   : [],
+				"commands"        : [],
+				"commands_json"   : []
+			},						
 			{
 				"model"           : "XDD13LM",
 				"device_type"     : "led_simple",
