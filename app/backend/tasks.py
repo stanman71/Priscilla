@@ -234,7 +234,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
                 if rgb_values != []:    
                     SET_LIGHT_RGB_THREAD(device.ieeeAddr, rgb_values[0], rgb_values[1], rgb_values[2], brightness)
-                    CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "ON", 100)
+                    CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "ON", "ON", 100)
 
                 else:
                     WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Invalid settings")  
@@ -291,7 +291,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
                 # device existing ?
                 if device != None:                            
                     SET_LIGHT_TURN_OFF_THREAD(device.ieeeAddr)
-                    CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "OFF", 100)
+                    CHECK_DEVICE_SETTING_PROCESS(device.ieeeAddr, "OFF", "OFF", 100)
 
                 else:
                     WRITE_LOGFILE_SYSTEM("ERROR", "Task | " + source + " | " + str(error_informations) + " | Light | " + task[3].strip() + " | missing")
