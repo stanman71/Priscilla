@@ -1,0 +1,8 @@
+Timestamp,Type,Description
+2021-04-10 20:50:57,EVENT,|System || File || /data/logs/log_system.csv || created|
+2021-04-10 20:50:57,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-04-10 20:50:59,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-04-10 20:50:59,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-04-10 20:51:27,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-04-10 20:51:28,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-04-10 20:51:28,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|

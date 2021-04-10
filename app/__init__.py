@@ -31,6 +31,46 @@ def GET_PATH():
         return("/home/pi/smarthome/")
 
 
+""" ############### """
+"""  create folder  """
+""" ############### """
+
+try:
+    os.mkdir(GET_PATH() + "/data/")
+except:
+    pass
+
+try:
+    os.mkdir(GET_PATH() + "/data/backup_database/")
+except:
+    pass
+
+try:
+    os.mkdir(GET_PATH() + "/data/backup_devices/")
+except:
+    pass
+
+try:
+    os.mkdir(GET_PATH() + "/data/backup_zigbee/")
+except:
+    pass
+
+try:
+    os.mkdir(GET_PATH() + "/data/csv/")
+except:
+    pass
+
+try:
+    os.mkdir(GET_PATH() + "/data/logs/")
+except:
+    pass
+
+try:
+    os.mkdir(GET_PATH() + "/firmwares/")
+except:
+    pass
+
+
 """ ####### """
 """  flask  """
 """ ####### """
