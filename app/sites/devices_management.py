@@ -79,6 +79,12 @@ def UPLOAD_FIRMWARE(file):
     elif file and allowed_file(file.filename):
 
         try:
+            # create folder, if necessary
+            os.mkdir(GET_PATH() + "/firmwares/")
+        except:
+            pass
+
+        try:
             # check existing device_models     
             device_found = False
 
