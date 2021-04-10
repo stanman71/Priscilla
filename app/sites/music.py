@@ -89,7 +89,7 @@ def music():
     spotify_volume         = spotify_data[3]
     spotify_shuffle        = spotify_data[4]
 
-    UPDATE_MULTIROOM_DEFAULT_SETTINGS()
+    UPDATE_SPOTIFY_ID()
 
     error_message_search_track                   = ""
     error_message_search_album                   = ""

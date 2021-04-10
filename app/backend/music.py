@@ -273,13 +273,13 @@ def SET_MUSIC_VOLUME(spotify_token, volume):
     time.sleep(0.15)
 
 
-""" ############################### """
-"""  update music default settings  """
-""" ############################### """
+""" ################### """
+"""  update spotify id  """
+""" ################### """
 
-def UPDATE_MUSIC_DEFAULT_SETTINGS():
+def UPDATE_SPOTIFY_ID():
 
-    # update settings if ID was changed
+    # update default settings if spotify ID was changed
 
     try:
 
