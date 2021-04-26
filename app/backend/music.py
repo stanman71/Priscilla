@@ -39,8 +39,8 @@ from lms import find_server
 """ ########################## """
 
 # Client Keys
-CLIENT_ID             = GET_MUSIC_SETTINGS().client_id
-CLIENT_SECRET         = GET_MUSIC_SETTINGS().client_secret
+CLIENT_ID             = GET_MUSIC_SETTINGS().spotify_client_id
+CLIENT_SECRET         = GET_MUSIC_SETTINGS().spotify_client_secret
 
 # Spotify URLS
 SPOTIFY_AUTH_URL      = "https://accounts.spotify.com/authorize"

@@ -353,15 +353,15 @@
             </div>
 
 
-<!---------------------->
-<!-- SETTINGS SPOTIFY -->
-<!---------------------->
+<!-------------------->
+<!-- SETTINGS MUSIC -->
+<!-------------------->
 
-<section id="spotify"></section>  
+<section id="music"></section>  
 
-<!-- success message change settings spotify -->
+<!-- success message change settings music -->
 
-{% if success_message_change_settings_spotify == True %}
+{% if success_message_change_settings_music == True %}
   <div class="alert alert-success">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
@@ -370,14 +370,14 @@
   </div>
 {% endif %}  
 
-<!-- error message change settings spotify -->
+<!-- error message change settings music -->
 
-{% if error_message_change_settings_spotify != [] %}
+{% if error_message_change_settings_music != [] %}
   <div class="alert alert-danger">
     <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
       <i class="tim-icons icon-simple-remove"></i>
     </button>
-    {% for error in error_message_change_settings_spotify %}
+    {% for error in error_message_change_settings_music %}
       <span data-notify="message">{{ error }}</span>
     {% endfor %}
   </div>
@@ -385,31 +385,31 @@
 
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Spotify</h5>
+                <h5 class="title">Music</h5>
               </div>            
               <form method="POST">          
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label>Client ID</label>
-                        <input type="text" class="form-control" name="set_client_id" value="{% if spotify_settings.client_id != None %}{{ spotify_settings.client_id }}{% endif %}" />
+                        <label>Spotify Client ID</label>
+                        <input type="text" class="form-control" name="set_spotify_client_id" value="{% if music_settings.spotify_client_id != None %}{{ music_settings.spotify_client_id }}{% endif %}" />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label>Client Secret</label>
-                        <input type="password" class="form-control" name="set_client_secret" value="{% if spotify_settings.client_secret != None %}{{ spotify_settings.client_secret }}{% endif %}" />
+                        <label>Spotify Client Secret</label>
+                        <input type="password" class="form-control" name="set_spotify_client_secret" value="{% if music_settings.spotify_client_secret != None %}{{ music_settings.spotify_client_secret }}{% endif %}" />
                       </div>
                     </div>
                   </div>      
                   
                   {% if request.MOBILE %}  
                     <div class="text-center">
-                      <button type="submit" onclick="window.location.href='/settings/system#spotify'" name="update_settings_spotify" class="btn btn-fill btn-primary">SAVE</button>
+                      <button type="submit" onclick="window.location.href='/settings/system#music'" name="update_settings_music" class="btn btn-fill btn-primary">SAVE</button>
                     </div>
                   {% else %}
-                    <button type="submit" onclick="window.location.href='/settings/system#spotify'" name="update_settings_spotify" class="btn btn-fill btn-primary">SAVE</button>
+                    <button type="submit" onclick="window.location.href='/settings/system#music'" name="update_settings_music" class="btn btn-fill btn-primary">SAVE</button>
                   {% endif %}                    
 
                 </div>

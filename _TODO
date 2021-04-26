@@ -21,3 +21,13 @@ OPTIONAL:
 Program settings
 
 save all when add / delete row
+
+
+-----------------------
+
+Devices
+
+> Change visible command names > Load default names in GUI > change and save them 
+> overwrite entries in database, based on ieeeAddr, check function while performing update
+
+Example: Power Strip

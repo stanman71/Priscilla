@@ -104,8 +104,8 @@ def settings_system():
     error_message_change_settings_network    = []
     success_message_change_settings_email    = False       
     error_message_change_settings_email      = []     
-    success_message_change_settings_spotify  = False       
-    error_message_change_settings_spotify    = []     
+    success_message_change_settings_music    = False       
+    error_message_change_settings_music      = []     
     success_message_backup_database          = ""    
     error_message_backup_database            = ""
 
@@ -394,18 +394,18 @@ def settings_system():
             message_test_settings_email = SEND_EMAIL("TEST", "TEST")
 
 
-    """ ################## """
-    """  settings spotify  """
-    """ ################## """    
+    """ ################ """
+    """  settings music  """
+    """ ################ """    
     
     # update email settings
-    if request.form.get("update_settings_spotify") != None:  
+    if request.form.get("update_settings_music") != None:  
 
-        client_id = request.form.get("set_client_id").strip()  
-        client_secret = request.form.get("set_client_secret").strip()  
+        spotify_client_id = request.form.get("set_spotify_client_id").strip()  
+        spotify_client_secret = request.form.get("set_spotify_client_secret").strip()  
 
-        if SET_SPOTIFY_SETTINGS(client_id, client_secret):
-            success_message_change_settings_spotify = True
+        if SET_MUSIC_SETTINGS(spotify_client_id, spotify_client_secret):
+            success_message_change_settings_music = True
 
 
     """ ################ """
@@ -421,7 +421,7 @@ def settings_system():
             error_message_backup_database = "Backup || " + str(result)
 
     system_settings   = GET_SYSTEM_SETTINGS()     
-    spotify_settings  = GET_SPOTIFY_SETTINGS()
+    music_settings    = GET_MUSIC_SETTINGS()
     email_settings    = GET_EMAIL_SETTINGS()
     list_backup_files = GET_ALL_BACKUP_FILES()
 
@@ -439,13 +439,13 @@ def settings_system():
                                                     success_message_change_settings_email=success_message_change_settings_email,                                                       
                                                     error_message_change_settings_email=error_message_change_settings_email,
                                                     message_test_settings_email=message_test_settings_email,                                                     
-                                                    success_message_change_settings_spotify=success_message_change_settings_spotify,       
-                                                    error_message_change_settings_spotify=error_message_change_settings_spotify,
+                                                    success_message_change_settings_music=success_message_change_settings_music,       
+                                                    error_message_change_settings_music=error_message_change_settings_music,
                                                     error_message_backup_database=error_message_backup_database,                                                       
                                                     success_message_backup_database=success_message_backup_database,                                                                                                     
                                                     message_system=message_system,
                                                     system_settings=system_settings,
-                                                    spotify_settings=spotify_settings,
+                                                    music_settings=music_settings,
                                                     email_settings=email_settings,                                            
                                                     list_backup_files=list_backup_files,                    
                                                     ) 

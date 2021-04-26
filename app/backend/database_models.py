@@ -213,9 +213,9 @@ class Lighting_Scenes(db.Model):
 class Music_Settings(db.Model):
     __tablename__ = 'music_settings'
     id                    = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    client_id             = db.Column(db.String(50), server_default=("120de7bdb90e4c139546f0f55919f8c0"))
-    client_secret         = db.Column(db.String(50), server_default=("8454b2fcaf134dff99e582507f0ad428"))   
-    refresh_token         = db.Column(db.String(50), server_default=(""))   
+    spotify_client_id     = db.Column(db.String(50), server_default=("120de7bdb90e4c139546f0f55919f8c0"))
+    spotify_client_secret = db.Column(db.String(50), server_default=("8454b2fcaf134dff99e582507f0ad428"))   
+    spotify_refresh_token = db.Column(db.String(50), server_default=(""))   
     default_device_id     = db.Column(db.String(50), server_default=(""))   
     default_device_name   = db.Column(db.String(50), server_default=("None"))       
     default_playlist_uri  = db.Column(db.String(50), server_default=(""))   
@@ -2259,21 +2259,21 @@ def GET_MUSIC_SETTINGS():
     return Music_Settings.query.filter_by().first()
 
 
-def SET_MUSIC_SETTINGS(client_id, client_secret):
+def SET_MUSIC_SETTINGS(spotify_client_id, spotify_client_secret):
     entry = Music_Settings.query.filter_by().first()
 
     # values changed ?
-    if (entry.client_id != client_id or entry.client_secret != client_secret):    
+    if (entry.spotify_client_id != spotify_client_id or entry.spotify_client_secret != spotify_client_secret):    
 
         changes = ""
 
-        if entry.client_id != client_id:
-            changes = changes + " || client_id || " + str(entry.client_id) + " >>> " + str(client_id)
-        if entry.client_secret != client_secret:
-            changes = changes + " || client_secret || " + str(entry.client_secret) + " >>> " + str(client_secret)      
+        if entry.spotify_client_id != spotify_client_id:
+            changes = changes + " || Spotify ClientId || " + str(entry.spotify_client_id) + " >>> " + str(spotify_client_id)
+        if entry.spotify_client_secret != client_secret:
+            changes = changes + " || Spotify ClientSecret || " + str(entry.spotify_client_secret) + " >>> " + str(spotify_client_secret)      
 
-        entry.client_id     = client_id
-        entry.client_secret = client_secret   
+        entry.spotify_client_id     = spotify_client_id
+        entry.spotify_client_secret = spotify_client_secret   
         db.session.commit()
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "Music | General Settings | changed" + changes) 
@@ -2314,16 +2314,16 @@ def SET_MUSIC_DEFAULT_SETTINGS(default_device_id, default_device_name, default_p
 
 
 def GET_SPOTIFY_REFRESH_TOKEN():
-    return Music_Settings.query.filter_by().first().refresh_token
+    return Music_Settings.query.filter_by().first().spotify_refresh_token
 
 
-def SET_SPOTIFY_REFRESH_TOKEN(refresh_token):
+def SET_SPOTIFY_REFRESH_TOKEN(spotify_refresh_token):
     entry = Music_Settings.query.filter_by().first()
 
     # values changed ?
-    if (entry.refresh_token != refresh_token):    
+    if (entry.spotify_refresh_token != spotify_refresh_token):    
 
-        entry.refresh_token = refresh_token
+        entry.spotify_refresh_token = spotify_refresh_token
         db.session.commit()
         return True
 

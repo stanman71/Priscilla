@@ -844,8 +844,8 @@ def CHECK_DEVICE_SETTING_PROCESS(ieeeAddr, command, setting, seconds, log_report
                          
 
 def CHECK_MQTT_SETTING(ieeeAddr, command):     
-    command = re.sub('{}', '', command)
-    
+    command = command[1:-1]
+
     for message in GET_MQTT_INCOMING_MESSAGES(20):
 
         # search for fitting message in incoming_messages_list
@@ -853,9 +853,13 @@ def CHECK_MQTT_SETTING(ieeeAddr, command):
             message[1] == "smarthome/mqtt/" + ieeeAddr + "/state" or 
             message[1] == "smarthome/mqtt/" + ieeeAddr + "/command_status"):
 
+            return_message = str(message[2])
+            return_message = return_message.replace("{","")
+            return_message = return_message.replace("}","")
+
             # only one command value ( "," = separator inside command entities || ";" = separator between command entities )
             if not ";" in command:    
-                if str(command) in str(message[2]):
+                if command in return_message:
                     return True
                                                     
             # more then one command values:
@@ -864,7 +868,7 @@ def CHECK_MQTT_SETTING(ieeeAddr, command):
                 list_commands = command.split(";")
                 
                 for command in list_commands:      
-                    if not str(command) in str(message[2]):
+                    if not command in return_message:
                         return False    
                         
                 return True
@@ -882,9 +886,13 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, command):
             # search for fitting message in incoming_messages_list
             if message[1] == "smarthome/zigbee2mqtt/" + device_name:   
 
+                return_message = str(message[2])
+                return_message = return_message.replace("{","")
+                return_message = return_message.replace("}","")
+
                 # only one setting value ( "," = separator between command entities || ";" = separator between command values )
                 if not ";" in command:       
-                    if str(command) in str(message[2]):
+                    if command in return_message:
                         return True
                                     
                 # more then one command value:
@@ -893,7 +901,7 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, command):
                     list_commands = command.split(";")
                     
                     for command in list_commands:        
-                        if not str(command) in str(message[2]):
+                        if not command in return_message:
                             return False    
                             
                     return True                    
