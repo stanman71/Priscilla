@@ -730,7 +730,7 @@
 					                 "{'state_l3':'OFF'}","{'state_l4':'ON'}","{'state_l4':'OFF'}","{'state_l5':'ON'}","{'state_l5':'OFF'}"]	
 			},		
 			{
-				"model"           : "TS0202",
+				"model"           : "TS0202_CR",
 				"device_type"     : "sensor_passiv",
 				"description"     : "TuYa Motion sensor",
 				"input_values"    : ["occupancy"],
