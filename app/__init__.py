@@ -15,6 +15,7 @@ import netifaces
 import os
 import heapq
 import json
+import yaml
 
 
 """ ###### """
@@ -67,6 +68,20 @@ except:
 
 try:
     os.mkdir(GET_PATH() + "/firmwares/")
+except:
+    pass
+
+
+""" ################################### """
+"""  change zigbee adapter permissions  """
+""" ################################### """
+
+try:
+    with open(r'/opt/zigbee2mqtt/data/configuration.yaml') as file:
+        configuration = yaml.load(file, Loader=yaml.FullLoader)
+
+        # change permissions
+        os.system("sudo chmod 666 " + str(configuration['serial']['port']))
 except:
     pass
 
