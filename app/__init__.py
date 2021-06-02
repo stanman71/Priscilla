@@ -78,7 +78,7 @@ except:
 
 try:
     # change permissions
-    os.system("sudo chmod -v -R 770 /home/pi/smarthome")
+    os.system("sudo chmod -v -R 770 " + GET_PATH())
 except:
     pass
 
