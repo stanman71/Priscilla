@@ -72,6 +72,17 @@ except:
     pass
 
 
+""" ########################### """
+"""  change folder permissions  """
+""" ########################### """
+
+try:
+    # change permissions
+    os.system("sudo chmod -v -R 770 /home/pi/smarthome")
+except:
+    pass
+
+
 """ ################################### """
 """  change zigbee adapter permissions  """
 """ ################################### """
