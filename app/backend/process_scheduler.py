@@ -3,12 +3,15 @@ from app.backend.database_models  import *
 from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
 from app.backend.tasks            import START_TASK
 
-from ping3    import ping
-from difflib  import SequenceMatcher
-from croniter import croniter
+from ping3          import ping
+from difflib        import SequenceMatcher
+from croniter       import croniter
+from timezonefinder import TimezoneFinder
+from datetime       import date
 
 import requests
 import datetime
+import astral
 
 
 """ ################################ """
@@ -156,21 +159,17 @@ def CHECK_SCHEDULER_SUNSET(job):
 
 def CHECK_SCHEDULER_DAY(job):
 
-    def is_between(time, time_range):
-        if time_range[1] < time_range[0]:
-            return time >= time_range[0] or time <= time_range[1]
+    try:    
 
-        return time_range[0] <= time <= time_range[1]
+        sunrise = GET_SCHEDULER_JOB_SUNRISE(job.id).split(":")
+        sunset  = GET_SCHEDULER_JOB_SUNSET(job.id).split(":")
 
-    # get current time
-    now            = datetime.datetime.now()
-    current_hour   = now.strftime('%H')
-    current_minute = now.strftime('%M')
+        now_time = datetime.datetime.now().time()
+        start    = datetime.time(int(sunrise[0]), int(sunrise[1]))
+        end      = datetime.time(int(sunset[0]), int(sunset[1]))
 
-    try:
-        if is_between(current_hour + ":" + current_minute, (GET_SCHEDULER_JOB_SUNRISE(job.id), GET_SCHEDULER_JOB_SUNSET(job.id))) == True:
+        if start <= now_time <= end:
             return True
-
         else:
             return False
 
@@ -180,21 +179,17 @@ def CHECK_SCHEDULER_DAY(job):
 
 def CHECK_SCHEDULER_NIGHT(job):
 
-    def is_between(time, time_range):
-        if time_range[1] < time_range[0]:
-            return time >= time_range[0] or time <= time_range[1]
+    try:    
 
-        return time_range[0] <= time <= time_range[1]
+        sunset  = GET_SCHEDULER_JOB_SUNSET(job.id).split(":")
+        sunrise = GET_SCHEDULER_JOB_SUNRISE(job.id).split(":")
 
-    # get current time
-    now            = datetime.datetime.now()
-    current_hour   = now.strftime('%H')
-    current_minute = now.strftime('%M')
+        now_time = datetime.datetime.now().time()
+        start    = datetime.time(int(sunset[0]), int(sunset[1]))
+        end      = datetime.time(int(sunrise[0]), int(sunrise[1]))
 
-    try:
-        if is_between(current_hour + ":" + current_minute, (GET_SCHEDULER_JOB_SUNSET(job.id), GET_SCHEDULER_JOB_SUNRISE(job.id))) == True:
+        if now_time >= start or now_time <= end:
             return True
-
         else:
             return False
 
@@ -452,27 +447,20 @@ def CHECK_SCHEDULER_PING(job):
 """ ################################ """
 
 
-# https://stackoverflow.com/questions/41072147/python-retrieve-the-sunrise-and-sunset-times-from-google
-
-def GET_SUNRISE_TIME(lat, long):
+def GET_SUNRISE_TIME(longitude, latitude):
 
     try:
 
-        link     = "http://api.sunrise-sunset.org/json?lat=%f&lng=%f&formatted=0" % (lat, long)
-        response = requests.get(link)
-        data     = response.text
+        # get timezone
+        obj      = TimezoneFinder()
+        timezone = obj.timezone_at(lng=longitude, lat=latitude)
 
-        # get sunrise data
-        sunrise = data[34:42]
-        sunrise = sunrise.split(":")
+        # get sunposition
+        loc = astral.Location(('', '', longitude, latitude, timezone, 510))
 
-        sunrise_hour   = str(sunrise[0])
-        sunrise_minute = str(sunrise[1])
-
-        if len(sunrise_minute) == 1:
-            sunrise_minute = str(0) + sunrise_minute
-
-        sunrise = sunrise_hour + ":" + sunrise_minute
+        for event in loc.sun(date.today()).items():
+            if event[0] == "dawn":
+                sunrise = str(event[1].hour + 1) + ":" + str(event[1].minute)
 
         return (sunrise)
 
@@ -480,25 +468,20 @@ def GET_SUNRISE_TIME(lat, long):
         WRITE_LOGFILE_SYSTEM("ERROR", "Scheduler | Update Sunrise | " + str(e))
 
 
-def GET_SUNSET_TIME(lat, long):
+def GET_SUNSET_TIME(longitude, latitude):
 
     try:
 
-        link     = "http://api.sunrise-sunset.org/json?lat=%f&lng=%f&formatted=0" % (lat, long)
-        response = requests.get(link)
-        data     = response.text
+        # get timezone
+        obj      = TimezoneFinder()
+        timezone = obj.timezone_at(lng=longitude, lat=latitude)
 
-        # get sunset data
-        sunset = data[71:79]
-        sunset = sunset.split(":")
+        # get sunposition
+        loc = astral.Location(('', '', longitude, latitude, timezone, 510))
 
-        sunset_hour   = str(sunset[0])
-        sunset_minute = str(sunset[1])
-
-        if len(sunset_minute) == 1:
-            sunset_minute = str(0) + sunset_minute
-
-        sunset = sunset_hour + ":" + sunset_minute
+        for event in loc.sun(date.today()).items():
+            if event[0] == "sunset":
+                sunset = str(event[1].hour - 1) + ":" + str(event[1].minute)
 
         return (sunset)
 

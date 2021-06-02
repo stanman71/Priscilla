@@ -658,8 +658,8 @@ def update_sunrise_sunset():
                 if job.latitude != "None" and job.latitude != None and job.longitude != "None" and job.longitude:
 
                     # update sunrise / sunset
-                    SET_SCHEDULER_JOB_SUNRISE(job.id, GET_SUNRISE_TIME(float(job.latitude), float(job.longitude)))
-                    SET_SCHEDULER_JOB_SUNSET(job.id, GET_SUNSET_TIME(float(job.latitude), float(job.longitude)))
+                    SET_SCHEDULER_JOB_SUNRISE(job.id, GET_SUNRISE_TIME(float(job.longitude), float(job.latitude)))
+                    SET_SCHEDULER_JOB_SUNSET(job.id, GET_SUNSET_TIME(float(job.longitude), float(job.latitude)))
                             
 
 @scheduler.task('cron', id='scheduler_time', minute='*')

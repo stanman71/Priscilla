@@ -305,8 +305,8 @@ class Scheduler_Jobs(db.Model):
     option_sunset               = db.Column(db.String(50), server_default=("False")) 
     option_day                  = db.Column(db.String(50), server_default=("False")) 
     option_night                = db.Column(db.String(50), server_default=("False"))     
-    latitude                    = db.Column(db.String(50), server_default=("None")) 
-    longitude                   = db.Column(db.String(50), server_default=("None"))    
+    longitude                   = db.Column(db.String(50), server_default=("None"))       
+    latitude                    = db.Column(db.String(50), server_default=("None"))  
     sunrise                     = db.Column(db.String(50), server_default=("None")) 
     sunset                      = db.Column(db.String(50), server_default=("None"))     
     device_ieeeAddr_1           = db.Column(db.String(50), server_default=("None")) 
@@ -3172,7 +3172,7 @@ def ADD_SCHEDULER_JOB():
 def SET_SCHEDULER_JOB(id, name, task,
                       trigger_timedate, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause, 
                       timedate, 
-                      option_sunrise, option_sunset, option_day, option_night, latitude, longitude,
+                      option_sunrise, option_sunset, option_day, option_night, longitude, latitude,
                       device_ieeeAddr_1, device_name_1, device_input_values_1, sensor_key_1, operator_1, value_1, main_operator_second_sensor,
                       device_ieeeAddr_2, device_name_2, device_input_values_2, sensor_key_2, operator_2, value_2, 
                       option_home, option_away, ip_addresses):
@@ -3186,7 +3186,7 @@ def SET_SCHEDULER_JOB(id, name, task,
         entry.trigger_position != trigger_position or entry.option_repeat != option_repeat or entry.option_pause != option_pause or 
         entry.timedate != timedate or
         entry.option_sunrise != option_sunrise or entry.option_sunset != option_sunset or entry.option_day != option_day or entry.option_night != option_night or 
-        str(entry.latitude) != str(latitude) or str(entry.longitude) != str(longitude) or 
+        str(entry.longitude) != str(longitude) or str(entry.latitude) != str(latitude) or 
         entry.device_ieeeAddr_1 != device_ieeeAddr_1 or entry.sensor_key_1 != sensor_key_1 or 
         entry.operator_1 != operator_1 or str(entry.value_1) != str(value_1)  or entry.main_operator_second_sensor != main_operator_second_sensor or 
         entry.device_ieeeAddr_2 != device_ieeeAddr_2 or entry.sensor_key_2 != sensor_key_2 or 
@@ -3216,10 +3216,10 @@ def SET_SCHEDULER_JOB(id, name, task,
         if trigger_sun_position == "True":      
 
             if (entry.option_sunrise != option_sunrise or entry.option_sunset != option_sunset or entry.option_day != option_day or entry.option_night != option_night or  
-                str(entry.latitude) != str(latitude) or str(entry.longitude) != str(longitude)):
+                str(entry.longitude) != str(longitude) or str(entry.latitude) != str(latitude)):
                 changes = (changes + " || sun_position_settings || option_sunrise: " + str(entry.option_sunrise) + ", option_sunset: " + str(entry.option_sunset) + ", option_day: " + str(entry.option_day) + 
-                           ", option_night: " + str(entry.option_night) + ", latitude: " + str(entry.latitude) + ", longitude: " + str(entry.longitude) +  
-                           " >>> option_sunrise: " + str(option_sunrise) + ", option_sunset: " + str(option_sunset) + ", latitude: " + str(latitude) + ", longitude: " + str(longitude))        
+                           ", option_night: " + str(entry.option_night) + ", longitude: " + str(entry.longitude) + ", latitude: " + str(entry.latitude) +   
+                           " >>> option_sunrise: " + str(option_sunrise) + ", option_sunset: " + str(option_sunset) + ", longitude: " + str(longitude) + ", latitude: " + str(latitude))        
   
         if trigger_sensors == "True":
 
@@ -3272,9 +3272,9 @@ def SET_SCHEDULER_JOB(id, name, task,
         entry.option_sunrise              = option_sunrise
         entry.option_sunset               = option_sunset
         entry.option_day                  = option_day
-        entry.option_night                = option_night       
-        entry.latitude                    = latitude        
-        entry.longitude                   = longitude          
+        entry.option_night                = option_night    
+        entry.longitude                   = longitude                 
+        entry.latitude                    = latitude            
         entry.device_ieeeAddr_1           = device_ieeeAddr_1
         entry.device_name_1               = device_name_1
         entry.device_input_values_1       = device_input_values_1

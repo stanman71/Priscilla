@@ -204,26 +204,26 @@ def scheduler():
                     option_night = "False"  
 
                 # set coordinates
-                latitude  = request.form.get("set_latitude_" + str(i))
-
-                if latitude == "" or latitude == None:           
-                    latitude = "None"  
-
                 longitude = request.form.get("set_longitude_" + str(i))
                 
                 if longitude == "" or longitude == None:           
                     longitude = "None"  
 
+                latitude  = request.form.get("set_latitude_" + str(i))
+
+                if latitude == "" or latitude == None:           
+                    latitude = "None"  
+
                 try:                
                     # update sunrise / sunset  
-                    if latitude != "None" and longitude != "None":  
+                    if longitude != "None" and latitude != "None":  
+                        longitude = longitude.replace(",",".")                        
                         latitude  = latitude.replace(",",".")
-                        longitude = longitude.replace(",",".")
 
                         # valid values ?
-                        if -90.0 <= float(latitude) <= 90.0 and -180.0 <= float(longitude) <= 180.0:       
-                            SET_SCHEDULER_JOB_SUNRISE(i, GET_SUNRISE_TIME(float(latitude), float(longitude)))
-                            SET_SCHEDULER_JOB_SUNSET(i, GET_SUNSET_TIME(float(latitude), float(longitude)))
+                        if -180.0 <= float(longitude) <= 180.0 and -90.0 <= float(latitude) <= 90.0:   
+                            SET_SCHEDULER_JOB_SUNRISE(i, GET_SUNRISE_TIME(float(longitude), float(latitude)))
+                            SET_SCHEDULER_JOB_SUNSET(i, GET_SUNSET_TIME(float(longitude), float(latitude)))
 
                         else:
                             SET_SCHEDULER_JOB_SUNRISE(i, "None")
@@ -233,7 +233,8 @@ def scheduler():
                         SET_SCHEDULER_JOB_SUNRISE(i, "None")
                         SET_SCHEDULER_JOB_SUNSET(i, "None")       
 
-                except:
+                except Exception as e:
+                    print(e)
                     SET_SCHEDULER_JOB_SUNRISE(i, "None")
                     SET_SCHEDULER_JOB_SUNSET(i, "None")                   
 
@@ -357,7 +358,7 @@ def scheduler():
                     if SET_SCHEDULER_JOB(i, name, task, 
                                          trigger_timedate, trigger_sun_position, trigger_sensors, trigger_position, option_repeat, option_pause,
                                          timedate,
-                                         option_sunrise, option_sunset, option_day, option_night, latitude, longitude,
+                                         option_sunrise, option_sunset, option_day, option_night, longitude, latitude, 
                                          device_ieeeAddr_1, device_name_1, device_input_values_1, 
                                          sensor_key_1, operator_1, value_1, main_operator_second_sensor,
                                          device_ieeeAddr_2, device_name_2, device_input_values_2, 

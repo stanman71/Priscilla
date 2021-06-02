@@ -601,15 +601,15 @@
                                     </div>   
                                   </div>  
                                 </div>                                    
-                              </div>                     
+                              </div>      
+                              <div class="col-sm-4">   
+                                <input type="text" class="form-control" placeholder="Longitude" name="set_longitude_{{ entry.id }}"
+                                  value = {% if entry.longitude != None and entry.longitude != "None" %}"{{ entry.longitude }}"{% else %}""{% endif %} />                                   
+                              </div>                                                
                               <div class="col-sm-4">                                         
                                 <input type="text" class="form-control" placeholder="Latitude" name="set_latitude_{{ entry.id }}"
                                   value = {% if entry.latitude != None and entry.latitude != "None" %}"{{ entry.latitude }}"{% else %}""{% endif %} />   
                               </div> 
-                              <div class="col-sm-4">   
-                                <input type="text" class="form-control" placeholder="Longitude" name="set_longitude_{{ entry.id }}"
-                                  value = {% if entry.longitude != None and entry.longitude != "None" %}"{{ entry.longitude }}"{% else %}""{% endif %} />                                   
-                              </div>   
                             </div>                                                      
                           </td>                           
                         </tr>
