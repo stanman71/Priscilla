@@ -405,8 +405,8 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
 
             except:
 
-                # start default settings
-                UPDATE_MUSIC_DEFAULT_SETTINGS()
+                # update spotify ID in default settings
+                UPDATE_SPOTIFY_ID()
 
                 # get spotity device id
                 spotify_device_id = GET_SPOTIFY_DEVICE_ID(spotify_token, GET_MUSIC_SETTINGS().default_device_name) 
@@ -422,8 +422,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
                 if GET_MUSIC_SETTINGS().default_shuffle == "True":
                     spotify_device_id = sp.current_playback(market=None)['device']['id'] 
                     sp.shuffle(True, device_id=spotify_device_id) 
-                    sp.next_track(device_id=spotify_device_id)   
-                    sp.shuffle(False, device_id=spotify_device_id)                   
+                    sp.next_track(device_id=spotify_device_id)                   
                 
                 else:
                     sp.shuffle(False, device_id=spotify_device_id)         
@@ -444,9 +443,10 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
                     spotify_device_id = sp.current_playback(market=None)['device']['id']
                     sp.pause_playback(device_id=spotify_device_id)      
 
-            except:                                
-                # start default settings
-                UPDATE_MUSIC_DEFAULT_SETTINGS()
+            except:        
+                                        
+                # update spotify ID in default settings
+                UPDATE_SPOTIFY_ID()
 
                 # get spotity device id
                 spotify_device_id = GET_SPOTIFY_DEVICE_ID(spotify_token, GET_MUSIC_SETTINGS().default_device_name) 
@@ -629,7 +629,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
                 SET_MUSIC_VOLUME(spotify_token, volume)    
 
     except Exception as e:
-        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Control | " + str(e)) 
+        WRITE_LOGFILE_SYSTEM("ERROR", "Music | Spotify | Control | " + command + " | " + str(e)) 
 
 
 def SPOTIFY_START_PLAYLIST(spotify_token, spotify_device_id, playlist_uri, playlist_volume, playlist_shuffle = True):
