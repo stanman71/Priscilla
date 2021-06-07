@@ -292,7 +292,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             # update success
 
             if data["meta"]["status"] == "update_succeeded":
-                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + data["meta"]["device"] + " | Device Update | " + str(data["message"]))
+                WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + data["meta"]["device"] + " | Device Update | successful")
                 time.sleep(10)
           
                 SET_ZIGBEE_DEVICE_UPDATE_AVAILABLE(GET_DEVICE_BY_NAME(data["meta"]["device"]).ieeeAddr, "")

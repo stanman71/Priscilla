@@ -22,7 +22,6 @@ Program settings
 
 save all when add / delete row
 
-
 -----------------------
 
 Devices
@@ -31,3 +30,19 @@ Devices
 > overwrite entries in database, based on ieeeAddr, check function while performing update
 
 Example: Power Strip
+
+-----------------------
+
+eMail Notifications
+
+> new sections Notifications
+> option to activate several system Notifications
+> option to create custom notifications (e.g. sensor values)
+
+-----------------------
+
+MQTT
+
+> error with adapter (version 1.19)
+> optional new Devices:
+    https://github.com/Koenkk/zigbee-herdsman-converters/commit/981b092d0292aaef95dbf018a1eeb0f2cb4eb016
