@@ -344,7 +344,7 @@ class System(db.Model):
     id                 = db.Column(db.Integer, primary_key=True, autoincrement = True)   
     ip_address         = db.Column(db.String(50), server_default=(""))
     gateway            = db.Column(db.String(50), server_default=(""))
-    port               = db.Column(db.String(50), server_default=("443"))    
+    port               = db.Column(db.String(50), server_default=("80"))    
     dhcp               = db.Column(db.String(50), server_default=("True"))     
     zigbee2mqtt_active = db.Column(db.String(50), server_default=("False"))
 
