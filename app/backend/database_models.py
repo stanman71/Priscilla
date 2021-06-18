@@ -2269,7 +2269,7 @@ def SET_MUSIC_SETTINGS(spotify_client_id, spotify_client_secret):
 
         if entry.spotify_client_id != spotify_client_id:
             changes = changes + " || Spotify ClientId || " + str(entry.spotify_client_id) + " >>> " + str(spotify_client_id)
-        if entry.spotify_client_secret != client_secret:
+        if entry.spotify_client_secret != spotify_client_secret:
             changes = changes + " || Spotify ClientSecret || " + str(entry.spotify_client_secret) + " >>> " + str(spotify_client_secret)      
 
         entry.spotify_client_id     = spotify_client_id
