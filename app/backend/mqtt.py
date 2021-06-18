@@ -480,8 +480,8 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
     # start controller job  
     if device_type == "controller":       
         heapq.heappush(process_management_queue, (1, ("controller", ieeeAddr, msg)))
+        WRITE_LOGFILE_SYSTEM("WARNING", "TEST | Controller | " + str(msg))      
             
-
 """ ###################### """
 """  mqtt publish message  """
 """ ###################### """

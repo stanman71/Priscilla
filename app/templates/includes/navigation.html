@@ -213,6 +213,7 @@
               </a>
 
               {% if data.navigation == "settings_system" or 
+                    data.navigation == "settings_notifications" or               
                     data.navigation == "settings_users" or 
                     data.navigation == "settings_threads" or 
                     data.navigation == "settings_system_log" or 
@@ -237,7 +238,20 @@
                       </div>     
                     </a>
                   </li>
-                      
+    
+                  {% if data.navigation == "settings_notifications" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/settings/notifications">
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">Notifications</font></p>     
+                      </div>     
+                    </a>
+                  </li>                  
+
                   {% if data.navigation == "settings_users" %} 
                     <li class="active navbar-collapse_active">
                   {% else %} 

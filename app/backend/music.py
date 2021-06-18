@@ -241,6 +241,9 @@ def REFRESH_SPOTIFY_TOKEN_THREAD():
 
         except Exception as e:
             WRITE_LOGFILE_SYSTEM("ERROR", "Host | Thread | Refresh Spotify Token | " + str(e)) 
+
+            if "Temporary failure in name resolution" in str(e):
+                time.sleep(29)
                 
         time.sleep(1)
 
@@ -360,12 +363,13 @@ def CHECK_MULTIROOM_PLAYING_THREAD():
 
                         time.sleep(5)
 
-                        # check track already change
+                        # check track position changed and new track started
                         server = find_server()
 
                         for player in server.players:             
                             if player.name == "multiroom" and player.is_playing == True and player.position_pct == 100.0:
 
+                                # player stopped playing > start next track
                                 sp                = spotipy.Spotify(auth=SPOTIFY_TOKEN)
                                 sp.trace          = False     
                                 spotify_device_id = sp.current_playback(market=None)['device']['id']
@@ -387,6 +391,8 @@ def CHECK_MULTIROOM_PLAYING_THREAD():
 """ ################# """
 
 def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
+
+    WRITE_LOGFILE_SYSTEM("WARNING", "TEST | Spotify | " + command)     
 
     sp       = spotipy.Spotify(auth=spotify_token)
     sp.trace = False     
@@ -574,7 +580,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
 
             except:
 
-                # case spotity connect device
+                # case other spotity connect device
                 if spotify_volume < 97:
                     volume = spotify_volume + 3
                 else:
@@ -620,7 +626,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
 
             except Exception as e:
 
-                # case spotity connect device
+                # case other spotity connect device
                 if spotify_volume > 3:
                     volume = spotify_volume - 3       
                 else:
