@@ -4,8 +4,6 @@ from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
 from app.backend.shared_resources import *
 from app.backend.tasks            import START_TASK
 
-from difflib import SequenceMatcher
-
 
 def PROCESS_CONTROLLER(ieeeAddr, msg):
     

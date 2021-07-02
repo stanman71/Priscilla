@@ -11,8 +11,7 @@ from app.backend.user_id         import SET_CURRENT_USER_ID
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
-import datetime
-import time
+import datetime as dt
 import pandas as pd
 
 dropdown_list_dates_temp = []
@@ -99,8 +98,6 @@ def sensordata_statistics():
                     error_message_select_datafiles.append("File " + data_file_2 + " selected several times")
                 if data_file_1 == data_file_2 or data_file_1 == data_file_3:
                     error_message_select_datafiles.append("File " + data_file_1 + " selected several times")  
-
-            import datetime as dt
 
             # format data
             try:

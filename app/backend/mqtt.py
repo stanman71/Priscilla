@@ -1,13 +1,3 @@
-import paho.mqtt.client as mqtt
-import heapq
-import threading
-import json
-import datetime
-import time
-import os
-import yaml
-import re
-
 from app                          import app
 from app.backend.database_models  import *
 from app.backend.file_management  import *
@@ -18,23 +8,31 @@ from ping3       import ping
 from ruamel.yaml import YAML
 from pathlib     import Path
 
+import paho.mqtt.client as mqtt
+import heapq
+import threading
+import json
+import datetime
+import time
+import os
 
-""" ############################ """
-"""  block battery low messages  """
-""" ############################ """
+
+""" ################################## """
+"""  block battery low messages timer  """
+""" ################################## """
 
 list_battery_low_devices = []
 
-def START_BLOCK_BATTERY_LOW_DEVICES_THREAD(device):
+def START_TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD(device):
 	try:
-		Thread = threading.Thread(target=BLOCK_BATTERY_LOW_DEVICES_THREAD, args=(device, ))
+		Thread = threading.Thread(target=TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD, args=(device, ))
 		Thread.start()  
 
 	except Exception as e:
-		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Block 'Battery Low' Devices | " + str(e)) 
+		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Timer Block 'Battery Low' Devices | " + str(e)) 
 
 
-def BLOCK_BATTERY_LOW_DEVICES_THREAD(device): 
+def TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD(device): 
     time.sleep(86400)  # 24h
     list_battery_low_devices.remove(device)
 
@@ -221,6 +219,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
                         SET_ZIGBEE2MQTT_PAIRING_STATUS("New Device added | " + data["meta"]["friendly_name"]) 
                         WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + data["meta"]["friendly_name"] + " | added")    
+                        SET_ZIGBEE2MQTT_PAIRING_STATUS("Device added")  
 
                         # add device config for IKEA SYMFONISK sound controller and IKEA TRADFRI wireless dimmer
                         if model == "E1744" or model == "ICTC-G-1":
@@ -246,9 +245,15 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
 
                 except Exception as e:
-                    WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + data["meta"]["friendly_name"] + " | " + str(e))
-                    SET_ZIGBEE2MQTT_PAIRING_STATUS("Error: " + str(e) + " | Update Devices manually")  
+                    if "UNIQUE constraint failed" not in str(e):
+                        WRITE_LOGFILE_SYSTEM("ERROR", "Network | Device | " + data["meta"]["friendly_name"] + " | " + str(e))
+                        SET_ZIGBEE2MQTT_PAIRING_STATUS("Error: " + str(e))  
+                    else:
+                        WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | Device | " + data["meta"]["friendly_name"] + " | Device was already in database")  
+                        SET_ZIGBEE2MQTT_PAIRING_STATUS("Device was already in database")  
+
                     time.sleep(10)
+
 
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Searching for new Devices...") 
 
@@ -367,9 +372,9 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             pass
 
 
-    # #####################################
-    # device last contact + check functions
-    # #####################################
+    # ###########################
+    # check battery + linkquality
+    # ###########################
 
     if ieeeAddr != "":
         
@@ -397,7 +402,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
                         # add device to block list
                         list_battery_low_devices.append(ieeeAddr)
-                        START_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
+                        START_TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
 
                 else:
                     if int(data["battery"]) < 20:
@@ -405,7 +410,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
                         # add device to block list
                         list_battery_low_devices.append(ieeeAddr)
-                        START_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
+                        START_TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
 
         except:
             pass               
@@ -481,7 +486,8 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
     if device_type == "controller":       
         heapq.heappush(process_management_queue, (1, ("controller", ieeeAddr, msg)))
         WRITE_LOGFILE_SYSTEM("WARNING", "TEST | Controller | " + str(msg))      
-            
+           
+           
 """ ###################### """
 """  mqtt publish message  """
 """ ###################### """
@@ -805,9 +811,9 @@ def UPDATE_DEVICES(gateway):
             return True
 
 
-""" ###################### """
-"""  check device setting  """
-""" ###################### """
+""" ####################### """
+"""  check device settings  """
+""" ####################### """
  
 def CHECK_DEVICE_SETTING_THREAD(ieeeAddr, command, setting, seconds = 100): 
     Thread  = threading.Thread(target=CHECK_DEVICE_SETTING_PROCESS, args=(ieeeAddr, command, setting, seconds, ))
@@ -912,9 +918,9 @@ def CHECK_ZIGBEE2MQTT_SETTING(device_name, command):
         return False
 
 
-""" ################# """
-"""  check functions  """
-""" ################# """
+""" ######################## """
+"""  check functions zigbee  """
+""" ######################## """
  
 def CHECK_ZIGBEE2MQTT_STARTED():    
     counter = 1
@@ -1095,6 +1101,10 @@ def CHECK_ZIGBEE2MQTT_RUNNING_THREAD():
         time.sleep(600)   # every 10 minutes
 
 
+""" ########################## """
+"""  check device connections  """
+""" ########################## """
+
 def START_CHECK_DEVICE_CONNECTION_THREAD():
 
     try:
@@ -1113,7 +1123,7 @@ def CHECK_DEVICE_CONNECTION_THREAD():
         try:
 
             # get the current time value
-            time_check_mqtt = datetime.datetime.now() - datetime.timedelta(days=1) 
+            time_check_mqtt = datetime.datetime.now() - datetime.timedelta(days=2) 
             time_check_mqtt = time_check_mqtt.strftime("%Y-%m-%d %H:%M:%S")
 
             for device in GET_ALL_DEVICES("mqtt"):
@@ -1121,9 +1131,9 @@ def CHECK_DEVICE_CONNECTION_THREAD():
                 time_last_contact = datetime.datetime.strptime(device.last_contact,"%Y-%m-%d %H:%M:%S")   
                 time_limit        = datetime.datetime.strptime(time_check_mqtt, "%Y-%m-%d %H:%M:%S")                
 
-                # error message if no connection in the last 24 hours
+                # error message if no connection in the last 48 hours
                 if time_last_contact < time_limit:
-                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | Last connection | " + str(time_last_contact))
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | No connection since: " + str(time_last_contact))
 
 
             if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
@@ -1139,7 +1149,7 @@ def CHECK_DEVICE_CONNECTION_THREAD():
 
                     # error message if no connection in the last 48 hours
                     if time_last_contact < time_limit:
-                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | Last connection | " + str(time_last_contact))
+                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | No connection since: " + str(time_last_contact))
 
         except:
             pass

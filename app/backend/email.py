@@ -4,8 +4,6 @@ from app                         import app
 from app.backend.database_models import *
 from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 
-import os
-
 
 def SEND_EMAIL(subject, message):
 

@@ -1,21 +1,16 @@
 from flask                       import url_for, render_template, request, redirect
-from werkzeug.security           import generate_password_hash, check_password_hash
-from flask_login                 import LoginManager, login_user, login_required, logout_user, current_user
+from werkzeug.security           import check_password_hash
+from flask_login                 import LoginManager, login_user, logout_user
 
-from flask_wtf                   import FlaskForm, RecaptchaField
-from flask_wtf.file              import FileField, FileRequired
-from wtforms                     import StringField, TextAreaField, SubmitField, PasswordField, BooleanField
-from wtforms.validators          import InputRequired, Email, DataRequired
+from flask_wtf                   import FlaskForm
+from wtforms                     import StringField, PasswordField, BooleanField
+from wtforms.validators          import DataRequired
 
 from app                         import app
 from app.backend.database_models import *
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
-import os
-import shutil
-import re
-import cgi
 
 
 """ ############# """

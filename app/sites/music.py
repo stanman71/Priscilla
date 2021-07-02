@@ -13,12 +13,7 @@ from app.backend.user_id          import SET_CURRENT_USER_ID
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
-from lms import find_server
-
-import requests
 import json
-import spotipy
-import socket 
 import heapq
 import threading
 

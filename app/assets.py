@@ -1,3 +1,3 @@
 class Assets:
-    BRAND_NAME = 'Priscilla'
-    BRAND_INFO = 'Priscilla'  
+    BRAND_NAME = 'Bianca'
+    BRAND_INFO = 'Bianca'  

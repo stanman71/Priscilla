@@ -223,6 +223,24 @@ class Music_Settings(db.Model):
     default_volume        = db.Column(db.Integer, server_default=("0"))
     default_shuffleStart  = db.Column(db.String(50), server_default=("False"))   
 
+class Notification_Jobs(db.Model):
+    __tablename__ = 'notification_jobs'
+    id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name            = db.Column(db.String(50), server_default=("None"))   
+    device_ieeeAddr = db.Column(db.String(50), db.ForeignKey('devices.ieeeAddr')) 
+    device          = db.relationship('Devices') 
+    sensor_key      = db.Column(db.String(50), server_default=("None"))
+    operator        = db.Column(db.String(50), server_default=("None"))
+    value           = db.Column(db.String(50), server_default=("None"))
+
+
+
+class Notification_Settings(db.Model):
+    __tablename__ = 'notification_settings'
+    id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
+
+
+
 class Programs(db.Model):
     __tablename__   = 'programs'
     id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
@@ -1062,7 +1080,7 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
                     last_values_string_modified = last_values_string_modified + element + ", "
                 if "occupied_heating_setpoint" in element and "unoccupied_heating_setpoint" not in element:
                     last_values_string_modified = last_values_string_modified + element + ", "                   
-                if "eurotronic_error_status" in element:
+                if "eurotronic_error_status" in element and not "0" in element:
                     last_values_string_modified = last_values_string_modified + element + ", "
                 if "linkquality" in element:
                     last_values_string_modified = last_values_string_modified + element + ", "
@@ -1078,7 +1096,7 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
                 last_values_string = last_values_string_modified + "battery: " + str(battery_value)
 
             except:
-                last_values_string = last_values_string_modified
+                last_values_string = last_values_string_modified[:-1]
 
         # special case XIAOMI Mi power plug EU >>> reduce string statement 
         if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "ZNCZ04LM":
@@ -1093,9 +1111,9 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
                 if "linkquality" in element:
                     last_values_string_modified = last_values_string_modified + element + ", "
                 if "temperature" in element:
-                    last_values_string_modified = last_values_string_modified + element 
+                    last_values_string_modified = last_values_string_modified + element + ", " 
 
-            last_values_string = last_values_string_modified
+            last_values_string = last_values_string_modified[:-1]
 
         # special case XIAOMI vacuum cleaner >>> ignore attributes messages
         if GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "xiaomi_mi" or GET_DEVICE_BY_IEEEADDR(ieeeAddr).model == "roborock_s50":
@@ -1112,8 +1130,8 @@ def SAVE_DEVICE_LAST_VALUES(ieeeAddr, last_values):
         entry.last_contact       = timestamp
         db.session.commit()   
     
-    except Exception as e:
-        print(e)
+    except:
+        pass
 
 
 def UPDATE_DEVICE(id, name, gateway, model, device_type = "", version = "", description = "", input_values = "", input_trigger = "", commands = "", commands_json = ""):
@@ -2326,6 +2344,130 @@ def SET_SPOTIFY_REFRESH_TOKEN(spotify_refresh_token):
         entry.spotify_refresh_token = spotify_refresh_token
         db.session.commit()
         return True
+
+
+""" ################### """
+""" ################### """
+"""    notifications    """
+""" ################### """
+""" ################### """
+
+
+def GET_NOTIFICATION_JOB_BY_ID(id):
+    return Notification_Jobs.query.filter_by(id=id).first()
+
+
+def GET_NOTIFICATION_JOB_BY_NAME(name):
+    for job in Notification_Jobs.query.all():
+        
+        if job.name.lower() == name.lower():
+            return job   
+            
+            
+def GET_ALL_NOTIFICATION_JOBS():
+    return Notification_Jobs.query.all()
+    
+
+def ADD_NOTIFICATION_JOB():
+    for i in range(1,26):
+        if Notification_Jobs.query.filter_by(id=i).first():
+            pass
+        else:
+            # add the new job
+            notification_job = Notification_Jobs(
+                                    id   = i,
+                                    name = "new_job_" + str(i),           
+                                    )
+            db.session.add(notification_job)
+            db.session.commit()
+
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Notification | Job | " + "new_job_" + str(i) + " | added")                    
+            return True
+
+    return "Limit reached (25)"
+
+
+def SET_NOTIFICATION_JOB_SETTINGS(id, name, device_ieeeAddr, sensor_key, operator, value):        
+    entry         = Notification_Jobs.query.filter_by(id=id).first()
+    previous_name = entry.name
+
+    # values changed?
+    if (entry.name != name or entry.device_ieeeAddr != device_ieeeAddr or entry.sensor_key != sensor_key or 
+        entry.operator != operator or entry.value != value):
+
+        changes = ""
+
+        if entry.name != name:
+            changes = changes + " || name || " + str(entry.name) + " >>> " + str(name)     
+        if entry.sensor_key != sensor_key:
+            changes = changes + " || sensor_key || " + str(entry.sensor_key) + " >>> " + str(sensor_key)        
+        if entry.operator != operator:
+            changes = changes + " || operator || " + str(entry.operator) + " >>> " + str(operator)       
+        if entry.value != value:
+            changes = changes + " || value || " + str(entry.value) + " >>> " + str(value)       
+
+        entry.name = name
+        entry.device_ieeeAddr =device_ieeeAddr
+        entry.sensor_key = sensor_key
+        entry.operator = operator        
+        entry.value = value
+        db.session.commit()    
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Notification | Job | " + str(previous_name) + " | changed" + changes)   
+        return True 
+
+
+def CHANGE_NOTIFICATION_JOB_POSITION(id, direction): 
+    if direction == "up":
+        notification_jobs_list = GET_ALL_NOTIFICATION_JOBS()
+        notification_jobs_list = notification_jobs_list[::-1]
+        
+        for notification_job in notification_jobs_list:
+            
+            if notification_job.id < id:  
+                new_id = notification_job.id
+                
+                # change ids
+                notification_job_1 = GET_NOTIFICATION_JOB_BY_ID(id)
+                notification_job_2 = GET_NOTIFICATION_JOB_BY_ID(new_id)
+                
+                notification_job_1.id = 99
+                db.session.commit()
+                
+                notification_job_2.id = id
+                notification_job_1.id = new_id
+                db.session.commit()    
+                return 
+
+    if direction == "down":
+        for notification_job in GET_ALL_NOTIFICATION_JOBS():
+            if notification_job.id > id:    
+                new_id = notification_job.id
+                
+                # change ids
+                notification_job_1 = GET_NOTIFICATION_JOB_BY_ID(id)
+                notification_job_2 = GET_NOTIFICATION_JOB_BY_ID(new_id)
+                
+                notification_job_1.id = 99
+                db.session.commit()
+                
+                notification_job_2.id = id
+                notification_job_1.id = new_id
+                db.session.commit()    
+                return 
+
+
+def DELETE_NOTIFICATION_JOB(id):
+    entry = GET_NOTIFICATION_JOB_BY_ID(id)
+    
+    try:
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Notification | Job | " + str(entry.name) + " | deleted")
+    except:
+        pass     
+ 
+    Notification_Jobs.query.filter_by(id=id).delete()
+    db.session.commit()
+    return True
 
 
 """ ################### """

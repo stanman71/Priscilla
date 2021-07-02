@@ -1,6 +1,3 @@
-import io
-import base64
-
 from pandas.plotting             import register_matplotlib_converters
 from app.backend.file_management import GET_PATH
 

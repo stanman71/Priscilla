@@ -6,7 +6,6 @@ from app.backend.shared_resources import *
 
 import spotipy
 import re
-import json
 import time
 
 

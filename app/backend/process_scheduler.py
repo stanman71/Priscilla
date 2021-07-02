@@ -4,12 +4,10 @@ from app.backend.file_management  import WRITE_LOGFILE_SYSTEM
 from app.backend.tasks            import START_TASK
 
 from ping3          import ping
-from difflib        import SequenceMatcher
 from croniter       import croniter
 from timezonefinder import TimezoneFinder
 from datetime       import date
 
-import requests
 import datetime
 import astral
 

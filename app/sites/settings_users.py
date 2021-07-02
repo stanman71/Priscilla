@@ -12,8 +12,6 @@ from app.backend.user_id         import SET_CURRENT_USER_ID
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
 
-import datetime
-
 
 # access rights
 def permission_required(f):

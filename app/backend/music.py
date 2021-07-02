@@ -23,7 +23,6 @@ from app.backend.mqtt             import CHECK_DEVICE_SETTING_PROCESS
 import requests
 import json
 import spotipy
-import socket 
 import time
 import base64
 import threading

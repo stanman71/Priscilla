@@ -1,10 +1,8 @@
 from flask             import Flask
-from flask_bootstrap   import Bootstrap
-from flask_mail        import Mail
 from flask_apscheduler import APScheduler
 from threading         import Lock
-from flask             import Flask, render_template, session, request, copy_current_request_context
-from flask_socketio    import SocketIO, emit
+from flask             import Flask
+from flask_socketio    import SocketIO
 from flask_mobility    import Mobility
 
 # load RES

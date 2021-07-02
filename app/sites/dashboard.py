@@ -2,7 +2,6 @@ from flask                        import json, url_for, redirect, render_templat
 from flask_login                  import current_user, login_required
 from werkzeug.exceptions          import HTTPException, NotFound, abort
 from functools                    import wraps
-from flask_mobility.decorators    import mobile_template
 
 from app                          import app, socketio
 from app.backend.database_models  import *
@@ -15,11 +14,6 @@ from app.backend.user_id          import SET_CURRENT_USER_ID
 from app.common                   import COMMON, STATUS
 from app.assets                   import *
 
-import os
-import shutil
-import re
-import cgi
-import spotipy
 import threading
 
 # access rights

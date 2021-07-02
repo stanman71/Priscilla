@@ -1,3 +1,324 @@
+<script>
+  var sensor_options_list_1  = '{{ device_input_values_list[0] }}';
+  var sensor_options_list_1  = sensor_options_list_1.split(",");
+  var sensor_options_list_2  = '{{ device_input_values_list[1] }}';
+  var sensor_options_list_2  = sensor_options_list_2.split(",");
+  var sensor_options_list_3  = '{{ device_input_values_list[2] }}';
+  var sensor_options_list_3  = sensor_options_list_3.split(",");
+  var sensor_options_list_4  = '{{ device_input_values_list[3] }}';
+  var sensor_options_list_4  = sensor_options_list_4.split(",");
+  var sensor_options_list_5  = '{{ device_input_values_list[4] }}';
+  var sensor_options_list_5  = sensor_options_list_5.split(",");
+  var sensor_options_list_6  = '{{ device_input_values_list[5] }}';
+  var sensor_options_list_6  = sensor_options_list_6.split(",");
+  var sensor_options_list_7  = '{{ device_input_values_list[6] }}';
+  var sensor_options_list_7  = sensor_options_list_7.split(",");
+  var sensor_options_list_8  = '{{ device_input_values_list[7] }}';
+  var sensor_options_list_8  = sensor_options_list_8.split(",");
+  var sensor_options_list_9  = '{{ device_input_values_list[8] }}';
+  var sensor_options_list_9  = sensor_options_list_9.split(",");
+  var sensor_options_list_10 = '{{ device_input_values_list[9] }}';
+  var sensor_options_list_10 = sensor_options_list_10.split(",");
+  var sensor_options_list_11 = '{{ device_input_values_list[10] }}';
+  var sensor_options_list_11 = sensor_options_list_11.split(",");
+  var sensor_options_list_12 = '{{ device_input_values_list[11] }}';
+  var sensor_options_list_12 = sensor_options_list_12.split(",");
+  var sensor_options_list_13 = '{{ device_input_values_list[12] }}';
+  var sensor_options_list_13 = sensor_options_list_13.split(",");
+  var sensor_options_list_14 = '{{ device_input_values_list[13] }}';
+  var sensor_options_list_14 = sensor_options_list_14.split(",");
+  var sensor_options_list_15 = '{{ device_input_values_list[14] }}';
+  var sensor_options_list_15 = sensor_options_list_15.split(",");
+  var sensor_options_list_16 = '{{ device_input_values_list[15] }}';
+  var sensor_options_list_16 = sensor_options_list_16.split(",");
+  var sensor_options_list_17 = '{{ device_input_values_list[16] }}';
+  var sensor_options_list_17 = sensor_options_list_17.split(",");
+  var sensor_options_list_18 = '{{ device_input_values_list[17] }}';
+  var sensor_options_list_18 = sensor_options_list_18.split(",");
+  var sensor_options_list_19 = '{{ device_input_values_list[18] }}';
+  var sensor_options_list_19 = sensor_options_list_19.split(",");
+  var sensor_options_list_20 = '{{ device_input_values_list[19] }}';
+  var sensor_options_list_20 = sensor_options_list_20.split(",");
+  var sensor_options_list_21 = '{{ device_input_values_list[20] }}';
+  var sensor_options_list_21 = sensor_options_list_21.split(",");
+  var sensor_options_list_22 = '{{ device_input_values_list[21] }}';
+  var sensor_options_list_22 = sensor_options_list_22.split(",");
+  var sensor_options_list_23 = '{{ device_input_values_list[22] }}';
+  var sensor_options_list_23 = sensor_options_list_23.split(",");
+  var sensor_options_list_24 = '{{ device_input_values_list[23] }}';
+  var sensor_options_list_24 = sensor_options_list_24.split(",");
+  var sensor_options_list_25 = '{{ device_input_values_list[24] }}';
+  var sensor_options_list_25 = sensor_options_list_25.split(",");
+  var sensor_options_list_26 = '{{ device_input_values_list[25] }}';
+  var sensor_options_list_26 = sensor_options_list_26.split(",");
+  var sensor_options_list_27 = '{{ device_input_values_list[26] }}';
+  var sensor_options_list_27 = sensor_options_list_27.split(",");
+  var sensor_options_list_28 = '{{ device_input_values_list[27] }}';
+  var sensor_options_list_28 = sensor_options_list_28.split(",");
+  var sensor_options_list_29 = '{{ device_input_values_list[28] }}';
+  var sensor_options_list_29 = sensor_options_list_29.split(",");
+  var sensor_options_list_30 = '{{ device_input_values_list[29] }}';
+  var sensor_options_list_30 = sensor_options_list_30.split(",");
+  var sensor_options_list_31 = '{{ device_input_values_list[30] }}';
+  var sensor_options_list_31 = sensor_options_list_31.split(",");
+  var sensor_options_list_32 = '{{ device_input_values_list[31] }}';
+  var sensor_options_list_32 = sensor_options_list_32.split(",");
+  var sensor_options_list_33 = '{{ device_input_values_list[32] }}';
+  var sensor_options_list_33 = sensor_options_list_33.split(",");
+  var sensor_options_list_34 = '{{ device_input_values_list[33] }}';
+  var sensor_options_list_34 = sensor_options_list_34.split(",");
+  var sensor_options_list_35 = '{{ device_input_values_list[34] }}';
+  var sensor_options_list_35 = sensor_options_list_35.split(",");
+  var sensor_options_list_36 = '{{ device_input_values_list[35] }}';
+  var sensor_options_list_36 = sensor_options_list_36.split(",");
+  var sensor_options_list_37 = '{{ device_input_values_list[36] }}';
+  var sensor_options_list_37 = sensor_options_list_37.split(",");
+  var sensor_options_list_38 = '{{ device_input_values_list[37] }}';
+  var sensor_options_list_38 = sensor_options_list_38.split(",");
+  var sensor_options_list_39 = '{{ device_input_values_list[38] }}';
+  var sensor_options_list_39 = sensor_options_list_39.split(",");
+  var sensor_options_list_40 = '{{ device_input_values_list[39] }}';
+  var sensor_options_list_40 = sensor_options_list_40.split(",");
+  var sensor_options_list_41 = '{{ device_input_values_list[40] }}';
+  var sensor_options_list_41 = sensor_options_list_41.split(",");
+  var sensor_options_list_42 = '{{ device_input_values_list[41] }}';
+  var sensor_options_list_42 = sensor_options_list_42.split(",");
+  var sensor_options_list_43 = '{{ device_input_values_list[42] }}';
+  var sensor_options_list_43 = sensor_options_list_43.split(",");
+  var sensor_options_list_44 = '{{ device_input_values_list[43] }}';
+  var sensor_options_list_44 = sensor_options_list_44.split(",");
+  var sensor_options_list_45 = '{{ device_input_values_list[44] }}';
+  var sensor_options_list_45 = sensor_options_list_45.split(",");
+  var sensor_options_list_46 = '{{ device_input_values_list[45] }}';
+  var sensor_options_list_46 = sensor_options_list_46.split(",");
+  var sensor_options_list_47 = '{{ device_input_values_list[46] }}';
+  var sensor_options_list_47 = sensor_options_list_47.split(",");
+  var sensor_options_list_48 = '{{ device_input_values_list[47] }}';
+  var sensor_options_list_48 = sensor_options_list_48.split(",");
+  var sensor_options_list_49 = '{{ device_input_values_list[48] }}';
+  var sensor_options_list_49 = sensor_options_list_49.split(",");
+  var sensor_options_list_50 = '{{ device_input_values_list[49] }}';
+  var sensor_options_list_50 = sensor_options_list_50.split(",");
+  var sensor_options_list_51 = '{{ device_input_values_list[50] }}';
+  var sensor_options_list_51 = sensor_options_list_51.split(",");
+  var sensor_options_list_52 = '{{ device_input_values_list[51] }}';
+  var sensor_options_list_52 = sensor_options_list_52.split(",");
+  var sensor_options_list_53 = '{{ device_input_values_list[52] }}';
+  var sensor_options_list_53 = sensor_options_list_53.split(",");
+  var sensor_options_list_54 = '{{ device_input_values_list[53] }}';
+  var sensor_options_list_54 = sensor_options_list_54.split(",");
+  var sensor_options_list_55 = '{{ device_input_values_list[54] }}';
+  var sensor_options_list_55 = sensor_options_list_55.split(",");
+  var sensor_options_list_56 = '{{ device_input_values_list[55] }}';
+  var sensor_options_list_56 = sensor_options_list_56.split(",");
+  var sensor_options_list_57 = '{{ device_input_values_list[56] }}';
+  var sensor_options_list_57 = sensor_options_list_57.split(",");
+  var sensor_options_list_58 = '{{ device_input_values_list[57] }}';
+  var sensor_options_list_58 = sensor_options_list_58.split(",");
+  var sensor_options_list_59 = '{{ device_input_values_list[58] }}';
+  var sensor_options_list_59 = sensor_options_list_59.split(",");
+  var sensor_options_list_60 = '{{ device_input_values_list[59] }}';
+  var sensor_options_list_60 = sensor_options_list_60.split(",");
+  var sensor_options_list_61 = '{{ device_input_values_list[60] }}';
+  var sensor_options_list_61 = sensor_options_list_61.split(",");
+  var sensor_options_list_62 = '{{ device_input_values_list[61] }}';
+  var sensor_options_list_62 = sensor_options_list_62.split(",");
+  var sensor_options_list_63 = '{{ device_input_values_list[62] }}';
+  var sensor_options_list_63 = sensor_options_list_63.split(",");
+  var sensor_options_list_64 = '{{ device_input_values_list[63] }}';
+  var sensor_options_list_64 = sensor_options_list_64.split(",");
+  var sensor_options_list_65 = '{{ device_input_values_list[64] }}';
+  var sensor_options_list_65 = sensor_options_list_65.split(",");
+  var sensor_options_list_66 = '{{ device_input_values_list[65] }}';
+  var sensor_options_list_66 = sensor_options_list_66.split(",");
+  var sensor_options_list_67 = '{{ device_input_values_list[66] }}';
+  var sensor_options_list_67 = sensor_options_list_67.split(",");
+  var sensor_options_list_68 = '{{ device_input_values_list[67] }}';
+  var sensor_options_list_68 = sensor_options_list_68.split(",");
+  var sensor_options_list_69 = '{{ device_input_values_list[68] }}';
+  var sensor_options_list_69 = sensor_options_list_69.split(",");
+  var sensor_options_list_70 = '{{ device_input_values_list[69] }}';
+  var sensor_options_list_70 = sensor_options_list_70.split(",");
+  var sensor_options_list_71 = '{{ device_input_values_list[70] }}';
+  var sensor_options_list_71 = sensor_options_list_71.split(",");
+  var sensor_options_list_72 = '{{ device_input_values_list[71] }}';
+  var sensor_options_list_72 = sensor_options_list_72.split(",");
+  var sensor_options_list_73 = '{{ device_input_values_list[72] }}';
+  var sensor_options_list_73 = sensor_options_list_73.split(",");
+  var sensor_options_list_74 = '{{ device_input_values_list[73] }}';
+  var sensor_options_list_74 = sensor_options_list_74.split(",");
+  var sensor_options_list_75 = '{{ device_input_values_list[74] }}';
+  var sensor_options_list_75 = sensor_options_list_75.split(",");
+  var sensor_options_list_76 = '{{ device_input_values_list[75] }}';
+  var sensor_options_list_76 = sensor_options_list_76.split(",");
+  var sensor_options_list_77 = '{{ device_input_values_list[76] }}';
+  var sensor_options_list_77 = sensor_options_list_77.split(",");
+  var sensor_options_list_78 = '{{ device_input_values_list[77] }}';
+  var sensor_options_list_78 = sensor_options_list_78.split(",");
+  var sensor_options_list_79 = '{{ device_input_values_list[78] }}';
+  var sensor_options_list_79 = sensor_options_list_79.split(",");
+  var sensor_options_list_80 = '{{ device_input_values_list[79] }}';
+  var sensor_options_list_80 = sensor_options_list_80.split(",");
+  var sensor_options_list_81 = '{{ device_input_values_list[80] }}';
+  var sensor_options_list_81 = sensor_options_list_81.split(",");
+  var sensor_options_list_82 = '{{ device_input_values_list[81] }}';
+  var sensor_options_list_82 = sensor_options_list_82.split(",");
+  var sensor_options_list_83 = '{{ device_input_values_list[82] }}';
+  var sensor_options_list_83 = sensor_options_list_83.split(",");
+  var sensor_options_list_84 = '{{ device_input_values_list[83] }}';
+  var sensor_options_list_84 = sensor_options_list_84.split(",");
+  var sensor_options_list_85 = '{{ device_input_values_list[84] }}';
+  var sensor_options_list_85 = sensor_options_list_85.split(",");
+  var sensor_options_list_86 = '{{ device_input_values_list[85] }}';
+  var sensor_options_list_86 = sensor_options_list_86.split(",");
+  var sensor_options_list_87 = '{{ device_input_values_list[86] }}';
+  var sensor_options_list_87 = sensor_options_list_87.split(",");
+  var sensor_options_list_88 = '{{ device_input_values_list[87] }}';
+  var sensor_options_list_88 = sensor_options_list_88.split(",");
+  var sensor_options_list_89 = '{{ device_input_values_list[88] }}';
+  var sensor_options_list_89 = sensor_options_list_89.split(",");
+  var sensor_options_list_90 = '{{ device_input_values_list[89] }}';
+  var sensor_options_list_90 = sensor_options_list_90.split(",");
+  var sensor_options_list_91 = '{{ device_input_values_list[90] }}';
+  var sensor_options_list_91 = sensor_options_list_91.split(",");
+  var sensor_options_list_92 = '{{ device_input_values_list[91] }}';
+  var sensor_options_list_92 = sensor_options_list_92.split(",");
+  var sensor_options_list_93 = '{{ device_input_values_list[92] }}';
+  var sensor_options_list_93 = sensor_options_list_93.split(",");
+  var sensor_options_list_94 = '{{ device_input_values_list[93] }}';
+  var sensor_options_list_94 = sensor_options_list_94.split(",");
+  var sensor_options_list_95 = '{{ device_input_values_list[94] }}';
+  var sensor_options_list_95 = sensor_options_list_95.split(",");
+  var sensor_options_list_96 = '{{ device_input_values_list[95] }}';
+  var sensor_options_list_96 = sensor_options_list_96.split(",");
+  var sensor_options_list_97 = '{{ device_input_values_list[96] }}';
+  var sensor_options_list_97 = sensor_options_list_97.split(",");
+  var sensor_options_list_98 = '{{ device_input_values_list[97] }}';
+  var sensor_options_list_98 = sensor_options_list_98.split(",");
+  var sensor_options_list_99 = '{{ device_input_values_list[98] }}';
+  var sensor_options_list_99 = sensor_options_list_99.split(",");
+  var sensor_options = {};
+
+  sensor_options['1']  = sensor_options_list_1;
+  sensor_options['2']  = sensor_options_list_2;
+  sensor_options['3']  = sensor_options_list_3;
+  sensor_options['4']  = sensor_options_list_4;
+  sensor_options['5']  = sensor_options_list_5;
+  sensor_options['6']  = sensor_options_list_6;
+  sensor_options['7']  = sensor_options_list_7;
+  sensor_options['8']  = sensor_options_list_8;
+  sensor_options['9']  = sensor_options_list_9;
+  sensor_options['10'] = sensor_options_list_10;
+  sensor_options['11'] = sensor_options_list_11;
+  sensor_options['12'] = sensor_options_list_12;
+  sensor_options['13'] = sensor_options_list_13;
+  sensor_options['14'] = sensor_options_list_14;
+  sensor_options['15'] = sensor_options_list_15;
+  sensor_options['16'] = sensor_options_list_16;
+  sensor_options['17'] = sensor_options_list_17;
+  sensor_options['18'] = sensor_options_list_18;
+  sensor_options['19'] = sensor_options_list_19;
+  sensor_options['20'] = sensor_options_list_20;
+  sensor_options['21'] = sensor_options_list_21;
+  sensor_options['22'] = sensor_options_list_22;
+  sensor_options['23'] = sensor_options_list_23;
+  sensor_options['24'] = sensor_options_list_24;
+  sensor_options['25'] = sensor_options_list_25;
+  sensor_options['26'] = sensor_options_list_26;
+  sensor_options['27'] = sensor_options_list_27;
+  sensor_options['28'] = sensor_options_list_28;
+  sensor_options['29'] = sensor_options_list_29;
+  sensor_options['30'] = sensor_options_list_30;
+  sensor_options['31'] = sensor_options_list_31;
+  sensor_options['32'] = sensor_options_list_32;
+  sensor_options['33'] = sensor_options_list_33;
+  sensor_options['34'] = sensor_options_list_34;
+  sensor_options['35'] = sensor_options_list_35;
+  sensor_options['36'] = sensor_options_list_36;
+  sensor_options['37'] = sensor_options_list_37;
+  sensor_options['38'] = sensor_options_list_38;
+  sensor_options['39'] = sensor_options_list_39;
+  sensor_options['40'] = sensor_options_list_40;
+  sensor_options['41'] = sensor_options_list_41;
+  sensor_options['42'] = sensor_options_list_42;
+  sensor_options['43'] = sensor_options_list_43;
+  sensor_options['44'] = sensor_options_list_44;
+  sensor_options['45'] = sensor_options_list_45;
+  sensor_options['46'] = sensor_options_list_46;
+  sensor_options['47'] = sensor_options_list_47;
+  sensor_options['48'] = sensor_options_list_48;
+  sensor_options['49'] = sensor_options_list_49;
+  sensor_options['50'] = sensor_options_list_50;
+  sensor_options['51'] = sensor_options_list_51;
+  sensor_options['52'] = sensor_options_list_52;
+  sensor_options['53'] = sensor_options_list_53;
+  sensor_options['54'] = sensor_options_list_54;
+  sensor_options['55'] = sensor_options_list_55;
+  sensor_options['56'] = sensor_options_list_56;
+  sensor_options['57'] = sensor_options_list_57;
+  sensor_options['58'] = sensor_options_list_58;
+  sensor_options['59'] = sensor_options_list_59;
+  sensor_options['60'] = sensor_options_list_60;
+  sensor_options['61'] = sensor_options_list_61;
+  sensor_options['62'] = sensor_options_list_62;
+  sensor_options['63'] = sensor_options_list_63;
+  sensor_options['64'] = sensor_options_list_64;
+  sensor_options['65'] = sensor_options_list_65;
+  sensor_options['66'] = sensor_options_list_66;
+  sensor_options['67'] = sensor_options_list_67;
+  sensor_options['68'] = sensor_options_list_68;
+  sensor_options['69'] = sensor_options_list_69;
+  sensor_options['70'] = sensor_options_list_70;
+  sensor_options['71'] = sensor_options_list_71;
+  sensor_options['72'] = sensor_options_list_72;
+  sensor_options['73'] = sensor_options_list_73;
+  sensor_options['74'] = sensor_options_list_74;
+  sensor_options['75'] = sensor_options_list_75;
+  sensor_options['76'] = sensor_options_list_76;
+  sensor_options['77'] = sensor_options_list_77;
+  sensor_options['78'] = sensor_options_list_78;
+  sensor_options['79'] = sensor_options_list_79;
+  sensor_options['80'] = sensor_options_list_80;
+  sensor_options['81'] = sensor_options_list_81;
+  sensor_options['82'] = sensor_options_list_82;
+  sensor_options['83'] = sensor_options_list_83;
+  sensor_options['84'] = sensor_options_list_84;
+  sensor_options['85'] = sensor_options_list_85;
+  sensor_options['86'] = sensor_options_list_86;
+  sensor_options['87'] = sensor_options_list_87;
+  sensor_options['88'] = sensor_options_list_88;
+  sensor_options['89'] = sensor_options_list_89;
+  sensor_options['90'] = sensor_options_list_90;
+  sensor_options['91'] = sensor_options_list_91;
+  sensor_options['92'] = sensor_options_list_92;
+  sensor_options['93'] = sensor_options_list_93;
+  sensor_options['94'] = sensor_options_list_94;
+  sensor_options['95'] = sensor_options_list_95;
+  sensor_options['96'] = sensor_options_list_96;
+  sensor_options['97'] = sensor_options_list_97;
+  sensor_options['98'] = sensor_options_list_98;
+  sensor_options['99'] = sensor_options_list_99;  
+
+  function Choose_Sensor(entry_id) {
+    var device_name = "device_" + entry_id
+    var sensor_list_name = "selected_sensor_" + entry_id
+    var device = document.getElementById(device_name);
+    var sensor_list = document.getElementById(sensor_list_name);
+    var selected_sensor = device.options[device.selectedIndex].value;
+    while (sensor_list.options.length) {
+      sensor_list.remove(0);
+    }
+    var sensors = sensor_options[selected_sensor];
+    if (sensors) {
+      var i;
+      for (i = 0; i < sensors.length; i++) {
+        var sensor = new Option(sensors[i], i);
+        sensor_list.options.add(sensor);
+      }
+    }
+  } 
+</script> 
+
 {% if request.MOBILE %} 
 <br>
 {% endif %} 
@@ -7,17 +328,236 @@
   <div class="col-md-12">
     <div class="card ">
       <div class="card-header">
-        <h4 class="card-title"><b>Settings - Notifications</b></h4>
+        <h4 class="card-title"><b>Notifications - Jobs</b></h4>
       </div>
     </div>
 
-    <div class="card">        
-      <div class="card-body">
 
-        
+<!--------------------------->
+<!-- SYSTEM NOTIFICATIONS  -->
+<!--------------------------->
 
-      </div>
+    <div class="card">
+      <form method="POST">         
+        <div class="card-footer">
+
+          {% if request.MOBILE %}         
+            <div class="text-center">
+              <button type="submit" onclick="window.location.href='/settings/notifications#'" name="add_notification_job" class="btn btn-fill btn-primary">SAVE</button>
+            </div>
+          {% else %}
+            <button type="submit" onclick="window.location.href='/settings/notifications#'" name="add_notification_job" class="btn btn-fill btn-primary">SAVE</button>
+          {% endif %}                  
+
+        </div>
+      </form>
     </div>
+
+
+
+
+<!-------------->
+<!-- ADD JOB  -->
+<!-------------->
+
+<!-- success message add job -->
+
+{% if success_message_add_job == True %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span>Job successfully added</span>
   </div>
-</div>
-</div>      
+{% endif %}  
+
+<!-- error message add job --> 
+
+{% if error_message_add_job != [] %}
+  <div class="alert alert-info alert-with-icon" data-notify="container">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+    {% for error in error_message_add_job %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+    <div class="card">
+      <form method="POST">         
+        <div class="card-footer">
+
+          {% if request.MOBILE %}         
+            <div class="text-center">
+              <button type="submit" onclick="window.location.href='/settings/notifications#'" name="add_notification_job" class="btn btn-fill btn-primary">NEW JOB</button>
+            </div>
+          {% else %}
+            <button type="submit" onclick="window.location.href='/settings/notifications#'" name="add_notification_job" class="btn btn-fill btn-primary">NEW JOB</button>
+          {% endif %}                  
+
+        </div>
+      </form>
+    </div>
+
+<!---------------->
+<!-- JOBS TABLE -->
+<!---------------->
+
+<section id="table_notification_jobs"></section>    
+
+<!-- error message settings -->
+
+{% if error_message_settings != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_settings %}
+      {{ error }} <br>
+    {% endfor %}
+  </div>      
+{% endif %}  
+
+<!-- success message change settings -->
+
+{% if success_message_change_settings != [] %}
+  <div class="alert alert-success">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for success in success_message_change_settings %}
+      <span data-notify="message">{{ success }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+<!-- error message change settings -->
+
+{% if error_message_change_settings != [] %}
+  <div class="alert alert-danger">
+    <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+    {% for error in error_message_change_settings %}
+      <span data-notify="message">{{ error }}</span>
+    {% endfor %}
+  </div>
+{% endif %}  
+
+    {% if list_notification_jobs != [] %}
+
+      <div class="card ">
+        <form method="POST">          
+          <div class="card-body"> 
+            <div class="table-responsive">
+              <table class="table tablesorter">
+                <thead>
+                  <th scope="col" style="width:3%"></th>  
+                  <th scope="col" style="width:18%" class="minwidth_200">Job</th>  
+                  <th scope="col" style="width:18%" class="minwidth_200">Device</th>
+                  <th scope="col" style="width:18%" class="minwidth_200">Sensor</th>
+                  <th scope="col" style="width:15%" class="minwidth_100">Operator</th> 
+                  <th scope="col" style="width:15%" class="minwidth_100">Value</th>
+                  <th scope="col"></th>                          
+                  <th scope="col" style="width:10%"></th>
+                </thead>
+                <tbody> 
+                  {% for entry in list_notification_jobs %}
+                    <tr>
+                      <td>
+                        <a href="/settings/notifications/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                        <a href="/settings/notifications/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>                            
+                      </td>                     
+                      <td>
+                        <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                    
+                      </td> 
+                      <td>
+                        <select id="device_{{ entry.id }}" class="form-control" onchange="Choose_Sensor('{{ entry.id }}')" name="set_device_{{ entry.id }}" style="background-color:#27293D"> 
+                          {% if entry.device_ieeeAddr != "None" and entry.device_ieeeAddr != None and entry.device_ieeeAddr != "" %}
+                            <option value = "{{ entry.device_ieeeAddr }}" > {{ entry.device.name }} </option>
+                          {% else %}   
+                            <option value = "None" > Device </option> 
+                          {% endif %}    
+                          <option disabled>------------------</option>
+                          {% for each in dropdown_list_devices %}
+                            <option value="{{ each.id }}"> {{ each.name }} </option>
+                          {% endfor %}
+                        </select>                           
+                      </td>
+                      <td>       
+                        <select id="selected_sensor_{{ entry.id }}" class="form-control" name="set_sensor_{{ entry.id }}" style="background-color:#27293D"> 
+                          {% if entry.sensor_key != "None" and entry.sensor_key != None and entry.sensor_key != "" %}
+                            <option value= "{{ entry.sensor_key }}" > {{ entry.sensor_key }} </option>                     
+                          {% else %}                         
+                            <option value= "None" > Sensor </option> 
+                          {% endif %}                
+                          <option disabled>------------------</option>
+                          {% if entry.device_ieeeAddr != None %}
+                            {% for each in entry.device.input_values.split(',') %}
+                              <option value= "{{ each }}" > {{ each }} </option>
+                            {% endfor %}     
+                          {% endif %} 
+                        </select>                    
+                      </td> 
+                      <td>
+                        <select data-size="5" class="form-control" name="set_operator_{{ entry.id }}" style="background-color:#27293D">  
+                          {% if entry.operator_2 != None and entry.operator != "None" and entry.operator != "" %}
+                            <option value= "{{ entry.operator }}" > {{ entry.operator }} </option>
+                          {% else %}
+                            <option value= "" > Operator </option>
+                          {% endif %}  
+                          <option disabled>------------------</option>                                       
+                          {% for each in dropdown_list_operators %}
+                            <option value="{{each}}"> {{ each }} </option>
+                          {% endfor %}                                                                                                                
+                        </select>  
+                      </td>                                 
+                      <td>
+                        <input type="text" class="form-control" placeholder="Value" name="set_value_{{ entry.id }}"
+                          value = {% if entry.value != None and entry.value != "None" %}"{{ entry.value }}"{% else %}""{% endif %} />
+                      </td>   
+                      <td></td>  
+                      <td>   
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_dialog_{{entry.id}}">DELETE</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="delete_dialog_{{entry.id}}">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title">Delete {{entry.name}} ?</h5>                              
+                              </div>          
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                                <a class="btn btn-danger" href="/settings/notifications/delete/{{ entry.id }}#table" role="button">DELETE</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>                          
+                      </td>   
+                    </tr>
+                    
+                  {% endfor %}
+
+                </tbody>
+              </table>               
+            </div>
+
+            {% if request.MOBILE %}                  
+              <div class="text-center">
+                <button type="submit" onclick="window.location.href='/settings/notification#table_notification_jobs'" name="save_notification_jobs_settings" class="btn btn-fill btn-primary">SAVE</button>
+              </div>
+            {% else %}
+              <button type="submit" onclick="window.location.href='/settings/notifications#table_notification_jobs'" name="save_notification_jobs_settings" class="btn btn-fill btn-primary">SAVE</button>
+            {% endif %}     
+
+          </div>
+        </form>
+      </div>
+
+    {% endif %}
+    
+  </div>
+</div>     

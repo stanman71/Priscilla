@@ -1,7 +1,3 @@
-import heapq
-import threading
-import time
-
 from app                            import app
 from app.backend.database_models    import *
 from app.backend.file_management    import WRITE_LOGFILE_SYSTEM
@@ -10,6 +6,10 @@ from app.backend.shared_resources   import process_management_queue
 from app.backend.process_controller import PROCESS_CONTROLLER
 from app.backend.process_program    import PROCESS_PROGRAM
 from app.backend.process_scheduler  import PROCESS_SCHEDULER
+
+import heapq
+import threading
+import time
 
 
 """ ########################## """

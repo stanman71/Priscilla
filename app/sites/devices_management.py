@@ -17,9 +17,6 @@ from app.assets                   import *
 import datetime
 import os
 import heapq
-import time
-import threading
-import urllib.request
 
 
 # access rights

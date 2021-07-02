@@ -49,12 +49,12 @@ def sensordata_jobs():
 
 
     # delete message
-    if session.get('delete_job_success', None) != None:
-        success_message_change_settings.append(session.get('delete_job_success')) 
+    if session.get('delete_sensordata_job_success', None) != None:
+        success_message_change_settings.append(session.get('delete_sensordata_job_success')) 
         session['delete_job_success'] = None
         
-    if session.get('delete_job_error', None) != None:
-        error_message_change_settings.append(session.get('delete_job_error'))
+    if session.get('delete_sensordata_job_error', None) != None:
+        error_message_change_settings.append(session.get('delete_sensordata_job_error'))
         session['delete_job_error'] = None       
 
     # error download datafile
@@ -152,23 +152,29 @@ def sensordata_jobs():
                 # sensor setting
                 # ##############
 
-                # add new sensor
-                if device_ieeeAddr != "None":
+                try:
 
-                    # replace array_position to sensor name 
-                    sensor_key = request.form.get("set_sensor_" + str(i))
-                    sensor_key = sensor_key.replace(" ", "")
-                    
-                    if sensor_key.isdigit():
+                    # add new sensor
+                    if device_ieeeAddr != "None":
+
+                        # replace array_position to sensor name 
+                        sensor_key = request.form.get("set_sensor_" + str(i))
+                        sensor_key = sensor_key.replace(" ", "")
                         
-                        # first two array elements are no sensors
-                        if sensor_key == "0" or sensor_key == "1":
-                            sensor_key = "None"
+                        if sensor_key.isdigit():
                             
-                        else:                                
-                            sensor_list = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).input_values
-                            sensor_list = sensor_list.split(",")
-                            sensor_key  = sensor_list[int(sensor_key)-2]
+                            # first two array elements are no sensors
+                            if sensor_key == "0" or sensor_key == "1":
+                                sensor_key = "None"
+                                
+                            else:                                
+                                sensor_list = GET_DEVICE_BY_IEEEADDR(device_ieeeAddr).input_values
+                                sensor_list = sensor_list.split(",")
+                                sensor_key  = sensor_list[int(sensor_key)-2]
+
+                except:
+                    error_message_change_settings.append(sensordata_job.name + " || No sensor given") 
+                    error_found = True        
 
 
                 # #############
@@ -249,9 +255,9 @@ def delete_sensordata_jobs(id):
     result = DELETE_SENSORDATA_JOB(id)
 
     if result == True:
-        session['delete_job_success'] = job + " || Job successfully deleted"
+        session['delete_sensordata_job_success'] = job + " || Job successfully deleted"
     else:
-        session['delete_job_error'] = job + " || " + str(result)
+        session['delete_sensordata_job_error'] = job + " || " + str(result)
 
     return redirect(url_for('sensordata_jobs'))
 
