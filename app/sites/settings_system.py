@@ -7,7 +7,7 @@ from ping3                        import ping
 from app                          import app
 from app.backend.database_models  import *
 from app.backend.email            import SEND_EMAIL
-from app.backend.mqtt             import CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING
+from app.backend.mqtt             import CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING, START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD
 from app.backend.file_management  import UPDATE_NETWORK_SETTINGS_LINUX, GET_ALL_BACKUP_FILES, BACKUP_DATABASE, RESTORE_DATABASE, DELETE_DATABASE_BACKUP, WRITE_LOGFILE_SYSTEM
 from app.backend.shared_resources import *
 from app.backend.user_id          import SET_CURRENT_USER_ID
@@ -80,12 +80,14 @@ def PING_IP_ADDRESS(ip_address):
 def SYSTEM_REBOOT():
     time.sleep(10)
     WRITE_LOGFILE_SYSTEM("EVENT", "System | Reboot") 
+    SEND_EMAIL("SYSTEM", "System | Reboot")   
     os.system("sudo reboot")
 
 
 def SYSTEM_SHUTDOWN():
     time.sleep(10)
     WRITE_LOGFILE_SYSTEM("EVENT", "System | Shutdown")     
+    SEND_EMAIL("SYSTEM", "System | Shutdown")   
     os.system("sudo shutdown")
 
 

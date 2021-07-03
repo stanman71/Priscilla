@@ -654,11 +654,18 @@ for device in GET_ALL_DEVICES(""):
 """  imports  """
 """ ######### """
 
-from app.sites                      import index, dashboard, scheduler, programs, lighting_scenes, lighting_groups, cameras, music, sensordata_jobs, sensordata_statistics, devices_management, devices_controller, settings_system, settings_notifications, settings_users, settings_system_log, settings_threads, settings_about, errors
+from app.sites                      import index, dashboard, scheduler, programs, lighting_scenes, lighting_groups, cameras, music, sensordata_jobs, sensordata_notifications, sensordata_statistics, devices_management, devices_controller, settings_system, settings_users, settings_system_log, settings_threads, settings_about, errors
 from app.backend.process_management import START_PROCESS_MANAGEMENT_THREAD
 from app.backend.mqtt               import START_MQTT_RECEIVE_THREAD, START_MQTT_PUBLISH_THREAD, START_CHECK_MQTT_RUNNING_THREAD, CHECK_ZIGBEE2MQTT_STARTED, CHECK_ZIGBEE2MQTT_PAIRING, START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD, START_CHECK_DEVICE_CONNECTION_THREAD
 from app.backend.email              import SEND_EMAIL
 from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
+
+
+""" ########### """
+"""    email    """
+""" ########### """
+
+SEND_EMAIL("SYSTEM", "System | Started") 
 
 
 """ ########### """
@@ -716,6 +723,7 @@ try:
 except Exception as e:
     print("ERROR: Network | MQTT | " + str(e))
     WRITE_LOGFILE_SYSTEM("ERROR", "Network | MQTT | " + str(e)) 
+    SEND_EMAIL("SYSTEM", "Network | MQTT | " + str(e)) 
 
 
 """ ########## """
@@ -732,6 +740,7 @@ if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
             print("Network | ZigBee2MQTT | connected") 
             
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | connected")
+            SEND_EMAIL("SYSTEM", "Network | ZigBee2MQTT | connected")  
 
             START_ZIGBEE_PAIRING_TIMER_THREAD()
             START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD()
@@ -756,12 +765,12 @@ if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
                 SET_ZIGBEE2MQTT_PAIRING_STATUS("Disabled")     
 
         else:
-            print("ERROR: Network | ZigBee2MQTT | No Connection") 
+            print("ERROR: Network | ZigBee2MQTT | No connection") 
             
-            WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No Connection")        
-            SEND_EMAIL("ERROR", "Network | ZigBee2MQTT | No Connection")  
+            WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No connection")        
+            SEND_EMAIL("SYSTEM", "Network | ZigBee2MQTT | No connection")  
             SET_ZIGBEE2MQTT_PAIRING_SETTING("None")
-            SET_ZIGBEE2MQTT_PAIRING_STATUS("No Zigbee2MQTT Connection")        
+            SET_ZIGBEE2MQTT_PAIRING_STATUS("No Zigbee2MQTT connection")        
 
     else:
         WRITE_LOGFILE_SYSTEM("WARNING", "Network | ZigBee2MQTT | Pairing disabled | No MQTT connection") 

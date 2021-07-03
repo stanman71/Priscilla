@@ -173,18 +173,31 @@ def settings_users():
                 # role
                 role = request.form.get("set_radio_role_" + str(i))
 
-                # notification
-                if request.form.get("set_checkbox_email_notification_" + str(i)):
+                # system_notifications
+                if request.form.get("set_checkbox_system_notifications_" + str(i)):
 
                     if email == "":
-                        error_message_change_settings.append(user.name + " || No eMail address found >>> Deactivate Notifications")
-                        email_notification = "False"
+                        error_message_change_settings.append(user.name + " || No eMail address found >>> Deactivate System Notifications")
+                        system_notifications = "False"
 
                     else:
-                        email_notification = "True"
+                        system_notifications = "True"
 
                 else:
-                    email_notification = "False"
+                    system_notifications = "False"
+
+                # sensor_notifications
+                if request.form.get("set_checkbox_sensor_notifications_" + str(i)):
+
+                    if email == "":
+                        error_message_change_settings.append(user.name + " || No eMail address found >>> Deactivate Sensor Notifications")
+                        sensor_notifications = "False"
+
+                    else:
+                        sensor_notifications = "True"
+
+                else:
+                    sensor_notifications = "False"
 
 
                 # save settings
@@ -192,7 +205,7 @@ def settings_users():
 
                     changes_saved = False
 
-                    if UPDATE_USER_SETTINGS(i, name, email, role, email_notification):   
+                    if UPDATE_USER_SETTINGS(i, name, email, role, system_notifications, sensor_notifications):   
                         changes_saved = True
 
                     if hashed_password != None:                             

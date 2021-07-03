@@ -1,4 +1,4 @@
-from app import app
+from app                   import app
 
 import datetime
 import os
@@ -228,7 +228,7 @@ def BACKUP_DATABASE():
             oldest_file = min(full_path, key=os.path.getctime)
             os.remove(oldest_file)        
         
-        WRITE_LOGFILE_SYSTEM("SUCCESS", "System | Database | Backup created")
+        WRITE_LOGFILE_SYSTEM("SUCCESS", "System | Database | Backup created")      
         return True
         
     except Exception as e:

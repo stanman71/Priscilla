@@ -328,33 +328,9 @@
   <div class="col-md-12">
     <div class="card ">
       <div class="card-header">
-        <h4 class="card-title"><b>Notifications - Jobs</b></h4>
+        <h4 class="card-title"><b>Sensordata - Notifications</b></h4>
       </div>
     </div>
-
-
-<!--------------------------->
-<!-- SYSTEM NOTIFICATIONS  -->
-<!--------------------------->
-
-    <div class="card">
-      <form method="POST">         
-        <div class="card-footer">
-
-          {% if request.MOBILE %}         
-            <div class="text-center">
-              <button type="submit" onclick="window.location.href='/settings/notifications#'" name="add_notification_job" class="btn btn-fill btn-primary">SAVE</button>
-            </div>
-          {% else %}
-            <button type="submit" onclick="window.location.href='/settings/notifications#'" name="add_notification_job" class="btn btn-fill btn-primary">SAVE</button>
-          {% endif %}                  
-
-        </div>
-      </form>
-    </div>
-
-
-
 
 <!-------------->
 <!-- ADD JOB  -->
@@ -391,10 +367,10 @@
 
           {% if request.MOBILE %}         
             <div class="text-center">
-              <button type="submit" onclick="window.location.href='/settings/notifications#'" name="add_notification_job" class="btn btn-fill btn-primary">NEW JOB</button>
+              <button type="submit" onclick="window.location.href='/sensordata/notifications#'" name="add_notification_job" class="btn btn-fill btn-primary">NEW JOB</button>
             </div>
           {% else %}
-            <button type="submit" onclick="window.location.href='/settings/notifications#'" name="add_notification_job" class="btn btn-fill btn-primary">NEW JOB</button>
+            <button type="submit" onclick="window.location.href='/sensordata/notifications#'" name="add_notification_job" class="btn btn-fill btn-primary">NEW JOB</button>
           {% endif %}                  
 
         </div>
@@ -467,8 +443,8 @@
                   {% for entry in list_notification_jobs %}
                     <tr>
                       <td>
-                        <a href="/settings/notifications/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
-                        <a href="/settings/notifications/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>                            
+                        <a href="/sensordata/notifications/position/up/{{ entry.id }}#table"><i class="tim-icons icon-minimal-up"></i></a>
+                        <a href="/sensordata/notifications/position/down/{{ entry.id }}#table"><i class="tim-icons icon-minimal-down"></i></a>                            
                       </td>                     
                       <td>
                         <input type="text" class="form-control" name="set_name_{{ entry.id }}" value="{{ entry.name }}" />                    
@@ -531,7 +507,7 @@
                               </div>          
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                                <a class="btn btn-danger" href="/settings/notifications/delete/{{ entry.id }}#table" role="button">DELETE</a>
+                                <a class="btn btn-danger" href="/sensordata/notifications/delete/{{ entry.id }}#table" role="button">DELETE</a>
                               </div>
                             </div>
                           </div>
@@ -547,10 +523,10 @@
 
             {% if request.MOBILE %}                  
               <div class="text-center">
-                <button type="submit" onclick="window.location.href='/settings/notification#table_notification_jobs'" name="save_notification_jobs_settings" class="btn btn-fill btn-primary">SAVE</button>
+                <button type="submit" onclick="window.location.href='/sensordata/notification#table_notification_jobs'" name="save_notification_jobs_settings" class="btn btn-fill btn-primary">SAVE</button>
               </div>
             {% else %}
-              <button type="submit" onclick="window.location.href='/settings/notifications#table_notification_jobs'" name="save_notification_jobs_settings" class="btn btn-fill btn-primary">SAVE</button>
+              <button type="submit" onclick="window.location.href='/sensordata/notifications#table_notification_jobs'" name="save_notification_jobs_settings" class="btn btn-fill btn-primary">SAVE</button>
             {% endif %}     
 
           </div>

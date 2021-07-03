@@ -118,7 +118,9 @@
                 <b class="caret mt-2"></b>
               </a>
 
-              {% if data.navigation == "sensordata_jobs" or data.navigation == "sensordata_statistics" %} 
+              {% if data.navigation == "sensordata_jobs" or 
+                    data.navigation == "sensordata_notifications" or 
+                    data.navigation == "sensordata_statistics" %} 
                 <div class="collapse show" id="sensordata">
               {% else %} 
                 <div class="collapse" id="sensordata">
@@ -138,7 +140,20 @@
                       </div>     
                     </a>
                   </li>
-                
+       
+                  {% if data.navigation == "sensordata_notifications" %} 
+                    <li class="active navbar-collapse_active">
+                  {% else %} 
+                    <li class="navbar-collapse_active">
+                  {% endif %}
+
+                    <a href="/sensordata/notifications">
+                      <div class="navbar-collapse_text">
+                        <p><font size="2">Notifications</font></p>     
+                      </div>     
+                    </a>
+                  </li>                       
+
                   {% if data.navigation == "sensordata_statistics" %} 
                     <li class="active navbar-collapse_active">
                   {% else %} 
@@ -212,13 +227,11 @@
                 <b class="caret mt-2"></b>
               </a>
 
-              {% if data.navigation == "settings_system" or 
-                    data.navigation == "settings_notifications" or               
+              {% if data.navigation == "settings_system" or             
                     data.navigation == "settings_users" or 
                     data.navigation == "settings_threads" or 
                     data.navigation == "settings_system_log" or 
                     data.navigation == "settings_about" %} 
-
                 <div class="collapse show" id="settings">
               {% else %} 
                 <div class="collapse" id="settings">
@@ -237,20 +250,7 @@
                         <p><font size="2">System</font></p>     
                       </div>     
                     </a>
-                  </li>
-    
-                  {% if data.navigation == "settings_notifications" %} 
-                    <li class="active navbar-collapse_active">
-                  {% else %} 
-                    <li class="navbar-collapse_active">
-                  {% endif %}
-
-                    <a href="/settings/notifications">
-                      <div class="navbar-collapse_text">
-                        <p><font size="2">Notifications</font></p>     
-                      </div>     
-                    </a>
-                  </li>                  
+                  </li>           
 
                   {% if data.navigation == "settings_users" %} 
                     <li class="active navbar-collapse_active">

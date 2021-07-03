@@ -223,24 +223,6 @@ class Music_Settings(db.Model):
     default_volume        = db.Column(db.Integer, server_default=("0"))
     default_shuffleStart  = db.Column(db.String(50), server_default=("False"))   
 
-class Notification_Jobs(db.Model):
-    __tablename__ = 'notification_jobs'
-    id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
-    name            = db.Column(db.String(50), server_default=("None"))   
-    device_ieeeAddr = db.Column(db.String(50), db.ForeignKey('devices.ieeeAddr')) 
-    device          = db.relationship('Devices') 
-    sensor_key      = db.Column(db.String(50), server_default=("None"))
-    operator        = db.Column(db.String(50), server_default=("None"))
-    value           = db.Column(db.String(50), server_default=("None"))
-
-
-
-class Notification_Settings(db.Model):
-    __tablename__ = 'notification_settings'
-    id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
-
-
-
 class Programs(db.Model):
     __tablename__   = 'programs'
     id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
@@ -357,6 +339,16 @@ class Sensordata_Jobs(db.Model):
     sensor_key      = db.Column(db.String(50)) 
     always_active   = db.Column(db.String(50), server_default=("True"))
 
+class Sensordata_Notification_Jobs(db.Model):
+    __tablename__ = 'sensordata_notification_jobs'
+    id              = db.Column(db.Integer, primary_key=True, autoincrement = True)
+    name            = db.Column(db.String(50), server_default=("None"))   
+    device_ieeeAddr = db.Column(db.String(50), db.ForeignKey('devices.ieeeAddr')) 
+    device          = db.relationship('Devices') 
+    sensor_key      = db.Column(db.String(50), server_default=("None"))
+    operator        = db.Column(db.String(50), server_default=("None"))
+    value           = db.Column(db.String(50), server_default=("None"))
+
 class System(db.Model):
     __tablename__ = 'system'
     id                 = db.Column(db.Integer, primary_key=True, autoincrement = True)   
@@ -373,7 +365,8 @@ class User(UserMixin, db.Model):
     email                         = db.Column(db.String(120), unique = True, server_default=(""))
     role                          = db.Column(db.String(50), server_default=("user"))   
     password                      = db.Column(db.String(100), server_default=(""))
-    email_notification            = db.Column(db.String(20), server_default=("False"))
+    system_notifications          = db.Column(db.String(20), server_default=("False"))
+    sensor_notifications          = db.Column(db.String(20), server_default=("False"))    
     dashboard_log_show_exceptions = db.Column(db.String(20), server_default=("False"))
 
 
@@ -508,12 +501,13 @@ if System.query.filter_by().first() == None:
 
 if User.query.filter_by(name='admin').first() is None:
     user = User(
-        id                 = 1,
-        name               = "admin",
-        email              = "admin@example.com",
-        role               = "administrator",
-        password           = "sha256$OeDkVenT$bc8d974603b713097e69fc3efa1132991bfb425c59ec00f207e4b009b91f4339",    
-        email_notification = "False"
+        id                   = 1,
+        name                 = "admin",
+        email                = "admin@example.com",
+        role                 = "administrator",
+        password             = "sha256$OeDkVenT$bc8d974603b713097e69fc3efa1132991bfb425c59ec00f207e4b009b91f4339",    
+        system_notifications = "False",
+        sensor_notifications = "False"        
     )           
     db.session.add(user)
     db.session.commit()
@@ -1452,20 +1446,27 @@ def GET_EMAIL_SETTINGS():
     return eMail.query.filter_by().first()
 
 
-def GET_EMAIL_ADDRESSES(address_type): 
-    if address_type == "TEST":
-        mail_list = []
-        mail_list.append(eMail.query.filter_by().first().username)
-        return mail_list
+def GET_EMAIL_RECIPIENTS(subject_type): 
+    mail_list = []
 
-    if address_type == "NOTIFICATION":
-        mail_list = []
+    if subject_type == "TEST":
+        mail_list.append(eMail.query.filter_by().first().username)
+
+    if subject_type == "SYSTEM":
         users = User.query.all()
         
         for user in users:
-            if user.email_notification == "True":
+            if user.system_notifications == "True":
                 mail_list.append(user.email)
-        return mail_list
+
+    if subject_type == "SENSOR":
+        users = User.query.all()
+        
+        for user in users:
+            if user.sensor_notifications == "True":
+                mail_list.append(user.email)
+
+    return mail_list
 
 
 def SET_EMAIL_SETTINGS(server_address, server_port, encoding, username, password): 
@@ -2344,130 +2345,6 @@ def SET_SPOTIFY_REFRESH_TOKEN(spotify_refresh_token):
         entry.spotify_refresh_token = spotify_refresh_token
         db.session.commit()
         return True
-
-
-""" ################### """
-""" ################### """
-"""    notifications    """
-""" ################### """
-""" ################### """
-
-
-def GET_NOTIFICATION_JOB_BY_ID(id):
-    return Notification_Jobs.query.filter_by(id=id).first()
-
-
-def GET_NOTIFICATION_JOB_BY_NAME(name):
-    for job in Notification_Jobs.query.all():
-        
-        if job.name.lower() == name.lower():
-            return job   
-            
-            
-def GET_ALL_NOTIFICATION_JOBS():
-    return Notification_Jobs.query.all()
-    
-
-def ADD_NOTIFICATION_JOB():
-    for i in range(1,26):
-        if Notification_Jobs.query.filter_by(id=i).first():
-            pass
-        else:
-            # add the new job
-            notification_job = Notification_Jobs(
-                                    id   = i,
-                                    name = "new_job_" + str(i),           
-                                    )
-            db.session.add(notification_job)
-            db.session.commit()
-
-            WRITE_LOGFILE_SYSTEM("DATABASE", "Notification | Job | " + "new_job_" + str(i) + " | added")                    
-            return True
-
-    return "Limit reached (25)"
-
-
-def SET_NOTIFICATION_JOB_SETTINGS(id, name, device_ieeeAddr, sensor_key, operator, value):        
-    entry         = Notification_Jobs.query.filter_by(id=id).first()
-    previous_name = entry.name
-
-    # values changed?
-    if (entry.name != name or entry.device_ieeeAddr != device_ieeeAddr or entry.sensor_key != sensor_key or 
-        entry.operator != operator or entry.value != value):
-
-        changes = ""
-
-        if entry.name != name:
-            changes = changes + " || name || " + str(entry.name) + " >>> " + str(name)     
-        if entry.sensor_key != sensor_key:
-            changes = changes + " || sensor_key || " + str(entry.sensor_key) + " >>> " + str(sensor_key)        
-        if entry.operator != operator:
-            changes = changes + " || operator || " + str(entry.operator) + " >>> " + str(operator)       
-        if entry.value != value:
-            changes = changes + " || value || " + str(entry.value) + " >>> " + str(value)       
-
-        entry.name = name
-        entry.device_ieeeAddr =device_ieeeAddr
-        entry.sensor_key = sensor_key
-        entry.operator = operator        
-        entry.value = value
-        db.session.commit()    
-
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Notification | Job | " + str(previous_name) + " | changed" + changes)   
-        return True 
-
-
-def CHANGE_NOTIFICATION_JOB_POSITION(id, direction): 
-    if direction == "up":
-        notification_jobs_list = GET_ALL_NOTIFICATION_JOBS()
-        notification_jobs_list = notification_jobs_list[::-1]
-        
-        for notification_job in notification_jobs_list:
-            
-            if notification_job.id < id:  
-                new_id = notification_job.id
-                
-                # change ids
-                notification_job_1 = GET_NOTIFICATION_JOB_BY_ID(id)
-                notification_job_2 = GET_NOTIFICATION_JOB_BY_ID(new_id)
-                
-                notification_job_1.id = 99
-                db.session.commit()
-                
-                notification_job_2.id = id
-                notification_job_1.id = new_id
-                db.session.commit()    
-                return 
-
-    if direction == "down":
-        for notification_job in GET_ALL_NOTIFICATION_JOBS():
-            if notification_job.id > id:    
-                new_id = notification_job.id
-                
-                # change ids
-                notification_job_1 = GET_NOTIFICATION_JOB_BY_ID(id)
-                notification_job_2 = GET_NOTIFICATION_JOB_BY_ID(new_id)
-                
-                notification_job_1.id = 99
-                db.session.commit()
-                
-                notification_job_2.id = id
-                notification_job_1.id = new_id
-                db.session.commit()    
-                return 
-
-
-def DELETE_NOTIFICATION_JOB(id):
-    entry = GET_NOTIFICATION_JOB_BY_ID(id)
-    
-    try:
-        WRITE_LOGFILE_SYSTEM("DATABASE", "Notification | Job | " + str(entry.name) + " | deleted")
-    except:
-        pass     
- 
-    Notification_Jobs.query.filter_by(id=id).delete()
-    db.session.commit()
-    return True
 
 
 """ ################### """
@@ -3719,6 +3596,130 @@ def DELETE_SENSORDATA_JOB(id):
     return True
 
 
+""" ############################## """
+""" ############################## """
+"""    sensordata notifications    """
+""" ############################## """
+""" ############################## """
+
+
+def GET_SENSORDATA_NOTIFICATION_JOB_BY_ID(id):
+    return Sensordata_Notification_Jobs.query.filter_by(id=id).first()
+
+
+def GET_SENSORDATA_NOTIFICATION_JOB_BY_NAME(name):
+    for job in Sensordata_Notification_Jobs.query.all():
+        
+        if job.name.lower() == name.lower():
+            return job   
+            
+            
+def GET_ALL_SENSORDATA_NOTIFICATION_JOBS():
+    return Sensordata_Notification_Jobs.query.all()
+    
+
+def ADD_SENSORDATA_NOTIFICATION_JOB():
+    for i in range(1,26):
+        if Sensordata_Notification_Jobs.query.filter_by(id=i).first():
+            pass
+        else:
+            # add the new job
+            sensordata_notification_job = Sensordata_Notification_Jobs(
+                                    id   = i,
+                                    name = "new_job_" + str(i),           
+                                    )
+            db.session.add(sensordata_notification_job)
+            db.session.commit()
+
+            WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata Notification | Job | " + "new_job_" + str(i) + " | added")                    
+            return True
+
+    return "Limit reached (25)"
+
+
+def SET_SENSORDATA_NOTIFICATION_JOB_SETTINGS(id, name, device_ieeeAddr, sensor_key, operator, value):        
+    entry         = Sensordata_Notification_Jobs.query.filter_by(id=id).first()
+    previous_name = entry.name
+
+    # values changed?
+    if (entry.name != name or entry.device_ieeeAddr != device_ieeeAddr or entry.sensor_key != sensor_key or 
+        entry.operator != operator or entry.value != value):
+
+        changes = ""
+
+        if entry.name != name:
+            changes = changes + " || name || " + str(entry.name) + " >>> " + str(name)     
+        if entry.sensor_key != sensor_key:
+            changes = changes + " || sensor_key || " + str(entry.sensor_key) + " >>> " + str(sensor_key)        
+        if entry.operator != operator:
+            changes = changes + " || operator || " + str(entry.operator) + " >>> " + str(operator)       
+        if entry.value != value:
+            changes = changes + " || value || " + str(entry.value) + " >>> " + str(value)       
+
+        entry.name = name
+        entry.device_ieeeAddr =device_ieeeAddr
+        entry.sensor_key = sensor_key
+        entry.operator = operator        
+        entry.value = value
+        db.session.commit()    
+
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata Notification | Job | " + str(previous_name) + " | changed" + changes)   
+        return True 
+
+
+def CHANGE_SENSORDATA_NOTIFICATION_JOB_POSITION(id, direction): 
+    if direction == "up":
+        notification_jobs_list = GET_ALL_SENSORDATA_NOTIFICATION_JOBS()
+        notification_jobs_list = notification_jobs_list[::-1]
+        
+        for notification_job in notification_jobs_list:
+            
+            if notification_job.id < id:  
+                new_id = notification_job.id
+                
+                # change ids
+                notification_job_1 = GET_SENSORDATA_NOTIFICATION_JOB_BY_ID(id)
+                notification_job_2 = GET_SENSORDATA_NOTIFICATION_JOB_BY_ID(new_id)
+                
+                notification_job_1.id = 99
+                db.session.commit()
+                
+                notification_job_2.id = id
+                notification_job_1.id = new_id
+                db.session.commit()    
+                return 
+
+    if direction == "down":
+        for notification_job in GET_ALL_SENSORDATA_NOTIFICATION_JOBS():
+            if notification_job.id > id:    
+                new_id = notification_job.id
+                
+                # change ids
+                notification_job_1 = GET_SENSORDATA_NOTIFICATION_JOB_BY_ID(id)
+                notification_job_2 = GET_SENSORDATA_NOTIFICATION_JOB_BY_ID(new_id)
+                
+                notification_job_1.id = 99
+                db.session.commit()
+                
+                notification_job_2.id = id
+                notification_job_1.id = new_id
+                db.session.commit()    
+                return 
+
+
+def DELETE_SENSORDATA_NOTIFICATION_JOB(id):
+    entry = GET_SENSORDATA_NOTIFICATION_JOB_BY_ID(id)
+    
+    try:
+        WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata Notification | Job | " + str(entry.name) + " | deleted")
+    except:
+        pass     
+ 
+    Sensordata_Notification_Jobs.query.filter_by(id=id).delete()
+    db.session.commit()
+    return True
+
+
 """ ################### """
 """ ################### """
 """        system       """
@@ -3804,12 +3805,12 @@ def ADD_USER():
     return "Limit reached (10)"        
 
 
-def UPDATE_USER_SETTINGS(id, name, email, role, email_notification):     
+def UPDATE_USER_SETTINGS(id, name, email, role, system_notifications, sensor_notifications):     
     entry         = User.query.filter_by(id=id).first()
     previous_name = entry.name
 
     # values changed ?
-    if (entry.name != name or entry.email != email or entry.role != role or entry.email_notification != email_notification):
+    if (entry.name != name or entry.email != email or entry.role != role or entry.system_notifications != system_notifications or entry.sensor_notifications != sensor_notifications):
 
         changes = ""
 
@@ -3819,13 +3820,16 @@ def UPDATE_USER_SETTINGS(id, name, email, role, email_notification):
             changes = changes + " || email || " + str(entry.email) + " >>> " + str(email)            
         if entry.role != role:
             changes = changes + " || role || " + str(entry.role) + " >>> " + str(role)        
-        if entry.email_notification != email_notification:
-            changes = changes + " || email_notification_setting || " + str(entry.email_notification) + " >>> " + str(email_notification)        
+        if entry.system_notifications != system_notifications:
+            changes = changes + " || system_notification_setting || " + str(entry.system_notifications) + " >>> " + str(system_notifications)        
+        if entry.sensor_notifications != sensor_notifications:
+            changes = changes + " || sensor_notification_setting || " + str(entry.sensor_notifications) + " >>> " + str(sensor_notifications)        
 
-        entry.name               = name
-        entry.email              = email
-        entry.role               = role 
-        entry.email_notification = email_notification
+        entry.name                 = name
+        entry.email                = email
+        entry.role                 = role 
+        entry.system_notifications = system_notifications
+        entry.sensor_notifications = sensor_notifications        
         db.session.commit()
         
         WRITE_LOGFILE_SYSTEM("DATABASE", "System | User | " + str(previous_name) + " | changed" + changes)

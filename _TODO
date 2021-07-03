@@ -39,6 +39,15 @@ eMail Notifications
 > option to activate several system Notifications
 > option to create custom notifications (e.g. sensor values)
 
+
+sensor <> system notifications
+
+system in user settings
+
+    - mqtt / zigbee connection
+    - backup
+    - start / restart
+
 -----------------------
 
 MQTT

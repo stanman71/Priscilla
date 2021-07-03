@@ -144,9 +144,9 @@ def sensordata_jobs():
                 elif GET_DEVICE_BY_ID(device):
                     device_ieeeAddr = GET_DEVICE_BY_ID(device).ieeeAddr
                 else:
-                    device_ieeeAddr = "None"
-                    sensor_key      = "None"
-  
+                    error_message_change_settings.append(sensordata_job.name + " || No device given") 
+                    error_found = True   
+
 
                 # ##############
                 # sensor setting

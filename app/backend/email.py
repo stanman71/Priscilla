@@ -5,7 +5,7 @@ from app.backend.database_models import *
 from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 
 
-def SEND_EMAIL(subject, message):
+def SEND_EMAIL(subject_type, message):
 
     def CHECK_EMAIL_SETTINGS():     
         settings = GET_EMAIL_SETTINGS()
@@ -43,16 +43,16 @@ def SEND_EMAIL(subject, message):
         app.config.update(CHECK_EMAIL_SETTINGS())
         mail = Mail(app)
 
-        recipients = GET_EMAIL_ADDRESSES(subject)
+        recipients_list = GET_EMAIL_RECIPIENTS(subject_type)
 
-        if recipients != None and recipients != "None":
+        if recipients_list != []:
 
             try:
                 with app.app_context():
-                    msg = Message(subject    = "SMARTHOME | " + subject + " | " + message,
-                                sender     = app.config.get("MAIL_USERNAME"),
-                                recipients = recipients,
-                                body       = "")
+                    msg = Message(subject_type = "SMARTHOME | " + subject_type + " | " + message,
+                                  sender       = app.config.get("MAIL_USERNAME"),
+                                  recipients   = recipients_list,
+                                  body         = "")
                     
                     """                            
                     ### attachment ###
@@ -74,5 +74,5 @@ def SEND_EMAIL(subject, message):
                 
             except Exception as e:
                 if str(e) != "No recipients have been added":
-                    WRITE_LOGFILE_SYSTEM("ERROR", "System | eMail | " + str(recipients) + " | " + subject + " | " + message + " | " + str(e))  
+                    WRITE_LOGFILE_SYSTEM("ERROR", "System | eMail | " + str(recipients_list) + " | " + subject_type + " | " + message + " | " + str(e))  
                     return ("ERROR eMail || " + str(e))  

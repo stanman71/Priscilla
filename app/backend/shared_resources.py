@@ -26,7 +26,7 @@ def START_REFRESH_MQTT_INPUT_MESSAGES_THREAD():
 		
 	except Exception as e:
 		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Refresh MQTT Messages | " + str(e)) 
-		SEND_EMAIL("ERROR", "System | Thread | Refresh MQTT Messages | " + str(e)) 
+		SEND_EMAIL("SYSTEM", "System | Thread | Refresh MQTT Messages | " + str(e)) 
 
 
 def REFRESH_MQTT_INPUT_MESSAGES_THREAD():   
@@ -310,7 +310,7 @@ def START_BAD_CONNECTION_THREAD():
 		
 	except Exception as e:
 		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Bad Connection | " + str(e)) 
-		SEND_EMAIL("ERROR", "System | Thread | Bad Connection | " + str(e)) 
+		SEND_EMAIL("SYSTEM", "System | Thread | Bad Connection | " + str(e)) 
 
 
 def BAD_CONNECTION_THREAD():   

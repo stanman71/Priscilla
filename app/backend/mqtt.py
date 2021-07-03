@@ -21,7 +21,7 @@ import os
 """  block battery low messages timer  """
 """ ################################## """
 
-list_battery_low_devices = []
+list_battery_low_devices_blocked = []
 
 def START_TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD(device):
 	try:
@@ -34,7 +34,7 @@ def START_TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD(device):
 
 def TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD(device): 
     time.sleep(86400)  # 24h
-    list_battery_low_devices.remove(device)
+    list_battery_low_devices_blocked.remove(device)
 
 
 """ ########################## """
@@ -56,9 +56,8 @@ def START_MQTT_RECEIVE_THREAD():
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | MQTT Receive | " + str(e))  
-        SEND_EMAIL("ERROR", "System | Thread | MQTT Receive | " + str(e))    
+  
 
-    
 def MQTT_RECEIVE_THREAD():
 
     def on_connect(client, userdata, flags, rc):   
@@ -73,6 +72,7 @@ def MQTT_RECEIVE_THREAD():
   
             print("Network | MQTT | connected") 
             WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | MQTT | connected")
+            SEND_EMAIL("SYSTEM", "Network | MQTT | connected")
             SET_MQTT_CONNECTION_STATUS(True)
 
 
@@ -157,9 +157,7 @@ def MQTT_RECEIVE_THREAD():
                     Thread.start()   
                 except Exception as e:
                     WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | MQTT Message | " + str(e)) 
-                    SEND_EMAIL("ERROR", "System | Thread | MQTT Message | " + str(e))                    
-
-
+               
     try:
         client = mqtt.Client()
         client.on_connect = on_connect
@@ -387,7 +385,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             device_blocked = False
 
             # block existing device ?
-            for device in list_battery_low_devices:   
+            for device in list_battery_low_devices_blocked:   
                 if device == ieeeAddr:
                     device_blocked = True
                     continue
@@ -401,15 +399,16 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                         WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")    
 
                         # add device to block list
-                        list_battery_low_devices.append(ieeeAddr)
+                        list_battery_low_devices_blocked.append(ieeeAddr)
                         START_TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
 
+                # default case for all other devices
                 else:
                     if int(data["battery"]) < 20:
                         WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")           
 
                         # add device to block list
-                        list_battery_low_devices.append(ieeeAddr)
+                        list_battery_low_devices_blocked.append(ieeeAddr)
                         START_TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
 
         except:
@@ -500,7 +499,6 @@ def START_MQTT_PUBLISH_THREAD():
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | MQTT Publish | " + str(e))  
-        SEND_EMAIL("ERROR", "System | Thread | MQTT Publish | " + str(e))    
 
 
 def MQTT_PUBLISH_THREAD():
@@ -564,7 +562,6 @@ def START_CHECK_MQTT_RUNNING_THREAD():
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Check MQTT running | " + str(e))  
-        SEND_EMAIL("ERROR", "System | Thread | Check MQTT running | " + str(e))    
 
 
 def CHECK_MQTT_RUNNING_THREAD():
@@ -1030,7 +1027,6 @@ def START_CHECK_ZIGBEE2MQTT_RUNNING_THREAD():
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Check ZIGBEE running | " + str(e))  
-        SEND_EMAIL("ERROR", "System | Thread | Check ZIGBEE running | " + str(e))    
 
 
 def CHECK_ZIGBEE2MQTT_RUNNING_THREAD():   
@@ -1066,6 +1062,7 @@ def CHECK_ZIGBEE2MQTT_RUNNING_THREAD():
                 else:          
                     SET_ZIGBEE2MQTT_CONNECTION_STATUS(False)
                     WRITE_LOGFILE_SYSTEM("ERROR", "Network | ZigBee2MQTT | No connection")  
+                    SEND_EMAIL("SYSTEM", "Network | ZigBee2MQTT | No connection")    
 
                     fail_counter = 0
 
@@ -1085,6 +1082,7 @@ def CHECK_ZIGBEE2MQTT_RUNNING_THREAD():
                             for message in GET_MQTT_INCOMING_MESSAGES(15):
                                 if message[1] == "smarthome/zigbee2mqtt/bridge/config":  
                                     WRITE_LOGFILE_SYSTEM("SUCCESS", "Network | ZigBee2MQTT | connected")  
+                                    SEND_EMAIL("SYSTEM", "Network | ZigBee2MQTT | connected")    
                                     zigbee_active = True
                                     counter       = 50
                                     break
@@ -1113,7 +1111,6 @@ def START_CHECK_DEVICE_CONNECTION_THREAD():
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Check Device connection | " + str(e))  
-        SEND_EMAIL("ERROR", "System | Thread | Check Device connection | " + str(e))    
 
 
 def CHECK_DEVICE_CONNECTION_THREAD():   

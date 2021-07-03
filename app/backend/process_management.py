@@ -26,7 +26,7 @@ def START_PROCESS_MANAGEMENT_THREAD():
         
     except Exception as e:
         WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Process Management | " + str(e)) 
-        SEND_EMAIL("ERROR", "System | Thread | Process Management | " + str(e))      
+        SEND_EMAIL("SYSTEM", "System | Thread | Process Management | " + str(e))      
 
 
 def PROCESS_MANAGEMENT():

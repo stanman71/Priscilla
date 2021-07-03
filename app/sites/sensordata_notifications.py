@@ -4,6 +4,7 @@ from werkzeug.exceptions         import HTTPException, NotFound, abort
 from functools                   import wraps
 
 from app                         import app
+from app.backend.database_models import *
 from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 from app.backend.user_id         import SET_CURRENT_USER_ID
 from app.common                  import COMMON, STATUS
@@ -29,11 +30,11 @@ def permission_required(f):
     return wrap
 
 
-@app.route('/settings/notifications', methods=['GET', 'POST'])
+@app.route('/sensordata/notifications', methods=['GET', 'POST'])
 @login_required
 @permission_required
-def settings_notifications():
-    page_title       = 'Bianca | Settings | Notifications'
+def sensordata_notifications():
+    page_title       = 'Bianca | Sensordata | Notifications'
     page_description = 'The notification configuration page'
 
     SET_CURRENT_USER_ID(current_user.id)  
@@ -59,7 +60,7 @@ def settings_notifications():
     """ ######### """   
 
     if request.form.get("add_notification_job") != None: 
-        result = ADD_NOTIFICATION_JOB()   
+        result = ADD_SENSORDATA_NOTIFICATION_JOB()   
         if result != True: 
             error_message_add_job.append(result)         
         else:       
@@ -81,11 +82,11 @@ def settings_notifications():
                 # name setting
                 # ############
 
-                notification_job = GET_NOTIFICATION_JOB_BY_ID(i)
+                notification_job = GET_SENSORDATA_NOTIFICATION_JOB_BY_ID(i)
                 input_name     = request.form.get("set_name_" + str(i)).strip()                      
 
                 # add new name
-                if ((input_name != "") and (GET_NOTIFICATION_JOB_BY_NAME(input_name) == None)):
+                if ((input_name != "") and (GET_SENSORDATA_NOTIFICATION_JOB_BY_NAME(input_name) == None)):
                     name = request.form.get("set_name_" + str(i)) 
                     
                 # nothing changed 
@@ -93,14 +94,14 @@ def settings_notifications():
                     name = notification_job.name                        
                     
                 # name already exist
-                elif ((GET_NOTIFICATION_JOB_BY_NAME(input_name) != None) and (notification_job.name != input_name)):
+                elif ((GET_SENSORDATA_NOTIFICATION_JOB_BY_NAME(input_name) != None) and (notification_job.name != input_name)):
                     error_message_change_settings.append(notification_job.name + " || Name - " + input_name + " - already taken")  
                     error_found = True
                     name = notification_job.name
 
                 # no input commited
                 else:                          
-                    name = GET_NOTIFICATION_JOB_BY_ID(i).name
+                    name = GET_SENSORDATA_NOTIFICATION_JOB_BY_ID(i).name
                     error_message_change_settings.append(notification_job.name + " || No name given") 
                     error_found = True  
 
@@ -116,8 +117,8 @@ def settings_notifications():
                 elif GET_DEVICE_BY_ID(device):
                     device_ieeeAddr = GET_DEVICE_BY_ID(device).ieeeAddr
                 else:
-                    device_ieeeAddr = "None"
-                    sensor_key      = "None"
+                    error_message_change_settings.append(notification_job.name + " || No device given") 
+                    error_found = True   
   
 
                 # ##############
@@ -171,11 +172,11 @@ def settings_notifications():
                 # save settings
                 if error_found == False: 
 
-                    if SET_NOTIFICATION_JOB_SETTINGS(i, name, device_ieeeAddr, sensor_key, operator, value):
+                    if SET_SENSORDATA_NOTIFICATION_JOB_SETTINGS(i, name, device_ieeeAddr, sensor_key, operator, value):
                         success_message_change_settings.append(name + " || Settings successfully saved") 
 
 
-    list_notification_jobs  = GET_ALL_NOTIFICATION_JOBS()
+    list_notification_jobs  = GET_ALL_SENSORDATA_NOTIFICATION_JOBS()
     dropdown_list_devices   = GET_ALL_DEVICES("sensors") 
     dropdown_list_operators = ["=", ">", "<"]
 
@@ -197,13 +198,13 @@ def settings_notifications():
     except:
         pass 
 
-    data = {'navigation': 'settings_notifications'}
+    data = {'navigation': 'sensordata_notifications'}
 
     return render_template('layouts/default.html',
                             data=data,    
                             title=page_title,        
                             description=page_description,               
-                            content=render_template( 'pages/settings_notifications.html',
+                            content=render_template( 'pages/sensordata_notifications.html',
                                                     success_message_change_settings=success_message_change_settings,                               
                                                     error_message_change_settings=error_message_change_settings,   
                                                     success_message_add_job=success_message_add_job,                            
@@ -219,25 +220,25 @@ def settings_notifications():
 
 
 # change job position 
-@app.route('/settings/notifications/position/<string:direction>/<int:id>')
+@app.route('/sensordata/notifications/position/<string:direction>/<int:id>')
 @login_required
 @permission_required
 def change_notification_job_position(id, direction):
-    CHANGE_NOTIFICATION_JOB_POSITION(id, direction)
-    return redirect(url_for('settings_notifications'))
+    CHANGE_SENSORDATA_NOTIFICATION_JOB_POSITION(id, direction)
+    return redirect(url_for('sensordata_notifications'))
 
 
 # delete job
-@app.route('/settings/notifications/delete/<int:id>')
+@app.route('/sensordata/notifications/delete/<int:id>')
 @login_required
 @permission_required
 def delete_notification_jobs(id):
-    job    = GET_NOTIFICATION_JOB_BY_ID(id).name  
-    result = DELETE_NOTIFICATION_JOB(id)
+    job    = GET_SENSORDATA_NOTIFICATION_JOB_BY_ID(id).name  
+    result = DELETE_SENSORDATA_NOTIFICATION_JOB(id)
 
     if result == True:
         session['delete_notification_job_success'] = job + " || Job successfully deleted"
     else:
         session['delete_notification_job_error'] = job + " || " + str(result)
 
-    return redirect(url_for('settings_notifications'))
+    return redirect(url_for('sensordata_notifications'))
