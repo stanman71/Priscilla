@@ -33,23 +33,6 @@ Example: Power Strip
 
 -----------------------
 
-eMail Notifications
-
-> new sections Notifications
-> option to activate several system Notifications
-> option to create custom notifications (e.g. sensor values)
-
-
-sensor <> system notifications
-
-system in user settings
-
-    - mqtt / zigbee connection
-    - backup
-    - start / restart
-
------------------------
-
 MQTT
 
 > error with adapter (version 1.19)

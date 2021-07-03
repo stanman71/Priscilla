@@ -17,24 +17,57 @@ import time
 import os
 
 
-""" ################################## """
-"""  block battery low messages timer  """
-""" ################################## """
+""" ################################# """
+"""  block devices low battery timer  """
+""" ################################# """
 
-list_battery_low_devices_blocked = []
+list_blocked_devices_low_battery = []
 
-def START_TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD(device):
+def START_TIMER_BLOCK_DEVICES_LOW_BATTERY_THREAD(device):
 	try:
-		Thread = threading.Thread(target=TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD, args=(device, ))
+		Thread = threading.Thread(target=TIMER_BLOCK_DEVICES_LOW_BATTERY_THREAD, args=(device, ))
 		Thread.start()  
 
 	except Exception as e:
 		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Timer Block 'Battery Low' Devices | " + str(e)) 
 
 
-def TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD(device): 
+def TIMER_BLOCK_DEVICES_LOW_BATTERY_THREAD(device): 
     time.sleep(86400)  # 24h
-    list_battery_low_devices_blocked.remove(device)
+    list_blocked_devices_low_battery.remove(device)
+
+
+""" ############################################# """
+"""  block devices sensordata notification timer  """
+""" ############################################# """
+
+list_blocked_devices_sensordata_notification = []
+
+def START_TIMER_BLOCK_DEVICES_SENSORDATA_NOTIFICATION_THREAD(device, interval):
+	try:
+		Thread = threading.Thread(target=TIMER_BLOCK_DEVICES_SENSORDATA_NOTIFICATION_THREAD, args=(device, interval, ))
+		Thread.start()  
+
+	except Exception as e:
+		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Timer Block 'Battery Low' Devices | " + str(e)) 
+
+
+def TIMER_BLOCK_DEVICES_SENSORDATA_NOTIFICATION_THREAD(device, interval): 
+    
+    if interval == "1 Hour":
+        time.sleep(3600)  
+    if interval == "6 Hours":
+        time.sleep(21600)  
+    if interval == "12 Hours":
+        time.sleep(43200)  
+    if interval == "1 Day":
+        time.sleep(86400)  
+    if interval == "3 Days":
+        time.sleep(259200)  
+    if interval == "7 Days":
+        time.sleep(604800)  
+
+    list_blocked_devices_sensordata_notification.remove(device)
 
 
 """ ########################## """
@@ -385,7 +418,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             device_blocked = False
 
             # block existing device ?
-            for device in list_battery_low_devices_blocked:   
+            for device in list_blocked_devices_low_battery:   
                 if device == ieeeAddr:
                     device_blocked = True
                     continue
@@ -399,8 +432,8 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                         WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")    
 
                         # add device to block list
-                        list_battery_low_devices_blocked.append(ieeeAddr)
-                        START_TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
+                        list_blocked_devices_low_battery.append(ieeeAddr)
+                        START_TIMER_BLOCK_DEVICES_LOW_BATTERY_THREAD(ieeeAddr)
 
                 # default case for all other devices
                 else:
@@ -408,8 +441,8 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                         WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " | Battery low")           
 
                         # add device to block list
-                        list_battery_low_devices_blocked.append(ieeeAddr)
-                        START_TIMER_BLOCK_BATTERY_LOW_DEVICES_THREAD(ieeeAddr)
+                        list_blocked_devices_low_battery.append(ieeeAddr)
+                        START_TIMER_BLOCK_DEVICES_LOW_BATTERY_THREAD(ieeeAddr)
 
         except:
             pass               
@@ -469,7 +502,17 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
 
     # sensordata notifications
     for job in GET_ALL_SENSORDATA_NOTIFICATION_JOBS():
-        if job.device_ieeeAddr == ieeeAddr:
+
+        device_blocked = False
+
+        # block existing device ?
+        for device in list_blocked_devices_sensordata_notification:   
+            if device == ieeeAddr:
+                device_blocked = True
+                continue
+
+
+        if job.device_ieeeAddr == ieeeAddr and device_blocked == False:
 
             try:
                 sensor_key   = job.sensor_key.strip()
@@ -509,6 +552,10 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                 if passing == True:
                     SEND_EMAIL("SENSOR", GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " || " + str(sensor_key) + " || " + str(sensor_value))
 
+                    if job.interval != "anytime":
+                        # add device to block list
+                        list_blocked_devices_sensordata_notification.append(ieeeAddr)
+                        START_TIMER_BLOCK_DEVICES_SENSORDATA_NOTIFICATION_THREAD(ieeeAddr, job.interval)
              
             except Exception as e:
                 WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Notification Job | " + job.name + " | " + str(e))
@@ -531,8 +578,7 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
     # start controller job  
     if device_type == "controller":       
         heapq.heappush(process_management_queue, (1, ("controller", ieeeAddr, msg)))
-        WRITE_LOGFILE_SYSTEM("WARNING", "TEST | Controller | " + str(msg))      
-           
+   
            
 """ ###################### """
 """  mqtt publish message  """

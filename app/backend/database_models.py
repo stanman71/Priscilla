@@ -221,7 +221,7 @@ class Music_Settings(db.Model):
     default_playlist_uri  = db.Column(db.String(50), server_default=(""))   
     default_playlist_name = db.Column(db.String(50), server_default=("None"))   
     default_volume        = db.Column(db.Integer, server_default=("0"))
-    default_shuffleStart  = db.Column(db.String(50), server_default=("False"))   
+    default_shuffle       = db.Column(db.String(50), server_default=("False"))   
 
 class Programs(db.Model):
     __tablename__   = 'programs'
@@ -348,6 +348,7 @@ class Sensordata_Notification_Jobs(db.Model):
     sensor_key      = db.Column(db.String(50), server_default=("None"))
     operator        = db.Column(db.String(50), server_default=("None"))
     value           = db.Column(db.String(50), server_default=("None"))
+    interval        = db.Column(db.String(50), server_default=("None"))
 
 class System(db.Model):
     __tablename__ = 'system'
@@ -2299,13 +2300,13 @@ def SET_MUSIC_SETTINGS(spotify_client_id, spotify_client_secret):
         return True
 
 
-def SET_MUSIC_DEFAULT_SETTINGS(default_device_id, default_device_name, default_playlist_uri, default_playlist_name, default_volume, default_shuffleStart):
+def SET_MUSIC_DEFAULT_SETTINGS(default_device_id, default_device_name, default_playlist_uri, default_playlist_name, default_volume, default_shuffle):
     entry = Music_Settings.query.filter_by().first()
 
     # values changed ?
     if (entry.default_device_id != default_device_id or entry.default_device_name != default_device_name or
         entry.default_playlist_uri != default_playlist_uri or entry.default_playlist_name != default_playlist_name or
-        int(entry.default_volume) != int(default_volume) or entry.default_shuffleStart != default_shuffleStart):    
+        int(entry.default_volume) != int(default_volume) or entry.default_shuffle != default_shuffle):    
 
         changes = ""
 
@@ -2315,15 +2316,15 @@ def SET_MUSIC_DEFAULT_SETTINGS(default_device_id, default_device_name, default_p
             changes = changes + " || default_playlist_name || " + str(entry.default_playlist_name) + " >>> " + str(default_playlist_name)            
         if int(entry.default_volume) != int(default_volume):
             changes = changes + " || default_volume || " + str(entry.default_volume) + " >>> " + str(default_volume)        
-        if entry.default_shuffleStart != default_shuffleStart:
-            changes = changes + " || default_shuffleStart || " + str(entry.default_shuffleStart) + " >>> " + str(default_shuffleStart)       
+        if entry.default_shuffle != default_shuffle:
+            changes = changes + " || default_shuffle || " + str(entry.default_shuffle) + " >>> " + str(default_shuffle)       
 
         entry.default_device_id     = default_device_id
         entry.default_device_name   = default_device_name
         entry.default_playlist_uri  = default_playlist_uri
         entry.default_playlist_name = default_playlist_name
         entry.default_volume        = default_volume       
-        entry.default_shuffleStart  = default_shuffleStart               
+        entry.default_shuffle       = default_shuffle               
         db.session.commit()
 
         if changes != "":
@@ -3532,11 +3533,11 @@ def SET_SENSORDATA_JOB_SETTINGS(id, name, filename, device_ieeeAddr, sensor_key,
         if entry.always_active != always_active:
             changes = changes + " || always_active || " + str(entry.always_active) + " >>> " + str(always_active)       
 
-        entry.name = name
-        entry.filename = filename
-        entry.device_ieeeAddr =device_ieeeAddr
-        entry.sensor_key = sensor_key
-        entry.always_active = always_active
+        entry.name            = name
+        entry.filename        = filename
+        entry.device_ieeeAddr = device_ieeeAddr
+        entry.sensor_key      = sensor_key
+        entry.always_active   = always_active
         db.session.commit()    
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata | Job | " + str(previous_name) + " | changed" + changes)   
@@ -3637,13 +3638,13 @@ def ADD_SENSORDATA_NOTIFICATION_JOB():
     return "Limit reached (25)"
 
 
-def SET_SENSORDATA_NOTIFICATION_JOB_SETTINGS(id, name, device_ieeeAddr, sensor_key, operator, value):        
+def SET_SENSORDATA_NOTIFICATION_JOB_SETTINGS(id, name, device_ieeeAddr, sensor_key, operator, value, interval):        
     entry         = Sensordata_Notification_Jobs.query.filter_by(id=id).first()
     previous_name = entry.name
 
     # values changed?
     if (entry.name != name or entry.device_ieeeAddr != device_ieeeAddr or entry.sensor_key != sensor_key or 
-        entry.operator != operator or entry.value != value):
+        entry.operator != operator or entry.value != value or entry.interval != interval):
 
         changes = ""
 
@@ -3655,12 +3656,15 @@ def SET_SENSORDATA_NOTIFICATION_JOB_SETTINGS(id, name, device_ieeeAddr, sensor_k
             changes = changes + " || operator || " + str(entry.operator) + " >>> " + str(operator)       
         if entry.value != value:
             changes = changes + " || value || " + str(entry.value) + " >>> " + str(value)       
+        if entry.interval != interval:
+            changes = changes + " || interval || " + str(entry.interval) + " >>> " + str(interval)      
 
-        entry.name = name
-        entry.device_ieeeAddr =device_ieeeAddr
-        entry.sensor_key = sensor_key
-        entry.operator = operator        
-        entry.value = value
+        entry.name            = name
+        entry.device_ieeeAddr = device_ieeeAddr
+        entry.sensor_key      = sensor_key
+        entry.operator        = operator        
+        entry.value           = value
+        entry.interval        = interval        
         db.session.commit()    
 
         WRITE_LOGFILE_SYSTEM("DATABASE", "Sensordata Notification | Job | " + str(previous_name) + " | changed" + changes)   

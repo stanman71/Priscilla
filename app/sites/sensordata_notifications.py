@@ -170,16 +170,27 @@ def sensordata_notifications():
                     value = "None"
 
 
+                # ################
+                # interval setting
+                # ################
+
+                interval = request.form.get("set_interval_" + str(i))
+
+                if interval == None:
+                    interval = "None"
+
+
                 # save settings
                 if error_found == False: 
 
-                    if SET_SENSORDATA_NOTIFICATION_JOB_SETTINGS(i, name, device_ieeeAddr, sensor_key, operator, value):
+                    if SET_SENSORDATA_NOTIFICATION_JOB_SETTINGS(i, name, device_ieeeAddr, sensor_key, operator, value, interval):
                         success_message_change_settings.append(name + " || Settings successfully saved") 
 
 
     list_notification_jobs  = GET_ALL_SENSORDATA_NOTIFICATION_JOBS()
     dropdown_list_devices   = GET_ALL_DEVICES("sensors") 
     dropdown_list_operators = ["=", ">", "<"]
+    dropdown_list_intervals = ["anytime", "1 Hour", "6 Hours", "12 Hours", "1 Day", "3 Days", "7 Days"]
 
     error_message_settings = CHECK_SENSORDATA_NOTIFICATIONS(GET_ALL_SENSORDATA_NOTIFICATION_JOBS())
 
@@ -213,6 +224,7 @@ def sensordata_notifications():
                                                     list_notification_jobs=list_notification_jobs,  
                                                     dropdown_list_devices=dropdown_list_devices,
                                                     dropdown_list_operators=dropdown_list_operators,
+                                                    dropdown_list_intervals=dropdown_list_intervals,
                                                     device_input_values_list=device_input_values_list,                                        
                                                     timestamp=timestamp,   
                                                     ) 

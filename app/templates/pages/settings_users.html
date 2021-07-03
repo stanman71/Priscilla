@@ -192,8 +192,9 @@
                                 <label class="custom-control-label" for="radio_role_administrator_{{ entry.id }}">Admin</label>
                               </div>  
                               <br>
+                              
                               <div class="border-top my-2"></div>
-                              <br>   
+
                               <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="checkbox_system_notifications_{{ entry.id }}" {% if entry.system_notifications == "True" %} checked="on" {% endif %} name="set_checkbox_system_notifications_{{ entry.id }}">
                                 <label class="custom-control-label" for="checkbox_system_notifications_{{ entry.id }}">System Notifications</label>

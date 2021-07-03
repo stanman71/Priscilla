@@ -665,7 +665,7 @@ from app.backend.process_scheduler  import GET_SUNRISE_TIME, GET_SUNSET_TIME
 """    email    """
 """ ########### """
 
-SEND_EMAIL("SYSTEM", "System | Started") 
+SEND_EMAIL("SYSTEM", "Started") 
 
 
 """ ########### """

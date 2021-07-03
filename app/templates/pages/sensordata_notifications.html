@@ -434,8 +434,9 @@
                   <th scope="col" style="width:18%" class="minwidth_200">Job</th>  
                   <th scope="col" style="width:18%" class="minwidth_200">Device</th>
                   <th scope="col" style="width:18%" class="minwidth_200">Sensor</th>
-                  <th scope="col" style="width:15%" class="minwidth_100">Operator</th> 
-                  <th scope="col" style="width:15%" class="minwidth_100">Value</th>
+                  <th scope="col" style="width:10%" class="minwidth_100">Operator</th> 
+                  <th scope="col" style="width:10%" class="minwidth_100">Value</th>
+                  <th scope="col" style="width:10%" class="minwidth_100">Interval</th>                  
                   <th scope="col"></th>                          
                   <th scope="col" style="width:10%"></th>
                 </thead>
@@ -479,7 +480,7 @@
                       </td> 
                       <td>
                         <select data-size="5" class="form-control" name="set_operator_{{ entry.id }}" style="background-color:#27293D">  
-                          {% if entry.operator_2 != None and entry.operator != "None" and entry.operator != "" %}
+                          {% if entry.operator != None and entry.operator != "None" and entry.operator != "" %}
                             <option value= "{{ entry.operator }}" > {{ entry.operator }} </option>
                           {% else %}
                             <option value= "" > Operator </option>
@@ -494,6 +495,19 @@
                         <input type="text" class="form-control" placeholder="Value" name="set_value_{{ entry.id }}"
                           value = {% if entry.value != None and entry.value != "None" %}"{{ entry.value }}"{% else %}""{% endif %} />
                       </td>   
+                      <td>
+                        <select data-size="5" class="form-control" name="set_interval_{{ entry.id }}" style="background-color:#27293D">  
+                          {% if entry.interval != None and entry.interval != "None" and entry.interval != "" %}
+                            <option value= "{{ entry.interval }}" > {{ entry.interval }} </option>
+                          {% else %}
+                            <option value= "" > Interval </option>
+                          {% endif %}  
+                          <option disabled>------------------</option>                                       
+                          {% for each in dropdown_list_intervals %}
+                            <option value="{{each}}"> {{ each }} </option>
+                          {% endfor %}                                                                                                                
+                        </select>  
+                      </td>                           
                       <td></td>  
                       <td>   
                         <!-- Button trigger modal -->

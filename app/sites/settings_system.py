@@ -80,14 +80,14 @@ def PING_IP_ADDRESS(ip_address):
 def SYSTEM_REBOOT():
     time.sleep(10)
     WRITE_LOGFILE_SYSTEM("EVENT", "System | Reboot") 
-    SEND_EMAIL("SYSTEM", "System | Reboot")   
+    SEND_EMAIL("SYSTEM", "Reboot")   
     os.system("sudo reboot")
 
 
 def SYSTEM_SHUTDOWN():
     time.sleep(10)
     WRITE_LOGFILE_SYSTEM("EVENT", "System | Shutdown")     
-    SEND_EMAIL("SYSTEM", "System | Shutdown")   
+    SEND_EMAIL("SYSTEM", "Shutdown")   
     os.system("sudo shutdown")
 
 

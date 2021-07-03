@@ -391,8 +391,6 @@ def CHECK_MULTIROOM_PLAYING_THREAD():
 
 def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
 
-    WRITE_LOGFILE_SYSTEM("WARNING", "TEST | Spotify | " + command)     
-
     sp       = spotipy.Spotify(auth=spotify_token)
     sp.trace = False     
 
@@ -401,7 +399,6 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
         if command == "play":    
 
             try:
-
                 # start current playback
                 spotify_current_playback = sp.current_playback(market=None)
                 spotify_device_id        = sp.current_playback(market=None)['device']['id']
@@ -409,6 +406,7 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
                 sp.next_track(device_id=spotify_device_id) 
 
             except:
+                # start default settings
 
                 # update spotify ID in default settings
                 UPDATE_SPOTIFY_ID()
@@ -421,8 +419,6 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
                                   uris=None, 
                                   offset = None)    
 
-                SET_MUSIC_VOLUME(spotify_token, GET_MUSIC_SETTINGS().default_volume)
-                
                 # set shuffle setting
                 if GET_MUSIC_SETTINGS().default_shuffle == "True":
                     spotify_device_id = sp.current_playback(market=None)['device']['id'] 
@@ -430,7 +426,11 @@ def SPOTIFY_CONTROL(spotify_token, command, spotify_volume = 0):
                     sp.next_track(device_id=spotify_device_id)                   
                 
                 else:
-                    sp.shuffle(False, device_id=spotify_device_id)         
+                    sp.shuffle(False, device_id=spotify_device_id)       
+
+                time.sleep(3)  
+
+                SET_MUSIC_VOLUME(spotify_token, GET_MUSIC_SETTINGS().default_volume)
 
 
         if command == "play/stop":    

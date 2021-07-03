@@ -570,7 +570,7 @@
                   <th scope="col" style="width:22%" class="minwidth_250">Default Playlist</th>
                   <th scope="col" style="width:7%"></th>                         
                   <th scope="col" style="width:20%" class="minwidth_100">Default Volume</th>  
-                  <th scope="col" style="width:10%" class="minwidth_100">Default ShuffleStart</th>  
+                  <th scope="col" style="width:10%" class="minwidth_100">Default shuffle</th>  
                   <th scope="col" style="width:19%" class="minwidth_100"></th>                                      
                 </thead>
                 <tbody> 
@@ -629,8 +629,8 @@
                     <td>
                       <div class="vertical_center"> 
                         <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="checkbox_default_shuffleStart" {% if default_settings.default_shuffleStart == "True" %} checked="on" {% endif %} name="set_checkbox_default_shuffleStart_setting">
-                          <label class="custom-control-label" for="checkbox_default_shuffleStart"></label>
+                          <input type="checkbox" class="custom-control-input" id="checkbox_default_shuffle" {% if default_settings.default_shuffle == "True" %} checked="on" {% endif %} name="set_checkbox_default_shuffle_setting">
+                          <label class="custom-control-label" for="checkbox_default_shuffle"></label>
                         </div>   
                       </div>                       
                     </td>                      

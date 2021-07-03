@@ -1345,20 +1345,24 @@ def CHECK_SENSORDATA_NOTIFICATIONS(jobs):
          if job.device_ieeeAddr == "None" or job.device_ieeeAddr == None:
             error_message_settings.append(job.name + " || Missing setting || Device") 
 
-         # check sensors
+         # check sensor
          if job.sensor_key == "None" or job.sensor_key == None:
             error_message_settings.append(job.name + " || Missing setting || Sensor") 
             
-         # check operators
+         # check operator
          if job.operator == "" or job.operator == "None" or job.operator == None: 
             error_message_settings.append(job.name + " || Missing setting || Operator")
          
-         # check values
+         # check value
          if job.value == "" or job.value == "None" or job.value == None: 
             error_message_settings.append(job.name + " || Missing setting || Value")   
                
          if (job.operator == "<" or job.operator == ">") and not job.value.isdigit():
             error_message_settings.append(job.name + " || Invalid input | Value | Only numbers can be used with the selected operator") 
+
+         # check interval
+         if job.interval == "" or job.interval == "None" or job.interval == None: 
+            error_message_settings.append(job.name + " || Missing setting || Interval")
 
    return error_message_settings
 
