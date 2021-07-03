@@ -131,16 +131,16 @@ def settings_users():
                 # email setting
                 # #############
 
-                input_email = request.form.get("set_email_" + str(i)).strip()                    
+                input_email = request.form.get("set_email_" + str(i)).strip()        
 
                 # add new email
                 if GET_USER_BY_EMAIL(input_email) == None:
-                    email = request.form.get("set_email_" + str(i)) 
+                    email = request.form.get("set_email_" + str(i)).strip()   
                     
                 # nothing changed 
                 elif input_email == user.email:
                     email = user.email                        
-                    
+
                 # email already exist
                 else:
                     error_message_change_settings.append(user.name + " || eMail - " + input_email + " - already taken")  

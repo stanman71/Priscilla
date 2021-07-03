@@ -147,3 +147,20 @@ Timestamp,Type,Description
 2021-07-03 10:21:03,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
 2021-07-03 10:21:04,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2021-07-03 10:21:04,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-07-03 17:45:04,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-07-03 17:45:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-07-03 17:45:05,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-07-03 17:45:14,ERROR,|System || name 'GET_ALL_NOTIFICATION_JOBS' is not defined|
+2021-07-03 17:46:07,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-07-03 17:46:08,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-07-03 17:46:08,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-07-03 17:46:18,DATABASE,|Sensordata Notification || Job || new_job_1 || added|
+2021-07-03 17:46:45,DATABASE,|Sensordata Notification || Job || new_job_1 || deleted|
+2021-07-03 17:46:48,DATABASE,|Sensordata Notification || Job || new_job_1 || added|
+2021-07-03 17:46:49,DATABASE,|Sensordata Notification || Job || new_job_2 || added|
+2021-07-03 17:46:52,DATABASE,|Sensordata Notification || Job || new_job_2 || deleted|
+2021-07-03 17:46:54,DATABASE,|Sensordata Notification || Job || new_job_1 || deleted|
+2021-07-03 18:03:46,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-07-03 18:03:47,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-07-03 18:03:47,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-07-03 18:04:02,DATABASE,|System || User || admin || changed |||| email |||| admin@example.com >>> |

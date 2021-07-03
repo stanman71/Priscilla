@@ -49,10 +49,10 @@ def SEND_EMAIL(subject_type, message):
 
             try:
                 with app.app_context():
-                    msg = Message(subject_type = "SMARTHOME | " + subject_type + " | " + message,
-                                  sender       = app.config.get("MAIL_USERNAME"),
-                                  recipients   = recipients_list,
-                                  body         = "")
+                    msg = Message(subject    = "SMARTHOME | " + subject_type + " | " + message,
+                                  sender     = app.config.get("MAIL_USERNAME"),
+                                  recipients = recipients_list,
+                                  body       = "")
                     
                     """                            
                     ### attachment ###
@@ -75,4 +75,4 @@ def SEND_EMAIL(subject_type, message):
             except Exception as e:
                 if str(e) != "No recipients have been added":
                     WRITE_LOGFILE_SYSTEM("ERROR", "System | eMail | " + str(recipients_list) + " | " + subject_type + " | " + message + " | " + str(e))  
-                    return ("ERROR eMail || " + str(e))  
+                    return ("ERROR || eMail || " + str(e))  

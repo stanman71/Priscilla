@@ -467,6 +467,53 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
                 WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Job | " + job.name + " | " + str(e))
 
 
+    # sensordata notifications
+    for job in GET_ALL_SENSORDATA_NOTIFICATION_JOBS():
+        if job.device_ieeeAddr == ieeeAddr:
+
+            try:
+                sensor_key   = job.sensor_key.strip()
+                data         = json.loads(msg)
+                sensor_value = data[sensor_key]
+
+                passing = False
+
+                if job.operator == "=" and not job.value.isdigit():
+
+                    if str(sensor_value).lower() == str(job.value).lower():
+                        passing = True
+                    else:
+                        passing = False
+
+                if job.operator == "=" and job.value.isdigit():
+
+                    if int(sensor_value) == int(job.value):
+                        passing = True
+                    else:
+                        passing = False
+
+                if job.operator == "<" and job.value.isdigit():
+
+                    if int(sensor_value) < int(job.value):
+                        passing = True
+                    else:
+                        passing = False
+
+                if job.operator == ">" and job.value.isdigit():
+
+                    if int(sensor_value) > int(job.value):
+                        passing = True
+                    else:
+                        passing = False
+
+                if passing == True:
+                    SEND_EMAIL("SENSOR", GET_DEVICE_BY_IEEEADDR(ieeeAddr).name + " || " + str(sensor_key) + " || " + str(sensor_value))
+
+             
+            except Exception as e:
+                WRITE_LOGFILE_SYSTEM("ERROR", "Sensordata | Notification Job | " + job.name + " | " + str(e))
+
+
     # #########
     # schedular
     # #########

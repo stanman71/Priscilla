@@ -6,6 +6,7 @@ from functools                   import wraps
 from app                         import app
 from app.backend.database_models import *
 from app.backend.file_management import WRITE_LOGFILE_SYSTEM
+from app.backend.checks          import CHECK_SENSORDATA_NOTIFICATIONS
 from app.backend.user_id         import SET_CURRENT_USER_ID
 from app.common                  import COMMON, STATUS
 from app.assets                  import *
@@ -180,8 +181,7 @@ def sensordata_notifications():
     dropdown_list_devices   = GET_ALL_DEVICES("sensors") 
     dropdown_list_operators = ["=", ">", "<"]
 
-    error_message_settings = []
-    #error_message_settings = CHECK_NOTIFICATION_JOBS(GET_ALL_NOTIFICATION_JOBS())
+    error_message_settings = CHECK_SENSORDATA_NOTIFICATIONS(GET_ALL_SENSORDATA_NOTIFICATION_JOBS())
 
     data = {'navigation': 'notification_jobs'}
 

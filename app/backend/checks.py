@@ -1332,6 +1332,37 @@ def CHECK_SENSORDATA_JOBS(jobs):
    return error_message_settings
 
 
+""" ########################## """
+"""  sensordata notifications  """
+""" ########################## """
+
+def CHECK_SENSORDATA_NOTIFICATIONS(jobs): 
+   error_message_settings = []
+
+   for job in jobs:
+
+         # check mqtt devices
+         if job.device_ieeeAddr == "None" or job.device_ieeeAddr == None:
+            error_message_settings.append(job.name + " || Missing setting || Device") 
+
+         # check sensors
+         if job.sensor_key == "None" or job.sensor_key == None:
+            error_message_settings.append(job.name + " || Missing setting || Sensor") 
+            
+         # check operators
+         if job.operator == "" or job.operator == "None" or job.operator == None: 
+            error_message_settings.append(job.name + " || Missing setting || Operator")
+         
+         # check values
+         if job.value == "" or job.value == "None" or job.value == None: 
+            error_message_settings.append(job.name + " || Missing setting || Value")   
+               
+         if (job.operator == "<" or job.operator == ">") and not job.value.isdigit():
+            error_message_settings.append(job.name + " || Invalid input | Value | Only numbers can be used with the selected operator") 
+
+   return error_message_settings
+
+
 """ ############### """
 """  user settings  """
 """ ############### """
