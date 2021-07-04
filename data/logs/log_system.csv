@@ -177,3 +177,9 @@ Timestamp,Type,Description
 2021-07-04 12:55:47,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
 2021-07-04 12:55:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
 2021-07-04 12:55:48,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-07-04 19:41:48,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-07-04 19:41:49,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-07-04 19:41:49,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-07-04 19:42:21,SUCCESS,|System || Services || ZigBee2MQTT || disabled|
+2021-07-04 19:42:22,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
+2021-07-04 19:42:22,ERROR,|Network || MQTT || [WinError 10061] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte|
