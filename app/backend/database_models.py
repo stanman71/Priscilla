@@ -2,10 +2,11 @@ from flask_sqlalchemy            import SQLAlchemy
 from flask_login                 import UserMixin
 
 from app                         import app
-from app.backend.file_management import *
+from app.backend.file_management import WRITE_LOGFILE_SYSTEM
 from app.common                  import COMMON, STATUS, DATATYPE
 
 import datetime
+import json
 
 db = SQLAlchemy(app)
 
