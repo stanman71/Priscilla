@@ -60,12 +60,8 @@ def TIMER_BLOCK_DEVICES_SENSORDATA_NOTIFICATION_THREAD(device, interval):
         time.sleep(21600)  
     if interval == "12 Hours":
         time.sleep(43200)  
-    if interval == "1 Day":
+    if interval == "24 Hours":
         time.sleep(86400)  
-    if interval == "3 Days":
-        time.sleep(259200)  
-    if interval == "7 Days":
-        time.sleep(604800)  
 
     list_blocked_devices_sensordata_notification.remove(device)
 
@@ -1159,8 +1155,8 @@ def CHECK_ZIGBEE2MQTT_RUNNING_THREAD():
 
                     fail_counter = 0
 
-                    # fail process
-                    while fail_counter < 3600 and zigbee_active == False:
+                    # fail process, check connection every 10 seconds, restart zigbee2mqtt after 10 minutes
+                    while zigbee_active == False:
 
                         if GET_ZIGBEE2MQTT_PAIRING_SETTING() == "True":
                             heapq.heappush(mqtt_message_queue, (20, ("smarthome/zigbee2mqtt/bridge/config/permit_join", "true")))   
@@ -1184,6 +1180,15 @@ def CHECK_ZIGBEE2MQTT_RUNNING_THREAD():
                             time.sleep(0.2)
 
                         fail_counter = fail_counter + 10
+
+                        # restart zigbee2mqtt every 10 minutes
+                        if fail_counter == 3600:
+                            os.system("sudo systemctl stop zigbee2mqtt")
+                            time.sleep(30)
+                            os.system("sudo systemctl start zigbee2mqtt")
+                            fail_counter = 0
+
+
                         time.sleep(10)
 
         except:

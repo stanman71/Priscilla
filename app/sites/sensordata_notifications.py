@@ -190,7 +190,7 @@ def sensordata_notifications():
     list_notification_jobs  = GET_ALL_SENSORDATA_NOTIFICATION_JOBS()
     dropdown_list_devices   = GET_ALL_DEVICES("sensors") 
     dropdown_list_operators = ["=", ">", "<"]
-    dropdown_list_intervals = ["anytime", "1 Hour", "6 Hours", "12 Hours", "1 Day", "3 Days", "7 Days"]
+    dropdown_list_intervals = ["anytime", "1 Hour", "6 Hours", "12 Hours", "24 Hours"]
 
     error_message_settings = CHECK_SENSORDATA_NOTIFICATIONS(GET_ALL_SENSORDATA_NOTIFICATION_JOBS())
 

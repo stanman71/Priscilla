@@ -2,6 +2,7 @@ from app.backend.lighting         import *
 from app.backend.mqtt             import *
 from app.backend.music            import *
 from app.backend.file_management  import GET_PATH, BACKUP_DATABASE, BACKUP_ZIGBEE, RESET_LOGFILE
+from app.backend.email            import SEND_EMAIL
 from app.backend.shared_resources import *
 
 import spotipy
@@ -462,6 +463,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
         if "reset_system" in task:
             WRITE_LOGFILE_SYSTEM("EVENT", "System | Reboot")
+            SEND_EMAIL("SYSTEM", "Reboot") 
             os.system("sudo reboot")
 
 
@@ -471,6 +473,7 @@ def START_TASK(task, source, error_informations, blocked_program_thread_id = 0):
 
         if "shutdown_system" in task:
             WRITE_LOGFILE_SYSTEM("EVENT", "System | Shutdown")
+            SEND_EMAIL("SYSTEM", "Shutdown") 
             os.system("sudo shutdown")
 
 
