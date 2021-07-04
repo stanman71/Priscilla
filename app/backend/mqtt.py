@@ -23,18 +23,38 @@ import os
 
 list_blocked_devices_low_battery = []
 
-def START_TIMER_BLOCK_DEVICES_LOW_BATTERY_THREAD(device):
+def START_TIMER_BLOCK_DEVICES_LOW_BATTERY_THREAD(ieeeAddr):
 	try:
-		Thread = threading.Thread(target=TIMER_BLOCK_DEVICES_LOW_BATTERY_THREAD, args=(device, ))
+		Thread = threading.Thread(target=TIMER_BLOCK_DEVICES_LOW_BATTERY_THREAD, args=(ieeeAddr, ))
 		Thread.start()  
 
 	except Exception as e:
 		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Timer Block 'Battery Low' Devices | " + str(e)) 
 
 
-def TIMER_BLOCK_DEVICES_LOW_BATTERY_THREAD(device): 
+def TIMER_BLOCK_DEVICES_LOW_BATTERY_THREAD(ieeeAddr): 
     time.sleep(86400)  # 24h
-    list_blocked_devices_low_battery.remove(device)
+    list_blocked_devices_low_battery.remove(ieeeAddr)
+
+
+""" #################################### """
+"""  block devices bad connection timer  """
+""" #################################### """
+
+list_blocked_devices_bad_connection = []
+
+def START_TIMER_BLOCK_DEVICES_BAD_CONNECTION_THREAD(ieeeAddr):
+	try:
+		Thread = threading.Thread(target=TIMER_BLOCK_DEVICES_BAD_CONNECTION_THREAD, args=(ieeeAddr, ))
+		Thread.start()  
+
+	except Exception as e:
+		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Timer Block 'Battery Low' Devices | " + str(e)) 
+
+
+def TIMER_BLOCK_DEVICES_BAD_CONNECTION_THREAD(ieeeAddr): 
+    time.sleep(86400)  # 24h
+    list_blocked_devices_bad_connection.remove(ieeeAddr)
 
 
 """ ############################################# """
@@ -43,16 +63,16 @@ def TIMER_BLOCK_DEVICES_LOW_BATTERY_THREAD(device):
 
 list_blocked_devices_sensordata_notification = []
 
-def START_TIMER_BLOCK_DEVICES_SENSORDATA_NOTIFICATION_THREAD(device, interval):
+def START_TIMER_BLOCK_DEVICES_SENSORDATA_NOTIFICATION_THREAD(ieeeAddr, interval):
 	try:
-		Thread = threading.Thread(target=TIMER_BLOCK_DEVICES_SENSORDATA_NOTIFICATION_THREAD, args=(device, interval, ))
+		Thread = threading.Thread(target=TIMER_BLOCK_DEVICES_SENSORDATA_NOTIFICATION_THREAD, args=(ieeeAddr, interval, ))
 		Thread.start()  
 
 	except Exception as e:
 		WRITE_LOGFILE_SYSTEM("ERROR", "System | Thread | Timer Block 'Battery Low' Devices | " + str(e)) 
 
 
-def TIMER_BLOCK_DEVICES_SENSORDATA_NOTIFICATION_THREAD(device, interval): 
+def TIMER_BLOCK_DEVICES_SENSORDATA_NOTIFICATION_THREAD(ieeeAddr, interval): 
     
     if interval == "1 Hour":
         time.sleep(3600)  
@@ -63,7 +83,7 @@ def TIMER_BLOCK_DEVICES_SENSORDATA_NOTIFICATION_THREAD(device, interval):
     if interval == "24 Hours":
         time.sleep(86400)  
 
-    list_blocked_devices_sensordata_notification.remove(device)
+    list_blocked_devices_sensordata_notification.remove(ieeeAddr)
 
 
 """ ########################## """
@@ -399,9 +419,9 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             pass
 
 
-    # ###########################
-    # check battery + linkquality
-    # ###########################
+    # #############
+    # check battery
+    # #############
 
     if ieeeAddr != "":
         
@@ -444,37 +464,58 @@ def MQTT_MESSAGE(channel, msg, ieeeAddr, device_type):
             pass               
 
 
-        # check signal strength (mqtt)
-        try:
-            data = json.loads(msg)
+        # ################
+        # check connection
+        # ################
 
-            if device_type == "client_music" and int(data["signal_strength"]) < -65:
+        device_blocked = False
 
-                # add ieeeAddr to the bad connection list
-                bad_connection_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), ieeeAddr)) 
+        # block existing device ?
+        for device in list_blocked_devices_bad_connection:   
+            if device == ieeeAddr:
+                device_blocked = True
+                continue
+                
+        if device_blocked == False:
 
-            if device_type != "client_music" and int(data["signal_strength"]) < -75:
+            # check signal strength (mqtt)
 
-                # add ieeeAddr to the bad connection list
-                bad_connection_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), ieeeAddr))                 
-
-        except:
-            pass   
-
-
-        if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
-
-            # check linkquality (zigbee2mqtt)
             try:
                 data = json.loads(msg)
-                
-                if int(data["linkquality"]) < 10:
 
-                    # add ieeeAddr to the bad connection list
-                    bad_connection_list.append((str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), ieeeAddr)) 
+                if device_type == "client_music" and int(data["signal_strength"]) < -65:
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | Bad connection")
+
+                    # add device to block list
+                    list_blocked_devices_bad_connection.append(ieeeAddr)
+                    START_TIMER_BLOCK_DEVICES_BAD_CONNECTION_THREAD(ieeeAddr)
+
+                if device_type != "client_music" and int(data["signal_strength"]) < -75:
+                    WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | Bad connection")
+
+                    # add device to block list
+                    list_blocked_devices_bad_connection.append(ieeeAddr)
+                    START_TIMER_BLOCK_DEVICES_BAD_CONNECTION_THREAD(ieeeAddr)         
 
             except:
                 pass   
+
+            if GET_SYSTEM_SETTINGS().zigbee2mqtt_active == "True":
+
+                # check linkquality (zigbee2mqtt)
+
+                try:
+                    data = json.loads(msg)
+                    
+                    if int(data["linkquality"]) < 10:
+                        WRITE_LOGFILE_SYSTEM("WARNING", "Network | Device | " + device.name + " | Bad connection")
+
+                        # add device to block list
+                        list_blocked_devices_bad_connection.append(ieeeAddr)
+                        START_TIMER_BLOCK_DEVICES_BAD_CONNECTION_THREAD(ieeeAddr)
+
+                except:
+                    pass   
 
 
     # ##########
